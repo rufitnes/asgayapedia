@@ -8,7 +8,7 @@ Asgaya is an open-source, permissionless remittance protocol that enables cross-
 
 ## 📖 Read the Documentation
 
-**Live site:** [https://asgaya.github.io/asgayapedia](https://asgaya.github.io/asgayapedia) *(will be live after publishing)*
+**Live site:** [https://rufitnes.github.io/asgayapedia/](https://rufitnes.github.io/asgayapedia/)
 
 **Local preview:**
 ```bash
