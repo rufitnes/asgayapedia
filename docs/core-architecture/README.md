@@ -51,8 +51,8 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Key principle:** the goal is to make asgaya redundant except to interact with the legacy system
 
 **Related concepts:**
-- [Dynamic Reward Modulation](.concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions
-- [BCH Miners as Escrows](.concepts/bch-miners-as-escrows.md) — How BCH miners can serve as escrow operators
+- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions
+- [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md) — How BCH miners can serve as escrow operators
 
 ---
 
@@ -107,9 +107,9 @@ These principles guide all architectural decisions across the three requirements
 - Care about access? → Start with [No KYC Model](core-architecture/no-kyc.md)
 
 **For deeper understanding:**
-- See [Concepts](.concepts/) for theoretical foundations
-- See [Android App](.android-app/) for implementation details
-- See [Contributing](.meta/contributing.md) to propose changes
+- See [Concepts](concepts/) for theoretical foundations
+- See [Android App](android-app/) for implementation details
+- See [Contributing](meta/contributing.md) to propose changes
 
 ---
 

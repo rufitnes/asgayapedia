@@ -2,7 +2,7 @@
 
 # Design Decisions
 
-This directory documents the **"how"** - the tradeoffs and constraints that shaped Asgaya's implementation. The [Core Architecture](.core-architecture/) explains **what** we need and **why** it matters. This directory explains **how** we achieved it through real-world constraints and pragmatic choices.
+This directory documents the **"how"** - the tradeoffs and constraints that shaped Asgaya's implementation. The [Core Architecture](core-architecture/) explains **what** we need and **why** it matters. This directory explains **how** we achieved it through real-world constraints and pragmatic choices.
 
 **Each decision follows this pattern:**
 1. **The Goal** - What we wanted architecturally
@@ -103,9 +103,9 @@ These principles guide all implementation decisions:
 - Understanding notification matching? → Start with [Bizum Concept Field](decisions/bizum-concept-field.md)
 
 **For deeper context:**
-- See [Core Architecture](.core-architecture/) for the "what" and "why"
+- See [Core Architecture](core-architecture/) for the "what" and "why"
 - See [Research](../research/) for testing data and validation
-- See [Concepts](.concepts/) for theoretical foundations
+- See [Concepts](concepts/) for theoretical foundations
 
 ---
 
