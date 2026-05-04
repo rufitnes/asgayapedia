@@ -20,8 +20,8 @@ Core Architecture is the index that connects **requirements** (what and why we n
 ### Permissionless Access
 - [why-no-kyc.md](core-architecture/why-no-kyc.md) - Peer-to-peer coordination without gatekeepers
 - [why-permissionless.md](core-architecture/why-permissionless.md) - Open participation principles
-- [why-minimal-hardware.md](core-architecture/why-minimal-hardware.md) - Support for low-tech solutions
-- [why-self-custody.md](core-architecture/why-self-custody.md) - User-controlled cryptography and keys
+- [why-why-minimal-hardware.md](core-architecture/why-why-minimal-hardware.md) - Support for low-tech solutions
+- [why-why-self-custody.md](core-architecture/why-why-self-custody.md) - User-controlled cryptography and keys
 
 ---
 
@@ -33,7 +33,7 @@ Core Architecture is the index that connects **requirements** (what and why we n
 
 **Architecture solutions:**
 - **[Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)** — Economic model breakdown: how free rails + market rates achieve <1%
-- **[Exchange Rate Safeguard](core-architecture/exchange-rate-safeguard.md)** — Real-time Kraken rates with zero markup
+- **[Exchange Rate Safeguard](core-architecture/why-market-rate-exchanges.md)** — Real-time Kraken rates with zero markup
 - **[Volatility Protection](core-architecture/why-eliminate-volatility.md)** — Two-step settlement eliminates Bitcoin Cash volatility concerns
 
 **Key principle:** Transparent economics with no hidden markups.
@@ -64,17 +64,17 @@ Core Architecture is the index that connects **requirements** (what and why we n
 
 **Access & Usability:**
 - **[No KYC Model](core-architecture/no-kyc.md)** — Peer-to-peer coordination without central gatekeepers
-- **[Permissionless Access](core-architecture/permissionless-access.md)** — Works offline, intermittent connectivity supported
-- **[Minimal Hardware](core-architecture/minimal-hardware.md)** — From cardboard QR codes, to RFID stickers, to smartphones
-- **[Minimal Knowledge](core-architecture/minimal-knowledge.md)** — Simple UI, Basic fucntions, not crypto jargon
+- **[Permissionless Access](core-architecture/why-permissionless.md)** — Works offline, intermittent connectivity supported
+- **[Minimal Hardware](core-architecture/why-minimal-hardware.md)** — From cardboard QR codes, to RFID stickers, to smartphones
+- **[Minimal Knowledge](core-architecture/why-permissionless.md)** — Simple UI, Basic fucntions, not crypto jargon
 
 **Security & Self-Custody:**
-- **[Self-Custody](core-architecture/self-custody.md)** — Users control keys, Asgaya has zero access
-- **[Key Education](core-architecture/key-education.md)** — Mandatory backup verification before first use
-- **[Key Safekeeping](core-architecture/key-safekeeping.md)** — Multiple backup methods for different risk profiles
+- **[Self-Custody](core-architecture/why-self-custody.md)** — Users control keys, Asgaya has zero access
+- **[Key Education](core-architecture/why-permissionless.md)** — Mandatory backup verification before first use
+- **[Key Safekeeping](core-architecture/why-permissionless.md)** — Multiple backup methods for different risk profiles
 
 **Error Prevention:**
-- **[Error Mitigation](core-architecture/error-mitigation.md)** — QR codes, guided flows, auto-calculation, auto-complete
+- **[Error Mitigation](core-architecture/why-permissionless.md)** — QR codes, guided flows, auto-calculation, auto-complete
 
 **Key principle:** Maximum freedom, minimum risk — no KYC; secure key management where essential.
 
