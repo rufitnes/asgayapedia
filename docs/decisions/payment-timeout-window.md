@@ -2,7 +2,7 @@
 
 **Decision Date:** April 2026
 **Status:** Implemented
-**Related Requirement:** [Permissionless](core-architecture/why-permissionless.md) ([Error Mitigation](core-architecture/error-mitigation.md)), [Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) (Volatility Protection)
+**Related Requirement:** [Permissionless](core-architecture/why-permissionless.md) ([Error Mitigation](core-architecture/why-permissionless.md#error-prevention)), [Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) (Volatility Protection)
 
 ---
 

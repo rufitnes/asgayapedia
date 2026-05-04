@@ -61,8 +61,6 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 
 **Success metric:** Verified usage in low-connectivity areas
 
-**How we achieve this:** [Permissionless Access](core-architecture/permissionless-access.md)
-
 ---
 
 ### 3. Minimal Hardware Required
@@ -102,8 +100,6 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 **Example:** Instead of "Enter BCH address," show "Scan QR code" with camera icon.
 
 **Success metric:** Non-crypto users can explain the system to others (word-of-mouth adoption).
-
-**How we achieve this:** [Minimal Knowledge](core-architecture/minimal-knowledge.md)
 
 ---
 
@@ -156,8 +152,6 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 
 **Success metric:** Users can choose backup method based on amount stored.
 
-**How we achieve this:** [Key Safekeeping](core-architecture/key-safekeeping.md)
-
 ---
 
 ### 8. Error Prevention
@@ -174,8 +168,6 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 - Confirmation screens before irreversible actions
 
 **Success metric:** <1% error rate on transactions.
-
-**How we achieve this:** [Error Mitigation](core-architecture/error-mitigation.md)
 
 ---
 
