@@ -1,6 +1,6 @@
 <!-- Simplified Sidebar - Less Overwhelming Navigation -->
 
-- [🏠 Home](README.md)
+- [🏠 Home](#/)
 - [📖 Glossary](glossary.md)
 - [🗺️ Roadmap](ROADMAP.md)
 - [⚠️ Risks & Disclaimers](risks-and-disclaimers.md)
