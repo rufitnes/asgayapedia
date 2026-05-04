@@ -1,9 +1,9 @@
 <!-- Simplified Sidebar - Less Overwhelming Navigation -->
 
-- [🏠 Home](/)
-- [📖 Glossary](/glossary.md)
-- [🗺️ Roadmap](/ROADMAP.md)
-- [⚠️ Risks & Disclaimers](/risks-and-disclaimers.md)
+- [🏠 Home](README.md)
+- [📖 Glossary](glossary.md)
+- [🗺️ Roadmap](ROADMAP.md)
+- [⚠️ Risks & Disclaimers](risks-and-disclaimers.md)
 
 ---
 
