@@ -5,7 +5,7 @@
 **Related:** [Bubble Prevention](concepts/bubble-prevention.md), [Escrow Incentives](concepts/bch-miners-as-escrows.md)
 
 **⚠️ NOTE:** This document describes pulpero (merchant) coordination for market stability. With two-step settlement architecture, **liquidity providers (LPs)** now play this role. See:
-- **[Core Architecture: Incentives](core-architecture/incentives-merchant-lp.md)** — LP role defined
+- **[Core Architecture: Incentives](core-architecture/why-promote-adoption.md)** — LP role defined
 - **[Two-Step Settlement](decisions/two-step-settlement-timing.md)** — How LPs provide instant merchant settlement
 
 ---

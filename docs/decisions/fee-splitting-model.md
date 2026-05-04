@@ -302,7 +302,7 @@ The reward is split equaly between the merchant and the escrow
 
 ## Related Decisions
 
-- [Two-Step Settlement](core-architecture/volatility-protection.md) — Why we can afford 10-minute timeouts (escrow holds EUR, not BCH)
+- [Two-Step Settlement](core-architecture/why-eliminate-volatility.md) — Why we can afford 10-minute timeouts (escrow holds EUR, not BCH)
 - [Promote Adoption](core-architecture/why-promote-adoption.md) — Why incentives matter more than ideology
 
 ---

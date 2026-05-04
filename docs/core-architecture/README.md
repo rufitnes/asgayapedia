@@ -34,7 +34,7 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Architecture solutions:**
 - **[Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)** — Economic model breakdown: how free rails + market rates achieve <1%
 - **[Exchange Rate Safeguard](core-architecture/exchange-rate-safeguard.md)** — Real-time Kraken rates with zero markup
-- **[Volatility Protection](core-architecture/volatility-protection.md)** — Two-step settlement eliminates Bitcoin Cash volatility concerns
+- **[Volatility Protection](core-architecture/why-eliminate-volatility.md)** — Two-step settlement eliminates Bitcoin Cash volatility concerns
 
 **Key principle:** Transparent economics with no hidden markups.
 
@@ -45,7 +45,7 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Requirement:** Every transaction must create economic incentives for participants to join and grow the network.
 
 **Architecture solutions:**
-- **[Merchant & LP Incentives](core-architecture/incentives-merchant-lp.md)** — Fee-splitting model (escrow, merchant, LP each earn from the 1% fee)
+- **[Merchant & LP Incentives](core-architecture/why-promote-adoption.md)** — Fee-splitting model (escrow, merchant, LP each earn from the 1% fee)
 - **[BCH Usage Incentives](core-architecture/bch-usage-incentives.md)** — Near zero-fee BCH payments vs. 1% remmitance cash-outs
 
 **Key principle:** the goal is to make asgaya redundant except to interact with the legacy system
@@ -103,7 +103,7 @@ These principles guide all architectural decisions across the three requirements
 
 **Start with the requirement that interests you most:**
 - Want cheaper fees? → Start with [Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
-- Curious about incentives? → Start with [Merchant & LP Incentives](core-architecture/incentives-merchant-lp.md)
+- Curious about incentives? → Start with [Merchant & LP Incentives](core-architecture/why-promote-adoption.md)
 - Care about access? → Start with [No KYC Model](core-architecture/no-kyc.md)
 
 **For deeper understanding:**

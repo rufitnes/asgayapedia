@@ -2,7 +2,7 @@
 
 **Concept Type:** Economic Mechanism
 **Category:** Market Stabilization / Incentive Design
-**Related:** [Volatility Protection](core-architecture/volatility-protection.md), [Bubble Prevention](concepts/bubble-prevention.md)
+**Related:** [Volatility Protection](core-architecture/why-eliminate-volatility.md), [Bubble Prevention](concepts/bubble-prevention.md)
 
 ---
 
@@ -561,7 +561,7 @@ def is_bubble_vs_trend(daily_prices):
 - **This concept:** Modulates holding incentives dynamically
 - **Volatility protection:** 24h rate guarantee for senders
 - **Together:** Senders protected from variance, merchants guided on holding
-- **See:** [volatility-protection.md](core-architecture/volatility-protection.md)
+- **See:** [why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
 
 ### Escrow Incentives
 - **This concept:** Merchant/LP split varies

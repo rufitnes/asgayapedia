@@ -549,7 +549,7 @@ Tier-1 regulated exchange (San Francisco, US). Used for:
 
 For detailed explanations of concepts in use, see:
 
-- **Volatility Protection:** [core-architecture/volatility-protection.md](core-architecture/volatility-protection.md)
+- **Volatility Protection:** [core-architecture/why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
 - **Incentive Structure:** [decisions/fee-splitting-model.md](decisions/fee-splitting-model.md)
 - **Notification Listener:** [android-app/notification-listener/](android-app/notification-listener/)
 - **Escrow Model:** [concepts/bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)

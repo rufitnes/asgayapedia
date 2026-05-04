@@ -78,7 +78,7 @@ A permissionless Bitcoin Cash remittance protocol with <1% fees, no KYC, and sel
 **Focus areas:**
 
 **a) Incentive Alignment**
-- **Documents:** `/core-architecture/incentives-merchant-lp.md`
+- **Documents:** `/core-architecture/why-promote-adoption.md`
 - **Questions:**
   - Do merchants have sufficient incentive to provide liquidity?
   - Can LPs game the system?
@@ -86,7 +86,7 @@ A permissionless Bitcoin Cash remittance protocol with <1% fees, no KYC, and sel
   - Are the 1/3 splits fair to all parties?
 
 **b) Volatility Protection**
-- **Document:** `/core-architecture/volatility-protection.md`
+- **Document:** `/core-architecture/why-eliminate-volatility.md`
 - **Design:** Pull system (buy BCH AFTER confirmations)
 - **Questions:**
   - Is this sufficient for rapid price movements?
@@ -202,9 +202,9 @@ We've designed the documentation to be reviewable in parallel. Choose the branch
 **Best for:** Economics/game theory-focused instances
 
 **Documents to review:**
-1. `/core-architecture/incentives-merchant-lp.md`
-2. `/core-architecture/volatility-protection.md`
-3. `/core-architecture/competitive-pricing.md`
+1. `/core-architecture/why-promote-adoption.md`
+2. `/core-architecture/why-eliminate-volatility.md`
+3. `/core-architecture/why-cheaper-than-legacy.md`
 
 **Time estimate:** 1 hour
 **Key questions:** Incentive alignment, economic exploits, volatility protection

@@ -37,7 +37,7 @@ To promote adoption, Asgaya must satisfy these requirements:
 
 **Success metric:** Merchants signing up for economic reasons, not activism.
 
-**How we achieve this:** [Merchant & LP Incentives](core-architecture/incentives-merchant-lp.md)
+**How we achieve this:** [Merchant & LP Incentives](core-architecture/why-promote-adoption.md)
 
 ---
 
@@ -54,7 +54,7 @@ To promote adoption, Asgaya must satisfy these requirements:
 
 **Success metric:** Sufficient LP liquidity in all corridors to support the merchants.
 
-**How we achieve this:** [Merchant & LP Incentives](core-architecture/incentives-merchant-lp.md) + [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md)
+**How we achieve this:** [Merchant & LP Incentives](core-architecture/why-promote-adoption.md) + [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md)
 
 ---
 

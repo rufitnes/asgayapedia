@@ -55,7 +55,7 @@ Asgaya eliminates intermediaries by using:
 
 **Success metric:** Total non-exchange costs < 0.3% of transfer amount.
 
-**How we achieve this:** [Volatility Protection](core-architecture/volatility-protection.md) + [Fee Splitting Model](decisions/fee-splitting-model.md)
+**How we achieve this:** [Volatility Protection](core-architecture/why-eliminate-volatility.md) + [Fee Splitting Model](decisions/fee-splitting-model.md)
 
 ---
 

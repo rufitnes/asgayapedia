@@ -356,7 +356,7 @@
 ## Related Concepts
 
 - [Pull System](concepts/pull-system.md) — Why pull-based BCH purchase is critical
-- [Volatility Protection](core-architecture/volatility-protection.md) — Architecture overview
+- [Volatility Protection](core-architecture/why-eliminate-volatility.md) — Architecture overview
 
 ---
 
@@ -385,7 +385,7 @@
 
 ## References
 
-- **Architecture:** `/docs/core-architecture/volatility-protection.md`
+- **Architecture:** `/docs/core-architecture/why-eliminate-volatility.md`
 - **Implementation:** `/docs/android-app/flows/sender-flows.md`
 
 ---

@@ -475,7 +475,7 @@ $233.71 × 1,420 (DolarAPI live) = 331,862 ARS
 **Related documents:**
 - RS041: Cross-corridor exchange rate calculation (methodology)
 - RS043: LLM.txt & AI-native web (documentation strategy)
-- Core architecture: volatility-protection.md (two-step settlement)
+- Core architecture: why-eliminate-volatility.md (two-step settlement)
 
 **Code:**
 - `/knowledge/code/eur_to_ars_calculator.py` (v1 - hardcoded)

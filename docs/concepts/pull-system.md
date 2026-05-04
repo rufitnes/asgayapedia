@@ -2,7 +2,7 @@
 
 **Concept Type:** Protocol Design Pattern
 **Category:** Volatility Protection
-**Related:** [../core-architecture/volatility-protection.md](core-architecture/volatility-protection.md)
+**Related:** [../core-architecture/why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
 
 ---
 
@@ -192,7 +192,7 @@ Volatility risk: 0.1% typical
 
 ## Related Concepts
 
-- **Volatility Protection:** [../core-architecture/volatility-protection.md](core-architecture/volatility-protection.md)
+- **Volatility Protection:** [../core-architecture/why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
 
 ---
 
