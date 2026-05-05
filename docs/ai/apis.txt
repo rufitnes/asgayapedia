@@ -1,0 +1,4909 @@
+==============================================
+ASGAYA BACKEND APIS
+==============================================
+
+This file contains all backend API specifications.
+
+Generated: 2026-05-05
+Source: /android-app/backend-apis/*.md
+
+==============================================
+
+← [Back to Android App](android-app/README.md)
+
+# RS046-5: Backend APIs - INDEX
+
+**Research Type:** Technical Specification
+**Status:** In Progress
+**Created:** 2026-04-27
+**Related:** [RS046 Main Index](android-app/README.md)
+
+---
+
+## Documents in This Section
+
+### Core APIs (MVP Required)
+- [rate-apis.md](android-app/backend-apis/rate-apis.md) - Exchange rates and transaction cost estimation
+- [transaction-apis.md](android-app/backend-apis/transaction-apis.md) - Remittance transactions and status tracking
+- [settlement-apis.md](android-app/backend-apis/settlement-apis.md) - Liquidity provider settlement opportunities
+
+### User Management (MVP - Minimal)
+- [user-apis.md](android-app/backend-apis/user-apis.md) - User registration and preferences
+- [notification-apis.md](android-app/backend-apis/notification-apis.md) - Push notification registration and delivery
+
+### Discovery & Network (Post-MVP)
+- [merchant-apis.md](android-app/backend-apis/merchant-apis.md) - Merchant discovery and availability
+- [leaderboard-apis.md](android-app/backend-apis/leaderboard-apis.md) - LP rankings and gamification
+
+### Infrastructure
+- [common-patterns.md](android-app/backend-apis/common-patterns.md) - Authentication, error handling, rate limiting
+- [bch-native-architecture.md](android-app/backend-apis/bch-native-architecture.md) - BCH-native design philosophy
+
+---
+
+## 💡 Documentation-First Philosophy
+
+> **This is a documentation-first project.** We're building the API specifications collaboratively before implementation. Nothing is set in stone. Every endpoint, every design decision, and every architectural choice is open for discussion and improvement.
+>
+> **We're seeking the best ideas from the community.** If you see a better way to structure an API, a smarter design pattern, or an improvement to any specification—please contribute! Your feedback shapes the foundation of Asgaya.
+>
+> **The status "💡 Open for Design" means:** This API is ready for discussion, feedback, and collaborative refinement. We want your input to make it better.
+
+---
+
+## Overview
+
+This folder contains the REST API specifications for Asgaya backend services. Each file focuses on one domain area and serves as a collaborative design document.
+
+**Architecture principle:** Keep backend minimal. Phone = identity, local storage only.
+
+**API design goal:** Simple enough for humans to understand, structured enough for AI agents to consume.
+
+---
+
+## API Categories
+
+### Core APIs (MVP Required)
+
+1. **[Rate APIs](android-app/backend-apis/rate-apis.md)** 💡 Open for Design
+   - Get current exchange rates
+   - Calculate transaction estimates
+   - Dynamic reward split (BCH volatility)
+   - **Why needed:** Show users accurate rates before sending money
+   - **How to contribute:** Review the design, suggest simplifications, propose alternative endpoints
+
+2. **[Transaction APIs](android-app/backend-apis/transaction-apis.md)** 💡 Open for Design
+   - Create remittance transaction
+   - Track transaction status
+   - Recipient claim (select merchant)
+   - Two-sided confirmation
+   - **Why needed:** Core flow from sender → recipient → merchant
+   - **How to contribute:** Discuss confirmation flows, error handling, edge cases
+
+3. **[Settlement APIs](android-app/backend-apis/settlement-apis.md)** 💡 Open for Design
+   - LP settlement opportunities
+   - Accept settlement
+   - Settlement history
+   - **Why needed:** LPs provide instant liquidity to merchants
+   - **How to contribute:** Review settlement guarantees, timing constraints, LP incentives
+
+### User Management (MVP - Minimal)
+
+4. **[User APIs](android-app/backend-apis/user-apis.md)** 💡 Open for Design
+   - Register user (phone verification)
+   - User preferences
+   - Transaction history
+   - **Why needed:** Basic identity and settings (keep minimal!)
+   - **How to contribute:** Suggest ways to keep this lightweight while meeting needs
+
+5. **[Notification APIs](android-app/backend-apis/notification-apis.md)** 💡 Open for Design
+   - Register device for push notifications
+   - Send notifications (transaction updates, settlement alerts)
+   - **Why needed:** Real-time updates for all participants
+   - **How to contribute:** Propose notification types, delivery guarantees, retry logic
+
+### Discovery & Network (Post-MVP?)
+
+6. **[Merchant APIs](android-app/backend-apis/merchant-apis.md)** 💡 Open for Design
+   - Find nearby merchants
+   - Register merchant location
+   - Merchant availability
+   - **Why needed:** Recipients need to find merchants to pick up cash
+   - **How to contribute:** Design the merchant discovery UX, location privacy, search filters
+
+7. **[Leaderboard APIs](android-app/backend-apis/leaderboard-apis.md)** 💡 Open for Design
+   - LP rankings (speed, volume, activity)
+   - Gamification mechanics
+   - **Why needed:** Incentivize LP participation (nice-to-have, not MVP)
+   - **How to contribute:** Suggest fair ranking algorithms, discuss gaming resistance
+
+### Infrastructure
+
+8. **[Common Patterns](android-app/backend-apis/common-patterns.md)** 💡 Open for Design
+   - Authentication (JWT)
+   - Error handling
+   - Rate limiting
+   - API versioning
+   - Security best practices
+   - **Why needed:** Consistent patterns across all endpoints
+   - **How to contribute:** Propose security best practices, discuss API versioning strategy
+
+---
+
+## How These Connect to the App
+
+### Sender Flow (RS046-2)
+```
+User opens app → Calls Rate APIs → Shows estimate
+User sends Bizum → Transaction APIs create txn
+User tracks → Transaction APIs poll status
+```
+
+### Merchant Flow (RS046-3)
+```
+Recipient selects merchant → Merchant APIs (nearby search)
+Merchant gets notification → Notification APIs
+Merchant confirms cash → Transaction APIs (confirm)
+LP settles → Settlement APIs
+```
+
+### LP Flow (RS046-4)
+```
+LP deposits BCH → (handled in wallet, not backend)
+LP sees opportunities → Settlement APIs (poll or push)
+LP accepts → Settlement APIs (accept)
+LP tracks earnings → Settlement APIs (history)
+LP sees leaderboard → Leaderboard APIs
+```
+
+---
+
+## MVP Scope Decision (Collaborative & Flexible)
+
+**What we LIKELY need for MVP** (open for discussion):
+- 💡 Rate APIs (users need accurate estimates)
+- 💡 Transaction APIs (core remittance flow)
+- 💡 Settlement APIs (LP liquidity provision)
+- 💡 Notification APIs (real-time updates critical)
+- 💡 Common Patterns (auth, errors, etc.)
+
+**What we CAN probably defer** (post-MVP, but let's discuss):
+- 💡 User APIs (can start with local-only storage, add backend sync later)
+- 💡 Merchant APIs (can manually add test merchants initially)
+- 💡 Leaderboard APIs (nice-to-have, but maybe we add gamification earlier?)
+
+**Current thinking:** Focus on APIs 1-3, 5, 8 first. Add 4, 6, 7 after MVP proven.
+
+**But:** This is a proposal, not a mandate. Do you see a better approach? Should we prioritize differently?
+
+---
+
+## Architecture Context
+
+### What Lives Where
+
+**On mobile device (Android app):**
+- User identity (phone number)
+- BCH wallet (seed phrase, private keys)
+- Transaction history (local cache)
+- Preferences and settings
+
+**On escrow backend (Python service):**
+- Bizum notification parsing (NotificationListener → Backend)
+- Kraken API integration (buy/sell BCH)
+- Transaction coordination (matching sender → recipient → merchant → LP)
+- Rate aggregation (DolarAPI + Kraken)
+- Settlement verification
+
+**External services:**
+- Kraken: BCH exchange
+- DolarAPI: VES/ARS exchange rates
+- BCH network: Blockchain verification
+- Bizum: Payment rail (via Sabadell SMS)
+
+---
+
+## Communication Flow
+
+```
+┌─────────────────────────────────────────────────┐
+│                 Mobile Apps                     │
+│  (Sender, Merchant, LP, Recipient)              │
+└──────────────────┬──────────────────────────────┘
+                   │
+                   │ HTTPS REST APIs (this folder)
+                   │
+┌──────────────────▼──────────────────────────────┐
+│            Escrow Backend (Python)              │
+│  • Transaction coordination                     │
+│  • Notification parsing                         │
+│  • Rate aggregation                             │
+│  • BCH operations (via Kraken)                  │
+└──────┬────────────────┬────────────┬────────────┘
+       │                │            │
+       ▼                ▼            ▼
+   ┌────────┐     ┌──────────┐  ┌─────────┐
+   │ Kraken │     │ DolarAPI │  │   BCH   │
+   │  API   │     │          │  │ Network │
+   └────────┘     └──────────┘  └─────────┘
+```
+
+---
+
+## Design Status & Contribution Opportunities
+
+| Document | MVP Priority | Status | Key Open Questions | How to Help |
+|----------|-------------|--------|-------------------|------------|
+| 1. Rate APIs | 🔴 Critical | 💡 Open for Design | How often to refresh rates? Which sources to trust? | Review rate aggregation logic, suggest data sources |
+| 2. Transaction APIs | 🔴 Critical | 💡 Open for Design | How to handle failures mid-flow? Timeout strategies? | Discuss confirmation flows, error scenarios |
+| 3. Settlement APIs | 🔴 Critical | 💡 Open for Design | What are fair LP incentives? How to prevent gaming? | Design settlement economics, discuss fairness |
+| 4. User APIs | 🟡 Important | 💡 Open for Design | How minimal can we go? Local-first sync strategy? | Suggest lean architecture, privacy considerations |
+| 5. Notification APIs | 🔴 Critical | 💡 Open for Design | Delivery guarantees? Retry strategy? | Design notification semantics, discuss reliability |
+| 6. Merchant APIs | 🟡 Important | 💡 Open for Design | How to ensure merchant verification? Privacy approach? | Design discovery UX, location privacy model |
+| 7. Leaderboard APIs | 🟢 Nice-to-have | 💡 Open for Design | Fair ranking metrics? Smurf-proof algorithm? | Propose ranking algorithms, gaming resistance |
+| 8. Common Patterns | 🔴 Critical | 💡 Open for Design | Which auth mechanism? Rate limit strategy? | Contribute security expertise, design patterns |
+
+**Legend:**
+- 🔴 Critical: Must have for MVP
+- 🟡 Important: Needed soon after MVP
+- 🟢 Nice-to-have: Can defer to V2
+- 💡 Open for Design: Ready for collaborative input and improvement
+
+---
+
+## How to Use This Index
+
+**For understanding:**
+1. Start here (index) to see big picture
+2. Read one API file at a time
+3. Ask questions when concepts unclear
+4. Connect APIs to user flows (RS046-2, 3, 4)
+
+**For implementation:**
+1. Pick highest priority API (Critical first)
+2. Read the spec
+3. Implement endpoints one at a time
+4. Test with mobile app
+5. Move to next API
+
+**For review:**
+1. Open specific API file
+2. Update based on learnings
+3. Keep this index updated (status, dates)
+
+---
+
+## Current Focus
+
+**Today (2026-04-27):**
+- [x] Create folder structure
+- [x] Write index.md
+- [ ] Review and explain rate-apis.md concept
+- [ ] Create rate-apis.md together
+
+**This Week:**
+- [ ] Complete critical APIs (1, 2, 3, 5, 8)
+- [ ] Review with Suso for understanding
+- [ ] Connect to user flows
+
+---
+
+## Target API Complexity
+
+**Each file should be:**
+- ✅ 150-300 lines max (readable in one sitting)
+- ✅ Focus on 2-5 related endpoints
+- ✅ Clear request/response examples
+- ✅ Explain WHY endpoint exists (connect to user need)
+- ✅ Note MVP vs post-MVP
+
+**Avoid:**
+- ❌ 1000+ line files (too overwhelming)
+- ❌ Mixing unrelated endpoints
+- ❌ Over-engineering (keep it simple!)
+
+---
+
+## Next Steps
+
+**Immediate:**
+1. Explain Rate APIs concept to Suso
+2. Get alignment on what's needed
+3. Create rate-apis.md together
+4. Repeat for each API category
+
+**Goal:** Suso understands each API and how it connects to the app before we write the spec.
+
+---
+
+## Related Documents
+
+- **Parent:** [RS046 Main Index](android-app/README.md)
+- **User Flows:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md), [RS046-3 Merchant](android-app/flows/merchant-flows.md), [RS046-4 LP](android-app/flows/lp-flows.md)
+- **Technical:** [RS046-6 NotificationListener](android-app/notification-listener/README.md)
+
+---
+
+*Created: April 27, 2026*
+*Philosophy: Atomic documents, one domain at a time, explain before writing*
+*Status: Index complete, ready to build APIs incrementally*
+
+
+==============================================
+BCH NATIVE ARCHITECTURE
+==============================================
+
+# BCH-Native Architecture Summary
+
+**Date:** April 27, 2026
+**Status:** Architecture Finalized
+**Philosophy:** Maximize BCH-native features, minimize centralized dependencies
+
+---
+
+## What We Built: Truly Permissionless Remittance System
+
+**Core innovation:** Use Bitcoin Cash blockchain primitives for ALL identity, authentication, and notifications - no centralized services needed.
+
+---
+
+## Architecture Pillars
+
+### 1. BCH Address = User Identity
+
+**Traditional approach (what we're NOT doing):**
+```
+User → Sign up with email/phone
+     → Verify email/SMS
+     → Create password
+     → Get JWT token
+     → Use token for API calls
+     → Phone number = user ID
+```
+
+**BCH-native approach (what we ARE doing):**
+```
+User → Generate BCH keypair on device
+     → Private key = password (stored in secure enclave)
+     → Public address = user ID
+     → Sign API requests with private key (off-chain)
+     → Backend verifies signature
+     → No email, no phone, no JWT, no centralized auth
+```
+
+**Benefits:**
+- ✅ Truly permissionless (no approval needed)
+- ✅ Privacy-preserving (no personal data collected)
+- ✅ Self-sovereign (user owns identity)
+- ✅ Works with zero BCH balance (off-chain signatures)
+- ✅ No SMS costs, no phone verification
+- ✅ No tracking by Google/Apple/telcos
+
+**Implementation:**
+- See: `5_user_apis.md` - Only 2 endpoints needed!
+
+---
+
+### 2. OP_RETURN = Notification System
+
+**Traditional approach (what we're NOT doing):**
+```
+Backend → Firebase/APNs → User's device
+       → Requires device token registration
+       → Google/Apple tracking
+       → Centralized service
+       → Monthly costs
+       → Doesn't work offline
+```
+
+**BCH-native approach (what we ARE doing):**
+```
+Escrow → OP_RETURN transaction to user's BCH address
+       → User's SPV wallet detects transaction (0-conf)
+       → App parses OP_RETURN data
+       → Shows notification
+       → User also gets 546 sats (dust) as bonus
+```
+
+**Example notifications:**
+```
+ASGAYA_TXN_READY_7382        → "€100 ready! Code: 7382"
+ASGAYA_SETTLE_READY_txn_abc  → "Settlement needed: VES 6,210"
+ASGAYA_COMPLETE_7382         → "Transaction completed!"
+```
+
+**Benefits:**
+- ✅ Fully decentralized (no Firebase, no APNs)
+- ✅ Privacy-preserving (no device tokens)
+- ✅ Works offline → online (transaction waits in mempool)
+- ✅ Cheap (~€0.006 per notification)
+- ✅ User gets free sats (546 sats dust)
+- ✅ No monthly service costs
+- ✅ Can't be censored
+
+**Cost:**
+```
+Per notification: 546 sats + 100 sats fee = €0.006
+For 100 transactions: €0.60
+Escrow BCH float: 0.01 BCH (€9) total
+```
+
+**Implementation:**
+- See: `transaction-apis.md` - Lines 210-216
+- See: `settlement-apis.md` - Lines 537-551
+- See: `5_user_apis.md` - "Notifications: OP_RETURN" section
+
+---
+
+### 3. Pull System = Volatility Protection
+
+**Problem:** BCH price can change during transaction lifetime (30 min - 2 hours)
+
+**Traditional approach:**
+```
+Escrow receives EUR → Buys BCH immediately → Holds BCH → Sends BCH later
+❌ Risk: BCH price drops 5% while waiting = escrow loses money
+```
+
+**Pull system (what we ARE doing):**
+```
+Escrow receives EUR → Holds EUR in bank → Waits for confirmations → Buys BCH → Sends BCH
+✅ No volatility exposure! BCH bought at exact moment everyone is ready
+```
+
+**Timeline:**
+```
+T+0:00  Sender sends €100 via Bizum
+        Escrow receives EUR, holds as EUR (not BCH)
+
+T+0:05  Recipient enters code, sees estimate
+
+T+0:30  Merchant confirms, hands cash
+        ⚠️ BCH price may have changed, but merchant committed to VES amount
+
+T+0:31  Recipient confirms
+
+T+0:32  🚨 NOW: Escrow buys BCH with €100
+        Gets current BCH price (may be slightly different)
+
+T+0:33  Escrow sends BCH to merchant/LP
+
+T+0:35  Complete!
+```
+
+**Volatility exposure:**
+- Escrow: 0 minutes (holds EUR until ready to buy)
+- Merchant: ~30 minutes (from confirm to BCH purchase)
+- Recipient: 0 minutes (gets fixed VES amount)
+
+**30-minute exposure is MINIMAL compared to hours/days.**
+
+**Implementation:**
+- See: `transaction-apis.md` - State machine shows `escrow_buying_bch` AFTER confirmations
+- See: `settlement-apis.md` - Lines 441-448 show BCH bought after VES confirmed
+
+---
+
+### 4. Bizum = MVP Payment Method (Bank Transfer = Fallback)
+
+**Why Bizum for MVP:**
+- ✅ Instant (under 10 seconds)
+- ✅ Free for sender
+- ✅ Ubiquitous in Spain (90% of banks)
+- ✅ Mobile-first (no web needed)
+- ✅ Low friction (just phone number + amount)
+
+**Why Bank Transfer as fallback:**
+- ⚠️ Bizum has limits (€500-1000/day per bank)
+- ⚠️ Not all Spanish banks support Bizum
+- ⚠️ Some users prefer traditional IBAN transfer
+- ✅ Bank transfer works for everyone (no limits)
+
+**Payment instructions format:**
+```json
+{
+  "primary_method": "bizum",
+  "fallback_method": "bank_transfer",
+  "bizum": {
+    "recipient_phone": "+34609123456",
+    "amount": 100.00,
+    "concept": "34ASGAYAtxn_7Hk9mNpQ2wX"
+  },
+  "bank_transfer": {
+    "iban": "ES1234567890123456789012",
+    "amount": 100.00,
+    "concept": "34ASGAYAtxn_7Hk9mNpQ2wX",
+    "note": "Use if Bizum unavailable"
+  }
+}
+```
+
+**Implementation:**
+- See: `transaction-apis.md` - Lines 115-131
+
+---
+
+## Complete Flow Example (EUR → VES)
+
+### Parties:
+- **Sender:** Iris (Spain) - wants to send €100
+- **Recipient:** Elena (Venezuela) - needs cash
+- **Merchant:** Jorge (Venezuela) - provides cash, wants BCH
+- **Escrow:** Asgaya backend - orchestrates everything
+
+### Step-by-Step:
+
+**1. Elena generates BCH address (first app launch)**
+```
+Elena opens app for first time
+  ↓
+App generates BCH keypair
+  Private: Stored in device secure enclave
+  Public: bitcoincash:qzxyz789abc123def456ghi789jkl012mn
+  ↓
+This is Elena's user ID (no phone verification needed)
+  ↓
+App shows seed phrase ONCE: "abandon ability able..." (for recovery)
+```
+
+**2. Iris creates transaction**
+```
+Iris opens app/website (maybe doesn't even install app)
+  ↓
+Enters: Elena's BCH address (copied from WhatsApp)
+  Amount: €100
+  Corridor: EUR → VES
+  ↓
+POST /api/v1/transactions
+  ↓
+Gets back:
+  - 4-digit code: "7382"
+  - Bizum instructions: Send €100 to +34609123456
+  - Concept: "34ASGAYAtxn_7Hk9mNpQ2wX"
+  ↓
+Iris sends Bizum: €100 to +34609123456
+  ↓
+Escrow bank account receives EUR (held as EUR, NOT converted to BCH yet)
+```
+
+**3. Elena gets notified (via OP_RETURN)**
+```
+Escrow sends OP_RETURN to Elena's BCH address:
+  Amount: 546 sats (dust)
+  OP_RETURN: "ASGAYA_TXN_READY_7382"
+  ↓
+Elena's app (running SPV wallet) sees transaction
+  ↓
+Shows notification: "€100 ready! Code: 7382. Go to any Asgaya merchant."
+  ↓
+Elena also got 546 sats (first BCH ever!)
+```
+
+**4. Elena goes to merchant Jorge**
+```
+Elena opens app → Sees map with Jorge's bodega (500m away)
+  ↓
+Walks to bodega, says: "I have code 7382"
+  ↓
+Jorge opens app → Taps "Provide Cash" → Enters code: 7382
+  ↓
+App shows: €100 = 6,210 Bs (Jorge chooses "Hold BCH")
+  ↓
+Jorge hands 6,210 Bs cash to Elena
+  ↓
+Jorge confirms in app (signs with his BCH private key)
+```
+
+**5. Elena confirms**
+```
+Elena confirms receiving cash (signs with her BCH private key)
+  ↓
+Backend receives BOTH confirmations
+  ↓
+🚨 NOW: Escrow buys BCH with €100 on Kraken
+  Gets: 0.002845 BCH (€99.76 after 0.24% fee)
+  ↓
+Margin: €0.24
+Minus notifications: €0.006 (just 1 notification for Path A)
+Net margin: €0.234
+  ↓
+Jorge gets ALL the margin (in BCH): 0.002845 BCH
+  (Because Jorge is holding BCH, no LP needed!)
+  ↓
+Escrow sends BCH to Jorge's address
+```
+
+**6. Complete!**
+```
+All parties notified via OP_RETURN
+  ↓
+Iris sees: "€100 delivered to Elena ✅"
+Elena has: 6,210 Bs cash
+Jorge has: 0.002845 BCH (~€99.76 worth)
+  ↓
+Transaction complete in ~35 minutes from start to finish
+```
+
+---
+
+## Cost Breakdown (Per €100 Transaction)
+
+**Costs:**
+```
+Kraken fee: €0.24 (0.24% maker fee)
+OP_RETURN notification (Elena): €0.006
+OP_RETURN notification (Jorge): €0.006
+Total costs: €0.252
+```
+
+**Margin split (if Jorge sells BCH instead of holding):**
+```
+Total margin: €0.24
+Minus 3 notifications: €0.018
+Net margin: €0.222
+
+Split 3 ways:
+- Escrow: €0.074 (33.3%)
+- Merchant: €0.074 (33.3%)
+- LP: €0.074 (33.3%)
+```
+
+**If Jorge holds BCH (Path A):**
+```
+Total margin: €0.24
+Minus 1 notification: €0.006
+Net margin: €0.234
+
+Jorge gets ALL: €0.234 in BCH (no LP split!)
+```
+
+---
+
+## API Endpoints Summary
+
+### 5_user_apis.md (2 endpoints)
+1. `GET /api/v1/users/me` - Get user profile (auto-creates on first call)
+2. `PUT /api/v1/users/me` - Update display name
+
+### transaction-apis.md (4 endpoints)
+1. `POST /api/v1/transactions` - Create transaction (get payment instructions + code)
+2. `GET /api/v1/transactions/{id}` - Get transaction status
+3. `POST /api/v1/transactions/{id}/confirm` - Two-sided confirmation (merchant + recipient)
+4. `POST /api/v1/transactions/{id}/cancel` - Cancel transaction (sender only, before payment)
+
+### settlement-apis.md (6 endpoints)
+1. `POST /api/v1/settlements/create` - Create settlement (internal)
+2. `GET /api/v1/settlements/pending` - Get pending settlements (LP)
+3. `POST /api/v1/settlements/{id}/accept` - LP accepts settlement
+4. `POST /api/v1/settlements/{id}/confirm-payment` - LP confirms VES sent
+5. `POST /api/v1/admin/settlements/{id}/confirm-ves` - NotificationListener confirms VES received
+6. `POST /api/v1/admin/settlements/{id}/complete` - Complete settlement (internal)
+
+### 4_merchant_apis.md (6 endpoints)
+1. `GET /api/v1/merchants/nearby` - Find nearby merchants (public)
+2. `GET /api/v1/merchants/{id}` - Get merchant details (public)
+3. `POST /api/v1/merchants/profile` - Create merchant listing
+4. `PUT /api/v1/merchants/profile` - Update merchant listing
+5. `DELETE /api/v1/merchants/profile` - Remove merchant listing
+6. `GET /api/v1/merchants/my-profile` - View own merchant stats
+
+### rate-apis.md (1 endpoint)
+1. `GET /api/v1/estimate` - Get exchange rate estimate
+
+**Total: 19 endpoints** for complete MVP functionality!
+
+---
+
+## Authentication: BCH Signature (No JWT, No Phone)
+
+**Every authenticated API call uses:**
+```http
+X-User-Address: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+X-Signature: 3045022100ab3f210e8d9c7b4a...
+X-Timestamp: 2026-04-27T10:30:00Z
+```
+
+**Backend verification:**
+```python
+def verify_request(request):
+    address = request.headers['X-User-Address']
+    signature = request.headers['X-Signature']
+    timestamp = request.headers['X-Timestamp']
+
+    # Check timestamp (prevent replay attacks)
+    if now - timestamp > 5 minutes:
+        return False
+
+    # Verify signature (off-chain, no fee)
+    message = request.body + timestamp
+    if verify_ecdsa_signature(message, signature, address):
+        return True  # User owns this BCH address
+
+    return False
+```
+
+**Benefits:**
+- No phone verification (privacy!)
+- No JWT tokens (simpler!)
+- No session management (stateless!)
+- Works with zero BCH balance (off-chain signature)
+- Cryptographically secure
+
+---
+
+## What We Don't Need (Removed from Traditional Stack)
+
+### ❌ Centralized Services
+- No Firebase Cloud Messaging
+- No Apple Push Notification Service
+- No Twilio (SMS verification)
+- No SendGrid (email)
+- No Auth0 (authentication)
+
+### ❌ User Data Collection
+- No phone numbers
+- No email addresses
+- No passwords
+- No password reset flows
+- No two-factor auth secrets
+- No device tokens
+
+### ❌ Complex Auth Flows
+- No JWT generation/validation
+- No refresh tokens
+- No session management
+- No OAuth flows
+- No social login
+
+### ❌ Database Bloat
+- No users.phone
+- No users.email
+- No users.password_hash
+- No sessions table
+- No refresh_tokens table
+- No email_verifications table
+- No phone_verifications table
+
+**Just:**
+```python
+class User:
+    user_id: str  # BCH address
+    display_name: str | None
+    created_at: datetime
+```
+
+---
+
+## BCH-Native Features We're Using (MVP)
+
+1. **ECDSA Signatures** - Off-chain authentication
+2. **OP_RETURN** - On-chain notifications
+3. **SPV Wallets** - Light clients monitoring addresses
+4. **Dust Outputs** - 546 sats notifications
+5. **0-conf** - Instant notification detection
+
+---
+
+## BCH-Native Features to Explore (Post-MVP)
+
+After RS046 complete, deep-dive on:
+
+1. **CashTokens** - NFTs/fungible tokens on BCH
+   - Could merchant listings be CashTokens?
+   - Could reputation be tokenized?
+   - Could transaction receipts be NFTs?
+
+2. **Schnorr Signatures** - More efficient signatures
+   - Smaller transaction sizes
+   - Better multi-sig
+
+3. **PayMail** - Email-like BCH addresses
+   - `elena@asgaya.com` instead of `bitcoincash:qp3w...`
+   - Much better UX
+
+4. **CHIP** - CHained 1-of-3 Multisig
+   - Advanced payment channels
+   - Lower trust escrow
+
+5. **AnyHedge** - BCH-native hedging contracts
+   - Protect against BCH volatility
+   - Could replace EUR escrow entirely?
+
+6. **SmartBCH** - EVM-compatible sidechain
+   - Smart contracts for escrow logic
+   - DEX integration
+
+7. **CashFusion** - Privacy protocol
+   - Anonymous transactions
+   - Break on-chain links
+
+8. **UTXO Commitments** - Faster sync
+   - Even lighter SPV wallets
+   - Instant app startup
+
+**TODO:** Schedule BCH deep-dive session! 🚀
+
+---
+
+## Security Properties
+
+### Cryptographic Security
+- ✅ Private keys never leave device
+- ✅ Stored in hardware-backed secure enclave (iOS Keychain, Android Keystore)
+- ✅ Biometric protection (fingerprint/face)
+- ✅ Signature replay prevention (timestamp validation)
+
+### Privacy
+- ✅ No personal data collected (no phone, no email)
+- ✅ No Google/Apple tracking (no push tokens)
+- ✅ No telco tracking (no SMS)
+- ✅ BCH addresses pseudonymous
+
+### Decentralization
+- ✅ No central auth server (signatures verified locally)
+- ✅ No push notification server (OP_RETURN on BCH blockchain)
+- ✅ No single point of failure
+- ✅ Censorship-resistant (can't block OP_RETURN)
+
+### Self-Sovereignty
+- ✅ User owns private key (not stored on server)
+- ✅ User can recover with seed phrase
+- ✅ No "forgot password" dependency
+- ✅ No email recovery dependency
+
+---
+
+## Comparison: Traditional vs BCH-Native
+
+| Feature | Traditional | BCH-Native (Asgaya) |
+|---------|------------|---------------------|
+| **User signup** | Email + password | Generate BCH keypair |
+| **Verification** | SMS code | None (permissionless) |
+| **Authentication** | JWT tokens | ECDSA signatures |
+| **Session management** | Server-side sessions | Stateless signatures |
+| **Notifications** | Firebase/APNs | OP_RETURN transactions |
+| **Password reset** | Email link | Seed phrase recovery |
+| **Two-factor auth** | TOTP/SMS | Private key = 2FA |
+| **Data collection** | Phone, email, IP | Just BCH address |
+| **Privacy** | Low (tracked) | High (pseudonymous) |
+| **Decentralization** | Centralized servers | Blockchain primitives |
+| **Censorship resistance** | None | High |
+| **Vendor lock-in** | High (Firebase, Twilio) | None (open protocols) |
+| **Monthly costs** | €50-200 | €0 |
+
+---
+
+## Monthly Cost Savings
+
+**Traditional stack costs:**
+```
+Firebase Cloud Messaging: €0 (free tier) → €50+ at scale
+Twilio SMS: €0.05/SMS × 1000 users/month = €50
+SendGrid Email: €15/month
+Auth0: €25/month
+Total: ~€90-140/month
+```
+
+**BCH-native stack costs:**
+```
+OP_RETURN notifications: €0.006/notification × 1000/month = €6
+BCH float maintenance: €0 (refilled from margins)
+Total: ~€6/month
+```
+
+**Savings: €84-134/month = 93-95% cost reduction** 🎯
+
+---
+
+## Files Updated in This Session
+
+1. ✅ **5_user_apis.md** - Created (BCH signature auth, OP_RETURN notifications)
+2. ✅ **transaction-apis.md** - Updated (removed phone auth, added OP_RETURN, pull system)
+3. ✅ **settlement-apis.md** - Updated (removed WhatsApp, BCH signature auth, margin with notification costs)
+4. ✅ **4_merchant_apis.md** - Already had permissionless merchant listings (no changes needed)
+5. ✅ **rate-apis.md** - Already correct (no auth needed for estimates)
+
+---
+
+## Next Steps
+
+**Immediate (this research session):**
+- [ ] Review all 5 API files for consistency
+- [ ] Upload RS046 to asgaya.org for model fact-checking
+
+**Post-research (after RS046 complete):**
+- [ ] BCH deep-dive session - explore CashTokens, Schnorr, PayMail, etc.
+- [ ] Prototype OP_RETURN notification system
+- [ ] Test BCH signature verification
+- [ ] Build SPV wallet integration
+- [ ] Test seed phrase recovery flow
+
+**Development priorities:**
+1. Backend: Implement BCH signature verification
+2. Mobile: Integrate SPV wallet library (bitcoincashjs)
+3. Mobile: Implement OP_RETURN monitoring
+4. Backend: Implement pull system (buy BCH after confirmations)
+5. Test end-to-end with 1-2 beta users
+
+---
+
+## Philosophy
+
+**"Use Bitcoin Cash for everything you can, fiat only when you must."**
+
+- Identity: BCH addresses (not phone numbers)
+- Authentication: ECDSA signatures (not JWT)
+- Notifications: OP_RETURN (not push services)
+- Money transfer: BCH blockchain (with fiat on-ramps/off-ramps)
+
+**This is what truly permissionless looks like.** 🚀
+
+---
+
+*Created: April 27, 2026*
+*Philosophy: Maximize BCH-native primitives, minimize centralized dependencies*
+*Result: 93% cost reduction, 100% privacy improvement, infinite decentralization*
+
+
+==============================================
+COMMON PATTERNS
+==============================================
+
+# RS046-5.7: Common Patterns
+
+**Status:** ⏳ Not Started
+
+This document will contain common API patterns and conventions once finalized.
+
+## Overview
+
+- Authentication (JWT)
+- Error handling
+- Rate limiting
+- Pagination
+- Versioning
+
+**Why needed:** Consistent API design across all endpoints
+
+
+==============================================
+LEADERBOARD APIS
+==============================================
+
+# RS046-5.6: Leaderboard APIs
+
+**Status:** ⏳ Not Started
+
+This document will contain the specification for leaderboard APIs once implemented.
+
+## Overview
+
+- LP rankings (speed, volume, activity)
+- Gamification mechanics
+- Incentive tracking
+
+**Why needed:** Recipients need to find merchants to pick up cash
+
+
+==============================================
+MERCHANT APIS
+==============================================
+
+# 4. Merchant APIs
+
+**Category:** Core APIs (MVP Required)
+**Priority:** 🟢 High (enables permissionless network growth)
+**Related:** [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md), [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md)
+
+---
+
+## Overview
+
+Merchant APIs allow **any user** to list themselves as a merchant (provide cash to recipients). This is **permissionless** - anyone can create a merchant listing, just like posting an ad on Craigslist.
+
+**Key insight:** There is no "merchant app" vs "user app". One app with two modes:
+- 👤 **"Need Cash" mode** - I'm receiving a remittance
+- 💵 **"Provide Cash" mode** - I'll hand cash to recipients for BCH
+
+**MVP philosophy:**
+- ✅ Self-service merchant listing (no approval needed)
+- ✅ Any authenticated user can become a merchant
+- ✅ Simple form: address, hours, transaction limit
+- ✅ Network effect: More users = more potential merchants
+
+---
+
+## Permissionless Philosophy
+
+**Why any user can be a merchant:**
+
+**Removes bottlenecks:**
+- ❌ No waiting for Suso to onboard merchants
+- ❌ No approval queue
+- ❌ No separate merchant verification
+- ✅ Network grows organically
+
+**Network effects:**
+- More users → More potential merchants
+- Users wear both hats (sometimes need cash, sometimes provide cash)
+- Like Uber (drivers are also riders) or Airbnb (hosts are also guests)
+
+**Trust through reputation:**
+- Merchant ratings visible to recipients
+- Transaction count shows experience
+- Bad actors naturally filtered out (low ratings)
+
+**For beta:**
+- Start with 1-2 trusted users creating merchant listings
+- Gradually invite more users
+- Network density increases organically
+
+---
+
+## Instant Settlement Setting
+
+> **⚠️ IMPORTANT:** `instant_settlement_enabled` is a **MERCHANT PROFILE SETTING**, not a per-transaction choice.
+> - Merchant sets this **ONCE** in their profile
+> - Applies to **ALL** future claims at that merchant
+> - **Default: `false`** (keeps it simple - merchant receives BCH directly)
+> - Can be toggled on/off anytime in merchant settings
+
+---
+
+**Merchants configure in their settings (not chosen at claim time):**
+
+**`instant_settlement_enabled: false` (DEFAULT - RECOMMENDED FOR MVP):**
+- Merchant receives BCH reward directly from escrow
+- No LP involved
+- Simple, straightforward flow
+- Merchant earns full BCH reward
+- Best for merchants who want to hold BCH
+- **Default for new merchants to keep setup simple**
+
+**`instant_settlement_enabled: true` (OPTIONAL - REQUIRES LP):**
+- LP sends local fiat (VES, ARS, etc.) to merchant immediately when claim happens
+- Merchant gets fiat in their bank account (~30 seconds)
+- Merchant still gives cash to recipient
+- LP receives BCH + reward from escrow
+- Creates "bounty" for LPs (first-come-first-served competition)
+- Best for merchants who need fiat liquidity, not BCH
+- **Only enable when LP network is reliable in corridor**
+
+**Key insights:**
+- **One-time setting:** Configure once in merchant profile, applies to all claims
+- **Not per-claim:** Merchant doesn't choose at claim time (too complex)
+- **Default OFF:** Keeps onboarding simple for new merchants
+- **Toggle anytime:** Merchant can enable/disable in settings based on needs
+- **Related:** [Settlement APIs](android-app/backend-apis/settlement-apis.md) - How LP bounties work
+- **Related:** [LP Flows](android-app/flows/lp-flows.md) - LP bounty system details
+
+---
+
+## API Endpoints Summary
+
+**6 endpoints total:**
+
+1. **GET /api/v1/merchants/nearby** - Find merchants near location (public)
+2. **GET /api/v1/merchants/{id}** - Get merchant details (public)
+3. **POST /api/v1/merchants/profile** - Create merchant listing (auth required)
+4. **PUT /api/v1/merchants/profile** - Update merchant listing (auth required)
+5. **DELETE /api/v1/merchants/profile** - Remove merchant listing (auth required)
+6. **GET /api/v1/merchants/my-profile** - View own merchant profile (auth required)
+
+---
+
+### 1. GET /api/v1/merchants/nearby
+
+**Purpose:** Find merchants near recipient's location (for map display)
+
+**Authentication:** Optional (public endpoint, but better UX if authenticated)
+
+**Request:**
+```http
+GET /api/v1/merchants/nearby?lat=10.4806&lng=-66.9036&radius=5000 HTTP/1.1
+Host: api.asgaya.com
+Authorization: Bearer <jwt_token>  # Optional
+```
+
+**Query parameters:**
+- `lat`: Latitude (decimal degrees)
+- `lng`: Longitude (decimal degrees)
+- `radius`: Search radius in meters (default: 5000m = 5km, max: 50000m = 50km)
+- `currency`: Optional filter (VES, ARS, HNL) - show only merchants accepting this currency
+
+**Response:**
+```json
+{
+  "merchants": [
+    {
+      "id": "merchant_9kLmP",
+      "name": "Bodega El Roble",
+      "location": {
+        "lat": 10.4821,
+        "lng": -66.9012,
+        "address": "Av. Francisco de Miranda, Chacao, Caracas",
+        "distance_meters": 450
+      },
+      "currencies_accepted": ["VES"],
+      "rating": 4.8,
+      "transaction_count": 127,
+      "availability": {
+        "status": "online",
+        "last_seen": "2026-04-27T10:30:00Z"
+      },
+      "hours": {
+        "monday": "08:00-20:00",
+        "tuesday": "08:00-20:00",
+        "wednesday": "08:00-20:00",
+        "thursday": "08:00-20:00",
+        "friday": "08:00-20:00",
+        "saturday": "09:00-18:00",
+        "sunday": "closed"
+      },
+      "instant_settlement_enabled": "false"
+    },
+    {
+      "id": "merchant_2xNpQ",
+      "name": "Panadería San José",
+      "location": {
+        "lat": 10.4798,
+        "lng": -66.9045,
+        "address": "Calle Paris, Los Palos Grandes, Caracas",
+        "distance_meters": 680
+      },
+      "currencies_accepted": ["VES"],
+      "rating": 4.9,
+      "transaction_count": 203,
+      "availability": {
+        "status": "online",
+        "last_seen": "2026-04-27T10:28:00Z"
+      },
+      "hours": {
+        "monday": "06:00-19:00",
+        "tuesday": "06:00-19:00",
+        "wednesday": "06:00-19:00",
+        "thursday": "06:00-19:00",
+        "friday": "06:00-19:00",
+        "saturday": "06:00-15:00",
+        "sunday": "07:00-13:00"
+      },
+      "instant_settlement_enabled": true
+    }
+  ],
+  "total_count": 2,
+  "search_params": {
+    "center": {
+      "lat": 10.4806,
+      "lng": -66.9036
+    },
+    "radius_meters": 5000
+  }
+}
+```
+
+**Response fields:**
+- `merchants`: Array of nearby merchants
+- `id`: Unique merchant ID
+- `name`: Merchant business name
+- `location.distance_meters`: Distance from search center
+- `currencies_accepted`: Which currencies merchant can dispense
+- `rating`: Average rating (1-5 stars)
+- `transaction_count`: Total transactions completed
+- `availability.status`: online/offline/busy
+- `hours`: Operating hours (for display only)
+- `instant_settlement_enabled`: true/false - Whether merchant wants instant fiat settlement via LP
+
+**Use case:**
+```
+Recipient Elena opens app
+  ↓
+App gets device location: (10.4806, -66.9036)
+  ↓
+App calls: GET /api/v1/merchants/nearby?lat=10.4806&lng=-66.9036&radius=5000
+  ↓
+App shows map with 2 merchants nearby
+  ↓
+Elena sees: "Bodega El Roble - 450m away"
+```
+
+**Errors:**
+- `INVALID_COORDINATES` (400): Lat/lng out of range
+- `RADIUS_TOO_LARGE` (400): Radius > 50km
+- `NO_MERCHANTS_FOUND` (404): No merchants in area
+
+---
+
+### 2. GET /api/v1/merchants/{merchant_id}
+
+**Purpose:** Get detailed merchant information
+
+**Authentication:** Optional
+
+**Request:**
+```http
+GET /api/v1/merchants/merchant_9kLmP HTTP/1.1
+Host: api.asgaya.com
+```
+
+**Response:**
+```json
+{
+  "id": "merchant_9kLmP",
+  "name": "Bodega El Roble",
+  "description": "Family-owned corner store serving the community since 1998",
+  "location": {
+    "lat": 10.4821,
+    "lng": -66.9012,
+    "address": "Av. Francisco de Miranda, Chacao, Caracas",
+    "neighborhood": "Chacao",
+    "city": "Caracas",
+    "country": "Venezuela"
+  },
+  "contact": {
+    "phone": "+58412987654",
+    "whatsapp": "+58412987654"
+  },
+  "currencies_accepted": ["VES"],
+  "instant_settlement_enabled": "false",
+  "rating": 4.8,
+  "transaction_count": 127,
+  "member_since": "2026-03-15T00:00:00Z",
+  "availability": {
+    "status": "online",
+    "last_seen": "2026-04-27T10:30:00Z"
+  },
+  "hours": {
+    "monday": "08:00-20:00",
+    "tuesday": "08:00-20:00",
+    "wednesday": "08:00-20:00",
+    "thursday": "08:00-20:00",
+    "friday": "08:00-20:00",
+    "saturday": "09:00-18:00",
+    "sunday": "closed"
+  },
+  "stats": {
+    "total_transactions": 127,
+    "total_volume_eur": 4850.00,
+    "total_volume_ves": 301575.00,
+    "average_transaction_eur": 38.19,
+    "on_time_rate": 0.98
+  },
+  "reviews": [
+    {
+      "rating": 5,
+      "comment": "Fast and friendly!",
+      "timestamp": "2026-04-25T15:20:00Z"
+    },
+    {
+      "rating": 5,
+      "comment": "Always available, great service",
+      "timestamp": "2026-04-20T11:10:00Z"
+    }
+  ]
+}
+```
+
+**Response fields:**
+- All fields from nearby search, plus:
+- `description`: Merchant bio/description
+- `stats`: Performance metrics
+- `reviews`: Recent customer reviews (last 5)
+- `on_time_rate`: % of transactions completed without issues
+
+**Use case:**
+```
+Recipient taps merchant pin on map
+  ↓
+App calls: GET /api/v1/merchants/merchant_9kLmP
+  ↓
+App shows merchant detail screen:
+- Name, address, distance
+- Rating: 4.8 stars (127 transactions)
+- Hours: Open now (closes 20:00)
+- Reviews
+- [Get Directions] [Call Merchant]
+```
+
+**Errors:**
+- `NOT_FOUND` (404): Merchant ID doesn't exist
+
+---
+
+### 3. POST /api/v1/merchants/profile
+
+**Purpose:** User creates their merchant listing (becomes a merchant)
+
+**Authentication:** Required (JWT)
+
+**Request:**
+```http
+POST /api/v1/merchants/profile HTTP/1.1
+Host: api.asgaya.com
+Authorization: Bearer <jwt_token>
+Content-Type: application/json
+
+{
+  "business_name": "Bodega El Roble",
+  "description": "Family-owned corner store, happy to help with cash pickup",
+  "location": {
+    "lat": 10.4821,
+    "lng": -66.9012,
+    "address": "Av. Francisco de Miranda, Chacao, Caracas"
+  },
+  "contact": {
+    "phone": "+58412987654",
+    "whatsapp": "+58412987654"
+  },
+  "currencies_accepted": ["VES"],
+  "instant_settlement_enabled": false,
+  "bch_address": "bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy",
+  "ves_pagomovil": "+58412987654",
+  "hours": {
+    "monday": "08:00-20:00",
+    "tuesday": "08:00-20:00",
+    "wednesday": "08:00-20:00",
+    "thursday": "08:00-20:00",
+    "friday": "08:00-20:00",
+    "saturday": "09:00-18:00",
+    "sunday": "closed"
+  },
+  "transaction_limit_eur": 50.00
+}
+```
+
+**Request fields:**
+- `business_name`: Name shown to recipients (can be just your name)
+- `description`: Short bio (optional)
+- `location`: Where recipients can find you
+- `currencies_accepted`: ["VES"] for now (expandable: ["VES", "ARS", "HNL"])
+- `instant_settlement_enabled`: true/false (see merchant settings)
+- `bch_address`: Where to receive BCH payouts
+- `ves_pagomovil`: Your PagoMóvil number for VES settlement
+- `hours`: When you're available (optional, can be "flexible")
+- `transaction_limit_eur`: Max amount per transaction (default: 50€)
+
+**Response:**
+```json
+{
+  "merchant_id": "merchant_9kLmP",
+  "status": "active",
+  "listed_at": "2026-04-27T11:15:00Z",
+  "message": "You're now listed as a merchant! Recipients can find you on the map."
+}
+```
+
+**Use case:**
+```
+User Jorge opens app → Taps "Provide Cash" tab
+  ↓
+Fills form:
+- Business: "Bodega El Roble"
+- Address: (auto-filled from GPS, editable)
+- Hours: Mon-Sat 8am-8pm
+- Max transaction: €50
+- Settlement: Hold BCH
+  ↓
+Taps "List Me as Merchant"
+  ↓
+POST /api/v1/merchants/profile
+  ↓
+✅ "You're now listed! Recipients nearby can find you."
+```
+
+**Validations:**
+- User must be phone-verified (can't list without verified account)
+- `bch_address` must be valid BCH address
+- `ves_pagomovil` must be valid Venezuelan phone
+- `transaction_limit_eur` must be ≤ 100€ (spam prevention)
+- User can only have ONE merchant profile (can't create multiple listings)
+
+**Errors:**
+- `PHONE_NOT_VERIFIED` (403): Must verify phone first
+- `MERCHANT_ALREADY_EXISTS` (409): User already has a merchant profile
+- `INVALID_BCH_ADDRESS` (400): BCH address format invalid
+- `INVALID_PHONE` (400): PagoMóvil number format invalid
+- `TRANSACTION_LIMIT_TOO_HIGH` (400): Limit > 100€
+
+---
+
+### 4. PUT /api/v1/merchants/profile
+
+**Purpose:** User updates their merchant listing
+
+**Authentication:** Required (JWT)
+
+**Request:**
+```http
+PUT /api/v1/merchants/profile HTTP/1.1
+Host: api.asgaya.com
+Authorization: Bearer <jwt_token>
+Content-Type: application/json
+
+{
+  "hours": {
+    "monday": "09:00-18:00",
+    "tuesday": "09:00-18:00",
+    "wednesday": "09:00-18:00",
+    "thursday": "09:00-18:00",
+    "friday": "09:00-18:00",
+    "saturday": "10:00-14:00",
+    "sunday": "closed"
+  },
+  "transaction_limit_eur": 75.00,
+  "instant_settlement_enabled": "true"
+}
+```
+
+**Partial updates allowed** - only send fields you want to change
+
+**Response:**
+```json
+{
+  "merchant_id": "merchant_9kLmP",
+  "updated_at": "2026-04-27T12:30:00Z",
+  "message": "Merchant profile updated successfully"
+}
+```
+
+**Use case:**
+```
+Merchant Jorge changes hours for holiday weekend
+  ↓
+Opens "Provide Cash" tab → Taps "Edit Profile"
+  ↓
+Updates hours: Saturday 10am-2pm only
+  ↓
+Taps "Save"
+  ↓
+PUT /api/v1/merchants/profile
+  ↓
+✅ "Profile updated"
+```
+
+**Errors:**
+- `MERCHANT_NOT_FOUND` (404): User has no merchant profile
+- `INVALID_UPDATE` (400): Invalid field values
+
+---
+
+### 5. DELETE /api/v1/merchants/profile
+
+**Purpose:** User removes their merchant listing (stop being a merchant)
+
+**Authentication:** Required (JWT)
+
+**Request:**
+```http
+DELETE /api/v1/merchants/profile HTTP/1.1
+Host: api.asgaya.com
+Authorization: Bearer <jwt_token>
+```
+
+**Response:**
+```json
+{
+  "message": "Merchant profile removed. You can list yourself again anytime.",
+  "removed_at": "2026-04-27T13:00:00Z"
+}
+```
+
+**Use case:**
+```
+Merchant decides to stop providing cash service
+  ↓
+Opens "Provide Cash" tab → Taps "Remove My Listing"
+  ↓
+Confirms: "Are you sure?"
+  ↓
+DELETE /api/v1/merchants/profile
+  ↓
+✅ "Listing removed. You can re-list anytime."
+```
+
+**Important:**
+- Merchant's historical transactions stay intact (for ratings/stats)
+- Merchant disappears from map immediately
+- Can re-create listing anytime (no penalties)
+
+**Errors:**
+- `MERCHANT_NOT_FOUND` (404): User has no merchant profile
+- `ACTIVE_TRANSACTIONS` (409): Can't delete while active transactions pending
+
+---
+
+### 6. GET /api/v1/merchants/my-profile
+
+**Purpose:** User views their own merchant profile
+
+**Authentication:** Required (JWT)
+
+**Request:**
+```http
+GET /api/v1/merchants/my-profile HTTP/1.1
+Host: api.asgaya.com
+Authorization: Bearer <jwt_token>
+```
+
+**Response:**
+```json
+{
+  "merchant_id": "merchant_9kLmP",
+  "business_name": "Bodega El Roble",
+  "location": {
+    "lat": 10.4821,
+    "lng": -66.9012,
+    "address": "Av. Francisco de Miranda, Chacao, Caracas"
+  },
+  "currencies_accepted": ["VES"],
+  "instant_settlement_enabled": false,
+  "bch_address": "bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy",
+  "ves_pagomovil": "+58412987654",
+  "hours": {
+    "monday": "08:00-20:00",
+    "tuesday": "08:00-20:00",
+    "wednesday": "08:00-20:00",
+    "thursday": "08:00-20:00",
+    "friday": "08:00-20:00",
+    "saturday": "09:00-18:00",
+    "sunday": "closed"
+  },
+  "transaction_limit_eur": 50.00,
+  "status": "active",
+  "stats": {
+    "total_transactions": 127,
+    "rating": 4.8,
+    "total_volume_eur": 4850.00,
+    "member_since": "2026-03-15T00:00:00Z"
+  }
+}
+```
+
+**Use case:**
+```
+Merchant opens "Provide Cash" tab
+  ↓
+App calls: GET /api/v1/merchants/my-profile
+  ↓
+Shows:
+- Your listing: "Bodega El Roble"
+- Rating: 4.8 stars (127 transactions)
+- Total earned: €4850 worth of BCH
+- [Edit Profile] [Remove Listing]
+```
+
+**Errors:**
+- `MERCHANT_NOT_FOUND` (404): User has no merchant profile (show "Create Listing" button)
+
+---
+
+## MVP Implementation Notes
+
+### Backend Database Schema
+
+**Merchant table (linked to users table):**
+```python
+class Merchant:
+    id: str  # merchant_9kLmP
+    user_id: str  # FK to users table (one-to-one relationship)
+    business_name: str
+    description: str  # Optional
+
+    # Location
+    lat: float
+    lng: float
+    address: str
+
+    # Contact (from user's profile)
+    phone: str  # From users.phone
+    whatsapp: str  # Optional
+
+    # Settings
+    currencies_accepted: list[str]  # ["VES"]
+    instant_settlement_enabled: bool  # true = want fiat via LP, false = want BCH directly
+    bch_address: str  # For BCH payouts
+    ves_pagomovil: str  # For VES settlement
+    transaction_limit_eur: float  # Default 50, max 100
+
+    # Hours (JSON)
+    hours: dict  # {"monday": "08:00-20:00", ...}
+
+    # Status
+    status: str  # active, inactive, suspended
+    availability: str  # online, offline, busy
+    last_seen: datetime
+
+    # Stats
+    rating: float  # Calculated from transaction reviews
+    transaction_count: int
+    total_volume_eur: float
+
+    created_at: datetime
+    updated_at: datetime
+```
+
+**Key constraint:**
+```sql
+UNIQUE(user_id)  -- One merchant profile per user
+```
+
+### Self-Service Merchant Onboarding (MVP)
+
+**Flow for first beta merchant:**
+
+**Step 1: User creates account**
+- Downloads app
+- Verifies phone: +58412987654
+- Now has authenticated user account
+
+**Step 2: User creates merchant listing (via app)**
+- Taps "Provide Cash" tab
+- Fills form (business name, address, hours, etc.)
+- Taps "List Me as Merchant"
+- `POST /api/v1/merchants/profile` called
+- ✅ Merchant listing created instantly
+
+**Step 3: Test the flow**
+- User switches to "Need Cash" mode
+- Searches nearby merchants
+- Sees their own listing on map
+- ✅ End-to-end flow working
+
+**Done!** Merchant is live. No manual database inserts needed.
+
+---
+
+## Permissionless but Safe
+
+**How we prevent abuse without approval workflow:**
+
+**Requirement: Phone verification**
+- Must verify phone before creating merchant listing
+- One phone = one account = one merchant listing
+- Prevents spam/duplicate listings
+
+**Transaction limits:**
+- Max €50-100 per transaction (adjustable by merchant)
+- Limits exposure for new/untrusted merchants
+- Can increase limit after building reputation
+
+**Reputation system:**
+- Ratings from recipients visible to all users
+- Low-rated merchants naturally avoided
+- Can suspend merchants with <3.0 rating (post-MVP)
+
+**For beta:**
+- Start with 1-2 trusted users (Suso's contacts)
+- They create merchant listings themselves (no manual insert)
+- Gradually invite more users
+- Trust emerges organically through ratings
+
+---
+
+## Merchant Availability Logic
+
+**How "availability" is determined:**
+
+**Backend updates merchant.last_seen when:**
+- Merchant opens app (app sends heartbeat)
+- Merchant confirms transaction
+- Merchant taps "I'm available" button
+
+**Status rules:**
+```python
+def get_merchant_availability(merchant):
+    now = datetime.now()
+    last_seen = merchant.last_seen
+
+    if now - last_seen < timedelta(minutes=5):
+        return "online"
+    elif now - last_seen < timedelta(minutes=30):
+        return "recently_active"
+    else:
+        return "offline"
+```
+
+**App displays:**
+- 🟢 Online (last seen <5 min)
+- 🟡 Recently active (last seen 5-30 min)
+- 🔴 Offline (last seen >30 min)
+
+**For MVP with 1-2 merchants:**
+- Can text merchants "be ready" before sending user
+- Don't rely on real-time status
+- Post-MVP: Add push notification "Elena is coming with code 7382"
+
+---
+
+## Testing Checklist
+
+**Before MVP:**
+- [ ] GET /merchants/nearby returns test merchants
+- [ ] Distance calculation accurate (use Haversine formula)
+- [ ] GET /merchants/{id} returns full details
+- [ ] Availability status updates correctly
+- [ ] Map displays merchants at correct locations
+- [ ] Error handling for invalid coordinates
+
+**Edge cases:**
+- [ ] No merchants in radius → Show message "No nearby merchants"
+- [ ] User location denied → Ask to enable location or enter address
+- [ ] Merchant goes offline during transaction → Handle gracefully
+- [ ] Multiple merchants same location → Display both on map
+
+---
+
+## Security Considerations
+
+### Public Endpoint Safety
+
+**GET /merchants/nearby is public because:**
+- User might browse before creating account
+- No sensitive data exposed
+- Helps with user acquisition
+
+**What's NOT exposed:**
+- Merchant's BCH address (not in public response)
+- Merchant's PagoMóvil number (not in public response)
+- Merchant's earnings/revenue
+- Internal merchant IDs (use opaque IDs like merchant_9kLmP)
+
+### Rate Limiting
+
+**Prevent abuse:**
+- Max 60 requests/minute per IP for nearby search
+- Max 120 requests/minute for merchant details
+- No scraping entire merchant database
+
+---
+
+## App UX: One App, Two Modes
+
+**How the app switches between modes:**
+
+**Bottom navigation:**
+```
+[Need Cash] [Provide Cash] [Profile]
+```
+
+**"Need Cash" mode (recipient):**
+- Shows map of nearby merchants
+- Enters code from sender
+- Confirms receiving cash
+
+**"Provide Cash" mode (merchant):**
+- Shows "Create Listing" button (if no profile)
+- OR shows "My Merchant Profile" (if listed)
+- Enters code from recipient
+- Confirms handing cash
+- Toggle availability (online/offline)
+
+**Profile tab (shared):**
+- User settings
+- Transaction history (both sent & received)
+- Merchant stats (if merchant)
+
+**Key insight:**
+- Users can use BOTH modes in the same day
+- Example: Receive remittance in morning, provide cash service in afternoon
+- No artificial separation between "merchant app" and "user app"
+
+---
+
+## Future Enhancements (Post-MVP)
+
+### V1.1: Merchant Verification (Optional)
+- Add optional "Verified Merchant" badge
+- Requires document upload (business license, ID)
+- Manual review by Asgaya team
+- Verified merchants get higher transaction limits (€200+)
+- **Important:** Unverified merchants still allowed (permissionless)
+
+### V1.2: Merchant Analytics Dashboard
+- Add `GET /api/v1/merchants/my-analytics` endpoint
+- Merchant dashboard showing:
+  - Earnings over time (in EUR, VES, BCH)
+  - Transaction volume charts
+  - Customer ratings breakdown
+  - Settlement history
+  - Peak hours analysis
+
+### V2: Merchant Discovery Improvements
+- Filter by rating (>4.5 stars only)
+- Sort by distance, rating, transaction count
+- Search by name/neighborhood
+- "Favorite merchants" for repeat users
+- "Notify me when merchants nearby" push notification
+
+### V2: Dynamic Transaction Limits
+- Increase limits based on reputation
+- New merchant: €50 limit
+- 10 transactions + 4.5★: €100 limit
+- 50 transactions + 4.8★: €200 limit
+- 200 transactions + 4.9★: €500 limit
+
+---
+
+## Related Documents
+
+- **User Flows:**
+  - [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - Recipient sees merchant map
+  - [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md) - Merchant settings
+- **Other APIs:**
+  - [transaction-apis.md](android-app/backend-apis/transaction-apis.md) - Transaction confirmation
+  - [settlement-apis.md](android-app/backend-apis/settlement-apis.md) - Settlement preferences
+- **Backend Index:** [RS046-5 Backend APIs Index](android-app/backend-apis/README.md)
+
+---
+
+*Created: April 27, 2026*
+*Status: Complete (MVP Minimal)*
+*Philosophy: Manual onboarding for beta, automated registration post-MVP*
+*MVP: 1-2 merchants, manual database insert, public nearby search only*
+
+
+==============================================
+NOTIFICATION APIS
+==============================================
+
+# RS046-5.5: Notification APIs
+
+**Status:** ⏳ Not Started
+
+This document will contain the specification for notification APIs once implemented.
+
+## Overview
+
+- Register device for push notifications
+- Send notifications (transaction updates, settlement alerts)
+- Notification preferences
+
+**Why needed:** Users need to know when cash is ready to pick up, when payment succeeded, etc.
+
+
+==============================================
+RATE APIS
+==============================================
+
+# 1. Rate APIs
+
+**Category:** Core APIs (MVP Required)
+**Priority:** 🔴 Critical
+**Related:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md), [Exchange Rate Safeguard](core-architecture/why-market-rate-exchanges.md)
+
+---
+
+## Overview
+
+Rate APIs provide exchange rate estimates for remittance transactions. The core strategy is **"1% plus live rate"** - show users a simple 1% fee, then calculate actual margin after BCH purchase.
+
+**Key principle:** Don't commit resources until recipient is ready. Show estimate upfront, calculate exact split afterward.
+
+---
+
+## The "1% Plus Live Rate" Strategy
+
+### Why This Approach?
+
+**Problem with traditional fee estimation:**
+- Estimate fees upfront (0.5% escrow + 0.25% merchant + 0.15% LP)
+- Buy BCH immediately
+- Risk: Kraken fee varies (0.25% maker vs 0.40% taker)
+- Result: Margin might be squeezed, could lose money
+
+**Our approach:**
+1. **Sender sees estimate:** "1% fee" (simple, easy to compare vs Western Union)
+2. **No resources committed:** Don't buy BCH until recipient ready
+3. **Recipient ready:** Escrow buys BCH at exact moment needed
+4. **Split actual margin:** Whatever is left after real costs gets split fairly
+
+**Benefits:**
+- ✅ No capital risk (don't buy BCH early)
+- ✅ Simple UX (user sees "1% fee")
+- ✅ Fair split (everyone shares actual profit)
+- ✅ Flexible (adapts to actual Kraken fees)
+
+---
+
+## Flow Example
+
+### Step 1: Sender Sees Estimate
+```
+Iris enters: €100
+App calls: GET /api/v1/estimate?from=EUR&to=VES&amount=100
+
+App shows:
+  Live rate: 1 EUR = 57.5 VES
+  Your 1% fee: €1.00
+
+  Elena receives: ~5,695 VES
+
+  [This is an estimate - actual amount determined at pickup]
+```
+
+**At this point:**
+- ❌ No BCH bought yet
+- ❌ No escrow resources locked
+- ✅ User can decide if rate acceptable
+
+### Step 2: Sender Sends Bizum
+```
+Iris confirms and sends €100 Bizum to escrow
+Escrow receives €100 EUR in bank account
+```
+
+**At this point:**
+- ✅ Escrow has €100 EUR
+- ❌ Still no BCH bought
+- ⏳ Waiting for Elena to be ready
+
+### Step 3: Recipient Ready → Buy BCH
+```
+Elena: "I'm at merchant, ready to pick up"
+  ↓
+Escrow: Buys BCH with €100 on Kraken
+  ↓
+Actual cost: €99.75 (0.25% maker fee)
+  ↓
+Remaining margin: €0.25
+```
+
+**At this point:**
+- ✅ Escrow has BCH (exact amount)
+- ✅ Escrow knows EXACT cost
+- ✅ Can calculate exact split: €0.25 / 3 = €0.083 per participant
+
+### Step 4: Split Known Margin
+```
+Total margin: €100.00 (received) - €99.75 (BCH cost) = €0.25
+
+Split 3 ways:
+- Escrow: €0.083
+- Merchant: €0.083
+- LP: €0.083
+```
+
+**Everyone gets fair share of ACTUAL margin, not estimated margin.**
+
+---
+
+## API Endpoint
+
+### GET /api/v1/estimate
+
+**Purpose:** Calculate transaction estimate with current exchange rate.
+
+**Authentication:** None (public endpoint)
+
+**Request:**
+```http
+GET /api/v1/estimate?from=EUR&to=VES&amount=100 HTTP/1.1
+Host: api.asgaya.com
+```
+
+**Query parameters:**
+- `from`: Source currency (EUR)
+- `to`: Target currency (VES, ARS, HNL, etc.)
+- `amount`: Amount in source currency
+
+---
+
+## Response Scenarios
+
+### Scenario 1: Live Rate Available (Normal Operation)
+
+```json
+{
+  "send_eur": 100.00,
+  "estimated_receive_ves": 5695.00,
+  "live_rate": 57.5,
+  "fee_percent": 1.0,
+  "rate_source": "dolartoday_live",
+  "rate_timestamp": "2026-04-27T10:30:00Z",
+  "warning": null,
+  "requires_confirmation": false,
+  "valid_until": "2026-04-27T10:35:00Z"
+}
+```
+
+**Response fields:**
+- `send_eur`: Amount sender will send
+- `estimated_receive_ves`: Approximate amount recipient receives (minus 1% fee)
+- `live_rate`: Current EUR/VES exchange rate
+- `fee_percent`: Simple fee (always 1.0 for MVP)
+- `rate_source`: Where rate came from (live API)
+- `rate_timestamp`: When rate was fetched
+- `warning`: null (no issues)
+- `requires_confirmation`: false (user can proceed directly)
+- `valid_until`: Rate guaranteed for 5 minutes
+
+**App displays:**
+```
+Send: €100.00
+Elena receives: ~VES 5,695
+Fee: €1.00 (1%)
+Rate: 1 EUR = 57.5 VES
+
+vs Western Union: €4.50 fee (4.5%)
+You save: €3.50 ✨
+
+[Continue]
+```
+
+---
+
+### Scenario 2: Fallback to Recent Transactions (API Down)
+
+```json
+{
+  "send_eur": 100.00,
+  "estimated_receive_ves": 5678.00,
+  "fallback_rate": 57.35,
+  "fee_percent": 1.0,
+  "rate_source": "last_10_transactions_avg",
+  "rate_timestamp": "2026-04-27T10:30:00Z",
+  "transactions_used": 10,
+  "oldest_transaction": "2026-04-27T08:45:00Z",
+  "warning": "Live rates unavailable. Using average from last 10 transactions (last 12 hours).",
+  "requires_confirmation": true,
+  "valid_until": "2026-04-27T10:35:00Z"
+}
+```
+
+**Response fields:**
+- `fallback_rate`: Average rate from recent transactions
+- `rate_source`: "last_10_transactions_avg" (indicates fallback)
+- `transactions_used`: Number of transactions averaged (10)
+- `oldest_transaction`: Timestamp of oldest transaction in average (must be within 12 hours)
+- `warning`: Message explaining fallback
+- `requires_confirmation`: true (user must explicitly accept)
+
+**App displays:**
+```
+⚠️ Live rates currently unavailable
+
+Using average from last 10 transactions (last 12 hours)
+
+Send: €100.00
+Elena receives: ~VES 5,678
+Rate: 1 EUR = 57.35 VES
+
+[I Accept This Rate] [Cancel]
+```
+
+**User must tap "I Accept This Rate" to proceed.**
+
+---
+
+## Fallback Logic (Backend Implementation)
+
+### When to Use Fallback
+
+**Primary rate source fails if:**
+- DolarAPI returns error (500, 503, timeout)
+- DolarAPI returns stale data (>10 minutes old)
+- Network connection issue
+
+**Fallback conditions:**
+- Use last 10 completed transactions for corridor (EUR → VES)
+- Transactions must be within last 12 hours (not stale)
+- If <10 transactions in 12 hours, use whatever is available (minimum 3)
+- If <3 transactions, return error "corridor unavailable"
+
+### Calculating Fallback Rate
+
+```python
+def get_fallback_rate(corridor: str) -> Optional[float]:
+    """
+    Get average rate from recent transactions
+
+    Args:
+        corridor: e.g., "EUR_VES"
+
+    Returns:
+        Average rate or None if insufficient data
+    """
+    # Get last 10 completed transactions (within 12 hours)
+    cutoff_time = datetime.now() - timedelta(hours=12)
+
+    transactions = db.query(Transaction).filter(
+        Transaction.corridor == corridor,
+        Transaction.status == "completed",
+        Transaction.completed_at >= cutoff_time
+    ).order_by(Transaction.completed_at.desc()).limit(10).all()
+
+    if len(transactions) < 3:
+        # Not enough data
+        return None
+
+    # Calculate average rate
+    rates = [t.exchange_rate for t in transactions]
+    avg_rate = sum(rates) / len(rates)
+
+    return avg_rate
+```
+
+---
+
+## Rate Sources (MVP)
+
+### Primary: DolarAPI (Confirmed for VES!)
+
+**For EUR → VES (Venezuela):**
+- Source: **DolarAPI (https://ve.dolarapi.com)** ✅
+- Rate type: **"Dólar Paralelo"** (parallel/black market dollar - equivalent to Argentina's dólar blue)
+- Endpoint: https://ve.dolarapi.com/v1/dolares (returns parallel + official rates)
+- Update frequency: Real-time (similar to Argentina API)
+- Cache: 30 seconds (reduce API calls)
+- **Confirmed:** Venezuela DOES have official vs black market disconnect (just like Argentina)
+
+**For EUR → ARS (future):**
+- Source: DolarAPI (https://dolarapi.com)
+- Rate type: "Dólar Blue"
+- Already researched (RS043)
+
+**For EUR → HNL (future):**
+- Source: DolarAPI (https://hn.dolarapi.com) or similar
+- Need to research if Honduras has parallel market
+
+**DolarAPI Coverage:**
+- Argentina (ARS) ✅
+- Chile (CLP) ✅
+- Venezuela (VES) ✅
+- Uruguay (UYU)
+- México (MXN)
+- Bolivia (BOB)
+- Brasil (BRL)
+- Colombia (COP)
+
+**This is perfect!** Single API provider for all Latin American corridors.
+
+### Fallback: Transaction Average
+
+**Source:** Asgaya's own completed transactions
+- Last 10 transactions for corridor
+- Within last 12 hours
+- Real market rate (what people actually paid)
+
+---
+
+## Error Handling
+
+### Error Response Format
+
+```json
+{
+  "error": {
+    "code": "CORRIDOR_UNAVAILABLE",
+    "message": "No recent transactions for EUR → VES corridor and live rates unavailable",
+    "details": {
+      "corridor": "EUR_VES",
+      "transactions_found": 1,
+      "minimum_required": 3
+    }
+  }
+}
+```
+
+### Error Codes
+
+**CORRIDOR_UNAVAILABLE** (503)
+- No live rate AND insufficient transaction history
+- User cannot proceed with this corridor
+- Suggest alternative corridor or try again later
+
+**INVALID_AMOUNT** (400)
+- Amount below minimum (Bizum minimum: €0.50)
+- Amount above maximum (if applicable)
+
+**INVALID_CORRIDOR** (400)
+- Corridor not supported (e.g., EUR → USD)
+- Only supported corridors: EUR → VES, EUR → ARS, EUR → HNL
+
+**RATE_STALE** (503)
+- Rate is older than 10 minutes
+- Backend should refresh, but if still fails, use fallback
+
+---
+
+## Caching Strategy
+
+### Client-Side (Mobile App)
+
+**Cache duration:** 30 seconds
+- User browsing different amounts → Use cached rate
+- Reduces API calls
+- Still fresh enough for accurate estimates
+
+**Invalidate cache when:**
+- User changes corridor (EUR → VES to EUR → ARS)
+- 30 seconds elapsed
+- User explicitly refreshes
+
+### Server-Side (Backend)
+
+**Cache live API responses:** 30 seconds
+- Multiple users requesting EUR → VES at same time
+- Only call external API once per 30 seconds
+- Serve cached response to others
+
+**Transaction history:** No cache
+- Always query database for fresh data
+- Ensures fallback uses latest transactions
+
+---
+
+## Rate Guarantee Period
+
+**Valid for:** 5 minutes from estimate request
+
+**Why 5 minutes?**
+- Long enough: User can review and send Bizum
+- Short enough: Rate doesn't deviate significantly
+- Matches payment timeout (see RS046-2 Sender Flows)
+
+**What happens after 5 minutes?**
+- Rate expires
+- User must request new estimate
+- App shows: "Rate expired, refreshing..."
+
+---
+
+## Connection to User Flows
+
+### Sender Flow (RS046-2)
+
+**Screen 3: Enter Amount**
+```
+User types: €100
+  ↓
+App calls: GET /api/v1/estimate?from=EUR&to=VES&amount=100
+  ↓
+App shows estimate with 1% fee
+  ↓
+User clicks "Continue" if happy
+```
+
+**Screen 4: Payment Instructions**
+- Rate locked for 5 minutes
+- User has time to send Bizum
+- If >5 minutes, must get new estimate
+
+### Post-Transaction Breakdown (Screen 6: Complete)
+
+**After transaction completes:**
+```
+Transaction Complete! ✓
+
+Elena received: VES 5,698
+
+Breakdown:
+━━━━━━━━━━━━━━━━━
+You sent: €100.00
+BCH cost: €99.76 (Kraken 0.24% fee)
+━━━━━━━━━━━━━━━━━
+Margin: €0.24
+
+Split between:
+• Escrow: €0.08
+• Merchant: €0.08
+• LP: €0.08
+
+vs Western Union: You saved €3.62 ✨
+```
+
+**This shows:**
+- ✅ Actual cost (not estimate)
+- ✅ Real Kraken fee charged
+- ✅ Fair split of actual margin
+- ✅ Transparent breakdown
+
+---
+
+## MVP Simplifications
+
+### What We're NOT Doing (Yet)
+
+**❌ Dynamic reward modulation:**
+- Fixed 1% fee for MVP
+- Equal 3-way split of margin
+- Post-MVP: Add volatility-based adjustment (see [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md))
+
+**❌ Multiple rate sources (averaging):**
+- Single source (DolarAPI or similar)
+- Post-MVP: Average multiple sources for reliability
+
+**❌ Rate alerts/notifications:**
+- User can't set "notify me when rate hits X"
+- Post-MVP: Add rate alerts
+
+**❌ Historical rate charts:**
+- Don't show rate history graphs
+- Post-MVP: Add charts for transparency
+
+**❌ User-reported rates:**
+- Can't flag "rate seems wrong" yet
+- Post-MVP: Add reporting mechanism
+
+---
+
+## Testing Checklist
+
+**Before MVP:**
+- [ ] Live rate API integrated (DolarAPI or similar)
+- [ ] Fallback to transaction average works
+- [ ] User confirmation flow when fallback used
+- [ ] Cache works (30 second client + server)
+- [ ] Rate expiry works (5 minute validity)
+- [ ] Error handling for all scenarios
+- [ ] Corridor unavailable message clear
+
+**Edge cases:**
+- [ ] First transaction in corridor (no history) → Must use live rate
+- [ ] Live API down + no transaction history → Show error
+- [ ] Live API returns invalid data (negative rate, etc.) → Validate
+- [ ] Large amounts (€1000+) → Ensure precision maintained
+- [ ] Small amounts (€0.50) → Ensure above Bizum minimum
+
+---
+
+## Security Considerations
+
+### Rate Manipulation Prevention
+
+**User can't game rates by:**
+- Requesting estimate, waiting for favorable rate change, then proceeding
+- **Protection:** 5 minute rate lock (must complete within window)
+
+**Escrow can't be gamed by:**
+- Sender claiming rate was different
+- **Protection:** Rate logged with transaction ID, immutable
+
+### Data Validation
+
+**All rates validated:**
+- Must be positive number
+- Must be within reasonable range (e.g., VES rate between 1-1000)
+- Timestamp must be recent (<10 minutes for live, <12 hours for fallback)
+
+---
+
+## Future Enhancements (Post-MVP)
+
+### V1.1: Multiple Rate Sources
+- Average DolarAPI + DolarSi + Monitor Dólar
+- More reliable than single source
+- Flag outliers (if one source differs >5%)
+
+### V1.2: Rate Alerts
+- User sets: "Notify me when EUR/VES > 58"
+- Push notification when rate hits target
+- Encourages engagement
+
+### V2: Dynamic Fee Display
+- Show fee based on BCH volatility
+- "Fee: 0.8%" when BCH stable
+- "Fee: 1.2%" when BCH volatile
+- Implement dynamic reward modulation
+
+### V2: Historical Data
+- Show rate chart (7 days, 30 days)
+- User can see if current rate is good/bad
+- Transparency builds trust
+
+---
+
+## Related Documents
+
+- **User Flows:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - Where estimate is shown
+- **Architecture:** [2.2 Exchange Rate Safeguard](core-architecture/README.md) - Rate protection mechanism
+- **Concepts:** [Dynamic Reward Modulation](core-architecture/README.md) - Post-MVP fee adjustment
+- **Backend Index:** [RS046-5 Backend APIs Index](android-app/backend-apis/README.md)
+
+---
+
+*Created: April 27, 2026*
+*Status: Complete*
+*Philosophy: Simple estimate upfront, exact split afterward*
+*MVP: Fixed 1% fee, single rate source, basic fallback*
+
+
+==============================================
+SETTLEMENT APIS
+==============================================
+
+# 3. Settlement APIs
+
+**Category:** Core APIs (MVP Required)
+**Priority:** 🔴 Critical
+**Related:** [RS046-4 LP Flows](android-app/flows/lp-flows.md), [transaction-apis.md](android-app/backend-apis/transaction-apis.md)
+
+---
+
+## Overview
+
+Settlement APIs manage the LP (Liquidity Provider) side of transactions. **LPs provide instant FIAT liquidity to merchants** in exchange for BCH rewards.
+
+**The key insight:** LPs don't provide BCH liquidity—they provide local fiat (VES, ARS, etc.) to merchants so recipients can get cash immediately.
+
+**Settlement flow (when merchant has instant settlement enabled):**
+1. Recipient claims remittance at merchant
+2. System creates bounty, notifies all LPs in corridor via OP_RETURN
+3. **First LP to accept bounty wins** (competitive, first-come-first-served)
+4. LP's available fiat liquidity automatically deducted
+5. LP sends fiat to merchant via PagoMóvil/MercadoPago (has 5 min)
+6. Merchant's NotificationListener auto-confirms fiat received
+7. Recipient confirms cash received from merchant
+8. **Both confirmations trigger settlement:** Escrow sends BCH + reward to LP
+9. LP's liquidity restored, available for next bounty
+
+**Settlement flow (when merchant has instant settlement disabled):**
+1. Recipient claims remittance at merchant
+2. Merchant and recipient both confirm cash handoff
+3. Escrow sends BCH reward directly to merchant
+4. No LP needed!
+
+**Key principles for MVP:**
+- ✅ **Merchant configures instant settlement in settings** (not chosen at claim time)
+- ✅ **Bounty system:** First LP to accept wins (self-regulating through liquidity deduction)
+- ✅ **Auto-confirm via NotificationListener:** Parse PagoMóvil/Bizum notifications
+- ✅ **LP liquidity tracking:** Automatically deduct when bounty accepted, restore when complete
+- ✅ **Two-sided confirmation:** Both merchant AND recipient must confirm
+
+---
+
+## Settlement States
+
+**Two paths based on merchant's instant settlement setting:**
+
+### Path A: Direct Settlement (instant_settlement = false)
+```
+claim_initiated → both_confirmed → bch_sent_to_merchant → completed
+```
+
+**Use case:** Merchant wants BCH reward directly (no LP needed)
+
+---
+
+### Path B: Instant Settlement (instant_settlement = true)
+```
+claim_initiated → bounty_created → bounty_accepted → 
+lp_paid_merchant → merchant_confirmed → recipient_confirmed → 
+bch_sent_to_lp → completed
+```
+
+**Use case:** Merchant wants fiat immediately, LP provides liquidity
+
+---
+
+**State descriptions:**
+- `claim_initiated`: Recipient selected merchant and initiated claim
+- `bounty_created`: System created bounty for LPs (Path B only)
+- `bounty_accepted`: LP accepted bounty, committed to pay merchant (Path B only)
+- `lp_paid_merchant`: LP sent fiat via PagoMóvil (Path B only)
+- `merchant_confirmed`: Merchant confirmed fiat received (Path B only)
+- `recipient_confirmed`: Recipient confirmed cash received from merchant
+- `both_confirmed`: Both parties confirmed (Path A only)
+- `bch_sent_to_merchant`: BCH reward sent to merchant (Path A only)
+- `bch_sent_to_lp`: BCH + reward sent to LP (Path B only)
+- `completed`: Settlement done!
+
+**Failure states:**
+- `bounty_timeout`: No LP accepted within 5 min → retry or manual settlement
+- `lp_payment_timeout`: LP didn't pay within 5 min → release bounty, flag LP
+- `confirmation_mismatch`: Merchant confirms but recipient disputes → manual review
+- `flagged_for_review`: Merchant or LP flagged for manual escrow review
+
+---
+
+## API Endpoints
+
+**MVP Note:** All endpoints needed from day one for proper LP experience!
+
+### 1. POST /api/v1/settlements/create
+
+**Purpose:** Create settlement/bounty when recipient claims at merchant
+
+**Authentication:** Internal (called by backend when claim initiated)
+
+**Request:**
+```http
+POST /api/v1/settlements/create HTTP/1.1
+Host: api.asgaya.com
+Authorization: Bearer <escrow_api_key>
+Content-Type: application/json
+
+{
+  "transaction_id": "txn_7Hk9mNpQ2wX",
+  "merchant": {
+    "merchant_id": "merchant_María_VES",
+    "instant_settlement_enabled": true,
+    "payout_method": "pagomovil",
+    "payout_account": "+58412555123",
+    "amount_ves": 113850.00
+  },
+  "recipient": {
+    "recipient_id": "recipient_Carlos",
+    "bch_address": "bc1qrecipient..."
+  }
+}
+```
+
+**Response (if instant_settlement_enabled = false):**
+```json
+{
+  "settlement_id": "settle_9kLmP",
+  "path": "direct_settlement",
+  "status": "claim_initiated",
+  "message": "Waiting for both merchant and recipient confirmation",
+  "merchant_bch_address": "bc1qmerchant..."
+}
+```
+
+**Response (if instant_settlement_enabled = true):**
+```json
+{
+  "settlement_id": "settle_9kLmP",
+  "path": "instant_settlement",
+  "status": "bounty_created",
+  "bounty": {
+    "amount_ves": 113850.00,
+    "reward_bch": 0.000250,
+    "reward_eur": 8.75,
+    "payment_method": "pagomovil",
+    "merchant_account": "+58412555123"
+  },
+  "lps_notified": ["lp_Juan", "lp_Pedro", "lp_Luis"],
+  "message": "Bounty created. OP_RETURN notifications sent to 3 LPs in EUR_VES corridor"
+}
+```
+
+---
+
+### 2. GET /api/v1/bounties/available
+
+**Purpose:** Get available bounties for LP (replaces GET /settlements/pending)
+
+**Authentication:** Required (LP only) - BCH signature authentication
+
+**Request:**
+```http
+GET /api/v1/bounties/available?corridor=EUR_VES HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: <bch_address>
+X-Signature: <signature>
+X-Timestamp: <timestamp>
+```
+
+**Query parameters:**
+- `corridor`: Filter by corridor (EUR_VES, EUR_ARS, etc.)
+
+**Response:**
+```json
+{
+  "available_bounties": [
+    {
+      "settlement_id": "settle_9kLmP",
+      "transaction_id": "txn_7Hk9mNpQ2wX",
+      "corridor": "EUR_VES",
+      "created_at": "2026-05-03T10:42:30Z",
+      "bounty": {
+        "send_amount_ves": 113850.00,
+        "send_to": "+58412555123",
+        "payment_method": "pagomovil",
+        "merchant_name": "Bodega María",
+        "reference": "ASGAYA_settle_9kLmP"
+      },
+      "reward": {
+        "bch_amount": 0.000250,
+        "eur_value": 8.75
+      },
+      "expires_in_seconds": 120,
+      "lp_liquidity_required": 113850.00
+    }
+  ],
+  "lp_status": {
+    "available_liquidity_ves": 500000.00,
+    "can_accept_bounty": true,
+    "pending_settlements_count": 0
+  },
+  "total_available": 1
+}
+```
+
+**Response fields:**
+- `bounty.send_amount_ves`: Fiat amount LP must send to merchant
+- `bounty.payment_method`: Method to use (pagomovil, mercadopago, etc.)
+- `bounty.reference`: Required reference for payment (for auto-confirmation)
+- `reward`: BCH + EUR value LP will earn
+- `expires_in_seconds`: Time until bounty expires (typically 300s = 5min)
+- `lp_liquidity_required`: Amount LP's liquidity will be deducted
+- `lp_status.available_liquidity_ves`: LP's current available liquidity
+- `lp_status.can_accept_bounty`: false if LP has pending settlement or insufficient liquidity
+
+**Use case:** LP app calls this after receiving OP_RETURN notification, or polls when opened
+
+**MVP:** OP_RETURN notification is primary trigger (LP's app monitors their BCH address), polling is backup
+
+---
+
+### 3. POST /api/v1/bounties/{settlement_id}/accept
+
+**Purpose:** LP accepts bounty and commits to pay merchant (first-come-first-served)
+
+**Authentication:** Required (LP only) - BCH signature authentication
+
+**Request:**
+```http
+POST /api/v1/bounties/settle_9kLmP/accept HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: <bch_address>
+X-Signature: <signature>
+X-Timestamp: <timestamp>
+Content-Type: application/json
+
+{
+  "lp_phone": "+58414123456"
+}
+```
+
+**Response (success - LP won bounty):**
+```json
+{
+  "settlement_id": "settle_9kLmP",
+  "status": "bounty_accepted",
+  "message": "Bounty accepted! You have 5 minutes to complete payment.",
+  "payment_instructions": {
+    "send_amount_ves": 113850.00,
+    "send_to": "+58412555123",
+    "payment_method": "pagomovil",
+    "merchant_name": "Bodega María",
+    "required_reference": "ASGAYA_settle_9kLmP",
+    "steps": [
+      "1. Open PagoMóvil app",
+      "2. Send VES 113,850 to +58412555123",
+      "3. Use reference: ASGAYA_settle_9kLmP",
+      "4. Wait for merchant confirmation (auto via SMS)"
+    ]
+  },
+  "reward": {
+    "bch_amount": 0.000250,
+    "eur_value": 8.75
+  },
+  "liquidity_deducted": {
+    "previous_liquidity_ves": 500000.00,
+    "amount_deducted": 113850.00,
+    "new_liquidity_ves": 386150.00
+  },
+  "deadline": "2026-05-03T10:47:30Z"
+}
+```
+
+**Response (failure - another LP won):**
+```json
+{
+  "error": {
+    "code": "BOUNTY_ALREADY_ACCEPTED",
+    "message": "Another LP already accepted this bounty",
+    "settlement_id": "settle_9kLmP"
+  }
+}
+```
+
+**Response (failure - insufficient liquidity):**
+```json
+{
+  "error": {
+    "code": "INSUFFICIENT_LIQUIDITY",
+    "message": "You need VES 113,850 available liquidity. You have VES 50,000.",
+    "required_ves": 113850.00,
+    "available_ves": 50000.00
+  }
+}
+```
+
+**Business logic:**
+- **First LP to call wins** (race condition by design)
+- Mark settlement as `bounty_accepted`
+- **Automatically deduct fiat amount from LP's available liquidity**
+- LP locked from accepting new bounties until this one completes or times out
+- LP has 5 minutes to send fiat payment
+- If LP doesn't complete, release bounty and restore liquidity
+- Other LPs get notification bounty is available again
+
+---
+
+### 4. POST /api/v1/settlements/{settlement_id}/confirm-payment
+
+**Purpose:** LP confirms they sent VES to merchant
+
+**Authentication:** Required (LP only) - BCH signature authentication
+
+**Request:**
+```http
+POST /api/v1/settlements/settle_9kLmP/confirm-payment HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: <bch_address>
+X-Signature: <signature>
+X-Timestamp: <timestamp>
+Content-Type: application/json
+
+{
+  "lp_phone": "+58414123456",
+  "payment_method": "pagomovil",
+  "payment_reference": "PM12345678",
+  "amount_sent_ves": 6210.00,
+  "timestamp": "2026-04-27T10:45:00Z"
+}
+```
+
+**Response:**
+```json
+{
+  "settlement_id": "settle_9kLmP",
+  "status": "lp_paid_merchant",
+  "next_step": "waiting_ves_confirmation",
+  "message": "Waiting for merchant's NotificationListener to auto-confirm VES received..."
+}
+```
+
+**Business logic:**
+- Update status: `lp_paid_merchant`
+- Wait for merchant's NotificationListener to parse PagoMóvil notification
+- **Auto-confirm when NotificationListener detects VES payment**
+- Fallback: If no auto-confirm in 5 min, notify escrow for manual check
+
+**MVP improvement:** NotificationListener parses PagoMóvil notifications just like it parses Bizum!
+
+---
+
+### 5. POST /api/v1/admin/settlements/{settlement_id}/confirm-ves
+
+**Purpose:** NotificationListener or escrow confirms merchant received VES
+
+**Authentication:** Escrow API key (internal)
+
+**Request:**
+```http
+POST /api/v1/admin/settlements/settle_9kLmP/confirm-ves HTTP/1.1
+Host: api.asgaya.com
+Authorization: Bearer <escrow_api_key>
+Content-Type: application/json
+
+{
+  "confirmation_source": "notification_listener",
+  "notification_parsed": {
+    "from_phone": "+58414123456",
+    "amount_ves": 6210.00,
+    "reference": "ASGAYA_settle_9kLmP",
+    "timestamp": "2026-04-27T10:45:30Z"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "settlement_id": "settle_9kLmP",
+  "status": "ves_confirmed",
+  "next_step": "escrow_buying_bch",
+  "message": "VES confirmed! Proceeding to buy BCH..."
+}
+```
+
+**Business logic:**
+- Verify amount matches expected
+- Verify reference contains settlement_id
+- Update status: `ves_confirmed`
+- Trigger BCH purchase
+
+---
+
+### 6. POST /api/v1/admin/settlements/{settlement_id}/complete
+
+**Purpose:** Escrow confirms settlement complete, triggers BCH send to LP
+
+**Authentication:** Escrow API key (internal)
+
+**Request:**
+```http
+POST /api/v1/admin/settlements/settle_9kLmP/complete HTTP/1.1
+Host: api.asgaya.com
+Authorization: Bearer <escrow_api_key>
+Content-Type: application/json
+
+{
+  "merchant_confirmed": true,
+  "bch_purchase_details": {
+    "eur_spent": 100.00,
+    "bch_purchased": 0.002845,
+    "kraken_fee_eur": 0.24,
+    "kraken_fee_percent": 0.24
+  },
+  "bch_txid": "abc123def456...",
+  "lp_address": "bc1qxyz..."
+}
+```
+
+**Response:**
+```json
+{
+  "settlement_id": "settle_9kLmP",
+  "status": "completed",
+  "lp_reward": {
+    "bch_sent": 0.00008,
+    "txid": "abc123def456...",
+    "timestamp": "2026-04-27T10:50:00Z"
+  },
+  "actual_margin": {
+    "total_eur": 0.222,
+    "notification_cost": 0.018,
+    "escrow_share": 0.074,
+    "merchant_share": 0.074,
+    "lp_share": 0.074
+  }
+}
+```
+
+**Business logic:**
+- Merchant confirmed VES received (or timeout)
+- Escrow bought BCH on Kraken
+- Calculate actual margin (€100 - BCH cost)
+- Split margin 3 ways (escrow/merchant/LP)
+- Send BCH to LP
+- Mark complete
+
+---
+
+## Settlement Flow Examples
+
+### Path A: Direct Settlement (instant_settlement = false)
+
+**Merchant has instant settlement DISABLED in settings. Wants BCH reward directly.**
+
+**1. Recipient claims at merchant:**
+```
+POST /api/v1/settlements/create (instant_settlement_enabled: false)
+→ Status: claim_initiated
+→ Waiting for both merchant and recipient confirmation
+→ No LP needed!
+```
+
+**2. Merchant hands cash, confirms:**
+```
+Merchant enters code: 8923
+→ Sees amount: VES 113,850
+→ Hands cash to recipient Carlos
+→ Taps "Confirm Cash Given"
+→ Status: merchant_confirmed (waiting for recipient)
+```
+
+**3. Recipient confirms cash received:**
+```
+Recipient Carlos taps "Confirm Cash Received"
+→ Status: both_confirmed
+→ Triggers BCH settlement
+```
+
+**4. Escrow sends BCH to merchant:**
+```
+Escrow sends BCH reward directly to merchant
+→ Merchant receives BCH in their wallet
+→ Status: completed
+→ No LP split needed! 🎉
+```
+
+**This is the simplest path - merchant earns BCH reward directly!**
+
+---
+
+### Path B: Instant Settlement (instant_settlement = true)
+
+**Merchant has instant settlement ENABLED in settings. Wants fiat immediately.**
+
+**1. Recipient claims at merchant:**
+```
+POST /api/v1/settlements/create (instant_settlement_enabled: true)
+→ Status: bounty_created
+→ OP_RETURN notifications sent to all LPs in EUR_VES corridor
+```
+
+**2. LPs compete for bounty (first-come-first-served):**
+```
+Juan, Pedro, Luis all receive OP_RETURN notification
+→ "New bounty: Send VES 113,850 to Bodega María, earn 0.000250 BCH"
+→ Juan taps first: POST /api/v1/bounties/settle_X/accept
+→ Status: bounty_accepted
+→ Juan's liquidity: 500,000 VES → 386,150 VES (auto-deducted)
+→ Pedro and Luis see: "Bounty already accepted"
+```
+
+**3. LP sends fiat to merchant:**
+```
+Juan opens PagoMóvil app
+→ Sends VES 113,850 to Bodega María (+58412555123)
+→ Uses reference: "ASGAYA_settle_9kLmP"
+→ Status: lp_paid_merchant
+```
+
+**4. Merchant's NotificationListener auto-confirms:**
+```
+Bodega María's phone receives PagoMóvil SMS:
+→ "Recibiste Bs. 113.850,00 de +58414123456. Ref: ASGAYA_settle_9kLmP"
+→ NotificationListener parses SMS
+→ POST /api/v1/admin/settlements/settle_X/confirm-ves
+→ Status: merchant_confirmed
+→ No manual confirmation needed! ✅
+```
+
+**5. Merchant hands cash, recipient confirms:**
+```
+Merchant María sees "VES received! Give cash to customer."
+→ Hands VES 113,850 cash to Carlos
+→ Both confirm in their apps
+→ Status: recipient_confirmed
+```
+
+**6. Escrow sends BCH + reward to LP:**
+```
+Both confirmations complete
+→ Escrow sends BCH + reward to Juan
+→ Juan receives 0.000250 BCH
+→ Juan's liquidity restored: 386,150 → 500,000 VES
+→ Status: completed
+→ Juan earned ~VES 250 in BCH!
+```
+
+---
+
+## LP Reward Calculation
+
+### How Margin is Split (MVP)
+
+**Given:**
+- Sender sends: €100
+- Escrow receives: €100
+- Kraken fee: €0.24 (0.24% maker)
+- OP_RETURN notification costs: €0.018 (3 notifications @ €0.006 each)
+- BCH purchased: €99.76 worth
+
+**Margin:**
+```
+Total margin = €100.00 - €99.76 - €0.018 = €0.222
+```
+
+**Split 3 ways:**
+```
+Escrow:   €0.074 (33.3%)
+Merchant: €0.074 (33.3%)
+LP:       €0.074 (33.3%)
+```
+
+**LP receives:**
+```
+€0.074 in BCH at current rate
+= 0.000074 BCH (at €1000/BCH rate)
+```
+
+### Actual Calculation (Backend)
+
+```python
+def calculate_settlement_split(eur_received: float, bch_cost_eur: float, notification_cost_eur: float = 0.018):
+    """
+    Calculate margin split between escrow, merchant, LP
+
+    Args:
+        eur_received: Amount received from sender (€100)
+        bch_cost_eur: Actual BCH cost including Kraken fees (€99.76)
+        notification_cost_eur: Cost of OP_RETURN notifications (€0.018 for 3 notifications)
+
+    Returns:
+        Dict with escrow, merchant, LP shares in EUR
+    """
+    margin = eur_received - bch_cost_eur - notification_cost_eur
+
+    # MVP: Simple 3-way split
+    escrow_share = margin / 3
+    merchant_share = margin / 3
+    lp_share = margin / 3
+
+    return {
+        'total_margin': margin,
+        'notification_cost': notification_cost_eur,
+        'escrow_eur': escrow_share,
+        'merchant_eur': merchant_share,
+        'lp_eur': lp_share
+    }
+
+def convert_to_bch(eur_amount: float, bch_eur_rate: float):
+    """Convert EUR to BCH"""
+    return eur_amount / bch_eur_rate
+
+# Example:
+margin_split = calculate_settlement_split(100.00, 99.76, 0.018)
+# → {'total_margin': 0.222, 'notification_cost': 0.018, 'escrow_eur': 0.074, 'merchant_eur': 0.074, 'lp_eur': 0.074}
+
+lp_bch = convert_to_bch(0.074, 1000)
+# → 0.000074 BCH
+```
+
+**Post-MVP:** Add dynamic reward modulation based on BCH volatility (see [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md))
+
+---
+
+## LP Bounty System (First-Come-First-Served)
+
+### How It Works (MVP)
+
+**Bounty creation and distribution:**
+1. Recipient claims at merchant with instant settlement enabled
+2. System creates bounty
+3. OP_RETURN notifications sent to ALL LPs in corridor
+4. **First LP to call `/bounties/{id}/accept` wins**
+5. Other LPs receive "bounty already accepted" response
+6. Winner's liquidity automatically deducted
+7. Winner has 5 minutes to send fiat payment
+
+**Why first-come-first-served (not algorithmic assignment):**
+- ✅ **Self-regulating:** Liquidity deduction naturally distributes bounties
+  - Successful LP runs out of liquidity → Must wait/top up
+  - Opens opportunity for other LPs
+- ✅ **Simple:** No complex scoring algorithm needed
+- ✅ **Fast:** No backend decision delay
+- ✅ **Fair:** Fastest/most active LP wins (incentivizes good service)
+
+**How LP's app monitors bounties:**
+1. LP's app subscribes to their BCH address via Fulcrum/Electrum server
+2. Backend sends OP_RETURN to LP's address when bounty created
+3. LP's app receives notification and displays alert
+4. LP can accept directly from notification (race condition!)
+
+**Liquidity self-regulation:**
+```python
+# When LP accepts bounty
+lp.available_liquidity -= bounty.amount_ves
+# LP now has less liquidity for next bounty
+
+# When settlement completes
+lp.available_liquidity += bounty.amount_ves
+# LP's liquidity restored, can accept new bounties
+
+# Eventually, even successful LP runs out:
+if lp.available_liquidity < bounty.amount_ves:
+    return error("INSUFFICIENT_LIQUIDITY")
+# LP must manually top up, opening opportunity for others
+```
+
+### Post-MVP: Enhanced Distribution (Optional)
+
+**If we see LP concentration issues:**
+- Add weighted notification (slower LPs get earlier notification)
+- Add reputation-based priority
+- Add corridor-specific LP pools
+
+**But for MVP:** First-come-first-served + liquidity deduction is sufficient
+
+---
+
+## MVP Simplifications
+
+### What We're Doing (Beta)
+
+**✅ OP_RETURN notifications to LP:**
+- System sends OP_RETURN notification to LP's BCH address
+- LP's app monitors their address for notifications
+- LP accepts settlement through app
+- Works fine for 1-2 LPs and low volume
+
+**✅ Auto-confirm via NotificationListener:**
+- Merchant's NotificationListener parses PagoMóvil notifications
+- Automatically confirms VES received
+- No manual WhatsApp confirmation needed
+
+**✅ Simple 3-way margin split:**
+- Escrow: 33%
+- Merchant: 33%
+- LP: 33%
+- Includes OP_RETURN notification costs (€0.018)
+- No dynamic adjustment based on volatility
+
+**✅ LP liquidity tracking:**
+- Track LP's available fiat liquidity
+- Automatically deduct when bounty accepted
+- Automatically restore when settlement completes
+- Prevent LP from accepting if insufficient liquidity
+- LP locked during pending settlement (can't accept new bounties)
+
+**✅ Bounty competition:**
+- First-come-first-served (no algorithmic selection)
+- All corridor LPs notified simultaneously
+- Race condition by design (incentivizes speed)
+- Self-regulating through liquidity deduction
+
+**✅ Merchant instant settlement toggle:**
+- Merchants configure in settings (not chosen at claim time)
+- Determines whether LP bounty is created
+
+### What We're NOT Doing (Yet)
+
+**❌ Weighted LP notification:**
+- All LPs notified simultaneously
+- No priority for slower/newer LPs
+- Post-MVP: Add if we see LP concentration issues
+
+**❌ Dynamic reward split:**
+- Fixed 33/33/33 for MVP
+- Post-MVP: Adjust based on BCH volatility, corridor demand
+
+**❌ Automatic bounty reassignment:**
+- If LP times out, requires manual intervention
+- No automatic retry with different LP
+- Post-MVP: Add timeout + auto-retry logic
+
+**❌ Partial bounties:**
+- Can't split one bounty across multiple LPs
+- Post-MVP: Allow LP pooling for large remittances
+
+**❌ LP reputation scoring:**
+- No reputation/reliability tracking for bounty priority
+- Post-MVP: Track LP performance, adjust notification order
+
+**❌ Corridor-specific liquidity pools:**
+- LPs manage own liquidity individually
+- Post-MVP: Allow LP pools to share liquidity
+
+---
+
+## Error Handling
+
+### Error Scenarios
+
+**1. LP accepts bounty but doesn't send fiat:**
+```
+Status: bounty_accepted
+→ 5 minutes pass, no merchant confirmation
+→ Status: lp_payment_timeout
+→ LP flagged for review
+→ LP's liquidity restored
+→ Bounty released back to pool
+→ All LPs notified again (retry)
+```
+
+**2. LP sends wrong amount:**
+```
+LP sends VES 113,000 (should be VES 113,850)
+→ Merchant's NotificationListener parses: VES 113,000
+→ Amount mismatch detected
+→ Status: flagged_for_review
+→ Escrow intervention: Contact LP for difference
+→ Hold BCH reward until resolved
+```
+
+**3. Merchant claims didn't receive fiat:**
+```
+LP shows proof of PagoMóvil payment
+Merchant's NotificationListener didn't parse it
+→ Manual confirmation required
+→ Merchant checks bank account
+→ Escrow reviews payment proof
+→ Manual override to complete settlement
+```
+
+**4. Confirmation mismatch (merchant confirms, recipient disputes):**
+```
+Merchant confirms fiat received from LP
+Merchant confirms cash given to recipient
+But recipient claims didn't receive cash
+→ Status: confirmation_mismatch
+→ Escrow intervention:
+  - Review both confirmations
+  - Contact both parties
+  - Hold BCH reward until resolved
+→ If merchant flagged multiple times → Disable instant settlement for merchant
+```
+
+**5. Multiple LPs accept same bounty (race condition):**
+```
+Juan and Pedro both call POST /bounties/settle_X/accept simultaneously
+→ First request (Juan) wins, gets status: bounty_accepted
+→ Second request (Pedro) fails with: BOUNTY_ALREADY_ACCEPTED
+→ Pedro sees notification bounty already taken
+```
+
+**6. LP insufficient liquidity:**
+```
+LP tries to accept bounty requiring VES 200,000
+But LP only has VES 50,000 available
+→ Error: INSUFFICIENT_LIQUIDITY
+→ LP sees: "Top up your liquidity to accept this bounty"
+```
+
+### Error Response Format
+
+```json
+{
+  "error": {
+    "code": "LP_PAYMENT_TIMEOUT",
+    "message": "LP did not send payment within 5 minutes",
+    "settlement_id": "settle_9kLmP",
+    "lp_id": "lp_Juan",
+    "action": "Bounty released, liquidity restored, LP flagged for review"
+  }
+}
+```
+
+**Common error codes:**
+- `BOUNTY_ALREADY_ACCEPTED`: Another LP won the bounty
+- `INSUFFICIENT_LIQUIDITY`: LP doesn't have enough fiat liquidity
+- `LP_PAYMENT_TIMEOUT`: LP didn't send payment within 5 min
+- `MERCHANT_DISPUTE`: Merchant claims didn't receive fiat
+- `CONFIRMATION_MISMATCH`: Merchant and recipient confirmations don't match
+- `AMOUNT_MISMATCH`: LP sent wrong amount
+- `NO_LP_AVAILABLE`: No LPs have sufficient liquidity in corridor
+- `MERCHANT_FLAGGED`: Merchant instant settlement disabled due to issues
+
+---
+
+## Testing Checklist
+
+**Before MVP:**
+- [ ] Bounty creation when claim at instant_settlement merchant
+- [ ] OP_RETURN notifications sent to all corridor LPs
+- [ ] First LP to accept wins (others get BOUNTY_ALREADY_ACCEPTED)
+- [ ] LP liquidity automatically deducted on bounty accept
+- [ ] LP liquidity restored on settlement complete
+- [ ] Insufficient liquidity check prevents accept
+- [ ] LP locked during pending settlement (can't accept new bounties)
+- [ ] Merchant NotificationListener auto-confirms fiat receipt
+- [ ] Both merchant + recipient confirmations required
+- [ ] BCH + reward sent to LP after both confirmations
+- [ ] Direct settlement (instant_settlement=false) sends BCH to merchant
+- [ ] Margin split calculated correctly (33/33/33)
+
+**Edge cases:**
+- [ ] LP accepts but doesn't send fiat → Timeout, flag, restore liquidity
+- [ ] Multiple LPs race to accept → First wins, others rejected
+- [ ] Merchant disputes fiat amount → Escrow intervention
+- [ ] Recipient disputes cash → Confirmation mismatch flagged
+- [ ] NotificationListener fails to parse → Manual confirmation fallback
+- [ ] LP has pending settlement → Can't accept new bounties
+
+---
+
+## Future Enhancements (Post-MVP)
+
+### V1.1: Automatic Bounty Retry
+- If LP times out, automatically release bounty to other LPs
+- No manual escrow intervention needed
+- Track timeout rate per LP for reputation
+
+### V1.2: Enhanced NotificationListener
+- Improved PagoMóvil notification parsing (support more banks)
+- Support for more payment methods (MercadoPago, Zinli, Reserve, Nequi)
+- Multi-country expansion (Argentina, Colombia, etc.)
+- More reliable auto-confirmation with fuzzy matching
+
+### V1.3: Merchant Reliability Tiers
+- Track individual merchant infrastructure quality
+- Tier 1: Urban, backup power → Instant settlement always enabled
+- Tier 2: Semi-urban → Instant settlement with warnings
+- Tier 3: Rural, intermittent power → Instant settlement disabled
+- Replaces corridor-wide disable (more granular control)
+
+### V2: LP Liquidity Pools
+- Multiple LPs pool together for large remittances
+- Share rewards proportionally by liquidity contributed
+- Lower barrier to entry (small LPs can participate)
+
+### V2: Weighted LP Notification
+- If LP concentration emerges, add weighted notification
+- Slower/newer LPs get earlier notification (slight advantage)
+- Maintain first-come-first-served but level playing field
+
+### V2: Dynamic Reward Split
+- Adjust LP/Merchant split based on BCH volatility
+- Adjust based on corridor demand (high-demand corridors pay more)
+- Test in production before full rollout
+
+### V2: Settlement Analytics & Leaderboard
+- Track LP performance (speed, reliability, volume, earnings)
+- Public leaderboard (gamification)
+- Reputation scores influence notification priority (optional)
+
+---
+
+## Data Model (Reference)
+
+```python
+class Settlement:
+    id: str  # settle_9kLmP
+    transaction_id: str  # Associated transaction
+    status: str  # claim_initiated, bounty_created, bounty_accepted, merchant_confirmed, etc.
+    path: str  # "direct_settlement" or "instant_settlement"
+
+    # Merchant details
+    merchant_id: str
+    merchant_instant_settlement_enabled: bool
+    merchant_payout_method: str  # pagomovil, mercadopago, zinli, reserve
+    merchant_payout_account: str  # +58412555123
+    amount_fiat: float  # Local currency amount (VES, ARS, etc.)
+    currency: str  # VES, ARS, COP, etc.
+
+    # Bounty details (instant settlement only)
+    is_bounty: bool  # True if instant_settlement path
+    bounty_created_at: datetime | None
+    bounty_expires_at: datetime | None  # 5 min from creation
+    lps_notified: List[str] | None  # List of LP IDs notified
+
+    # LP details (instant settlement only)
+    lp_id: str | None
+    lp_accepted_at: datetime | None
+    lp_paid_merchant_at: datetime | None
+    lp_payment_reference: str | None
+    lp_liquidity_deducted: float | None  # Amount deducted from LP's available liquidity
+
+    # Confirmations
+    merchant_confirmed_fiat_at: datetime | None  # Merchant confirmed fiat from LP
+    merchant_confirmed_cash_at: datetime | None  # Merchant confirmed cash given to recipient
+    recipient_confirmed_at: datetime | None  # Recipient confirmed cash received
+
+    # BCH settlement
+    bch_purchase_eur: float | None  # €99.76
+    kraken_fee_eur: float | None    # €0.24
+    margin_eur: float | None         # €0.222
+
+    escrow_share_eur: float | None   # €0.074
+    merchant_share_eur: float | None # €0.074
+    lp_share_eur: float | None       # €0.074 (instant settlement only)
+
+    merchant_reward_bch: float | None  # BCH sent to merchant (direct settlement)
+    lp_reward_bch: float | None        # BCH sent to LP (instant settlement)
+    bch_txid: str | None               # BCH transaction ID
+
+    # Failure tracking
+    flagged_for_review: bool
+    flag_reason: str | None  # "lp_timeout", "confirmation_mismatch", "amount_mismatch", etc.
+
+    # Timestamps
+    created_at: datetime
+    completed_at: datetime | None
+    timeout_at: datetime  # Varies: 5 min for bounty, longer for confirmations
+
+
+class LiquidityProvider:
+    id: str  # lp_Juan
+    bch_address: str  # LP's BCH address (identity)
+    
+    # Liquidity tracking
+    corridor: str  # EUR_VES, EUR_ARS, etc.
+    available_liquidity_fiat: float  # Current available fiat (automatically managed)
+    currency: str  # VES, ARS, etc.
+    payment_method: str  # pagomovil, mercadopago, etc.
+    payment_account: str  # LP's payment account
+    
+    # Status
+    is_locked: bool  # True if has pending settlement
+    pending_settlement_id: str | None  # Current pending settlement
+    
+    # Stats
+    total_settlements: int
+    total_earned_bch: float
+    avg_response_seconds: float
+    reliability_score: float  # 0-100, based on timeout rate
+    
+    # Timestamps
+    created_at: datetime
+    last_bounty_accepted_at: datetime | None
+
+
+class Merchant:
+    id: str  # merchant_María_VES
+    name: str  # "Bodega María"
+    bch_address: str  # Merchant's BCH address (identity)
+    
+    # Instant settlement settings
+    instant_settlement_enabled: bool  # Toggle for instant settlement
+    corridor: str  # EUR_VES, EUR_ARS, etc.
+    payment_method: str  # pagomovil, mercadopago, etc.
+    payment_account: str  # +58412555123
+    currency: str  # VES, ARS, etc.
+    
+    # Reliability tracking
+    instant_settlement_flagged: bool  # True if disabled due to issues
+    flag_reason: str | None  # Reason for flag
+    successful_instant_settlements: int
+    failed_instant_settlements: int
+    reliability_tier: int | None  # 1=best, 3=worst (post-MVP)
+    
+    # Stats
+    total_claims: int
+    total_earned_bch: float
+    
+    # Timestamps
+    created_at: datetime
+    instant_settlement_enabled_at: datetime | None
+```
+
+---
+
+## Related Documents
+
+- **User Flows:** [RS046-4 LP Flows](android-app/flows/lp-flows.md) - LP dashboard, bounty system, liquidity management
+- **Merchant Flows:** [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md) - Merchant instant settlement toggle
+- **Transaction APIs:** [transaction-apis.md](android-app/backend-apis/transaction-apis.md) - How transactions trigger settlements
+- **Merchant APIs:** [merchant-apis.md](android-app/backend-apis/merchant-apis.md) - Merchant settings, instant settlement toggle
+- **Backend Index:** [RS046-5 Backend APIs Index](android-app/backend-apis/README.md)
+
+---
+
+*Created: April 27, 2026*
+*Updated: May 3, 2026 - Corrected to bounty system with fiat liquidity*
+*Status: Corrected and aligned with LP flows*
+*Philosophy: LPs provide FIAT liquidity (not BCH), first-come-first-served bounty system, self-regulating through liquidity deduction*
+*MVP: Bounty competition, automatic liquidity management, merchant instant settlement toggle, BCH signature auth, simple 33/33/33 split*
+
+
+==============================================
+TRANSACTION APIS
+==============================================
+
+# 2. Transaction APIs
+
+**Category:** Core APIs (MVP Required)
+**Priority:** 🔴 Critical
+**Related:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md), [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md)
+
+---
+
+## Overview
+
+Transaction APIs manage the complete remittance lifecycle from sender → escrow → recipient → merchant → LP → completion.
+
+**Core flow:**
+1. Sender creates transaction (gets payment instructions)
+2. Sender sends Bizum → Escrow receives EUR
+3. Recipient claims transaction (selects merchant)
+4. Merchant confirms cash handed
+5. Recipient confirms cash received
+6. LP settles with merchant
+7. Transaction complete
+
+---
+
+## Dispute Handling
+
+**When confirmations don't match**, transaction enters dispute resolution:
+
+**Triggers:**
+- Merchant confirms, recipient denies (most common)
+- Recipient confirms, merchant denies
+- Both deny (coordination failure)
+
+**Process:**
+1. Transaction → `disputed` state
+2. Both parties notified → Submit evidence to `disputes@asgaya.org`
+3. Escrow investigates → `under_review` (24h max)
+4. Resolution applied → `resolved_merchant`, `resolved_recipient`, or `resolved_refund`
+
+**See:** [Dispute Resolution Framework](decisions/dispute-resolution.md) for full policy.
+
+---
+
+## Transaction States
+
+```
+Happy path:
+pending_payment → payment_received → expiring_soon →
+merchant_confirmed → recipient_confirmed → escrow_buying_bch → lp_settling → completed
+
+Dispute path:
+merchant_confirmed (mismatched confirmations) → disputed → under_review →
+  resolved_merchant (merchant wins) → completed
+  resolved_recipient (recipient wins) → refunded
+  resolved_refund (default applied) → refunded
+
+Other termination states:
+→ expired (payment not received in 5 min)
+→ expired_unclaimed (recipient didn't claim in 24h) → refunded
+→ cancelled (user cancels)
+```
+
+**State diagram:**
+```
+┌─────────────────┐
+│ pending_payment │  Sender creates transaction, 4-digit code generated
+└────────┬────────┘
+         │ Bizum received by escrow
+         │ OR timeout after 5 min → expired
+         ▼
+┌─────────────────┐
+│ payment_received│  Escrow has EUR, recipient notified with code
+└────────┬────────┘  24-hour claim window starts
+         │ 18h elapsed → expiring_soon
+         ▼
+┌─────────────────┐
+│ expiring_soon   │  <6h remaining, urgent reminders sent
+└────────┬────────┘
+         │ Recipient goes to merchant with code
+         │ OR 24h elapsed → expired_unclaimed → refunded
+         ▼
+┌─────────────────┐
+│merchant_confirmed│ Waiting for recipient confirmation
+└────────┬────────┘
+         │ Recipient confirms cash received
+         │ OR confirmations mismatch → disputed → under_review (24h)
+         │   → resolved_merchant / resolved_recipient / resolved_refund
+         ▼
+┌──────────────────┐
+│recipient_confirmed│ Both parties agreed, trigger BCH purchase
+└────────┬─────────┘
+         │ Escrow buys BCH (pull system)
+         ▼
+┌──────────────────┐
+│escrow_buying_bch │ Waiting for BCH purchase confirmations
+└────────┬─────────┘
+         │ BCH purchase confirmed, LP pays merchant
+         ▼
+┌─────────────────┐
+│  lp_settling    │  LP pays merchant in VES, BCH sent to LP
+└────────┬────────┘
+         │ BCH sent to LP
+         ▼
+┌─────────────────┐
+│   completed     │  Transaction done!
+└─────────────────┘
+
+Terminal states (no further transitions):
+┌──────────────────┐
+│     refunded     │  EUR returned to sender (minus €0.50 processing fee)
+└──────────────────┘
+```
+
+---
+
+## API Endpoints
+
+**MVP Simplification:** No `/claim` endpoint needed! Recipient just goes to any merchant with code.
+
+### 1. POST /api/v1/transactions
+
+**Purpose:** Create new remittance transaction
+
+**Authentication:** BCH signature authentication
+
+**Request:**
+```http
+POST /api/v1/transactions HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+X-Signature: <BCH_signature>
+X-Timestamp: 2026-04-27T10:30:00Z
+Content-Type: application/json
+
+{
+  "sender_address": "bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy",
+  "recipient_address": "bitcoincash:qzxyz789abc123def456ghi789jkl012mn",
+  "send_amount": 100.00,
+  "send_currency": "EUR",
+  "target_currency": "VES",
+  "recipient_name": "Elena"
+}
+```
+
+**Request fields:**
+- `sender_address`: Sender's BCH address (must match X-User-Address)
+- `recipient_address`: Recipient's BCH address
+- `send_amount`: Amount in EUR
+- `send_currency`: Always "EUR" for MVP
+- `target_currency`: VES, ARS, or HNL
+- `recipient_name`: Optional display name
+
+**Response:**
+```json
+{
+  "transaction_id": "txn_7Hk9mNpQ2wX",
+  "status": "pending_payment",
+  "created_at": "2026-04-27T10:30:00Z",
+  "confirmation_code": "7382",
+  "payment_instructions": {
+    "primary_method": "bizum",
+    "fallback_method": "bank_transfer",
+    "bizum": {
+      "recipient_phone": "+34609123456",
+      "amount": 100.00,
+      "concept": "34ASGAYAtxn_7Hk9mNpQ2wX"
+    },
+    "bank_transfer": {
+      "iban": "ES1234567890123456789012",
+      "amount": 100.00,
+      "concept": "34ASGAYAtxn_7Hk9mNpQ2wX",
+      "note": "Use if Bizum unavailable"
+    },
+    "concept_format": "34ASGAYA{transaction_id}",
+    "expires_at": "2026-04-27T10:35:00Z"
+  },
+  "estimate": {
+    "receive_amount": 6210.00,
+    "receive_currency": "VES",
+    "exchange_rate": 62.1,
+    "fee_eur": 1.00,
+    "fee_percent": 1.0
+  },
+  "expires_in_seconds": 300
+}
+```
+
+**Business logic:**
+- Generate unique transaction ID
+- **Generate 4-digit confirmation code** (created immediately, not on claim)
+- Create payment concept code: `34ASGAYA{transaction_id}`
+- Lock exchange rate for 5 minutes
+- Set expiry: `created_at + 5 minutes`
+- Status: `pending_payment`
+- **Payment instructions:** Bizum is PRIMARY method (MVP), bank transfer is fallback
+
+**Errors:**
+- `INVALID_AMOUNT` (400): Below €10 or above €500
+- `INVALID_ADDRESS` (400): BCH address format incorrect
+- `INVALID_SIGNATURE` (401): Signature verification failed
+- `CORRIDOR_UNAVAILABLE` (503): EUR → VES not supported (no rates)
+- `RATE_LIMIT_EXCEEDED` (429): Too many transactions
+
+---
+
+### 2. GET /api/v1/transactions/{transaction_id}
+
+**Purpose:** Get transaction status and details
+
+**Authentication:** Required (sender or recipient only)
+
+**Request:**
+```http
+GET /api/v1/transactions/txn_7Hk9mNpQ2wX HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+X-Signature: <BCH_signature>
+X-Timestamp: 2026-04-27T10:30:00Z
+```
+
+**Response:**
+```json
+{
+  "transaction_id": "txn_7Hk9mNpQ2wX",
+  "status": "merchant_confirmed",
+  "created_at": "2026-04-27T10:30:00Z",
+  "updated_at": "2026-04-27T10:42:15Z",
+  "sender": {
+    "address": "bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy",
+    "name": "Iris"
+  },
+  "recipient": {
+    "address": "bitcoincash:qzxyz789abc123def456ghi789jkl012mn",
+    "name": "Elena"
+  },
+  "amounts": {
+    "sent_eur": 100.00,
+    "receive_ves": 6210.00,
+    "exchange_rate": 62.1,
+    "fee_eur": 1.00
+  },
+  "expiry": {
+    "claim_deadline": "2026-04-28T10:31:15Z",
+    "hours_remaining": 22.3,
+    "refund_amount_eur": 99.90,
+    "processing_fee_eur": 0.10
+  },
+  "timeline": [
+    {
+      "status": "pending_payment",
+      "timestamp": "2026-04-27T10:30:00Z",
+      "message": "Waiting for payment"
+    },
+    {
+      "status": "payment_received",
+      "timestamp": "2026-04-27T10:31:15Z",
+      "message": "Bizum received. Code: 7382"
+    },
+    {
+      "status": "merchant_confirmed",
+      "timestamp": "2026-04-27T10:42:10Z",
+      "message": "Merchant confirmed cash delivery"
+    }
+  ],
+  "confirmation_code": "7382",
+  "next_action": "recipient_confirm"
+}
+```
+
+**Response fields:**
+- `status`: Current state
+- `timeline`: Array of state changes with timestamps
+- `merchant`: Merchant details (if claimed)
+- `confirmation_code`: 4-digit code (only shown to recipient/merchant)
+- `expiry`: Claim deadline and refund details (null if already claimed/completed)
+  - `claim_deadline`: ISO timestamp when transaction expires
+  - `hours_remaining`: Time left to claim (calculated from current time)
+  - `refund_amount_eur`: What sender gets back if unclaimed (€99.90 on €100)
+  - `processing_fee_eur`: Manual refund + liquidity lock fee (€0.10 = 0.1%)
+- `next_action`: What user should do next
+
+**OP_RETURN Notifications:**
+- Transaction state changes are broadcast via BCH OP_RETURN messages
+- Mobile app listens to BCH blockchain for OP_RETURN notifications
+- No polling needed - app receives real-time updates from blockchain
+- OP_RETURN format: `ASGAYA:<transaction_id>:<status>:<timestamp>`
+- Example: `ASGAYA:txn_7Hk9mNpQ2wX:payment_received:1714212675`
+
+**Automated Expiry Notifications:**
+
+Recipients have **24 hours** from `payment_received` status to claim their remittance. Automated notifications are sent at:
+
+**Hour 12 - Reminder (Recipient only):**
+```
+Subject: Reminder: €100 waiting for you
+Body: You have 12 hours left to claim your money.
+Merchant list: [nearby merchants]
+Claim code: 7382
+```
+
+**Hour 18 - Status Update (Sender only):**
+```
+Subject: Recipient hasn't claimed yet
+Body: Elena hasn't claimed the €100 yet. If unclaimed in 6 hours, €99.90 will be refunded to you (€0.10 processing fee).
+Contact: 0412-XXX-5678
+```
+
+**Hour 23 - Urgent (Recipient only):**
+```
+Subject: URGENT: Claim in 1 hour
+Body: Your €100 will be refunded to the sender in 1 hour if you don't claim now.
+Merchant list: [nearby merchants]
+Claim code: 7382
+```
+
+**Hour 24 - Refund Notifications (Both):**
+
+To recipient:
+```
+Subject: Transaction expired
+Body: You didn't claim within 24 hours. The €100 has been refunded to the sender.
+```
+
+To sender:
+```
+Subject: Refund processed
+Body: Elena didn't claim the remittance. €99.90 has been sent back to your Bizum account (€0.10 processing fee).
+Refund transaction: [Bizum reference]
+```
+
+**Processing Fee Breakdown:**
+- €0.10 (0.1%) - Manual refund work + 24h liquidity lock
+- **No exchange fees** (pull system - no BCH was purchased)
+- Can increase to 0.2-1.0% if abuse detected
+
+For full policy details, see [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md).
+
+**Errors:**
+- `UNAUTHORIZED` (401): User not sender or recipient
+- `NOT_FOUND` (404): Transaction doesn't exist
+
+---
+
+### 3. POST /api/v1/transactions/{transaction_id}/confirm
+
+**Purpose:** Two-sided confirmation (merchant + recipient)
+
+**Authentication:** Required (merchant or recipient)
+
+**Request (Merchant confirms):**
+```http
+POST /api/v1/transactions/txn_7Hk9mNpQ2wX/confirm HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: bitcoincash:qmerchant123abc456def789ghi012jkl3mn
+X-Signature: <BCH_signature>
+X-Timestamp: 2026-04-27T10:42:10Z
+Content-Type: application/json
+
+{
+  "role": "merchant",
+  "confirmation_code": "7382",
+  "amount_handed_ves": 6210.00,
+  "timestamp": "2026-04-27T10:42:10Z"
+}
+```
+
+**Request (Recipient confirms):**
+```http
+POST /api/v1/transactions/txn_7Hk9mNpQ2wX/confirm HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: bitcoincash:qzxyz789abc123def456ghi789jkl012mn
+X-Signature: <BCH_signature>
+X-Timestamp: 2026-04-27T10:42:25Z
+Content-Type: application/json
+
+{
+  "role": "recipient",
+  "confirmation_code": "7382",
+  "amount_received_ves": 6210.00,
+  "timestamp": "2026-04-27T10:42:25Z"
+}
+```
+
+**Response (Merchant confirms first):**
+```json
+{
+  "transaction_id": "txn_7Hk9mNpQ2wX",
+  "status": "merchant_confirmed",
+  "confirmations": {
+    "merchant": {
+      "confirmed": true,
+      "timestamp": "2026-04-27T10:42:10Z",
+      "amount": 6210.00
+    },
+    "recipient": {
+      "confirmed": false
+    }
+  },
+  "next_step": "waiting_recipient_confirmation",
+  "message": "Waiting for Elena to confirm"
+}
+```
+
+**Response (Both confirmed):**
+```json
+{
+  "transaction_id": "txn_7Hk9mNpQ2wX",
+  "status": "recipient_confirmed",
+  "confirmations": {
+    "merchant": {
+      "confirmed": true,
+      "timestamp": "2026-04-27T10:42:10Z",
+      "amount": 6210.00
+    },
+    "recipient": {
+      "confirmed": true,
+      "timestamp": "2026-04-27T10:42:25Z",
+      "amount": 6210.00
+    }
+  },
+  "next_step": "lp_settlement",
+  "message": "Both parties confirmed! Processing settlement..."
+}
+```
+
+**Business logic:**
+- Verify confirmation code matches transaction
+- Store confirmation (merchant or recipient)
+- If BOTH confirmed:
+  - Check amounts match (within 1% tolerance)
+  - Update status: `recipient_confirmed`
+  - Trigger LP settlement (see Settlement APIs)
+- If only one confirmed:
+  - Update status: `merchant_confirmed` or similar
+  - Notify other party to confirm
+- **If confirmations mismatch** (merchant confirms, recipient denies OR vice versa):
+  - Update status: `disputed`
+  - Notify both parties → Submit evidence to `disputes@asgaya.org`
+  - Escrow reviews within 24h → `under_review` → resolution applied
+  - See [Dispute Resolution Framework](decisions/dispute-resolution.md)
+
+**Error handling:**
+- `INVALID_CODE` (400): Confirmation code incorrect
+- `AMOUNT_MISMATCH` (400): Amounts differ by >1%
+- `TIMEOUT` (408): Other party didn't confirm within 1 hour → Escrow intervention
+- `ALREADY_CONFIRMED` (409): This party already confirmed
+- `DISPUTED` (409): Confirmations mismatch → Enter dispute resolution (see above)
+
+---
+
+### 4. POST /api/v1/transactions/{transaction_id}/cancel
+
+**Purpose:** Cancel transaction (sender only, before payment received)
+
+**Authentication:** Required (sender only)
+
+**Request:**
+```http
+POST /api/v1/transactions/txn_7Hk9mNpQ2wX/cancel HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+X-Signature: <BCH_signature>
+X-Timestamp: 2026-04-27T10:32:00Z
+Content-Type: application/json
+
+{
+  "reason": "changed_mind"
+}
+```
+
+**Response:**
+```json
+{
+  "transaction_id": "txn_7Hk9mNpQ2wX",
+  "status": "cancelled",
+  "cancelled_at": "2026-04-27T10:32:00Z",
+  "refund": null
+}
+```
+
+**Business logic:**
+- Only allow cancellation if status = `pending_payment`
+- If payment already received, can't cancel (must complete or request escrow intervention)
+
+**Errors:**
+- `INVALID_STATE` (400): Can't cancel (payment already received)
+- `UNAUTHORIZED` (401): Only sender can cancel
+
+---
+
+## Transaction Lifecycle Examples
+
+### Happy Path (Everything Works)
+
+**1. Sender creates transaction:**
+```
+POST /api/v1/transactions
+→ Status: pending_payment
+→ 4-digit code generated: 7382
+→ Sender gets Bizum instructions
+```
+
+**2. Sender sends Bizum:**
+```
+(NotificationListener detects Bizum)
+→ Escrow backend updates transaction
+→ Status: payment_received
+→ Recipient gets OP_RETURN notification: "€100 received! Code: 7382. Go to any Asgaya merchant."
+→ OP_RETURN broadcast: ASGAYA:txn_7Hk9mNpQ2wX:payment_received:1714212675
+```
+
+**3. Recipient goes to merchant:**
+```
+Elena walks into any Asgaya merchant
+Elena: "I have code 7382"
+Merchant enters code in app
+```
+
+**4. Merchant confirms:**
+```
+POST /api/v1/transactions/txn_X/confirm (role: merchant, code: 7382)
+→ System validates code exists
+→ Shows merchant: "€100 → VES 6210 for Elena"
+→ Merchant hands cash
+→ Status: merchant_confirmed
+→ Recipient reminded to confirm
+```
+
+**5. Recipient confirms:**
+```
+POST /api/v1/transactions/txn_X/confirm (role: recipient, code: 7382)
+→ Status: recipient_confirmed
+→ Trigger BCH purchase (pull system)
+```
+
+**6. Escrow buys BCH:**
+```
+→ Status: escrow_buying_bch
+→ Escrow purchases BCH on exchange
+→ Wait for BCH confirmations (typically 1-2 blocks)
+→ BCH purchase confirmed
+```
+
+**7. LP settles:**
+```
+(LP sends VES to merchant)
+→ Status: lp_settling
+→ Escrow sends BCH to LP
+```
+
+**8. Complete:**
+```
+Status: completed
+→ All parties notified via OP_RETURN
+→ Transaction record finalized
+```
+
+---
+
+### Error Path: Payment Not Received
+
+**1. Sender creates transaction:**
+```
+Status: pending_payment
+Expires at: 10:35:00
+```
+
+**2. Sender doesn't send Bizum:**
+```
+(5 minutes pass)
+→ Backend auto-expires transaction
+→ Status: expired
+→ Sender notified
+```
+
+---
+
+### Error Path: Confirmations Don't Match
+
+**1. Merchant confirms 6210 VES**
+**2. Recipient confirms 6000 VES**
+
+```
+→ Amounts differ by >1%
+→ Status: escrow_intervention
+→ Escrow reviews manually
+→ Contact both parties
+```
+
+---
+
+### Error Path: Only One Party Confirms
+
+**1. Merchant confirms**
+**2. Recipient doesn't confirm within 1 hour**
+
+```
+→ Status: escrow_intervention
+→ Escrow checks:
+  - Did merchant actually hand cash?
+  - Did recipient receive cash but not confirm?
+→ Manual resolution
+```
+
+---
+
+## Data Model (Reference)
+
+```python
+class Transaction:
+    id: str  # txn_7Hk9mNpQ2wX
+    status: str  # pending_payment, payment_received, escrow_buying_bch, etc.
+
+    # Parties (BCH addresses)
+    sender_address: str  # bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+    recipient_address: str  # bitcoincash:qzxyz789abc123def456ghi789jkl012mn
+    merchant_id: str | None
+    lp_id: str | None
+
+    # Amounts
+    send_amount_eur: float
+    receive_amount_ves: float
+    exchange_rate: float
+    fee_eur: float
+
+    # Payment details
+    payment_concept: str  # 34ASGAYAtxn_7Hk9mNpQ2wX
+    payment_method: str  # "bizum" or "bank_transfer"
+    payment_received_at: datetime | None
+
+    # Confirmation
+    confirmation_code: str  # 7382 (4 digits)
+    merchant_confirmed_at: datetime | None
+    merchant_confirmed_amount: float | None
+    recipient_confirmed_at: datetime | None
+    recipient_confirmed_amount: float | None
+
+    # BCH Purchase (Pull System)
+    bch_purchase_initiated_at: datetime | None
+    bch_purchase_confirmed_at: datetime | None
+    bch_purchase_txid: str | None
+    bch_amount: float | None
+
+    # Settlement
+    lp_settled_at: datetime | None
+    lp_txid: str | None  # BCH transaction ID to LP
+
+    # Timestamps
+    created_at: datetime
+    updated_at: datetime
+    expires_at: datetime
+    completed_at: datetime | None
+```
+
+---
+
+## MVP Simplifications
+
+### What We Simplified
+
+**✅ No merchant pre-selection (claim endpoint):**
+- Recipient doesn't select merchant from app
+- Just goes to any Asgaya merchant with code
+- Simpler: One less endpoint, one less state
+- For beta with 1-2 merchants: Can text them "be ready"
+- Post-MVP: Can add optional "notify merchant" feature
+
+### What We're NOT Doing (Yet)
+
+**❌ Partial refunds:**
+- If transaction fails, no automatic refund mechanism
+- Escrow manually processes refunds
+- Post-MVP: Add refund API
+
+**❌ Transaction editing:**
+- Can't change amount/recipient after creation
+- Must cancel and create new transaction
+- Post-MVP: Allow edits before payment
+
+**❌ Multi-currency:**
+- Only EUR → VES for MVP
+- Post-MVP: Add ARS, HNL support
+
+**❌ Recurring transactions:**
+- No scheduled/automatic transactions
+- User must create each time
+- Post-MVP: Add "Send Again" shortcut
+
+**❌ Transaction notes:**
+- No custom messages/memos
+- Post-MVP: Allow sender to add note for recipient
+
+---
+
+## Security Considerations
+
+### 1. Confirmation Code Security
+
+**4-digit code known by:**
+- ✅ Escrow (generated it)
+- ✅ Recipient (shown in app after claiming)
+- ✅ Sender (shown after payment received)
+- ❌ Merchant (does NOT know code until recipient shares it)
+
+**Why merchant doesn't know code:**
+- Prevents merchant from confirming without recipient present
+- Recipient must physically share code with merchant
+- Creates accountability
+
+### 2. Amount Validation
+
+**Check amounts match:**
+- Merchant confirms: 6210 VES
+- Recipient confirms: 6210 VES
+- If differ by >1%, flag for escrow review
+
+**Why 1% tolerance:**
+- Small rounding differences acceptable
+- Larger differences indicate fraud or mistake
+
+### 3. Two-Sided Confirmation
+
+**Both parties must confirm:**
+- Prevents merchant fraud (claiming delivery without recipient agreement)
+- Prevents recipient fraud (claiming non-delivery after receiving cash)
+- Creates mutual accountability
+
+### 4. State Validation
+
+**Can't skip states:**
+- Can't claim before payment received
+- Can't confirm before claimed
+- Can't settle before both confirmed
+
+**Enforced at API level:**
+```python
+def claim_transaction(txn):
+    if txn.status != "payment_received":
+        raise InvalidStateError("Must receive payment before claiming")
+```
+
+---
+
+## Testing Checklist
+
+**Before MVP:**
+- [ ] Create transaction works
+- [ ] Get transaction status works
+- [ ] Claim transaction works
+- [ ] Two-sided confirmation works
+- [ ] Cancel transaction works
+- [ ] State transitions validated (can't skip states)
+- [ ] Confirmation code unique per transaction
+- [ ] Amount mismatch detected (>1% difference)
+- [ ] Timeout handling (payment not received in 5 min)
+- [ ] Escrow intervention triggered correctly
+
+**Edge cases:**
+- [ ] Duplicate Bizum payment (same concept) → Reject
+- [ ] Invalid confirmation code → Error
+- [ ] Both parties confirm different amounts → Flag
+- [ ] Only one party confirms within 1 hour → Intervention
+- [ ] Transaction expires while recipient selecting merchant → Handle gracefully
+
+---
+
+## Related Documents
+
+- **User Flows:**
+  - [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - Where these APIs are called
+  - [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md) - Confirmation flow
+- **Other APIs:**
+  - [rate-apis.md](android-app/backend-apis/rate-apis.md) - Exchange rate estimation
+  - [settlement-apis.md](android-app/backend-apis/settlement-apis.md) - LP settlement (next)
+- **Backend Index:** [RS046-5 Backend APIs Index](android-app/backend-apis/README.md)
+
+---
+
+*Created: April 27, 2026*
+*Status: Complete*
+*Philosophy: Two-sided confirmation prevents fraud, state machine prevents chaos*
+*MVP: EUR → VES only, manual escrow intervention for disputes*
+
+
+==============================================
+USER APIS
+==============================================
+
+# 5. User APIs
+
+**Category:** Core APIs (MVP Required)
+**Priority:** 🔴 Critical (Foundation for all other APIs)
+**Related:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md), [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md)
+
+---
+
+## Overview
+
+User APIs manage user identity and profiles. In Asgaya, **BCH address = user ID**. This is truly permissionless - no phone verification, no email, no KYC. Just cryptographic proof of key ownership.
+
+**Key principles:**
+- ✅ **BCH address as identity** - Generate keypair on first app launch
+- ✅ **Off-chain signature auth** - No fees, no blockchain transaction needed
+- ✅ **Minimal data collection** - Only what's absolutely necessary
+- ✅ **Self-sovereign** - User owns their identity (private key)
+
+---
+
+## Authentication: BCH Signatures (No JWT, No Phone)
+
+### How it works:
+
+```
+User opens app for first time
+  ↓
+App generates BCH keypair
+  Private key: Stored in device secure enclave
+  Public address: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+  ↓
+This address IS the user ID
+  ↓
+For every API call:
+  - Sign request body + timestamp with private key (off-chain)
+  - Include signature in headers
+  - Backend verifies signature matches BCH address
+  ↓
+Authenticated! No fees, no blockchain transaction
+```
+
+### Example authenticated request:
+
+```http
+GET /api/v1/users/me HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+X-Signature: 3045022100ab3f...
+X-Timestamp: 2026-04-27T10:30:00Z
+```
+
+### Backend verification:
+
+```python
+def verify_bch_signature(request):
+    """
+    Verify user owns the BCH address they claim
+
+    No blockchain transaction needed - just cryptographic signature
+    """
+    user_address = request.headers['X-User-Address']
+    signature = request.headers['X-Signature']
+    timestamp = request.headers['X-Timestamp']
+
+    # Check timestamp freshness (prevent replay attacks)
+    if datetime.now() - parse_timestamp(timestamp) > timedelta(minutes=5):
+        return False, "Signature expired"
+
+    # Verify signature
+    message = request.body + timestamp
+    if verify_ecdsa_signature(message, signature, user_address):
+        return True, user_address
+
+    return False, "Invalid signature"
+```
+
+**Key benefits:**
+- ✅ No phone number needed (privacy!)
+- ✅ No SMS costs
+- ✅ No fees (off-chain signature)
+- ✅ Works with zero BCH balance
+- ✅ Cryptographically secure
+- ✅ Self-sovereign (user controls private key)
+
+---
+
+## API Endpoints
+
+**Total: 2 endpoints** (that's it!)
+
+1. **GET /api/v1/users/me** - Get my profile
+2. **PUT /api/v1/users/me** - Update my profile
+
+---
+
+### 1. GET /api/v1/users/me
+
+**Purpose:** Get user profile and stats
+
+**Authentication:** BCH signature (required)
+
+**Request:**
+```http
+GET /api/v1/users/me HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+X-Signature: 3045022100ab3f210e8d9c7b4a...
+X-Timestamp: 2026-04-27T10:30:00Z
+```
+
+**Response (first time user):**
+```json
+{
+  "user_id": "bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy",
+  "display_name": null,
+  "created_at": "2026-04-27T10:30:00Z",
+  "stats": {
+    "transactions_sent": 0,
+    "transactions_received": 0,
+    "total_sent_eur": 0.00,
+    "total_received_eur": 0.00
+  },
+  "is_merchant": false
+}
+```
+
+**Response (existing user):**
+```json
+{
+  "user_id": "bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy",
+  "display_name": "Elena",
+  "created_at": "2026-03-15T00:00:00Z",
+  "stats": {
+    "transactions_sent": 3,
+    "transactions_received": 12,
+    "total_sent_eur": 250.00,
+    "total_received_eur": 850.00
+  },
+  "is_merchant": true,
+  "merchant_id": "merchant_9kLmP"
+}
+```
+
+**Business logic:**
+- If BCH address not in database → Create user record automatically
+- Return profile data (minimal)
+- Include merchant info if user has merchant listing
+
+**Auto-registration:**
+```python
+def get_or_create_user(bch_address):
+    """
+    Auto-create user on first API call
+
+    No approval needed, no verification - truly permissionless
+    """
+    user = db.users.find_one({'user_id': bch_address})
+
+    if not user:
+        user = {
+            'user_id': bch_address,
+            'display_name': None,
+            'created_at': datetime.now(),
+            'stats': {
+                'transactions_sent': 0,
+                'transactions_received': 0,
+                'total_sent_eur': 0.0,
+                'total_received_eur': 0.0
+            }
+        }
+        db.users.insert_one(user)
+
+    return user
+```
+
+**Use case:**
+```
+User opens app for first time
+  ↓
+App calls: GET /api/v1/users/me
+  ↓
+Backend creates user record automatically
+  ↓
+App shows: "Welcome! You're ready to receive remittances."
+```
+
+**Errors:**
+- `INVALID_SIGNATURE` (401): Signature doesn't match address
+- `SIGNATURE_EXPIRED` (401): Timestamp >5 minutes old
+
+---
+
+### 2. PUT /api/v1/users/me
+
+**Purpose:** Update user profile (display name only for MVP)
+
+**Authentication:** BCH signature (required)
+
+**Request:**
+```http
+PUT /api/v1/users/me HTTP/1.1
+Host: api.asgaya.com
+X-User-Address: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+X-Signature: 3045022100cd7e...
+X-Timestamp: 2026-04-27T10:35:00Z
+Content-Type: application/json
+
+{
+  "display_name": "Elena"
+}
+```
+
+**Response:**
+```json
+{
+  "user_id": "bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy",
+  "display_name": "Elena",
+  "updated_at": "2026-04-27T10:35:00Z",
+  "message": "Profile updated"
+}
+```
+
+**Request fields:**
+- `display_name`: Optional friendly name (max 50 chars)
+  - Used in transaction UI ("Elena received €100")
+  - Can be changed anytime
+  - NOT used for authentication (only BCH address is)
+
+**Business logic:**
+- Update display_name only
+- Validate: 1-50 characters, alphanumeric + spaces
+- No other profile fields for MVP
+
+**Use case:**
+```
+User opens app → Goes to Profile tab
+  ↓
+Sees: "Your ID: bitcoincash:qp3w... (too long to remember)"
+  ↓
+Enters display name: "Elena"
+  ↓
+PUT /api/v1/users/me
+  ↓
+Now transactions show: "Elena" instead of "bitcoincash:qp3w..."
+```
+
+**Errors:**
+- `INVALID_SIGNATURE` (401): Signature doesn't match
+- `INVALID_NAME` (400): Display name invalid format
+
+---
+
+## Database Schema
+
+**Minimal users table:**
+
+```python
+class User:
+    # Identity (PK)
+    user_id: str  # bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+
+    # Profile (optional)
+    display_name: str | None  # "Elena"
+
+    # Stats (calculated)
+    transactions_sent: int
+    transactions_received: int
+    total_sent_eur: float
+    total_received_eur: float
+
+    # Timestamps
+    created_at: datetime
+    updated_at: datetime
+```
+
+**Index:**
+```sql
+CREATE UNIQUE INDEX idx_user_id ON users(user_id);
+```
+
+**That's it! No:**
+- ❌ Phone number
+- ❌ Email
+- ❌ Password hash
+- ❌ Email verification status
+- ❌ Phone verification status
+- ❌ Two-factor secrets
+- ❌ Session tokens
+- ❌ Refresh tokens
+
+**Just BCH address + optional display name.**
+
+---
+
+## Notifications: OP_RETURN (No Push Services)
+
+### How recipients get notified:
+
+**Traditional way (what we're NOT doing):**
+```
+Backend → Firebase/APNs → User's device
+❌ Requires phone registration
+❌ Google/Apple tracking
+❌ Centralized service
+❌ Monthly costs
+```
+
+**BCH-native way (what we ARE doing):**
+```
+Escrow sends OP_RETURN transaction to recipient's BCH address
+  ↓
+App's SPV wallet detects incoming transaction (0-conf)
+  ↓
+App parses OP_RETURN data: "ASGAYA_TXN_READY_7382"
+  ↓
+Shows notification: "€100 ready! Code: 7382"
+  ↓
+Recipient also got 546 sats (dust) as bonus!
+```
+
+**Example OP_RETURN notification:**
+
+```python
+def notify_recipient(recipient_address, code):
+    """
+    Send OP_RETURN notification to recipient
+
+    Cost: ~€0.006 (from escrow's BCH float)
+    """
+    tx = create_bch_transaction(
+        to=recipient_address,
+        amount_sats=546,  # Dust
+        op_return=f"ASGAYA_TXN_READY_{code}",
+        from_wallet=escrow_float_wallet
+    )
+
+    broadcast_transaction(tx)
+    # Done! Recipient will see notification when app syncs
+```
+
+**Recipient app (SPV wallet monitoring):**
+
+```javascript
+// App monitors recipient's BCH address
+const wallet = new SPVWallet(userBchAddress)
+
+wallet.on('transaction', (tx) => {
+  // Check for OP_RETURN data
+  const opReturn = parseOpReturn(tx)
+
+  if (opReturn && opReturn.startsWith('ASGAYA_TXN_READY_')) {
+    const code = opReturn.split('_')[3]  // "7382"
+
+    showNotification({
+      title: '€100 ready to claim!',
+      body: `Your code: ${code}. Go to any Asgaya merchant.`,
+      action: 'open_app'
+    })
+
+    // User also got 546 sats!
+    console.log(`Received ${tx.value} sats from escrow`)
+  }
+})
+```
+
+**Benefits:**
+- ✅ Fully decentralized (no Firebase, no APNs)
+- ✅ Privacy-preserving (no device tokens)
+- ✅ Works offline → online (transaction waits in mempool)
+- ✅ Cheap (~€0.006 per notification)
+- ✅ Recipient gets free sats (546 sats dust)
+- ✅ No monthly service costs
+
+**OP_RETURN message types:**
+
+```
+ASGAYA_TXN_READY_7382        → New transaction ready
+ASGAYA_SETTLE_READY_txn_abc  → Settlement ready (for merchants/LPs)
+ASGAYA_COMPLETE_7382         → Transaction completed
+```
+
+---
+
+## Escrow's BCH Float (For Notifications)
+
+**Escrow maintains small BCH balance for OP_RETURN notifications:**
+
+**Float size:**
+```
+Per notification: 546 sats + 100 sats fee = 646 sats ≈ €0.006
+
+For 100 transactions: 64,600 sats = 0.000646 BCH ≈ €0.60
+
+Escrow keeps: 0.01 BCH (€9) as float
+Refilled from transaction margins periodically
+```
+
+**Float is TINY compared to transaction volumes:**
+- Transaction: €100 (sender pays)
+- Escrow's BCH exposure: €0.006 (notification cost)
+- **99.994% of funds in EUR** (not exposed to BCH volatility)
+
+**Float management:**
+
+```python
+def check_notification_float():
+    """
+    Monitor escrow's BCH float, refill if needed
+    """
+    balance = get_wallet_balance(escrow_float_wallet)
+
+    if balance < 0.005:  # Below 0.005 BCH
+        # Refill from transaction margins
+        needed = 0.01 - balance
+        buy_bch_for_float(needed)
+        log(f"Float refilled: {needed} BCH")
+```
+
+**Cost from margin:**
+
+```
+Per €100 transaction:
+- Margin: €0.24
+- Notifications: €0.018 (3 notifications × €0.006)
+  - Recipient: €0.006
+  - Merchant: €0.006
+  - LP: €0.006
+- Remaining margin: €0.222
+- Split 3 ways: €0.074 each (escrow, merchant, LP)
+```
+
+**Notifications cost only 7.5% of margin!** Totally sustainable.
+
+---
+
+## Account Recovery (Optional Seed Phrase)
+
+**Problem:** User loses device = loses private key = loses account
+
+**MVP solution:** Show 12-word seed phrase on first launch
+
+```
+User opens app for first time
+  ↓
+App generates BCH keypair
+  ↓
+App shows ONE-TIME warning:
+  "⚠️ IMPORTANT: Save these 12 words
+
+  abandon ability able about above absent absorb abstract absurd abuse access accident
+
+  These words are your ONLY way to recover your account if you lose this device.
+
+  [✓] I saved these words safely
+  [Skip - I understand the risk]"
+  ↓
+User saves seed phrase (or skips)
+  ↓
+Never shown again
+```
+
+**Recovery flow:**
+
+```
+User gets new device → Reinstalls app
+  ↓
+App asks: "New account or Recover existing?"
+  ↓
+User selects: "Recover"
+  ↓
+Enters 12-word seed phrase
+  ↓
+App derives same BCH keypair
+  ↓
+Same BCH address = same user ID
+  ↓
+Account recovered! ✅
+```
+
+**We don't handle recovery on backend - it's all client-side:**
+- ✅ User controls seed phrase
+- ✅ No "forgot password" flow needed
+- ✅ No email recovery
+- ✅ Self-sovereign recovery
+
+**Tradeoff:**
+- ⚠️ If user loses device + didn't save seed = account lost forever
+- But that's the price of self-sovereignty!
+- For MVP beta: Acceptable risk (trusted users, low balances)
+
+---
+
+## What We're NOT Doing (Yet)
+
+### No Phone Verification
+- ❌ No SMS codes
+- ❌ No phone number storage
+- ❌ No "one phone per account" limit
+- ✅ User can create unlimited accounts (one per device)
+- ✅ Spam prevention via IP rate limiting + CAPTCHA instead
+
+### No Email
+- ❌ No email collection
+- ❌ No email verification
+- ❌ No password reset emails
+- ✅ Seed phrase recovery only
+
+### No KYC
+- ❌ No ID upload
+- ❌ No address verification
+- ❌ No name matching
+- ✅ Fully anonymous (BCH address only)
+- Post-MVP: Optional verification for higher limits
+
+### No Social Login
+- ❌ No Google Sign-In
+- ❌ No Facebook Login
+- ❌ No Apple ID
+- ✅ BCH keypair is the login
+
+### No Password
+- ❌ No password field
+- ❌ No password strength requirements
+- ❌ No password reset
+- ✅ Private key IS the password (stored in device secure enclave)
+
+---
+
+## Security Considerations
+
+### 1. Private Key Storage
+
+**Mobile apps:**
+```
+iOS: Keychain (hardware-backed when available)
+Android: Keystore (TEE/StrongBox)
+```
+
+**Security properties:**
+- Private key never leaves device
+- Can't be extracted even with root access
+- Biometric protection (fingerprint/face)
+
+### 2. Signature Replay Prevention
+
+**Timestamp validation:**
+```python
+# Reject signatures older than 5 minutes
+if now - timestamp > timedelta(minutes=5):
+    raise SignatureExpiredError()
+```
+
+**Prevents:**
+- Attacker intercepts signed request
+- Tries to replay it later
+- Backend rejects (timestamp too old)
+
+### 3. Man-in-the-Middle Protection
+
+**HTTPS required:**
+- All API calls over TLS 1.3
+- Certificate pinning (app pins api.asgaya.com cert)
+- Prevents MITM even on compromised WiFi
+
+### 4. Device Theft
+
+**If device stolen:**
+- Thief needs to unlock device (PIN/biometric)
+- Private key protected by OS-level security
+- User can recover with seed phrase on new device
+
+**Best practice:**
+- Enable device lock (PIN/fingerprint)
+- Save seed phrase offline
+- Don't root/jailbreak device
+
+---
+
+## Testing Checklist
+
+**Before MVP:**
+- [ ] BCH keypair generated on first launch
+- [ ] Private key stored in secure enclave
+- [ ] Signature verification works (off-chain)
+- [ ] GET /users/me auto-creates user
+- [ ] PUT /users/me updates display name
+- [ ] Timestamp validation rejects old signatures
+- [ ] OP_RETURN notifications received by SPV wallet
+- [ ] Seed phrase recovery works on new device
+
+**Edge cases:**
+- [ ] User with zero BCH balance can sign (off-chain)
+- [ ] Signature replay attack prevented (timestamp check)
+- [ ] Invalid BCH address rejected
+- [ ] Malformed signature rejected
+- [ ] Notification OP_RETURN parsed correctly
+- [ ] Float refill triggered when low
+
+---
+
+## Future Enhancements (Post-MVP)
+
+### V1.1: Optional Phone Verification
+- Add optional phone verification for "Verified" badge
+- Verified users get higher transaction limits
+- Unverified users still fully functional (permissionless!)
+
+### V1.2: Multi-Device Support
+- Add `GET /users/devices` endpoint
+- User can link multiple devices to same BCH address
+- Each device has own keypair (derived from master seed)
+
+### V2: Profile Customization
+- Avatar (IPFS hash)
+- Bio/description
+- Social links
+- Display preferences
+
+### V2: Notification Preferences
+- Choose which notifications to receive
+- Quiet hours
+- Notification sound
+
+---
+
+## BCH-Native Features to Explore (Post-MVP)
+
+**After RS046 research complete, deep-dive on:**
+
+1. **CashTokens** - NFTs/fungible tokens on BCH
+   - Could merchant listings be CashTokens?
+   - Could reputation be tokenized?
+
+2. **Schnorr Signatures** - More efficient signatures
+   - Smaller transaction sizes
+   - Multi-sig improvements
+
+3. **PayMail** - Email-like addresses for BCH
+   - `elena@asgaya.com` instead of `bitcoincash:qp3w...`
+   - Makes UX much friendlier
+
+4. **CHIP (CHained 1-of-3 Multisig)** - Advanced payment channels
+   - Could enable escrow improvements
+   - Lower trust requirements
+
+5. **AnyHedge** - BCH-native hedging contracts
+   - Protect against BCH volatility
+   - Could replace fiat escrow entirely?
+
+6. **SmartBCH** - EVM-compatible sidechain
+   - Smart contracts for complex escrow logic
+   - DEX integration
+
+**TODO:** Schedule deep-dive session after RS046 complete to explore these! 🚀
+
+---
+
+## Related Documents
+
+- **User Flows:**
+  - [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - User creates transactions
+  - [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md) - User as merchant
+- **Other APIs:**
+  - [transaction-apis.md](android-app/backend-apis/transaction-apis.md) - Uses BCH signature auth
+  - [merchant-apis.md](android-app/backend-apis/merchant-apis.md) - User creates merchant profile
+- **Backend Index:** [RS046-5 Backend APIs Index](android-app/backend-apis/README.md)
+
+---
+
+*Created: April 27, 2026*
+*Status: Complete*
+*Philosophy: BCH address = identity. Self-sovereign, permissionless, private.*
+*MVP: 2 endpoints. No phone, no email, no KYC. Just cryptography.*
+*Innovation: OP_RETURN notifications instead of push services = fully decentralized*

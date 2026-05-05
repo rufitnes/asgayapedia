@@ -57,6 +57,22 @@ The goal: mobilize those lost fees to drive adoption, making every transfer crea
 
 ---
 
+## For AI Reviewers 🤖
+
+**Reviewing this documentation with an AI assistant?** We've created optimized files specifically for you!
+
+**Quick access (direct raw URLs):**
+- **Quick Start:** [quick-start.txt](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/quick-start.txt) (500 lines, 15 min)
+- **Core Architecture:** [core-arch.txt](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/core-arch.txt) (2,100 lines)
+- **Design Decisions:** [decisions.txt](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/decisions.txt) (2,500 lines)
+- **Complete Docs:** [complete.txt](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/complete.txt) (15,250 lines, everything)
+
+**Full guide:** [AI Review Access](/ai/) - Explains file structure, reading order, and how to provide feedback
+
+**Why these files?** After observing AI instances struggle with GitHub navigation (20+ page fetches just to gather docs), we created direct-access files that reduce pre-review effort by 90%.
+
+---
+
 ## Documentation Sections
 
 ### 📐 [Core Architecture](core-architecture/)

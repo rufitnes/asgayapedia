@@ -1,0 +1,2115 @@
+==============================================
+ASGAYA CORE ARCHITECTURE
+==============================================
+
+This file contains all core architecture documents explaining WHY Asgaya is designed this way.
+
+Generated: 2026-05-05
+Source: /core-architecture/*.md
+
+==============================================
+
+← [Back to Home](README.md)
+
+# Core Architecture
+
+Core Architecture is the index that connects **requirements** (what and why we need) to **solutions** (how we achieve them). Each section below branches into detailed explanations of the principles, tradeoffs, and implementation approaches.
+
+---
+
+## Documents in This Section
+
+### Economics & Fees
+- [why-cheaper-than-legacy.md](core-architecture/why-cheaper-than-legacy.md) - Economic model breakdown and fee structure
+- [why-market-rate-exchanges.md](core-architecture/why-market-rate-exchanges.md) - Transparent exchange rates with zero markup
+- [why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md) - Two-step settlement volatility protection
+
+### Adoption & Incentives
+- [why-promote-adoption.md](core-architecture/why-promote-adoption.md) - Network effects and participant incentives
+- [why-bch-usage-incentive.md](core-architecture/why-bch-usage-incentive.md) - Incentivizing direct BCH payments
+
+### Permissionless Access
+- [why-no-kyc.md](core-architecture/why-no-kyc.md) - Peer-to-peer coordination without gatekeepers
+- [why-permissionless.md](core-architecture/why-permissionless.md) - Open participation principles
+- [why-why-minimal-hardware.md](core-architecture/why-why-minimal-hardware.md) - Support for low-tech solutions
+- [why-why-self-custody.md](core-architecture/why-why-self-custody.md) - User-controlled cryptography and keys
+
+---
+
+## How We Satisfy The 3 Core Requirements
+
+### 1️⃣ Cheaper Than Legacy (<1% fees)
+
+**Requirement:** Beat 6.49% average remittance costs through market-rate exchanges and free peer-to-peer rails.
+
+**Architecture solutions:**
+- **[Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)** — Economic model breakdown: how free rails + market rates achieve <1%
+- **[Exchange Rate Safeguard](core-architecture/why-market-rate-exchanges.md)** — Real-time Kraken rates with zero markup
+- **[Volatility Protection](core-architecture/why-eliminate-volatility.md)** — Two-step settlement eliminates Bitcoin Cash volatility concerns
+
+**Key principle:** Transparent economics with no hidden markups.
+
+---
+
+### 2️⃣ Promote Adoption
+
+**Requirement:** Every transaction must create economic incentives for participants to join and grow the network.
+
+**Architecture solutions:**
+- **[Merchant & LP Incentives](core-architecture/why-promote-adoption.md)** — Fee-splitting model (escrow, merchant, LP each earn from the 1% fee)
+- **[BCH Usage Incentives](core-architecture/bch-usage-incentives.md)** — Near zero-fee BCH payments vs. 1% remmitance cash-outs
+
+**Key principle:** the goal is to make asgaya redundant except to interact with the legacy system
+
+**Related concepts:**
+- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions
+- [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md) — How BCH miners can serve as escrow operators
+
+---
+
+### 3️⃣ Permissionless
+
+**Requirement:** Anyone can participate without KYC, using minimal hardware and knowledge, Asgaya isn't an entity is an open source protocol anyone can participate build and develope
+
+**Architecture solutions:**
+
+**Access & Usability:**
+- **[No KYC Model](core-architecture/no-kyc.md)** — Peer-to-peer coordination without central gatekeepers
+- **[Permissionless Access](core-architecture/why-permissionless.md)** — Works offline, intermittent connectivity supported
+- **[Minimal Hardware](core-architecture/why-minimal-hardware.md)** — From cardboard QR codes, to RFID stickers, to smartphones
+- **[Minimal Knowledge](core-architecture/why-permissionless.md)** — Simple UI, Basic fucntions, not crypto jargon
+
+**Security & Self-Custody:**
+- **[Self-Custody](core-architecture/why-self-custody.md)** — Users control keys, Asgaya has zero access
+- **[Key Education](core-architecture/why-permissionless.md)** — Mandatory backup verification before first use
+- **[Key Safekeeping](core-architecture/why-permissionless.md)** — Multiple backup methods for different risk profiles
+
+**Error Prevention:**
+- **[Error Mitigation](core-architecture/why-permissionless.md)** — QR codes, guided flows, auto-calculation, auto-complete
+
+**Key principle:** Maximum freedom, minimum risk — no KYC; secure key management where essential.
+
+---
+
+## Design Principles
+
+These principles guide all architectural decisions across the three requirements:
+
+1. **Accessibility Over Perfection** — Serve users with 3% fees rather than refuse unserved markets
+2. **Economic Incentives Over Ideology** — Ideology alone has failed to spread the use of BCH lets try rewards inestead.
+3. **Simplicity at Scale** — Do a few things excellently rather than many things poorly
+4. **Maximum Freedom, Minimum Risk** — No KYC; secure key management education, desigend to avoid errors
+5. **Transparent Economics** — Market rates only, zero hidden markups, clear breakdown of cost after each transaction
+6. **Low-Tech Compatibility** — Low tech edge cases are given serious consideration
+
+---
+
+## How to Use This Index
+
+**Each architecture document includes:**
+- Problem statement and user context
+- Why this solution was chosen
+- Trade-offs and alternatives considered
+- Links to related concepts and implementation decisions
+
+**Start with the requirement that interests you most:**
+- Want cheaper fees? → Start with [Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
+- Curious about incentives? → Start with [Merchant & LP Incentives](core-architecture/why-promote-adoption.md)
+- Care about access? → Start with [No KYC Model](core-architecture/no-kyc.md)
+
+**For deeper understanding:**
+- See [Concepts](concepts/) for theoretical foundations
+- See [Android App](android-app/) for implementation details
+- See [Contributing](meta/contributing.md) to propose changes
+
+---
+
+*Architecture index created: April 8, 2026*
+*Maintained by: Asgaya Contributors*
+*Last updated: April 30, 2026*
+
+
+==============================================
+WHY BCH USAGE INCENTIVE
+==============================================
+
+# Why: BCH Usage Incentive (Recipients)
+
+**Sub-requirement of:** [Why: Promote Adoption](core-architecture/why-promote-adoption.md)
+
+**Core Requirement:** Recipients must have a reason to keep received funds in BCH rather than immediately cashing out to fiat.
+
+---
+
+## The Problem
+
+### Building "Better Western Union" Isn't the Goal
+
+If 100% of recipients instantly convert BCH to fiat, Asgaya is just another payment rail—cheaper than Western Union, but still trapping users in the legacy banking system.
+
+**This solves nothing long-term:**
+- Users still depend on banks for day-to-day spending
+- Merchants still deal with bank fees, chargebacks, account freezes
+- The banking system still controls who can transact
+- We've built a better trap, not freedom
+
+**The actual goal:** Create economic incentives for recipients to hold and spend BCH, bootstrapping a parallel economy where banking system problems don't exist.
+
+---
+
+## Why Recipients Holding BCH Matters
+
+### 1. Breaking the Chicken-and-Egg Problem
+
+**The cycle that kills crypto adoption:**
+- Users don't hold BCH → Merchants don't accept it (no customers)
+- Merchants don't accept BCH → Users don't hold it (nowhere to spend)
+
+**Traditional approach (ideology):**
+"BCH is fast and cheap! Everyone should use it!"
+**Result:** 99.9% of merchants ignore it because 99.9% of customers don't have it.
+
+**Asgaya's approach (economics):**
+Every remittance creates:
+1. A merchant who accepts BCH (earning passive income from remittances)
+2. A recipient who received BCH (and sees merchants who accept it)
+3. An economic reason to hold BCH (lower fees on repeat spending)
+
+**Result:** Self-reinforcing cycle where each transaction makes the next one more likely.
+
+### 2. Network Growth Requires Retention
+
+**If recipients cash out immediately:**
+- 1,000 remittances = 1,000 fiat conversions
+- Network size: Still 0 BCH holders
+- Growth: None
+
+**If 30% of recipients hold BCH:**
+- 1,000 remittances = 300 new BCH holders
+- Each holder sees 5-10 local merchants (from remittance network)
+- Those holders spend BCH locally (near-zero fees)
+- Merchants see more BCH customers, promote acceptance
+- **Network compounds**
+
+**The math is simple:** We're not building Asgaya to process remittances forever. We're building it to bootstrap BCH adoption, then become redundant.
+
+---
+
+## The Economic Case
+
+### Scenario: Recipient in Venezuela Receives 5 Transfers/Month
+
+**Option A: Cash out every transfer (stay in fiat system)**
+```
+Transfer 1: €100 - 1% fee = €99 cash
+Transfer 2: €100 - 1% fee = €99 cash  
+Transfer 3: €100 - 1% fee = €99 cash
+Transfer 4: €100 - 1% fee = €99 cash
+Transfer 5: €100 - 1% fee = €99 cash
+
+Total received: €500
+Total fees paid: €5 (1% × 5 transactions)
+Net: €495
+```
+
+**Option B: Hold BCH, spend at local merchants**
+```
+Transfer 1: €100 → 0.260 BCH (held)
+Transfer 2: €100 → 0.260 BCH (held)
+Transfer 3: €100 → 0.260 BCH (held)
+Transfer 4: €100 → 0.260 BCH (held)  
+Transfer 5: €100 → 0.260 BCH (held)
+
+Total received: 1.300 BCH (€500 equivalent)
+Spending fees: 5 BCH transactions × ~$0.01 = $0.05 total
+Net: €499.95 equivalent
+```
+
+**Savings by holding BCH: €4.95/month = €59.40/year**
+
+For someone receiving €500/month in remittances, that's 12% more value by simply spending BCH instead of cashing out to fiat.
+
+### The Compounding Effect
+
+**But wait, there's more:**
+
+If recipient holds BCH and local merchants accept it:
+- No bank account required (saves account fees)
+- No risk of account freezes or capital controls
+- No currency devaluation (BCH is global, not subject to local inflation)
+- Instant settlement (no waiting days for bank transfers)
+- Can send money to family/friends at near-zero cost
+
+**The value proposition writes itself.**
+
+---
+
+## Why BCH Specifically?
+
+### Practical Requirements for Remittance Settlement
+
+**What Asgaya needs from a settlement layer:**
+1. **Low transaction fees** (<$0.01 per transaction, consistently)
+2. **Fast confirmations** (seconds for 0-conf, minutes for final settlement)
+3. **Proven reliability** (years of operation without critical failures)
+4. **Smart contract capabilities** (for covenants, CashTokens, on-chain communication)
+5. **Sufficient liquidity** (fiat pairs on major exchanges)
+
+**Why BCH:**
+
+Bitcoin Cash delivers all requirements today, with a proven track record:
+- **Fees:** ~$0.001-0.01 per transaction (proven over years)
+- **Speed:** Instant for 0-conf merchant payments, ~10min for settlement
+- **Reliability:** 7+ years of continuous operation, survived multiple challenges
+- **Smart contracts:** Covenants and CashTokens enable advanced settlement patterns
+- **Liquidity:** EUR/BCH, USD/BCH pairs on Kraken and other exchanges
+
+**More importantly:** Trust in continued delivery. BCH has consistently shipped the features Asgaya needs (smart contracts, low fees, reliability improvements) without breaking existing functionality.
+
+### Why Not Alternatives?
+
+**Stablecoins (USDC, USDT):**
+- Require trust in central issuer (defeats permissionless requirement)
+- Subject to regulatory freezes and account blacklists
+- No smart contract flexibility for complex settlement
+
+**Other cryptocurrencies:**
+- Most have significantly higher fees (disqualifies them for micro-payments)
+- Or lack the smart contract features Asgaya requires
+- Or haven't proven reliability at scale over years
+
+**The choice is pragmatic, not political:** BCH has the features Asgaya needs, working today, with a community that ships improvements we can build on (covenants, CashTokens, network communication primitives).
+
+---
+
+## Why This Matters for Adoption
+
+### The Vision: Asgaya Becomes Redundant
+
+**Year 1:**
+- Users send remittances via Asgaya (cheaper than Western Union)
+- Recipients cash out to fiat (old habits)
+- Merchants earn passive income from remittances
+
+**Year 2:**
+- Same remittance volume, but 30% of recipients hold BCH
+- Recipients discover they can pay 10+ local merchants in BCH (near-zero fees)
+- Merchants see BCH customers, promote acceptance
+
+**Year 3:**
+- 50% of recipients hold BCH long-term
+- New merchants join just to accept BCH (not for remittance income)
+- Recipients prefer BCH-to-BCH transfers (why pay 1% when you can pay $0.01?)
+
+**Year 5:**
+- Most transactions are BCH-to-BCH (not remittances)
+- Asgaya's remittance feature rarely used (only for new users onboarding)
+- **Mission accomplished:** Created a parallel economy where banking system problems don't apply
+
+**This is the endgame.** Remittances are the kindling. BCH adoption is the fire.
+
+---
+
+## The Honest Pitch to Recipients
+
+**We're not asking you to "believe in crypto."**
+
+**We're asking you to do the math:**
+- Hold €500 in fiat bank account: Pay fees, deal with banks, lose purchasing power to inflation
+- Hold €500 equivalent in BCH: Spend at 10+ local merchants, near-zero fees, no bank required
+
+**Which costs less? Which gives you more control?**
+
+The answer is obvious once merchants exist. Asgaya's job is to create those merchants by making remittances fund their onboarding.
+
+---
+
+## Related Requirements
+
+- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — The full adoption flywheel
+- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — The fee savings that fund the incentives
+- [Why: Permissionless](core-architecture/why-permissionless.md) — Why self-custody and no KYC matter for this vision
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for how we achieve this:
+
+- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Why recipients holding BCH changes the fee calculation
+- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How settlement creates the merchant network
+
+---
+
+## The Bottom Line
+
+**Ideology has failed to spread BCH adoption.**
+
+**Economics won't fail.**
+
+Give recipients a clear financial reason to hold BCH (lower fees + more merchants), and they will. Give merchants a clear financial reason to accept BCH (passive remittance income), and they will.
+
+**The network grows because participants are better off financially, not because they believe in a vision.**
+
+---
+
+*Last updated: May 1, 2026*
+*Core principle: "We're not building better Western Union. We're building the on-ramp to a parallel economy."*
+
+
+==============================================
+WHY CHEAPER THAN LEGACY
+==============================================
+
+# Why: Cheaper Than Legacy (<1% fees)
+
+**Core Requirement:** Beat the 6.49% average remittance cost and achieve <1% fees through market-rate exchanges and free peer-to-peer rails.
+
+---
+
+## The Problem
+
+The global remittance market moves **$685 billion annually**, but **$44.5 billion never reaches recipients** due to fees averaging 6.49%.
+
+This is unacceptable for migrants sending money home to support families. A worker in Spain sending €500 to Venezuela loses €32.45 to fees in the legacy system. Over a year (12 transfers), that's €389.40 lost—nearly a full month's worth of remittances.
+
+Despite UN and G20 pledges to reduce costs to 3% by 2030, progress has stalled. The legacy system has no incentive to change.
+
+---
+
+## Sub-Requirements
+
+To achieve <1% fees, Asgaya must satisfy these technical and economic requirements:
+
+### 1. Market-Rate Exchanges Only
+
+**Requirement:** Use real market exchange rates with zero markup.
+
+**Why this matters:** Hidden markups are where legacy systems extract the most profit. A 2% "spread" on exchange rates costs more than stated transfer fees. Government-imposed rates can extract up to 65% of remittance value.
+
+**Success metric:** Users can independently verify rates match Kraken's published rates.
+
+**Deep dive:** [Why: Market-Rate Exchanges](core-architecture/why-market-rate-exchanges.md) — Government extraction problem, why BCH bypasses financial repression
+
+---
+
+### 2. Eliminate Volatility Risk
+
+**Requirement:** Protect users from cryptocurrency price fluctuations during the transfer.
+
+**Why this matters:** If BCH drops 5% between when the sender commits EUR and when the recipient gets local currency, the entire fee advantage is lost. Volatility risk is why every crypto remittance project has failed.
+
+**Success metric:** <0.5% slippage on 95% of transactions due to volatility.
+
+**Deep dive:** [Why: Eliminate Volatility](core-architecture/why-eliminate-volatility.md) — Why surprise losses kill adoption, who should bear volatility risk
+
+---
+
+### 3. Free Peer-to-Peer Rails
+
+**Requirement:** Use payment systems with zero or near-zero transfer costs (Bizum, PagoMóvil, BCH transactions).
+
+**Why this matters:** Every intermediary charges a fee. Legacy remittances pass through 3-5 intermediaries (local bank → correspondent bank → SWIFT → receiving bank → payment processor). Each takes a cut.
+
+Asgaya eliminates intermediaries by using:
+- **Bizum** (Spain): Free peer-to-peer transfers
+- **PagoMóvil** (Venezuela): Free peer-to-peer transfers
+- **Bitcoin Cash**: ~$0.01 transaction fees
+
+**Success metric:** Total non-exchange costs < 0.3% of transfer amount.
+
+**How we achieve this:** [Volatility Protection](core-architecture/why-eliminate-volatility.md) + [Fee Splitting Model](decisions/fee-splitting-model.md)
+
+---
+
+### 4. Transparent Cost Breakdown
+
+**Requirement:** Show users exactly where their money goes: exchange cost, BCH network fee, participant rewards.
+
+**Why this matters:** Trust. Users need to verify that Asgaya isn't hiding markups like legacy systems do.
+
+**Success metric:** Every transaction shows itemized costs. Users can independently verify exchange rates match Kraken's published rates.
+
+**How we achieve this:** Built into transaction receipts and user flows.
+
+---
+
+### 5. Competitive on Difficult Corridors
+
+**Requirement:** Even on corridors where <1% is unrealistic (due to liquidity constraints or exchange limitations), beat legacy systems by 50%+ savings.
+
+**Why this matters:** Accessibility over perfection. Refusing to serve a corridor because we can't hit <1% means those users stay trapped in the 6.49% legacy system.
+
+**Example:** If a difficult corridor costs 3%, that's still saving €16.23 on a €500 transfer vs. 6.49% (€32.45).
+
+**Success metric:** 50%+ savings vs. Western Union verified on all supported corridors.
+
+**How we achieve this:** Pragmatic corridor-by-corridor approach (see fee breakdown below)
+
+---
+
+## The 1% Fee Breakdown
+
+**How the 1% total fee is distributed:**
+
+**Example: €100 transfer**
+- **Total fee:** €1.00 (1% of transfer)
+- **Exchange fee (Kraken):** ~€0.26 (0.26% - deducted first)
+- **Remaining:** ~€0.74 (0.74% - split equally three ways)
+
+**The remaining €0.74 is divided equally among:**
+- **Escrow operator:** €0.247 (0.247%)
+- **Merchant:** €0.247 (0.247%)
+- **Liquidity Provider:** €0.247 (0.247%) *(if instant settlement selected)*
+
+**Key insight:** Participants don't split the full 1% - they split what remains after exchange costs. This creates economic incentives for all participants while still beating legacy systems by 85% (€1 vs €6.49 on €100).
+
+---
+
+## Why This Requirement Comes First
+
+Cheaper fees are the entry point. Without a clear economic advantage, users won't switch from Western Union or bank transfers. Once they experience the cost savings, they stay for the other benefits (permissionless access, self-custody, BCH adoption).
+
+**The economic case must be undeniable.**
+
+---
+
+## Related Requirements
+
+- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — How we use fee savings to incentivize network growth
+- [Why: Permissionless](core-architecture/why-permissionless.md) — How we keep costs low by eliminating KYC/compliance overhead
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
+
+- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — Why pull-based BCH purchase eliminates volatility risk
+- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — How the 1% fee is distributed to incentivize all participants
+- Decision: Why Kraken exchange (coming soon)
+
+---
+
+*Last updated: April 30, 2026*
+
+
+==============================================
+WHY ELIMINATE VOLATILITY
+==============================================
+
+# Why: Eliminate Volatility Risk
+
+**Sub-requirement of:** [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
+
+**Core Requirement:** Protect users from cryptocurrency price fluctuations during the transfer.
+
+---
+
+## The Problem
+
+### Cryptocurrency Volatility Kills Remittances
+
+Bitcoin Cash price can move 2-5% in 20 minutes during volatile periods. While this volatility is acceptable for traders and investors, it's catastrophic for remittances.
+
+**Example scenario:**
+- Sender commits €100
+- 20 minutes later, recipient cashes out
+- If BCH dropped 3%, recipient gets €97 worth of value
+- **Recipient loses €3 through no fault of their own**
+
+For a family depending on remittances for food and rent, a surprise 3% loss is unacceptable.
+
+### Why This Is Deal-Breaking
+
+**Remittances require predictability:**
+- Sender needs to know: "If I send €100, family gets €100 equivalent"
+- Recipient needs to know: "I can pay my €95 rent with this €100 transfer"
+- Merchant needs to know: "I'm getting €100 worth of value, not €97"
+
+**One bad experience ends adoption:**
+- User sends €100
+- Family receives €97 equivalent
+- User thinks: "Asgaya cheated me, back to Western Union"
+- **Lost customer forever**
+
+**The lesson:** You cannot build a remittance network on top of volatility risk. Users will not accept "maybe you lose 3%, maybe you gain 2%"—they need certainty.
+
+---
+
+## Why Zero Volatility Is Required
+
+### 1. Trust Requires Predictability
+
+Users switching from Western Union know exactly what they're getting:
+- Send €100, family gets exact local currency equivalent
+- Fees are transparent (even if unfair)
+- **No surprise losses**
+
+Asgaya must match or exceed this predictability. If we introduce volatility risk, we're asking users to gamble with their family's rent money.
+
+**Success metric:** <0.5% slippage on 95%+ of transactions due to volatility.
+
+### 2. Merchants Won't Accept Volatility Risk
+
+Merchants operate on thin margins. A corner store owner can't accept:
+- "You might get €100 worth of BCH, or €97, we'll see"
+- Uncertainty in what they're receiving
+- Risk they bear through no action of their own
+
+**Without merchant certainty, there is no network.**
+
+### 3. The 1% Fee Advantage Evaporates
+
+If volatility causes 2-5% slippage, the entire economic advantage of <1% fees disappears:
+- Asgaya fee: 1%
+- Volatility loss: 3%
+- **Total cost: 4%**
+
+User thinks: "Western Union charges 6.49%, but I know what I'm getting. Asgaya is 4% but unpredictable—I'll stick with Western Union."
+
+**Volatility protection isn't optional—it's foundational.**
+
+---
+
+## The Asymmetry Problem
+
+**In traditional crypto transfers:**
+- If price goes up 3% → User gains €3 (happy accident)
+- If price goes down 3% → User loses €3 (Asgaya cheated me!)
+
+**Human psychology:**
+- Gains feel like luck
+- Losses feel like theft
+- **Losses are remembered 10x more than gains**
+
+One user who loses €3 tells 10 friends. Those 10 friends never try Asgaya.
+
+**We cannot build a network on a foundation of random losses.**
+
+---
+
+## Why "Close Enough" Isn't Good Enough
+
+**Users don't think in averages—they remember losses:**
+1. One bad experience erases ten good ones
+2. Families can't budget with "might be €97, might be €103"
+3. Merchants can't operate with uncertain revenue
+4. Network growth requires consistent positive experiences
+
+**The requirement is zero volatility exposure, not reduced volatility.**
+
+---
+
+## Who Should Bear Volatility Risk?
+
+Not the sender (they're sending money to family, not speculating).
+Not the recipient (they need certainty to pay bills).
+Not the merchant (they operate on thin margins).
+
+**Only parties who voluntarily accept it and are compensated for it.**
+
+This means:
+- Liquidity providers who profit from volatility arbitrage
+- Speculators who want BCH exposure
+- Long-term holders who believe in BCH appreciation
+
+**These parties accept risk knowingly and benefit from it.**
+
+---
+
+## Why This Matters for Adoption
+
+Volatility protection is the difference between:
+- "Send money home reliably" (remittance network)
+- "Gamble on crypto prices" (trading platform)
+
+Users need the first. If we offer the second, we fail.
+
+**Every transaction must prove:** "Your family got exactly what you sent, no surprises."
+
+---
+
+## Related Requirements
+
+- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Volatility losses erase the 1% fee advantage
+- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — Surprise losses reverse network growth
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for how we achieve zero volatility:
+
+- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How pull-based BCH purchase eliminates volatility for all parties except LPs
+
+---
+
+## The Bottom Line
+
+**Users don't need to understand Bitcoin Cash.**
+**Users DO need certainty that €100 sent = €100 received.**
+
+If we compromise on volatility protection, we're not building a remittance network—we're building a casino.
+
+---
+
+*Last updated: May 1, 2026*
+*Core principle: "Remittances require certainty. One surprise loss ends adoption."*
+
+
+==============================================
+WHY MARKET RATE EXCHANGES
+==============================================
+
+# Why: Market-Rate Exchanges Only
+
+**Sub-requirement of:** [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
+
+**Core Requirement:** Use real market exchange rates with zero markup.
+
+---
+
+## The Problem
+
+### Hidden Extraction by Private Companies
+
+Legacy remittance services extract profit through hidden exchange rate markups, often charging more in "spread" than their stated transfer fees.
+
+**Example: Western Union**
+- Advertised fee: $5 (1% on $500 transfer)
+- Hidden markup: 2-3% on exchange rate
+- **Total cost: $15-20 (3-4% of transfer)**
+
+Users see "$5 fee" but lose $15 in unfair exchange rates. This opacity is by design—it's where the real profit happens.
+
+### Government Extraction Through Rate Control
+
+Some governments impose official exchange rates below market value to extract wealth from remittances. This is financial repression disguised as policy.
+
+**Example scenario:**
+- **Official rate:** 1 USD = 350 local currency
+- **Market rate:** 1 USD = 1,000 local currency
+- **Government captures:** ~65% of remittance value through rate manipulation
+
+**Who gets hurt:**
+- Migrants sending money home (hard-earned wages taxed)
+- Families receiving remittances (lose 2/3 of purchasing power)
+
+**Why it's unfair:**
+- Worker earns €500
+- Sends to family abroad
+- Family should get equivalent purchasing power
+- Artificial rate extracts €325
+- **Family receives only €175 worth of value**
+
+This is taxation disguised as monetary policy.
+
+---
+
+## Why Market Rates Are Non-Negotiable
+
+### 1. Trust Requires Transparency
+
+Users need to verify that Asgaya isn't hiding markups like legacy systems do.
+
+**Success metric:** Users can independently verify exchange rates match Kraken's published rates at the time of transfer.
+
+### 2. Bypassing Financial Repression
+
+Bitcoin Cash is global, permissionless, and market-driven:
+- No government can dictate BCH/EUR rate
+- No government can dictate BCH/local currency rate
+- **Real market value always flows through**
+
+**Comparison:**
+
+**Traditional remittance (subject to control):**
+```
+EUR → Bank → Government-imposed rate → Local currency
+Result: Government captures spread
+```
+
+**Asgaya (escapes control):**
+```
+EUR → Kraken (global market) → BCH → Local market → Local currency
+Result: Market determines value, government can't intercept
+```
+
+### 3. Preventing System Replication of Legacy Problems
+
+If Asgaya allowed escrows or merchants to inflate exchange rates, we'd recreate the same extraction mechanisms we're trying to replace.
+
+**The line we draw:** Freedom on convenience, **ZERO flexibility on exchange rates**.
+
+**Escrows CANNOT:**
+- Inflate exchange rate
+- Negotiate better personal rate
+- Extract profit through spread manipulation
+
+**Merchants CANNOT:**
+- Quote below-market BCH rates to users
+- Exploit information asymmetry
+- Price-gouge on cash-outs
+
+**Why zero flexibility?**
+
+Protection against:
+- Escrow becoming predatory (charging hidden spread)
+- Merchant becoming exploitative (monopoly pricing)
+- System replicating legacy problems (opacity, extraction)
+
+---
+
+## Real-World Impact
+
+**Example corridor:**
+
+**€50 transfer:**
+- **Via Asgaya:** Recipient gets market rate value (13.6% more than legacy)
+- **Via legacy service:** Recipient loses ~13.6% to inflated spread + fees
+
+**€500 transfer:**
+- **Asgaya:** Recipient gets full market value minus 1% fee = €495 equivalent
+- **Legacy service:** Recipient gets market value minus 6.49% = €467.55 equivalent
+- **Family receives €27.45 more** (enough for a week of groceries)
+
+---
+
+## Why This Matters for Adoption
+
+Market-rate exchanges are the foundation of trust. Without verifiable, transparent rates, Asgaya is just another black box asking users to trust us.
+
+**Users don't need to understand Bitcoin Cash.**
+**Users DO need to verify they're getting fair value.**
+
+If we compromise on exchange rates, we lose the moral authority to claim we're better than legacy systems.
+
+---
+
+## Related Requirements
+
+- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Market rates are required to achieve <1% fees
+- [Why: Permissionless](core-architecture/why-permissionless.md) — Bypassing government control requires permissionless settlement layer
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for detailed documentation of how we enforce market rates:
+
+- **[How: Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Kraken integration, local rate discovery, alternatives considered
+- Decision: Why Kraken exchange (coming soon)
+- Decision: Rate verification in user flows (coming soon)
+
+---
+
+*Last updated: May 1, 2026*
+*Core principle: "Freedom on convenience, ZERO flexibility on exchange rates. Market value is non-negotiable."*
+
+
+==============================================
+WHY MINIMAL HARDWARE
+==============================================
+
+# Why: Minimal Hardware Requirements
+
+**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+
+**Core Requirement:** Support the widest possible range of devices, from cardboard QR codes to RFID stickers to basic smartphones.
+
+---
+
+## The Problem
+
+### Hardware Requirements Exclude the Poorest Users
+
+Most "crypto solutions" assume everyone has a smartphone. Many assume a recent smartphone with NFC, reliable internet, and modern operating systems.
+
+**Who this excludes:**
+
+**The extremely poor:**
+- Can't afford €100+ smartphone
+- Maybe have €10 feature phone
+- Maybe have nothing at all
+- **Need remittances most, excluded first**
+
+**Elderly users:**
+- Don't want to learn smartphone
+- Prefer simple solutions
+- May only have basic phone
+- **Excluded by complexity**
+
+**Children receiving money for family:**
+- Too young for own phone
+- Family shares one phone
+- Need to receive money independently
+- **Excluded by age**
+
+**Rural populations:**
+- Limited phone access
+- Shared community devices
+- No reliable electricity for charging
+- **Excluded by infrastructure**
+
+**The question:** How minimal can we go while still working?
+
+**The answer:** A piece of cardboard with a QR code printed on it.
+
+---
+
+## Why Cardboard QR Codes Matter
+
+### The Philosophy: If It Works for the Lowest-Tech User, It Works for Everyone
+
+**Scenario:**
+- Recipient in rural area
+- No smartphone
+- No electricity
+- No money to buy device
+- **Has: Piece of cardboard**
+
+**Solution:**
+1. Merchant (who has phone) generates BCH address for recipient
+2. Prints QR code on cardboard or writes address on paper
+3. Gives to recipient
+4. Recipient can now receive remittances
+5. **Cost: €0**
+
+**When money arrives:**
+1. Sender in Spain sends €100 via Bizum to escrow
+2. Escrow notifies merchant: "€100 ready for [recipient ID]"
+3. Recipient shows cardboard QR to merchant
+4. Merchant scans, sees BCH address matches
+5. Merchant hands €100 equivalent in cash
+6. **Remittance complete**
+
+**Hardware requirement for recipient: €0**
+
+### Why This Approach Is Not "Nice to Have"—It's Essential
+
+**If we require smartphones:**
+- We exclude people earning <€200/month (can't afford €100 phone)
+- We exclude rural areas with no electricity
+- We exclude elderly who won't adopt new tech
+- **We've built "better Western Union for people with smartphones"**
+
+**With cardboard QR support:**
+- Anyone can receive money
+- No hardware barrier
+- No learning curve (merchant does the tech part)
+- **We've built financial access for everyone**
+
+---
+
+## The Tiered Hardware Model
+
+### Progressive Enhancement: Pay for Better Experience, Not for Access
+
+**Tier 1: Cardboard QR Code (€0)**
+- **What you get:** Can receive money
+- **What you can't do:** Verify transactions yourself, receive notifications
+- **Trade-off:** Must trust merchant, need merchant with phone nearby
+
+**Tier 2: RFID Sticker/Card (€2-5)**
+- **What you get:** More durable, harder to counterfeit, can tap merchant's phone
+- **What you can't do:** Still can't verify independently
+- **Trade-off:** Small cost, but lasts longer than paper
+
+**Tier 3: Feature Phone (€10-20)**
+- **What you get:** Receive SMS notifications, communicate with escrow
+- **What you can't do:** Can't verify transactions visually, can't scan codes
+- **Trade-off:** More independence, still limited functionality
+
+**Tier 4: Smartphone (€50-100 used)**
+- **What you get:** Full functionality, complete autonomy, best experience
+- **What you can't do:** Nothing, full control
+- **Trade-off:** Higher cost, but maximum capability
+
+**The key:** Everyone can participate. Hardware determines quality of experience, not access to the system.
+
+---
+
+## Why This Philosophy Matters
+
+### 1. Hardware Should Not Be a Barrier to Financial Access
+
+**Current system:**
+- Want to receive Western Union? → Need government ID
+- Want to receive crypto? → Need €300 smartphone
+- **Either way, poorest are excluded**
+
+**Asgaya's approach:**
+- Want to receive remittance? → Need cardboard with QR code
+- Have €5? → Get RFID sticker (better experience)
+- Have €100? → Get smartphone (best experience)
+- **No one excluded, everyone can upgrade when they can afford it**
+
+### 2. Design for the Edge Case, Not the Average Case
+
+Most tech projects ask: "What does our average user have?"
+- Average user has smartphone
+- Design for smartphone
+- Edge cases (no phone) are ignored
+
+**Asgaya inverts this:**
+- What does our poorest user have? → Nothing
+- Design so cardboard works
+- **If cardboard works, smartphones work even better**
+
+**Result:** System that serves everyone, from poorest to richest.
+
+### 3. The Merchant Has the Tech, Not the Recipient
+
+**Key insight:** Merchants are businesses. They can afford smartphones. Recipients might not.
+
+**Division of labor:**
+- **Merchant:** Has smartphone, runs Asgaya app, scans QR codes
+- **Recipient:** Has cardboard, shows it to merchant, receives cash
+- **Sender:** Has bank account, sends Bizum
+- **Escrow:** Has Kraken account, coordinates settlement
+
+**Each participant contributes what they can afford. No one is required to have what they can't afford.**
+
+---
+
+## The RFID Sticker Vision
+
+### Why RFID Stickers Are the Perfect Middle Ground
+
+**Better than cardboard:**
+- More durable (lasts years, not months)
+- Harder to counterfeit (contains chip)
+- Can store multiple addresses (rotate for privacy)
+- Feels more "legitimate" (tap vs show paper)
+
+**Cheaper than smartphones:**
+- Cost: €2-5 per sticker
+- No battery (passive NFC)
+- No charging needed
+- Can embed in ID card, keychain, wristband
+
+**Use case:**
+- Recipient gets RFID sticker embedded in ID card
+- Goes to merchant
+- Taps phone to merchant's phone
+- Merchant's app reads BCH address
+- Hands cash
+- **Works even if recipient's phone is dead or stolen**
+
+**Why this matters:** In areas with unreliable electricity, phones die. RFID stickers never die. They're the ultimate resilience layer.
+
+---
+
+## Low-Tech Edge Cases Are Given Serious Consideration
+
+Unlike most crypto projects that say "edge cases don't matter," Asgaya designs for them:
+
+**What if recipient has no phone?**
+- → Cardboard QR code
+
+**What if recipient's phone is dead?**
+- → RFID sticker backup
+
+**What if there's no electricity to charge phones?**
+- → Cardboard or RFID (no power needed)
+
+**What if recipient is illiterate?**
+- → Visual QR code (universal, no reading needed)
+
+**What if there's no internet in the area?**
+- → Offline sync mode (merchant caches data, syncs later)
+
+**The principle:** If we solve for the worst case, we solve for everyone.
+
+---
+
+## Why "Nice to Have" Becomes "Must Have"
+
+**When you're designing for Silicon Valley:**
+- "Cardboard QR support is nice to have, maybe V3"
+- Average user has iPhone
+- Edge cases ignored
+
+**When you're designing for migrants and recipients:**
+- "Cardboard QR support is V1.1, right after MVP"
+- Average user has feature phone or nothing
+- **Edge cases are the majority**
+
+**Asgaya serves the majority that other systems call "edge cases."**
+
+---
+
+## The Trade-Offs Are Acceptable
+
+**Cardboard users give up:**
+- Independence (can't verify alone)
+- Privacy (merchant sees their address)
+- Convenience (must find merchant with phone)
+
+**Cardboard users gain:**
+- Financial access (€0 barrier)
+- Ability to receive remittances
+- Path to upgrade (save money, buy phone later)
+
+**For someone with nothing, getting 70% of the experience at €0 cost is far better than getting 0% of the experience because they can't afford €100.**
+
+---
+
+## Related Requirements
+
+- [Why: Permissionless](core-architecture/why-permissionless.md) — Minimal hardware is one aspect of truly permissionless access
+- [Why: No KYC](core-architecture/why-no-kyc.md) — Low barriers across all dimensions (ID, hardware, knowledge)
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for implementation approaches:
+
+- Decision: QR codes vs NFC priority (coming soon)
+- Decision: Offline sync capabilities (coming soon)
+
+---
+
+## The Bottom Line
+
+**Most crypto projects assume "everyone has a smartphone."**
+
+**This assumption excludes billions of people.**
+
+Asgaya assumes nothing. If you can borrow a smartphone from a merchant for 30 seconds to scan a piece of cardboard, you can receive money.
+
+**After that, it's your choice:**
+- Stay with cardboard (€0, works)
+- Upgrade to RFID (€5, better)
+- Upgrade to phone (€100, best)
+
+**But access is never tied to what you own. Only to what you can borrow for 30 seconds.**
+
+---
+
+*Last updated: May 1, 2026*
+*Core principle: "If it works for someone with nothing, it works for everyone. Design for the edge case, not the average."*
+
+
+==============================================
+WHY NO KYC
+==============================================
+
+# Why: No KYC
+
+**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+
+**Core Requirement:** No participant needs to provide government ID or personal information to use Asgaya.
+
+---
+
+## The Problem
+
+### KYC Excludes the People Who Need Remittances Most
+
+Traditional remittance services require Know Your Customer (KYC) verification: government-issued ID, proof of address, sometimes credit checks and bank statements.
+
+**Who this excludes:**
+
+**Refugees and asylum seekers:**
+- Fled their country, no valid government ID
+- Can't prove address (living in temporary housing)
+- Need to send money to family back home
+- **Locked out of Western Union, MoneyGram, banks**
+
+**Undocumented migrants:**
+- Working to send money to family
+- Fear deportation if they provide ID to authorities
+- Use informal remittance networks (high fees, unreliable)
+- **Choose between financial access and safety**
+
+**The unbanked (1.7 billion people globally):**
+- Can't get bank account without ID
+- Can't get ID without address
+- Can't get address without income
+- Can't prove income without bank account
+- **Trapped in catch-22**
+
+**Politically exposed people:**
+- Dissidents in authoritarian countries
+- Activists under surveillance
+- Journalists protecting sources
+- **Need to move money without government tracking**
+
+**Privacy-conscious users:**
+- Don't want financial surveillance
+- Don't want data sold to advertisers
+- Don't want transactions tracked
+- **Financial privacy shouldn't require being rich**
+
+### The Irony of Financial Exclusion
+
+The people who most need affordable remittances—those sending €100-500 to support family—are the ones most likely to be excluded by KYC requirements.
+
+**Meanwhile:**
+- The wealthy have private bankers who don't ask questions
+- Corporations use complex structures to move billions
+- Politicians use trusts and offshore accounts
+- **The barriers apply selectively to the poor**
+
+---
+
+## Why No KYC Is Non-Negotiable
+
+### 1. Our Users Don't Have What KYC Requires
+
+**The target user:**
+- Migrant worker in Spain
+- Earning €1,200/month
+- Sending €500/month to family
+- May or may not have residence permit
+- May or may not have bank account
+- **Definitely doesn't have spare €50 to pay for notarized ID copies**
+
+**The recipient:**
+- Living in emerging market
+- No bank account
+- No government ID (or expired)
+- No proof of address (informal housing)
+- **Needs the money to survive**
+
+If Asgaya requires KYC, we're not serving our users. We're serving the people who already have financial access.
+
+### 2. KYC Is Surveillance
+
+Every KYC verification creates a paper trail:
+- Who sent money
+- Who received it
+- How much
+- When
+- **All recorded in government databases**
+
+**Why this matters:**
+
+**In authoritarian countries:**
+- Dissidents' families receive money → Government flags them
+- Activists send money abroad → Arrested for "financing terrorism"
+- Journalists receive foreign payments → Accused of being "foreign agents"
+
+**Even in democratic countries:**
+- Financial surveillance enables abuse
+- Data breaches expose sensitive information
+- Governments change (today's privacy is tomorrow's persecution)
+
+**No KYC isn't just convenient—it's necessary for safety.**
+
+### 3. KYC Enables Gatekeeping
+
+With KYC, someone decides who gets access:
+- Bank says "we don't serve your country"
+- Exchange says "your risk profile is too high"
+- Regulator says "this corridor is prohibited"
+- **Arbitrary decisions exclude millions**
+
+**Without KYC:**
+- No one to ask permission from
+- No one to deny access
+- No arbitrary exclusions
+- **If you can fund the escrow, you can participate**
+
+### 4. Financial Access Is a Human Right, Not a Privilege
+
+**The current system treats financial access as a privilege:**
+- Prove you're trustworthy (ID, credit check)
+- Prove you're legitimate (address, bank statements)
+- Ask permission from institutions
+- **Only then can you send money to your family**
+
+**Asgaya's position:**
+Financial access is a human right. If you earned money, you should be able to send it to your family without asking permission from institutions.
+
+---
+
+## The Leverage Model
+
+### 10 Escrows with KYC → 10,000 Recipients Without KYC
+
+**The reality:** Someone needs Kraken account to convert fiat to BCH. That requires KYC.
+
+**The solution:** A small number of escrow operators bear the KYC burden on behalf of thousands of users.
+
+**How it works:**
+- 10-50 escrow operators globally
+- Each has Kraken account (KYC required)
+- Each serves hundreds of recipients (no KYC)
+- **Recipients get permissionless access**
+
+**The key insight:** KYC burden doesn't scale linearly with users.
+- 1 escrow with KYC → 1,000 recipients without KYC
+- 10 escrows with KYC → 10,000 recipients without KYC
+- **Leverage ratio: 1:1000**
+
+**Escrows volunteer for this:**
+- They already have bank access
+- They're ideologically motivated (believe in financial freedom)
+- They earn fees for providing this service
+- **Their KYC enables others' freedom**
+
+---
+
+## Who Needs KYC, Who Doesn't
+
+**Recipients (our primary users): NO KYC**
+- Download Asgaya app
+- Generate BCH wallet (local, no registration)
+- Receive BCH
+- Cash out at merchant or spend
+- **Zero barriers**
+
+**Merchants: NO KYC**
+- Download app
+- Accept BCH payments
+- Earn fees from remittances
+- **Zero barriers**
+
+**Liquidity Providers: NO KYC**
+- Use existing bank account
+- Provide fiat to merchants
+- Receive BCH
+- **No additional verification**
+
+**Senders: Already have KYC (with their bank)**
+- Need Bizum or bank account to send EUR
+- Already passed KYC for that account
+- No additional KYC for Asgaya
+- **Existing access, no new barriers**
+
+**Escrows: YES, have KYC (with Kraken)**
+- Small number (10-50 globally)
+- Volunteer for this role
+- Enable thousands of KYC-free users
+- **Leverage for freedom**
+
+**The pattern:** KYC burden is concentrated in roles that volunteer for it, while end users (recipients) have zero barriers.
+
+### No-KYC Edge Cases (Future Expansion)
+
+**Even senders can avoid KYC in some cases:**
+
+**Cash ATM deposits (Spain and other countries):**
+- Go to ATM
+- Deposit cash into escrow's bank account
+- No ID required (free service in many countries)
+- Escrow receives funds, processes remittance
+- **Fully no-KYC flow for sender**
+
+**Reverse merchant flow:**
+- Merchant holds BCH from previous remittances
+- Sender gives cash to merchant in person
+- Merchant sends BCH to escrow later
+- **All participants no-KYC**
+
+**Miners as escrows:**
+- BCH miners already have Kraken accounts (for mining revenue)
+- KYC already completed for mining operations
+- Can serve as escrows without additional KYC burden
+- See: [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md)
+
+**The vision:** As the network grows, more no-KYC paths emerge. The system is designed to support them.
+
+---
+
+## What We're NOT Saying
+
+**We're NOT saying:**
+- "KYC regulations are wrong" (that's a political debate)
+- "Money laundering isn't a problem" (it is)
+- "Financial crime should go unpunished" (it shouldn't)
+
+**We're saying:**
+- The current system uses KYC as a blunt instrument that excludes millions of innocent people
+- Those excluded are predominantly poor, foreign, or politically vulnerable
+- There's a better balance between security and access
+- **Asgaya chooses access**
+
+---
+
+## Why This Matters for Adoption
+
+**If Asgaya requires KYC:**
+- We compete with Western Union (regulated, trusted, established)
+- Western Union wins (they have brand recognition, physical offices, regulatory approvals)
+- **We've built nothing new**
+
+**If Asgaya has no KYC:**
+- We serve people Western Union refuses
+- We offer access to the unbanked
+- We enable financial privacy
+- **We've created something the world needs**
+
+**The unbanked don't need "better Western Union." They need access.**
+
+---
+
+## Related Requirements
+
+- [Why: Permissionless](core-architecture/why-permissionless.md) — No KYC is one aspect of truly permissionless access
+- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — No KYC reduces compliance costs
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for how we achieve no KYC while managing risks:
+
+- Decision: Regulatory approach (coming soon)
+- Decision: Escrow operator requirements (coming soon)
+
+---
+
+## The Bottom Line
+
+**KYC is designed to exclude.**
+
+It excludes the poor (who can't get IDs).
+It excludes migrants (who fear deportation).
+It excludes dissidents (who need privacy).
+It excludes refugees (who fled their countries).
+
+**Asgaya is designed to include.**
+
+If you have a phone, you can receive money. That's it.
+
+**Not your papers, not your permission, not your problem.**
+
+---
+
+*Last updated: May 1, 2026*
+*Core principle: "Financial access is a human right, not a privilege. KYC excludes those who need access most."*
+
+
+==============================================
+WHY PERMISSIONLESS
+==============================================
+
+# Why: Permissionless
+
+**Core Requirement:** Anyone can participate without KYC, using minimal hardware and knowledge. Asgaya isn't an entity—it's an open-source protocol anyone can participate in, build on, and develop.
+
+**Key principle:** Maximum freedom, minimum risk. No KYC; secure key management education designed to avoid errors.
+
+---
+
+## The Problem
+
+**Traditional remittances are gatekept systems.**
+
+To send money via Western Union, you need:
+- Government-issued ID (excludes refugees, undocumented migrants)
+- Physical access to an office (excludes rural areas)
+- Bank account (excludes 1.7 billion unbanked people)
+- Internet access during business hours (excludes poor connectivity areas)
+- Literacy to fill out forms (excludes ~773 million adults globally)
+
+Even cryptocurrency "solutions" often require:
+- KYC verification on exchanges (same exclusions as above)
+- Expensive smartphones (iPhone, high-end Android)
+- Deep understanding of wallets, keys, addresses
+- Reliable internet (excludes intermittent connectivity areas)
+
+**Asgaya removes these barriers entirely.**
+
+---
+
+## Sub-Requirements
+
+To be truly permissionless, Asgaya must satisfy these requirements:
+
+### 1. No KYC Requirement
+
+**Requirement:** No participant (sender, recipient, merchant, LP, escrow) needs to provide government ID or personal information to use Asgaya.
+
+**Why this matters:** KYC excludes the people who need remittances most—refugees without ID, undocumented workers who fear deportation, the 1.7 billion unbanked people trapped in catch-22s, dissidents under surveillance.
+
+**The leverage model:** 10 escrow operators with KYC → 10,000 recipients without KYC. The burden is concentrated where it's voluntary, while end users have zero barriers.
+
+**Success metric:** Verified usage by users who cannot access legacy remittances due to lack of ID.
+
+**Deep dive:** [Why: No KYC](core-architecture/why-no-kyc.md) — Who KYC excludes, why financial access is a human right, the 1:1000 leverage ratio
+
+---
+
+### 2. Works Offline / Low Connectivity
+
+**Requirement:** Users in areas with intermittent internet access must be able to send and receive remittances.
+
+**Why this matters:**
+- In some parts of the world power outages are common
+- Even if power is reliable cell coverage might be intermitent
+- Emergency situations: Natural disasters, infrastructure failures, conflicts
+
+**How it works:**
+- App syncs once daily when internet is available
+- Transactions can be initiated offline and completed when connectivity returns
+- Escrow operators handle coordination during offline periods
+
+**Success metric:** Verified usage in low-connectivity areas
+
+---
+
+### 3. Minimal Hardware Required
+
+**Requirement:** Support the widest possible range of devices, from cardboard QR codes to RFID stickers to basic smartphones.
+
+**Why this matters:** Hardware requirements exclude the poorest users—those who need remittances most. If we require €100 smartphones, we've built "better Western Union for people with smartphones," not financial access for everyone.
+
+**The tiered model:**
+- Cardboard QR (€0): Can receive money
+- RFID sticker (€5): More durable, tap-to-pay
+- Smartphone (€100): Full functionality
+
+**The principle:** If it works for someone with nothing, it works for everyone. Design for the edge case, not the average.
+
+**Success metric:** Verified usage with cardboard QR codes and RFID stickers in at least one corridor.
+
+**Deep dive:** [Why: Minimal Hardware](core-architecture/why-minimal-hardware.md) — The cardboard QR code philosophy, progressive enhancement, why edge cases matter most
+
+---
+
+### 4. Minimal Knowledge Required
+
+**Requirement:** Users should not need to understand cryptocurrency, blockchain, or technical concepts to use Asgaya safely.
+
+**Why this matters:**
+- **Low literacy users:** Can't read technical documentation
+- **Non-technical users:** Don't care about "blockchain" "decentralization" or "cryptography"
+- **Elderly users:** May struggle with complex interfaces
+
+**How it works:**
+- Simple UI with familiar currency terminology (EUR, VES, ARS)
+- No crypto jargon ("blockchain", "private key", "address")
+- Guided flows with auto-calculation and auto-complete
+- Visual indicators (checkmarks, progress bars) instead of text
+
+**Example:** Instead of "Enter BCH address," show "Scan QR code" with camera icon.
+
+**Success metric:** Non-crypto users can explain the system to others (word-of-mouth adoption).
+
+---
+
+### 5. Self-Custody (Users Control Keys)
+
+**Requirement:** Users must hold their own BCH keys. Asgaya has zero access to user funds.
+
+**Why this matters:** Custodial = permissioned by definition. If Asgaya held funds, we'd need licenses (payment institution, money transmitter), which require KYC, which excludes the unbanked. Self-custody is the only way to stay truly permissionless.
+
+**The trade-off:** Users gain sovereignty (no one can freeze their accounts) but lose safety net (lost keys = lost funds forever).
+
+**User choice preserved:** Don't want responsibility? Cash out immediately. Want sovereignty? Hold BCH and accept the risk.
+
+**Success metric:** <1% of users losing funds due to lost keys (balanced with security).
+
+**Deep dive:** [Why: Self-Custody](core-architecture/why-self-custody.md) — Why custodial is worse, "not your keys not your coins," harsh reality as feature not bug
+
+---
+
+### 6. Mandatory Key Backup Education
+
+**Requirement:** Users must prove they've backed up their keys before making their first transaction.
+
+**Why this matters:** Self-custody is worthless if users lose their keys. The #1 cause of crypto fund loss is lost/forgotten keys, not hacks.
+
+**How it works:**
+- On first launch, app generates BCH wallet
+- User must write down 12-word recovery phrase
+- User must re-enter 3 random words to prove they wrote it down
+- Only then can they receive/send BCH
+
+**Success metric:** >80% of users with verified backups.
+
+---
+
+### 7. Multiple Key Storage Options
+
+**Requirement:** Support different backup methods for different risk profiles.
+
+**Why this matters:**
+- **Low-risk users** (small amounts): Encrypted phone storage is fine
+- **Medium-risk users** (moderate amounts): Paper backup at home
+- **High-risk users** (large amounts): Metal backup in safe or split between locations
+
+**How it works:**
+- Encrypted phone storage (default)
+- Paper backup (recommended)
+- Metal backup (advanced users)
+- Multisig support (V1.1)
+
+**Success metric:** Users can choose backup method based on amount stored.
+
+---
+
+### 8. Error Prevention
+
+**Requirement:** Design the system to prevent common user errors (wrong amount, wrong recipient, wrong currency).
+
+**Why this matters:** Financial transactions are high-stakes. A single typo can lose someone's rent money.
+
+**How it works:**
+- QR codes eliminate manual address entry
+- Guided flows show each step clearly
+- Auto-calculation of exchange rates (no manual math)
+- Auto-complete for common amounts (€50, €100, €200)
+- Confirmation screens before irreversible actions
+
+**Success metric:** <1% error rate on transactions.
+
+---
+
+## Why "Permissionless" Matters
+
+**It's not just about access—it's about freedom.**
+
+When systems require permission (KYC, bank accounts, expensive hardware), they create:
+- **Exclusion:** Billions of people are locked out
+- **Surveillance:** Governments track every transaction
+- **Censorship:** Accounts can be frozen arbitrarily
+- **Control:** Central authorities decide who can participate
+
+Asgaya inverts this:
+- **Inclusion:** Anyone with a phone (or even a QR code) can participate
+- **Privacy:** Peer-to-peer coordination, no central database
+- **Censorship-resistance:** No central authority to freeze accounts
+- **Freedom:** Open-source protocol, anyone can build on it
+
+**We're not asking permission to build a better financial system. We're just building it.**
+
+---
+
+## Trade-offs
+
+Permissionless design requires accepting some trade-offs:
+
+1. **Security vs. Usability:** Mandatory key backups add friction, but prevent fund loss
+2. **Privacy vs. Compliance:** No KYC means users are responsible for their own compliance
+3. **Simplicity vs. Flexibility:** Limited features (by design) to avoid overwhelming users
+4. **Accessibility vs. Perfection:** Support low-tech edge cases even if not "ideal"
+
+These trade-offs are documented in detail in the **Decisions** section.
+
+---
+
+## Low-Tech Edge Cases Are Given Serious Consideration
+
+Unlike most crypto projects that assume "everyone has a smartphone," Asgaya designs for the worst-case scenario:
+
+- What if the user has no phone? → **Cardboard QR code**
+- What if there's no internet? → **Offline sync mode**
+- What if they can't read? → **Visual-first UI**
+- What if they don't understand crypto? → **No crypto jargon**
+
+**If it works for the lowest-tech user, it works for everyone.**
+The protocol is unnecesary complicated because of the conditions it has to meet to work but for the casual user it has to feel like sending money from A to B not more than that.
+
+---
+
+## Related Requirements
+
+- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Permissionless design reduces compliance costs
+- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — Low barriers enable rapid network growth
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
+
+- **[Bizum Concept Field](decisions/bizum-concept-field.md)** — Why phone numbers instead of semantic IDs (bank constraints)
+- **[Payment Timeout Window](decisions/payment-timeout-window.md)** — Why 10 minutes accommodates SMS delays and encoding issues
+- Decision: QR codes vs NFC (coming soon)
+- Decision: No universal merchant API (coming soon)
+
+---
+
+*Last updated: April 30, 2026*
+
+
+==============================================
+WHY PROMOTE ADOPTION
+==============================================
+
+# Why: Promote Adoption
+
+**Core Requirement:** Every transaction must create economic incentives for participants to join and grow the network.
+
+**Key principle:** The goal is to make Asgaya redundant except to interact with the legacy system. Users should prefer BCH-to-BCH transfers over remittances.
+
+---
+
+## The Problem
+
+**Ideology alone has failed to spread the use of Bitcoin Cash.**
+
+For years, the BCH community has promoted the technical benefits (fast, cheap, reliable), but adoption remains limited. Why? Because there's no compelling reason for merchants to accept BCH when 99.9% of their customers want to pay with fiat.
+
+**The chicken-and-egg problem:**
+- Users don't hold BCH because merchants don't accept it
+- Merchants don't accept BCH because users don't hold it
+
+Asgaya breaks this cycle by making every remittance transaction create economic incentives for both merchants and users to participate in the BCH ecosystem.
+
+---
+
+## Sub-Requirements
+
+To promote adoption, Asgaya must satisfy these requirements:
+
+### 1. Merchant Economic Incentive
+
+**Requirement:** Merchants must profit from participating in the network.
+
+**Why this matters:** Merchants are rational economic actors. They won't adopt BCH out of ideology—they need to make more money by accepting it than by refusing it.
+
+**How it works:**
+- Every remittance that flows through a merchant earns them a share of the 1% fee
+- A merchant handling 10 remittances/day (€100 avg) earns ~€7.40/day = €222/month passive income
+- This is *in addition to* whatever they earn from selling goods/services
+
+**Success metric:** Merchants signing up for economic reasons, not activism.
+
+**How we achieve this:** [Merchant & LP Incentives](core-architecture/why-promote-adoption.md)
+
+---
+
+### 2. Liquidity Provider Economic Incentive
+
+**Requirement:** LPs must profit from sending fiat to the merchant where the recipient cashes out.
+
+**Why this matters:** Without LPs willing to sell fiat for BCH, the merchants are exposed to bch liquidity and posible backlash from the banking system if they frown upon crypto usage in their area. LPs provide a escape hatch for the merchants not willing to risk holding BCH or selling it themselves. This role comes at a cost not only the capital lock-up but some other risk they might be willing to accept and deserve to be compensated.
+
+**How it works:**
+- LPs earn a share of the 1% fee on every transaction
+- LPs can also earn from the spread if they buy BCH at market rate and sell at a small premium
+- V1.1 will introduce dynamic rewards based on corridor demand
+
+**Success metric:** Sufficient LP liquidity in all corridors to support the merchants.
+
+**How we achieve this:** [Merchant & LP Incentives](core-architecture/why-promote-adoption.md) + [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md)
+
+---
+
+### 3. BCH Usage Incentive (Recipients)
+
+**Requirement:** Recipients must have a reason to keep received funds in BCH rather than immediately cashing out to fiat.
+
+**Why this matters:** If 100% of recipients instantly convert BCH to fiat, we've just built "better Western Union"—still trapping users in the banking system. The goal is bootstrapping a parallel BCH economy.
+
+**The economic case:**
+- **Cash out 5 times/month:** Pay 1% × 5 = €5 in fees
+- **Hold BCH, spend locally:** Pay ~$0.05 total in BCH fees
+- **Savings:** €4.95/month = €59.40/year
+
+Every merchant using Asgaya accepts BCH. As the merchant network grows, holding BCH becomes the rational economic choice.
+
+**Success metric:** 30%+ of recipients holding and spending BCH long-term (>30 days).
+
+**Deep dive:** [Why: BCH Usage Incentive](core-architecture/why-bch-usage-incentive.md) — Breaking the chicken-and-egg problem, why BCH specifically, the endgame vision
+
+---
+
+### 4. Network Effects (Merchant Map)
+
+**Requirement:** Every transaction should create visibility for the merchant network, encouraging more merchants to join.
+
+**Why this matters:** When a recipient sees that 10 merchants in their neighborhood accept BCH (because they're earning from remittances), they're more likely to spend BCH locally. When those merchants see foot traffic increase, they're more likely to promote BCH acceptance.
+
+**How it works:**
+- Public merchant map showing all participating merchants
+- Every remittance transaction adds the merchant to the map (with their consent)
+- Recipients can see: "5 merchants within 2km accept BCH"
+
+**Success metric:** Growing merchant map (new dots with each transfer).
+
+**How we achieve this:** Documented in Android app flows (merchant discovery features).
+
+---
+
+### 5. Escrow Operator Economic Incentive
+
+**Requirement:** Escrow operators compensation from coordinating transactions.
+
+**Why this matters:** Escrows perform critical work: monitoring fiat payment notifications, coordinating BCH settlements, managing disputes. This work requires capital (to hold BCH briefly) and technical infrastructure.
+
+**How it works:**
+- Escrow earns 1/3 of the remaining fee (after exchange costs)
+- On a €100 transfer: €0.247 goes to escrow
+- An escrow handling 100 transactions/day earns ~€24.70/day = €741/month
+
+**Success metric:** Multiple escrow operators competing for business in each corridor.
+
+**How we achieve this:** [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md)
+
+---
+
+## The Adoption Flywheel
+
+Once kickstarted, the incentives create a self-reinforcing cycle:
+
+1. **Sender** in Spain sends €100 via Asgaya (saves €5.49 vs. Western Union)
+2. **Merchant** in Venezuela receives notification, earns €0.247
+3. **Recipient** receives BCH, sees they can pay 5 local merchants with BCH
+4. **Merchant** sees more customers paying with BCH, decides to promote it
+5. **New merchant** hears about passive income, joins network
+6. **Recipient** now sees 6 merchants, decides to hold BCH instead of cashing out
+7. **LP** sees increased demand, joins network to earn fees
+8. **Repeat**
+
+**Result:** Asgaya becomes redundant except for on-ramps/off-ramps to legacy fiat. BCH becomes the default medium of exchange.
+
+---
+
+## Why This Requirement Is Critical
+
+Without economic incentives, Asgaya is just another remittance service—cheaper, but still dependent on ongoing fiat-to-fiat transfers.
+
+With economic incentives, Asgaya becomes a **network growth engine** that turns every remittance into a step toward BCH adoption.
+
+**We're not building a better Western Union. We're building the on-ramp to a parallel economy.**
+
+---
+
+## Related Requirements
+
+- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — The fee savings fund the incentives
+- [Why: Permissionless](core-architecture/why-permissionless.md) — Low barriers enable rapid merchant/LP growth
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
+
+- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Why equal three-way split among escrow/merchant/LP
+- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How BCH settlement creates adoption flywheel
+- Decision: Dynamic reward modulation approach (coming soon in V1.1)
+
+---
+
+*Last updated: April 30, 2026*
+
+
+==============================================
+WHY SELF CUSTODY
+==============================================
+
+# Why: Self-Custody
+
+**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+
+**Core Requirement:** Users must hold their own BCH keys. Asgaya has zero access to user funds.
+
+---
+
+## The Problem
+
+### Custodial Systems Are Permissioned by Definition
+
+**What "custodial" means:**
+- Platform controls user funds
+- Platform can freeze accounts
+- Platform can be compelled by authorities
+- Platform can be hacked
+- **Platform decides who can access their money**
+
+**Examples:**
+- PayPal freezes accounts arbitrarily
+- Banks freeze accounts based on "suspicious activity"
+- Exchanges freeze accounts based on nationality
+- **All claim it's "for your protection"**
+
+**The truth:** Custodial = you're asking permission to use your own money.
+
+---
+
+## Why Self-Custody Is Non-Negotiable
+
+### 1. Custodial Makes Asgaya a Target
+
+**If Asgaya controlled user funds:**
+- Single point of failure (hack Asgaya = steal all funds)
+- Honeypot for attackers (millions in one place)
+- Liability for losses (users sue if hacked)
+- Insurance requirements (expensive, maybe impossible)
+
+**With self-custody:**
+- No central honeypot (each user controls own funds)
+- Can't hack what we don't have
+- No liability for user losses (they control keys)
+- **Asgaya can't lose what it never had**
+
+### 2. Custodial Requires Regulatory Licenses
+
+**If Asgaya held user funds, we'd be classified as:**
+- Payment Institution (requires license, €125k+ capital requirement in EU)
+- Money Transmitter (state-by-state licenses in US, €millions in compliance)
+- Cryptocurrency Exchange (MiCA regulations in EU, complex compliance)
+
+**What this means:**
+- Years to get licenses
+- Millions in capital requirements
+- Ongoing compliance costs
+- KYC requirements (defeats no-KYC principle)
+- **Can't serve unbanked if we need banking licenses**
+
+**With self-custody:**
+- Not a custodian (no custody license needed)
+- Not holding funds (not a payment processor)
+- Peer-to-peer coordinator (regulatory gray zone, not clearly prohibited)
+- **Can launch and serve users immediately**
+
+### 3. Custodial Enables Censorship
+
+**If Asgaya controlled funds, authorities could compel us to:**
+- Freeze accounts from certain countries
+- Block transactions to certain addresses
+- Report all transactions to government
+- Deny service to "high-risk" users
+- **We'd become the gatekeepers we're trying to replace**
+
+**With self-custody:**
+- Can't freeze what we don't control
+- Can't block what we can't access
+- Can't report what we don't see
+- **Users own their money, literally**
+
+### 4. Self-Custody Is Self-Sovereignty
+
+**The philosophical core:**
+
+**Custodial model:**
+- "We'll hold your money safely"
+- "Trust us to protect you"
+- "We know what's best"
+- **You're dependent on our goodwill**
+
+**Self-custody model:**
+- "You hold your money"
+- "You're responsible for protecting it"
+- "You decide what's best"
+- **You're sovereign over your wealth**
+
+**"Not your keys, not your coins" isn't a slogan—it's reality.**
+
+---
+
+## The Trade-Off: Convenience vs. Sovereignty
+
+### What Users Give Up with Self-Custody
+
+**No password reset:**
+- Lose your keys → Funds gone forever
+- No customer service can help
+- No "forgot password" button
+- **Responsibility is yours**
+
+**No reversals:**
+- Send to wrong address → Funds gone
+- Get scammed → No chargeback
+- Make mistake → No undo
+- **Transactions are final**
+
+**No safety net:**
+- Phone stolen → Need recovery phrase or funds gone
+- Recovery phrase lost → Funds gone forever
+- No bank to call, no insurance to claim
+- **You are the bank**
+
+### What Users Gain with Self-Custody
+
+**True ownership:**
+- Your keys, your coins, your control
+- No one can freeze your account
+- No one can confiscate your wealth
+- **Financial sovereignty**
+
+**Censorship resistance:**
+- No one can stop your transactions
+- No one can block your access
+- No one can discriminate based on nationality, politics, or beliefs
+- **Permissionless by design**
+
+**Privacy:**
+- No central database of your transactions
+- No company selling your data
+- No government surveillance by default
+- **Your finances are your business**
+
+---
+
+## Why This Trade-Off Is Acceptable
+
+### The Alternative (Custodial) Is Worse
+
+**Custodial creates systemic risk for everyone:**
+- One hack → Everyone loses
+- One court order → Everyone's accounts frozen
+- One regulatory change → Service shuts down
+- **Centralized failure affects all users**
+
+**Self-custody creates individual responsibility:**
+- User loses keys → Only that user affected
+- User makes mistake → Only that user affected
+- No systemic risk
+- **Each user's security is independent**
+
+**Better:** Small percentage of users lose funds due to lost keys
+**Worse:** Platform hacked and all users lose funds
+
+**The math favors self-custody.**
+
+### User Choice Is Preserved
+
+**Don't want responsibility? → Cash out immediately**
+- Receive BCH from remittance
+- Go to merchant immediately
+- Exchange for local currency
+- Hold zero BCH
+- **Zero risk of lost keys**
+
+**Want sovereignty? → Hold BCH and accept responsibility**
+- Save recovery phrase
+- Protect your keys
+- Accept risk
+- Gain control
+- **You chose this**
+
+**The system supports both:**
+- Low-commitment users cash out (safe, simple)
+- High-commitment users hold BCH (sovereign, responsible)
+- **No one is forced into a model they don't want**
+
+---
+
+## Self-Custody Enables True Peer-to-Peer
+
+### Asgaya Doesn't Touch Funds—Ever
+
+**The flow:**
+1. Sender sends EUR to escrow's bank account (escrow controls)
+2. Escrow buys BCH on Kraken (escrow controls)
+3. Escrow sends BCH to recipient's wallet (recipient controls)
+4. Recipient cashes out at merchant or holds (recipient controls)
+
+**At no point does "Asgaya the platform" control any funds.**
+
+**Each actor controls their own funds:**
+- Escrow: Controls their bank account + BCH wallet
+- Merchant: Controls their BCH wallet
+- Recipient: Controls their BCH wallet
+- Sender: Controls their bank account
+
+**Asgaya coordinates. We don't custody.**
+
+**This is what "peer-to-peer" actually means.** Not "platform intermediating," but participants transacting directly while Asgaya provides the communication layer.
+
+---
+
+## Why "Lost Keys = Lost Funds" Is a Feature, Not a Bug
+
+### Harsh Reality Ensures Responsibility
+
+**If we offered recovery:**
+- "Password reset via email" → Email gets hacked, funds stolen
+- "Customer service recovery" → Social engineering attacks
+- "Backup keys on servers" → Server gets hacked, all funds stolen
+- **Every safety net is a security hole**
+
+**By making loss permanent:**
+- Users take it seriously
+- Users save recovery phrases
+- Users understand the stakes
+- **Accountability produces careful behavior**
+
+**Example:**
+- User A: "Lost keys = lost funds? I'll write down my recovery phrase in three places"
+- User B: "I can always reset password, no worries" → Gets phished, loses funds
+
+**Harsh reality produces better security practices than false safety.**
+
+### The Unrecoverable Is Unstealable
+
+**Key insight:** If Asgaya can recover your keys, so can hackers.
+
+**Scenarios:**
+
+**Recoverable system:**
+- User forgets password
+- Clicks "reset password"
+- Receives email with reset link
+- **Attacker hacks email, steals funds**
+
+**Unrecoverable system:**
+- User forgets password
+- No reset option
+- Funds locked forever
+- **Attacker can't access them either**
+
+**Trade-off:** Some users lose funds due to carelessness vs all users at risk of theft.
+
+**Self-custody chooses: Better 5% lose due to carelessness than 100% vulnerable to hacking.**
+
+---
+
+## Education Before Commitment
+
+### Users Must Understand Before They Hold
+
+**The onboarding requirement:**
+
+**Before wallet creation:**
+1. Explain self-custody clearly
+2. Show recovery phrase importance
+3. Test understanding ("What happens if you lose your recovery phrase?")
+4. Offer choice: "Cash out immediately" vs "Hold BCH"
+5. **Only proceed if user demonstrates understanding**
+
+**Why this matters:**
+- User who doesn't understand → Loses funds → Blames Asgaya
+- User who was educated → Loses funds → Accepts responsibility
+
+**We can't prevent all losses, but we can ensure users knew the stakes.**
+
+---
+
+## Related Requirements
+
+- [Why: Permissionless](core-architecture/why-permissionless.md) — Self-custody is essential for true permissionless access
+- [Why: No KYC](core-architecture/why-no-kyc.md) — Custody would require licenses, which require KYC
+
+---
+
+## Trade-offs and Decisions
+
+See the **Decisions** section for how we achieve self-custody safely:
+
+- Decision: Key backup education flow (coming soon)
+- Decision: Tiered security recommendations (coming soon)
+
+---
+
+## The Bottom Line
+
+**Custodial = Asking permission to use your own money.**
+
+**Self-custody = Owning your money, literally.**
+
+The trade-off is real:
+- Lose keys → Lose funds (no recovery)
+- But no one can take your funds from you (no censorship)
+
+**For a truly permissionless system, this trade-off is non-negotiable.**
+
+If we held user funds, we'd need licenses. If we need licenses, we need KYC. If we need KYC, we exclude the unbanked.
+
+**Self-custody isn't just about philosophy—it's about staying permissionless.**
+
+---
+
+*Last updated: May 1, 2026*
+*Core principle: "Not your keys, not your coins. Self-custody enables permissionless, but requires responsibility."*

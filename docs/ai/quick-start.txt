@@ -1,0 +1,555 @@
+==============================================
+ASGAYA QUICK START GUIDE
+==============================================
+
+AI-Optimized Overview (~15 minute read)
+Version: 1.0
+Last Updated: 2026-05-05
+
+==============================================
+WHAT IS ASGAYA?
+==============================================
+
+Asgaya is a permissionless, peer-to-peer remittance protocol that enables cross-border money
+transfers using Bitcoin Cash as the settlement layer, with fiat on/off ramps through local
+payment systems.
+
+**Tagline:** Bitcoin Cash remittances with <1% fees, no KYC, self-custody
+
+**Key Innovation:** Two-step settlement with pull-based BCH purchases eliminates volatility risk
+
+
+CORE REQUIREMENTS
+------------------
+
+Asgaya is designed to satisfy three fundamental requirements:
+
+1. CHEAPER THAN LEGACY (<1% fees)
+   - Traditional remittances: 6.49% average cost
+   - Asgaya target: <1% through market-rate exchanges + free P2P rails
+   - On €100 transfer: Save €5.49
+
+2. PROMOTE MERCHANT ADOPTION
+   - Every transaction creates economic incentives for participants
+   - Merchants earn ~0.247% per transaction
+   - Liquidity Providers earn ~0.247% per settlement
+   - Self-sustaining network growth
+
+3. PERMISSIONLESS
+   - No KYC requirements
+   - Minimal hardware (Android phone)
+   - Minimal knowledge (if you can use WhatsApp, you can use Asgaya)
+   - Self-custody (users control their BCH)
+
+
+FEE STRUCTURE
+-------------
+
+Total fee: 1% of transfer amount
+
+On a €100 transfer, the 1% (€1.00) is distributed as:
+- Exchange fee (Kraken): ~€0.26 (0.26%)
+- Escrow operator: ~€0.247 (0.247%)
+- Merchant: ~€0.247 (0.247%)
+- Liquidity Provider: ~€0.247 (0.247%) - if instant settlement selected
+
+How it works: The 1% fee first covers the Kraken exchange cost (~0.26%), then the
+remaining ~0.74% is split equally three ways among the participants.
+
+Comparison: €1.00 (Asgaya) vs €6.49 (traditional) = 6.5× cheaper
+
+
+CURRENT STATUS
+--------------
+
+Phase: Public Beta (Seeking External Review)
+Implementation: Documentation complete, code not started
+Review Status: All critical gaps resolved (DeepSeek review - May 2026)
+
+Next: Phase 0 implementation (Asgaya Husk - manual everything)
+
+==============================================
+THE PROBLEM
+==============================================
+
+REMITTANCE CRISIS
+-----------------
+
+Global remittances: $685 billion annually
+Average cost: 6.49%
+Money lost to fees: $44.5 billion per year
+
+Despite UN and G20 pledges to reduce costs to 3%, the reality is stark:
+over $44.5 billion never reaches its destination.
+
+
+WHY ARE REMITTANCES EXPENSIVE?
+-------------------------------
+
+1. WALLED GARDENS
+   - Payment systems don't interoperate (Bizum can't send to PagoMóvil)
+   - Each system has monopoly within its jurisdiction
+   - No competition = high fees
+
+2. BUREAUCRACY
+   - KYC/AML compliance costs
+   - Multiple intermediaries
+   - Regulatory overhead in each jurisdiction
+
+3. VOLATILITY RISK
+   - Previous crypto remittance attempts failed due to volatility
+   - Price changes between send and receive destroyed value
+   - Users lost trust after bad experiences
+
+4. BOOTSTRAPPING PROBLEM
+   - Merchants won't join without users
+   - Users won't join without merchants
+   - Chicken-and-egg deadlock
+
+
+PREVIOUS CRYPTO ATTEMPTS (AND WHY THEY FAILED)
+-----------------------------------------------
+
+Bitcoin, Ethereum, Stellar, Ripple, etc. all tried crypto remittances.
+They all failed for the same reason: VOLATILITY.
+
+Scenario:
+- Day 1: Sender sends €100, buys 0.01 BTC
+- Day 5: Price drops 10%
+- Day 5: Recipient cashes out, gets €90
+
+Result: Recipient lost €10 due to volatility, not fees.
+
+**Critical insight:** Volatility protection isn't optional, it's foundational.
+
+==============================================
+THE SOLUTION
+==============================================
+
+ASGAYA'S APPROACH
+-----------------
+
+Asgaya solves the four problems:
+
+1. WALLED GARDENS → Use BCH as bridge
+   - Bizum (Spain) → BCH → PagoMóvil (Venezuela)
+   - Free P2P rails on both sides
+   - BCH handles cross-border settlement
+
+2. BUREAUCRACY → Permissionless design
+   - No KYC (use existing payment apps)
+   - No intermediaries (direct peer-to-peer)
+   - No special licenses needed
+
+3. VOLATILITY → Two-step settlement with pull system
+   - EUR held until recipient claims (0% volatility)
+   - BCH purchase only when ready to settle (30-second window)
+   - Volatility risk reduced from 20 minutes to 30 seconds
+
+4. BOOTSTRAPPING → Economic incentives
+   - Merchants earn €0.247 per €100 transaction
+   - Build network by mobilizing lost fees
+   - Every transaction creates a new merchant advocate
+
+
+TWO-STEP SETTLEMENT (THE KEY INNOVATION)
+-----------------------------------------
+
+Traditional crypto remittance:
+1. Sender buys crypto
+2. Crypto sits (volatility risk!)
+3. Recipient sells crypto
+4. Total volatility window: Hours or days
+
+Asgaya's approach:
+1. Sender sends EUR to escrow (0% volatility - it's fiat!)
+2. EUR sits in escrow (no BCH bought yet)
+3. Recipient goes to merchant, ready to claim
+4. Escrow buys BCH (30-second transaction)
+5. BCH settles to merchant
+6. Merchant gives cash to recipient
+7. Total BCH volatility window: 30 seconds
+
+Result: 99.5% reduction in volatility exposure
+
+
+PULL SYSTEM
+-----------
+
+Key principle: Don't buy BCH until someone is ready to receive fiat.
+
+Push system (traditional):
+- Sender triggers BCH purchase
+- BCH sits waiting for recipient
+- Volatility risk: High
+
+Pull system (Asgaya):
+- Recipient triggers BCH purchase (by claiming at merchant)
+- BCH purchased and settled immediately
+- Volatility risk: Minimal
+
+Analogy: Don't make the sandwich until the customer walks in the door.
+
+==============================================
+HOW IT WORKS (STEP-BY-STEP)
+==============================================
+
+PARTICIPANTS
+------------
+
+1. SENDER (María, Barcelona)
+   - Has EUR in Spanish bank account
+   - Has Bizum app on phone
+   - Wants to send €100 to Venezuela
+
+2. RECIPIENT (Elena, Caracas)
+   - Has Venezuelan phone number
+   - Needs to receive bolívares (VES)
+   - Doesn't need bank account or special app
+
+3. MERCHANT (Pulpería owner, Caracas)
+   - Has Android phone
+   - Has Asgaya app installed
+   - Has cash available (bolívares)
+   - Earns ~€0.247 per transaction
+
+4. LIQUIDITY PROVIDER (Optional)
+   - Has EUR and BCH
+   - Provides instant settlement
+   - Earns ~€0.247 per settlement
+
+5. ESCROW OPERATOR
+   - Holds EUR temporarily
+   - Coordinates BCH purchase
+   - Earns ~€0.247 per transaction
+
+
+THE FLOW (EUR → VES REMITTANCE)
+--------------------------------
+
+STEP 1: SENDER INITIATES (María in Barcelona)
+- Opens Asgaya app
+- Enters: €100 to send
+- Enters: Elena's Venezuelan phone (0412-XXX-5678)
+- Enters: Recipient name (Elena)
+- App calculates: 4,999,500 VES will arrive (using live rates)
+- App shows fee: €1.00 total
+- María approves
+
+STEP 2: SENDER PAYS ESCROW (via Bizum)
+- App generates unique code: ASG-7X2K9
+- María opens Bizum app
+- Sends €100 to escrow's Bizum account
+- Concept field: "ASG-7X2K9 Elena 0412-XXX-5678"
+- Payment completes instantly (Bizum is free and instant in Spain)
+
+STEP 3: ESCROW RECEIVES & HOLDS
+- Escrow's NotificationListener detects Bizum payment
+- Parses concept field, extracts code + recipient phone
+- Matches payment to María's pending transaction
+- EUR sits in escrow (NO BCH PURCHASED YET - this is key!)
+- Sends SMS to Elena: "María sent you 4,999,500 VES. Code: ASG-7X2K9. Go to merchant."
+
+STEP 4: RECIPIENT GOES TO MERCHANT (Elena in Caracas)
+- Elena receives SMS notification
+- Goes to nearby pulpería (small neighborhood store)
+- Merchant has Asgaya app installed
+
+STEP 5: MERCHANT ENTERS CODE
+- Merchant opens Asgaya app
+- Enters code: ASG-7X2K9
+- App shows: "Elena, 4,999,500 VES"
+- Merchant confirms details match
+
+STEP 6: CASH-OUT (THE CRITICAL MOMENT)
+- Merchant gives Elena 4,999,500 VES in cash
+- Elena confirms receipt in merchant's app (face-to-face)
+- Merchant confirms delivery in app
+
+STEP 7: PULL SYSTEM TRIGGERS (BCH Settlement)
+- ONLY NOW does escrow buy BCH (pull-based!)
+- Escrow sends Bizum to Kraken: €99.74 (€100 - €0.26 Kraken fee)
+- Kraken instantly converts to BCH at market rate
+- BCH sent to merchant's wallet
+- Merchant receives: ~€0.247 in BCH (their fee)
+- LP receives: ~€0.247 in BCH (if instant settlement)
+- Escrow keeps: ~€0.247 (their fee)
+
+Total BCH volatility window: ~30 seconds (Kraken exchange + BCH transaction)
+
+STEP 8: COMPLETION
+- María sees: "Delivered" status
+- Elena has: Cash in hand
+- Merchant has: BCH reward + new customer
+- System has: New trusted merchant node
+
+
+WHAT IF RECIPIENT DOESN'T CLAIM?
+---------------------------------
+
+Unclaimed transaction policy:
+- Claim window: 24 hours
+- Notifications: 12h (reminder), 18h (sender alert), 23h (urgent)
+- If unclaimed: Auto-refund sender
+- Refund amount: €99.90 (€100 - €0.10 processing fee)
+- Processing fee covers: Manual refund work + 24h liquidity lock
+
+Note: No BCH was bought (pull system!), so no exchange fees incurred.
+
+
+WHAT IF THERE'S A DISPUTE?
+---------------------------
+
+Merchant says: "I gave cash"
+Recipient says: "I never received it"
+
+Resolution (MVP):
+- Escrow investigates (24h deadline)
+- Evidence requested: Video, photos, witnesses, GPS
+- Default: Favor merchant (they're scarce resource)
+- 3-strike system for dishonest merchants
+- Future: Community arbitration, dispute pool
+
+Safe confirmation sequence (prevents most disputes):
+1. Recipient shows code to merchant
+2. Merchant enters code (validates)
+3. Merchant hands cash to recipient
+4. Merchant confirms "I gave cash" (in recipient's presence)
+5. Recipient confirms "I received cash" (in merchant's presence)
+6. Both confirmations done face-to-face
+
+Self-auditing through UX design!
+
+==============================================
+KEY FEATURES
+==============================================
+
+VOLATILITY PROTECTION
+----------------------
+
+Problem: Crypto price changes destroy value
+Solution: Two-step settlement + pull system
+
+Volatility window:
+- Traditional crypto remittance: Hours to days
+- Asgaya: 30 seconds (BCH settlement only)
+
+Result: 99.5%+ reduction in volatility exposure
+
+
+PERMISSIONLESS ACCESS
+----------------------
+
+No KYC required because:
+- Users already KYC'd by their banks (Bizum, PagoMóvil)
+- We're just coordinating existing payment systems
+- No new accounts, no new identity verification
+
+Anyone can participate:
+- Senders: Just need Bizum account (already have it)
+- Recipients: Just need phone number (already have it)
+- Merchants: Just need Android phone + Asgaya app
+
+
+COMPETITIVE PRICING
+-------------------
+
+Traditional remittance: 6.49% average
+Asgaya: 1% total
+
+Why so cheap?
+1. Free P2P rails (Bizum, PagoMóvil - no fees)
+2. Market-rate exchanges (Kraken - 0.26%, not 6.49%)
+3. No intermediaries (direct peer-to-peer)
+4. No regulatory overhead (permissionless)
+
+Fee breakdown on €100:
+- Kraken exchange: €0.26 (unavoidable)
+- Participants (escrow, merchant, LP): €0.74 (split 3 ways)
+- Total: €1.00 (vs €6.49 traditional)
+
+
+MERCHANT INCENTIVES
+-------------------
+
+Why merchants join:
+1. Earn ~€0.247 per €100 transaction (0.247% fee)
+2. Attract new customers (recipients come to their store)
+3. Drive repeat business (recipients become regular customers)
+4. No risk (receive BCH instantly, can hold or sell)
+
+Example: 100 transactions/month = €24.70 extra income
+In Venezuela (or Honduras, Nicaragua, etc.), this is significant!
+
+
+SELF-CUSTODY
+------------
+
+Users control their private keys:
+- Merchants receive BCH directly to their wallet
+- No custodial risk (no exchange can freeze funds)
+- True peer-to-peer transfer
+- Bitcoin Cash ethos maintained
+
+
+BCH AS SETTLEMENT LAYER
+------------------------
+
+Why Bitcoin Cash (not Bitcoin, Ethereum, etc.)?
+
+1. Low fees: ~€0.01 per transaction (vs €5-50 for Bitcoin)
+2. Fast confirmation: 10 minutes average, 0-conf reliable
+3. Reliable: No congestion, predictable fees
+4. Philosophy: Designed for payments (not just store of value)
+
+BCH is the bridge, not the destination. Users never need to think about it.
+
+==============================================
+PHASES & ROADMAP
+==============================================
+
+PHASE 0: ASGAYA HUSK (MANUAL EVERYTHING)
+-----------------------------------------
+
+Goal: Validate core concept with minimal automation
+
+Characteristics:
+- 1-2 trusted merchants (personal connections)
+- Manual escrow operation (operator monitors Bizum manually)
+- Manual BCH purchases (operator triggers Kraken orders)
+- No app yet (SMS-based coordination)
+- Friends & family testers only
+
+Success metric: 10 successful EUR→VES remittances with 0 disputes
+Timeline: Manual, data-driven validation
+
+
+PHASE 1: MVP (EUR→VES CORRIDOR)
+--------------------------------
+
+Goal: First automated implementation
+
+Features:
+- Android app (sender, merchant)
+- NotificationListener (automated Bizum parsing)
+- Backend APIs (19 endpoints)
+- Automated BCH settlement
+- Dispute resolution framework
+- 5-10 merchants in Caracas
+
+Success metric: 100 transactions, <5% dispute rate, <1 minute avg settlement
+Timeline: After Phase 0 validation
+
+
+PHASE 2: SCALE EUR→VES
+-----------------------
+
+Goal: Grow Venezuela corridor
+
+Features:
+- 50+ merchants across Venezuela
+- LP competition (bounty system for instant settlement)
+- Merchant onboarding automation
+- Dynamic reward modulation (if needed)
+- Enhanced fraud detection
+
+Success metric: 1,000 transactions/month, merchant density in major cities
+
+
+PHASE 3+: NEW CORRIDORS
+------------------------
+
+EUR→HNL (Honduras), EUR→NIO (Nicaragua), EUR→Other
+
+Expansion criteria:
+- Local payment rail exists (PagoMóvil equivalent)
+- Merchant interest validated
+- Regulatory environment assessed
+- Community demand confirmed
+
+Long-term vision: Global permissionless remittance network
+
+==============================================
+CURRENT STATUS & WHAT'S NEXT
+==============================================
+
+DOCUMENTATION STATUS
+--------------------
+
+✅ Complete: All critical sections documented
+✅ Reviewed: DeepSeek external review (May 2026)
+✅ Gaps resolved: All critical issues addressed
+✅ Ready for: Implementation (Phase 0)
+
+
+CRITICAL GAPS RESOLVED
+-----------------------
+
+1. Fee split clarity: ✅ Fixed
+   - Now clear that Kraken fee is deducted first
+   - Consistent messaging across all documents
+
+2. Dynamic reward modulation: ✅ Fixed
+   - Marked as POST-MVP feature (V1.1+)
+   - MVP uses fixed equal splits
+
+3. Unclaimed transaction expiry: ✅ Fixed
+   - 24-hour claim window with auto-refund
+   - €0.10 processing fee (not €0.50 - pull system!)
+   - Notification timeline documented
+
+4. Dispute resolution framework: ✅ Fixed
+   - Complete policy document
+   - 3-strike merchant system
+   - Safe confirmation sequence
+   - Evidence hierarchy defined
+
+
+WHAT'S NEXT
+-----------
+
+Immediate (May-June 2026):
+- Phase 0 implementation (Asgaya Husk)
+- Merchant recruitment (1-2 trusted contacts)
+- Friends & family testing
+- Real-world data collection
+
+Near-term (Q3 2026):
+- Merchant onboarding research session
+- Android app development starts (if Phase 0 succeeds)
+- Backend API implementation
+- NotificationListener development
+
+Long-term (2027+):
+- Scale EUR→VES corridor
+- Launch new corridors (EUR→HNL, EUR→NIO)
+- Community governance
+- Decentralized escrow (BCH miners as escrows)
+
+
+WHERE TO GO FROM HERE
+---------------------
+
+For comprehensive review, read in this order:
+1. core-arch.txt (WHY each feature exists)
+2. decisions.txt (HOW we implement it)
+3. flows.txt (UX walkthrough)
+4. apis.txt (Technical specs)
+
+Or jump straight to: complete.txt (everything in one file)
+
+For human-friendly browsing: https://rufitnes.github.io/asgayapedia/
+
+For GitHub repository: https://github.com/rufitnes/asgayapedia
+
+==============================================
+END OF QUICK START GUIDE
+==============================================
+
+Questions? Open a GitHub issue or contact: jesgf@yahoo.es
+
+Last Updated: 2026-05-05
+Version: 1.0
+Status: All critical gaps resolved
+
+==============================================

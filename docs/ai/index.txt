@@ -1,0 +1,135 @@
+==============================================
+ASGAYA DOCUMENTATION - AI REVIEW ACCESS
+==============================================
+
+Welcome! This directory contains Asgaya protocol documentation optimized for AI consumption.
+
+==============================================
+QUICK START
+==============================================
+
+New to Asgaya? Start here:
+→ quick-start.txt (500 lines, ~15 min read)
+
+Condensed overview of the entire protocol: what it is, why it exists, how it works.
+
+==============================================
+RECOMMENDED READING ORDER
+==============================================
+
+For comprehensive review:
+
+1. quick-start.txt      → Overview & context (500 lines)
+2. core-arch.txt        → Why each feature exists (1500 lines)
+3. decisions.txt        → How we implement it (1200 lines)
+4. flows.txt            → User experience (800 lines)
+5. apis.txt             → Technical specs (1000 lines)
+
+Total: ~5000 lines, ~2-3 hours thorough review
+
+==============================================
+FILES BY CONTEXT WINDOW
+==============================================
+
+**Small context models (<8K tokens):**
+→ quick-start.txt only
+
+**Medium context models (8K-32K tokens):**
+→ quick-start.txt + core-arch.txt + decisions.txt
+
+**Large context models (32K+ tokens):**
+→ complete.txt (everything in one file)
+
+==============================================
+FILES BY TOPIC
+==============================================
+
+**Strategic/Business:**
+- quick-start.txt       → High-level overview
+- core-arch.txt         → Feature rationale (the WHYs)
+
+**Technical/Implementation:**
+- decisions.txt         → Design decisions (the HOWs)
+- apis.txt              → Backend specifications
+- flows.txt             → UX flows (sender, recipient, merchant, LP)
+
+**Comprehensive:**
+- complete.txt          → All of the above in one file
+- overview.txt          → Optimized summary (llm.txt format)
+
+==============================================
+WHAT TO REVIEW
+==============================================
+
+Focus areas requested:
+1. Consistency - Do decisions match research?
+2. Missing pieces - Critical gaps or edge cases?
+3. Clarity - Can newcomers understand it?
+4. Technical soundness - Security concerns?
+5. Research validation - Do sources support conclusions?
+
+==============================================
+HOW TO PROVIDE FEEDBACK
+==============================================
+
+**GitHub Issues (Preferred):**
+https://github.com/rufitnes/asgayapedia/issues
+
+**Label by severity:**
+- critical: Blocks implementation, must fix
+- warning: Should address before launch
+- improvement: Nice to have, post-MVP
+
+**Format:**
+- Title: Brief description
+- Body: Detailed explanation + location (file, line)
+- Suggestion: Proposed fix (if applicable)
+
+==============================================
+FILE DETAILS
+==============================================
+
+index.txt           This file (navigation guide)
+quick-start.txt     500 lines   Condensed overview
+overview.txt        2000 lines  Optimized summary (llm.txt)
+core-arch.txt       1500 lines  Core architecture (WHY)
+decisions.txt       1200 lines  Design decisions (HOW)
+flows.txt           800 lines   User flows (UX)
+apis.txt            1000 lines  Backend APIs (TECHNICAL)
+complete.txt        6000 lines  Everything combined
+
+==============================================
+DIRECT RAW URLS (COPY-PASTE READY)
+==============================================
+
+Base: https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/
+
+index.txt:          [BASE]/index.txt
+quick-start.txt:    [BASE]/quick-start.txt
+overview.txt:       [BASE]/overview.txt
+core-arch.txt:      [BASE]/core-arch.txt
+decisions.txt:      [BASE]/decisions.txt
+flows.txt:          [BASE]/flows.txt
+apis.txt:           [BASE]/apis.txt
+complete.txt:       [BASE]/complete.txt
+
+Once asgaya.org goes live, these will also be available at:
+https://asgaya.org/ai/[filename]
+
+==============================================
+LAST UPDATED
+==============================================
+
+Version: 1.0
+Date: 2026-05-05
+Status: All critical gaps resolved (DeepSeek review)
+
+==============================================
+QUESTIONS?
+==============================================
+
+Project maintainer: Suso (jesgf@yahoo.es)
+Repository: https://github.com/rufitnes/asgayapedia
+Human-friendly docs: https://rufitnes.github.io/asgayapedia/
+
+==============================================
