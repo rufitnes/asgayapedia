@@ -6,6 +6,18 @@
 
 ---
 
+> ⚠️ **STATUS: POST-MVP FEATURE (V1.1+)**
+>
+> **This concept is NOT implemented in Phase 0-2 (MVP).**
+>
+> The initial implementation uses **fixed equal splits** (see [Fee Splitting Model](../decisions/fee-splitting-model.md)) for simplicity and predictability. Dynamic Reward Modulation is a **future enhancement** for consideration after validating the core protocol with real users and observing actual market behavior.
+>
+> **Why document it now?** To preserve the design thinking and allow community discussion before implementation. This concept may be refined or rejected based on MVP feedback.
+>
+> **Current status:** Design proposal, not active code.
+
+---
+
 ## What It Is
 
 A **dynamic reward split mechanism** that automatically adjusts LP/Merchant incentives based on BCH price volatility.

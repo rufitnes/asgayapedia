@@ -4,7 +4,9 @@
 
 Key concepts that underpin Asgaya's design.
 
-## Core Concepts
+> **Note:** Some concepts are **active** (implemented in MVP), while others are **future enhancements** (post-MVP). Each concept page indicates its status.
+
+## Core Concepts (Active - MVP)
 
 ### [Two-Step Settlement](concepts/two-step-settlement.md)
 The fundamental mechanism that separates fiat receipt from BCH purchase, eliminating volatility risk.
@@ -12,24 +14,24 @@ The fundamental mechanism that separates fiat receipt from BCH purchase, elimina
 ### [Pull System](concepts/pull-system.md)
 How BCH is purchased AFTER confirmations, not before - protecting against price movements.
 
-### [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md)
-How merchant and LP rewards adjust based on liquidity needs.
-
-### [Bubble Prevention](concepts/bubble-prevention.md)
-Mechanisms to prevent speculative bubbles in the reward system.
-
----
-
-## Supporting Concepts
-
 ### [Live Exchange Rates](concepts/live-exchange-rates.md)
 How real-time exchange rates are calculated and displayed.
 
 ### [Market Making Partners](concepts/market-making-partners.md)
 The role of liquidity providers in the Asgaya ecosystem.
 
-### [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md)
-How BCH miners can serve as ideal escrow operators, earning dual revenue streams.
+---
+
+## Future Enhancements (Post-MVP)
+
+### [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) ⚠️ **V1.1+**
+Proposed mechanism for adjusting merchant/LP rewards based on BCH volatility. NOT implemented in MVP - uses fixed equal splits instead.
+
+### [Bubble Prevention](concepts/bubble-prevention.md) ⚠️ **Future**
+Proposed mechanisms to prevent speculative bubbles in the reward system.
+
+### [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md) ⚠️ **Future**
+How BCH miners could serve as escrow operators in a fully decentralized model, earning dual revenue streams.
 
 ---
 
