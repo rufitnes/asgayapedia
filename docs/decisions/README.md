@@ -60,7 +60,9 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 - **[Payment Timeout Window](decisions/payment-timeout-window.md)** — Sender manually funds escrow in their own banking app (Asgaya can't initiate payments without KYC/integration). Need 10-minute window for sender to complete payment. Multiple funding options preserve permissionless access. Trade-off: Slower UX, but anyone can be an escrow without payment processor integration.
 
-- **[Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)** — Recipients have 24 hours to claim remittances before automatic refund. Prevents funds from locking indefinitely in escrow. Proactive notifications to both sender and recipient. Processing fee (€0.50) covers round-trip exchange costs. Trade-off: Time pressure vs escrow risk protection.
+- **[Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)** — Recipients have 24 hours to claim remittances before automatic refund. Prevents funds from locking indefinitely in escrow. Proactive notifications to both sender and recipient. Processing fee (€0.10) covers manual refund work + liquidity lock. Trade-off: Time pressure vs escrow risk protection.
+
+- **[Dispute Resolution Framework](decisions/dispute-resolution.md)** — Two-sided confirmation disputes resolved by escrow (MVP) in 24h. 3-strike merchant system (Strike 1 permanent, Strike 2 redeemable at €2K, Strike 3 final). Evidence via email. Default: favor merchant. Safe confirmation sequence prevents most disputes. Trade-off: Manual resolution vs network trust.
 
 - **No KYC Payment Rails** — Use consumer payment systems (Bizum, Nequi, etc.) that don't require business accounts or KYC. Anyone with a bank account can be an escrow. Constraint: Must work within each system's rules (see Bizum Concept Field decision).
 
@@ -119,6 +121,7 @@ These principles guide all implementation decisions:
 | Bizum Concept Field | **Active** | Yes, if bank rules change or better matching available |
 | Payment Timeout | **Active** | Yes, if SMS delays improve or alternative notification method found |
 | Unclaimed Transaction Expiry | **Active** | Yes, if real data shows 24h is too short/long for specific corridors |
+| Dispute Resolution | **Active** | Yes, strike thresholds and evidence requirements based on trial data |
 | Fee Splitting | **Active** | Yes, in V1.1 with dynamic rewards based on real usage data |
 | Two-Step Settlement | **Active** | Only if BCH volatility becomes negligible (<1% daily for months) |
 
