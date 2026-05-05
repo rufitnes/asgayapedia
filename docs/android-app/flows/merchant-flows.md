@@ -172,10 +172,14 @@ Show merchant how much cash to hand out, get confirmation.
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  ⚠️ IMPORTANT:                      │
-│  • Count cash carefully             │
-│  • Hand cash to Elena               │
-│  • Confirm ONLY after cash given    │
+│  ⚠️ CRITICAL - Safe Confirmation:   │
+│  1. Count VES 113,850 carefully     │
+│  2. Hand ALL cash to Elena FIRST    │
+│  3. Wait for Elena to confirm       │
+│  4. ONLY tap "Yes" AFTER steps 1-3  │
+│                                     │
+│  ⚠️ Do NOT confirm before handing   │
+│     cash - prevents disputes!       │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
@@ -257,27 +261,40 @@ Show merchant how much cash to hand out, get confirmation.
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  Transaction frozen for review.     │
+│  Transaction under review (24h max) │
 │                                     │
-│  Asgaya support will contact you    │
-│  within 24 hours.                   │
+│  📧 Submit evidence to:             │
+│  disputes@asgaya.org                │
+│                                     │
+│  Helpful evidence:                  │
+│  • Video of transaction             │
+│  • Photos of Elena with cash        │
+│  • Witness statements               │
 │                                     │
 │  Order: REM-89234                   │
 │                                     │
-│  [ Contact Support Now ]            │
+│  ┌─────────────────────────────┐   │
+│  │  Email Evidence Now         │   │
+│  └─────────────────────────────┘   │
+│                                     │
 │  [ Back to Dashboard ]              │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
-**Dispute Handling:**
-- Funds frozen until manual review
-- Support (Suso for MVP) contacts both parties
-- Should be RARE (trust system works)
-- If merchant gave cash but recipient says no → Likely fraud attempt, ban recipient
-- If merchant didn't give cash but said yes → Ban merchant
+**Dispute Resolution (MVP):**
+- **Timeline:** 24h max for escrow decision
+- **Evidence:** Video > Photos > GPS > Witness > Word-of-mouth
+- **Default:** Favor merchant (unless merchant has previous strikes)
+- **3-Strike System:**
+  - Strike 1: Permanent internal flag + investigation
+  - Strike 2: Public warning (redeemable at €2K successful txns)
+  - Strike 3: Final warning (merchant still operates)
+- Full policy: [Dispute Resolution Framework](decisions/dispute-resolution.md)
 
-**Note:** Two-sided confirmation creates accountability. Both parties know the other must confirm.
+**Should be RARE:** Safe confirmation sequence prevents most disputes.
+
+**Note:** Two-sided confirmation + evidence collection creates accountability.
 
 ---
 

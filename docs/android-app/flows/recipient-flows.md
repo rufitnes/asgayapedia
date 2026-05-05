@@ -273,12 +273,18 @@ Confirm recipient is at merchant and ready to claim cash.
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  Instructions:                      │
+│  ⚠️ CRITICAL - Safe Confirmation:   │
 │                                     │
-│  1️⃣ Show code to merchant           │
-│  2️⃣ Merchant verifies amount        │
-│  3️⃣ You receive cash                │
-│  4️⃣ Confirm below when done         │
+│  1️⃣ Show code REM-89234 to merchant │
+│  2️⃣ Merchant counts cash            │
+│  3️⃣ COUNT your cash - verify amount │
+│  4️⃣ Tell merchant to confirm AFTER  │
+│     they hand you ALL the cash      │
+│  5️⃣ ONLY confirm AFTER receiving    │
+│     cash (while merchant watches)   │
+│                                     │
+│  ⚠️ Do NOT confirm before receiving │
+│     cash - prevents disputes!       │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
@@ -464,6 +470,55 @@ Confirm recipient is at merchant and ready to claim cash.
 │                                     │
 └─────────────────────────────────────┘
 ```
+
+### Dispute Detected
+
+```
+┌─────────────────────────────────────┐
+│          ⚠️ Dispute Detected        │
+├─────────────────────────────────────┤
+│                                     │
+│  Merchant says they gave you cash,  │
+│  but you say you didn't receive it. │
+│                                     │
+│  Your confirmation: NO ❌            │
+│  Merchant's confirmation: YES ✓     │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  Transaction under review (24h max) │
+│                                     │
+│  📧 Submit evidence to:             │
+│  disputes@asgaya.org                │
+│                                     │
+│  Helpful evidence:                  │
+│  • Your side of the story           │
+│  • Photos (if no cash received)     │
+│  • Witness statements               │
+│  • Your location data               │
+│                                     │
+│  Order: REM-89234                   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  Email Evidence Now         │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  [ Back to Home ]                   │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Dispute Resolution:**
+- Escrow investigates within 24h
+- Evidence evaluated (merchant video > photos > GPS > word)
+- Default: Favor merchant (unless merchant has strikes)
+- If you win: Funds refunded to sender, merchant flagged
+- If merchant wins: Transaction completes, merchant receives BCH
+- Full policy: [Dispute Resolution Framework](decisions/dispute-resolution.md)
+
+**Should be RARE:** Safe confirmation sequence prevents most disputes.
+
+---
 
 ### Merchant Not Available
 
