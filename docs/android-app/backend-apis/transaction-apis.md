@@ -24,11 +24,13 @@ Transaction APIs manage the complete remittance lifecycle from sender → escrow
 ## Transaction States
 
 ```
-pending_payment → payment_received →
+pending_payment → payment_received → expiring_soon →
 merchant_confirmed → recipient_confirmed → escrow_buying_bch → lp_settling → completed
 
-Or error states:
+Or error/termination states:
 → expired (payment not received in 5 min)
+→ expired_unclaimed (recipient didn't claim in 24h)
+→ refunded (escrow returned EUR to sender)
 → cancelled (user cancels)
 → escrow_intervention (confirmations don't match)
 ```
@@ -39,12 +41,18 @@ Or error states:
 │ pending_payment │  Sender creates transaction, 4-digit code generated
 └────────┬────────┘
          │ Bizum received by escrow
+         │ OR timeout after 5 min → expired
          ▼
 ┌─────────────────┐
 │ payment_received│  Escrow has EUR, recipient notified with code
+└────────┬────────┘  24-hour claim window starts
+         │ 18h elapsed → expiring_soon
+         ▼
+┌─────────────────┐
+│ expiring_soon   │  <6h remaining, urgent reminders sent
 └────────┬────────┘
-         │ Recipient goes to any merchant with code
-         │ Merchant enters code + confirms cash delivery
+         │ Recipient goes to merchant with code
+         │ OR 24h elapsed → expired_unclaimed → refunded
          ▼
 ┌─────────────────┐
 │merchant_confirmed│ Waiting for recipient confirmation
@@ -69,6 +77,11 @@ Or error states:
 ┌─────────────────┐
 │   completed     │  Transaction done!
 └─────────────────┘
+
+Terminal states (no further transitions):
+┌──────────────────┐
+│     refunded     │  EUR returned to sender (minus €0.50 processing fee)
+└──────────────────┘
 ```
 
 ---
@@ -199,6 +212,12 @@ X-Timestamp: 2026-04-27T10:30:00Z
     "exchange_rate": 62.1,
     "fee_eur": 1.00
   },
+  "expiry": {
+    "claim_deadline": "2026-04-28T10:31:15Z",
+    "hours_remaining": 22.3,
+    "refund_amount_eur": 99.50,
+    "processing_fee_eur": 0.50
+  },
   "timeline": [
     {
       "status": "pending_payment",
@@ -226,6 +245,11 @@ X-Timestamp: 2026-04-27T10:30:00Z
 - `timeline`: Array of state changes with timestamps
 - `merchant`: Merchant details (if claimed)
 - `confirmation_code`: 4-digit code (only shown to recipient/merchant)
+- `expiry`: Claim deadline and refund details (null if already claimed/completed)
+  - `claim_deadline`: ISO timestamp when transaction expires
+  - `hours_remaining`: Time left to claim (calculated from current time)
+  - `refund_amount_eur`: What sender gets back if unclaimed
+  - `processing_fee_eur`: Round-trip exchange fees (€0.50)
 - `next_action`: What user should do next
 
 **OP_RETURN Notifications:**
@@ -234,6 +258,56 @@ X-Timestamp: 2026-04-27T10:30:00Z
 - No polling needed - app receives real-time updates from blockchain
 - OP_RETURN format: `ASGAYA:<transaction_id>:<status>:<timestamp>`
 - Example: `ASGAYA:txn_7Hk9mNpQ2wX:payment_received:1714212675`
+
+**Automated Expiry Notifications:**
+
+Recipients have **24 hours** from `payment_received` status to claim their remittance. Automated notifications are sent at:
+
+**Hour 12 - Reminder (Recipient only):**
+```
+Subject: Reminder: €100 waiting for you
+Body: You have 12 hours left to claim your money.
+Merchant list: [nearby merchants]
+Claim code: 7382
+```
+
+**Hour 18 - Status Update (Sender only):**
+```
+Subject: Recipient hasn't claimed yet
+Body: Elena hasn't claimed the €100 yet. If unclaimed in 6 hours, €99.50 will be refunded to you (€0.50 processing fee).
+Contact: 0412-XXX-5678
+```
+
+**Hour 23 - Urgent (Recipient only):**
+```
+Subject: URGENT: Claim in 1 hour
+Body: Your €100 will be refunded to the sender in 1 hour if you don't claim now.
+Merchant list: [nearby merchants]
+Claim code: 7382
+```
+
+**Hour 24 - Refund Notifications (Both):**
+
+To recipient:
+```
+Subject: Transaction expired
+Body: You didn't claim within 24 hours. The €100 has been refunded to the sender.
+```
+
+To sender:
+```
+Subject: Refund processed
+Body: Elena didn't claim the remittance. €99.50 has been sent back to your Bizum account (€0.50 processing fee covered exchange costs).
+Refund transaction: [Bizum reference]
+```
+
+**Processing Fee Breakdown:**
+- €0.26 - Kraken fee (buy BCH)
+- €0.26 - Kraken fee (sell BCH back)
+- ~€0.00 - Price movement buffer
+- **Total: €0.50**
+
+For full policy details, see [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md).
 
 **Errors:**
 - `UNAUTHORIZED` (401): User not sender or recipient

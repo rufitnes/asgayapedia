@@ -38,7 +38,9 @@ Notification → View details → Find merchant → Navigate → Claim cash → 
 
 **Timeline:**
 - ⏱️ **24 hours** to claim after notification (timer starts when escrow funded)
-- After 24h: Remittance expires, funds returned to sender
+- **Reminders sent at:** 12h (general), 18h (sender notified), 23h (urgent)
+- **After 24h:** Remittance expires → €99.50 refunded to sender (€0.50 processing fee)
+- Full policy: [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)
 
 ---
 

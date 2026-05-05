@@ -413,6 +413,61 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 - Claim code shown to sender (can share if needed)
 - Estimated time based on typical recipient behavior
 
+#### State 2b: Expiring Soon (18h Elapsed, No Claim)
+
+```
+┌─────────────────────────────────────┐
+│         Order #REM-89234            │
+├─────────────────────────────────────┤
+│                                     │
+│      ⚠️  Claim window closing       │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │         [Progress bar]      │   │
+│  │  ████░░░░░░░░░░░░  25%      │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│   To: Elena (+58-412-XXX)           │
+│   Amount: €100 → ~4,999,500 VES     │
+│                                     │
+│   Progress:                         │
+│   ✅ EUR received                   │
+│   ⚠️  Elena hasn't claimed yet      │
+│   ⏸️  Merchant selection...         │
+│   ⏸️  Cash delivery...              │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│   ⏱️ Time remaining: 5h 42m         │
+│                                     │
+│   ⚠️  Elena hasn't claimed yet.     │
+│   If unclaimed in 6 hours, €99.50   │
+│   will be refunded to you.          │
+│   (€0.50 processing fee)            │
+│                                     │
+│   Contact Elena: +58-412-XXX-5678   │
+│                                     │
+│  [ Call Elena ]  [ Message Elena ]  │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Triggers:**
+- Shown at 18-hour mark if recipient hasn't selected a merchant yet
+- Notification sent to sender: "Elena hasn't claimed yet"
+- Urgent reminder sent to recipient simultaneously
+
+**Interactions:**
+- Sender can contact recipient directly (phone number shown)
+- "Call" button opens phone dialer
+- "Message" button opens WhatsApp/SMS
+
+**Notes:**
+- Empowers sender to coordinate with recipient
+- Clear warning about refund amount (€99.50) and fee (€0.50)
+- Processing fee covers round-trip exchange costs (buy + sell BCH)
+- Related policy: [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)
+
 #### State 3: Merchant Confirms
 
 ```
@@ -660,11 +715,31 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │           ⏰ Remittance Expired      │
 ├─────────────────────────────────────┤
 │                                     │
-│  Order #REM-89234 expired because   │
-│  Elena didn't claim within 24 hours.│
+│  Order #REM-89234 expired           │
 │                                     │
-│  Your €100 has been refunded.       │
-│  (May take 1-3 business days)       │
+│  Elena didn't claim the remittance  │
+│  within 24 hours.                   │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  Refund Details:                    │
+│                                     │
+│  Original amount:    €100.00        │
+│  Processing fee:     -€0.50         │
+│  ─────────────────────────────      │
+│  Refunded to you:    €99.50         │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  ℹ️  Processing fee covers          │
+│     exchange costs (buy + sell BCH) │
+│                                     │
+│  Your Bizum refund should arrive    │
+│  within 1-3 business days.          │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  Contact: Elena (+58-412-XXX-5678)  │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │    Contact Elena            │   │
@@ -678,8 +753,10 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 
 **Notes:**
 - Two different timeouts: 10 min (payment) vs 24h (claim)
-- Full refund if recipient doesn't claim
-- Encourage sender to contact recipient (communication issue?)
+- Partial refund: €99.50 (€0.50 processing fee covers round-trip exchange costs)
+- Processing fee breakdown: €0.26 (buy BCH) + €0.26 (sell BCH) + buffer
+- Encourage sender to contact recipient (might try again with coordination)
+- Related policy: [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)
 
 ### Corridor Unavailable
 
