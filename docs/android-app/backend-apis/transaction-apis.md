@@ -215,8 +215,8 @@ X-Timestamp: 2026-04-27T10:30:00Z
   "expiry": {
     "claim_deadline": "2026-04-28T10:31:15Z",
     "hours_remaining": 22.3,
-    "refund_amount_eur": 99.50,
-    "processing_fee_eur": 0.50
+    "refund_amount_eur": 99.90,
+    "processing_fee_eur": 0.10
   },
   "timeline": [
     {
@@ -248,8 +248,8 @@ X-Timestamp: 2026-04-27T10:30:00Z
 - `expiry`: Claim deadline and refund details (null if already claimed/completed)
   - `claim_deadline`: ISO timestamp when transaction expires
   - `hours_remaining`: Time left to claim (calculated from current time)
-  - `refund_amount_eur`: What sender gets back if unclaimed
-  - `processing_fee_eur`: Round-trip exchange fees (€0.50)
+  - `refund_amount_eur`: What sender gets back if unclaimed (€99.90 on €100)
+  - `processing_fee_eur`: Manual refund + liquidity lock fee (€0.10 = 0.1%)
 - `next_action`: What user should do next
 
 **OP_RETURN Notifications:**
@@ -274,7 +274,7 @@ Claim code: 7382
 **Hour 18 - Status Update (Sender only):**
 ```
 Subject: Recipient hasn't claimed yet
-Body: Elena hasn't claimed the €100 yet. If unclaimed in 6 hours, €99.50 will be refunded to you (€0.50 processing fee).
+Body: Elena hasn't claimed the €100 yet. If unclaimed in 6 hours, €99.90 will be refunded to you (€0.10 processing fee).
 Contact: 0412-XXX-5678
 ```
 
@@ -297,15 +297,14 @@ Body: You didn't claim within 24 hours. The €100 has been refunded to the send
 To sender:
 ```
 Subject: Refund processed
-Body: Elena didn't claim the remittance. €99.50 has been sent back to your Bizum account (€0.50 processing fee covered exchange costs).
+Body: Elena didn't claim the remittance. €99.90 has been sent back to your Bizum account (€0.10 processing fee).
 Refund transaction: [Bizum reference]
 ```
 
 **Processing Fee Breakdown:**
-- €0.26 - Kraken fee (buy BCH)
-- €0.26 - Kraken fee (sell BCH back)
-- ~€0.00 - Price movement buffer
-- **Total: €0.50**
+- €0.10 (0.1%) - Manual refund work + 24h liquidity lock
+- **No exchange fees** (pull system - no BCH was purchased)
+- Can increase to 0.2-1.0% if abuse detected
 
 For full policy details, see [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md).
 

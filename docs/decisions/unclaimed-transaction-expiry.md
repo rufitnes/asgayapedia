@@ -31,21 +31,23 @@ Prevent funds from being locked indefinitely in escrow when recipients never cla
 
 ## The Constraint
 
-**Escrow operational reality:**
+**Escrow operational reality (Pull System):**
 1. Escrow receives €100 via Bizum (instant)
-2. Escrow **immediately** buys BCH on Kraken (~€0.26 fee)
+2. Escrow **HOLDS EUR** (doesn't buy BCH yet - pull system!)
 3. Claim code generated and sent to recipient
-4. **If recipient never claims:**
-   - Escrow holds BCH indefinitely
-   - BCH price fluctuates (volatility risk transferred to escrow)
+4. **If recipient claims:** Escrow buys BCH, settles transaction
+5. **If recipient never claims:**
+   - EUR sits in escrow account for 24h (liquidity locked)
+   - No BCH purchased (pull system = on-demand purchase)
    - No revenue earned (transaction never completed)
-   - Escrow must sell BCH back to get EUR for refund (another ~€0.26 fee)
+   - Escrow must manually send Bizum refund (administrative work)
 
 **Escrow costs for unclaimed transaction:**
-- Buy BCH: €0.26 (Kraken maker fee)
-- Hold BCH: Price movement risk during claim window
-- Sell BCH: €0.26 (Kraken maker fee)
-- **Total cost:** ~€0.50 + price volatility exposure
+- Buy BCH: €0.00 (never purchased - pull system!)
+- Sell BCH: €0.00 (never purchased)
+- Manual refund: ~10 min work
+- Liquidity lock: €100 tied up for 24h (opportunity cost)
+- **Total cost:** Time + opportunity cost (no hard exchange fees)
 
 ---
 
@@ -153,13 +155,24 @@ Hour 24: Auto-refund initiated → Both parties notified
 **Refund calculation:**
 ```
 Original amount:     €100.00
-Kraken buy fee:      -€0.26
-Kraken sell fee:     -€0.26
-Price buffer:        ~€0.00 (absorbed in €0.50 fee)
+Processing fee:      -€0.10 (0.1%)
 ─────────────────────────────
-Refund to sender:    €99.50
-Processing fee:      €0.50 (covers round-trip exchange costs)
+Refund to sender:    €99.90
 ```
+
+**What processing fee covers:**
+- Manual refund work (escrow sends Bizum back to sender)
+- 24h liquidity lock (escrow's EUR was tied up)
+- Administrative overhead
+
+**What it does NOT cover:**
+- ❌ Exchange fees (no BCH was purchased - pull system!)
+- ❌ Network fees (no blockchain transaction happened)
+
+**Why 0.1%?**
+- Start low, encourage legitimate use
+- Can increase to 0.2-1.0% if abuse detected (discourage fake claims)
+- Real escrow feedback will determine optimal rate
 
 **Who gets notified:**
 - ✅ **Recipient:** Action-oriented reminders (hours 12, 23)
@@ -235,7 +248,8 @@ expired_unclaimed → refunded (BCH sold, EUR returned)
 
 **Escrow automation:**
 - Cron job checks transactions every 15 minutes
-- At 24h mark: Sell BCH on Kraken → Send Bizum to sender → Update state to `refunded`
+- At 24h mark: Send Bizum refund to sender (€99.90) → Update state to `refunded`
+- No BCH to sell (pull system - BCH was never purchased)
 
 ---
 
@@ -277,7 +291,28 @@ expired_unclaimed → refunded (BCH sold, EUR returned)
 
 **Not committed to these, but worth considering after real usage data:**
 
-### 1. Corridor-Specific Timeouts
+### 1. Dynamic Processing Fee (Anti-Abuse)
+**Rationale:** Prevent users from abusing the system by creating fake transactions
+
+**Current:** Fixed 0.1% processing fee (€0.10 on €100)
+
+**If abuse detected (>10% expiry rate from same user):**
+- First expiry: €0.10 (0.1%) - benefit of the doubt
+- Second expiry: €0.50 (0.5%) - warning
+- Third+ expiry: €1.00 (1.0%) - full fee to discourage abuse
+
+**Abuse patterns to watch:**
+- Same sender repeatedly creating transactions that expire
+- Sender creates transaction, recipient never attempts to claim
+- Pattern suggests using Asgaya as "free parking" for EUR
+
+**When to add:** If expiry rate >5% AND pattern analysis shows deliberate abuse
+
+**Trade-off:** Penalizes legitimate users who have multiple coordination failures
+
+---
+
+### 2. Corridor-Specific Timeouts
 **Rationale:** Urban areas might succeed faster than remote villages
 
 **Implementation:**

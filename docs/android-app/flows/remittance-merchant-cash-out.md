@@ -441,9 +441,9 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │   ⏱️ Time remaining: 5h 42m         │
 │                                     │
 │   ⚠️  Elena hasn't claimed yet.     │
-│   If unclaimed in 6 hours, €99.50   │
+│   If unclaimed in 6 hours, €99.90   │
 │   will be refunded to you.          │
-│   (€0.50 processing fee)            │
+│   (€0.10 processing fee)            │
 │                                     │
 │   Contact Elena: +58-412-XXX-5678   │
 │                                     │
@@ -464,8 +464,8 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 
 **Notes:**
 - Empowers sender to coordinate with recipient
-- Clear warning about refund amount (€99.50) and fee (€0.50)
-- Processing fee covers round-trip exchange costs (buy + sell BCH)
+- Clear warning about refund amount (€99.90) and fee (€0.10)
+- Processing fee covers manual refund work + 24h liquidity lock (pull system = no BCH purchased)
 - Related policy: [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)
 
 #### State 3: Merchant Confirms
@@ -725,14 +725,14 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  Refund Details:                    │
 │                                     │
 │  Original amount:    €100.00        │
-│  Processing fee:     -€0.50         │
+│  Processing fee:     -€0.10         │
 │  ─────────────────────────────      │
-│  Refunded to you:    €99.50         │
+│  Refunded to you:    €99.90         │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  ℹ️  Processing fee covers          │
-│     exchange costs (buy + sell BCH) │
+│  ℹ️  Processing fee (0.1%) covers   │
+│     manual refund + liquidity lock  │
 │                                     │
 │  Your Bizum refund should arrive    │
 │  within 1-3 business days.          │
@@ -753,8 +753,10 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 
 **Notes:**
 - Two different timeouts: 10 min (payment) vs 24h (claim)
-- Partial refund: €99.50 (€0.50 processing fee covers round-trip exchange costs)
-- Processing fee breakdown: €0.26 (buy BCH) + €0.26 (sell BCH) + buffer
+- Partial refund: €99.90 (€0.10 processing fee = 0.1%)
+- Processing fee covers: Manual refund work + 24h liquidity lock
+- **No exchange fees** (pull system - EUR sat idle, no BCH purchased)
+- Fee can increase to 0.2-1.0% if abuse detected (repeated expiries)
 - Encourage sender to contact recipient (might try again with coordination)
 - Related policy: [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)
 
