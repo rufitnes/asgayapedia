@@ -21,18 +21,42 @@ Transaction APIs manage the complete remittance lifecycle from sender → escrow
 
 ---
 
+## Dispute Handling
+
+**When confirmations don't match**, transaction enters dispute resolution:
+
+**Triggers:**
+- Merchant confirms, recipient denies (most common)
+- Recipient confirms, merchant denies
+- Both deny (coordination failure)
+
+**Process:**
+1. Transaction → `disputed` state
+2. Both parties notified → Submit evidence to `disputes@asgaya.org`
+3. Escrow investigates → `under_review` (24h max)
+4. Resolution applied → `resolved_merchant`, `resolved_recipient`, or `resolved_refund`
+
+**See:** [Dispute Resolution Framework](decisions/dispute-resolution.md) for full policy.
+
+---
+
 ## Transaction States
 
 ```
+Happy path:
 pending_payment → payment_received → expiring_soon →
 merchant_confirmed → recipient_confirmed → escrow_buying_bch → lp_settling → completed
 
-Or error/termination states:
+Dispute path:
+merchant_confirmed (mismatched confirmations) → disputed → under_review →
+  resolved_merchant (merchant wins) → completed
+  resolved_recipient (recipient wins) → refunded
+  resolved_refund (default applied) → refunded
+
+Other termination states:
 → expired (payment not received in 5 min)
-→ expired_unclaimed (recipient didn't claim in 24h)
-→ refunded (escrow returned EUR to sender)
+→ expired_unclaimed (recipient didn't claim in 24h) → refunded
 → cancelled (user cancels)
-→ escrow_intervention (confirmations don't match)
 ```
 
 **State diagram:**
@@ -58,6 +82,8 @@ Or error/termination states:
 │merchant_confirmed│ Waiting for recipient confirmation
 └────────┬────────┘
          │ Recipient confirms cash received
+         │ OR confirmations mismatch → disputed → under_review (24h)
+         │   → resolved_merchant / resolved_recipient / resolved_refund
          ▼
 ┌──────────────────┐
 │recipient_confirmed│ Both parties agreed, trigger BCH purchase
@@ -406,12 +432,18 @@ Content-Type: application/json
 - If only one confirmed:
   - Update status: `merchant_confirmed` or similar
   - Notify other party to confirm
+- **If confirmations mismatch** (merchant confirms, recipient denies OR vice versa):
+  - Update status: `disputed`
+  - Notify both parties → Submit evidence to `disputes@asgaya.org`
+  - Escrow reviews within 24h → `under_review` → resolution applied
+  - See [Dispute Resolution Framework](decisions/dispute-resolution.md)
 
 **Error handling:**
 - `INVALID_CODE` (400): Confirmation code incorrect
 - `AMOUNT_MISMATCH` (400): Amounts differ by >1%
 - `TIMEOUT` (408): Other party didn't confirm within 1 hour → Escrow intervention
 - `ALREADY_CONFIRMED` (409): This party already confirmed
+- `DISPUTED` (409): Confirmations mismatch → Enter dispute resolution (see above)
 
 ---
 
