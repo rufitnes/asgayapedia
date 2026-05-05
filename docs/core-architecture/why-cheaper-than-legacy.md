@@ -87,19 +87,19 @@ Asgaya eliminates intermediaries by using:
 
 ## The 1% Fee Breakdown
 
-When Asgaya achieves 1% fees, here's where that 1% goes:
+**How the 1% total fee is distributed:**
 
 **Example: €100 transfer**
-- Total fee: €1.00 (1%)
-- Exchange cost: ~€0.26 (0.26%)
-- **Remaining to split:** €0.74 (0.74%)
+- **Total fee:** €1.00 (1% of transfer)
+- **Exchange fee (Kraken):** ~€0.26 (0.26% - deducted first)
+- **Remaining:** ~€0.74 (0.74% - split equally three ways)
 
-That €0.74 is divided equally among:
-- Escrow operator: €0.247
-- Merchant: €0.247
-- Liquidity Provider: €0.247
+**The remaining €0.74 is divided equally among:**
+- **Escrow operator:** €0.247 (0.247%)
+- **Merchant:** €0.247 (0.247%)
+- **Liquidity Provider:** €0.247 (0.247%) *(if instant settlement selected)*
 
-This creates economic incentives for all participants while still beating legacy systems by 85%.
+**Key insight:** Participants don't split the full 1% - they split what remains after exchange costs. This creates economic incentives for all participants while still beating legacy systems by 85% (€1 vs €6.49 on €100).
 
 ---
 

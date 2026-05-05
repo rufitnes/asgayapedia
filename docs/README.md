@@ -23,6 +23,22 @@ Anyone can participate without KYC, using minimal hardware and knowledge.
 
 ---
 
+### Fee Structure
+
+**Total fee: 1% of transfer amount**
+
+On a **€100 transfer**, the 1% (€1.00) is distributed as:
+- **Exchange fee (Kraken):** ~€0.26 (0.26%)
+- **Escrow operator:** ~€0.247 (0.247%)
+- **Merchant:** ~€0.247 (0.247%)
+- **Liquidity Provider:** ~€0.247 (0.247%) *(if instant settlement selected)*
+
+**How it works:** The 1% fee first covers the Kraken exchange cost (~0.26%), then the remaining ~0.74% is split equally three ways among the participants who make the transaction possible.
+
+**Comparison:** Traditional remittances average 6.49% (€6.49 on €100). Asgaya's 1% total fee is **6.5× cheaper**.
+
+---
+
 **Key Innovation:** Two-step settlement with pull-based BCH purchases eliminates volatility risk.
 
 **⚠️ Important:** Asgaya is an **experimental, unregulated protocol**. By exploring this documentation or participating in any capacity, you accept full responsibility for understanding and complying with laws in your jurisdiction. **[Read full risks and disclaimers →](risks-and-disclaimers.md)**

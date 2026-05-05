@@ -169,7 +169,7 @@ Small business owner (bodega, farmacia, minimarket) who facilitates cash pickups
 - Hand cash to recipient
 - Confirm both parties (two-sided confirmation)
 
-**Incentive structure:** Earn 0.24-0.5% transaction fee in BCH. Can hold BCH for 50% bonus on future transactions.
+**Incentive structure:** Earn ~0.247% of transaction amount in BCH (~€0.247 on €100 transfer). This is 1/3 of the remaining fee after Kraken's ~0.26% exchange cost is deducted from the 1% total fee. Can hold BCH for ongoing remittance discounts.
 
 **Key behavior:** Merchants are NOT crypto experts—UX must be extremely simple (scan code, hand cash, tap confirm).
 
@@ -202,7 +202,7 @@ Person providing **LOCAL FIAT LIQUIDITY** (VES, ARS, COP, etc.) to merchants who
 7. Recipient confirms cash received
 8. Escrow sends BCH + reward to LP, liquidity restored
 
-**Incentive structure:** Earn ~0.25% of transaction amount in BCH per bounty (33% of margin split 3 ways: escrow/merchant/LP).
+**Incentive structure:** Earn ~0.247% of transaction amount in BCH per bounty (~€0.247 on €100 transfer). This is 1/3 of the remaining fee after Kraken's ~0.26% exchange cost is deducted from the 1% total fee.
 
 **Self-regulating system:** Liquidity automatically deducted when bounty accepted, restored when complete. Even successful LPs eventually run out of liquidity, opening opportunities for others.
 
@@ -227,13 +227,15 @@ Person running an escrow node that processes remittances. Receives EUR from send
 - Manage covenant-based escrow contracts
 - Enable fully decentralized escrow (eliminating centralized trust)
 
-**Incentive structure:** Share fee split with Merchants and LPs. Formula: `[1% fee - Kraken fees] / n_participants`. Example on €100:
-- Total fee: €1.00
-- Escrow receives: €0.33 (1/3 share)
-- Merchant receives: €0.33
-- LP receives: €0.34
-- Kraken cost: €0.26
-- **Escrow net: ~€0.24 profit (0.24%)**
+**Incentive structure:** Share fee split with Merchants and LPs after exchange costs. Formula: `[1% fee - Kraken fee] / 3 participants`. Example on €100:
+- Total fee: €1.00 (1%)
+- Kraken exchange cost: €0.26 (0.26%) - deducted first
+- Remaining to split: €0.74 (0.74%)
+- **Escrow receives: €0.247** (0.247% = €0.74 ÷ 3)
+- Merchant receives: €0.247 (0.247%)
+- LP receives: €0.247 (0.247%)
+
+**Key clarification:** Participants split the REMAINING fee after exchange costs, not the full 1%.
 
 **Capital requirement:** €500-€2,000 EUR buffer (can process €100k+/month volume)
 

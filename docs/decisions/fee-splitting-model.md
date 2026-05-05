@@ -6,6 +6,16 @@
 
 ---
 
+> 💡 **TL;DR: How the 1% fee is split**
+>
+> The 1% total fee is NOT split equally as "0.33% each." Instead:
+> - **Kraken exchange fee:** ~0.26% (deducted first)
+> - **Remaining 0.74%:** Split equally three ways = ~0.247% each
+>
+> **Example (€100):** €1 total fee → €0.26 to Kraken + (€0.247 × 3) to participants
+
+---
+
 ## The Goal (Architectural Ideal)
 
 Create **economic incentives** for all participants to join and grow the Asgaya network.
