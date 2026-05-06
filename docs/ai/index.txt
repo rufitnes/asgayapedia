@@ -102,27 +102,33 @@ complete.txt        6000 lines  Everything combined
 DIRECT RAW URLS (COPY-PASTE READY)
 ==============================================
 
-Base: https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/
+GitHub Raw URLs:
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/index.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/quick-start.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/overview.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/core-arch.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/decisions.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/flows.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/apis.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/complete.txt
 
-index.txt:          [BASE]/index.txt
-quick-start.txt:    [BASE]/quick-start.txt
-overview.txt:       [BASE]/overview.txt
-core-arch.txt:      [BASE]/core-arch.txt
-decisions.txt:      [BASE]/decisions.txt
-flows.txt:          [BASE]/flows.txt
-apis.txt:           [BASE]/apis.txt
-complete.txt:       [BASE]/complete.txt
-
-Once asgaya.org goes live, these will also be available at:
-https://asgaya.org/ai/[filename]
+docs.asgaya.org URLs (NOW LIVE):
+https://docs.asgaya.org/ai/index.txt
+https://docs.asgaya.org/ai/quick-start.txt
+https://docs.asgaya.org/ai/overview.txt
+https://docs.asgaya.org/ai/core-arch.txt
+https://docs.asgaya.org/ai/decisions.txt
+https://docs.asgaya.org/ai/flows.txt
+https://docs.asgaya.org/ai/apis.txt
+https://docs.asgaya.org/ai/complete.txt
 
 ==============================================
 LAST UPDATED
 ==============================================
 
-Version: 1.0
-Date: 2026-05-05
-Status: All critical gaps resolved (DeepSeek review)
+Version: 1.1
+Date: 2026-05-06
+Status: All critical gaps resolved + DeepSeek sanity check passed ✅
 
 ==============================================
 QUESTIONS?
