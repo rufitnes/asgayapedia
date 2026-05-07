@@ -8,11 +8,8 @@ Key concepts that underpin Asgaya's design.
 
 ## Core Concepts (Active - MVP)
 
-### [Two-Step Settlement](concepts/two-step-settlement.md)
-The fundamental mechanism that separates fiat receipt from BCH purchase, eliminating volatility risk.
-
 ### [Pull System](concepts/pull-system.md)
-How BCH is purchased AFTER confirmations, not before - protecting against price movements.
+How BCH is purchased AFTER confirmations, not before - protecting against volatility and enabling fail-safe operation.
 
 ### [Live Exchange Rates](concepts/live-exchange-rates.md)
 How real-time exchange rates are calculated and displayed.
@@ -43,4 +40,4 @@ These concepts are referenced throughout the documentation. Understanding them h
 - How volatility protection works
 - How the system scales
 
-**Start with:** [Two-Step Settlement](concepts/two-step-settlement.md) - everything else builds on this.
+**Start with:** [Two-Step Settlement](decisions/two-step-settlement-timing.md) - the implementation decision that makes everything else possible.

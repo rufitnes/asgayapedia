@@ -9,10 +9,11 @@
 > 💡 **TL;DR: How the 1% fee is split**
 >
 > The 1% total fee is NOT split equally as "0.33% each." Instead:
-> - **Kraken exchange fee:** ~0.26% (deducted first)
-> - **Remaining 0.74%:** Split equally three ways = ~0.247% each
+> - **Cost to source BCH:** Deducted first (varies by escrow)
+> - **Remaining amount:** Split equally three ways among participants
 >
-> **Example (€100):** €1 total fee → €0.26 to Kraken + (€0.247 × 3) to participants
+> **Example with Kraken (€100):** €1 total → €0.26 exchange cost + (€0.247 × 3) to participants  
+> **Example with own BCH (€100):** €1 total → €0 sourcing cost + (€0.333 × 3) to participants
 
 ---
 
@@ -33,152 +34,161 @@ Create **economic incentives** for all participants to join and grow the Asgaya 
 
 **Total fee budget:** 1% of transfer amount (to beat 6.49% legacy average)
 
-**Fixed cost within that 1%:**
-- Exchange costs (Kraken fee): ~0.26%
-- **Remaining to distribute:** ~0.74%
+**Variable cost within that 1%:**
+- BCH sourcing costs: 0% to ~0.50% (depends on escrow's method)
+- **Remaining to distribute:** ~0.50% to 1.00% (varies by escrow efficiency)
 
-**Challenge:** Split 0.74% among 3 participants fairly while maintaining strong incentives for each.
-
----
-
-## Alternatives Considered
-
-### Option 1: Equal Three-Way Split
-
-**Model:** Divide remaining 0.74% equally among escrow, merchant, LP.
-
-**Distribution (€100 transfer):**
-- Escrow: €0.247 (0.247%)
-- Merchant: €0.247 (0.247%)
-- LP: €0.247 (0.247%)
-
-**Pros:**
-- Simple, fair, easy to understand
-- Each participant has equal stake in network growth
-- No favoritism
-
-**Cons:**
-- Doesn't account for different effort/capital requirements
-- Escrow does most work, same reward as others
-
-**Verdict:** ✅ Best balance despite equal split critique
-
----
-
-### Option 2: Escrow-Weighted (40/30/30)
-
-**Model:** Escrow gets larger share (40%) because they do most work.
-
-**Distribution (€100 transfer):**
-- Escrow: €0.296 (0.296%)
-- Merchant: €0.222 (0.222%)
-- LP: €0.222 (0.222%)
-
-**Pros:**
-- Rewards escrow for infrastructure/coordination work
-- Acknowledges capital requirements
-
-**Cons:**
-- Reduces merchant/LP incentive (network growth depends on them too)
-- More complex to explain
-- Arbitrary percentages (why 40/30/30 and not 50/25/25?)
-
-**Verdict:** ❌ Complexity not worth marginal benefit
-
----
-
-### Option 3: Merchant-Weighted (30/40/30)
-
-**Model:** Merchant gets larger share because they're hardest to recruit.
-
-**Distribution (€100 transfer):**
-- Escrow: €0.222 (0.222%)
-- Merchant: €0.296 (0.296%)
-- LP: €0.222 (0.222%)
-
-**Pros:**
-- Stronger merchant incentive (critical bottleneck)
-- Merchants take most regulatory/banking risk
-
-**Cons:**
-- Reduces escrow incentive (but escrow is easier to recruit)
-- Still arbitrary percentages
-
-**Verdict:** ⚠️ Tempting, but equal split simpler
-
----
-
-### Option 4: Dynamic Split Based on Corridor
-
-**Model:** Adjust split based on corridor difficulty (high-demand corridors pay more to LPs, low-demand pay more to merchants).
-
-**Example:**
-- **Easy corridor (EUR→VES):** 33/34/33 (merchant bonus)
-- **Hard corridor (EUR→CUB):** 33/33/34 (LP bonus)
-
-**Pros:**
-- Optimizes incentives per corridor
-- Attracts participants where most needed
-
-**Cons:**
-- Extremely complex
-- Requires real-time market analysis
-- Participants can't predict earnings
-- Harder to explain/trust
-
-**Verdict:** ❌ Save for V1.1 (dynamic reward modulation)
-
----
-
-### Option 5: Two-Way Split (No LP)
-
-**Model:** Merchants handle their own BCH→fiat conversion. Split only between escrow and merchant.
-
-**Distribution (€100 transfer):**
-- Escrow: €0.37 (0.37%)
-- Merchant: €0.37 (0.37%)
-- LP: €0 (doesn't exist)
-
-**Pros:**
-- Higher rewards for escrow and merchant
-- Simpler model (fewer participants)
-
-**Cons:**
-- **Excludes merchants who can't/won't handle BCH** (banking restrictions, risk aversion)
-- Reduces network growth potential
-- Limits corridors to crypto-friendly merchants only
-
-**Verdict:** ❌ Too limiting for permissionless goal
+**Challenge:** Split remaining fees among participants fairly while:
+1. Maintaining strong incentives for each participant
+2. Allowing escrow operational freedom (any sourcing method)
+3. Rewarding efficiency (better sourcing = better rewards for everyone)
 
 ---
 
 ## The Decision
 
-**Equal three-way split of remaining fees after exchange costs.**
+**Equal three-way split of remaining fees after BCH sourcing costs.**
 
-**Formula:**
+**Universal Formula:**
 ```
 Total fee: 1% of transfer
-Exchange cost: ~0.26%
-Remaining: ~0.74%
+BCH sourcing cost: (varies by escrow - see below)
+Remaining: (1% - sourcing_cost)
 
-Escrow share: 0.74% / 3 = 0.247%
-Merchant share: 0.74% / 3 = 0.247%
-LP share: 0.74% / 3 = 0.247%
+Escrow share: Remaining / 3
+Merchant share: Remaining / 3
+LP share: Remaining / 3
 ```
 
-**Example (€100 transfer):**
+**Example 1: Escrow uses Kraken (€100 transfer):**
 - Total fee: €1.00
-- Exchange cost: €0.26
+- Kraken fee: €0.26
+- Remaining: €0.74
 - Escrow earns: €0.247
 - Merchant earns: €0.247
 - LP earns: €0.247
+
+**Example 2: Escrow uses own BCH (€100 transfer):**
+- Total fee: €1.00
+- Sourcing cost: €0 (uses existing BCH holdings)
+- Remaining: €1.00
+- Escrow earns: €0.333
+- Merchant earns: €0.333
+- LP earns: €0.333
 
 **Rationale:**
 1. **Simple and transparent** (easy to explain, easy to verify)
 2. **Fair to all participants** (equal stake in network growth)
 3. **Maximizes trust** (no perception of favoritism)
-4. **Flexible for future** (can adjust later if data shows imbalance)
+4. **Permissionless** (escrow has complete operational freedom)
+5. **Competition-driven** (better BCH sourcing = better rewards for everyone)
+
+---
+
+## Escrow Operational Freedom
+
+**Key principle:** Asgaya does NOT dictate how escrows operate. Each escrow has complete freedom to optimize their operations.
+
+### 1. BCH Sourcing Flexibility
+
+**Escrows can source BCH using ANY method:**
+
+**Option A: Buy from centralized exchange**
+- Examples: Kraken (0.26%), Coinbase (0.50%), Binance (0.10%)
+- Escrow chooses based on fees, liquidity, regulatory compliance
+- **Competitive advantage:** Lower exchange fees = more remaining to split
+
+**Option B: Use own BCH holdings**
+- Miner using mined BCH (0% sourcing cost)
+- Investor "farming BCH" (earn escrow fees while holding)
+- BCH enthusiast providing liquidity from savings
+- **Result:** €1.00 / 3 = €0.333 each (35% more than Kraken example)
+
+**Option C: P2P markets**
+- Local Bitcoin Cash meetups
+- Direct peer-to-peer purchases
+- Cash transactions
+- Varies by local market conditions
+
+**Option D: Hybrid approach**
+- Use own BCH when available
+- Buy from exchange when holdings depleted
+- Mix strategies based on volume/capital
+
+### 2. Payment Acceptance Flexibility
+
+**Escrows can accept EUR payments via ANY method:**
+
+**Common options:**
+- ✅ Bizum (instant, free, Spain-specific)
+- ✅ SEPA bank transfer (1-3 days, EU-wide)
+- ✅ Cash deposit at ATM (instant, anonymous)
+- ✅ Direct bank deposit (escrow provides account details)
+- ✅ Mobile payment apps (depends on corridor)
+- ✅ Cryptocurrency swap (sender has other crypto)
+
+**Permissionless principle:** As long as escrow receives EUR, the payment rail doesn't matter.
+
+### 3. Competitive Dynamics
+
+**Better operations = Better rewards for EVERYONE:**
+
+**Scenario:** Two escrows in same corridor
+
+**Escrow A (uses Kraken 0.26%):**
+- Participants earn: €0.247 each per €100 transfer
+- Competitive but standard
+
+**Escrow B (BCH miner, uses own coins):**
+- Participants earn: €0.333 each per €100 transfer
+- **35% higher rewards** attract more merchants/LPs
+- Grows faster, gains market share
+
+**Result:** Competition drives efficiency. Escrows innovate to attract participants.
+
+### 4. Why This Matters for Miners
+
+**BCH miners have dual revenue opportunity:**
+
+1. **Mining revenue:** Block rewards + transaction fees
+2. **Escrow revenue:** €0.333 per €100 transfer (when using own BCH)
+
+**Capital efficiency:**
+- Miner already holds BCH (capital investment in mining)
+- Can use mined BCH as escrow liquidity (no additional capital needed)
+- Earns fees while maintaining BCH exposure
+- **No exchange costs** (0% sourcing cost)
+
+**Example: Miner processes 1000 transfers/month @ €100 average:**
+- Escrow fees: 1000 × €0.333 = €333/month
+- Plus mining revenue
+- Plus BCH price appreciation (if holding)
+
+**Why miners are ideal escrows:**
+- Technical expertise (already running BCH nodes)
+- Capital availability (BCH holdings from mining)
+- Aligned incentives (network growth benefits mining)
+- Infrastructure ready (servers, uptime, security)
+
+### 5. Formula Remains Universal
+
+**Regardless of how escrow sources BCH, the formula is the same:**
+
+```
+(1% total fee - cost_to_source_BCH) / 3 participants
+```
+
+**Examples:**
+
+| Escrow Method | Sourcing Cost | Each Earns | Notes |
+|---------------|---------------|------------|-------|
+| Kraken exchange | 0.26% | 0.247% | Standard baseline |
+| Better exchange | 0.10% | 0.30% | 21% higher rewards |
+| Own BCH (miner) | 0% | 0.333% | 35% higher rewards |
+| P2P market | ~0.20% | 0.267% | Varies by market |
+| Hybrid (50/50) | ~0.13% | 0.29% | Mix of methods |
+
+**Transparency requirement:** Escrow must disclose sourcing cost to participants (trust through transparency).
 
 ---
 
@@ -203,15 +213,16 @@ LP share: 0.74% / 3 = 0.247%
 **Transparency mechanism:**
 - Every transaction shows itemized breakdown:
   ```
-  Transfer amount: €100.00
-  Exchange cost:   €0.26 (Kraken)
-  Escrow fee:      €0.247
-  Merchant fee:    €0.247
-  LP fee:          €0.247
-  Total cost:      €1.00
+  Transfer amount:  €100.00
+  BCH sourcing cost: €0.26 (escrow: Kraken)
+  Escrow fee:        €0.247
+  Merchant fee:      €0.247
+  LP fee:            €0.247
+  Total cost:        €1.00
   ```
 - Participants can independently verify fees match formula
 - Public fee structure (no hidden charges)
+- **Escrow discloses sourcing method** (builds trust)
 
 ---
 
@@ -240,18 +251,26 @@ LP share: 0.74% / 3 = 0.247%
 ### Case 1: No LP (Merchant Handles Cash-Out)
 
 **Scenario:** Merchant willing to hold BCH.
-The reward is split equaly between the merchant and the escrow
+The reward is split equally between the merchant and the escrow (2 participants).
 
+**Example with Kraken:**
 - Total fee: €1.00
-- Exchange cost: €0.26
-- Escrow earns: €0.37
-- Merchant earns: €0.37
+- BCH sourcing cost: €0.26 (Kraken)
+- Remaining: €0.74 / 2 = €0.37 each
+- Escrow earns: €0.37 (50% more than 3-way split)
+- Merchant earns: €0.37 (50% more than 3-way split)
+
+**Example with escrow's own BCH:**
+- Total fee: €1.00
+- BCH sourcing cost: €0 (owns BCH)
+- Remaining: €1.00 / 2 = €0.50 each
+- Escrow earns: €0.50 (100% more than Kraken 3-way split)
+- Merchant earns: €0.50 (100% more than Kraken 3-way split)
 
 **After merchant hands out cash to the recipient:**
-
-- Escrow buys 101€ worth of BCH
-- Escrow sends 100.37€ worth of BCH to the Merchant earns €0.37 total (50% more)
-- Simpler flow (fewer participants)
+- Escrow sources BCH (buy or use own holdings)
+- Escrow sends merchant's share in BCH
+- Both benefit from simpler flow
 
 **Implementation:** Merchant flags No instant settlement required funds go straigh to the the merchant BCH wallet.
 
@@ -321,24 +340,6 @@ The reward is split equaly between the merchant and the escrow
 
 - [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md) — How miners benefit from dual revenue
 - [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Future optimization
-
----
-
-## Lessons Learned
-
-### 1. Simplicity Wins
-- Equal split easier to understand than weighted split
-- Trust comes from transparency, not optimization
-- Can always optimize later with data
-
-### 2. Volume > Percentage
-- Small share of large volume > Large share of small volume
-- Focus on network growth, not fee maximization
-
-### 3. Flexibility Matters
-- Equal split works for merchant-only, escrow-LP hybrid, etc.
-- One formula, multiple configurations
-- Reduces implementation complexity
 
 ---
 

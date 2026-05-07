@@ -121,51 +121,6 @@ Use real market exchange rates with zero markup, bypassing both private company 
 
 ---
 
-## Alternatives Considered
-
-### Alternative 1: Use Stablecoin Pegs (USDC, USDT)
-
-**Advantages:**
-- No volatility exposure
-- Predictable amounts
-- Many fiat pairs available
-
-**Disadvantages:**
-- Requires trust in central issuer (defeats permissionless)
-- Subject to account freezes and blacklists
-- Regulatory compliance burden
-- **Decision:** Rejected (conflicts with permissionless requirement)
-
-### Alternative 2: Multiple Exchange Integration
-
-**Advantages:**
-- Route splitting for better rates
-- Redundancy if one exchange fails
-- Arbitrage opportunities
-
-**Disadvantages:**
-- Increased complexity
-- More API integrations to maintain
-- KYC burden multiplied
-- Diminishing returns (Kraken liquidity sufficient)
-- **Decision:** Deferred to V2 (not needed for MVP)
-
-### Alternative 3: DEX (Decentralized Exchange)
-
-**Advantages:**
-- No KYC required
-- Censorship-resistant
-- Aligns with permissionless vision
-
-**Disadvantages:**
-- Low EUR/BCH liquidity on DEXs
-- Higher slippage on large orders
-- Smart contract risks
-- Complexity for escrow operators
-- **Decision:** Monitor for future (not viable today)
-
----
-
 ## Trade-offs Made
 
 ### ✅ What We Gain

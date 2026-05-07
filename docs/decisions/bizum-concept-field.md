@@ -48,80 +48,6 @@ Use **semantic identifiers** in the Bizum concept field to enable automated matc
 
 ---
 
-## Alternatives Considered
-
-### Option 1: Use Hyphens Instead
-**Format:** `ASG-VEN-001`
-
-**Pros:**
-- More readable than underscores
-- Common in identifiers
-
-**Cons:**
-- Also rejected by bank (tested)
-- Same problem as underscores
-
-**Verdict:** ❌ Rejected by real-world testing
-
----
-
-### Option 2: Use Spaces
-**Format:** `ASG VEN 001`
-
-**Pros:**
-- Accepted by bank
-- Human-readable
-
-**Cons:**
-- Spaces cause issues in SMS encoding (different character sets handle spaces differently)
-- Risk of spaces being collapsed/removed in notification parsing
-- Less machine-friendly for pattern matching
-
-**Verdict:** ❌ Too risky for automated parsing
-
----
-
-### Option 3: Numeric-Only Codes
-**Format:** `ASG001` or `123456`
-
-**Pros:**
-- Definitely accepted by bank
-- Easy to parse
-
-**Cons:**
-- Not semantic (what does `ASG001` mean?)
-- Requires lookup table (escrow must maintain code→recipient mapping)
-- Collision risk (what if two transfers use same code?)
-- Doesn't include corridor info (VEN, ARG, etc.)
-
-**Verdict:** ⚠️ Possible but adds complexity
-
----
-
-### Option 4: Recipient Phone Number
-**Format:** `+584121234567` or `584121234567`
-
-**Pros:**
-- Accepted by bank (alphanumeric + symbols work in this format)
-- Globally unique (no collision risk)
-- Self-documenting (phone number identifies recipient)
-- No lookup table needed
-- Escrow can verify recipient owns this phone
-- Corridor implicit (phone prefix indicates country)
-- Easy to understand to the sender
-- Most devices copy phone numbers to the clipboard automatically
-- The recipient public address can be pair to the phone number
-
-**Cons:**
-- Less semantic than `ASG_VEN_001`
-- Reveals recipient phone number (minor privacy concern, but recipient already trusts merchant)
-- Requires phone number validation
-- Requires a phone number
-
-**Verdict:** ✅ Best compromise
-
----
-
 ## The Decision
 
 **Use recipient phone numbers in Bizum concept field.**
@@ -208,26 +134,6 @@ Other corridors may have different constraints:
 - **SEPA transfers:** Longer concept fields, different character support
 
 **Action:** Document constraints per-corridor, not per-protocol.
-
----
-
-## Lessons Learned
-
-### 1. Test Early with Real Money
-- Paper specifications lie; bank APIs tell the truth
-- €1 test saved weeks of development on wrong approach
-- Always validate constraints with actual transfers
-
-### 2. Semantic != Practical
-- Beautiful identifiers (`ASG_VEN_001`) are worthless if rejected
-- Pragmatic solutions (phone numbers) beat elegant solutions that don't work
-
-### 3. Constraints Shape Design
-- This decision influenced notification listener architecture
-- Pattern matching logic built around phone number format
-- Verification flow designed for phone-based identity
-
-**Result:** The constraint made the implementation simpler, not harder.
 
 ---
 
