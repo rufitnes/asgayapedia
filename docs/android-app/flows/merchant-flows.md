@@ -138,84 +138,123 @@ If invalid → Error: "Code 8923 not found. Ask customer to check their app."
 
 ---
 
-## Screen 2: Confirm & Hand Cash
+## Screen 2: Accept Bounty & Hand Cash
 
 ### Purpose
-Show merchant how much cash to hand out, get confirmation.
+Merchant accepts bounty, hands cash, receives completion code to give recipient.
 
 ### Wireframe
 
 ```
 ┌─────────────────────────────────────┐
-│            Confirm Pickup           │
+│            Cash Out Request         │
 ├─────────────────────────────────────┤
 │                                     │
-│  ✅ Code 8923 verified!             │
+│  ✅ Code 847293 verified!           │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
 │  │  Customer: Elena            │   │
-│  │  Code: 8923 ✓               │   │
+│  │  Code: 847293 ✓             │   │
 │  │                             │   │
 │  │  ━━━━━━━━━━━━━━━━━━━━━━━   │   │
 │  │                             │   │
-│  │  🎯 Hand Elena:             │   │
+│  │  🎯 Amount to hand out:     │   │
 │  │                             │   │
 │  │     VES 113,850             │   │◄─ Big, clear amount
 │  │                             │   │
 │  │  ━━━━━━━━━━━━━━━━━━━━━━━   │   │
 │  │                             │   │
-│  │  Your reward: VES 380       │   │
+│  │  Your earnings: €0.247      │   │
 │  │  (paid in BCH)              │   │
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  ⚠️ CRITICAL - Safe Confirmation:   │
-│  1. Count VES 113,850 carefully     │
-│  2. Hand ALL cash to Elena FIRST    │
-│  3. Wait for Elena to confirm       │
-│  4. ONLY tap "Yes" AFTER steps 1-3  │
-│                                     │
-│  ⚠️ Do NOT confirm before handing   │
-│     cash - prevents disputes!       │
-│                                     │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
-│                                     │
-│  Did you hand VES 113,850 to Elena? │
+│  Do you have VES 113,850 cash?      │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │  ✅ Yes, Cash Delivered     │   │◄─ Primary action
+│  │  ✅ Yes, Accept Bounty      │   │◄─ Primary action
 │  └─────────────────────────────┘   │
 │                                     │
-│  [ ❌ Cancel Transaction ]          │
+│  [ ❌ Cancel - Not Enough Cash ]    │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
 **Interactions:**
-- Merchant counts cash (VES 113,850)
-- Merchant hands cash to Elena
-- Merchant taps "Yes, Cash Delivered"
-- Waiting for two-sided confirmation → Screen 2b
-- If cancel → Transaction canceled, funds returned to sender
+- Merchant verifies they have enough cash
+- If yes → Tap "Accept Bounty" → Screen 2a
+- If no → Tap "Cancel" → Transaction returns to available bounties
 
-**Warning:**
-- Clear instruction: ONLY confirm AFTER handing cash
-- Amount shown large and prominently
-- Merchant's reward visible (motivates completion)
+**Merchant flexibility:**
+- Can reject if insufficient liquidity (no penalty)
+- Protects merchant from over-committing
+- Recipient tries different merchant
 
-**Notes:**
-- Two-sided confirmation prevents fraud
-- Merchant confirms first, then recipient
-- Both must agree before settlement
+---
+
+### Screen 2a: Completion Code (Hand Cash)
+
+**After accepting bounty, merchant receives completion code:**
+
+```
+┌─────────────────────────────────────┐
+│          Hand Cash to Elena         │
+├─────────────────────────────────────┤
+│                                     │
+│  ⚠️ CRITICAL - Safe Handout:        │
+│                                     │
+│  1. Count VES 113,850 carefully     │
+│  2. Hand ALL cash to Elena FIRST    │
+│  3. Tell Elena the completion code  │
+│  4. Elena confirms on her device    │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  📱 Completion Code:                │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │         6 2 5 1 0 4         │   │◄─ Large, clear numbers
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  Tell Elena: "Enter 625104"         │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  ⏳ Waiting for Elena to confirm... │
+│                                     │
+│  (Elena enters code on her app)     │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  💡 Alternative (Phase 1+):         │
+│  If Elena has RFID card, ask her    │
+│  to tap it on your device instead   │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Interactions:**
+- Merchant hands VES 113,850 cash to Elena
+- Merchant tells completion code: "625104"
+- Elena enters code on her device → Screen 2b
+- **Security:** Merchant cannot complete without Elena entering code on her device
+
+**Why completion code works:**
+- Merchant gets code AFTER accepting (proves intent)
+- Elena must enter on HER device (merchant can't fake)
+- Elena won't enter without cash in hand (self-enforcing)
+- Cryptographically secure (merchant can't complete alone)
 
 ---
 
 ### Screen 2b: Waiting for Recipient Confirmation
 
-**Merchant confirmed, now waiting for recipient:**
+**Merchant waiting for recipient to enter completion code:**
 
 ```
 ┌─────────────────────────────────────┐
@@ -228,15 +267,17 @@ Show merchant how much cash to hand out, get confirmation.
 │  │         [Spinner]           │   │
 │  └─────────────────────────────┘   │
 │                                     │
-│  You confirmed: Cash delivered ✓    │
+│  Completion code: 625104            │
 │                                     │
-│  Ask Elena to confirm on her app    │◄─ Merchants can police each other
+│  Elena should enter this code       │
+│  on her Asgaya app now              │◄─ Clear instruction
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  This usually takes a few seconds   │
+│  This usually takes 10-30 seconds   │
 │                                     │
-│  (Elena is confirming receipt       │
+│  (Elena is entering code on         │
+│   her device)                       │
 │   on her Asgaya app)                │
 │                                     │
 └─────────────────────────────────────┘
@@ -244,17 +285,21 @@ Show merchant how much cash to hand out, get confirmation.
 
 **States:**
 
-**If recipient confirms "Yes":**
-- Both agreed → Go to Screen 3 (Complete)
+**If recipient enters completion code:**
+- Transaction completes → Go to Screen 3 (Complete)
+- BCH sent to merchant (or LP if instant settlement)
 
-**If recipient confirms "No" (RARE):**
+**If recipient refuses to enter code (DISPUTE - RARE):**
 ```
 ┌─────────────────────────────────────┐
 │          ⚠️ Dispute Detected        │
 ├─────────────────────────────────────┤
 │                                     │
-│  Elena says she did NOT receive     │
-│  the cash.                          │
+│  Elena is NOT entering the          │
+│  completion code.                   │
+│                                     │
+│  This means she claims she did NOT  │
+│  receive the cash.                  │
 │                                     │
 │  Your confirmation: YES ✓           │
 │  Elena's confirmation: NO ❌         │

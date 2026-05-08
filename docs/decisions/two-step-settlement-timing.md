@@ -96,17 +96,27 @@ The pull-based two-step settlement is not an arbitrary design choice—it's the 
 
 ### 1. Minimal Hardware Requirement (Permissionless Core)
 
-**Requirement:** Recipients don't need smartphones or stable connectivity.
+**Requirement:** Recipients need minimal hardware—no BCH wallet, no crypto knowledge, no exchange access.
 
-**How pull system delivers:**
-- Recipient only needs to travel to merchant (who has the device)
-- No app installation, no BCH wallet, no technical knowledge required
-- Merchant's device handles all coordination with escrow
-- Works even when recipient has no phone at all
+**Phase 0: Smartphone with app required**
+- Recipient needs Android smartphone with Asgaya app installed
+- Internet connection required at time of cash-out (merchant location)
+- **No BCH wallet needed** (merchant handles crypto)
+- **No technical knowledge required** (just enter a code)
 
-**Why this matters:** In Venezuela, many potential recipients cannot afford smartphones or reliable data plans. Pull system makes Asgaya accessible to the financially excluded—not just the digitally connected.
+**Future (Phase 1+): RFID card alternative**
+- Recipient can use RFID card instead of smartphone (see [RFID Card Recipients](concepts/rfid-card-recipients.md))
+- Card costs $0.50-2 (vs $50-200 smartphone)
+- Merchant helps provision card (merchant-assisted onboarding)
+- Tap card on merchant device → transaction completes
+- **True minimal hardware** (no phone ownership needed)
 
-**Alternative (push model) would fail:** If BCH was purchased when sender initiated, recipient would need a wallet app to receive funds. This excludes ~40% of potential users in target markets.
+**Why this matters:** 
+- Phase 0 smartphone requirement is still MUCH lower barrier than traditional crypto (no wallet, no private keys, no exchange)
+- Future RFID option makes Asgaya accessible to recipients without smartphones (elderly, low-income)
+- Merchant handles all crypto complexity
+
+**Alternative (push model) would fail:** If BCH was purchased when sender initiated, recipient would need BCH wallet to receive funds. This excludes most potential users in target markets.
 
 ---
 

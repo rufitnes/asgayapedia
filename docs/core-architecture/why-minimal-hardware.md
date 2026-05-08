@@ -2,7 +2,14 @@
 
 **Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
 
-**Core Requirement:** Support the widest possible range of devices, from cardboard QR codes to RFID stickers to basic smartphones.
+**Core Requirement:** Support the widest possible range of devices, minimizing hardware barriers to remittance access.
+
+**⚠️ Implementation Status:**
+- **Phase 0 (Current):** Android smartphone with app required
+- **Phase 1 (Planned):** RFID card alternative (no smartphone needed)
+- **Future Vision:** Cardboard QR codes / feature phones (aspirational)
+
+**This document describes the VISION.** See [RFID Card Recipients](concepts/rfid-card-recipients.md) for Phase 1 implementation plan.
 
 ---
 
@@ -255,6 +262,64 @@ See the **Decisions** section for implementation approaches:
 
 - Decision: QR codes vs NFC priority (coming soon)
 - Decision: Offline sync capabilities (coming soon)
+
+---
+
+## Phase 0 Reality Check
+
+**The vision above is aspirational.** Here's what we're actually building:
+
+### Current Implementation (Phase 0)
+
+**Minimum hardware requirement:** Android smartphone with Asgaya app
+
+**Why start here:**
+- Cryptographic confirmation requires recipient device (security)
+- Numeric code entry prevents merchant unilateral completion
+- SMS-only flow has security vulnerabilities (merchant could fake)
+- Need to validate core flow before expanding hardware support
+
+**Still "minimal" because:**
+- No BCH wallet needed (vs traditional crypto)
+- No private key management (vs holding crypto)
+- No exchange account (vs buying/selling crypto)
+- Just install free app, enter codes
+
+**Who this serves:**
+- Recipients with basic Android phones (common in Venezuela)
+- Smartphone penetration ~70% in target markets
+- **Excludes:** ~30% without smartphones (acknowledged limitation)
+
+---
+
+### Phase 1 Enhancement: RFID Cards
+
+**Next step:** Support recipients without smartphones via RFID cards
+
+**How it works:**
+- Recipient gets RFID card ($0.50-2 cost)
+- Merchant helps provision card (merchant-assisted onboarding)
+- Recipient taps card on merchant device (NFC) to confirm
+- **No smartphone needed**
+
+**See:** [RFID Card Recipients](concepts/rfid-card-recipients.md) for full specification
+
+**Status:** Concept documented, not yet implemented
+
+---
+
+### Future Vision: Cardboard QR / Feature Phones
+
+**The tiered model described above (Tiers 1-4) is the long-term vision.**
+
+**Challenges to solve:**
+- How to do cryptographic confirmation with no recipient device
+- How to prevent merchant from completing without recipient present
+- SMS-based solutions have security trade-offs
+
+**Research needed:** Can cardboard QR work with strong security model?
+
+**Timeline:** Post-Phase 1, requires security design work
 
 ---
 

@@ -244,10 +244,10 @@ Show nearby merchants where recipient can claim cash.
 
 ---
 
-## Screen 5: Claim at Merchant
+## Screen 5a: Show Transaction Code to Merchant
 
 ### Purpose
-Confirm recipient is at merchant and ready to claim cash.
+Display transaction code for recipient to tell merchant.
 
 ### Wireframe
 
@@ -261,38 +261,39 @@ Confirm recipient is at merchant and ready to claim cash.
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
 │  │  You're claiming:           │   │
-│  │  $50,000 VES                │   │
+│  │  VES 113,850 (€100)         │   │
 │  │                             │   │
-│  │  Show this code to merchant:│   │
+│  │  ━━━━━━━━━━━━━━━━━━━━━━     │   │
 │  │                             │   │
-│  │      REM-89234              │   │
+│  │  📱 Transaction Code:       │   │
 │  │                             │   │
-│  │  [ Copy Code ]              │   │
+│  │      8 4 7 2 9 3           │   │◄─ Large numbers
+│  │                             │   │
+│  │  ┌─────────────────────┐   │   │
+│  │  │  Copy: 847293       │   │   │
+│  │  └─────────────────────┘   │   │
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  ⚠️ CRITICAL - Safe Confirmation:   │
+│  ⚠️ Instructions:                   │
 │                                     │
-│  1️⃣ Show code REM-89234 to merchant │
-│  2️⃣ Merchant counts cash            │
-│  3️⃣ COUNT your cash - verify amount │
-│  4️⃣ Tell merchant to confirm AFTER  │
-│     they hand you ALL the cash      │
-│  5️⃣ ONLY confirm AFTER receiving    │
-│     cash (while merchant watches)   │
+│  1️⃣ Tell merchant: "847293"         │
+│  2️⃣ Merchant enters code in app     │
+│  3️⃣ Merchant hands you cash         │
+│  4️⃣ COUNT your cash carefully       │
+│  5️⃣ Merchant tells you completion   │
+│     code - enter it on next screen  │
 │                                     │
-│  ⚠️ Do NOT confirm before receiving │
-│     cash - prevents disputes!       │
+│  ⚠️ Do NOT leave without getting    │
+│     completion code!                │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  ✅ Received cash from merchant?    │
-│                                     │
-│  ┌─────────────────────────────┐   │
-│  │    Confirm Receipt          │   │
-│  └─────────────────────────────┘   │
+│  Waiting for merchant to accept...  │
+│  (This screen auto-advances when    │
+│   merchant accepts your request)    │
 │                                     │
 │  [ Problem? Contact Support ]       │
 │                                     │
@@ -300,87 +301,135 @@ Confirm recipient is at merchant and ready to claim cash.
 ```
 
 **Interactions:**
-- Tap "Copy Code" → Copies REM-89234 to clipboard
-- Tap "Confirm Receipt" → **Two options (see below)**
+- Display transaction code: 847293
+- Tap "Copy" → Copies to clipboard
+- Recipient tells code to merchant verbally
+- When merchant accepts → Auto-advance to Screen 5b
 - Tap "Contact Support" → Opens support chat/phone
 
 **Notes:**
-- Code (REM-89234) identifies this specific remittance
-- Merchant looks up code in their app to verify amount
-- Merchant gives cash to recipient
-- Recipient confirms receipt to complete settlement
+- Recipient doesn't tap anything to proceed (auto-advances)
+- Code identifies this specific transaction
+- Merchant enters code, sees amount, accepts bounty
+- After merchant hands cash → merchant tells completion code
 
 ---
 
-## Confirmation Method (Design Decision)
+## Screen 5b: Enter Completion Code
 
-### Option A: Simple Confirmation (Lower Complexity)
+### Purpose
+Recipient enters completion code from merchant to confirm cash receipt.
+
+### Wireframe
+
+```
+┌─────────────────────────────────────┐
+│ ◄ Back    Confirm Receipt       ⚙️  │
+├─────────────────────────────────────┤
+│                                     │
+│  ✅ Merchant accepted your request! │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  ⚠️ CRITICAL - Safe Cash-Out:       │
+│                                     │
+│  1️⃣ Merchant hands you cash         │
+│  2️⃣ COUNT cash: VES 113,850         │
+│  3️⃣ Merchant tells completion code  │
+│  4️⃣ Enter code ONLY AFTER getting   │
+│     ALL the cash in your hand       │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  Merchant's completion code:        │
+│                                     │
+│  ┌─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐   │
+│   [6] [2] [5] [1] [0] [4]         │◄─ 6-digit input
+│  └─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  ✅ Confirm Cash Received   │   │◄─ Enabled when 6 digits
+│  └─────────────────────────────┘   │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  💡 Why completion code?            │
+│                                     │
+│  This prevents merchant from        │
+│  completing the transaction         │
+│  without you. You control the       │
+│  final confirmation.                │
+│                                     │
+│  Only enter after you have cash!    │
+│                                     │
+│  [ Problem? Contact Support ]       │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Interactions:**
+- Recipient receives VES 113,850 cash from merchant
+- Merchant says: "Your completion code is 625104"
+- Recipient enters: 6-2-5-1-0-4
+- Tap "Confirm Cash Received" → Sends to escrow
+- Escrow validates → Transaction completes → Screen 6
+
+**Security:**
+- **Merchant CANNOT complete without recipient**
+- Merchant has completion code but can't use it
+- Only recipient entering code on THEIR device completes transaction
+- Recipient won't enter without cash in hand (self-enforcing)
+
+**Why this works:**
+- Cryptographically proves both parties participated
+- Merchant can't fake recipient confirmation
+- Recipient controls final step
+- Balanced power (neither can complete alone)
+
+---
+
+## Phase 0 Implementation: Numeric Code Confirmation
+
+**Decision:** Use numeric completion codes (Phase 0)
 
 **How it works:**
-- Recipient taps "Confirm Receipt"
-- Simple API call: `POST /claim/{remittance_id}`
-- Merchant also confirms in their app
-- Both confirmations trigger settlement
+1. Recipient shows transaction code (847293) to merchant
+2. Merchant enters code, accepts bounty
+3. Merchant device generates completion code (625104)
+4. Merchant hands cash + tells completion code
+5. Recipient enters completion code on their device
+6. Both confirmations validated → Transaction completes
 
-**Advantages:**
-- ✅ Simple UX (one tap)
+**Why numeric codes:**
+- ✅ Simple UX (enter 6 digits)
 - ✅ No crypto knowledge required
-- ✅ Fast confirmation
+- ✅ Cryptographically secure (merchant can't fake)
+- ✅ Works on basic Android phones
+- ✅ Recipient controls confirmation (balanced power)
 
-**Disadvantages:**
-- ❌ No cryptographic proof recipient authorized
-- ❌ Merchant could fake recipient confirmation
-- ❌ Trust-based (not fully trustless)
-
----
-
-### Option B: BCH Signature Confirmation (Higher Security)
-
-**How it works:**
-- Recipient taps "Confirm Receipt"
-- App prompts: "Sign with your BCH key to confirm"
-- Recipient enters PIN/biometric to unlock key
-- App signs message: `"I received ${amount} VES from ${merchant} for ${remittance_id}"`
-- Signature sent to escrow via OP_RETURN or API
-- Escrow verifies signature matches recipient BCH address
-- Settlement triggered only if signature valid
-
-**Advantages:**
-- ✅ Cryptographic proof recipient authorized
-- ✅ Fits BCH-native architecture (already using OP_RETURN)
-- ✅ Enables covenant conditions (smart contract: "release funds only if recipient signed")
-- ✅ Effectively 2-of-2 multisig (both merchant AND recipient must sign to complete claim)
-- ✅ Trustless (no merchant manipulation possible, no recipient false claims)
-- ✅ Audit trail (signatures on-chain or logged)
-
-**Disadvantages:**
-- ❌ More complex UX (requires key management understanding)
-- ❌ Recipient must understand "signing" concept
-- ❌ Risk: User loses key → can't confirm → funds stuck?
-- ❌ Slower confirmation (crypto operation + broadcast)
+**Security properties:**
+- Merchant cannot complete alone (needs recipient to enter code)
+- Recipient won't enter without cash (self-interest)
+- Completion code proves face-to-face interaction
+- Escrow validates both sides participated
 
 ---
 
-### Recommendation: Start with Option A, Plan for Option B
+## Future: RFID Card Alternative (Phase 1+)
 
-**Phase 1 (MVP):**
-- Use simple confirmation (Option A)
-- Validate core flow works
-- Gather user feedback on trust model
+**For recipients without smartphones:**
 
-**Phase 2 (Post-Beta):**
-- If covenant architecture requires signatures → Implement Option B
-- If fraud/disputes occur → Signatures provide proof
-- Educational flows can teach signing to users
+Instead of entering completion code, recipient can tap RFID card on merchant's device.
 
-**Decision drivers:**
-- Do we need covenant conditions? (If yes → Option B makes sense)
-- Is fraud a real risk? (If yes → Option B prevents merchant faking confirmation)
-- Can users handle key management? (Asgaya already requires it for BCH self-custody)
+**Flow:**
+1. Recipient shows transaction code (via SMS: "847293")
+2. Merchant enters code, accepts bounty, hands cash
+3. Merchant device shows: "Ask recipient to tap their Asgaya card"
+4. Recipient taps RFID card (NFC) → Transaction completes
 
-**Related decisions:**
-- [Self-Custody](core-architecture/why-self-custody.md) — Users already manage BCH keys
-- [BCH Native Architecture](android-app/backend-apis/bch-native-architecture.md) — Already using OP_RETURN for notifications
+**See:** [RFID Card Recipients](concepts/rfid-card-recipients.md)
+
+**Phase 0 status:** Not implemented (smartphone app required)
 
 ---
 
@@ -604,35 +653,27 @@ Confirm recipient is at merchant and ready to claim cash.
 2. Rating (higher rated preferred)
 3. Availability (online merchants first)
 
-### Signature Confirmation (Option B Implementation)
+### Technical Implementation Notes
 
-**If implementing BCH signature:**
+**Completion code validation:**
+- 6-digit numeric code (000000-999999)
+- Generated by merchant device after accepting bounty
+- Single-use (expires after confirmation or 30-minute timeout)
+- Sent to escrow when recipient enters on their device
+- Escrow validates both merchant acceptance + recipient code entry
 
-**Message format:**
+**Security properties:**
+- Merchant cannot reuse code (single-use)
+- Merchant cannot complete without recipient (needs recipient's device)
+- Recipient cannot fake (merchant's code must match escrow record)
+- Time-bound (30-minute window prevents delayed attacks)
+
+**API flow:**
 ```
-ASGAYA_CLAIM:${remittance_id}:${amount}:${currency}:${merchant_id}:${timestamp}
+1. POST /merchant/accept-bounty → Returns completion_code
+2. POST /recipient/confirm-cash {completion_code} → Validates & completes
+3. Escrow verifies both endpoints called from correct devices
 ```
-
-**Example:**
-```
-ASGAYA_CLAIM:REM-89234:50000:VES:BODEGA_CARACAS:1714665900
-```
-
-**Signature delivery:**
-- Option 1: OP_RETURN transaction (on-chain)
-- Option 2: REST API with signature in header
-- Option 3: Both (API for speed, OP_RETURN for audit)
-
-**Verification:**
-- Escrow verifies signature against recipient BCH address
-- Address must match remittance recipient
-- Timestamp must be within claim window (24h)
-- Message format must be valid
-
-**Recovery if key lost:**
-- Fallback: Manual support verification (KYC-like, defeats permissionless)
-- Prevention: Strong backup education before first use
-- Alternative: Time-based fallback (after 24h, simple confirmation allowed?)
 
 ---
 
@@ -666,9 +707,10 @@ ASGAYA_CLAIM:REM-89234:50000:VES:BODEGA_CARACAS:1714665900
 - Clear expiry consequences
 
 **✅ Secure Confirmation:**
-- Simple confirmation for MVP
-- Signature option for covenant architecture
-- Trade-offs documented for future decision
+- Numeric completion codes (Phase 0)
+- Cryptographically secure (merchant can't fake)
+- RFID card alternative planned (Phase 1+)
+- Balanced power between merchant and recipient
 
 **✅ Educational Moments:**
 - Success screen shows BCH received
@@ -677,6 +719,7 @@ ASGAYA_CLAIM:REM-89234:50000:VES:BODEGA_CARACAS:1714665900
 
 ---
 
-*Flow documented: May 2, 2026*
-*Status: Design phase, signature confirmation pending decision*
-*Next: Implement simple confirmation (Option A) for MVP, plan Option B for post-beta*
+*Flow documented: May 2, 2026*  
+*Updated: May 8, 2026 (numeric code confirmation)*  
+*Status: Design complete, ready for Phase 0 implementation*  
+*Next: Build numeric code flow, plan RFID card support for Phase 1+*

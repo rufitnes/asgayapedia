@@ -96,18 +96,44 @@
 
 **Self-auditing through proper sequencing:**
 
+### Phase 0: Numeric Code Confirmation (Smartphone App)
+
 ```
-1. Recipient shows code to merchant
-2. Merchant enters code → Validates amount
-3. ⚠️ Merchant HANDS CASH to recipient (FIRST!)
-4. Merchant presses "I gave cash" (while recipient watches)
-5. Recipient presses "I received cash" (while merchant watches)
-6. Both confirmations FACE-TO-FACE
+1. Recipient tells transaction code to merchant (e.g., "847293")
+2. Merchant enters code → Validates amount, accepts bounty
+3. Merchant device generates completion code (e.g., "625104")
+4. ⚠️ Merchant HANDS CASH to recipient (FIRST!)
+5. Merchant tells completion code to recipient: "625104"
+6. Recipient enters completion code in THEIR app (on their device)
+7. Transaction completes (merchant cannot complete without recipient)
 ```
 
+**Why this works:**
+- Merchant cannot complete transaction alone (needs recipient to enter completion code on their device)
+- Recipient won't enter code without cash in hand
+- Cryptographically proves both parties participated face-to-face
+
 **UI Enforcement:**
-- Merchant screen: "⚠️ Hand cash BEFORE confirming"
-- Recipient screen: "Confirm AFTER receiving cash, in merchant's presence"
+- Merchant screen: "⚠️ Hand cash BEFORE telling completion code"
+- Recipient screen: "Enter completion code AFTER receiving cash"
+
+---
+
+### Future: RFID Card Alternative (Phase 1+)
+
+For recipients without smartphones, an RFID card can be used instead:
+
+```
+1-3. [Same as above]
+4. Merchant hands cash to recipient
+5. Merchant device shows: "Ask recipient to TAP their Asgaya card"
+6. Recipient taps RFID card on merchant device (NFC)
+7. Card cryptographically signs transaction → completes
+```
+
+**See:** [RFID Card Recipients](concepts/rfid-card-recipients.md) for full specification.
+
+**Phase 0 status:** Not implemented yet (smartphone app only)
 
 ---
 
