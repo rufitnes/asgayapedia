@@ -245,32 +245,6 @@ For recipients without smartphones, an RFID card can be used instead:
 
 ---
 
-## Known Limitations
-
-### Phase 0: Trusted Merchants Only
-
-**Collusion risk (Phase 2+ concern):**
-- **Scenario:** Merchant + fake recipient collude to claim bounties without cash exchange
-- **How:** Recipient shares transaction code remotely, merchant generates completion code, both enter codes without meeting
-- **Detection:** Harder than button-based confirmations (numeric codes can be shared remotely)
-- **Phase 0 mitigation:** 1-2 personally vetted merchants, small transaction volumes
-- **Phase 2+ solutions needed:**
-  - GPS verification (both parties at same location)
-  - Randomized audit transactions (send "test recipient" to merchant)
-  - Community reputation system (other customers report suspicious patterns)
-  - Bonds/fidelity deposits (merchant has skin in the game)
-  - Video evidence mandatory above certain thresholds
-
-**Why this is acceptable for Phase 0:**
-- Only trusted merchants participate (personally known to team)
-- Low volume (validates security model before scaling)
-- Collusion benefits both parties equally (unlike merchant-only fraud)
-- Easier to detect pattern abuse with small merchant pool
-
-**Marked for Phase 2 design:** This limitation must be addressed before scaling beyond trusted merchants.
-
----
-
 ## Open Questions (Validate in Trials)
 
 1. **Strike 2 redemption threshold:** Is €2,000 the right amount? Too high? Too low?
@@ -278,7 +252,6 @@ For recipients without smartphones, an RFID card can be used instead:
 3. **Evidence requirements:** Should video be mandatory at Strike 2?
 4. **Time zones:** Is 24h sufficient for global corridors?
 5. **Appeal process:** Should merchants be able to appeal Strike 2/3?
-6. **Collusion detection:** What metrics can detect merchant+recipient collusion at scale? (Phase 2+)
 
 ---
 
