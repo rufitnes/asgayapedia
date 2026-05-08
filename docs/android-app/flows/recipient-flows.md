@@ -374,6 +374,41 @@ Recipient enters completion code from merchant to confirm cash receipt.
 - Tap "Confirm Cash Received" → Sends to escrow
 - Escrow validates → Transaction completes → Screen 6
 
+**If code doesn't work:**
+```
+┌─────────────────────────────────────┐
+│      ❌ Invalid Code                │
+├─────────────────────────────────────┤
+│                                     │
+│  The code "625104" is not valid.    │
+│                                     │
+│  This might mean:                   │
+│  • You entered it incorrectly       │
+│  • Merchant gave wrong code         │
+│  • Code expired (30 min timeout)    │
+│  • Merchant generated new code      │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  Ask merchant:                      │
+│  "Can you check the code again?"    │
+│                                     │
+│  Merchant can show the code again   │
+│  or generate a new one.             │
+│                                     │
+│  [ Try Again ]                      │
+│                                     │
+│  [ Contact Support ]                │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Recovery scenarios:**
+- **Wrong code entered:** Recipient re-enters correct code
+- **Merchant told wrong code:** Merchant checks their app, tells correct code
+- **Code expired/regenerated:** Merchant generates new code, tells recipient new code
+- **Merchant's app crashed:** Merchant reopens app, sees code again or regenerates
+
 **Security:**
 - **Merchant CANNOT complete without recipient**
 - Merchant has completion code but can't use it
@@ -412,6 +447,26 @@ Recipient enters completion code from merchant to confirm cash receipt.
 - Recipient won't enter without cash (self-interest)
 - Completion code proves face-to-face interaction
 - Escrow validates both sides participated
+
+**API Transaction States:**
+
+| State | Description | Triggered By |
+|-------|-------------|--------------|
+| `pending` | Transaction created, waiting for recipient to claim | Sender pays escrow |
+| `claimed` | Recipient selected merchant, transaction code shown | Recipient taps "Claim Cash" |
+| `accepted` | Merchant accepted bounty, completion code generated | Merchant enters transaction code |
+| `completion_code_generated` | Completion code created and shown to merchant | Server after merchant accepts |
+| `completion_code_shown` | Merchant viewed/reshowed completion code | Merchant taps "Show Code Again" |
+| `completion_code_regenerated` | New completion code generated (old invalidated) | Merchant taps "Generate New Code" |
+| `completed` | Recipient entered completion code successfully | Recipient confirms |
+| `disputed` | Merchant or recipient flagged issue | Either party after timeout |
+| `expired` | 30-min timeout on completion code | Server timeout |
+| `refunded` | 24-hour unclaimed timeout, EUR returned to sender | Server timeout |
+
+**Audit logging:**
+- Every completion code generation/regeneration logged with timestamp
+- Multiple regenerations (>3) flag automatic review
+- State transitions tracked for dispute resolution evidence
 
 ---
 

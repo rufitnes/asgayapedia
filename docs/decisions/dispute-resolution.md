@@ -113,9 +113,80 @@
 - Recipient won't enter code without cash in hand
 - Cryptographically proves both parties participated face-to-face
 
+**Code entropy (6 digits):**
+- **Space:** 1,000,000 possible combinations (10^6)
+- **Single-use:** Each code valid for only one transaction
+- **30-minute expiry:** Code becomes invalid after timeout
+- **Server-authoritative:** Validation happens on server, not client
+- **Brute force impractical:** 1M combinations + network latency + single-use + timeout = cannot be brute forced
+- **Why not 8 digits?** 6 digits easier to tell verbally, sufficient security given constraints
+- **Why not cryptographic signature?** Phase 0 prioritizes UX (verbal communication), Phase 1+ adds RFID with crypto signatures
+
 **UI Enforcement:**
 - Merchant screen: "⚠️ Hand cash BEFORE telling completion code"
 - Recipient screen: "Enter completion code AFTER receiving cash"
+
+**Security residual risk (acknowledged):**
+- ⚠️ **Social engineering possible:** A determined merchant can trick recipient into entering code before giving cash
+- **Mitigation:** UI warnings ("ONLY enter AFTER receiving cash") deter accidental/casual abuse
+- **Phase 0 acceptance:** 1-2 trusted merchants, personally vetted by team
+- **Future defense:** User education, community reputation, bonds/insurance (Phase 2+)
+- **Key insight:** Two-code system prevents *unilateral* merchant completion (major improvement over buttons), but cannot prevent all social engineering without hardware tokens/biometrics
+- **Honest assessment:** This is acceptable for Phase 0 with trusted merchants, requires additional layers for scale
+
+---
+
+### Recovery Mechanism: Lost Completion Code
+
+**Problem:** What if the completion code never reaches the recipient?
+
+**Scenarios:**
+- Merchant's app crashes after generating code
+- Merchant tells wrong code accidentally
+- Recipient didn't hear code clearly
+- Network dies after code generation
+- Recipient's app loses state
+
+**Recovery options (merchant's app):**
+
+**1. Show Code Again (anytime)**
+- Merchant can re-display the same completion code
+- No regeneration, same code remains valid
+- Use when: Recipient forgot, didn't hear, asked to repeat
+- **No security risk:** Same code, same transaction state
+
+**2. Generate New Code (after 5-minute timeout)**
+- Merchant can request new completion code
+- Server invalidates old code, generates fresh one
+- Merchant tells new code to recipient
+- Recipient enters new code on their device
+- **Security:** Only one code valid at a time
+- **Audit:** Server logs all regeneration events
+
+**3. Report Dispute (after 5-minute timeout)**
+- If recipient refuses to enter code (claims didn't receive cash)
+- Escalates to dispute resolution process
+- Both parties can submit evidence
+
+**Operational safeguards:**
+- Completion codes expire after 30 minutes (timeout)
+- Code regeneration logged for audit trail
+- Multiple regenerations flag review (>3 regenerations → automatic dispute review)
+- Recipient can request merchant show code again (via support if needed)
+
+**Why this is safe:**
+- Recipient still controls final confirmation (must enter code on their device)
+- Merchant cannot complete alone even with regeneration
+- Code regeneration doesn't bypass recipient participation
+- Audit trail prevents abuse
+- Only one valid completion code exists at any time
+
+**Edge case: Both parties claim the other failed**
+- Escrow reviews: Was code regenerated? How many times?
+- GPS evidence: Was recipient at merchant location?
+- Time analysis: How long between code generation and claim?
+- Evidence hierarchy applied (video > photo > GPS > word)
+- Pattern analysis: Does merchant frequently regenerate codes? (potential fraud signal)
 
 ---
 
@@ -174,6 +245,32 @@ For recipients without smartphones, an RFID card can be used instead:
 
 ---
 
+## Known Limitations
+
+### Phase 0: Trusted Merchants Only
+
+**Collusion risk (Phase 2+ concern):**
+- **Scenario:** Merchant + fake recipient collude to claim bounties without cash exchange
+- **How:** Recipient shares transaction code remotely, merchant generates completion code, both enter codes without meeting
+- **Detection:** Harder than button-based confirmations (numeric codes can be shared remotely)
+- **Phase 0 mitigation:** 1-2 personally vetted merchants, small transaction volumes
+- **Phase 2+ solutions needed:**
+  - GPS verification (both parties at same location)
+  - Randomized audit transactions (send "test recipient" to merchant)
+  - Community reputation system (other customers report suspicious patterns)
+  - Bonds/fidelity deposits (merchant has skin in the game)
+  - Video evidence mandatory above certain thresholds
+
+**Why this is acceptable for Phase 0:**
+- Only trusted merchants participate (personally known to team)
+- Low volume (validates security model before scaling)
+- Collusion benefits both parties equally (unlike merchant-only fraud)
+- Easier to detect pattern abuse with small merchant pool
+
+**Marked for Phase 2 design:** This limitation must be addressed before scaling beyond trusted merchants.
+
+---
+
 ## Open Questions (Validate in Trials)
 
 1. **Strike 2 redemption threshold:** Is €2,000 the right amount? Too high? Too low?
@@ -181,6 +278,7 @@ For recipients without smartphones, an RFID card can be used instead:
 3. **Evidence requirements:** Should video be mandatory at Strike 2?
 4. **Time zones:** Is 24h sufficient for global corridors?
 5. **Appeal process:** Should merchants be able to appeal Strike 2/3?
+6. **Collusion detection:** What metrics can detect merchant+recipient collusion at scale? (Phase 2+)
 
 ---
 

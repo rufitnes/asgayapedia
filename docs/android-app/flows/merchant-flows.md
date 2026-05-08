@@ -276,18 +276,89 @@ Merchant accepts bounty, hands cash, receives completion code to give recipient.
 │                                     │
 │  This usually takes 10-30 seconds   │
 │                                     │
-│  (Elena is entering code on         │
-│   her device)                       │
-│   on her Asgaya app)                │
+│  [ 🔄 Show Code Again ]             │◄─ Recovery option
+│                                     │
+│  💡 If Elena didn't hear the code,  │
+│  tap "Show Code Again" to display   │
+│  it in large numbers again          │
 │                                     │
 └─────────────────────────────────────┘
 ```
+
+**Interactions:**
+
+**If "Show Code Again" tapped:**
+- Returns to Screen 2a (completion code display)
+- Code remains the same (not regenerated)
+- Merchant can re-tell code to recipient
+- **Use case:** Recipient didn't hear, was distracted, or forgot code
+
+**Recovery timeout (after 5 minutes waiting):**
+```
+┌─────────────────────────────────────┐
+│       ⚠️ Code Not Entered           │
+├─────────────────────────────────────┤
+│                                     │
+│  Elena hasn't entered the code yet  │
+│  (waited 5 minutes)                 │
+│                                     │
+│  Completion code: 625104            │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  What happened?                     │
+│                                     │
+│  [ 🔄 Show Code Again ]             │
+│                                     │
+│  [ 🆕 Generate New Code ]           │◄─ If code was wrong/lost
+│                                     │
+│  [ ⚠️ Report Dispute ]              │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  💡 "Generate New Code" if:         │
+│  - You told Elena wrong code        │
+│  - Elena's app crashed              │
+│  - Network died after you told her  │
+│                                     │
+│  This invalidates old code 625104   │
+│  and creates a new one              │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Recovery options:**
+
+1. **Show Code Again** (anytime)
+   - Re-displays Screen 2a with same completion code
+   - Use when: Recipient forgot code, didn't hear clearly
+   - No security risk (same code, same transaction state)
+
+2. **Generate New Code** (after 5 min timeout)
+   - Server invalidates old completion code (625104)
+   - Generates fresh completion code (e.g., 384729)
+   - Merchant tells new code to recipient
+   - Returns to Screen 2a with new code displayed
+   - **Use case:** Merchant told wrong code accidentally, or recipient's device lost state
+   - **Security:** Only one completion code valid at a time
+   - **Logging:** Server logs code regeneration for audit trail
+
+3. **Report Dispute** (after 5 min timeout)
+   - Use when: Recipient claims they didn't receive cash
+   - Merchant claims they handed cash but recipient won't confirm
+   - Escalates to dispute resolution (see dispute flow below)
 
 **States:**
 
 **If recipient enters completion code:**
 - Transaction completes → Go to Screen 3 (Complete)
 - BCH sent to merchant (or LP if instant settlement)
+
+**If merchant regenerates code:**
+- Old code (625104) invalidated
+- New code generated and displayed (Screen 2a)
+- Merchant tells new code to recipient
+- Wait cycle restarts
 
 **If recipient refuses to enter code (DISPUTE - RARE):**
 ```

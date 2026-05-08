@@ -4,6 +4,8 @@
 
 **Core Requirement:** Support the widest possible range of devices, minimizing hardware barriers to remittance access.
 
+> **Note on "Minimal":** In Phase 0, a basic Android smartphone is required. This is still "minimal" compared to traditional crypto (no BCH wallet, no private keys, no exchange account—just install a free app). Future phases aim for true zero-smartphone options (RFID cards, feature phones) as documented below.
+
 **⚠️ Implementation Status:**
 - **Phase 0 (Current):** Android smartphone with app required
 - **Phase 1 (Planned):** RFID card alternative (no smartphone needed)
