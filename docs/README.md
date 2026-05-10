@@ -13,33 +13,36 @@ Asgaya is a **permissionless, peer-to-peer bridge** between payment walled garde
 Asgaya is designed to satisfy three fundamental requirements:
 
 **1. Cheaper Than Legacy (<1% fees)**
-Remittances cost 6.49% on average. Asgaya targets <1% through market-rate exchanges and free peer-to-peer rails.
+Remittances cost 6.49% on average. Asgaya targets <1% through market-rate exchanges and decentralized covenant-based settlement.
 
 **2. Promote Merchant Adoption**
-Every transaction creates economic incentives for merchants and liquidity providers to join the network.
+Every transaction creates economic incentives for merchants to join the network (earn ~1% spread by selling VES for BCH).
 
 **3. Permissionless**
-Anyone can participate without KYC, using minimal hardware and knowledge.
+Anyone can participate without KYC, using minimal hardware and knowledge. No custody, no intermediation.
 
 ---
 
 ### Fee Structure
 
-**Total fee: 1% of transfer amount**
+**Total fee: ~1% of transfer amount**
 
-On a **€100 transfer**, the 1% (€1.00) is distributed as:
-- **Exchange fee (Kraken):** ~€0.26 (0.26%)
-- **Escrow operator:** ~€0.247 (0.247%)
-- **Merchant:** ~€0.247 (0.247%)
-- **Liquidity Provider:** ~€0.247 (0.247%) *(if instant settlement selected)*
+On a **€100 transfer**, the ~1% (€1.00) is distributed as:
+- **Sender fee:** €0.50 (0.5% - paid to BCH seller)
+- **Merchant spread:** ~€0.50 (0.5% - earned by selling VES for BCH)
 
-**How it works:** The 1% fee first covers the Kraken exchange cost (~0.26%), then the remaining ~0.74% is split equally three ways among the participants who make the transaction possible.
+**How it works:** 
+- Sender pays BCH seller €100 via Bizum
+- BCH seller posts ~€107 worth of BCH as collateral (7% overcollateralization)
+- Covenant promises €99.50 worth of BCH to merchant (settled at maturity rate)
+- Merchant sells 500,000 VES to recipient, receives ~€100.50 worth of BCH (earns ~€1 spread)
+- BCH seller keeps surplus after merchant paid (~€0.50 fee + hedged position)
 
-**Comparison:** Traditional remittances average 6.49% (€6.49 on €100). Asgaya's 1% total fee is **6.5× cheaper**.
+**Comparison:** Traditional remittances average 6.49% (€6.49 on €100). Asgaya's ~1% total fee is **6.5× cheaper**.
 
 ---
 
-**Key Innovation:** Two-step settlement with pull-based BCH purchases eliminates volatility risk.
+**Key Innovation:** EUR-denominated covenants with BCH settlement eliminate custody and intermediation risk.
 
 **⚠️ Important:** Asgaya is an **experimental, unregulated protocol**. By exploring this documentation or participating in any capacity, you accept full responsibility for understanding and complying with laws in your jurisdiction. **[Read full risks and disclaimers →](risks-and-disclaimers.md)**
 
@@ -49,7 +52,7 @@ On a **€100 transfer**, the 1% (€1.00) is distributed as:
 
 Today's remittance system is a labyrinth of bureaucracy, platforms, regulations, and networks. Despite UN and G20 pledges to reduce costs to 3%, the reality is stark: **$685 billion in remittances sent annually, with 6.49% average cost. Over $44.5 billion never reach their destination.**
 
-Asgaya offers an alternative by connecting local mobile payment apps (like Bizum, Mercado Pago, PagoMóvil) through **Bitcoin Cash** as the settlement layer. A sender in Barcelona triggers a Bizum payment that, through a coordinated chain reaction, results in pesos appearing in a recipient's Mercado Pago account in Buenos Aires—all in seconds, with <1% fees.
+Asgaya offers an alternative by connecting local mobile payment apps (like Bizum, Mercado Pago, PagoMóvil) through **Bitcoin Cash covenants** as the settlement layer. A sender in Spain triggers a Bizum payment to a BCH seller, who posts collateral to a covenant. The recipient in Venezuela claims cash from a local merchant by co-signing the covenant, which distributes BCH to the merchant—all peer-to-peer, with <1% fees.
 
 The goal: mobilize those lost fees to drive adoption, making every transfer create a new merchant on the network.
 
@@ -79,9 +82,10 @@ The goal: mobilize those lost fees to drive adoption, making every transfer crea
 
 Fundamental design principles and economic incentives:
 - Competitive pricing (<1% fees)
-- Volatility protection (pull system)
-- Permissionless access (no KYC)
+- Volatility protection (overcollateralized covenants)
+- Permissionless access (no KYC, no custody)
 - Self-custody (users control BCH)
+- No intermediation (covenant-based distribution)
 
 **Start here if:** You want to understand WHY Asgaya is designed this way
 
@@ -91,9 +95,9 @@ Fundamental design principles and economic incentives:
 *User Experience & Technical Implementation*
 
 Complete specification for mobile app implementation:
-- **User flows** (sender, recipient, merchant, LP) - *Great for UI/UX feedback*
-- Backend APIs (19 endpoints)
-- NotificationListener (bridges fiat and BCH)
+- **User flows** (sender, recipient, merchant, BCH seller) - *Great for UI/UX feedback*
+- Backend APIs (covenant state machine, bulletin board)
+- Notification system (bridges fiat and BCH)
 
 **Start here if:** You want to understand HOW Asgaya works, participate, or contribute
 
@@ -104,9 +108,10 @@ Complete specification for mobile app implementation:
 ### 💡 [Concepts](concepts/)
 
 Theoretical foundations and key ideas:
-- Two-step settlement and volatility protection
-- Dynamic incentive mechanisms
-- Pull-based BCH purchase model
+- Overcollateralized bounty contracts (covenant mechanics)
+- Decentralized pull system (bulletin board architecture)
+- BCH sellers and hedge mechanism
+- No custody, no intermediation
 
 **Start here if:** You want to understand the underlying concepts that power Asgaya
 
@@ -116,8 +121,9 @@ Theoretical foundations and key ideas:
 
 Real-world tradeoffs and implementation choices:
 - How we achieve <1% fees in practice
-- Market-rate exchange strategies
-- Incentive structure decisions
+- How exchange rates work (EUR-denominated, BCH-settled)
+- Fee splitting model
+- Why no custody/intermediation (MiCA compliance)
 
 **Start here if:** You want to understand the "why" behind specific architectural choices
 
@@ -138,21 +144,28 @@ How to contribute to Asgaya:
 
 **Phase:** Public Beta (Seeking External Review)
 
-**Version:** 0.1.0
+**Version:** 0.2.0 (Covenant Architecture)
 
-**Last Updated:** 2026-04-28
+**Last Updated:** 2026-05-10
 
 **What's complete:**
-- ✅ Core architecture (14 documents)
-- ✅ Android app flows (3 documents)
-- ✅ Backend APIs (5 documents)
-- ✅ NotificationListener (6 documents)
+- ✅ Core architecture (covenant-based)
+- ✅ Android app flows (sender, recipient, merchant)
+- ✅ Overcollateralized bounty contracts specification
+- ✅ No custody/no intermediation model
+- ✅ Decentralized pull system (bulletin board)
 
 **What needs review:**
-- Security considerations (especially NotificationListener)
+- Security considerations (covenant timeout cascade)
 - BCH-native architecture assumptions
 - Testing strategy completeness
 - Missing edge cases
+- Regulatory compliance (MiCA/PSD2)
+
+**Recent pivot (May 9, 2026):**
+- Abandoned escrow-based architecture (custody/intermediation service)
+- Adopted covenant-based architecture (no custody, no intermediation)
+- Reason: MiCA compliance (avoid CASP licensing requirement)
 
 ---
 
