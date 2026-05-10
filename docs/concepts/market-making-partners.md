@@ -2,11 +2,16 @@
 
 **Concept Type:** Strategic Pattern
 **Category:** Network Design
-**Related:** [Bubble Prevention](concepts/bubble-prevention.md), [Escrow Incentives](concepts/bch-miners-as-escrows.md)
+**Related:** [Bubble Prevention](concepts/bubble-prevention.md), [BCH Sellers as Capital Providers](concepts/bch-miners-as-escrows.md)
 
-**⚠️ NOTE:** This document describes pulpero (merchant) coordination for market stability. With two-step settlement architecture, **liquidity providers (LPs)** now play this role. See:
-- **[Core Architecture: Incentives](core-architecture/why-promote-adoption.md)** — LP role defined
-- **[Two-Step Settlement](decisions/two-step-settlement-timing.md)** — How LPs provide instant merchant settlement
+**⚠️ NOTE:** This document describes historical concepts for market stability coordination. In the current covenant-based architecture:
+- **BCH sellers** post overcollateralized capital (not "escrow operators")
+- **BCH buyers** provide optional instant settlement (replacing "LP" role)
+- Market coordination happens through smart contract mechanics rather than centralized coordination
+
+See:
+- **[Core Architecture: Incentives](core-architecture/why-promote-adoption.md)** — Current participant roles
+- **[Pull System](concepts/pull-system.md)** — Covenant-based mechanics
 
 ---
 
@@ -24,11 +29,11 @@ Pulperos (merchant liquidity providers) aren't just infrastructure - they're **a
 
 **Weekend remittance spike (€240k):**
 ```
-1. Escrow → Pre-positions reserves (removes buy pressure)
+1. BCH seller → Pre-positions reserves (removes buy pressure)
 2. Users → Cash out at pulperías
 3. Pulperos → Accumulate BCH
 4. Pulperos → HOLD BCH (no sell pressure)
-5. Result → Price stays elevated, escrow replenishes at high price
+5. Result → Price stays elevated, BCH seller replenishes at high price
 ```
 
 **Outcome:** Arbitrage profits reduced, potential bubble formation.
@@ -37,7 +42,7 @@ Pulperos (merchant liquidity providers) aren't just infrastructure - they're **a
 
 **Same weekend spike:**
 ```
-1. Escrow → Pre-positions reserves (removes buy pressure)
+1. BCH seller → Pre-positions reserves (removes buy pressure)
 2. Users → Cash out at pulperías
 3. Pulperos → Accumulate BCH
 4. System → Warns about spike risk
@@ -56,15 +61,15 @@ Pulperos (merchant liquidity providers) aren't just infrastructure - they're **a
 **The equation:**
 ```
 Weekend stability =
-  Escrow removes buy pressure (pre-positioning) +
+  BCH seller removes buy pressure (pre-positioning) +
   Pulpero adds sell pressure (coordinated selling)
 ```
 
 **Effect on capital requirements:**
 
-| Strategy | Escrow Capital | Pulpero Compliance | Market Stability | Escrow Profit |
+| Strategy | BCH Seller Capital | Pulpero Compliance | Market Stability | BCH Seller Profit |
 |----------|----------------|-------------------|------------------|---------------|
-| **Escrow only** | €100k | N/A | 60-70% | 0.35% |
+| **BCH seller only** | €100k | N/A | 60-70% | 0.35% |
 | **+ Warning nudge** | €30k | 60% | 85% | 0.45% |
 | **+ POS default** | €30k | 85% | 95% | 0.52% |
 
@@ -160,7 +165,7 @@ Usuarios que aceptan protección: 127/150 (85%)
 - High capital barrier
 
 **With 85% pulpero coordination:**
-- Need €30k escrow capital
+- Need €30k BCH seller capital
 - 95% effective
 - **3x capital reduction**
 - **Better results**
@@ -174,7 +179,7 @@ Usuarios que aceptan protección: 127/150 (85%)
 
 ### Profit Distribution
 
-**Escrow perspective:**
+**BCH seller perspective:**
 - Less capital tied up (€30k vs €100k)
 - Better arbitrage (€378 replenish vs €385)
 - Higher ROI (0.52% vs 0.35%)
@@ -292,7 +297,7 @@ else:
 - **Market stability:** <5% volatility during spike
 
 **Capital efficiency:**
-- **Coverage ratio:** Escrow capital / spike volume
+- **Coverage ratio:** BCH seller capital / spike volume
 - **Effectiveness multiplier:** Stability / capital deployed
 - **ROI improvement:** With coordination vs without
 
@@ -407,7 +412,7 @@ else:
 ## Related Concepts
 
 - **Bubble Prevention:** [bubble-prevention.md](concepts/bubble-prevention.md)
-- **Escrow Incentives:** [bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)
+- **BCH Seller Incentives:** [bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)
 - **Pull System:** [pull-system.md](concepts/pull-system.md)
 
 ---

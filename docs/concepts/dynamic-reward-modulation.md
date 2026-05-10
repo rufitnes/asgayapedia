@@ -20,11 +20,11 @@
 
 ## What It Is
 
-A **dynamic reward split mechanism** that automatically adjusts LP/Merchant incentives based on BCH price volatility.
+A **dynamic reward split mechanism** that automatically adjusts BCH Buyer/Merchant incentives based on BCH price volatility.
 
 **Core principle:** When BCH deflates rapidly (price spikes), reduce the penalty for merchants who sell immediately by increasing their reward share.
 
-**Implementation:** Simple formula that modulates the LP/Merchant reward split (baseline 50/50) based on 7-day BCH price movement.
+**Implementation:** Simple formula that modulates the BCH Buyer/Merchant reward split (baseline 50/50) based on 7-day BCH price movement.
 
 ---
 
@@ -55,22 +55,22 @@ When BCH price spikes 10-20% in a week:
 ```python
 def calculate_reward_split(bch_7day_change_percent):
     """
-    Returns (merchant_share, lp_share) as percentages
+    Returns (merchant_share, bch_buyer_share) as percentages
 
     Baseline: 50/50 split at 0% BCH movement
     Range: 30/70 to 70/30 based on volatility
 
     Merchant share INCREASES when BCH appreciates (deflationary)
-    LP share INCREASES when BCH depreciates (inflationary)
+    BCH Buyer share INCREASES when BCH depreciates (inflationary)
     """
     # Clamp BCH movement to ±20% for calculation
     clamped_change = max(-20, min(20, bch_7day_change_percent))
 
     # Merchant share: 50% baseline + 1% per 1% BCH appreciation
     merchant_share = 50 + clamped_change
-    lp_share = 100 - merchant_share
+    bch_buyer_share = 100 - merchant_share
 
-    return (merchant_share, lp_share)
+    return (merchant_share, bch_buyer_share)
 ```
 
 ### Examples in Practice
@@ -78,7 +78,7 @@ def calculate_reward_split(bch_7day_change_percent):
 **Scenario 1: Healthy Growth (+2% in 7 days)**
 ```
 BCH movement: +2%
-Reward split: 52% merchant / 48% LP
+Reward split: 52% merchant / 48% BCH Buyer
 Effect: Near-baseline, balanced incentives
 Merchant message: "Hold BCH for 4% more reward" (52% vs 50%)
 ```
@@ -86,7 +86,7 @@ Merchant message: "Hold BCH for 4% more reward" (52% vs 50%)
 **Scenario 2: Deflationary Spike (+10% in 7 days)**
 ```
 BCH movement: +10%
-Reward split: 60% merchant / 40% LP
+Reward split: 60% merchant / 40% BCH Buyer
 Effect: Merchants less penalized for selling
 Merchant message: "Hold BCH for 20% more reward" (60% vs 50%)
                   ↑ Still incentive, but weaker
@@ -95,7 +95,7 @@ Merchant message: "Hold BCH for 20% more reward" (60% vs 50%)
 **Scenario 3: Bubble Territory (+20% in 7 days)**
 ```
 BCH movement: +20%
-Reward split: 70% merchant / 30% LP
+Reward split: 70% merchant / 30% BCH Buyer
 Effect: Strong incentive to sell immediately
 Merchant message: "Hold BCH for 40% more reward" (70% vs 50%)
                   ↑ But selling still gives 70% of baseline
@@ -104,8 +104,8 @@ Merchant message: "Hold BCH for 40% more reward" (70% vs 50%)
 **Scenario 4: Price Decline (-10% in 7 days)**
 ```
 BCH movement: -10%
-Reward split: 40% merchant / 60% LP
-Effect: Reward LPs for providing liquidity during downturn
+Reward split: 40% merchant / 60% BCH Buyer
+Effect: Reward BCH Buyers for providing liquidity during downturn
 Merchant message: "Hold BCH for 50% MORE reward!" (60% vs 40%)
                   ↑ Strong incentive to hold during dip
 ```
@@ -124,7 +124,7 @@ This mechanism works **in concert** with bubble prevention at the escrow level:
 - **See:** [bubble-prevention.md](concepts/bubble-prevention.md)
 
 ### Layer 2: Reward Split Modulation (This Concept)
-- **Who:** LPs and Merchants see adjusted rewards
+- **Who:** BCH Buyers and Merchants see adjusted rewards
 - **What:** 50/50 baseline, shift to 30/70 during deflation
 - **Effect:** Dampens demand-side (merchants sell BCH)
 - **Timeline:** Immediate per transaction
@@ -147,10 +147,10 @@ Week 1: BCH rises +8%
 → Effect: Moderate sell pressure from merchants
 
 Week 2: BCH rises +15% (total +23%)
-→ Escrows: Shift to 40/60 reserves (bubble risk)
-→ Rewards: 65% merchant / 35% LP (capped at +15%)
+→ BCH Sellers: Shift to 40/60 reserves (bubble risk)
+→ Rewards: 65% merchant / 35% BCH Buyer (capped at +15%)
 → Users: Strong warning about bubble risk
-→ Effect: Strong sell pressure from both escrows + merchants
+→ Effect: Strong sell pressure from both BCH sellers + merchants
 
 Week 3: Bubble prevented
 → Price spike slows due to sell pressure
@@ -203,12 +203,12 @@ During price decline: "Your share: 60% (up from 50%)"
 - Protect capital from volatility
 - Simple, predictable earnings
 
-**LP:**
+**BCH Buyer:**
 - Maximize return on BCH capital
 - Minimize risk of providing liquidity
 - Attract more merchant volume
 
-**Escrow:**
+**BCH Seller:**
 - Maintain stable operations
 - Protect reserves from volatility
 - Process transactions reliably
@@ -221,7 +221,7 @@ During price decline: "Your share: 60% (up from 50%)"
 - **Individual action:** Sell BCH immediately
 - **Collective effect:** Sell pressure dampens bubble
 
-**LP (during deflation):**
+**BCH Buyer (during deflation):**
 - Sees reduced reward share (40% vs 60%)
 - Accepts lower return as cost of stability
 - **Individual action:** Continue providing liquidity
@@ -233,7 +233,7 @@ During price decline: "Your share: 60% (up from 50%)"
 - **Individual action:** Hold BCH despite paper loss
 - **Collective effect:** Reduced sell pressure during downturn
 
-**LP (during decline):**
+**BCH Buyer (during decline):**
 - Sees increased reward share (60% vs 40%)
 - Compensated for increased risk
 - **Individual action:** Maintain/increase liquidity
@@ -261,7 +261,7 @@ During price decline: "Your share: 60% (up from 50%)"
 │  ✓ Transaction Complete             │
 │                                     │
 │  Your reward: VES 380               │
-│  (you shared 190 VES with LP)       │
+│  (you shared 190 VES with BCH Buyer) │
 │                                     │
 │  Settlement:                        │
 │  (•) Hold BCH - 4% more reward     │
@@ -280,7 +280,7 @@ During price decline: "Your share: 60% (up from 50%)"
 │  ✓ Transaction Complete             │
 │                                     │
 │  Your reward: VES 532               │
-│  (you shared 133 VES with LP)       │
+│  (you shared 133 VES with BCH Buyer) │
 │                                     │
 │  Settlement:                        │
 │  ( ) Hold BCH - 40% more reward     │
@@ -330,7 +330,7 @@ During price decline: "Your share: 60% (up from 50%)"
 │   penalty during high volatility)   │
 │                                     │
 │  📊 BCH: +18% this week (bubble?)   │
-│     Lower LP share protects network │
+│     Lower BCH Buyer share protects network │
 └─────────────────────────────────────┘
 ```
 
@@ -346,7 +346,7 @@ During price decline: "Your share: 60% (up from 50%)"
 ### Data Sources
 
 **BCH price feed:**
-- Source: Kraken ticker API (same as escrow)
+- Source: Market data API (e.g., CoinGecko, or direct exchange API)
 - Frequency: Real-time updates
 - Calculation: 7-day rolling average
 
@@ -363,9 +363,9 @@ def get_bch_7day_change():
     end_time = datetime.now()
     start_time = end_time - timedelta(days=7)
 
-    # Kraken OHLC endpoint
+    # Example: Exchange OHLC endpoint
     response = requests.get(
-        'https://api.kraken.com/0/public/OHLC',
+        'https://api.example.com/v1/ohlc',
         params={
             'pair': 'BCHEUR',
             'interval': 1440,  # Daily candles
@@ -553,7 +553,7 @@ def is_bubble_vs_trend(daily_prices):
 
 **Reality Check:**
 - Would need to move entire BCH market (expensive)
-- Asgaya uses Kraken price feed (high volume, hard to manipulate)
+- Asgaya uses exchange price feeds (high volume, hard to manipulate)
 - Individual transaction rewards too small to justify
 - **Conclusion:** Not economically viable attack vector
 
@@ -575,10 +575,10 @@ def is_bubble_vs_trend(daily_prices):
 - **Together:** Senders protected from variance, merchants guided on holding
 - **See:** [why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
 
-### Escrow Incentives
-- **This concept:** Merchant/LP split varies
-- **Escrow incentives:** Escrow fee fixed (0.5% or lower)
-- **Together:** Escrow stability + merchant/LP flexibility
+### BCH Seller Incentives
+- **This concept:** Merchant/BCH Buyer split varies
+- **BCH seller incentives:** BCH seller fee fixed (0.5% or lower)
+- **Together:** BCH seller stability + merchant/BCH Buyer flexibility
 - **See:** [bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)
 
 ### Pull System
@@ -599,8 +599,8 @@ def is_bubble_vs_trend(daily_prices):
 
 **Asgaya prevents this by:**
 - Dynamic incentives that adapt automatically
-- Protecting merchants from volatility (even at LP cost)
-- Multi-layer bubble prevention (escrow + rewards + education)
+- Protecting merchants from volatility (even at BCH Buyer cost)
+- Multi-layer bubble prevention (BCH seller + rewards + education)
 - Transparent formulas (no black box, no authority)
 
 **The insight:**
@@ -633,7 +633,7 @@ def is_bubble_vs_trend(daily_prices):
 ---
 
 *Concept documented: April 26, 2026*
-*Inspired by: Suso's insight during RS046-4 LP Flows discussion*
+*Inspired by: Suso's insight during RS046-4 BCH Buyer Flows discussion*
 *Philosophy: Incentives should adapt to market conditions automatically*
 *Status: Requires empirical testing before full deployment*
 *Testing priority: Phase 2 (Months 6-12 post-launch)*
@@ -646,11 +646,11 @@ def is_bubble_vs_trend(daily_prices):
 - [ ] Historical simulation using 2020-2026 BCH price data
 - [ ] A/B testing framework design
 - [ ] Survey instrument for merchant understanding
-- [ ] LP satisfaction metrics during volatility
+- [ ] BCH Buyer satisfaction metrics during volatility
 - [ ] Optimal baseline determination (40/60, 50/50, or 60/40?)
 - [ ] Formula shape testing (linear vs exponential vs step function)
 - [ ] Multi-exchange VWAP implementation for manipulation resistance
 - [ ] Trend vs bubble detection algorithm refinement
-- [ ] Integration testing with bubble-prevention.md escrow bot
+- [ ] Integration testing with bubble-prevention.md BCH seller bot
 
 **Critical path:** Must test before deploying at scale. This is a hypothesis, not proven fact.

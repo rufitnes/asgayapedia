@@ -2,7 +2,7 @@
 
 **Concept Type:** Economic Mechanism
 **Category:** Market Stabilization
-**Related:** [Escrow Incentives](concepts/bch-miners-as-escrows.md), [../core-architecture/why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
+**Related:** [BCH Seller Incentives](concepts/bch-miners-as-escrows.md), [../core-architecture/why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
 
 ---
 
@@ -41,7 +41,7 @@ At scale, Asgaya's BCH buying pressure could create speculative bubbles:
 **When:** Asgaya volume is small relative to BCH market
 - Network is too small to move the market
 - BCH price driven by external forces
-- Escrows exposed to volatility they can't influence
+- BCH sellers exposed to volatility they can't influence
 
 **Reserve Strategy: Hold EUR at exchange**
 
@@ -52,14 +52,14 @@ At scale, Asgaya's BCH buying pressure could create speculative bubbles:
 
 **How it works:**
 ```
-Escrow setup:
-→ Deposit €500-€2,000 in Kraken account
+BCH Seller setup:
+→ Deposit €500-€2,000 in exchange account
 → EUR balance sits ready
 
 Transaction processing:
-→ Receive EUR from sender
+→ Receive EUR from sender (via Bizum)
 → API call: Buy BCH instantly (seconds)
-→ Send BCH to receiver
+→ Lock BCH in covenant
 → EUR balance maintained
 
 Volatility exposure: Minimal
@@ -71,7 +71,7 @@ Volatility exposure: Minimal
 **Benefits:**
 - ✅ Zero volatility risk (only hold BCH momentarily)
 - ✅ Simpler operations (no reserve switching)
-- ✅ Predictable costs (0.26% Kraken fee)
+- ✅ Predictable costs (exchange fee ~0.26%)
 - ✅ No trading bot needed
 - ✅ No bubble risk management needed
 
@@ -85,7 +85,7 @@ Volatility exposure: Minimal
 
 **When:** Asgaya volume becomes significant relative to BCH market
 - Network buying pressure moves the market
-- Escrows can benefit from appreciation they're creating
+- BCH sellers can benefit from appreciation they're creating
 - Bubble prevention becomes necessary
 
 **Reserve Strategy: Hold 50% BCH / 50% EUR buffer**
@@ -98,7 +98,7 @@ Volatility exposure: Minimal
 
 **How it works:**
 ```
-Escrow setup:
+BCH Seller setup:
 → €10,000 total buffer
 → €5,000 EUR + 13 BCH (at €380) = 50/50 split
 
@@ -122,7 +122,7 @@ Market normalizes:
 **Benefits:**
 - ✅ Profit from BCH appreciation (network creates upside)
 - ✅ Automatic bubble prevention (bot handles it)
-- ✅ Decentralized (each escrow acts independently)
+- ✅ Decentralized (each BCH seller acts independently)
 - ✅ Emergent stability (individual rationality → collective benefit)
 
 **Trade-off:**
@@ -161,7 +161,7 @@ if market_impact_percent > THRESHOLD:
 - Need research: RS039 Market Impact Threshold Analysis
 
 **Estimated volume to reach threshold:**
-- BCH/EUR daily volume on Kraken: [TODO: measure]
+- BCH/EUR daily volume on exchanges: [TODO: measure]
 - 5% of that: [TODO: calculate]
 - "A few million EUR/year might be enough" (rough estimate)
 
@@ -176,8 +176,8 @@ if market_impact_percent > THRESHOLD:
 ```python
 class BubblePrevention:
     """
-    Each escrow runs independently.
-    No coordination with other escrows needed.
+    Each BCH seller runs independently.
+    No coordination with other BCH sellers needed.
     """
 
     def monitor_market(self):
@@ -249,17 +249,17 @@ def buy_bch_gradually(self):
 
 **The beautiful part: No coordination needed**
 
-### What Each Escrow Wants (Individual Rationality)
+### What Each BCH Seller Wants (Individual Rationality)
 - Protect capital from volatility
 - Reduce risk exposure
 - Maintain operational efficiency
 - Maximize profit (or minimize loss)
 
-### What Each Escrow Does (Autonomous Action)
+### What Each BCH Seller Does (Autonomous Action)
 - Monitor market conditions independently
 - Switch reserves when personal risk threshold exceeded
 - Execute gradually to minimize costs
-- **No communication with other escrows**
+- **No communication with other BCH sellers**
 
 ### What Emerges (Collective Result)
 
@@ -268,14 +268,14 @@ Timeline of bubble formation & automatic prevention:
 
 Week 1: BCH price starts rising
 → +15% in 7 days (elevated but not critical)
-→ Some cautious escrows switch to EUR
-→ 20/100 escrows sell reserves
+→ Some cautious BCH sellers switch to EUR
+→ 20/100 BCH sellers sell reserves
 → Moderate sell pressure
 
 Week 2: Price continues rising
 → +30% in 7 days (bubble risk threshold)
-→ Most escrows independently switch to EUR
-→ 70/100 escrows sell reserves
+→ Most BCH sellers independently switch to EUR
+→ 70/100 BCH sellers sell reserves
 → Strong sell pressure
 
 Week 3: Sell pressure counters buy pressure
@@ -285,12 +285,12 @@ Week 3: Sell pressure counters buy pressure
 
 Week 4-5: Market normalizes
 → Volatility returns to healthy range
-→ Escrows start switching back to BCH
+→ BCH sellers start switching back to BCH
 → Gradual buy pressure (controlled)
 → Natural equilibrium restored
 ```
 
-**Each escrow just managing their own risk.**
+**Each BCH seller just managing their own risk.**
 **Collectively, they stabilize the entire market.**
 
 **This is how real financial markets work!**
@@ -321,7 +321,7 @@ Week 4-5: Market normalizes
 ### Why It Works
 
 **Incentive alignment:**
-- Escrow **wants:** Protect their capital
+- BCH Seller **wants:** Protect their capital
 - Network **needs:** Market stability
 - **Result:** Individual self-interest = collective benefit
 
@@ -348,8 +348,8 @@ Week 4-5: Market normalizes
 
 ### Phase 1 (Simple)
 
-**Per escrow:**
-- EUR balance at Kraken
+**Per BCH seller:**
+- EUR balance at exchange
 - API access for instant buy/send
 - Basic transaction processing software
 
@@ -360,16 +360,16 @@ Week 4-5: Market normalizes
 
 ### Phase 2 (Complex)
 
-**Per escrow:**
-- BCH/EUR reserves at Kraken
-- Real-time BCH price feed (Kraken ticker API)
+**Per BCH seller:**
+- BCH/EUR reserves at exchange
+- Real-time BCH price feed (exchange ticker API)
 - 7-day volatility calculation
 - 14-day momentum tracking
 - Bubble prevention bot software
 - Gradual execution capability
 
 **Network level:**
-- Optional: Registry of active escrows (visibility)
+- Optional: Registry of active BCH sellers (visibility)
 - Optional: Shared market metrics (coordination aid)
 - But critically: **No coordination required for this to work**
 

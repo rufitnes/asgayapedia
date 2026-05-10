@@ -71,7 +71,7 @@ GET https://dolarapi.com/v1/dolares/blue
 
 **Why 'venta'?**
 - Merchant RECEIVES ARS (they're "selling" USD, we're "buying" USD with ARS)
-- From LP's perspective: LP pays ARS, merchant receives ARS
+- From BCH seller's perspective: BCH seller facilitates conversion, merchant receives ARS
 - The 'venta' (sell) rate is what the market charges to convert USD → ARS
 
 ---
@@ -194,9 +194,9 @@ print(f"Updated: {rates['blue_info']['fechaActualizacion']}")
 
 ---
 
-## **Integration with Escrow API**
+## **Integration with Covenant API**
 
-**escrow_api.py updated:**
+**covenant_api.py updated:**
 
 ```python
 # OLD (v1):
