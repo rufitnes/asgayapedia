@@ -18,8 +18,8 @@
 **Ideal flow:**
 1. Sender taps "Send €100" in Asgaya app (t=0)
 2. **Asgaya app automatically initiates Bizum payment** via banking API (t=1s)
-3. Escrow receives notification (t=2s)
-4. Escrow confirms funds → notifies recipient (t=3s)
+3. BCH seller receives notification (t=2s)
+4. BCH seller confirms funds → notifies recipient (t=3s)
 5. **Total time: <5 seconds**
 
 **Why this is the ideal:**
@@ -93,10 +93,10 @@
 
 ### Constraint 3: Multiple Payment Sources
 
-**Discovery:** Escrows receive payments from many sources, not just Asgaya.
+**Discovery:** BCH sellers receive payments from many sources, not just Asgaya.
 
 **Real-world scenario:**
-- Escrow might receive 10 Bizum payments/day
+- BCH seller might receive 10 Bizum payments/day
 - Only some are Asgaya-related
 - Others are: personal transfers, refunds, business payments
 
@@ -109,18 +109,18 @@
 
 ## The Decision
 
-**Use 10-minute timeout window for escrow to receive and confirm payment.**
+**Use 10-minute timeout window for BCH seller to receive and confirm payment.**
 
 **Rationale:**
 1. **Covers 95%+ of real-world scenarios** (fast + slow senders, typical notification delays)
 2. **Balances reliability vs. speed** (rare timeouts, acceptable wait time)
-3. **No volatility risk** (escrow holds EUR during this window, BCH purchased AFTER recipient cashes out)
+3. **No volatility risk** (BCH seller holds EUR during this window, BCH locked in covenant AFTER recipient cashes out)
 4. **Simple user experience** (no "confirm I sent it" button - system handles automatically)
 
 **Implementation:**
 - **Timer starts:** When sender receives payment instructions
-- **Timer ends:** When escrow parses notification from sender OR when 10 minutes elapses
-- **If notification received:** Escrow confirms funds → notifies recipient
+- **Timer ends:** When BCH seller parses notification from sender OR when 10 minutes elapses
+- **If notification received:** BCH seller confirms funds → notifies recipient
 - **If timeout (10 min):** System asks sender "Did you send the payment?"
   - If yes → Manual verification
   - If no → "Do you still want to proceed?"
@@ -131,7 +131,7 @@
 
 ### Sender Experience
 
-1. Sender receives payment instructions in Asgaya app (includes escrow Bizum details, amount €101, concept field with recipient phone)
+1. Sender receives payment instructions in Asgaya app (includes BCH seller Bizum details, amount €101, concept field with recipient phone)
 2. **Timer starts automatically: "Waiting for payment... (0:00 / 10:00)"**
 3. Sender leaves app, opens bank app, sends Bizum
 4. Sender can close bank app and wait (no need to return to Asgaya app)
@@ -144,7 +144,7 @@
 
 ---
 
-### Escrow Experience
+### BCH Seller Experience
 
 1. Generates payment instructions for sender
 2. **Starts monitoring for notifications** (checks every 15-30 seconds)
@@ -154,7 +154,7 @@
    - Matches phone number
    - Validates amount (€101)
 5. If match found → Confirms funds received
-6. **Holds EUR** (does NOT buy BCH yet)
+6. **Locks BCH in covenant** (overcollateralized position)
 7. Notifies recipient: "Funds ready for cash-out"
 
 ---
@@ -172,33 +172,31 @@
 
 ### Settlement (After Cash-Out Confirmed)
 
-**If merchant selected instant settlement (3 participants):**
-1. LP sends €100 fiat to merchant
-2. Merchant app parses fiat settlement notification from LP
-3. **Escrow buys €101 worth of BCH** (e.g., 0.1007374 BCH lands in hot wallet)
-4. Calculate fee: 0.1007374 - 0.1000000 = 0.0007374 BCH
-5. Split 3 ways: 0.0007374 / 3 = 0.0002458 BCH each
-6. Escrow sends to LP: 0.1002458 BCH (€100 principal + 0.0002458 BCH fee)
-7. Escrow sends to merchant: 0.0002458 BCH (fee only, merchant already has fiat from LP)
-8. Escrow keeps: 0.0002458 BCH
+**Covenant execution (2 participants - standard):**
+1. Both merchant and recipient co-sign covenant
+2. Covenant automatically distributes BCH:
+   - Merchant receives: €99.5 worth of BCH (€100 - 0.5% fee)
+   - BCH seller receives: €7.5 (overcollateralization surplus + 0.5% fee)
+3. Transaction complete, recorded on-chain
 
-**Volatility window:** Seconds (from BCH purchase to LP receipt)
+**Volatility window:** ~30 seconds (from recipient entering merchant to covenant maturity)
 
-**If merchant holds BCH (2 participants):**
-1. **Escrow buys €101 worth of BCH** (e.g., 0.1007374 BCH)
-2. Calculate fee: 0.0007374 BCH
-3. Split 2 ways: 0.0007374 / 2 = 0.0003687 BCH each
-4. Escrow sends to merchant: 0.1003687 BCH
-5. Escrow keeps: 0.0003687 BCH
+**If BCH buyer provides instant settlement (3 participants - optional):**
+1. BCH buyer sends €100 fiat to merchant (instant)
+2. Both merchant and recipient co-sign covenant
+3. Covenant automatically distributes BCH:
+   - BCH buyer receives: €99.5 worth of BCH
+   - BCH seller receives: €7.5 (overcollateralization surplus + 0.5% shared fee)
+4. Merchant already has fiat from BCH buyer
 
-**Volatility window:** Seconds
+**Volatility window:** ~30 seconds (covenant execution time)
 
 ---
 
 ## Trade-offs Accepted
 
 ### Lost: Instant Confirmation
-- Cannot achieve <1 minute sender-to-escrow confirmation
+- Cannot achieve <1 minute sender-to-BCH seller confirmation
 - Must accommodate real-world sender behavior + notification delays
 - 2-10 minute typical wait
 
@@ -209,9 +207,9 @@
 
 ### Volatility Risk: Near Zero
 - **10-minute timeout is NOT a volatility window**
-- Escrow holds EUR during timeout (zero volatility)
-- BCH only purchased AFTER recipient cashes out (settlement in seconds)
-- **Total volatility exposure: ~5-30 seconds** (from BCH purchase to LP/merchant receipt)
+- BCH locked in overcollateralized covenant during wait (volatility protected)
+- Covenant only executes when recipient ready to cash out
+- **Total volatility exposure: ~30 seconds** (covenant execution time)
 
 ---
 
@@ -279,8 +277,8 @@ Received: +58 412 123 4567 (with spaces and +)
 ## Related Decisions
 
 - [Bizum Concept Field](decisions/bizum-concept-field.md) — Why phone numbers (enables simple fuzzy matching)
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — Why escrow holds EUR during timeout (zero volatility)
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees are calculated after BCH lands in wallet
+- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — Why covenant-based architecture eliminates volatility during timeout
+- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees are calculated in covenant distribution
 
 ---
 

@@ -3,14 +3,14 @@
 # Unclaimed Transaction Expiry Policy
 
 **Status:** Active (MVP)  
-**Category:** User Protection & Escrow Operations  
+**Category:** User Protection & Covenant Operations  
 **Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Transaction APIs](android-app/backend-apis/transaction-apis.md)
 
 ---
 
 ## The Goal
 
-Prevent funds from being locked indefinitely in escrow when recipients never claim their remittances.
+Prevent funds from being locked indefinitely in covenant when recipients never claim their remittances.
 
 ---
 
@@ -19,11 +19,11 @@ Prevent funds from being locked indefinitely in escrow when recipients never cla
 **Scenario:** Sender sends €100 to recipient Elena in Venezuela. Elena never goes to a merchant to claim. What happens?
 
 **Without expiry policy:**
-- EUR remains locked in escrow indefinitely
-- Escrow has already bought BCH (to eliminate volatility window)
+- BCH remains locked in covenant indefinitely
+- BCH seller's capital is tied up (overcollateralized position)
 - No clear resolution process
 - Sender's money is in limbo
-- Escrow bears ongoing operational costs
+- BCH seller bears ongoing operational costs
 
 **Critical gap identified by:** DeepSeek Review (May 4, 2026)
 
@@ -31,23 +31,23 @@ Prevent funds from being locked indefinitely in escrow when recipients never cla
 
 ## The Constraint
 
-**Escrow operational reality (Pull System):**
-1. Escrow receives €100 via Bizum (instant)
-2. Escrow **HOLDS EUR** (doesn't buy BCH yet - pull system!)
+**BCH Seller operational reality (Covenant System):**
+1. BCH seller receives €100 via Bizum (instant)
+2. BCH seller **locks BCH in covenant** (overcollateralized: €107 worth)
 3. Claim code generated and sent to recipient
-4. **If recipient claims:** Escrow buys BCH, settles transaction
+4. **If recipient claims:** Covenant executes, BCH distributed automatically
 5. **If recipient never claims:**
-   - EUR sits in escrow account for 24h (liquidity locked)
-   - No BCH purchased (pull system = on-demand purchase)
+   - BCH remains locked in covenant for 24h (capital tied up)
+   - Covenant timeout triggers automatic refund
    - No revenue earned (transaction never completed)
-   - Escrow must manually send Bizum refund (administrative work)
+   - BCH seller must manually send Bizum refund to sender (administrative work)
 
-**Escrow costs for unclaimed transaction:**
-- Buy BCH: €0.00 (never purchased - pull system!)
-- Sell BCH: €0.00 (never purchased)
+**BCH Seller costs for unclaimed transaction:**
+- BCH locked: €107 (overcollateralized capital)
+- Covenant gas fee: minimal
 - Manual refund: ~10 min work
-- Liquidity lock: €100 tied up for 24h (opportunity cost)
-- **Total cost:** Time + opportunity cost (no hard exchange fees)
+- Capital lock: €107 BCH tied up for 24h (opportunity cost)
+- **Total cost:** Time + opportunity cost + volatility exposure
 
 ---
 
@@ -73,18 +73,19 @@ Refund to sender:    €99.90
 ```
 
 **What processing fee covers:**
-- Manual refund work (escrow sends Bizum back to sender)
-- 24h liquidity lock (escrow's EUR was tied up)
+- Manual refund work (BCH seller sends Bizum back to sender)
+- 24h capital lock (BCH seller's capital was tied up)
 - Administrative overhead
+- Volatility exposure during lock period
 
 **What it does NOT cover:**
-- ❌ Exchange fees (no BCH was purchased - pull system!)
-- ❌ Network fees (no blockchain transaction happened)
+- ❌ Covenant gas fees (minimal)
+- ❌ Overcollateralization surplus (already locked)
 
 **Why 0.1%?**
 - Start low, encourage legitimate use
 - Can increase to 0.2-1.0% if abuse detected (discourage fake claims)
-- Real escrow feedback will determine optimal rate
+- Real BCH seller feedback will determine optimal rate
 
 **Who gets notified:**
 - ✅ **Recipient:** Action-oriented reminders (hours 12, 23)
@@ -97,9 +98,9 @@ Refund to sender:    €99.90
 
 ### What We Gained ✅
 - **Clear deadline:** Everyone knows when funds will be refunded
-- **Automatic resolution:** No manual escrow intervention needed
-- **Bounded escrow risk:** 24h max BCH volatility exposure
-- **Fair processing fee:** Only covers actual exchange costs
+- **Automatic resolution:** Covenant timeout handles refund automatically
+- **Bounded BCH seller risk:** 24h max BCH volatility exposure
+- **Fair processing fee:** Covers actual capital lock and admin costs
 - **Sender protection:** Get money back if recipient can't claim
 - **Recipient protection:** Multiple reminders prevent accidental expiry
 
@@ -126,12 +127,12 @@ Refund to sender:    €99.90
 
 **State transitions:**
 ```
-pending → active (escrow funded)
+pending → active (covenant funded)
 active → claimed (recipient claims)
 active → expiring_soon (18h elapsed)
 expiring_soon → claimed (recipient claims before expiry)
 expiring_soon → expired_unclaimed (24h elapsed, no claim)
-expired_unclaimed → refunded (BCH sold, EUR returned)
+expired_unclaimed → refunded (covenant timeout, BCH returned to seller, EUR refunded to sender)
 ```
 
 ### Notification Requirements
@@ -158,10 +159,11 @@ expired_unclaimed → refunded (BCH sold, EUR returned)
 }
 ```
 
-**Escrow automation:**
-- Cron job checks transactions every 15 minutes
-- At 24h mark: Send Bizum refund to sender (€99.90) → Update state to `refunded`
-- No BCH to sell (pull system - BCH was never purchased)
+**BCH Seller automation:**
+- Cron job checks covenant timeouts every 15 minutes
+- At 24h mark: Covenant automatically refunds BCH to seller
+- BCH seller sends Bizum refund to sender (€99.90) → Update state to `refunded`
+- Covenant handles BCH distribution automatically
 
 ---
 
@@ -261,22 +263,23 @@ expired_unclaimed → refunded (BCH sold, EUR returned)
 ---
 
 ### 4. Partial Auto-Claim
-**Rationale:** Reduce escrow volatility exposure
+**Rationale:** Reduce BCH seller volatility exposure
 
 **Implementation:**
-- At hour 20: If unclaimed, escrow sells 50% of BCH (locks in half the refund)
-- At hour 24: Sells remaining 50%
-- Reduces price movement risk for escrow
+- At hour 20: If unclaimed, covenant could trigger partial refund mechanism
+- At hour 24: Full covenant timeout and refund
+- Reduces price movement risk for BCH seller
 
 **When to add:** If BCH volatility causes significant variance in refund amounts
+
+**Note:** Requires covenant contract modification for partial timeout logic.
 
 ---
 
 ## Related Research
 
 - **[RS010_Bizum.md](../research/RS010_Bizum.md)** — Bizum refund capabilities and timing
-- **[RS015_Kraken_API.md](../research/RS015_Kraken_API.md)** — Round-trip fee calculation
-- **[Two-Step Settlement Timing](two-step-settlement-timing.md)** — Why escrow buys BCH immediately
+- **[Two-Step Settlement Timing](two-step-settlement-timing.md)** — Why covenant-based architecture prevents volatility risk
 
 ---
 
