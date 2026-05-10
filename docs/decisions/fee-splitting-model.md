@@ -1,32 +1,42 @@
-# Decision: Fee Splitting Model - Three-Way Split
+# Decision: Fee Splitting Model - Two-Participant Split
 
-**Decision Date:** April 2026
-**Status:** Implemented
-**Related Requirement:** [Promote Adoption](core-architecture/why-promote-adoption.md)
+**Decision Date:** April 2026 (Updated May 2026 for covenant architecture)  
+**Status:** Implemented (Chipnet testing)  
+**Related Requirement:** [Promote Adoption](../core-architecture/why-promote-adoption.md)
 
 ---
 
 > 💡 **TL;DR: How the 1% fee is split**
 >
-> The 1% total fee is NOT split equally as "0.33% each." Instead:
-> - **Cost to source BCH:** Deducted first (varies by escrow)
-> - **Remaining amount:** Split equally three ways among participants
+> The 1% total fee is split between TWO participants in the covenant:
+> - **BCH Seller:** 0.5% (provides overcollateralized BCH to covenant)
+> - **Merchant:** 0.5% (hands cash to recipient, receives BCH)
 >
-> **Example with Kraken (€100):** €1 total → €0.26 exchange cost + (€0.247 × 3) to participants  
-> **Example with own BCH (€100):** €1 total → €0 sourcing cost + (€0.333 × 3) to participants
+> **Example (€100 transfer):**
+> - Total fee: €1.00
+> - BCH seller earns: €0.50 (0.5%)
+> - Merchant earns: €0.50 (0.5%)
+> - **Recipient receives:** €99.00 worth of VES cash
+>
+> **Optional instant settlement:**
+> - Merchant can sell BCH immediately to BCH buyer (separate market)
+> - Typical spread: 0.5% (merchant loses entire reward to spread)
+> - **Result if selling immediately:** Merchant gets €99.00 fiat (same as no reward!)
 
 ---
 
 ## The Goal (Architectural Ideal)
 
-Create **economic incentives** for all participants to join and grow the Asgaya network.
+Create **economic incentives** for all participants to join and grow the Asgaya network **while promoting BCH adoption**.
 
-**Participants to incentivize:**
-1. **Escrow operators:** Coordinate transactions, provide infrastructure
-2. **Merchants:** Accept BCH, provide fiat liquidity to recipients
-3. **Liquidity Providers (LPs):** Provide fiat liquidity to merchants
+**Primary participants to incentivize:**
+1. **BCH Sellers:** Post overcollateralized BCH to covenants, enable pull system
+2. **Merchants:** Accept BCH payments, provide VES liquidity to recipients
 
-**Goal:** Maximize network growth by rewarding participation.
+**Secondary market (optional):**
+3. **BCH Buyers:** Buy BCH from merchants who want immediate fiat settlement
+
+**Goal:** Maximize network growth by rewarding participation **AND incentivizing BCH holding over immediate fiat conversion**.
 
 ---
 
@@ -34,161 +44,255 @@ Create **economic incentives** for all participants to join and grow the Asgaya 
 
 **Total fee budget:** 1% of transfer amount (to beat 6.49% legacy average)
 
-**Variable cost within that 1%:**
-- BCH sourcing costs: 0% to ~0.50% (depends on escrow's method)
-- **Remaining to distribute:** ~0.50% to 1.00% (varies by escrow efficiency)
+**Fixed participants:** 2 (BCH seller + Merchant)
 
-**Challenge:** Split remaining fees among participants fairly while:
-1. Maintaining strong incentives for each participant
-2. Allowing escrow operational freedom (any sourcing method)
-3. Rewarding efficiency (better sourcing = better rewards for everyone)
+**Challenge:** Split 1% fee to:
+1. Fairly compensate both participants
+2. Incentivize BCH sellers to provide liquidity (post overcollateralized BCH)
+3. Incentivize merchants to hold BCH (not immediately sell)
+4. Make instant settlement available but economically discouraged
+5. Align with Asgaya's mission: BCH adoption, not just fiat conversion
 
 ---
 
 ## The Decision
 
-**Equal three-way split of remaining fees after BCH sourcing costs.**
+**Equal two-way split of total 1% fee between covenant participants.**
 
-**Universal Formula:**
+**Fixed Formula:**
 ```
-Total fee: 1% of transfer
-BCH sourcing cost: (varies by escrow - see below)
-Remaining: (1% - sourcing_cost)
-
-Escrow share: Remaining / 3
-Merchant share: Remaining / 3
-LP share: Remaining / 3
+Total fee: 1% of transfer amount
+BCH Seller share: 0.5%
+Merchant share: 0.5%
+Recipient receives: 99% (transfer amount minus fees)
 ```
 
-**Example 1: Escrow uses Kraken (€100 transfer):**
-- Total fee: €1.00
-- Kraken fee: €0.26
-- Remaining: €0.74
-- Escrow earns: €0.247
-- Merchant earns: €0.247
-- LP earns: €0.247
-
-**Example 2: Escrow uses own BCH (€100 transfer):**
-- Total fee: €1.00
-- Sourcing cost: €0 (uses existing BCH holdings)
-- Remaining: €1.00
-- Escrow earns: €0.333
-- Merchant earns: €0.333
-- LP earns: €0.333
-
-**Rationale:**
-1. **Simple and transparent** (easy to explain, easy to verify)
-2. **Fair to all participants** (equal stake in network growth)
-3. **Maximizes trust** (no perception of favoritism)
-4. **Permissionless** (escrow has complete operational freedom)
-5. **Competition-driven** (better BCH sourcing = better rewards for everyone)
+**No variable sourcing costs** (unlike old escrow model):
+- BCH seller posts their own BCH as collateral
+- Overcollateralization surplus is separate from fee (seller keeps if BCH rises)
+- Simple, transparent, no hidden costs
 
 ---
 
-## Escrow Operational Freedom
+## Fee Distribution Examples
 
-**Key principle:** Asgaya does NOT dictate how escrows operate. Each escrow has complete freedom to optimize their operations.
+### Standard Transaction (€100 transfer, merchant holds BCH)
 
-### 1. BCH Sourcing Flexibility
+**Sender pays:** €100 via Bizum to BCH seller
 
-**Escrows can source BCH using ANY method:**
-
-**Option A: Buy from centralized exchange**
-- Examples: Kraken (0.26%), Coinbase (0.50%), Binance (0.10%)
-- Escrow chooses based on fees, liquidity, regulatory compliance
-- **Competitive advantage:** Lower exchange fees = more remaining to split
-
-**Option B: Use own BCH holdings**
-- Miner using mined BCH (0% sourcing cost)
-- Investor "farming BCH" (earn escrow fees while holding)
-- BCH enthusiast providing liquidity from savings
-- **Result:** €1.00 / 3 = €0.333 each (35% more than Kraken example)
-
-**Option C: P2P markets**
-- Local Bitcoin Cash meetups
-- Direct peer-to-peer purchases
-- Cash transactions
-- Varies by local market conditions
-
-**Option D: Hybrid approach**
-- Use own BCH when available
-- Buy from exchange when holdings depleted
-- Mix strategies based on volume/capital
-
-### 2. Payment Acceptance Flexibility
-
-**Escrows can accept EUR payments via ANY method:**
-
-**Common options:**
-- ✅ Bizum (instant, free, Spain-specific)
-- ✅ SEPA bank transfer (1-3 days, EU-wide)
-- ✅ Cash deposit at ATM (instant, anonymous)
-- ✅ Direct bank deposit (escrow provides account details)
-- ✅ Mobile payment apps (depends on corridor)
-- ✅ Cryptocurrency swap (sender has other crypto)
-
-**Permissionless principle:** As long as escrow receives EUR, the payment rail doesn't matter.
-
-### 3. Competitive Dynamics
-
-**Better operations = Better rewards for EVERYONE:**
-
-**Scenario:** Two escrows in same corridor
-
-**Escrow A (uses Kraken 0.26%):**
-- Participants earn: €0.247 each per €100 transfer
-- Competitive but standard
-
-**Escrow B (BCH miner, uses own coins):**
-- Participants earn: €0.333 each per €100 transfer
-- **35% higher rewards** attract more merchants/LPs
-- Grows faster, gains market share
-
-**Result:** Competition drives efficiency. Escrows innovate to attract participants.
-
-### 4. Why This Matters for Miners
-
-**BCH miners have dual revenue opportunity:**
-
-1. **Mining revenue:** Block rewards + transaction fees
-2. **Escrow revenue:** €0.333 per €100 transfer (when using own BCH)
-
-**Capital efficiency:**
-- Miner already holds BCH (capital investment in mining)
-- Can use mined BCH as escrow liquidity (no additional capital needed)
-- Earns fees while maintaining BCH exposure
-- **No exchange costs** (0% sourcing cost)
-
-**Example: Miner processes 1000 transfers/month @ €100 average:**
-- Escrow fees: 1000 × €0.333 = €333/month
-- Plus mining revenue
-- Plus BCH price appreciation (if holding)
-
-**Why miners are ideal escrows:**
-- Technical expertise (already running BCH nodes)
-- Capital availability (BCH holdings from mining)
-- Aligned incentives (network growth benefits mining)
-- Infrastructure ready (servers, uptime, security)
-
-### 5. Formula Remains Universal
-
-**Regardless of how escrow sources BCH, the formula is the same:**
-
+**Covenant distribution when mature:**
 ```
-(1% total fee - cost_to_source_BCH) / 3 participants
+Total BCH in covenant: €107 (overcollateralized by seller)
+├─ Merchant receives: €99.50 worth of BCH (€99 principal + €0.50 fee)
+└─ BCH seller receives: €7.50 (€7 overcollateralization surplus + €0.50 fee)
+
+Merchant hands to recipient: €99.00 worth of VES cash
+Merchant keeps: €0.50 (0.5% reward in BCH)
 ```
 
-**Examples:**
+**Net result:**
+- Sender paid: €100.00
+- Recipient got: €99.00 worth of VES
+- Merchant earned: €0.50 in BCH (holds for future use)
+- BCH seller earned: €0.50 + overcollateralization surplus
 
-| Escrow Method | Sourcing Cost | Each Earns | Notes |
-|---------------|---------------|------------|-------|
-| Kraken exchange | 0.26% | 0.247% | Standard baseline |
-| Better exchange | 0.10% | 0.30% | 21% higher rewards |
-| Own BCH (miner) | 0% | 0.333% | 35% higher rewards |
-| P2P market | ~0.20% | 0.267% | Varies by market |
-| Hybrid (50/50) | ~0.13% | 0.29% | Mix of methods |
+---
 
-**Transparency requirement:** Escrow must disclose sourcing cost to participants (trust through transparency).
+### With Instant Settlement (Merchant sells BCH immediately)
+
+**Merchant chooses instant settlement** (wants fiat, not BCH):
+
+**Step 1: Covenant matures (same as above)**
+```
+Merchant receives: €99.50 worth of BCH from covenant
+```
+
+**Step 2: Merchant sells to BCH buyer (separate market)**
+```
+Merchant posts on bulletin board: "Selling €99.50 BCH now"
+BCH buyer offers: €99.00 fiat (0.5% spread)
+Merchant accepts: Sends BCH, receives €99.00 fiat
+```
+
+**Net result:**
+- Merchant received from covenant: €99.50 BCH
+- Merchant sold for: €99.00 fiat
+- **Merchant's reward consumed by spread:** €0.50 lost!
+- Merchant's final position: €99.00 fiat (same as if no reward existed)
+
+**BCH buyer earns:**
+- Paid merchant: €99.00 fiat
+- Received: €99.50 worth of BCH
+- Profit: €0.50 (the 0.5% spread = merchant's reward transferred to buyer)
+
+---
+
+## The Economic Lesson: Instant Settlement Costs Your Reward
+
+**This is intentional design.**
+
+**Holding BCH:**
+```
+Merchant gets: €99.50 worth of BCH
+Merchant keeps: €0.50 reward ✅
+Can use BCH for: Restocking inventory, paying suppliers, holding as savings
+```
+
+**Selling BCH immediately:**
+```
+Merchant gets: €99.00 fiat (after 0.5% spread)
+Merchant keeps: €0 reward ❌
+Why bother? Same as having no reward at all!
+```
+
+**Message to merchants:**
+> "Your 0.5% reward is REAL if you hold BCH. But if you immediately convert to fiat, you give up that reward to the BCH buyer. Instant settlement is available, but it costs you."
+
+**This aligns incentives with Asgaya's mission:**
+- ✅ BCH adoption (merchants hold and use BCH)
+- ✅ Circular economy (merchants pay suppliers with BCH)
+- ✅ Network effects (more BCH in circulation)
+- ⚠️ Instant settlement discouraged but available (merchant freedom preserved)
+
+---
+
+## BCH Seller Sourcing Flexibility
+
+**BCH sellers can source their BCH inventory using ANY method:**
+
+### Option A: Use Own BCH Holdings (Miners, HODLers)
+
+**Best case for BCH sellers:**
+- Already own BCH (miners from mining rewards, HODLers from past purchases)
+- **Zero acquisition cost**
+- Post overcollateralized BCH to covenant (e.g., €107 for €100 bounty)
+- Earn 0.5% fee (€0.50) + overcollateralization surplus if BCH rises
+
+**Example: BCH miner processes 100 bounties/month:**
+- Fees: 100 × €0.50 = €50/month
+- Overcollateralization surplus: Variable (depends on BCH price movement)
+- **No exchange fees** (using mined BCH)
+- **Total revenue:** Mining rewards + seller fees + surplus
+
+**Why miners are ideal BCH sellers:** See [BCH Sellers](../concepts/bch-sellers.md)
+
+---
+
+### Option B: Buy from Exchange
+
+**For traders or those without BCH inventory:**
+- Buy BCH on exchange (Kraken 0.26%, Binance 0.10%, etc.)
+- Post to covenant as overcollateralized bounty
+- Earn 0.5% fee (€0.50) + overcollateralization surplus
+
+**Net profit calculation:**
+```
+Revenue: €0.50 (seller fee) + surplus (if BCH rises)
+Costs: Exchange fee (e.g., €0.26 on €107 purchase)
+Net: €0.24 + surplus
+```
+
+**Lower exchange fees = higher profit:**
+- Kraken (0.26%): Net €0.24 + surplus
+- Better exchange (0.10%): Net €0.40 + surplus
+- P2P market (0.20%): Net €0.30 + surplus
+
+**Competitive advantage:** BCH sellers with lower acquisition costs earn more.
+
+---
+
+### Option C: Hybrid Approach
+
+**Use own BCH when available, buy when depleted:**
+- Post overcollateralized BCH from holdings first (0% cost)
+- Buy from exchange when holdings run low (0.10-0.26% cost)
+- Mix strategies based on volume and capital availability
+
+---
+
+## Overcollateralization Economics (Separate from Fee)
+
+**BCH seller's additional revenue source:**
+
+**When BCH price rises during 24h wait:**
+```
+Seller posted: €107 worth of BCH (at lock time)
+24 hours later: BCH rises 5%
+Covenant holds: €107 × 1.05 = €112.35 worth
+Merchant takes: €99.50 worth (at maturity)
+Seller gets back: €112.35 - €99.50 = €12.85
+Seller's total: €0.50 fee + €12.85 surplus = €13.35 on €100 bounty!
+```
+
+**When BCH price drops:**
+```
+Seller posted: €107 worth of BCH
+24 hours later: BCH drops 3%
+Covenant holds: €107 × 0.97 = €103.79 worth
+Merchant takes: €99.50 worth
+Seller gets back: €103.79 - €99.50 = €4.29
+Seller's total: €0.50 fee + €4.29 surplus = €4.79 (still profitable)
+```
+
+**When BCH drops >7% (margin call):**
+```
+Seller must add more BCH or bounty refunds
+Opportunity cost + reputation penalty
+```
+
+**Overcollateralization is:**
+- ✅ Separate from fee (volatility buffer, not compensation)
+- ✅ Profit opportunity (if BCH rises)
+- ⚠️ Risk exposure (if BCH drops >7%)
+
+---
+
+## BCH Buyer Economics (Optional Instant Settlement)
+
+**BCH buyers participate in a separate market** (not part of covenant):
+
+**Their role:**
+- Monitor bulletin board for merchants wanting instant settlement
+- Compete to offer best spread (lowest fee)
+- Buy BCH from merchants, provide fiat immediately
+
+**Revenue model:**
+```
+Buy from merchant: €99.50 worth of BCH for €99.00 fiat (0.5% spread)
+Sell later or hold: €99.50 worth of BCH
+Profit: €0.50 (the spread)
+```
+
+**In reality, spreads might be competitive:**
+- BCH Buyer A offers: 0.5% spread (€99.00 fiat)
+- BCH Buyer B offers: 0.3% spread (€99.20 fiat) ← Merchant picks this!
+- BCH Buyer C offers: 0.2% spread (€99.30 fiat) ← Even better!
+
+**But in Asgaya examples, we use 0.5% spread** to show:
+> "If you sell immediately, you lose your entire reward. Hold BCH to keep your reward!"
+
+**Why BCH buyers participate:**
+- Accumulate BCH at slight discount (0.2-0.5% below market)
+- Provide valuable service (fiat liquidity for merchants who need it)
+- Profit from spread
+
+---
+
+## Comparison to Old Escrow Model
+
+| Factor | Old (Escrow) | New (Covenant) |
+|--------|-------------|----------------|
+| **Participants** | 3 (Escrow, Merchant, LP) | 2 (BCH Seller, Merchant) |
+| **Fee split** | Variable (depends on sourcing cost) | Fixed (0.5% each) |
+| **Escrow/Seller earns** | €0.247-€0.333 (depends on BCH source) | €0.50 + surplus |
+| **Merchant earns** | €0.247-€0.333 | €0.50 (if holds BCH) |
+| **LP/BCH Buyer earns** | €0.247-€0.333 (coordinated by escrow) | €0-0.50 (competitive market) |
+| **Sourcing cost** | Deducted from fee pool | Separate (seller's own capital) |
+| **Instant settlement** | LP sends fiat (coordinated) | BCH buyer competes (market) |
+| **Complexity** | Medium (3-way split formula) | Low (fixed 0.5% each) |
+| **Transparency** | Variable (depends on escrow method) | Fixed (always 0.5%) |
+
+**Result:** Simpler, more transparent, higher rewards for covenant participants.
 
 ---
 
@@ -196,161 +300,247 @@ LP share: Remaining / 3
 
 ### How Fees Are Collected
 
-**Sender pays upfront:**
-- Sender transfers €101 (€100 + €1 fee)
-- Fee collected before BCH purchase
+**Sender pays BCH seller directly:**
+- Sender transfers €100 via Bizum to BCH seller
+- Fee included in covenant structure (seller posts €107, merchant gets €99.50, recipient gets €99)
+- No upfront "€101" payment (unlike old escrow model)
 
-### How Fees Are Distributed in case the merchant slects instant settlement
+### How Fees Are Distributed (Covenant Maturity)
 
-**After merchant hands out cash to the recipient:**
+**When both conditions met (seller paid + merchant confirmed):**
 
-1. LP sends merchant €100.247 (merchant selected payment)
-2. Escrow sends LP €100.247 worth of BCH
-3. Remaining 0.247€ worth of BCH left at escrows exchange account 
+**Covenant executes automatically:**
+```
+Input: €107 worth of BCH (posted by seller)
+
+Outputs:
+├─ Merchant address: €99.50 worth of BCH (€99 principal + €0.50 fee)
+└─ Seller address: €7.50 worth of BCH (€7 overcollateralization + €0.50 fee)
+
+On-chain, immutable, deterministic
+```
+
+**No entity distributes fees** (covenant code executes automatically).
+
+---
 
 ### Verification
 
 **Transparency mechanism:**
-- Every transaction shows itemized breakdown:
+- Every covenant shows parameters on-chain:
   ```
   Transfer amount:  €100.00
-  BCH sourcing cost: €0.26 (escrow: Kraken)
-  Escrow fee:        €0.247
-  Merchant fee:      €0.247
-  LP fee:            €0.247
-  Total cost:        €1.00
+  BCH seller fee:   €0.50 (0.5%)
+  Merchant fee:     €0.50 (0.5%)
+  Recipient gets:   €99.00 worth of VES
+  Total cost:       €1.00 (1%)
+  Overcollateralization: €7.00 (7%)
   ```
-- Participants can independently verify fees match formula
-- Public fee structure (no hidden charges)
-- **Escrow discloses sourcing method** (builds trust)
+- Participants can verify on blockchain (immutable)
+- Public covenant code (open-source, auditable)
+- **No hidden charges** (code enforces fixed 0.5% split)
 
 ---
 
 ## Trade-offs Accepted
 
-### Lost: Optimized Incentives
-- Not tailored to effort/capital per participant
-- Doesn't account for corridor difficulty
-- Same split for all transfers (no dynamic adjustment)
+### Lost: Three-Way Incentive Distribution
+- No longer reward liquidity providers directly (LP → BCH buyer)
+- BCH buyers earn from market spread (not covenant fee)
+- Fewer participants in covenant (2 instead of 3)
 
-### Gained: Simplicity & Trust
-- Dead simple to understand
-- No arguments about fairness
-- Easy to verify
-- Builds trust with participants
+### Gained: Simplicity, BCH Holding Incentive, MiCA Compliance
+- **Dead simple:** Always 0.5% each (no variable sourcing cost formula)
+- **Transparent:** Fixed split (no escrow operational decisions)
+- **BCH adoption focus:** Instant settlement costs your reward (discouraged)
+- **MiCA compliant:** No entity custody, no intermediation
+- **Competitive market:** BCH buyers compete on spread (better for merchants over time)
 
-### Economic Impact
-- €0.247 per €100 transfer may not attract large-scale LPs initially
-- **Mitigation:** Volume growth compensates (100 transfers/day = €741/month)
-- **Future:** Dynamic rewards in V1.1 can optimize per corridor
+### Economic Impact on Merchant Behavior
+
+**Desired outcome:** Merchants hold BCH
+- Merchant keeps full €0.50 reward
+- Can use BCH to pay suppliers (circular economy)
+- Benefits from BCH price appreciation
+
+**Discouraged but available:** Instant settlement
+- Merchant loses €0.50 reward to spread
+- Gets €99.00 fiat (same as no reward)
+- **Why use Asgaya if you immediately cash out?** (Defeats the purpose!)
+
+**This is honest framing:**
+- We don't block instant settlement (merchant freedom)
+- We don't hide the cost (0.5% spread examples)
+- We show the math (you lose your reward)
+- **Merchants make informed choice**
 
 ---
 
 ## Edge Cases
 
-### Case 1: No LP (Merchant Handles Cash-Out)
+### Case 1: Merchant Holds BCH (No Instant Settlement)
 
-**Scenario:** Merchant willing to hold BCH.
-The reward is split equally between the merchant and the escrow (2 participants).
+**This is the TARGET behavior.**
 
-**Example with Kraken:**
-- Total fee: €1.00
-- BCH sourcing cost: €0.26 (Kraken)
-- Remaining: €0.74 / 2 = €0.37 each
-- Escrow earns: €0.37 (50% more than 3-way split)
-- Merchant earns: €0.37 (50% more than 3-way split)
+**Covenant flow:**
+```
+Merchant receives: €99.50 BCH from covenant
+Merchant keeps: €99.50 BCH
+Uses BCH for: Inventory restocking, supplier payments, savings
 
-**Example with escrow's own BCH:**
-- Total fee: €1.00
-- BCH sourcing cost: €0 (owns BCH)
-- Remaining: €1.00 / 2 = €0.50 each
-- Escrow earns: €0.50 (100% more than Kraken 3-way split)
-- Merchant earns: €0.50 (100% more than Kraken 3-way split)
+Merchant's profit:
+├─ €0.50 fee (0.5% reward)
+├─ BCH exposure (potential appreciation)
+└─ Participation in BCH economy
+```
 
-**After merchant hands out cash to the recipient:**
-- Escrow sources BCH (buy or use own holdings)
-- Escrow sends merchant's share in BCH
-- Both benefit from simpler flow
-
-**Implementation:** Merchant flags No instant settlement required funds go straigh to the the merchant BCH wallet.
+**Fee split (2 participants):**
+- BCH seller: €0.50
+- Merchant: €0.50
+- **No BCH buyer involved** (no instant settlement)
 
 ---
 
-### Case 2: Escrow is Also LP
+### Case 2: Merchant Wants Instant Settlement
 
-**Scenario:** Escrow provides both coordination AND fiat liquidity.
+**Merchant prefers fiat over BCH.**
 
-**Solution:**
-- Escrow earns both fees (€0.247 + €0.247 = €0.494)
-- Merchant still earns €0.247
-- Escrow takes on more work/capital, earns more
+**Covenant flow (same as Case 1):**
+```
+Merchant receives: €99.50 BCH from covenant
+```
 
-**Implementation:** Escrow flags "I provide fiat liquidity" in app.
+**Separate market transaction:**
+```
+Merchant posts: "Selling €99.50 BCH now"
+BCH buyer responds: "€99.00 fiat" (0.5% spread)
+Merchant accepts: Sends BCH, receives fiat
+```
+
+**Merchant's final position:**
+- Received from covenant: €99.50 BCH
+- Sold for: €99.00 fiat
+- **Net profit: €0** (reward lost to spread)
+
+**BCH buyer's profit:**
+- Bought: €99.50 BCH for €99.00 fiat
+- Spread: €0.50 (0.5%)
+
+**Fee split (effectively 3 participants):**
+- BCH seller: €0.50 (from covenant)
+- Merchant: €0 (lost to spread)
+- BCH buyer: €0.50 (earned from spread, not covenant)
+
+**This shows:** Instant settlement transfers merchant's reward to BCH buyer.
 
 ---
 
-### Case 3: Multiple LPs (Future)
+### Case 3: Multiple BCH Buyers Compete (Future)
 
-**Scenario:** 3 LPs compete to provide fiat to merchant.
+**Scenario:** 5 BCH buyers compete for merchant's BCH.
 
-**Solution:** the fastest LP to accept the bounty gets the fee.
+**Competitive offers:**
+```
+BCH Buyer A: €99.00 fiat (0.5% spread)
+BCH Buyer B: €99.20 fiat (0.3% spread)
+BCH Buyer C: €99.30 fiat (0.2% spread) ← Merchant picks this!
+BCH Buyer D: €99.10 fiat (0.4% spread)
+BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
+```
 
-**For now:** Not implemented (single LP per corridor on the initial beta test)
+**Result:** Competition drives spreads down
+- Merchants get better prices (closer to €99.50)
+- BCH buyers compete on efficiency
+- **Market-based pricing** (better than single LP monopoly)
+
+**In our docs, we still use 0.5% spread examples** to emphasize:
+> "Even in the best case (competitive market), you lose part of your reward. Hold BCH to keep it all!"
 
 ---
 
 ## Validation
 
 **How we verify this decision:**
-- ✅ Participants understand the model (tested with beta users)
-- ✅ Fee breakdown transparent in app UI
-- ⏳ Pending: Real transfers to validate payout mechanism
-- ⏳ Pending: Participant feedback on incentive adequacy
+- ⏳ **Pending:** Chipnet testing (May 2026)
+  - Deploy covenant with 0.5% fee split
+  - Test overcollateralization surplus calculation
+  - Verify merchant receives correct BCH amount
+- ⏳ **Pending:** Phase 0 mainnet (June 2026)
+  - Real transfers with 1-2 trusted merchants
+  - Measure merchant holding vs. selling behavior
+  - Track BCH buyer spread competition
+
+**Metrics to track:**
+- Merchant holding rate (target: >70% hold BCH, <30% instant settlement)
+- BCH buyer spread average (target: 0.2-0.5%)
+- BCH seller profitability (target: Positive after fees + surplus - margin calls)
+- Recipient satisfaction (target: 99%+ get expected VES amount)
 
 ---
 
 ## Future Considerations
 
-### V1.1: Dynamic Reward Modulation
+### V1.1: Dynamic Spread-Based Rewards
 
-**Concept:** Adjust split based on real-time supply/demand.
+**Concept:** Adjust merchant reward based on holding behavior.
 
 **Example:**
-- If LPs are scarce in EUR→VES corridor → LP fee increases to 0.35%
-- If merchants are abundant → Merchant fee decreases to 0.20%
-- Escrow fee remains stable (infrastructure provider)
-
-**See:** [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md)
+- Merchants who hold BCH for >30 days: 0.6% reward
+- Merchants who hold <7 days: 0.4% reward
+- Merchants who sell immediately: 0.3% reward (discourage further)
 
 **Why not now:**
-- Need baseline data (what's "scarce"? what's "abundant"?)
-- V1 establishes market rates
+- Need baseline data (what's typical holding period?)
+- V1 establishes behavior patterns
 - V1.1 optimizes based on real usage
+- Covenant logic becomes more complex (requires time-lock logic)
+
+---
+
+### V2: Merchant Circular Economy Incentives
+
+**Concept:** Bonus rewards for merchants who spend BCH (not just hold).
+
+**Example:**
+- Merchant receives €99.50 BCH from covenant
+- Merchant uses €50 BCH to pay supplier (also on Asgaya)
+- Merchant earns **bonus 0.1%** for BCH circulation
+- **Total reward:** €0.50 base + €0.05 bonus = €0.55
+
+**Why not now:**
+- Requires tracking BCH flow between Asgaya participants
+- Complex covenant logic or off-chain verification
+- V1 focuses on holding (simpler)
+- V2 focuses on circulation (stronger network effects)
 
 ---
 
 ## Related Decisions
 
-- [Two-Step Settlement](core-architecture/why-eliminate-volatility.md) — Why we can afford 10-minute timeouts (escrow holds EUR, not BCH)
-- [Promote Adoption](core-architecture/why-promote-adoption.md) — Why incentives matter more than ideology
+- [Two-Step Settlement](./two-step-settlement-timing.md) — Why covenant-based pull system works
+- [Dispute Resolution](./dispute-resolution.md) — How conflicts resolved without central arbiter
+- [Promote Adoption](../core-architecture/why-promote-adoption.md) — Why BCH holding matters more than fiat conversion
 
 ---
 
 ## Related Concepts
 
-- [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md) — How miners benefit from dual revenue
-- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Future optimization
+- [BCH Sellers](../concepts/bch-sellers.md) — Who provides liquidity and why (miners especially)
+- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) — Technical covenant implementation
+- [Pull System](../concepts/pull-system.md) — Why recipient-triggered execution is critical
+- [Dynamic Reward Modulation](../concepts/dynamic-reward-modulation.md) — Future fee optimization
 
 ---
 
 ## References
 
 - **Architecture:** `/docs/core-architecture/why-promote-adoption.md`
-- **Implementation:** `/docs/android-app/flows/` (all flows show fee breakdown)
-- **Concepts:** `/docs/concepts/bch-miners-as-escrows.md`
+- **Implementation:** `/docs/android-app/flows/` (all flows show 0.5% split)
+- **Concepts:** `/docs/concepts/bch-sellers.md`
 
 ---
 
-*Decision made: April 2026*
-*Validated: Beta user feedback positive*
-*Status: Active, working as designed*
+**Decision made:** April 2026  
+**Updated for covenant architecture:** May 10, 2026  
+**Validated:** Beta user feedback positive (old model), Chipnet testing pending (covenant model)  
+**Status:** Active design, undergoing implementation pivot from escrow to covenant

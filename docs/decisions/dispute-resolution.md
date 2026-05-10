@@ -29,18 +29,26 @@
 
 ## The Decision: Phased Approach
 
-### Phase 0-1 (MVP): Escrow Manual Resolution
+### Phase 0-1 (MVP): Covenant + Manual Mediation
 
-**Who decides:** Escrow operator (trusted human)  
-**Timeline:** 24 hours max (accounts for time zones)  
+**Smart contract role:** Autonomous execution (no human discretion)  
+**Mediator role:** Investigate signature deadlock, apply strikes, recommend resolution  
+**Timeline:** 24 hours max (covenant timeout)  
 **Evidence:** Email submission from both parties  
 **Default:** Favor merchant (scarce resource, unless previous strikes)
+
+**How it works:**
+1. **Happy path:** Both parties sign covenant → automatic distribution (no mediator involved)
+2. **Dispute path:** One party refuses to sign → manual mediation investigates
+3. **Timeout:** 24h from BCH lock → covenant refunds seller if no signatures
+4. **Key difference from escrow:** Mediator doesn't control funds, covenant does
 
 **Why this works for MVP:**
 - 1-2 trusted merchants (personally vetted)
 - Low volume (manual investigation feasible)
 - Small amounts (€50-100 max)
 - Trusted tester network (fraud unlikely)
+- **Regulatory compliance:** No entity has discretionary control over distribution
 
 ---
 
@@ -56,10 +64,10 @@
 - Enhanced warning to **recipient**: 
   > ⚠️ **IMPORTANT:** Tell merchant to accept AFTER they hand you the cash!
 
-**Escrow action:** Internal investigation
+**Mediator action:** Internal investigation
 - Circumstances? (Internet outage, safety issue, misunderstanding?)
 - Evidence review (video, photos, witnesses)
-- Decision logged
+- Recommendation logged
 
 **Why permanent?** Trust signal - merchants with zero strikes are "pristine"
 
@@ -96,97 +104,100 @@
 
 **Self-auditing through proper sequencing:**
 
-### Phase 0: Numeric Code Confirmation (Smartphone App)
+### Phase 0: Covenant Co-Signature (Smartphone App)
 
 ```
-1. Recipient tells transaction code to merchant (e.g., "847293")
-2. Merchant enters code → Validates amount, accepts bounty
-3. Merchant device generates completion code (e.g., "625104")
+1. Recipient shares covenant details with merchant (QR code or numeric code)
+2. Merchant reviews terms in app:
+   - Amount: 500,000 VES
+   - Merchant fee: 2,500 VES (0.5%)
+   - Covenant conditions: [1] Seller paid ✅, [2] Merchant confirms cash given ⏳
+3. Merchant accepts bounty (commits to terms)
 4. ⚠️ Merchant HANDS CASH to recipient (FIRST!)
-5. Merchant tells completion code to recipient: "625104"
-6. Recipient enters completion code in THEIR app (on their device)
-7. Transaction completes (merchant cannot complete without recipient)
+5. Merchant signs covenant: "Cash delivered" (cryptographic signature)
+6. Recipient reviews same terms in THEIR app
+7. Recipient signs covenant: "Cash received" (cryptographic signature)
+8. Covenant executes automatically → BCH distributed on-chain
 ```
 
 **Why this works:**
-- Merchant cannot complete transaction alone (needs recipient to enter completion code on their device)
-- Recipient won't enter code without cash in hand
-- Cryptographically proves both parties participated face-to-face
+- Covenant requires BOTH signatures (merchant cannot complete alone)
+- Recipient won't sign without cash in hand
+- Signatures are cryptographic (blockchain-verifiable, immutable)
+- Covenant execution is autonomous code (no entity discretion)
 
-**Code entropy (6 digits):**
-- **Space:** 1,000,000 possible combinations (10^6)
-- **Single-use:** Each code valid for only one transaction
-- **30-minute expiry:** Code becomes invalid after timeout
-- **Server-authoritative:** Validation happens on server, not client
-- **Brute force impractical:** 1M combinations + network latency + single-use + timeout = cannot be brute forced
-- **Why not 8 digits?** 6 digits easier to tell verbally, sufficient security given constraints
-- **Why not cryptographic signature?** Phase 0 prioritizes UX (verbal communication), Phase 1+ adds RFID with crypto signatures
+**Security properties:**
+- **Blockchain-anchored:** Signatures recorded on BCH blockchain
+- **Non-repudiable:** Cannot claim "I didn't sign" after signing
+- **Atomic execution:** Both conditions met → distribution happens automatically
+- **Timeout protection:** 24h from funding → auto-refund if no signatures
+- **No central control:** Smart contract executes, not human operator
 
 **UI Enforcement:**
-- Merchant screen: "⚠️ Hand cash BEFORE telling completion code"
-- Recipient screen: "Enter completion code AFTER receiving cash"
+- Merchant screen: "⚠️ Hand cash BEFORE signing covenant"
+- Recipient screen: "⚠️ ONLY sign AFTER receiving cash"
+- Both screens show: "Once you sign, covenant executes automatically"
 
 **Security residual risk (acknowledged):**
-- ⚠️ **Social engineering possible:** A determined merchant can trick recipient into entering code before giving cash
-- **Mitigation:** UI warnings ("ONLY enter AFTER receiving cash") deter accidental/casual abuse
-- **Phase 0 acceptance:** 1-2 trusted merchants, personally vetted by team
-- **Future defense:** User education, community reputation, bonds/insurance (Phase 2+)
-- **Key insight:** Two-code system prevents *unilateral* merchant completion (major improvement over buttons), but cannot prevent all social engineering without hardware tokens/biometrics
-- **Honest assessment:** This is acceptable for Phase 0 with trusted merchants, requires additional layers for scale
+- ⚠️ **Social engineering possible:** Merchant can pressure recipient to sign before giving cash
+- **Mitigation:** UI warnings, reputation system, trusted merchants (Phase 0)
+- **Phase 0 acceptance:** 1-2 personally vetted merchants
+- **Future defense:** Video verification, bonds/insurance, community reputation (Phase 2+)
+- **Key advantage over escrow:** Dispute resolution doesn't control funds (covenant does)
+- **Honest assessment:** Acceptable for Phase 0, requires additional layers for scale
 
 ---
 
-### Recovery Mechanism: Lost Completion Code
+### Dispute Scenario: Signature Deadlock
 
-**Problem:** What if the completion code never reaches the recipient?
+**Problem:** What if one party refuses to sign the covenant?
 
 **Scenarios:**
-- Merchant's app crashes after generating code
-- Merchant tells wrong code accidentally
-- Recipient didn't hear code clearly
-- Network dies after code generation
-- Recipient's app loses state
+- Merchant claims they gave cash, recipient refuses to sign
+- Recipient claims they didn't receive cash (or wrong amount)
+- Merchant backs out after seeing recipient
+- Network failure prevents signature submission
+- App crashes during signing process
 
-**Recovery options (merchant's app):**
+**Covenant timeout mechanism (automatic):**
 
-**1. Show Code Again (anytime)**
-- Merchant can re-display the same completion code
-- No regeneration, same code remains valid
-- Use when: Recipient forgot, didn't hear, asked to repeat
-- **No security risk:** Same code, same transaction state
+**If both signatures within 24h:**
+- Covenant executes automatically
+- BCH distributed on-chain
+- Transaction complete (immutable)
 
-**2. Generate New Code (after 5-minute timeout)**
-- Merchant can request new completion code
-- Server invalidates old code, generates fresh one
-- Merchant tells new code to recipient
-- Recipient enters new code on their device
-- **Security:** Only one code valid at a time
-- **Audit:** Server logs all regeneration events
+**If timeout expires (24h from BCH lock):**
+- Covenant refunds BCH seller automatically
+- No human intervention needed
+- Seller refunds sender's Bizum payment (minus small processing fee)
+- Transaction cancelled (no BCH moved to merchant)
 
-**3. Report Dispute (after 5-minute timeout)**
-- If recipient refuses to enter code (claims didn't receive cash)
-- Escalates to dispute resolution process
-- Both parties can submit evidence
+**Manual mediation (signature deadlock):**
 
-**Operational safeguards:**
-- Completion codes expire after 30 minutes (timeout)
-- Code regeneration logged for audit trail
-- Multiple regenerations flag review (>3 regenerations → automatic dispute review)
-- Recipient can request merchant show code again (via support if needed)
+**1. Dispute flagged by either party**
+- Merchant claims: "I gave cash, recipient won't sign"
+- Recipient claims: "Merchant didn't give cash / wrong amount"
+- Both submit evidence to `disputes@asgaya.org`
 
-**Why this is safe:**
-- Recipient still controls final confirmation (must enter code on their device)
-- Merchant cannot complete alone even with regeneration
-- Code regeneration doesn't bypass recipient participation
-- Audit trail prevents abuse
-- Only one valid completion code exists at any time
+**2. Mediator investigates (24h max)**
+- Reviews evidence hierarchy (video > photo > GPS > word)
+- Checks merchant strike history
+- Analyzes timeline (when was cash supposed to be given?)
+- **Key limitation:** Mediator CANNOT force covenant execution
+- Mediator CAN recommend resolution + apply strikes
 
-**Edge case: Both parties claim the other failed**
-- Escrow reviews: Was code regenerated? How many times?
-- GPS evidence: Was recipient at merchant location?
-- Time analysis: How long between code generation and claim?
-- Evidence hierarchy applied (video > photo > GPS > word)
-- Pattern analysis: Does merchant frequently regenerate codes? (potential fraud signal)
+**3. Possible outcomes:**
+- **Merchant vindicated:** Recipient instructed to sign, Strike 1 applied to recipient for bad faith
+- **Recipient vindicated:** Timeout expires, covenant refunds seller, Strike applied to merchant
+- **Unclear evidence:** Default favor merchant (scarce resource), but Strike 1 applied
+- **Both at fault:** Timeout expires, both flagged for review
+
+**Why covenant model is better:**
+- Mediator doesn't control funds (covenant does)
+- No discretionary intermediation (regulatory compliance)
+- Timeout prevents indefinite BCH lock
+- Immutable audit trail (blockchain signatures)
+- Cannot reverse completed transactions (once both signed, autonomous execution)
 
 ---
 
@@ -210,7 +221,7 @@ For recipients without smartphones, an RFID card can be used instead:
 
 ## Evidence Collection
 
-**Escrow email:** `disputes@asgaya.org` (or similar)
+**Dispute mediation email:** `disputes@asgaya.org` (or similar)
 
 **Evidence hierarchy:**
 1. **Video** of transaction at register (gold standard)
@@ -231,17 +242,39 @@ For recipients without smartphones, an RFID card can be used instead:
 
 ## Resolution Rules
 
-**Timeline:** 24h max from dispute flag
+**Timeline:** 24h max from dispute flag (matches covenant timeout)
+
+**Critical constraint:** Mediator cannot force covenant execution, only make recommendations
 
 **Default resolution (if evidence unclear):**
 - **Favor merchant** (scarce resource for network growth)
 - **Exception:** Merchant has Strike 1 or Strike 2 → scrutinize more carefully
 
 **Possible outcomes:**
-1. **Merchant wins** → BCH sent to merchant, transaction complete
-2. **Recipient wins** → EUR refunded to sender (minus €0.10 processing), merchant flagged
-3. **Insufficient evidence** → Favor merchant (default), but Strike 1 applied
-4. **Both at fault** → Split loss, both flagged
+
+1. **Merchant vindicated** (evidence shows cash was given)
+   - Mediator instructs recipient to sign covenant
+   - If recipient complies → covenant executes, BCH sent to merchant
+   - If recipient refuses → timeout expires, covenant refunds seller, recipient banned from network
+   - Strike 1 applied to recipient (bad faith)
+
+2. **Recipient vindicated** (evidence shows cash was NOT given)
+   - Mediator recommends: let timeout expire
+   - Covenant refunds BCH seller automatically
+   - Seller refunds sender's Bizum (minus €0.10 processing)
+   - Strike applied to merchant
+
+3. **Insufficient evidence** (he-said-she-said)
+   - Default: Favor merchant (instruct recipient to sign)
+   - Strike 1 applied to merchant (permanent record, even if favored)
+   - If dispute pattern emerges → escalate to Strike 2
+
+4. **Both at fault** (evidence shows mutual bad behavior)
+   - Let timeout expire (covenant refunds)
+   - Both flagged for review
+   - Both may be banned depending on severity
+
+**Key innovation:** Covenant timeout provides automatic resolution if mediation fails. No funds stay locked indefinitely.
 
 ---
 
@@ -255,27 +288,36 @@ For recipients without smartphones, an RFID card can be used instead:
 
 ---
 
-## Phase 2+: Community Arbitration (Future)
+## Phase 2+: Community Mediation (Future)
 
 **Not for MVP - validate approach first:**
 
 ### Dispute Pool Fee
-- Voluntary 0.1% fee on transactions → dispute resolution fund
+- Voluntary 0.1% fee on transactions → dispute mediation fund
+- Pays community mediators for investigation work
 - Compensates edge cases where neither party has proof
 - First few hundred merchants: Give benefit of doubt (cost of real-world data)
 
-### Community Arbitrators
-- Trusted network members vote on disputes
-- 3-of-5 arbitrator consensus required
-- Arbitrators earn fee for participation
-- Prevents single point of failure (escrow operator)
+### Community Mediators (Not Arbitrators)
+- Trusted network members investigate disputes
+- 3-of-5 mediator consensus required for recommendations
+- Mediators earn fee for participation
+- **Key distinction:** Mediators recommend, covenant executes autonomously
+- Prevents single point of failure (central mediator)
+- Maintains regulatory compliance (no entity discretion over funds)
 
 ### Automated Evidence Verification
 - GPS timestamps (recipient at merchant location?)
-- Blockchain analysis (transaction timing patterns)
+- Blockchain analysis (covenant signature timing patterns)
 - Machine learning fraud detection (repeat offenders)
+- Video verification (facial recognition, cash handover detection)
 
-**When to add:** After 500+ successful transactions, when manual resolution doesn't scale.
+**When to add:** After 500+ successful transactions, when manual mediation doesn't scale.
+
+**Why this preserves regulatory compliance:**
+- Community mediates (investigates, recommends)
+- Covenant executes (autonomous code, no human discretion)
+- Clear separation: advice vs. control
 
 ---
 
@@ -304,12 +346,35 @@ For recipients without smartphones, an RFID card can be used instead:
 ## Contributors
 
 - **Framework design:** Suso + Coordination (May 5, 2026)
+- **Covenant-based architecture update:** Suso + Coordination (May 10, 2026)
 - **Critical gap identified:** DeepSeek Review (May 4, 2026)
 
 ---
 
-**Last updated:** May 5, 2026  
-**Status:** Active (MVP)  
-**Next review:** After Phase 1 (50+ transactions, first dispute)
+## Architecture Notes
 
-**Line count:** 195 lines ✅
+**Key change (May 10, 2026):** Updated from escrow-based dispute resolution to covenant-based mediation.
+
+**Old model:**
+- Escrow operator decides distribution
+- Entity has discretionary control over funds
+- Triggered MiCA CASP licensing requirements
+
+**New model:**
+- Covenant executes based on signatures (autonomous code)
+- Mediator investigates and recommends (no fund control)
+- Covenant timeout provides automatic resolution
+- MiCA/PSD2 compliant (no discretionary intermediation)
+
+**Preserved from original design:**
+- 3-strike merchant system
+- Evidence hierarchy
+- Safe confirmation sequencing (now via covenant signatures)
+- 24h resolution timeline
+- Default favor merchant (scarce resource)
+
+---
+
+**Last updated:** May 10, 2026  
+**Status:** Active (MVP, covenant-based)  
+**Next review:** After Phase 1 (50+ transactions, first dispute)
