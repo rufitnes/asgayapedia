@@ -141,13 +141,39 @@ https://asgaya.org/ai/[filename]
 
 **Version:** 1.0  
 **Date:** 2026-05-05  
-**Status:** All critical gaps resolved (DeepSeek review)
+**Status:** ⚠️ **STALE - Pre-Covenant Architecture**
+
+---
+
+## ⚠️ IMPORTANT NOTICE
+
+**These AI-optimized files describe the OLD escrow-based architecture (pre-May 10, 2026).**
+
+**Major changes since these files were generated:**
+- ❌ Escrow model **abandoned** (MiCA compliance issue discovered)
+- ✅ Covenant-based architecture **implemented** (BCH smart contracts)
+- ❌ Mediator role **removed** (Phase 0 = autonomous covenant + trusted parties)
+- ✅ Fee split **updated** (2-way: Seller 0.5%, Merchant 0.5%, no protocol fee)
+- ✅ Social media disputes **documented as V1** (not built yet)
+
+**Current documentation (May 11, 2026):**
+- Main docs: ✅ Updated for covenant architecture
+- AI files: ❌ Still describe escrow model (need regeneration)
+
+**For accurate information:** Read the main documentation at:
+- https://github.com/rufitnes/asgayapedia/tree/main/docs
+
+**These AI files will be regenerated after DeepSeek reviews Phase 1 fixes.**
+
+---
+
+## 📋 Original Update Log (May 5)
 
 **Recent updates:**
-- ✅ Fee split clarity (Kraken fee deducted first)
+- ✅ Fee split clarity (Kraken fee deducted first) [NOW OBSOLETE]
 - ✅ Dynamic reward modulation (marked as POST-MVP)
 - ✅ Unclaimed transaction expiry (24h, €0.10 fee)
-- ✅ Dispute resolution framework (3-strike system)
+- ✅ Dispute resolution framework (3-strike system) [NOW SIMPLIFIED]
 
 ---
 
