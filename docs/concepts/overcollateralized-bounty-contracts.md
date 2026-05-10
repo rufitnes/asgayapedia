@@ -635,11 +635,16 @@ Accounting:
 ```
 1% total fee
 ├─ Seller: 0.5% (provides capital + takes volatility risk)
-├─ Merchant: 0.3% (provides cash + BCH acceptance)
-└─ Protocol: 0.2% (bulletin board hosting)
+├─ Merchant: 0.5% (provides cash + BCH acceptance)
+└─ Protocol: 0% (NO protocol fee = pure bulletin board)
 ```
 
-**Needs validation:** Is 0.5% enough to incentivize sellers given capital requirements?
+**Why no protocol fee:**
+Taking a protocol fee suggests Asgaya provides a service, which would trigger 
+MiCA/PSD2 licensing requirements. Zero protocol fee = information society service 
+= regulatory exemption (per RS052 analysis).
+
+**Authoritative source:** See [fee-splitting-model.md](../decisions/fee-splitting-model.md) for detailed rationale.
 
 ---
 
