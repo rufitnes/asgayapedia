@@ -441,10 +441,18 @@ At maturity, covenant distributes:
 
 **The covenant structure creates a powerful partial hedge for sellers.** Here's the key insight:
 
-**Seller gets €100 fiat IMMEDIATELY (before price moves)**  
+**Seller gets €100 fiat within 5 minutes (before significant price moves)**  
 **Seller only has BCH price exposure on the SURPLUS (0.00226-0.01224 BCH)**
 
-This means the seller has **converted most of their BCH to EUR at creation-time price**, while keeping only a small amount exposed to future volatility.
+**The 5-minute Bizum window:**
+- Seller posts BCH at T+0
+- Iris sends Bizum within 5 minutes
+- Typical Bizum arrival: 2-3 minutes
+- **During this window:** Seller has full BCH exposure (0.107 BCH)
+- **Volatility in 5 min:** Typically 0.5-1% (well within 7% buffer)
+- **After Bizum received:** Hedge activates (converted most BCH to EUR)
+
+This means the seller has **converted most of their BCH to EUR shortly after posting**, with only a brief window of full exposure that's negligible for BCH holders.
 
 #### Comparison: Covenant vs. Just Holding BCH
 

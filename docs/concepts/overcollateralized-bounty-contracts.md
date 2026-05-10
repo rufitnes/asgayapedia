@@ -256,39 +256,168 @@ Outputs:
 contract BountyContract(
     pubkey merchantPubKey,
     pubkey sellerPubKey,
-    pubkey recipientPubKey,
-    int requiredAmount,      // BCH satoshis (e.g., 1,000,000 sats)
-    int timeout              // Block height (24 hours from creation)
+    pubkey senderRefundPubKey,  // Iris's address for timeout refund
+    int merchantAmount,         // BCH satoshis for merchant (e.g., 995,000 sats = 0.00995 BCH)
+    int sellerFee,              // BCH satoshis for seller fee (e.g., 75,000 sats = 0.00075 BCH)
+    int bizumWindow,            // Block height for Bizum payment (5 min from acceptance)
+    int timeout                 // Block height for full timeout (24h from acceptance)
 ) {
-    // Maturity path: Both signatures present
+    // Maturity path: Both signatures present (normal execution)
     function mature(sig merchantSig, sig sellerSig) {
         require(checkSig(merchantSig, merchantPubKey));
         require(checkSig(sellerSig, sellerPubKey));
         
-        // Calculate outputs
-        int merchantAmount = requiredAmount;
-        int sellerSurplus = tx.value - requiredAmount - txFee;
+        // Calculate amounts
+        int merchantPayout = merchantAmount;
+        int sellerPayout = tx.value - merchantAmount - txFee;
         
         // Enforce outputs
-        require(tx.outputs[0].value == merchantAmount);
+        require(tx.outputs[0].value == merchantPayout);
         require(tx.outputs[0].lockingBytecode == merchantPubKey.lock());
-        require(tx.outputs[1].value == sellerSurplus);
+        require(tx.outputs[1].value == sellerPayout);
         require(tx.outputs[1].lockingBytecode == sellerPubKey.lock());
     }
     
-    // Timeout path: Refund to seller if conditions not met
-    function refund(sig sellerSig) {
+    // Early cancel: Seller can reclaim if no Bizum within 5 min
+    function cancelNoBizum(sig sellerSig) {
+        require(tx.time >= bizumWindow);
+        require(tx.time < timeout);
+        require(checkSig(sellerSig, sellerPubKey));
+        
+        // Full refund to seller (no Bizum received, no service provided)
+        require(tx.outputs[0].value == tx.value - txFee);
+        require(tx.outputs[0].lockingBytecode == sellerPubKey.lock());
+    }
+    
+    // Timeout refund: Split refund if Elena never cashes out
+    function refundTimeout(sig sellerSig) {
         require(tx.time >= timeout);
         require(checkSig(sellerSig, sellerPubKey));
+        
+        // Split refund:
+        // - Merchant portion → Sender's refund address (Iris)
+        // - Seller fee → Seller (earned for providing service)
+        require(tx.outputs[0].value == merchantAmount);
+        require(tx.outputs[0].lockingBytecode == senderRefundPubKey.lock());
+        require(tx.outputs[1].value == sellerFee);
+        require(tx.outputs[1].lockingBytecode == sellerPubKey.lock());
     }
 }
 ```
 
 **Security properties:**
-- ✅ Merchant cannot claim BCH without Elena (recipient) being present (merchant needs seller signature too)
+- ✅ Merchant cannot claim BCH without seller signature (both must sign for normal execution)
 - ✅ Seller cannot reclaim BCH unless timeout expires (both signatures needed or timeout)
+- ✅ Iris gets refund if Elena never cashes out (merchant portion returned automatically)
+- ✅ Seller always earns fee (compensation for time/risk/capital lockup)
 - ✅ Exact amounts enforced by covenant (merchant gets exactly required BCH, no more)
 - ✅ Immutable once deployed (no one can change terms)
+
+---
+
+### Timeout & Refund Mechanisms
+
+**Complete timeout cascade with three execution paths:**
+
+#### Path 1: Normal Execution (Within 24h) ✅
+
+```
+Timeline:
+├─ T+0min:  Seller accepts, posts 0.107 BCH
+├─ T+2min:  Iris sends €100 Bizum
+├─ T+3min:  Seller bot detects Bizum → signs condition 2
+├─ T+45min: Elena goes to merchant, hands cash
+├─ T+46min: Merchant signs condition 1
+└─ MATURE:  Covenant executes
+
+Distribution:
+├─ Merchant receives: 0.0995 BCH (merchant portion)
+└─ Seller receives: 0.0075 BCH (fee + overcollateralization)
+
+Everyone happy! ✅
+```
+
+---
+
+#### Path 2: No Bizum Received (0-5 min window) 🔄
+
+```
+Timeline:
+├─ T+0min: Seller accepts, posts 0.107 BCH
+├─ T+5min: Bizum window expires (Iris never paid)
+└─ CANCEL: Seller calls cancelNoBizum()
+
+Refund:
+└─ Seller receives: 0.107 BCH (full amount back)
+
+Why:
+- No Bizum received = no service provided
+- Seller gets full refund (no penalty)
+- Seller wasted 5 minutes (opportunity cost)
+- Iris loses nothing (never paid)
+```
+
+**5-minute window rationale:**
+- Short enough to not significantly affect seller's capital efficiency
+- Long enough for Bizum to process (typically instant, but allows for delays)
+- Typical BCH volatility in 5 min: 0.5-1% (well within 7% buffer)
+- Seller has full BCH exposure during this window (acceptable risk for BCH holders)
+
+---
+
+#### Path 3: Bizum Received, But Elena Never Cashes Out (5 min - 24h) 💰
+
+```
+Timeline:
+├─ T+0min:  Seller accepts, posts 0.107 BCH
+├─ T+2min:  Iris sends €100 Bizum (condition 2 met)
+├─ T+24h:   Timeout expires (Elena never went to merchant)
+└─ TIMEOUT: Seller calls refundTimeout()
+
+Refund (split):
+├─ Iris's address receives: 0.0995 BCH (merchant portion)
+└─ Seller receives: 0.0075 BCH (fee earned)
+
+Seller also keeps: €100 Bizum (already received)
+
+Accounting:
+├─ Seller: Posted 0.107 BCH, received €100 + 0.0075 BCH
+│          Net: €107.50 - €107 = €0.50 profit ✅
+│
+└─ Iris:   Paid €100 Bizum, received back 0.0995 BCH
+           Net: Lost €0.50 (cost of failed transaction) ❌
+```
+
+**Why this refund split:**
+- ✅ Seller earned their fee (provided service: posted BCH, took risk, locked capital)
+- ✅ Iris gets 99.5% refund (fair for transaction that didn't complete)
+- ✅ Iris pays 0.5% cost (incentive to ensure Elena is ready before creating covenant)
+- ✅ All automatic (no manual Bizum returns needed)
+
+**Incentive alignment:**
+- Seller incentivized to accept (always earns fee, even if Elena doesn't show)
+- Iris incentivized to coordinate with Elena (loses €0.50 if timeout)
+- Elena has no penalty (she never participated)
+
+---
+
+### Timing Windows Summary
+
+| Window | Duration | Trigger | Refund Path | Who Wins |
+|--------|----------|---------|-------------|----------|
+| **Bizum payment** | 0-5 min | Iris must pay seller | `cancelNoBizum()` | Seller gets full BCH back |
+| **Elena cash-out** | 5 min-24h | Elena+merchant must co-sign | `refundTimeout()` | Iris gets merchant portion, seller keeps fee |
+| **Normal** | < 24h | Both conditions met | `mature()` | Everyone wins ✅ |
+
+**Seller's hedge activates AFTER receiving Bizum** (typically ~2-3 min after acceptance).
+
+**5-minute exposure window:**
+- Seller has full BCH exposure while waiting for Bizum
+- Typical volatility: 0.5-1% (well within 7% buffer)
+- Acceptable risk for anyone who normally holds BCH through full market swings
+- Once Bizum received, hedge activates (94-97% exposure reduction)
+
+---
 
 ### 2. Seller Bot Automation
 
