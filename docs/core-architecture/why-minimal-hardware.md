@@ -72,8 +72,8 @@ Most "crypto solutions" assume everyone has a smartphone. Many assume a recent s
 5. **Cost: €0**
 
 **When money arrives:**
-1. Sender in Spain sends €100 via Bizum to escrow
-2. Escrow notifies merchant: "€100 ready for [recipient ID]"
+1. Sender in Spain sends €100 via Bizum to BCH seller
+2. BCH seller notifies merchant: "€100 ready for [recipient ID]"
 3. Recipient shows cardboard QR to merchant
 4. Merchant scans, sees BCH address matches
 5. Merchant hands €100 equivalent in cash
@@ -112,7 +112,7 @@ Most "crypto solutions" assume everyone has a smartphone. Many assume a recent s
 - **Trade-off:** Small cost, but lasts longer than paper
 
 **Tier 3: Feature Phone (€10-20)**
-- **What you get:** Receive SMS notifications, communicate with escrow
+- **What you get:** Receive SMS notifications, communicate with BCH seller
 - **What you can't do:** Can't verify transactions visually, can't scan codes
 - **Trade-off:** More independence, still limited functionality
 
