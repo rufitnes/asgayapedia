@@ -615,12 +615,17 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 └─────────────────────────────────────┘
 ```
 
-**Dispute Resolution:**
-- Support investigates within 24h
-- Evidence evaluated (merchant video > photos > GPS > word)
-- Default: Favor merchant (unless merchant has strikes)
-- If you win: Funds refunded to sender, merchant flagged
-- If merchant wins: Transaction completes, merchant receives BCH
+**What Happens (Phase 0):**
+- Covenant times out (24h) → Automatic split refund
+  - Sender gets merchant portion back (€99.50 BCH)
+  - BCH seller keeps fee portion (€7.50 BCH)
+- No formal investigation or arbitration
+- Sender knows both parties personally (family/friends), can mediate offline
+- Phase 0: Trusted merchants only, disputes should be rare (<1%)
+
+**V1 Enhancement (Future):**
+- Parties can post evidence on social media (`#AsgayaDispute`)
+- Community sees evidence and decides merchant trustworthiness
 - Full policy: [Dispute Resolution Framework](decisions/dispute-resolution.md)
 
 **Should be RARE:** Co-signing mechanism prevents most disputes (both parties must confirm).
@@ -630,6 +635,8 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - **Recipient signed but claims no cash:** Rare (why would recipient sign?)
 - **Technical glitch:** One party thinks they signed, but signature didn't submit
 - **Misunderstanding:** Wrong amount given, partial cash, etc.
+
+**Phase 0 mitigation:** Trusted merchants only (sender's family/friends), personal accountability.
 
 ---
 

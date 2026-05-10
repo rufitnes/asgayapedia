@@ -707,24 +707,24 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 └─────────────────────────────────────┘
 ```
 
-**Dispute resolution:**
-- Merchant reports: "I gave cash, Elena won't sign"
-- Elena reports: "Merchant didn't give cash"
-- **Evidence reviewed:**
-  - Video footage (if merchant has cameras)
-  - GPS timestamps (both parties at same location)
-  - Transaction history (merchant's past behavior)
-  - Elena's past behavior (serial disputer?)
+**What happens (Phase 0):**
+- Covenant times out (24h) → Automatic split refund
+  - Merchant portion (€99.50 BCH) → Sender (Iris gets BCH back)
+  - Seller fee (€7.50 BCH) → BCH Seller
+- No formal investigation or bans
+- Sender (Iris) knows both merchant and Elena personally, can mediate offline
+- Phase 0: Trusted parties only (family/friends), disputes should be rare (<1%)
 
-**Outcome:**
-- If merchant has evidence → Elena banned
-- If Elena has evidence → Merchant flagged/banned
-- If unclear → Funds returned to sender (Iris), merchant keeps fee
+**V1 Enhancement (Future):**
+- Parties can post evidence on social media (`#AsgayaDispute`)
+- Future users see evidence and decide merchant trustworthiness
+- Community-driven reputation, no central judgment
 
 **Should be RARE:**
 - Both parties know other must sign (accountability)
 - Merchant won't hand cash without confidence Elena will sign
 - Elena won't walk in without intent to complete
+- Phase 0: Trusted relationships prevent disputes
 
 ---
 
