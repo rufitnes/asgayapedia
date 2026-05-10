@@ -113,7 +113,7 @@ With KYC, someone decides who gets access:
 - No one to ask permission from
 - No one to deny access
 - No arbitrary exclusions
-- **If you can fund the escrow, you can participate**
+- **If you can participate in the covenant, you can use Asgaya**
 
 ### 4. Financial Access Is a Human Right, Not a Privilege
 
@@ -130,28 +130,28 @@ Financial access is a human right. If you earned money, you should be able to se
 
 ## The Leverage Model
 
-### 10 Escrows with KYC → 10,000 Recipients Without KYC
+### Few BCH Sellers with KYC → Thousands of Recipients Without KYC
 
-**The reality:** Someone needs Kraken account to convert fiat to BCH. That requires KYC.
+**The reality:** BCH sellers need bank accounts (Bizum) and may already have exchange accounts. That's optional KYC they handle.
 
-**The solution:** A small number of escrow operators bear the KYC burden on behalf of thousands of users.
+**The solution:** A small number of BCH sellers participate in the covenant system, enabling thousands of KYC-free recipients.
 
 **How it works:**
-- 10-50 escrow operators globally
-- Each has Kraken account (KYC required)
-- Each serves hundreds of recipients (no KYC)
+- 10-50 BCH sellers globally
+- Each already owns BCH (miners, early adopters, traders)
+- Each posts overcollateralized BCH to covenants
 - **Recipients get permissionless access**
 
-**The key insight:** KYC burden doesn't scale linearly with users.
-- 1 escrow with KYC → 1,000 recipients without KYC
-- 10 escrows with KYC → 10,000 recipients without KYC
-- **Leverage ratio: 1:1000**
+**The key insight:** KYC burden doesn't scale with recipients.
+- 1 BCH seller → serves 1,000+ recipients (no KYC)
+- 10 BCH sellers → serve 10,000+ recipients (no KYC)
+- **Leverage ratio: 1:1000+**
 
-**Escrows volunteer for this:**
-- They already have bank access
-- They're ideologically motivated (believe in financial freedom)
-- They earn fees for providing this service
-- **Their KYC enables others' freedom**
+**BCH sellers volunteer for this:**
+- They already hold BCH (no additional purchase needed)
+- They earn fees for providing collateral (0.5% per transaction)
+- They hedge their BCH position (receive fiat within 5 minutes)
+- **Their participation enables others' freedom**
 
 ---
 
@@ -166,25 +166,28 @@ Financial access is a human right. If you earned money, you should be able to se
 
 **Merchants: NO KYC**
 - Download app
-- Accept BCH payments
-- Earn fees from remittances
+- Accept BCH from covenants
+- Sell VES cash to recipients
+- Earn spread by selling VES for BCH
 - **Zero barriers**
 
-**Liquidity Providers: NO KYC**
-- Use existing bank account
-- Provide fiat to merchants
-- Receive BCH
+**BCH Buyers: NO KYC (Optional participants)**
+- Use existing bank account (Pagomóvil, etc.)
+- Buy BCH from merchants (separate P2P market)
+- No registration required
 - **No additional verification**
 
 **Senders: Already have KYC (with their bank)**
-- Need Bizum or bank account to send EUR
+- Need Bizum or bank account to send EUR to BCH seller
 - Already passed KYC for that account
 - No additional KYC for Asgaya
 - **Existing access, no new barriers**
 
-**Escrows: YES, have KYC (with Kraken)**
+**BCH Sellers: MAY have KYC (optional, depends on BCH source)**
 - Small number (10-50 globally)
-- Volunteer for this role
+- Already own BCH (miners, holders, traders)
+- Post overcollateralized BCH to covenants
+- May have exchange accounts (personal choice)
 - Enable thousands of KYC-free users
 - **Leverage for freedom**
 
@@ -196,24 +199,25 @@ Financial access is a human right. If you earned money, you should be able to se
 
 **Cash ATM deposits (Spain and other countries):**
 - Go to ATM
-- Deposit cash into escrow's bank account
+- Deposit cash into BCH seller's bank account
 - No ID required (free service in many countries)
-- Escrow receives funds, processes remittance
+- BCH seller receives funds, posts covenant
 - **Fully no-KYC flow for sender**
 
 **Reverse merchant flow:**
-- Merchant holds BCH from previous remittances
+- Merchant holds BCH from previous covenants
 - Sender gives cash to merchant in person
-- Merchant sends BCH to escrow later
+- Merchant creates reverse covenant (sells BCH for cash)
 - **All participants no-KYC**
 
-**Miners as escrows:**
-- BCH miners already have Kraken accounts (for mining revenue)
-- KYC already completed for mining operations
-- Can serve as escrows without additional KYC burden
-- See: [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md)
+**Miners as BCH sellers:**
+- BCH miners already own BCH (from mining revenue)
+- Can post overcollateralized BCH to covenants
+- Earn fees without additional setup
+- Natural fit: miners hedge BCH position, earn steady income
+- See: [BCH Sellers](concepts/bch-sellers.md#miners-as-natural-sellers)
 
-**The vision:** As the network grows, more no-KYC paths emerge. The system is designed to support them.
+**The vision:** As the network grows, more no-KYC paths emerge. The covenant system is designed to support them.
 
 ---
 
@@ -260,8 +264,8 @@ Financial access is a human right. If you earned money, you should be able to se
 
 See the **Decisions** section for how we achieve no KYC while managing risks:
 
-- Decision: Regulatory approach (coming soon)
-- Decision: Escrow operator requirements (coming soon)
+- **[Core Regulatory Constraints](concepts/core-regulatory-constraints.md)** — How covenant architecture avoids custody/intermediation licensing
+- **[BCH Sellers](concepts/bch-sellers.md)** — Who provides BCH collateral and why they don't need special licensing
 
 ---
 
@@ -282,5 +286,5 @@ If you have a phone, you can receive money. That's it.
 
 ---
 
-*Last updated: May 1, 2026*
+*Last updated: May 10, 2026*
 *Core principle: "Financial access is a human right, not a privilege. KYC excludes those who need access most."*
