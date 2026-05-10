@@ -49,7 +49,7 @@ This is taxation disguised as monetary policy.
 
 Users need to verify that Asgaya isn't hiding markups like legacy systems do.
 
-**Success metric:** Users can independently verify exchange rates match Kraken's published rates at the time of transfer.
+**Success metric:** Users can independently verify exchange rates match publicly available market rates at the time of transfer.
 
 ### 2. Bypassing Financial Repression
 
@@ -68,17 +68,17 @@ Result: Government captures spread
 
 **Asgaya (escapes control):**
 ```
-EUR → Kraken (global market) → BCH → Local market → Local currency
+EUR → Exchange (global market) → BCH → Covenant → Local market → Local currency
 Result: Market determines value, government can't intercept
 ```
 
 ### 3. Preventing System Replication of Legacy Problems
 
-If Asgaya allowed escrows or merchants to inflate exchange rates, we'd recreate the same extraction mechanisms we're trying to replace.
+If Asgaya allowed BCH sellers or merchants to inflate exchange rates, we'd recreate the same extraction mechanisms we're trying to replace.
 
 **The line we draw:** Freedom on convenience, **ZERO flexibility on exchange rates**.
 
-**Escrows CANNOT:**
+**BCH Sellers CANNOT:**
 - Inflate exchange rate
 - Negotiate better personal rate
 - Extract profit through spread manipulation
@@ -91,7 +91,7 @@ If Asgaya allowed escrows or merchants to inflate exchange rates, we'd recreate 
 **Why zero flexibility?**
 
 Protection against:
-- Escrow becoming predatory (charging hidden spread)
+- BCH seller becoming predatory (charging hidden spread)
 - Merchant becoming exploitative (monopoly pricing)
 - System replicating legacy problems (opacity, extraction)
 
@@ -134,8 +134,7 @@ If we compromise on exchange rates, we lose the moral authority to claim we're b
 
 See the **Decisions** section for detailed documentation of how we enforce market rates:
 
-- **[How: Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Kraken integration, local rate discovery, alternatives considered
-- Decision: Why Kraken exchange (coming soon)
+- **[How: Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Exchange integration, local rate discovery, alternatives considered
 - Decision: Rate verification in user flows (coming soon)
 
 ---

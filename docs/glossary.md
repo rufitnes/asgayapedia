@@ -26,7 +26,7 @@
 
 Spanish instant payment service. Transfers up to €3,600 using phone number and bank account, typically arrives within seconds. Primary payment method for senders in Spain. Integrated into most Spanish banks.
 
-**Usage:** "User sends €100 via Bizum to the escrow's phone number"
+**Usage:** "User sends €100 via Bizum to the BCH seller's phone number"
 
 **Related:** [PagoMóvil](#pagomóvil), [Mercado Pago](#mercado-pago), [SEPA](#sepa)
 
@@ -39,7 +39,7 @@ Venezuelan instant payment service. Transfers using phone number, identity card 
 
 **Usage:** "The merchant sends 100,000 VES to Elena via PagoMóvil"
 
-**Key distinction:** PagoMóvil is for receiving cash (merchant → recipient), while Bizum is for sending (sender → escrow)
+**Key distinction:** PagoMóvil is for receiving cash (merchant → recipient), while Bizum is for sending (sender → BCH seller)
 
 **Related:** [Bizum](#bizum), [Mercado Pago](#mercado-pago)
 
@@ -61,13 +61,13 @@ Argentine digital wallet and payment service. Used for both sending and receivin
 ### SEPA
 **Type:** Payment System
 
-Single Euro Payments Area. European standard for EUR transfers. Used for funding escrow accounts from partner exchanges like Kraken. Typically takes 1-2 business days, used for large institutional transfers.
+Single Euro Payments Area. European standard for EUR transfers. May be used by BCH sellers to move EUR between bank accounts. Typically takes 1-2 business days, used for large institutional transfers.
 
-**Usage:** "Escrow receives EUR funding via SEPA from Kraken"
+**Usage:** "BCH seller receives EUR funding via SEPA"
 
 **Note:** Only used for backend infrastructure, not visible to end users.
 
-**Related:** [Bizum](#bizum), [Kraken](#kraken)
+**Related:** [Bizum](#bizum)
 
 ---
 
@@ -84,7 +84,7 @@ Peer-to-peer electronic cash system. Used as settlement layer for all Asgaya rem
 - Decimal places: 8 (1 BCH = 100,000,000 satoshis)
 - Indivisibility: Can transact as small as 1 satoshi (~€0.000003)
 
-**Usage:** "LP sends 0.0012 BCH to merchant as settlement"
+**Usage:** "Covenant sends 0.0995 BCH to merchant as settlement"
 
 **Not to be confused with:** Bitcoin (BTC), which is separate cryptocurrency with different consensus rules
 
@@ -130,12 +130,12 @@ Person initiating a remittance. Sends fiat currency (EUR) to recipient via local
 
 **Responsibilities:**
 - Initiate transfer request (specify recipient phone, amount)
-- Send Bizum payment to escrow
+- Send Bizum payment to BCH seller
 - Confirm transfer sent to app
 
 **Experience:** Never sees BCH or crypto—entire flow is fiat currency
 
-**Related:** [Recipient](#recipient), [Merchant](#merchant), [Liquidity Provider (LP)](#liquidity-provider-lp)
+**Related:** [Recipient](#recipient), [Merchant](#merchant), [BCH Seller](#bch-seller)
 
 ---
 
@@ -161,147 +161,141 @@ Person receiving a remittance. Uses Asgaya app to claim funds, select nearest me
 ### Merchant
 **Type:** User Role / Economic Actor
 
-Small business owner (bodega, farmacia, minimarket) who facilitates cash pickups for recipients. Receives BCH rewards for completing transactions.
+Small business owner (bodega, farmacia, minimarket) who facilitates cash pickups for recipients. Receives BCH from covenants by selling VES/ARS cash.
 
 **Responsibilities:**
 - Register shop location
-- Accept pickup requests (scan code or enter code)
+- Accept covenant claims (scan code or enter code)
 - Hand cash to recipient
-- Confirm both parties (two-sided confirmation)
+- Co-sign covenant with recipient (cryptographic signatures)
 
-**Incentive structure:** Earn ~0.247% of transaction amount in BCH (~€0.247 on €100 transfer). This is 1/3 of the remaining fee after Kraken's ~0.26% exchange cost is deducted from the 1% total fee. Can hold BCH for ongoing remittance discounts.
+**Incentive structure:** Earn ~0.5% spread by selling VES for BCH (~€0.50 on €100 transfer). Merchant sells 500,000 VES cash, receives ~€100.50 worth of BCH from covenant, earning ~€0.50 spread. Can hold BCH or optionally sell to BCH buyers via bulletin board.
 
 **Key behavior:** Merchants are NOT crypto experts—UX must be extremely simple (scan code, hand cash, tap confirm).
 
-**Related:** [Recipient](#recipient), [Liquidity Provider (LP)](#liquidity-provider-lp), [Escrow Operator](#escrow-operator)
+**Related:** [Recipient](#recipient), [BCH Buyer](#bch-buyer-optional), [BCH Seller](#bch-seller)
 
 ---
 
-### Liquidity Provider (LP)
+### BCH Buyer (Optional)
 **Type:** User Role / Economic Actor
 
-Person providing **LOCAL FIAT LIQUIDITY** (VES, ARS, COP, etc.) to merchants who want instant settlement. LPs send fiat to merchants immediately, then receive BCH + reward from escrow.
+**OPTIONAL PARTICIPANT** who wants to buy BCH from merchants using local fiat (VES, ARS, COP, etc.). Part of the circular economy—same covenant mechanism used in reverse (merchant = seller, BCH buyer = recipient).
 
-**Key insight:** LPs provide FIAT liquidity, not BCH liquidity. They buy BCH from escrow by providing fiat to merchants.
+**Key insight:** BCH buyers provide an exit for merchants who want fiat instead of holding BCH. This is optional—merchants can (and should) hold BCH, but this provides flexibility.
 
-**Abbreviation:** On first mention use "Liquidity Provider (LP)", then "LP" for brevity.
+**Abbreviation:** "BCH Buyer" or "BCH buyer" (lowercase after first mention).
 
 **Responsibilities:**
-- Maintain available fiat liquidity in local currency (VES, ARS, etc.)
-- Monitor for bounty notifications (via OP_RETURN or push notifications)
-- Send fiat to merchants within 5 minutes when accepting bounties (first-come-first-served competition)
-- Receive BCH + reward from escrow after both merchant and recipient confirm
+- Post offers on BCH buyer bulletin board (e.g., "I'll pay 500,000 VES for 0.0995 BCH")
+- Monitor for accepted offers
+- Send fiat to merchant via PagoMóvil/MercadoPago/etc. within 5 minutes
+- Co-sign covenant with merchant (cryptographic signatures)
+- Receive BCH from covenant
 
-**How bounties work:**
-1. Merchant enables instant settlement
-2. Recipient claims at merchant → Bounty created
-3. All LPs in corridor notified simultaneously
-4. First LP to accept wins, liquidity automatically deducted
-5. LP sends fiat to merchant via PagoMóvil/MercadoPago/etc.
-6. Merchant confirms fiat received (auto via SMS parsing or manual)
-7. Recipient confirms cash received
-8. Escrow sends BCH + reward to LP, liquidity restored
+**How it works:**
+1. Merchant receives BCH from remittance covenant, decides to sell
+2. Merchant browses BCH buyer bulletin board (sorted by rate)
+3. Merchant selects BCH buyer offer
+4. BCH buyer sends fiat to merchant via PagoMóvil/MercadoPago
+5. Both co-sign covenant
+6. Covenant settles → BCH buyer receives BCH, merchant receives fiat
 
-**Incentive structure:** Earn ~0.247% of transaction amount in BCH per bounty (~€0.247 on €100 transfer). This is 1/3 of the remaining fee after Kraken's ~0.26% exchange cost is deducted from the 1% total fee.
+**Incentive structure:** BCH buyers acquire BCH at market rate (or slightly below market), avoiding exchange KYC. Merchants get instant fiat liquidity if needed.
 
-**Self-regulating system:** Liquidity automatically deducted when bounty accepted, restored when complete. Even successful LPs eventually run out of liquidity, opening opportunities for others.
+**Why optional:** Merchants should prefer holding BCH (earn full spread, save on future remittance cash-outs). BCH buyer bulletin is for merchants who need fiat urgently.
 
-**Related:** [Escrow Operator](#escrow-operator), [Merchant](#merchant), [Instant Settlement](#instant-settlement)
+**Related:** [BCH Seller](#bch-seller), [Merchant](#merchant), [Covenant](#covenant)
 
 ---
 
-### Escrow Operator
+### BCH Seller
 **Type:** User Role / Economic Actor
 
-Person running an escrow node that processes remittances. Receives EUR from senders, holds capital buffer, buys BCH from Kraken, manages settlement process.
+Person who posts overcollateralized BCH to covenants, enabling remittances. Already owns BCH (miners, holders, traders) and uses covenants as a hedge mechanism while earning fees.
 
-**Responsibilities (MVP):**
-- Monitor Bizum payments (smsbridge_loop.py parsing)
-- Hold EUR buffer (capital allocation)
-- Buy BCH from Kraken when settlement triggered
-- Manage dispute resolution
-- Coordinate settlements between merchants and LPs
+**Responsibilities:**
+- Post ~7% overcollateralized BCH to covenant (e.g., ~€107 worth of BCH for €100 remittance)
+- Monitor for sender Bizum payments (smsbridge_loop.py parsing or manual)
+- Receive EUR from sender via Bizum (within 5 minutes)
+- Wait for covenant maturity (24h max, typically <2 hours)
+- Receive surplus BCH after merchant paid (~0.5% fee + hedge benefit)
 
-**Future responsibilities (Post-MVP - Covenants Architecture):**
-- Create EUR-tokens (proof of EUR committed via CashTokens)
-- Manage covenant-based escrow contracts
-- Enable fully decentralized escrow (eliminating centralized trust)
+**Covenant structure (€100 example):**
+- BCH seller posts: ~€107 worth of BCH (7% overcollateralization buffer)
+- Covenant promises merchant: ~€99.50 worth of BCH (settled at maturity rate)
+- Sender pays seller: €100.00 via Bizum (within 5 minutes)
+- Seller net profit: ~€0.50 fee + hedge benefit (94-97% exposure reduction once Bizum received)
 
-**Incentive structure:** Share fee split with Merchants and LPs after exchange costs. Formula: `[1% fee - Kraken fee] / 3 participants`. Example on €100:
-- Total fee: €1.00 (1%)
-- Kraken exchange cost: €0.26 (0.26%) - deducted first
-- Remaining to split: €0.74 (0.74%)
-- **Escrow receives: €0.247** (0.247% = €0.74 ÷ 3)
-- Merchant receives: €0.247 (0.247%)
-- LP receives: €0.247 (0.247%)
+**Incentive structure:** Earn 0.5% fee per transaction. On €100 transfer, BCH seller earns ~€0.50. A seller handling 100 covenants/day earns ~€50/day = €1,500/month.
 
-**Key clarification:** Participants split the REMAINING fee after exchange costs, not the full 1%.
+**Hedge mechanism:** Seller posts BCH collateral (~€107), then receives €100 fiat within 5 minutes. This reduces BCH price exposure by 94-97% during the 5-minute Bizum window. Seller benefits from fiat hedge while earning fees.
 
-**Capital requirement:** €500-€2,000 EUR buffer (can process €100k+/month volume)
+**Capital requirement:** BCH holdings (no EUR buffer needed—receive EUR from sender before covenant matures). Typical: 0.5-2 BCH enables handling 20-100 concurrent covenants.
 
-**Important context from Suso:** "The escrow gets part of the reward like the LPs and the merchant. After the exchange fees are deducted, whatever is left over from the 1% is split between the number of participants."
+**No exchange needed:** BCH sellers already own BCH (from mining, trading, or holding). No Kraken purchase required—covenant architecture removes exchange dependency.
 
-**Related:** [Liquidity Provider (LP)](#liquidity-provider-lp), [Merchant](#merchant)
+**Related:** [BCH Buyer](#bch-buyer-optional), [Merchant](#merchant), [Covenant](#covenant)
 
 ---
 
 ## Economic Models
 
-### Bounty (Settlement Opportunity)
-**Type:** Economic Mechanism / LP Incentive
+### Bounty (Covenant Claim Opportunity)
+**Type:** Economic Mechanism / Merchant Incentive
 
-Instant settlement opportunity offered to LPs when a merchant has `instant_settlement_enabled = true`. When recipient claims at such a merchant, a bounty is created offering: *"Earn [BCH amount] by sending [fiat amount] to merchant within 5 minutes."*
+Covenant claim opportunity visible on public bulletin board. Merchants can claim covenants by selling VES/ARS cash to recipients, earning BCH spread.
 
 **How it works:**
-1. Recipient claims at merchant with instant settlement enabled
-2. System creates bounty (e.g., "Send VES 113,850 to Bodega María, earn 0.000250 BCH")
-3. All LPs in corridor notified simultaneously (OP_RETURN or push notifications)
-4. **First LP to accept wins** (first-come-first-served competition)
-5. LP's liquidity automatically deducted
-6. LP has 5 minutes to send fiat to merchant
-7. After confirmations, LP receives BCH + reward
+1. BCH seller posts overcollateralized covenant (e.g., "€100 remittance, promises ~€99.50 BCH to merchant")
+2. Recipient receives notification (via WhatsApp, OP_RETURN, or push notification)
+3. Covenant appears on public bulletin board visible to all merchants
+4. Recipient selects merchant (or merchant enters bounty code)
+5. Merchant sells VES/ARS cash to recipient
+6. Both co-sign covenant (cryptographic signatures)
+7. Covenant matures → Merchant receives ~€100.50 worth of BCH, earning ~€0.50 spread
 
-**Competition model:** First-come-first-served (race condition by design). No algorithmic selection or round-robin needed—system self-regulates through liquidity deduction.
+**Competition model:** First-come-first-served for bulletin board claims. For directed claims (recipient selects specific merchant), no competition needed.
 
-**Example:** *"Juan accepted a 250 VES bounty to send VES 113,850 to Bodega María"*
+**Example:** *"Bodega María claimed €100 covenant, sold 500,000 VES to Elena, earned 0.0995 BCH"*
 
-**Self-regulation:** Even highly successful LPs eventually run out of available liquidity, must manually top up, opening opportunities for other LPs.
-
-**Related:** [Liquidity Provider (LP)](#liquidity-provider-lp), [Instant Settlement](#instant-settlement), [Settlement](#settlement)
+**Related:** [BCH Seller](#bch-seller), [Merchant](#merchant), [Covenant](#covenant)
 
 ---
 
-### Instant Settlement
-**Type:** Feature / Merchant Option
+### BCH Buyer Bulletin (Optional Liquidity)
+**Type:** Feature / Circular Economy Mechanism
 
-Optional merchant setting (`instant_settlement_enabled = true/false`) that determines whether merchant receives BCH directly or gets local fiat immediately via LP.
+**OPTIONAL** feature that allows merchants to sell BCH for fiat using the same covenant mechanism (reversed roles). Merchants receive BCH from remittance covenants first, then optionally sell to BCH buyers if they need fiat.
 
 **How it works:**
 
-**When DISABLED (default):**
-- Merchant receives BCH reward directly from escrow
-- No LP involved
-- Simpler flow
-- Best for merchants who want to hold BCH
+**Default flow (Hold BCH - Recommended):**
+- Merchant receives BCH from covenant (~€100.50 worth)
+- Merchant holds BCH (earns full spread, saves on future transactions)
+- No additional steps needed
+- Best for long-term adoption
 
-**When ENABLED:**
-- Creates "bounty" for LPs when recipient claims
-- LP sends local fiat (VES, ARS, etc.) to merchant immediately
-- Merchant gets fiat in bank account within ~30 seconds
-- LP receives BCH + reward from escrow after confirmations
-- Best for merchants who need fiat liquidity
+**Optional flow (Sell to BCH Buyer):**
+- Merchant receives BCH from covenant (~€100.50 worth)
+- Merchant browses BCH buyer bulletin board in app
+- Merchant selects BCH buyer offer (e.g., "I'll pay 500,000 VES for 0.0995 BCH")
+- Merchant posts covenant (same mechanism, reversed roles)
+- BCH buyer sends fiat via PagoMóvil/MercadoPago
+- Both co-sign covenant
+- Merchant receives fiat, BCH buyer receives BCH
 
 **Key characteristics:**
-- **One-time setting:** Configured in merchant profile, applies to all claims
-- **Default: OFF** - Keeps merchant onboarding simple
-- **Toggle anytime:** Merchant can enable/disable based on needs
-- **Requires LP network:** Only works if LPs available in corridor
+- **Circular economy:** Same covenant infrastructure, both directions
+- **No special feature needed:** Just show bulletin board in UI ("the best feature is no feature")
+- **Merchant decides per transaction:** Hold BCH or sell to BCH buyer
+- **Default: Hold BCH** - Encourages BCH adoption
 
-**Example:** Bodega María enables instant settlement. When Carlos claims €100 remittance, Juan (LP) immediately sends VES 113,850 to María's bank account. María gives cash to Carlos. Both confirm. Juan receives BCH + reward.
+**Example:** Bodega María received 0.0995 BCH from remittance covenant. María needs fiat urgently, browses BCH buyer bulletin, selects Juan's offer. Juan sends 500,000 VES via PagoMóvil, both co-sign covenant. María receives fiat, Juan receives BCH.
 
-**Why it matters:** Enables merchants who need fiat liquidity (not BCH) to participate in the network, expanding merchant adoption.
+**Why it matters:** Provides optional exit for merchants while using same covenant infrastructure. No instant settlement complexity needed.
 
-**Related:** [Bounty](#bounty-settlement-opportunity), [Liquidity Provider (LP)](#liquidity-provider-lp), [Settlement](#settlement)
+**Related:** [Bounty](#bounty-covenant-claim-opportunity), [BCH Buyer](#bch-buyer-optional), [Covenant](#covenant)
 
 ---
 
@@ -319,75 +313,81 @@ The unofficial, parallel market exchange rate in countries with government-impos
 
 **How Asgaya uses it:**
 - DolarAPI tracks real-time blue dollar rates
-- Escrow calculates: EUR → USD (Kraken) → Local currency (blue dollar rate)
-- Example: €1 × 1.1685 (EUR/USD) × 1,420 (blue ARS/USD) = 1,659 ARS
+- Covenant calculates: EUR → BCH (spot rate) → Local currency (blue dollar rate)
+- Example: €100 → 0.0995 BCH (spot) → 500,000 VES (blue rate)
 
-**Tested accuracy:** 9% more accurate than hardcoded rates in real €1 Bizum test.
+**Tested accuracy:** Market rates ensure fair value for recipients.
 
 **Related:** [DolarAPI](#dolarapi), [Market-Rate Exchanges](core-architecture/why-market-rate-exchanges.md)
 
 ---
 
-### Two-Step Settlement
+### EUR-Denominated Covenant Settlement
 **Type:** Protocol Design / Volatility Solution
 
-Architectural innovation where EUR commitment (Step 1) and BCH purchase (Step 2) are separated. BCH is only purchased AFTER merchant confirms receiving local fiat.
+Architectural innovation where covenants promise EUR value but settle in BCH at maturity rate. This eliminates volatility risk for all participants.
 
 **How it works:**
-1. Step 1: Sender sends EUR → Escrow creates EUR-token → Posts to DEX orderbook
-2. Merchant selects themselves
-3. Step 2: Recipient gets local fiat → Confirms receipt → Triggers BCH purchase
-4. Escrow buys BCH from Kraken
-5. Escrow sends BCH to LP
+1. Sender sends €100 via Bizum to BCH seller
+2. BCH seller posts ~€107 worth of BCH to covenant (7% overcollateralization)
+3. Covenant promises merchant: ~€99.50 worth of BCH (settled at maturity rate, not creation rate)
+4. Merchant sells 500,000 VES to recipient for cash
+5. Both co-sign covenant (cryptographic signatures)
+6. Covenant matures → Merchant receives BCH worth ~€99.50 (at maturity rate)
+7. BCH seller keeps surplus after merchant paid (~€0.50 fee)
 
-**Key benefit:** Zero volatility for sender, recipient, and merchant. Only LP voluntarily takes BCH exposure.
+**Key benefit:** Zero volatility for sender, recipient, and merchant. BCH seller's risk reduced 94-97% once Bizum received (hedge mechanism).
 
-**Result:** Eliminates the classic crypto remittance problem where merchant loses money to volatility while funds are in transit.
+**Result:** Eliminates the classic crypto remittance problem where participants lose money to volatility while funds are in transit.
 
-**Implementation:** Built on covenant contracts that lock EUR-token until ARS/VES proof received.
+**Implementation:** Built on overcollateralized covenant contracts that settle at maturity rate (not creation rate).
 
-**Related:** [Volatility Protection](#volatility-protection), [Escrow Operator](#escrow-operator), [Liquidity Provider (LP)](#liquidity-provider-lp)
+**Related:** [Volatility Protection](#volatility-protection), [BCH Seller](#bch-seller), [Covenant](#covenant)
 
 ---
 
 ### Settlement
 **Type:** Economic Concept
 
-Process of finalizing a transaction and distributing rewards. Context matters—"settlement" means different things depending on phase:
+Process of finalizing a covenant and distributing BCH. Context matters—"settlement" means different things depending on phase:
 
-**Phase 1 (Two-Step Settlement):** Escrow buys BCH and sends to LP after merchant confirms ARS/VES receipt.
+**Covenant creation:** BCH seller posts overcollateralized BCH, sender pays Bizum
 
-**Phase 2 (Finalization):** LP receives BCH, escrow gets EUR back from LP (completes the capital flow).
+**Covenant claiming:** Merchant and recipient co-sign covenant (cryptographic signatures)
 
-**Technical settlement:** BCH blockchain confirmation (10 minutes typical, 0-conf acceptable).
+**Covenant maturity:** Covenant settles, distributing BCH to merchant (at maturity rate) and surplus to seller
 
-**Always clarify context:** "merchant settlement" = merchant confirms cash handed, "payment settlement" = escrow sends BCH, "final settlement" = both sides confirmed.
+**Technical settlement:** BCH blockchain confirmation (10 minutes typical, 0-conf acceptable for covenant creation).
 
-**Related:** [Two-Step Settlement](#two-step-settlement), [Volatility Protection](#volatility-protection)
+**Always clarify context:** "merchant settlement" = merchant receives BCH from covenant, "covenant settlement" = covenant matures and distributes funds, "final settlement" = both participants confirmed.
+
+**Related:** [EUR-Denominated Covenant Settlement](#eur-denominated-covenant-settlement), [Volatility Protection](#volatility-protection)
 
 ---
 
-### Escrow (as concept)
+### Covenant (as concept)
 **Type:** Economic Mechanism
 
-Third party (Escrow Operator) holding funds in a transaction until conditions are met. In Asgaya's case, escrow holds EUR from sender until recipient confirms ARS/VES receipt.
+**OBSOLETE:** Old model used third-party escrow holding funds. New covenant architecture (May 2026 pivot) eliminates custody and intermediation.
 
-**Key property:** Escrow NEVER takes USD/VES/ARS risk—always holds EUR until triggered to buy BCH.
+**Covenant architecture:** Smart contract on BCH blockchain that holds overcollateralized BCH until conditions are met (merchant and recipient co-sign). No third party holds funds—covenant enforces rules automatically.
 
-**Escrow revenue model:** "The escrow gets part of the reward like the LPs and the merchant. After the exchange fees are deducted, whatever is left over from the 1% is split between the number of participants."
+**Key property:** No custody, no intermediation, no licensing requirements. BCH seller posts collateral, covenant enforces settlement.
 
-**Example (€100 transaction):**
+**Fee distribution (€100 transaction):**
 ```
-Total fee: €1.00
-Kraken cost: €0.26 (0.26% of €100)
-Amount to split: €1.00 - €0.26 = €0.74
-Split 3 ways (escrow, LP, merchant): €0.74 / 3 = €0.247 each
-Escrow net profit: €0.247 (0.247%)
+Sender pays: €100.00 (to BCH seller via Bizum)
+Sender fee: €0.50 (0.5% - paid to seller)
+Total cost: ~€1.00 (~1%)
+
+Distribution:
+- BCH seller: ~€0.50 (0.5% fee + hedge profit)
+- Merchant: ~€0.50 (0.5% spread earned selling VES for BCH)
 ```
 
-**Critical note:** This differs from traditional escrow (which takes fee from transaction) OR from investor (which takes equity). Asgaya escrow takes operating fee, not capital risk.
+**Critical note:** No exchange fees (no Kraken purchase). BCH seller already owns BCH. Overcollateralization protects against volatility.
 
-**Related:** [Escrow Operator](#escrow-operator), [Two-Step Settlement](#two-step-settlement)
+**Related:** [BCH Seller](#bch-seller), [EUR-Denominated Covenant Settlement](#eur-denominated-covenant-settlement)
 
 ---
 
@@ -413,20 +413,24 @@ Python script that monitors SMS notifications for payment confirmations. Runs on
 
 ---
 
-### Covenant
-**Type:** Technical Concept
+### Covenant (Technical)
+**Type:** Technical Concept / Smart Contract
 
-Bitcoin/BCH smart contract that enforces conditions before funds can be spent. In Asgaya, covenants lock EUR-tokens until two conditions are met:
-1. Merchant confirms ARS/VES receipt (SMS proof hash)
-2. Liquidity provider wants BCH (signature)
+Bitcoin Cash smart contract that enforces overcollateralized bounty conditions. BCH seller posts ~7% extra BCH collateral, covenant promises EUR-denominated value to merchant (settled in BCH at maturity rate).
 
-**Example condition:** "Unlock EUR-token IF hash(SMS_proof) matches AND liquidity_provider_signature valid"
+**In Asgaya, covenants enforce:**
+1. EUR-denominated promise (e.g., "pay merchant €99.50 worth of BCH at maturity rate")
+2. Co-signing requirement (both merchant and recipient must sign)
+3. Timeout cascade (5-minute Bizum timeout, 24-hour claim timeout)
+4. Split refund (merchant portion → sender, seller fee → seller if unclaimed)
 
-**Advantage:** Trustless settlement—blockchain enforces terms, not Asgaya.
+**Example condition:** "Unlock BCH for merchant IF: (merchant_signature AND recipient_signature) OR (24h timeout → split refund)"
 
-**Implementation complexity:** Medium (requires UTXO inspection, signature verification). Planned for Phase 3.
+**Advantage:** Trustless settlement—blockchain enforces terms, no custody, no intermediation. MiCA compliant (no licensing needed).
 
-**Related:** [Two-Step Settlement](#two-step-settlement), [CashTokens](#cashtokens)
+**Implementation:** BCH introspection opcodes enable EUR-denominated settlement with BCH as underlying asset.
+
+**Related:** [EUR-Denominated Covenant Settlement](#eur-denominated-covenant-settlement), [BCH Seller](#bch-seller)
 
 ---
 
@@ -526,24 +530,27 @@ Small neighborhood store common in Honduras, Nicaragua, and other Central Americ
 
 ---
 
-## Kraken
+## Kraken (Historical)
 **Type:** Cryptocurrency Exchange
 
-Tier-1 regulated exchange (San Francisco, US). Used for:
-1. Spot trading: EUR/BCH conversion (maker fee 0.16%)
-2. API access: Programmatic order placement
-3. Account funding: SEPA deposits from escrow funding partners
+**HISTORICAL:** Tier-1 regulated exchange (San Francisco, US). Was planned for old escrow architecture (pre-May 2026) to buy BCH on demand.
 
-**Key metrics:**
-- EUR/BCH trading pairs: Liquid, 24/7
-- Maker fee: 0.16% (used in fee calculation)
-- Taker fee: 0.26% (if speed required)
-- Min order: 0.001 BCH (~€35)
-- Settlement: Usually 30 seconds to 2 minutes
+**Old model (obsolete):**
+- Escrow would buy BCH from Kraken when settlement triggered
+- Exchange fees: 0.16-0.26%
+- Required SEPA deposits and exchange accounts
 
-**Why Kraken:** Best combination of liquidity, low fees, API quality, regulatory standing.
+**New model (covenant architecture):**
+- No exchange purchase needed
+- BCH sellers already own BCH (miners, holders, traders)
+- No Kraken dependency
+- No exchange fees
 
-**Related:** [BCH](#bitcoin-cash-bch), [SEPA](#sepa), [Rate API](#rate-api)
+**Why this matters:** Eliminating exchange dependency reduces costs, eliminates custody risk, and removes licensing requirements.
+
+**Research context:** Kraken research files (RS017-RS045) remain in documentation as historical context for understanding the architectural pivot.
+
+**Related:** [BCH Seller](#bch-seller), [Covenant](#covenant-technical)
 
 ---
 
@@ -552,10 +559,10 @@ Tier-1 regulated exchange (San Francisco, US). Used for:
 For detailed explanations of concepts in use, see:
 
 - **Volatility Protection:** [core-architecture/why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
-- **Incentive Structure:** [decisions/fee-splitting-model.md](decisions/fee-splitting-model.md)
+- **Covenant Architecture:** [concepts/overcollateralized-bounty-contracts.md](concepts/overcollateralized-bounty-contracts.md)
+- **BCH Sellers:** [concepts/bch-sellers.md](concepts/bch-sellers.md)
+- **Exchange Rates:** [decisions/how-exchange-rates-work.md](decisions/how-exchange-rates-work.md)
 - **Notification Listener:** [android-app/notification-listener/](android-app/notification-listener/)
-- **Escrow Model:** [concepts/bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)
-- **Two-Step Settlement:** [decisions/two-step-settlement-timing.md](decisions/two-step-settlement-timing.md)
 
 ---
 
@@ -564,17 +571,21 @@ For detailed explanations of concepts in use, see:
 ### Always Use
 
 ✅ **recipient** (not "receiver")
-✅ **Liquidity Provider (LP)** on first mention, then "LP"
-✅ **escrow operator** (not "escrow" as person—"escrow" is the mechanism)
-✅ **settlement** (clarify context: merchant settlement vs. payment settlement vs. final settlement)
+✅ **BCH seller** (person posting overcollateralized BCH to covenants)
+✅ **BCH buyer** (optional participant buying BCH from merchants)
+✅ **covenant** (not "escrow"—covenant is trustless smart contract)
+✅ **settlement** (clarify context: covenant settlement vs. merchant settlement vs. final settlement)
 ✅ **EUR→VES** for example corridors (unless corridor-agnostic)
 ✅ **merchant** (not "shop owner" or "retail partner")
+✅ **co-sign** (cryptographic signatures, not numeric codes)
 
 ### Avoid
 
 ❌ "receiver" (use "recipient" instead)
-❌ "LP" on first mention (spell out "Liquidity Provider (LP)" first)
-❌ "The escrow said..." (use "The escrow operator said...")
+❌ "escrow operator" (old model—use "BCH seller" in covenant architecture)
+❌ "LP" or "Liquidity Provider" (old model—use "BCH buyer" for circular economy)
+❌ "escrow holds funds" (covenant architecture has no custody)
+❌ "Kraken purchase" (no exchange purchase in covenant model)
 ❌ "settlement" without clarification (which kind?)
 ❌ "Spain→Argentina" for examples (use "Spain→Venezuela" / "EUR→VES")
 ❌ Mixing "shop", "store", "vendor", "retailer" (use "merchant" consistently)
