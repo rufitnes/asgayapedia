@@ -3,7 +3,7 @@
 **Purpose:** Standardized terminology for all Asgaya documentation.
 
 **Maintained by:** Project team
-**Last updated:** April 29, 2026
+**Last updated:** May 11, 2026
 **Status:** Active - Reference document
 
 ---
@@ -396,11 +396,11 @@ Distribution:
 ### smsbridge_loop.py
 **Type:** Technical Component
 
-Python script that monitors SMS notifications for payment confirmations. Runs on escrow's device (Spain) and recipient's device (destination country).
+Python script that monitors SMS notifications for payment confirmations. Runs on BCH seller's device (Spain) and recipient's device (destination country).
 
 **Dual function:**
-1. **Escrow (Spain):** Listens for Bizum SMS → Parses EUR amount → Creates EUR-token
-2. **Recipient (Venezuela/Argentina):** Listens for PagoMóvil/Mercado Pago SMS → Parses VES/ARS amount → Triggers settlement
+1. **BCH Seller (Spain):** Listens for Bizum SMS → Parses EUR amount → Confirms payment received, co-signs covenant
+2. **Recipient (Venezuela/Argentina):** Listens for merchant PagoMóvil/Mercado Pago SMS → Parses VES/ARS amount → Triggers notification (V1 feature)
 
 **Parser languages:**
 - Bizum: "Ha recibido..." (Spanish bank SMS format)
@@ -430,7 +430,53 @@ Bitcoin Cash smart contract that enforces overcollateralized bounty conditions. 
 
 **Implementation:** BCH introspection opcodes enable EUR-denominated settlement with BCH as underlying asset.
 
-**Related:** [EUR-Denominated Covenant Settlement](#eur-denominated-covenant-settlement), [BCH Seller](#bch-seller)
+**Related:** [EUR-Denominated Covenant Settlement](#eur-denominated-covenant-settlement), [BCH Seller](#bch-seller), [Overcollateralization](#overcollateralization)
+
+---
+
+### Overcollateralization
+**Type:** Technical Concept / Risk Management
+
+BCH seller posts more BCH than required (typically 107% of transaction amount) to covenant as buffer against price volatility. Protects merchant from receiving less than promised EUR value if BCH price drops during 24-hour claim window.
+
+**Example:** €100 remittance requires 0.1 BCH at current rate. BCH seller posts 0.107 BCH (7% extra).
+
+**How it protects:**
+- If BCH drops 5%: Merchant still gets €99.50 worth of BCH (seller's surplus absorbs loss)
+- If BCH rises 5%: Merchant gets €99.50, seller gets larger surplus back (hedge benefit)
+- Covenant is EUR-denominated (promises €99.50 value, not fixed BCH amount)
+
+**Seller perspective:** This is a hedge mechanism—seller reduces BCH exposure by converting most to fiat (€100 Bizum), only small surplus exposed to price movement.
+
+**Capital requirement:** Sellers need BCH inventory to post collateral, but receive EUR within 5 minutes (hedge activates quickly).
+
+**Related:** [BCH Seller](#bch-seller), [Covenant (Technical)](#covenant-technical), [EUR-Denominated Covenant Settlement](#eur-denominated-covenant-settlement)
+
+---
+
+### Co-signing
+**Type:** Technical Concept / Signature Mechanism
+
+Both merchant and recipient must cryptographically sign covenant to trigger BCH distribution. Replaces old "completion code" system with blockchain-anchored signatures.
+
+**Security properties:**
+- **Non-repudiable:** Signatures recorded on BCH blockchain, cannot deny after signing
+- **Atomic:** Covenant only executes when BOTH signatures present
+- **Immutable:** Once both sign, distribution happens automatically (no entity can stop it)
+- **Timeout protection:** If only one signs (or neither), covenant refunds after 24h
+
+**UX flow:**
+1. Merchant hands cash to recipient
+2. Merchant signs in app: "Cash delivered" (creates cryptographic signature)
+3. Recipient counts cash, verifies amount
+4. Recipient signs in app: "Cash received" (creates cryptographic signature)
+5. Covenant detects both signatures → Executes automatically → BCH distributed
+
+**Critical UX principle:** Hand cash FIRST, then sign. Both parties must understand: signing = confirming cash exchange complete.
+
+**V1 enhancement:** RFID card tap can replace smartphone signature for recipients without phones.
+
+**Related:** [Covenant (Technical)](#covenant-technical), [RFID Card Recipients](../concepts/rfid-card-recipients.md)
 
 ---
 
