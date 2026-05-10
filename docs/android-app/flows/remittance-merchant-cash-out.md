@@ -1,8 +1,8 @@
-# Remittance with Merchant Cash-Out - Complex Flow
+# Remittance with Merchant Cash-Out - Complete Flow
 
 **Part of:** [Android App Flows](android-app/flows/README.md)
-**Date:** 2026-05-02
-**Status:** Active - Priority 2 (Build SECOND)
+**Date:** 2026-05-10
+**Status:** Active - Covenant Architecture
 
 ---
 
@@ -12,17 +12,17 @@ This document details the **core Asgaya remittance use case**: Send money to rec
 
 **Use case:** Cross-border remittance with merchant claim window
 
-**Example:** María in Spain sends €100 to Elena in Venezuela. Elena gets notified, finds nearby merchant, walks to shop, claims cash.
+**Example:** Iris in Spain sends €100 to Elena in Venezuela. Elena gets notified, finds nearby merchant, walks to shop, claims cash.
 
 **Why build this SECOND:**
 - ✅ More complex (recipient selection, notification, merchant matching)
-- ✅ Slower settlement (on-demand BCH purchase, 10-30 min)
-- ✅ More actors (sender, escrow, recipient, merchant, LP)
-- ✅ Two-sided confirmation needed (merchant + recipient)
+- ✅ More actors (sender, BCH seller, recipient, merchant)
+- ✅ Two-sided co-signing needed (merchant + recipient)
 - ✅ 24-hour claim window management
+- ✅ Covenant architecture (overcollateralization, timeout cascade)
 
 **Value proposition:**
-- 🎯 **Core innovation:** Kickstarts merchant network (merchants earn from claims)
+- 🎯 **Core innovation:** Kickstarts merchant network (merchants earn spread)
 - 🌍 **Cross-border:** Bypasses government rate manipulation
 - 💰 **Cheaper than legacy:** <1% vs 6.49% average remittance cost
 - 📱 **Recipient choice:** Pick convenient merchant from map
@@ -30,14 +30,14 @@ This document details the **core Asgaya remittance use case**: Send money to rec
 
 **User journey:**
 ```
-Sender → Creates order → Funds escrow → Recipient notified → Finds merchant on map →
-Walks to shop → Claims cash → Both confirm → Complete
+Sender → Creates covenant → Funds BCH seller (Bizum) → Recipient notified →
+Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Complete
 ```
 
 **Total screens:**
 - Sender: 7 screens
 - Recipient: 6 screens (see [recipient-flows.md](android-app/flows/recipient-flows.md))
-- Merchant: 3 screens (see [merchant-flows.md](android-app/flows/merchant-flows.md))
+- Merchant: 5 screens (see [merchant-flows.md](android-app/flows/merchant-flows.md))
 
 **Timeline:** 30-60 minutes (mostly waiting for recipient to claim)
 
@@ -108,13 +108,13 @@ Walks to shop → Claims cash → Both confirm → Complete
 │  │                              │   │
 │  │  📱 Recipient phone number    │   │
 │  │                             │   │
-│  │  +58  ___________________   │   │◄─ add number from contact list (error mitigation)
+│  │  +58  ___________________   │   │◄─ From contact list
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│   Recent recipients:                │◄─ Quick send (pseudo-recurrent payments)
+│   Recent recipients:                │◄─ Quick send
 │   • Elena (+58-412-XXX-XXXX)        │
 │   • Carlos (+54-911-XXX-XXXX)       │
 │                                     │
@@ -126,15 +126,18 @@ Walks to shop → Claims cash → Both confirm → Complete
 │                                     │
 │                                     │
 │  💡 Recipient will be notified      │
-│     and can choose where to pick    │◄─ lets add a link to the merchant map here
+│     and can choose where to pick    │
 │     up the cash                     │
+│                                     │
+│  [ View Merchant Map ]              │◄─ Preview available merchants
 │                                     │
 └─────────────────────────────────────┘
 ```
 
 **Interactions:**
-- Add phone number from contact list. already has country code les prone to error
+- Add phone number from contact list (has country code, less error-prone)
 - Tap recent recipient → Auto-fill
+- Tap "View Merchant Map" → Show merchants in recipient's country
 - Tap "Continue" → Check corridor availability → Go to Screen 3
 
 **Validation:**
@@ -144,16 +147,18 @@ Checks:
 1. Valid phone format? ✓
 2. Corridor available (EUR→VES)? ✓
 3. Active merchants in Venezuela? ✓
+4. Phone has BCH address associated? ✓
 
 If any check fails:
-"Sorry, we don't serve Venezuela yet. (We need to know if a phone number has a bch address asociated to it)
- [ Notify me when available ]"
+"Sorry, recipient needs Asgaya app to receive.
+ Send them: https://asgaya.org/app"
 ```
 
 **Notes:**
 - Recent recipients enable quick re-sends (recurrent payments pattern)
 - Country code auto-detected from phone format
 - Corridor check happens before amount entry (fail fast)
+- Merchant map preview builds confidence (shows network exists)
 
 ---
 
@@ -174,21 +179,21 @@ If any check fails:
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
-│  │        €  100.00            │   │◄─ Large input (this needs to stay in the escrow currency or it won't work)
+│  │        €  100.00            │   │◄─ Large input (EUR)
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │   Exchange rate: 1 EUR = 50,500 VES│
-│   (Includes 1% fee)                 │
+│   (Real market rate via BCH)        │
 │   (Updated 3 min ago)               │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
-│   Elena receives: ~€99 worth        │
-│   Estimated: 4,999,500 VES          │
+│   Elena receives: ~€99.50 worth     │
+│   Estimated: 5,024,750 VES          │
 │                                     │
 │   ⚠️ Rate determined when Elena     │
-│      picks up cash (usually same)   │
+│      claims cash (usually same)     │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │         Continue            │   │
@@ -202,23 +207,24 @@ If any check fails:
 **Calculations:**
 ```
 User sends: €100
-Fee: 1% = €1 (deducted from amount)
-Elena gets: €99 worth of VES
-VES amount: €99 × 50,500 = 4,999,500 VES
-(Estimate - final rate when she picks up)
+Sender fee: 0.5% = €0.50
+Elena gets: €99.50 worth of BCH (settled at maturity rate)
+VES amount: €99.50 × 50,500 = 5,024,750 VES (estimate at current rate)
+(Final rate when she claims)
 ```
 
 **Interactions:**
 - Type amount (validates: €10-500)
-- Rate updates every 5 seconds (live DolarAPI call)
+- Rate updates every 5 minutes (DolarAPI cache)
 - Tap "Continue" → Go to Screen 4
 
 **Notes:**
 - Real-time rate from DolarAPI (blue dollar market rate)
-- Warning: rate locked when recipient claims (not when sender pays)
+- Warning: covenant EUR-denominated, settled in BCH at maturity rate
 - Min/max amounts prevent abuse and ensure viability
+- VES equivalency helps sender understand what recipient will receive
 
-**Related decision:** [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)
+**Related decision:** [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
 
 ---
 
@@ -237,8 +243,8 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  │  €100.00                    │   │
 │  │                             │   │
 │  │  Elena receives:            │   │
-│  │  ~4,999,500 VES             │   │
-│  │  (~€99 worth)               │   │
+│  │  ~5,024,750 VES             │   │
+│  │  (€99.50 worth in BCH)      │   │
 │  │                             │   │
 │  │  Exchange rate:             │   │
 │  │  1 EUR = 50,500 VES         │   │
@@ -251,11 +257,11 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
 │  What happens next:                 │
-│  1. You send Bizum payment          │
-│  2. Elena gets notified             │
-│  3. She picks a nearby merchant     │
-│  4. Walks to shop, gets cash        │
-│  5. Both confirm delivery           │
+│  1. You send Bizum to BCH seller    │
+│  2. Covenant created (24h window)   │
+│  3. Elena gets notified             │
+│  4. She picks a nearby merchant     │
+│  5. Both co-sign covenant           │
 │                                     │
 │  Estimated time: 30-60 minutes      │
 │                                     │
@@ -276,10 +282,11 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 - Clear expectations (timeline, process)
 - Final chance to review before paying
 - Honest time estimate (30-60 min, not instant)
+- Explains covenant model (BCH seller, not central entity)
 
 ---
 
-### Screen 5: Payment Instructions (Bizum)
+### Screen 5: Payment Instructions (Bizum to BCH Seller)
 
 ```
 ┌─────────────────────────────────────┐
@@ -290,11 +297,11 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
-│  │  To: 609-XXX-XXX            │   │◄─ Escrow phone
+│  │  To: 612-XXX-XXX            │   │◄─ BCH seller phone
 │  │                             │   │
 │  │  Amount: €100.00            │   │
 │  │                             │   │
-│  │  Concept: 58412XXXXXXX      │   │◄─ Recipient phone (no +)
+│  │  Concept: REM-89234         │   │◄─ Covenant ID
 │  │                             │   │
 │  │  [ Copy details ]           │   │
 │  │                             │   │
@@ -305,13 +312,18 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  Instructions:                      │
 │  1. Open your bank app              │
 │  2. Send Bizum with exact details   │
-│     (Concept field is important!)   │
+│     (Concept field links payment    │
+│      to covenant)                   │
 │  3. Return here when sent           │
 │                                     │
-│  ⏱️ Complete within: 10 min         │◄─ notify before canceling user might forget to come back to the app
-│     (Order expires otherwise)       │
+│  ⏱️ Complete within: 5 min          │
+│     (Seller's volatility window)    │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  💡 You're paying the BCH seller    │
+│     who provides collateral for     │
+│     Elena's covenant                │
 │                                     │
 │  ┌─────────────────────────────┐    │
 │  │   I've sent the Bizum       │    │
@@ -328,17 +340,24 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 - Tap "Cancel order" → Return to home
 
 **Notes:**
-- 10 min timeout for sender to fund escrow
-- Concept field = recipient phone (matches notification to remittance)
+- 5-minute window (seller's BCH volatility exposure)
+- Concept field = covenant ID (links Bizum payment to specific covenant)
 - Copy button reduces manual entry errors
+- Explains BCH seller role (not central entity)
 
-**Related decision:** [Payment Timeout Window](decisions/payment-timeout-window.md) - Why 10 minutes
+**Why 5 minutes:**
+- Seller has full BCH exposure until Bizum received
+- Typical BCH volatility in 5 min: 0.5-1% (within 7% buffer)
+- Bizum usually arrives in 2-3 minutes
+- After Bizum received, seller's hedge activates (94-97% exposure reduction)
+
+**Related concept:** [BCH Sellers - Hedge Mechanism](concepts/bch-sellers.md#the-hedge-mechanism-why-sellers-always-win-)
 
 ---
 
 ### Screen 6: Tracking (Multiple States)
 
-#### State 1: Waiting for EUR
+#### State 1: Waiting for Bizum
 
 ```
 ┌─────────────────────────────────────┐
@@ -353,17 +372,19 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → ~4,999,500 VES     │
+│   Amount: €100 → ~5,024,750 VES     │
 │                                     │
 │   Progress:                         │
-│   ⏳ EUR payment pending...         │
+│   ⏳ Bizum to BCH seller pending... │
+│   ⏸️  Creating covenant...          │
 │   ⏸️  Notifying Elena...            │
-│   ⏸️  Merchant selection...         │
+│   ⏸️  Merchant co-signing...        │
 │   ⏸️  Cash delivery...              │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
-│   ⏱️ Time remaining: 23h 45m        │
+│   ⏱️ Time remaining (5 min window): │
+│       4m 32s                        │
 │                                     │
 │  [ Cancel (full refund) ]           │
 │                                     │
@@ -371,10 +392,11 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 ```
 
 **Notes:**
-- 24-hour claim window starts when EUR received (not when order created)
-- Sender can cancel before EUR confirmed (full refund)
+- 5-minute Bizum window (seller's volatility exposure)
+- Sender can cancel before Bizum confirmed (full refund, no covenant created)
+- Automatic timeout if Bizum not received within 5 minutes
 
-#### State 2: EUR Confirmed, Notifying Recipient
+#### State 2: Covenant Created, Notifying Recipient
 
 ```
 ┌─────────────────────────────────────┐
@@ -389,29 +411,33 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → ~4,999,500 VES     │
+│   Amount: €100 → ~5,024,750 VES     │
 │                                     │
 │   Progress:                         │
-│   ✅ EUR received                   │
+│   ✅ Bizum received (seller paid)   │
+│   ✅ Covenant created (24h window)  │
 │   🔄 Notifying Elena...             │
-│   ⏸️  Merchant selection...         │
+│   ⏸️  Merchant co-signing...        │
 │   ⏸️  Cash delivery...              │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
 │   Elena has been notified!          │
-│   Code: REM-89234                   │
+│   Bounty code: 8923                 │
 │                                     │
-│   The remmittance can be claimed at │
-│   any merchant in the Asgaya network│
+│   Covenant can be claimed at any    │
+│   merchant in the Asgaya network    │
+│                                     │
+│   ⏱️ Claim window: 23h 58m          │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
 **Notes:**
 - Notification sent via WhatsApp/Telegram/LINE (see [recipient-flows.md](android-app/flows/recipient-flows.md))
-- Claim code shown to sender (can share if needed)
-- Estimated time based on typical recipient behavior
+- Bounty code shown to sender (can share if needed: last 4 digits of covenant ID)
+- 24-hour claim window starts when covenant created
+- Covenant is public on bulletin board (all merchants can see)
 
 #### State 2b: Expiring Soon (18h Elapsed, No Claim)
 
@@ -428,12 +454,12 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → ~4,999,500 VES     │
+│   Amount: €100 → ~5,024,750 VES     │
 │                                     │
 │   Progress:                         │
-│   ✅ EUR received                   │
+│   ✅ Covenant created               │
 │   ⚠️  Elena hasn't claimed yet      │
-│   ⏸️  Merchant selection...         │
+│   ⏸️  Merchant co-signing...        │
 │   ⏸️  Cash delivery...              │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
@@ -441,9 +467,10 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │   ⏱️ Time remaining: 5h 42m         │
 │                                     │
 │   ⚠️  Elena hasn't claimed yet.     │
-│   If unclaimed in 6 hours, €99.90   │
-│   will be refunded to you.          │
-│   (€0.10 processing fee)            │
+│   If unclaimed after 24h, split     │
+│   refund:                           │
+│   - Merchant portion → You (€99.50) │
+│   - Seller fee → Seller (€0.50)    │
 │                                     │
 │   Contact Elena: +58-412-XXX-5678   │
 │                                     │
@@ -453,7 +480,7 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 ```
 
 **Triggers:**
-- Shown at 18-hour mark if recipient hasn't selected a merchant yet
+- Shown at 18-hour mark if recipient hasn't claimed yet
 - Notification sent to sender: "Elena hasn't claimed yet"
 - Urgent reminder sent to recipient simultaneously
 
@@ -464,18 +491,20 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 
 **Notes:**
 - Empowers sender to coordinate with recipient
-- Clear warning about refund amount (€99.90) and fee (€0.10)
-- Processing fee covers manual refund work + 24h liquidity lock (pull system = no BCH purchased)
-- Related policy: [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)
+- Clear warning about split refund mechanism
+- **Split refund rationale:**
+  - Merchant portion (€99.50) → Refunded to you (Iris)
+  - Seller fee (€0.50) → Kept by seller (earned for 24h service)
+- Related policy: [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
-#### State 3: Merchant Confirms
+#### State 3: Merchant Co-Signing
 
 ```
 ┌─────────────────────────────────────┐
 │         Order #REM-89234            │
 ├─────────────────────────────────────┤
 │                                     │
-│      🏪 Merchant confirming...      │
+│      🏪 Merchant co-signing...      │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │         [Progress bar]      │   │
@@ -483,30 +512,36 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → VES 6,210          │
-│   Code: REM-89234                   │
+│   Amount: €100 → ~5,024,750 VES     │
+│   Code: 8923                        │
 │                                     │
 │   Progress:                         │
-│   ✅ EUR received                   │
-│   ✅ Elena notified (code sent)     │
+│   ✅ Covenant created               │
+│   ✅ Elena notified                 │
 │   ✅ Merchant entered code          │
-│   🔄 Waiting for Elena to confirm...│
+│   🔄 Both co-signing covenant...    │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
 │   💡 Elena is at a merchant now     │
-│   Pickup usually takes 5-10 min     │
+│   Both parties co-signing covenant  │
+│   (cryptographic signatures)        │
+│                                     │
+│   Covenant matures when both sign   │
 │                                     │
 │   Elena is on her way!              │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
-**Note:** Final VES amount updated based on rate when merchant selected (DolarAPI rate at claim time).
+**Note:** 
+- Covenant requires both merchant and recipient signatures
+- No numeric codes (cryptographic co-signing via BCH Script)
+- Settlement triggered when both signatures present
 
-**Related decision:** [Two-Step Settlement](decisions/two-step-settlement-timing.md)
+**Related flow:** [Merchant Flows - Co-Sign Covenant](android-app/flows/merchant-flows.md#screen-3-hand-ves--co-sign-covenant)
 
-#### State 4: Cash Delivered (Both Confirmed)
+#### State 4: Cash Delivered (Both Co-Signed)
 
 ```
 ┌─────────────────────────────────────┐
@@ -521,12 +556,13 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → 4,997,820 VES      │
+│   Amount: €100 → 5,021,385 VES      │
 │                                     │
 │   Progress:                         │
-│   ✅ EUR received                   │
+│   ✅ Covenant created               │
 │   ✅ Elena notified                 │
-│   ✅ Merchant: Bodega Los Amigos    │
+│   ✅ Merchant: Bodega María         │
+│   ✅ Both co-signed covenant        │
 │   ✅ Cash delivered & confirmed     │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
@@ -546,9 +582,10 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 - Real-time updates (push notifications or polling)
 
 **Notes:**
-- Both merchant AND recipient confirm (2-of-2 confirmation)
+- Both merchant AND recipient co-signed (cryptographic signatures)
 - Final VES amount shown (actual rate at claim time)
 - Total time tracked (transparency)
+- Covenant matured → BCH distributed to merchant and seller
 
 ---
 
@@ -571,7 +608,7 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │   Order: #REM-89234                 │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │   Sent: €100.00                     │
-│   Elena received: 4,997,820 VES     │
+│   Elena received: 5,021,385 VES     │
 │   (€99.50 worth at final rate)      │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │   Your cost: €0.50 (0.50%)          │
@@ -580,13 +617,12 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  💡 Asgaya is a P2P project         │
+│  💡 Asgaya is a P2P network         │
 │     How can you contribute?         │
 │                                     │
-│  • Become an LP (earn from fees)    │
-│  • Run an escrow (earn from fees)   │
-│  • Become a merchant (earn from    │
-│    claims)                          │
+│  • Become a BCH seller (earn fees)  │
+│  • Become a merchant (earn spread)  │
+│  • Tell friends about Asgaya        │
 │                                     │
 │  [ Learn More ]                     │
 │                                     │
@@ -614,7 +650,7 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │                                     │
 │   Your €100 transfer:               │
 │                                     │
-│   Asgaya:        €1.00  (1.00%) ✓   │
+│   Asgaya:        €0.50  (0.50%) ✓   │
 │                                     │
 │   vs Traditional:                   │
 │   Western Union: €5.00  (5.00%)     │
@@ -625,21 +661,21 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │                                     │
 │   Cost Breakdown:                   │
 │   You sent: €100.00                 │
-│   BCH cost: €99.76 (Kraken 0.24%)   │
-│   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
-│   Margin: €0.24                     │
+│   Sender fee: €0.50 (0.5%)          │
+│   Elena gets: €99.50 worth of BCH   │
 │                                     │
-│   Split between:                    │
-│   • Escrow: €0.08                   │
-│   • Merchant: €0.08                 │
-│   • LP: €0.08                       │
+│   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│   Where the €0.50 goes:             │
+│   • Merchant: ~€0.25 (spread)       │
+│   • BCH seller: ~€0.25 (fee)        │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
 │   Why Bitcoin Cash?                 │
-│   • Direct settlement               │
+│   • Global settlement               │
 │   • No intermediaries               │
-│   • Network fees: ~€0.01            │
+│   • Network fees: ~€0.001           │
 │   • Open protocol                   │
 │                                     │
 │  ┌─────────────────────────────┐    │
@@ -656,8 +692,14 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 **Viral growth mechanism:**
 - Dramatic savings shown (vs Western Union, MoneyGram, bank wire)
 - Transparent cost breakdown (builds trust)
-- Recruit LPs/escrows/merchants (grow network)
+- Recruit BCH sellers/merchants (grow network)
 - Easy sharing (pre-filled social media messages)
+
+**Fee breakdown explanation:**
+- **Sender pays:** €0.50 (0.5% of €100)
+- **Elena gets:** €99.50 worth of BCH (calculated at maturity spot rate)
+- **Merchant spread:** ~€0.25 (sells 500,000 VES for 0.0995 BCH worth ~€100.25)
+- **BCH seller fee:** ~€0.25 (earned for posting collateral and service)
 
 **Related decision:** [Fee Splitting Model](decisions/fee-splitting-model.md)
 
@@ -686,18 +728,27 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 └─────────────────────────────────────┘
 ```
 
-### Order Expired (Sender Didn't Pay)
+### Bizum Timeout (Sender Didn't Pay Within 5 Min)
 
 ```
 ┌─────────────────────────────────────┐
-│           ⏰ Order Expired           │
+│           ⏰ Payment Expired         │
 ├─────────────────────────────────────┤
 │                                     │
 │  Your order #REM-89234 expired      │
-│  because payment wasn't received    │
-│  within 10 minutes.                 │
+│  because Bizum payment wasn't       │
+│  received within 5 minutes.         │
 │                                     │
+│  No covenant was created.           │
 │  No charges were made.              │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│  💡 Why 5 minutes?                  │
+│  BCH sellers have volatility        │
+│  exposure while waiting for your    │
+│  Bizum. 5 minutes keeps their       │
+│  risk low (0.5-1% typical).         │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │      Create New Order       │   │
@@ -708,11 +759,16 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 └─────────────────────────────────────┘
 ```
 
-### Remittance Expired (Recipient Didn't Claim)
+**Notes:**
+- Timeout protects BCH seller from volatility exposure
+- No covenant created = no charges
+- Sender can retry immediately (create new order)
+
+### Covenant Expired (Recipient Didn't Claim Within 24h)
 
 ```
 ┌─────────────────────────────────────┐
-│           ⏰ Remittance Expired      │
+│           ⏰ Covenant Expired        │
 ├─────────────────────────────────────┤
 │                                     │
 │  Order #REM-89234 expired           │
@@ -722,20 +778,24 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  Refund Details:                    │
+│  Split Refund:                      │
 │                                     │
-│  Original amount:    €100.00        │
-│  Processing fee:     -€0.10         │
-│  ─────────────────────────────      │
-│  Refunded to you:    €99.90         │
+│  Merchant portion:   €99.50 ✓       │
+│  (Refunded to you)                  │
+│                                     │
+│  Seller fee:         €0.50          │
+│  (Kept by BCH seller - earned       │
+│   for 24h service)                  │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  ℹ️  Processing fee (0.1%) covers   │
-│     manual refund + liquidity lock  │
+│  ℹ️  Seller fee covers:             │
+│     - 24h collateral lock           │
+│     - Volatility risk               │
+│     - Service provision             │
 │                                     │
-│  Your Bizum refund should arrive    │
-│  within 1-3 business days.          │
+│  Your BCH refund (~0.0995 BCH)      │
+│  should arrive within minutes.      │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
@@ -752,13 +812,19 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 ```
 
 **Notes:**
-- Two different timeouts: 10 min (payment) vs 24h (claim)
-- Partial refund: €99.90 (€0.10 processing fee = 0.1%)
-- Processing fee covers: Manual refund work + 24h liquidity lock
-- **No exchange fees** (pull system - EUR sat idle, no BCH purchased)
-- Fee can increase to 0.2-1.0% if abuse detected (repeated expiries)
+- **Split refund mechanism:**
+  - Merchant portion (0.0995 BCH worth €99.50) → Refunded to you (Iris)
+  - Seller fee (0.0075 BCH worth €0.50) → Kept by BCH seller
+- **Why seller keeps fee:**
+  - Seller posted BCH collateral for 24 hours
+  - Seller had volatility risk exposure
+  - Seller provided service (covenant infrastructure)
+  - Incentive alignment: Sellers rewarded even if unused
+- **Your net cost:** €0.50 (0.5% sender fee)
+- **Refund timing:** Immediate (on-chain BCH transaction)
 - Encourage sender to contact recipient (might try again with coordination)
-- Related policy: [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)
+
+**Related concept:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 ### Corridor Unavailable
 
@@ -773,11 +839,11 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 │  more countries!                    │
 │                                     │
 │  💡 Know someone who could help?    │
-│    recomend us to merchants         │
+│    Recommend us to merchants        │
 │     in Venezuela.                   │
 │                                     │
 │  ┌─────────────────────────────┐    │
-│  │   Refer an Escrow/Merchant  │    │
+│  │   Refer a Merchant          │    │
 │  └─────────────────────────────┘    │
 │                                     │
 │  ┌─────────────────────────────┐    │
@@ -801,34 +867,38 @@ VES amount: €99 × 50,500 = 4,999,500 VES
 ### ✅ More Complex Architecture
 
 **Participants:** 4 (vs 2-3 in payment flow)
-- Sender (initiates remittance)
-- Escrow (receives EUR, coordinates)
+- Sender (initiates remittance, pays BCH seller)
+- BCH Seller (posts collateral, receives Bizum)
 - Recipient (claims cash)
-- Merchant (provides cash)
-- Optional: LP (instant settlement)
+- Merchant (provides cash, earns spread)
 
 **Additional complexity:**
 - Recipient notification system (WhatsApp/Telegram/LINE)
 - 24-hour claim window management
 - Merchant discovery/selection (map, distance, ratings)
-- Two-sided confirmation (merchant + recipient both sign)
+- Two-sided co-signing (merchant + recipient both sign)
 - Failed claim scenarios (expired, merchant unavailable)
+- Covenant timeout cascade (split refund logic)
 
-### ✅ Slower Settlement
+### ✅ Covenant Architecture
 
-**Payment flow:** ~30 seconds (BCH float)
-**Remittance flow:** 30-60 minutes (recipient claim time)
+**Payment flow:** Direct BCH transfer (simple)  
+**Remittance flow:** Overcollateralized covenant (complex)
 
-Requires patience from sender (educational opportunity)
+Requires understanding of:
+- EUR-denominated futures contracts (settle in BCH)
+- Overcollateralization mechanics (7% buffer)
+- Timeout cascade (5-min Bizum, 24h claim, split refund)
+- Co-signing mechanism (cryptographic, not numeric codes)
 
 ### ✅ Kickstarts Merchant Network
 
 This is the **core innovation** that drives merchant adoption:
-- Merchants earn from each claim (1/3 or 1/2 of fee)
+- Merchants earn spread from each claim (~1% of VES sold)
 - Creates economic incentive to join network
 - More merchants → more convenient for recipients → more remittances
 
-**Payment flow helps BCH ecosystem broadly**
+**Payment flow helps BCH ecosystem broadly**  
 **Remittance flow builds Asgaya-specific merchant network**
 
 ---
@@ -901,60 +971,67 @@ Secondary (outline):
 
 ### 24-Hour Claim Window
 
-**Timer starts:** When escrow receives EUR payment (not when order created)
-**Timer visible:** In sender tracking screen, recipient notification
+**Timer starts:** When covenant funded by BCH seller (after Bizum received)  
+**Timer visible:** In sender tracking screen, recipient notification  
 **What happens at expiry:**
-- Remittance marked as expired
-- EUR refunded to sender (1-3 business days)
+- Covenant marked as expired
+- Split refund triggered:
+  - Merchant portion (0.0995 BCH worth €99.50) → Sender's address (Iris)
+  - Seller fee (0.0075 BCH worth €0.50) → BCH seller
 - Recipient can no longer claim
 - Sender and recipient both notified
 
 **Related:** [Recipient Flows](android-app/flows/recipient-flows.md) - Recipient claim process
 
-### Two-Step Settlement Timing
+### Covenant Settlement Timing
 
-**Step 1:** Sender pays EUR → Escrow receives
-**Step 2:** Recipient claims → Escrow buys BCH at claim-time rate
+**Step 1:** Sender pays Bizum to BCH seller (€100)  
+**Step 2:** Seller posts BCH collateral to covenant (~0.107 BCH)  
+**Step 3:** Recipient claims → Both co-sign → Covenant matures  
+**Step 4:** BCH distributed (merchant gets 0.0995 BCH, seller gets surplus)
 
-**Why not buy BCH immediately?**
-- Eliminates BCH volatility risk
-- Recipient gets exact rate when they claim
-- No hedging needed
+**Why EUR-denominated covenant?**
+- Merchant always gets promised EUR value (€99.50 worth of BCH)
+- Overcollateralization absorbs short-term volatility
+- Seller hedges by receiving €100 fiat before price moves
+- No rate locking needed (covenant calculates BCH at maturity rate)
 
-**Related decision:** [Two-Step Settlement](decisions/two-step-settlement-timing.md)
+**Related decision:** [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
 
 ### Rate Locking
 
-**Estimate shown:** When sender creates order (informational only)
-**Final rate:** When recipient claims at merchant (DolarAPI blue dollar rate)
+**Estimate shown:** When sender creates order (informational only)  
+**Final rate:** When recipient claims at merchant (DolarAPI blue dollar rate)  
 **Variance:** Usually <1% (blue dollar relatively stable short-term)
 
 **Why lock at claim time, not payment time?**
-- BCH purchased on-demand (no float needed for remittances)
+- Covenant promises EUR value, settles in BCH at maturity rate
 - Recipient gets latest market rate (fairness)
-- Escrow has no volatility exposure
+- Seller hedges volatility (Bizum received before price moves)
+- Overcollateralization protects merchant (always gets €99.50 worth)
 
-**Related decision:** [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)
+**Related decision:** [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
 
 ---
 
-## Related Documents
+## Related Documentation
 
 **Flows:**
 - [BCH Payment Flows](android-app/flows/bch-payment-flows.md) — Simpler flow, build FIRST
 - [Recipient Flows](android-app/flows/recipient-flows.md) — Recipient claim process (6 screens)
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Merchant cash-out process (3 screens)
-- [LP Flows](android-app/flows/lp-flows.md) — LP instant settlement process
+- [Merchant Flows](android-app/flows/merchant-flows.md) — Merchant VES sale process (5 screens)
+- [BCH Seller Flows](android-app/flows/bch-seller-flows.md) — Seller collateral posting
 
 **Decisions:**
-- [Payment Timeout Window](decisions/payment-timeout-window.md) — Why 10 min for sender payment
-- [Two-Step Settlement](decisions/two-step-settlement-timing.md) — Why EUR first, BCH second
-- [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md) — DolarAPI + Kraken integration
+- [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
+- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — Covenant maturity timing
 - [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees distributed
 
 **Concepts:**
-- [Pull System](concepts/pull-system.md) — On-demand BCH purchase
-- [Market Making Partners](concepts/market-making-partners.md) — LP role
+- [Pull System](concepts/pull-system.md) — Recipient-driven settlement
+- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [BCH Sellers](concepts/bch-sellers.md) — Seller role and hedge mechanism
+- [Decentralized Pull System](concepts/decentralized-pull-system.md) — Bulletin board architecture
 
 ---
 
@@ -983,6 +1060,6 @@ Secondary (outline):
 
 ---
 
-*Flow documented: May 2, 2026*
-*Status: Priority 2 - Build SECOND (after payment flow)*
-*Implementation: Build on proven payment flow foundation*
+*Flow documented: May 10, 2026*  
+*Status: Active - Covenant Architecture*  
+*Replaces: Escrow-era flows (10-min timeout, LP instant settlement, Kraken purchase)*
