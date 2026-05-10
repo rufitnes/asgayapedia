@@ -1,8 +1,8 @@
-# RS046-3: Recipient Flows (Screen-by-Screen)
+# Recipient Flows - Cash Claim Process
 
-**Part of:** [RS046 Android App Flows](android-app/flows/README.md)
-**Date:** 2026-05-02
-**Status:** Active - Design Phase
+**Part of:** [Android App Flows](android-app/flows/README.md)
+**Date:** 2026-05-10
+**Status:** Active - Covenant Architecture
 
 ---
 
@@ -15,8 +15,8 @@ This document details **every screen** a recipient sees when claiming a remittan
 **Key Principles:**
 - ✅ Clear instructions (first-time users understand immediately)
 - ✅ Map-based merchant discovery (visual, no addresses to type)
-- ✅ 24-hour claim window (from notification to merchant visit)
-- ✅ Secure confirmation (cryptographic proof of receipt)
+- ✅ 24-hour claim window (from covenant creation to merchant visit)
+- ✅ Secure confirmation (cryptographic co-signing of covenant)
 - ✅ Educational moments (show BCH benefits, encourage holding)
 
 ---
@@ -28,19 +28,19 @@ This document details **every screen** a recipient sees when claiming a remittan
 - Remittance details
 - Merchant map
 - Navigation to merchant
-- Claim confirmation
+- Co-sign covenant
 - Receipt/success
 
 **User journey:**
 ```
-Notification → View details → Find merchant → Navigate → Claim cash → Receive BCH
+Notification → View details → Find merchant → Navigate → Co-sign covenant → Receive BCH
 ```
 
 **Timeline:**
-- ⏱️ **24 hours** to claim after notification (timer starts when escrow funded)
+- ⏱️ **24 hours** to claim after covenant created (timer starts when sender funds covenant)
 - **Reminders sent at:** 12h (general), 18h (sender notified), 23h (urgent)
-- **After 24h:** Remittance expires → €99.90 refunded to sender (€0.10 processing fee)
-- Full policy: [Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)
+- **After 24h:** Covenant expires → Split refund (merchant portion to Iris, seller fee to seller)
+- Full policy: [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 ---
 
@@ -52,8 +52,8 @@ Notification → View details → Find merchant → Navigate → Claim cash → 
 ┌─────────────────────────────────────┐
 │  💰 Asgaya                          │
 │                                     │
-│  You received $50,000 VES           │
-│  from María G.                      │
+│  You received 500,000 VES           │
+│  from Iris M.                       │
 │                                     │
 │  Tap to claim at nearby merchant    │
 │                                     │
@@ -69,10 +69,10 @@ Notification → View details → Find merchant → Navigate → Claim cash → 
 ```
 💰 Asgaya Remittance
 
-You received $50,000 VES from María G.
+You received 500,000 VES from Iris M.
 
 📍 Claim at nearby merchant within 24h
-🔑 Code: REM-89234
+🔑 Code: 8923
 
 Download Asgaya app:
 https://asgaya.org/app
@@ -86,7 +86,7 @@ Questions? Reply to this message.
 - Reply to message → Sender receives question (can help recipient)
 
 **Notes:**
-- Notification sent when escrow receives EUR payment
+- Notification sent when covenant funded by BCH seller
 - 24-hour timer starts immediately
 - If app not installed, sender notifies via WhatsApp/Telegram/LINE (free, no SMS cost)
 - Sender already has recipient phone number, likely connected on messaging app
@@ -118,10 +118,10 @@ Show recipient what they're claiming and where to claim it.
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
-│  │  Amount: $50,000 VES        │   │
+│  │  Amount: 500,000 VES        │   │
 │  │                             │   │
-│  │  From: María G.             │   │
-│  │  (Your mother)              │   │
+│  │  From: Iris M.              │   │
+│  │  (Your friend)              │   │
 │  │                             │   │
 │  │  Message: "Para la comida"  │   │
 │  │                             │   │
@@ -155,9 +155,9 @@ Show recipient what they're claiming and where to claim it.
 
 **Notes:**
 - Shows sender name and optional message (personal context)
-- 24-hour countdown starts from notification
+- 24-hour countdown starts from covenant creation
 - Educational nudge to keep BCH instead of cashing out
-- Remittance ID: REM-89234 (shown in top bar or details)
+- Bounty code: 8923 (last 4 digits of remittance ID, shown in top bar or details)
 
 ---
 
@@ -173,7 +173,7 @@ Show nearby merchants where recipient can claim cash.
 │ ◄ Back       Find Merchant      🔍  │
 ├─────────────────────────────────────┤
 │                                     │
-│  Claim: $50,000 VES                 │
+│  Claim: 500,000 VES                 │
 │  Time left: 23h 42min               │
 │                                     │
 │  ┌─────────────────────────────┐   │
@@ -181,7 +181,7 @@ Show nearby merchants where recipient can claim cash.
 │  │                             │   │
 │  │    📍 You are here          │   │
 │  │                             │   │
-│  │    🏪 Bodega Caracas        │   │
+│  │    🏪 Bodega María          │   │
 │  │       (450m) ⭐⭐⭐⭐⭐        │   │
 │  │                             │   │
 │  │    🏪 Farmacia Central      │   │
@@ -197,7 +197,7 @@ Show nearby merchants where recipient can claim cash.
 │  Merchants sorted by distance       │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │ 🏪 Bodega Caracas           │   │
+│  │ 🏪 Bodega María             │   │
 │  │    450m away • ⭐⭐⭐⭐⭐       │   │
 │  │    Open: 8am - 10pm         │   │
 │  │    [ Navigate ]             │   │
@@ -222,7 +222,7 @@ Show nearby merchants where recipient can claim cash.
 **Notes:**
 - Map shows recipient location + nearby merchants
 - Merchants sorted by distance (closest first)
-- Rating based on previous claims (speed, reliability)
+- Rating based on previous transactions (speed, reliability)
 - Real-time open/closed status
 - Can navigate to merchant via external app
 
@@ -244,10 +244,10 @@ Show nearby merchants where recipient can claim cash.
 
 ---
 
-## Screen 5a: Show Transaction Code to Merchant
+## Screen 5a: Show Bounty Code to Merchant
 
 ### Purpose
-Display transaction code for recipient to tell merchant.
+Display bounty code for recipient to tell merchant.
 
 ### Wireframe
 
@@ -256,21 +256,21 @@ Display transaction code for recipient to tell merchant.
 │ ◄ Back      Claim Cash          ⚙️  │
 ├─────────────────────────────────────┤
 │                                     │
-│   🏪 Bodega Caracas                  │
+│   🏪 Bodega María                    │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
 │  │  You're claiming:           │   │
-│  │  VES 113,850 (€100)         │   │
+│  │  500,000 VES                │   │
 │  │                             │   │
 │  │  ━━━━━━━━━━━━━━━━━━━━━━     │   │
 │  │                             │   │
-│  │  📱 Transaction Code:       │   │
+│  │  📱 Bounty Code:            │   │
 │  │                             │   │
-│  │      8 4 7 2 9 3           │   │◄─ Large numbers
+│  │      8  9  2  3             │   │◄─ Large 4-digit code
 │  │                             │   │
 │  │  ┌─────────────────────┐   │   │
-│  │  │  Copy: 847293       │   │   │
+│  │  │  Copy: 8923         │   │   │
 │  │  └─────────────────────┘   │   │
 │  │                             │   │
 │  └─────────────────────────────┘   │
@@ -279,21 +279,19 @@ Display transaction code for recipient to tell merchant.
 │                                     │
 │  ⚠️ Instructions:                   │
 │                                     │
-│  1️⃣ Tell merchant: "847293"         │
+│  1️⃣ Tell merchant: "8923"           │
 │  2️⃣ Merchant enters code in app     │
 │  3️⃣ Merchant hands you cash         │
 │  4️⃣ COUNT your cash carefully       │
-│  5️⃣ Merchant tells you completion   │
-│     code - enter it on next screen  │
-│                                     │
-│  ⚠️ Do NOT leave without getting    │
-│     completion code!                │
+│     (verify 500,000 VES)            │
+│  5️⃣ After receiving cash, both      │
+│     co-sign covenant to complete    │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
 │  Waiting for merchant to accept...  │
 │  (This screen auto-advances when    │
-│   merchant accepts your request)    │
+│   merchant accepts your bounty)     │
 │                                     │
 │  [ Problem? Contact Support ]       │
 │                                     │
@@ -301,7 +299,7 @@ Display transaction code for recipient to tell merchant.
 ```
 
 **Interactions:**
-- Display transaction code: 847293
+- Display bounty code: 8923 (4 digits)
 - Tap "Copy" → Copies to clipboard
 - Recipient tells code to merchant verbally
 - When merchant accepts → Auto-advance to Screen 5b
@@ -309,16 +307,21 @@ Display transaction code for recipient to tell merchant.
 
 **Notes:**
 - Recipient doesn't tap anything to proceed (auto-advances)
-- Code identifies this specific transaction
-- Merchant enters code, sees amount, accepts bounty
-- After merchant hands cash → merchant tells completion code
+- Code identifies this specific covenant on bulletin board
+- Merchant enters code, sees VES amount and BCH to receive, accepts bounty
+- After merchant hands cash → both co-sign covenant
+
+**Code format:**
+- Full remittance ID: REM-89234
+- Last 4 digits used as bounty code: 9234 (or middle 4: 8923)
+- Links recipient to specific covenant on merchant bulletin board
 
 ---
 
-## Screen 5b: Enter Completion Code
+## Screen 5b: Co-Sign Covenant
 
 ### Purpose
-Recipient enters completion code from merchant to confirm cash receipt.
+Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 
 ### Wireframe
 
@@ -327,184 +330,154 @@ Recipient enters completion code from merchant to confirm cash receipt.
 │ ◄ Back    Confirm Receipt       ⚙️  │
 ├─────────────────────────────────────┤
 │                                     │
-│  ✅ Merchant accepted your request! │
+│  ✅ Merchant accepted your bounty!  │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
 │  ⚠️ CRITICAL - Safe Cash-Out:       │
 │                                     │
 │  1️⃣ Merchant hands you cash         │
-│  2️⃣ COUNT cash: VES 113,850         │
-│  3️⃣ Merchant tells completion code  │
-│  4️⃣ Enter code ONLY AFTER getting   │
+│  2️⃣ COUNT cash: 500,000 VES         │
+│  3️⃣ Verify amount is correct        │
+│  4️⃣ Co-sign ONLY AFTER getting      │
 │     ALL the cash in your hand       │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  Merchant's completion code:        │
+│  💡 What is co-signing?             │
 │                                     │
-│  ┌─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐   │
-│   [6] [2] [5] [1] [0] [4]         │◄─ 6-digit input
-│  └─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘   │
+│  You and merchant both sign the     │
+│  covenant with your private keys.   │
+│  This triggers settlement:          │
+│  - Merchant gets BCH for selling    │
+│    VES to you                       │
+│  - You get BCH from sender          │
 │                                     │
-│  ┌─────────────────────────────┐   │
-│  │  ✅ Confirm Cash Received   │   │◄─ Enabled when 6 digits
-│  └─────────────────────────────┘   │
+│  Both signatures needed to complete │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  💡 Why completion code?            │
+│  🔒 Protection:                     │
+│  - Merchant cannot complete without │
+│    your signature                   │
+│  - You cannot complete without      │
+│    merchant's signature             │
+│  - Both must agree transaction is   │
+│    complete                         │
 │                                     │
-│  This prevents merchant from        │
-│  completing the transaction         │
-│  without you. You control the       │
-│  final confirmation.                │
+│  Only tap after you have cash!      │
 │                                     │
-│  Only enter after you have cash!    │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  [ Problem? Contact Support ]       │
+│  ⏸️  When you've received cash:     │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  ✅ Co-Sign Covenant        │   │◄─ Primary action
+│  └─────────────────────────────┘   │
+│                                     │
+│  ⚠️ Only tap after receiving cash!  │
+│                                     │
+│  [ Problem? Cancel Transaction ]    │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
 **Interactions:**
-- Recipient receives VES 113,850 cash from merchant
-- Merchant says: "Your completion code is 625104"
-- Recipient enters: 6-2-5-1-0-4
-- Tap "Confirm Cash Received" → Sends to escrow
-- Escrow validates → Transaction completes → Screen 6
 
-**If code doesn't work:**
+**Step 1: Recipient receives cash**
+- Merchant hands 500,000 VES cash to recipient
+- Recipient counts cash (verify amount correct)
+- Recipient confirms cash in hand
+
+**Step 2: Recipient co-signs covenant**
+- Recipient taps "Co-Sign Covenant"
+- App signs covenant with recipient's private key (automatic)
+- Signature submitted to blockchain
+
+**Step 3: Waiting for merchant**
+- If merchant hasn't signed yet, show waiting screen
+- If merchant already signed, transaction completes immediately
+
+**If merchant signed first (waiting for recipient):**
 ```
 ┌─────────────────────────────────────┐
-│      ❌ Invalid Code                │
+│     Waiting for Merchant...         │
 ├─────────────────────────────────────┤
 │                                     │
-│  The code "625104" is not valid.    │
+│  You've signed covenant             │
 │                                     │
-│  This might mean:                   │
-│  • You entered it incorrectly       │
-│  • Merchant gave wrong code         │
-│  • Code expired (30 min timeout)    │
-│  • Merchant generated new code      │
+│  Waiting for merchant to co-sign... │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │         [Spinner]           │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  Both signatures trigger payment    │
+│                                     │
+│  This usually takes 10-30 seconds   │
+│                                     │
+│  If merchant doesn't sign within    │
+│  5 minutes, transaction cancels     │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  Ask merchant:                      │
-│  "Can you check the code again?"    │
-│                                     │
-│  Merchant can show the code again   │
-│  or generate a new one.             │
-│                                     │
-│  [ Try Again ]                      │
-│                                     │
-│  [ Contact Support ]                │
+│  [ Cancel Transaction ]             │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
-**Recovery scenarios:**
-- **Wrong code entered:** Recipient re-enters correct code
-- **Merchant told wrong code:** Merchant checks their app, tells correct code
-- **Code expired/regenerated:** Merchant generates new code, tells recipient new code
-- **Merchant's app crashed:** Merchant reopens app, sees code again or regenerates
+**If both sign successfully:**
+- Transaction completes → Go to Screen 6 (Success)
+- Covenant distributes BCH to merchant and seller
+- Recipient receives notification
 
-**Security:**
-- **Merchant CANNOT complete without recipient**
-- Merchant has completion code but can't use it
-- Only recipient entering code on THEIR device completes transaction
-- Recipient won't enter without cash in hand (self-enforcing)
+**Security model:**
+- **Recipient protected:** Cannot complete without merchant signature (merchant can't claim they gave cash if they didn't)
+- **Merchant protected:** Cannot complete without recipient signature (recipient can't claim completion without merchant's consent)
+- **Cryptographic:** Uses BCH Script covenant signatures (secp256k1)
 
-**Why this works:**
-- Cryptographically proves both parties participated
-- Merchant can't fake recipient confirmation
-- Recipient controls final step
-- Balanced power (neither can complete alone)
+**Why co-signing works:**
+- **Accountability:** Both parties confirm the exchange happened
+- **Self-enforcing:** Recipient won't sign without cash, merchant won't sign without cash handed
+- **Trustless:** No third party needed to verify (blockchain enforces)
+- **Simple UX:** Just tap button (app handles key management)
 
----
+**Alternative: RFID Card (Future)**
+```
+┌─────────────────────────────────────┐
+│  💡 Alternative (Phase 1+):         │
+│                                     │
+│  If you have an RFID card:          │
+│  - Tap card on merchant's device    │
+│  - Card signature counts as your    │
+│    co-sign                          │
+│  - Faster than app button           │
+│  - Works even if phone offline      │
+│                                     │
+└─────────────────────────────────────┘
+```
 
-## Phase 0 Implementation: Numeric Code Confirmation
-
-**Decision:** Use numeric completion codes (Phase 0)
-
-**How it works:**
-1. Recipient shows transaction code (847293) to merchant
-2. Merchant enters code, accepts bounty
-3. Merchant device generates completion code (625104)
-4. Merchant hands cash + tells completion code
-5. Recipient enters completion code on their device
-6. Both confirmations validated → Transaction completes
-
-**Why numeric codes:**
-- ✅ Simple UX (enter 6 digits)
-- ✅ No crypto knowledge required
-- ✅ Cryptographically secure (merchant can't fake)
-- ✅ Works on basic Android phones
-- ✅ Recipient controls confirmation (balanced power)
-
-**Security properties:**
-- Merchant cannot complete alone (needs recipient to enter code)
-- Recipient won't enter without cash (self-interest)
-- Completion code proves face-to-face interaction
-- Escrow validates both sides participated
-
-**API Transaction States:**
-
-| State | Description | Triggered By |
-|-------|-------------|--------------|
-| `pending` | Transaction created, waiting for recipient to claim | Sender pays escrow |
-| `claimed` | Recipient selected merchant, transaction code shown | Recipient taps "Claim Cash" |
-| `accepted` | Merchant accepted bounty, completion code generated | Merchant enters transaction code |
-| `completion_code_generated` | Completion code created and shown to merchant | Server after merchant accepts |
-| `completion_code_shown` | Merchant viewed/reshowed completion code | Merchant taps "Show Code Again" |
-| `completion_code_regenerated` | New completion code generated (old invalidated) | Merchant taps "Generate New Code" |
-| `completed` | Recipient entered completion code successfully | Recipient confirms |
-| `disputed` | Merchant or recipient flagged issue | Either party after timeout |
-| `expired` | 30-min timeout on completion code | Server timeout |
-| `refunded` | 24-hour unclaimed timeout, EUR returned to sender | Server timeout |
-
-**Audit logging:**
-- Every completion code generation/regeneration logged with timestamp
-- Multiple regenerations (>3) flag automatic review
-- State transitions tracked for dispute resolution evidence
-
----
-
-## Future: RFID Card Alternative (Phase 1+)
-
-**For recipients without smartphones:**
-
-Instead of entering completion code, recipient can tap RFID card on merchant's device.
-
-**Flow:**
-1. Recipient shows transaction code (via SMS: "847293")
-2. Merchant enters code, accepts bounty, hands cash
-3. Merchant device shows: "Ask recipient to tap their Asgaya card"
-4. Recipient taps RFID card (NFC) → Transaction completes
-
-**See:** [RFID Card Recipients](concepts/rfid-card-recipients.md)
-
-**Phase 0 status:** Not implemented (smartphone app required)
+**Post-MVP:** NFC-enabled RFID cards for recipients without smartphones or unreliable internet.
 
 ---
 
 ## Screen 6: Success / Receipt
 
-### Wireframe (Simple Confirmation)
+### Wireframe
 
 ```
 ┌─────────────────────────────────────┐
 │            ✅ Success!               │
 ├─────────────────────────────────────┤
 │                                     │
-│   You received $50,000 VES!          │
+│   You received 500,000 VES!          │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
-│  │  From: María G.             │   │
-│  │  Amount: $50,000 VES        │   │
-│  │  Merchant: Bodega Caracas   │   │
-│  │  Date: May 2, 2026 3:45pm   │   │
+│  │  From: Iris M.              │   │
+│  │  Amount: 500,000 VES        │   │
+│  │  Merchant: Bodega María     │   │
+│  │  Date: May 10, 2026 3:45pm  │   │
 │  │                             │   │
 │  │  Transaction ID:            │   │
 │  │  REM-89234                  │   │
@@ -516,8 +489,8 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 │  💡 You also received Bitcoin Cash!  │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │  +0.0015 BCH                │   │
-│  │  (~$50 value)               │   │
+│  │  +0.0995 BCH                │   │
+│  │  (~505,000 VES value)       │   │
 │  │                             │   │
 │  │  Keep it to pay anywhere    │   │
 │  │  with near-zero fees!       │   │
@@ -541,10 +514,21 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 - Tap "Get Help" → Support options
 
 **Notes:**
-- Shows cash received AND BCH received
+- Shows cash received (500,000 VES) AND BCH received (0.0995 BCH)
 - Educational moment about BCH benefits
 - Receipt available for record-keeping
 - Encourages holding BCH for future use
+
+**What recipient actually received:**
+- **Cash in hand:** 500,000 VES (from merchant)
+- **BCH in wallet:** 0.0995 BCH (from covenant, worth ~505,000 VES at current rate)
+- **Total value:** ~1,005,000 VES equivalent (if recipient holds BCH)
+
+**Why recipient gets BCH:**
+- Covenant distributes BCH to both merchant and recipient
+- Recipient can hold BCH (recommended) or sell to BCH buyer
+- BCH useful for future remittances (accumulate, send back to sender)
+- Educational opportunity (introduce BCH to new users)
 
 ---
 
@@ -561,10 +545,12 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 │  it wasn't claimed within 24 hours. │
 │                                     │
 │  Remittance ID: REM-89234           │
-│  Amount: $50,000 VES                │
-│  From: María G.                     │
+│  Amount: 500,000 VES                │
+│  From: Iris M.                      │
 │                                     │
-│  Funds have been returned to sender.│
+│  Covenant timed out → Split refund: │
+│  - Merchant portion → Sender (Iris) │
+│  - Seller fee → BCH seller (earned) │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │   Contact Sender            │   │
@@ -574,6 +560,23 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 │                                     │
 └─────────────────────────────────────┘
 ```
+
+**What happened:**
+- Covenant reached 24-hour timeout without maturity (both signatures)
+- **Split refund triggered:**
+  - Merchant portion (0.0995 BCH) → Refunded to Iris's address
+  - Seller fee (0.0075 BCH) → Sent to BCH seller (earned for providing service)
+- Elena cannot claim anymore (covenant locked)
+- Iris can create new covenant if Elena still needs funds
+
+**Why split refund:**
+- **Seller incentive:** Seller posted BCH for 24h, deserves fee even if unused
+- **Iris's loss:** Iris paid sender fee (€0.50), lost to timeout
+- **Merchant unaffected:** Never committed (didn't see bounty until recipient arrived)
+
+**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
+
+---
 
 ### Dispute Detected
 
@@ -593,7 +596,7 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 │  Transaction under review (24h max) │
 │                                     │
 │  📧 Submit evidence to:             │
-│  disputes@asgaya.org                │
+│  support@asgaya.org                 │
 │                                     │
 │  Helpful evidence:                  │
 │  • Your side of the story           │
@@ -613,14 +616,20 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 ```
 
 **Dispute Resolution:**
-- Escrow investigates within 24h
+- Support investigates within 24h
 - Evidence evaluated (merchant video > photos > GPS > word)
 - Default: Favor merchant (unless merchant has strikes)
 - If you win: Funds refunded to sender, merchant flagged
 - If merchant wins: Transaction completes, merchant receives BCH
 - Full policy: [Dispute Resolution Framework](decisions/dispute-resolution.md)
 
-**Should be RARE:** Safe confirmation sequence prevents most disputes.
+**Should be RARE:** Co-signing mechanism prevents most disputes (both parties must confirm).
+
+**How disputes happen:**
+- **Merchant signed but didn't give cash:** Rare (merchant knows recipient won't sign without cash)
+- **Recipient signed but claims no cash:** Rare (why would recipient sign?)
+- **Technical glitch:** One party thinks they signed, but signature didn't submit
+- **Misunderstanding:** Wrong amount given, partial cash, etc.
 
 ---
 
@@ -631,7 +640,7 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 │      ⚠️ Merchant Unavailable         │
 ├─────────────────────────────────────┤
 │                                     │
-│  Bodega Caracas is currently        │
+│  Bodega María is currently          │
 │  unavailable or offline.            │
 │                                     │
 │  Try another merchant:              │
@@ -649,6 +658,18 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 └─────────────────────────────────────┘
 ```
 
+**What happened:**
+- Merchant's app is offline
+- Merchant closed shop temporarily
+- Merchant has insufficient VES cash to sell
+
+**Solution:**
+- Recipient tries different merchant
+- All merchants see same bounty on bulletin board
+- First merchant to accept bounty wins (race condition)
+
+---
+
 ### Already Claimed
 
 ```
@@ -657,10 +678,10 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 ├─────────────────────────────────────┤
 │                                     │
 │  This remittance was already        │
-│  claimed on May 2, 2026 at 3:45pm.  │
+│  claimed on May 10, 2026 at 3:45pm. │
 │                                     │
-│  Merchant: Bodega Caracas           │
-│  Amount: $50,000 VES                │
+│  Merchant: Bodega María             │
+│  Amount: 500,000 VES                │
 │                                     │
 │  If you didn't claim this, contact  │
 │  support immediately.               │
@@ -674,17 +695,83 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 └─────────────────────────────────────┘
 ```
 
+**What happened:**
+- Covenant already matured (both parties co-signed)
+- Someone else claimed with recipient's code
+- **Security concern:** If recipient didn't claim, someone stole their code
+
+**Prevention:**
+- Bounty codes should only be shared with merchant in person
+- Don't share code via messaging (someone could intercept)
+- Report theft immediately (freeze account, investigate)
+
+---
+
+### Timeout Waiting for Merchant
+
+```
+┌─────────────────────────────────────┐
+│      ⏰ Merchant Didn't Sign        │
+├─────────────────────────────────────┤
+│                                     │
+│  You signed covenant, but merchant  │
+│  did not sign within 5 minutes      │
+│                                     │
+│  Transaction cancelled              │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  What probably happened:            │
+│  • Merchant changed their mind      │
+│  • Merchant app crashed             │
+│  • Network issue prevented sign     │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  ⚠️ If merchant gave you cash but   │
+│  didn't sign, report theft:         │
+│                                     │
+│  [ Report Theft ]                   │
+│                                     │
+│  Otherwise, try different merchant: │
+│                                     │
+│  [ Find Another Merchant ]          │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**What happened:**
+- Recipient signed covenant (confirmed cash received)
+- Merchant didn't sign within 5-minute window
+- **Timeout triggered:** Covenant cancels (neither party paid)
+
+**Recipient's risk:**
+- **If merchant gave cash:** Merchant has cash but covenant didn't complete (theft)
+- **If merchant didn't give cash:** No loss (recipient shouldn't have signed anyway)
+
+**Prevention:**
+- **Clear warnings:** "Only co-sign after receiving cash"
+- **Visual cues:** Big red warning on co-sign screen
+- **5-minute window:** Generous time for merchant to sign after recipient
+- **Self-enforcing:** Recipient won't sign without cash in hand
+
+**Recovery:**
+- Report to support (evidence: recipient signed, merchant didn't)
+- Merchant flagged (reputation system)
+- Recipient tries different merchant
+- Covenant still valid (recipient can claim with different merchant)
+
 ---
 
 ## Technical Notes
 
 ### 24-Hour Claim Window
 
-**Timer starts:** When escrow receives EUR payment from sender
-**Timer visible:** In notification, remittance details, map screen, claim screen
+**Timer starts:** When covenant funded by BCH seller  
+**Timer visible:** In notification, remittance details, map screen, claim screen  
 **What happens at expiry:**
-- Remittance marked as expired
-- Funds returned to sender (minus any processing fees)
+- Covenant marked as expired
+- Split refund triggered (merchant portion to Iris, seller fee to seller)
 - Recipient can no longer claim
 - Sender notified of expiry
 
@@ -693,14 +780,16 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 - Not so long that funds are locked unnecessarily
 - Balances recipient convenience vs sender risk
 
-**Related decision:** [Payment Timeout Window](decisions/payment-timeout-window.md) — Different from 10-min sender payment timeout
+**Related decision:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+
+---
 
 ### Merchant Discovery
 
 **Data sources:**
 - Merchant location (GPS coordinates)
 - Merchant availability (online/offline status)
-- Merchant rating (from previous claims)
+- Merchant rating (from previous transactions)
 - Merchant hours (business hours)
 
 **Sorting logic:**
@@ -708,44 +797,104 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 2. Rating (higher rated preferred)
 3. Availability (online merchants first)
 
-### Technical Implementation Notes
-
-**Completion code validation:**
-- 6-digit numeric code (000000-999999)
-- Generated by merchant device after accepting bounty
-- Single-use (expires after confirmation or 30-minute timeout)
-- Sent to escrow when recipient enters on their device
-- Escrow validates both merchant acceptance + recipient code entry
-
-**Security properties:**
-- Merchant cannot reuse code (single-use)
-- Merchant cannot complete without recipient (needs recipient's device)
-- Recipient cannot fake (merchant's code must match escrow record)
-- Time-bound (30-minute window prevents delayed attacks)
-
-**API flow:**
-```
-1. POST /merchant/accept-bounty → Returns completion_code
-2. POST /recipient/confirm-cash {completion_code} → Validates & completes
-3. Escrow verifies both endpoints called from correct devices
-```
+**Bulletin board:**
+- All merchants see same bounties (public covenant bulletin)
+- First merchant to enter recipient's code "claims" the bounty
+- Other merchants see "already claimed" if they try same code
 
 ---
 
-## Related Documents
+### Co-Signing Mechanism
+
+**Cryptographic signatures (not completion codes):**
+- Recipient signs with recipient private key (secp256k1)
+- Merchant signs with merchant private key (secp256k1)
+- Both signatures submitted to covenant
+- Covenant verifies signatures on-chain (BCH Script)
+- If valid → Settlement triggered (BCH distributed)
+
+**Why cryptographic (not numeric codes):**
+- **Security:** Cannot be spoofed (neither party can fake the other's signature)
+- **Trustless:** Blockchain enforces (no central authority needed)
+- **Simple UX:** Tap "Co-Sign" button (app handles key management)
+- **Accountability:** Both parties provably confirmed transaction
+
+**Key management:**
+- Recipient wallet: HD wallet (BIP32/44) stored on device
+- Merchant wallet: Same (or NFC device in Phase 1+)
+- Apps handle signing automatically (user just taps button)
+- No manual key entry required
+
+**Signing order:**
+- Either party can sign first (order doesn't matter)
+- Covenant waits for both signatures
+- 5-minute timeout if one party signs but other doesn't
+- After 5 minutes, unsigned covenant can be cancelled
+
+---
+
+### Covenant Settlement Flow
+
+**After both signatures:**
+```
+1. Both parties co-sign covenant (recipient + merchant)
+2. Backend verifies both signatures present
+3. Covenant distributes BCH:
+   ├─ Merchant receives: 0.0995 BCH (promised amount)
+   ├─ Recipient receives: (if any BCH allocated to recipient by sender)
+   └─ Seller receives: Surplus BCH (after merchant paid)
+4. Transaction confirmed on BCH blockchain
+5. Both apps show "Complete" screen
+```
+
+**On-chain verification:**
+- Covenant is BCH Script (CashScript)
+- Anyone can verify settlement on blockchain explorer
+- Transparent: All amounts, signatures, timing public
+- Immutable: Once settled, cannot be reversed
+
+**See:** [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
+
+---
+
+### API Flow
+
+**Covenant state machine:**
+```
+1. POST /recipient/claim-bounty {bounty_code} → Recipient enters code
+2. POST /merchant/accept-bounty {bounty_code} → Merchant accepts
+3. POST /recipient/sign-covenant → Recipient signs
+4. POST /merchant/sign-covenant → Merchant signs
+5. Backend verifies both signatures → Covenant matures → BCH distributed
+```
+
+**State transitions:**
+```
+pending → claimed → accepted → partially_signed → completed
+                                    ↓
+                               timed_out (if only one signature after 5 min)
+```
+
+**See:** [Settlement APIs](android-app/backend-apis/settlement-apis.md) for complete API specification
+
+---
+
+## Related Documentation
+
+**Flows:**
+- [Sender Flows](android-app/flows/sender-flows.md) — How Iris creates covenant and sends
+- [Merchant Flows](android-app/flows/merchant-flows.md) — How merchant sells VES for BCH (other side of co-signing)
+- [BCH Seller Flows](android-app/flows/bch-seller-flows.md) — How sellers post collateral
 
 **Decisions:**
-- [Payment Timeout Window](decisions/payment-timeout-window.md) — 10-min sender payment vs 24h claim timeout
-- [Self-Custody](core-architecture/why-self-custody.md) — Why recipients manage BCH keys
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How merchant earns from claim
+- [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
+- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — When BCH distributed
+- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees work
 
-**Other Flows:**
-- [Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) — How sender initiates remittance
-- [Merchant Flows](android-app/flows/merchant-flows.md) — How merchant provides cash to recipient
-
-**APIs:**
-- [Settlement APIs](android-app/backend-apis/settlement-apis.md) — Claim confirmation endpoint
-- [BCH Native Architecture](android-app/backend-apis/bch-native-architecture.md) — OP_RETURN notification system
+**Concepts:**
+- [Pull System](concepts/pull-system.md) — How recipient timing control works
+- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [Decentralized Pull System](concepts/decentralized-pull-system.md) — How bulletin board works
 
 ---
 
@@ -762,19 +911,22 @@ Instead of entering completion code, recipient can tap RFID card on merchant's d
 - Clear expiry consequences
 
 **✅ Secure Confirmation:**
-- Numeric completion codes (Phase 0)
-- Cryptographically secure (merchant can't fake)
-- RFID card alternative planned (Phase 1+)
+- Cryptographic co-signing (both signatures required)
 - Balanced power between merchant and recipient
+- RFID card alternative planned (Phase 1+)
 
 **✅ Educational Moments:**
 - Success screen shows BCH received
 - Encourages holding BCH for future use
 - "Learn More" buttons throughout
 
+**✅ Bounty Code System:**
+- 4-digit code (easy to remember)
+- Links recipient to specific covenant
+- Fast to type and tell merchant
+
 ---
 
-*Flow documented: May 2, 2026*  
-*Updated: May 8, 2026 (numeric code confirmation)*  
-*Status: Design complete, ready for Phase 0 implementation*  
-*Next: Build numeric code flow, plan RFID card support for Phase 1+*
+*Flow documented: May 10, 2026*  
+*Status: Active - Covenant Architecture*  
+*Replaces: Escrow-era transaction codes and completion codes*
