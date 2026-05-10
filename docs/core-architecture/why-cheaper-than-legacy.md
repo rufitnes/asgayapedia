@@ -24,7 +24,7 @@ To achieve <1% fees, Asgaya must satisfy these technical and economic requiremen
 
 **Why this matters:** Hidden markups are where legacy systems extract the most profit. A 2% "spread" on exchange rates costs more than stated transfer fees. Government-imposed rates can extract up to 65% of remittance value.
 
-**Success metric:** Users can independently verify rates match Kraken's published rates.
+**Success metric:** Users can independently verify rates match DolarAPI's published blue dollar rates.
 
 **Deep dive:** [Why: Market-Rate Exchanges](core-architecture/why-market-rate-exchanges.md) — Government extraction problem, why BCH bypasses financial repression
 
@@ -65,7 +65,7 @@ Asgaya eliminates intermediaries by using:
 
 **Why this matters:** Trust. Users need to verify that Asgaya isn't hiding markups like legacy systems do.
 
-**Success metric:** Every transaction shows itemized costs. Users can independently verify exchange rates match Kraken's published rates.
+**Success metric:** Every transaction shows itemized costs. Users can independently verify exchange rates match DolarAPI's published blue dollar rates and BCH spot prices.
 
 **How we achieve this:** Built into transaction receipts and user flows.
 
@@ -85,21 +85,27 @@ Asgaya eliminates intermediaries by using:
 
 ---
 
-## The 1% Fee Breakdown
+## The ~1% Fee Breakdown
 
-**How the 1% total fee is distributed:**
+**How the ~1% total fee is distributed:**
 
 **Example: €100 transfer**
-- **Total fee:** €1.00 (1% of transfer)
-- **Exchange fee (Kraken):** ~€0.26 (0.26% - deducted first)
-- **Remaining:** ~€0.74 (0.74% - split equally three ways)
+- **Sender pays:** €100.00 (to BCH seller via Bizum)
+- **Sender fee:** €0.50 (0.5% - paid to BCH seller)
+- **Recipient gets:** ~€99.50 worth of BCH (settled at maturity rate)
 
-**The remaining €0.74 is divided equally among:**
-- **Escrow operator:** €0.247 (0.247%)
-- **Merchant:** €0.247 (0.247%)
-- **Liquidity Provider:** €0.247 (0.247%) *(if instant settlement selected)*
+**The ~€1.00 total cost is distributed as:**
+- **BCH seller:** ~€0.50 (0.5% - seller fee + hedge profit)
+- **Merchant:** ~€0.50 (0.5% - spread earned by selling VES for BCH)
 
-**Key insight:** Participants don't split the full 1% - they split what remains after exchange costs. This creates economic incentives for all participants while still beating legacy systems by 85% (€1 vs €6.49 on €100).
+**How it works:**
+- Sender sends €100 to BCH seller via Bizum
+- BCH seller posts ~€107 worth of BCH collateral (7% overcollateralization)
+- Covenant promises €99.50 worth of BCH to merchant (settled at maturity rate)
+- Merchant sells 500,000 VES to recipient, receives ~€100.50 worth of BCH (earns ~€1 spread)
+- BCH seller keeps surplus after merchant paid (~€0.50 fee + hedge profit)
+
+**Key insight:** No exchange purchase needed. BCH seller already owns BCH, posts collateral, earns fee. Merchant earns spread by selling VES. Overcollateralization protects against volatility. Total cost still beats legacy systems by 85% (~€1 vs €6.49 on €100).
 
 ---
 
@@ -122,10 +128,10 @@ Cheaper fees are the entry point. Without a clear economic advantage, users won'
 
 See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
 
-- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — Why pull-based BCH purchase eliminates volatility risk
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — How the 1% fee is distributed to incentivize all participants
-- Decision: Why Kraken exchange (coming soon)
+- **[How Exchange Rates Work](decisions/how-exchange-rates-work.md)** — How EUR-denominated covenants with BCH settlement achieve market rates
+- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — How the ~1% fee is distributed to incentivize all participants
+- **[Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md)** — How overcollateralization protects against volatility
 
 ---
 
-*Last updated: April 30, 2026*
+*Last updated: May 10, 2026*
