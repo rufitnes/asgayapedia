@@ -41,20 +41,22 @@ To promote adoption, Asgaya must satisfy these requirements:
 
 ---
 
-### 2. Liquidity Provider Economic Incentive
+### 2. BCH Buyer Economic Incentive (Optional)
 
-**Requirement:** LPs must profit from sending fiat to the merchant where the recipient cashes out.
+**Requirement:** BCH buyers (who want to buy BCH from merchants) must be able to find competitive offers.
 
-**Why this matters:** Without LPs willing to sell fiat for BCH, the merchants are exposed to bch liquidity and posible backlash from the banking system if they frown upon crypto usage in their area. LPs provide a escape hatch for the merchants not willing to risk holding BCH or selling it themselves. This role comes at a cost not only the capital lock-up but some other risk they might be willing to accept and deserve to be compensated.
+**Why this matters:** Merchants receive BCH from covenants and can choose to hold it or sell it. Without easy access to BCH buyers, merchants might feel locked into holding BCH. BCH buyers provide an optional exit for merchants while creating a circular economy.
 
 **How it works:**
-- LPs earn a share of the 1% fee on every transaction
-- LPs can also earn from the spread if they buy BCH at market rate and sell at a small premium
-- V1.1 will introduce dynamic rewards based on corridor demand
+- Merchants receive BCH from covenant (~1% spread earned)
+- Merchants can hold BCH (recommended) OR sell via BCH buyer bulletin
+- BCH buyers post offers on bulletin board (e.g., "I'll pay 500,000 VES for 0.0995 BCH")
+- Same covenant mechanism, reversed roles (merchant = seller, BCH buyer = recipient)
+- BCH buyers acquire BCH at market rate (or slightly below)
 
-**Success metric:** Sufficient LP liquidity in all corridors to support the merchants.
+**Success metric:** Active BCH buyer market in each corridor (optional, not required for MVP).
 
-**How we achieve this:** [Merchant & LP Incentives](core-architecture/why-promote-adoption.md) + [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md)
+**How we achieve this:** [BCH Buyer Bulletin](android-app/flows/merchant-flows.md#screen-4a-bch-buyer-bulletin-optional) — Uses same covenant infrastructure
 
 ---
 
@@ -94,20 +96,27 @@ Every merchant using Asgaya accepts BCH. As the merchant network grows, holding 
 
 ---
 
-### 5. Escrow Operator Economic Incentive
+### 5. BCH Seller Economic Incentive
 
-**Requirement:** Escrow operators compensation from coordinating transactions.
+**Requirement:** BCH sellers must profit from posting overcollateralized BCH to covenants.
 
-**Why this matters:** Escrows perform critical work: monitoring fiat payment notifications, coordinating BCH settlements, managing disputes. This work requires capital (to hold BCH briefly) and technical infrastructure.
+**Why this matters:** BCH sellers provide the foundation of the system: they post ~7% extra BCH as collateral, enabling recipients to claim cash at merchants. This requires capital lock-up (24h max) and volatility risk exposure (5-minute Bizum window).
 
 **How it works:**
-- Escrow earns 1/3 of the remaining fee (after exchange costs)
-- On a €100 transfer: €0.247 goes to escrow
-- An escrow handling 100 transactions/day earns ~€24.70/day = €741/month
+- BCH seller posts ~€107 worth of BCH collateral to covenant
+- Sender pays BCH seller €100 via Bizum (within 5 minutes)
+- BCH seller's exposure reduced by 94-97% once Bizum received (hedge mechanism)
+- When covenant matures, seller receives surplus BCH + 0.5% fee
+- Typical profit: €0.50 per transaction + hedge benefit
 
-**Success metric:** Multiple escrow operators competing for business in each corridor.
+**Economic benefit:**
+- On a €100 transfer: €0.50 goes to BCH seller
+- A BCH seller handling 100 covenants/day earns ~€50/day = €1,500/month
+- PLUS hedge benefit (better than just holding BCH during volatility)
 
-**How we achieve this:** [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md)
+**Success metric:** Multiple BCH sellers competing for business in each corridor.
+
+**How we achieve this:** [BCH Sellers](concepts/bch-sellers.md) — Hedge mechanism explanation
 
 ---
 
@@ -116,13 +125,15 @@ Every merchant using Asgaya accepts BCH. As the merchant network grows, holding 
 Once kickstarted, the incentives create a self-reinforcing cycle:
 
 1. **Sender** in Spain sends €100 via Asgaya (saves €5.49 vs. Western Union)
-2. **Merchant** in Venezuela receives notification, earns €0.247
-3. **Recipient** receives BCH, sees they can pay 5 local merchants with BCH
-4. **Merchant** sees more customers paying with BCH, decides to promote it
-5. **New merchant** hears about passive income, joins network
-6. **Recipient** now sees 6 merchants, decides to hold BCH instead of cashing out
-7. **LP** sees increased demand, joins network to earn fees
-8. **Repeat**
+2. **BCH seller** posts covenant, receives €100 Bizum, earns €0.50 fee
+3. **Merchant** in Venezuela claims covenant, earns ~€0.50 spread
+4. **Recipient** receives VES cash, gets BCH from covenant
+5. **Recipient** sees they can pay 5 local merchants with BCH (no cash-out fees)
+6. **Merchant** sees more customers paying with BCH, promotes acceptance
+7. **New merchant** hears about spread earnings, joins network
+8. **Recipient** now sees 6 merchants, decides to hold BCH instead of cashing out
+9. **BCH buyer** (optional) sees market opportunity, joins to buy BCH from merchants
+10. **Repeat**
 
 **Result:** Asgaya becomes redundant except for on-ramps/off-ramps to legacy fiat. BCH becomes the default medium of exchange.
 
@@ -141,7 +152,7 @@ With economic incentives, Asgaya becomes a **network growth engine** that turns 
 ## Related Requirements
 
 - [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — The fee savings fund the incentives
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Low barriers enable rapid merchant/LP growth
+- [Why: Permissionless](core-architecture/why-permissionless.md) — Low barriers enable rapid merchant/BCH seller growth
 
 ---
 
