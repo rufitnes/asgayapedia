@@ -20,8 +20,8 @@ Core Architecture is the index that connects **requirements** (what and why we n
 ### Permissionless Access
 - [why-no-kyc.md](core-architecture/why-no-kyc.md) - Peer-to-peer coordination without gatekeepers
 - [why-permissionless.md](core-architecture/why-permissionless.md) - Open participation principles
-- [why-why-minimal-hardware.md](core-architecture/why-why-minimal-hardware.md) - Support for low-tech solutions
-- [why-why-self-custody.md](core-architecture/why-why-self-custody.md) - User-controlled cryptography and keys
+- [why-minimal-hardware.md](core-architecture/why-minimal-hardware.md) - Support for low-tech solutions
+- [why-self-custody.md](core-architecture/why-self-custody.md) - User-controlled cryptography and keys
 
 ---
 
@@ -45,14 +45,14 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Requirement:** Every transaction must create economic incentives for participants to join and grow the network.
 
 **Architecture solutions:**
-- **[Merchant & LP Incentives](core-architecture/why-promote-adoption.md)** — Fee-splitting model (escrow, merchant, LP each earn from the 1% fee)
-- **[BCH Usage Incentives](core-architecture/bch-usage-incentives.md)** — Near zero-fee BCH payments vs. 1% remmitance cash-outs
+- **[Merchant & BCH Seller Incentives](core-architecture/why-promote-adoption.md)** — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
+- **[BCH Usage Incentives](core-architecture/bch-usage-incentives.md)** — Near zero-fee BCH payments vs. 1% remittance cash-outs
 
 **Key principle:** the goal is to make asgaya redundant except to interact with the legacy system
 
 **Related concepts:**
-- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions
-- [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md) — How BCH miners can serve as escrow operators
+- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions (V1 feature)
+- [BCH Sellers](concepts/bch-sellers.md) — How BCH miners and holders can provide covenant liquidity
 
 ---
 

@@ -159,10 +159,10 @@ Most tech projects ask: "What does our average user have?"
 **Key insight:** Merchants are businesses. They can afford smartphones. Recipients might not.
 
 **Division of labor:**
-- **Merchant:** Has smartphone, runs Asgaya app, scans QR codes
-- **Recipient:** Has cardboard, shows it to merchant, receives cash
-- **Sender:** Has bank account, sends Bizum
-- **Escrow:** Has Kraken account, coordinates settlement
+- **Merchant:** Has smartphone, runs Asgaya app, scans codes, co-signs covenant
+- **Recipient:** Has cardboard (with QR code or 4-digit code), shows it to merchant, receives cash
+- **Sender:** Has bank account, sends Bizum to BCH seller
+- **BCH Seller:** Has BCH inventory, posts overcollateralized BCH to covenant, automated via bot
 
 **Each participant contributes what they can afford. No one is required to have what they can't afford.**
 
