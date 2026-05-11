@@ -26,15 +26,15 @@ RECOMMENDED READING ORDER
 For comprehensive review (covenant architecture v2.0):
 
 1. quick-start.txt      → Overview & context (650 lines) ✅ v2.0
-2. core-arch.txt        → Why each feature exists (<400 lines) 🔄 REGENERATING
-3. decisions.txt        → How we implement it (<400 lines) 🔄 REGENERATING
-4. flows.txt            → User experience (<400 lines) 🔄 REGENERATING
-5. apis.txt             → Technical specs (<400 lines) 🔄 REGENERATING
+2. core-arch.txt        → Why each feature exists (395 lines) ✅ v2.0
+3. decisions.txt        → How we implement it (322 lines) ✅ v2.0
+4. flows.txt            → User experience (337 lines) ✅ v2.0
+5. apis.txt             → Technical specs (392 lines) ✅ v2.0
 
-⚠️ Files 2-5 currently describe old escrow model (pre-May 10, 2026).
-   Regeneration in progress to reflect covenant architecture.
+ALL FILES NOW CURRENT: Covenant architecture throughout, optimized for
+AI retrieval systems (<400 lines per file for full ingestion).
 
-ALTERNATIVE: Read quick-start.txt (650 lines) for full current overview.
+Total: ~2,100 lines, ~1 hour comprehensive review.
 
 ==============================================
 FILES BY CONTEXT WINDOW
@@ -104,18 +104,17 @@ FILE DETAILS
 
 FILE                STATUS              LINES   DESCRIPTION
 --------------------------------------------------------------------------------
-index.txt           ✅ v2.0             ~150    Navigation guide (this file)
+index.txt           ✅ v2.0             ~180    Navigation guide (this file)
 quick-start.txt     ✅ v2.0             650     Condensed overview (covenant)
 complete.txt        ✅ v2.0             3,898   Everything combined (covenant)
-core-arch.txt       🔄 Regenerating     <400    Core architecture (WHY)
-decisions.txt       🔄 Regenerating     <400    Design decisions (HOW)
-flows.txt           🔄 Regenerating     <400    User flows (UX)
-apis.txt            🔄 Regenerating     <400    Backend APIs (TECHNICAL)
+core-arch.txt       ✅ v2.0             395     Core architecture (WHY)
+decisions.txt       ✅ v2.0             322     Design decisions (HOW)
+flows.txt           ✅ v2.0             337     User flows (UX)
+apis.txt            ✅ v2.0             392     Backend APIs (TECHNICAL)
 overview.txt        ⚠️ Pre-covenant    323     Optimized summary (llm.txt)
 
-✅ = Current (covenant architecture v2.0, May 11, 2026)
-🔄 = Being regenerated to <400 lines for full AI ingestion
-⚠️ = Stale (escrow model, pre-May 10, 2026)
+✅ = Current (covenant architecture v2.0, May 12, 2026)
+⚠️ = Stale (escrow model, pre-May 10, 2026) - Low priority legacy file
 
 ==============================================
 DIRECT RAW URLS (COPY-PASTE READY)
@@ -146,9 +145,8 @@ LAST UPDATED
 ==============================================
 
 Version: 2.0 (Covenant Architecture)
-Date: 2026-05-11
-Status: quick-start.txt + complete.txt current ✅
-        Topic files (<400 lines) regeneration in progress 🔄
+Date: 2026-05-12
+Status: ALL TOPIC FILES CURRENT ✅
 
 Key changes in v2.0:
 - Covenant-based architecture (no custody, no intermediation)
@@ -156,6 +154,10 @@ Key changes in v2.0:
 - BCH seller hedge mechanism documented
 - Autonomous dispute resolution (Phase 0)
 - All files optimized for AI ingestion (<400 lines per topic)
+- Overcollateralization × Timeout interdependency analysis added
+
+Regeneration complete: quick-start (650), complete (3,898), core-arch (395),
+decisions (322), flows (337), apis (392). Total: ~6,000 lines.
 
 ==============================================
 QUESTIONS?
