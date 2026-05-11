@@ -6,7 +6,7 @@ Welcome! This directory contains Asgaya protocol documentation optimized for AI 
 
 **New to Asgaya?** Start here:
 
-**→ [quick-start.txt](quick-start.txt)** (500 lines, ~15 min read)
+**→ [quick-start.txt](quick-start.txt)** (650 lines, ~15 min read)
 
 Condensed overview of the entire protocol: what it is, why it exists, how it works.
 
@@ -16,13 +16,16 @@ Condensed overview of the entire protocol: what it is, why it exists, how it wor
 
 **For comprehensive review:**
 
-1. **[quick-start.txt](quick-start.txt)** → Overview & context (500 lines)
-2. **[core-arch.txt](core-arch.txt)** → Why each feature exists (2,100 lines)
-3. **[decisions.txt](decisions.txt)** → How we implement it (2,500 lines)
-4. **[flows.txt](flows.txt)** → User experience (3,850 lines)
-5. **[apis.txt](apis.txt)** → Technical specs (4,900 lines)
+1. **[quick-start.txt](quick-start.txt)** → Overview & context (650 lines) ✅ **v2.0**
+2. **[complete.txt](complete.txt)** → Full documentation (3,898 lines) ✅ **v2.0**
 
-**Total:** ~14,000 lines, ~3-4 hours thorough review
+**Alternative (older individual files):**
+- **[core-arch.txt](core-arch.txt)** → Why each feature exists (2,100 lines) ⚠️ *Pre-covenant*
+- **[decisions.txt](decisions.txt)** → How we implement it (2,500 lines) ⚠️ *Pre-covenant*
+- **[flows.txt](flows.txt)** → User experience (3,850 lines) ⚠️ *Pre-covenant*
+- **[apis.txt](apis.txt)** → Technical specs (4,900 lines) ⚠️ *Pre-covenant*
+
+**Recommended:** Use quick-start.txt + complete.txt for current covenant architecture
 
 ---
 
@@ -35,7 +38,7 @@ Condensed overview of the entire protocol: what it is, why it exists, how it wor
 **→ [quick-start.txt](quick-start.txt)** + **[core-arch.txt](core-arch.txt)** + **[decisions.txt](decisions.txt)**
 
 ### Large Context Models (32K+ tokens)
-**→ [complete.txt](complete.txt)** (everything in one file, 15,250 lines)
+**→ [complete.txt](complete.txt)** (everything in one file, 3,898 lines) ✅ **v2.0 - Covenant Architecture**
 
 ---
 
@@ -122,58 +125,69 @@ https://asgaya.org/ai/[filename]
 
 ## 📊 File Details
 
-| File | Lines | Size | Description |
-|------|-------|------|-------------|
-| **index.txt** | ~100 | 4.4KB | Navigation guide (plain text) |
-| **quick-start.txt** | 497 | 16KB | Condensed overview |
-| **overview.txt** | 323 | 11KB | Optimized summary (llm.txt format) |
-| **core-arch.txt** | 2,115 | 74KB | Core architecture (WHY) |
-| **decisions.txt** | 2,462 | 81KB | Design decisions (HOW) |
-| **flows.txt** | 3,850 | 158KB | User flows (UX) |
-| **apis.txt** | 4,909 | 138KB | Backend APIs (TECHNICAL) |
-| **complete.txt** | 15,250 | 512KB | Everything combined |
+| File | Lines | Status | Description |
+|------|-------|--------|-------------|
+| **quick-start.txt** | 650 | ✅ v2.0 | Condensed overview (covenant architecture) |
+| **complete.txt** | 3,898 | ✅ v2.0 | Everything combined (covenant architecture) |
+| **index.txt** | ~100 | ⚠️ Pre-covenant | Navigation guide (plain text) |
+| **overview.txt** | 323 | ⚠️ Pre-covenant | Optimized summary (llm.txt format) |
+| **core-arch.txt** | 2,115 | ⚠️ Pre-covenant | Core architecture (WHY) |
+| **decisions.txt** | 2,462 | ⚠️ Pre-covenant | Design decisions (HOW) |
+| **flows.txt** | 3,850 | ⚠️ Pre-covenant | User flows (UX) |
+| **apis.txt** | 4,909 | ⚠️ Pre-covenant | Backend APIs (TECHNICAL) |
 
-**Total:** ~15,000 lines, ~1MB
+**Current (May 11):** quick-start.txt + complete.txt reflect covenant architecture  
+**Legacy (Pre-May 10):** Other files describe old escrow model
 
 ---
 
 ## 🕐 Last Updated
 
-**Version:** 1.0  
-**Date:** 2026-05-05  
-**Status:** ⚠️ **STALE - Pre-Covenant Architecture**
+**Version:** 2.0 (Covenant Architecture)  
+**Date:** 2026-05-11  
+**Status:** ✅ **CURRENT** (quick-start.txt + complete.txt)
 
 ---
 
 ## ⚠️ IMPORTANT NOTICE
 
-**These AI-optimized files describe the OLD escrow-based architecture (pre-May 10, 2026).**
+**Status of AI-optimized files (May 11, 2026):**
 
-**Major changes since these files were generated:**
-- ❌ Escrow model **abandoned** (MiCA compliance issue discovered)
+✅ **CURRENT (Covenant Architecture v2.0):**
+- **quick-start.txt** (650 lines) - Regenerated May 11
+- **complete.txt** (3,898 lines) - Regenerated May 11
+
+⚠️ **STALE (Escrow Architecture v1.0):**
+- All other .txt files still describe the OLD escrow model (pre-May 10, 2026)
+
+**Key changes in v2.0:**
+- ❌ Escrow model **abandoned** (MiCA compliance issue)
 - ✅ Covenant-based architecture **implemented** (BCH smart contracts)
-- ❌ Mediator role **removed** (Phase 0 = autonomous covenant + trusted parties)
-- ✅ Fee split **updated** (2-way: Seller 0.5%, Merchant 0.5%, no protocol fee)
-- ✅ Social media disputes **documented as V1** (not built yet)
+- ❌ Mediator role **removed** (Phase 0 = autonomous covenant)
+- ✅ Fee split **updated** (2-way: Seller 0.5%, Merchant 0.5%)
+- ✅ BCH seller hedge mechanism **documented**
 
-**Current documentation (May 11, 2026):**
-- Main docs: ✅ Updated for covenant architecture
-- AI files: ❌ Still describe escrow model (need regeneration)
+**For AI reviewers:** Use **quick-start.txt** and **complete.txt** for current covenant architecture.
 
-**For accurate information:** Read the main documentation at:
-- https://github.com/rufitnes/asgayapedia/tree/main/docs
-
-**These AI files will be regenerated after DeepSeek reviews Phase 1 fixes.**
+**Main documentation:** https://github.com/rufitnes/asgayapedia/tree/main/docs (all updated)
 
 ---
 
-## 📋 Original Update Log (May 5)
+## 📋 Update Log
 
-**Recent updates:**
-- ✅ Fee split clarity (Kraken fee deducted first) [NOW OBSOLETE]
-- ✅ Dynamic reward modulation (marked as POST-MVP)
-- ✅ Unclaimed transaction expiry (24h, €0.10 fee)
-- ✅ Dispute resolution framework (3-strike system) [NOW SIMPLIFIED]
+**May 11, 2026 (v2.0 Regeneration):**
+- ✅ quick-start.txt regenerated (650 lines, covenant architecture)
+- ✅ complete.txt regenerated (3,898 lines, covenant architecture)
+- ✅ BCH seller hedge mechanism documented
+- ✅ Fee split unified (2-way: 0.5% seller, 0.5% merchant)
+- ✅ Dispute resolution simplified (Phase 0 autonomous)
+- ✅ Phase 0 validation checklist integrated
+
+**May 5, 2026 (v1.0 - Now Obsolete):**
+- ⚠️ Fee split clarity (Kraken fee deducted first) [OBSOLETE]
+- ⚠️ Dynamic reward modulation (marked as POST-MVP) [OBSOLETE]
+- ⚠️ Unclaimed transaction expiry (24h, €0.10 fee) [KEPT]
+- ⚠️ Dispute resolution framework (3-strike system) [SIMPLIFIED]
 
 ---
 
