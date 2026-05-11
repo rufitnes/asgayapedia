@@ -259,6 +259,107 @@ Code lengths, notification timings, flow complexity
 
 ---
 
+### 🔗 **PARAMETER INTERDEPENDENCY: Overcollateralization % × Timeout Duration**
+
+**Recognition date:** May 12, 2026 (Suso's insight during AI file review)
+
+**The insight:** Overcollateralization isn't a single parameter—it's the product of TWO levers:
+1. **Buffer percentage** (7%)
+2. **Time exposure window** (24h timeout)
+
+**Why it matters:**
+- Current: 7% buffer × 24h exposure = Risk of ±7% moves in 24 hours
+- Alternative: 5% buffer × 12h exposure = Risk of ±5% moves in 12 hours (potentially safer!)
+- **Volatility scales with time:** 24h moves are larger than 12h moves
+
+**Engineering for the MODE, not the 95th percentile:**
+
+Current design optimizes for edge case (24h timeout covers 95% of recipients).
+
+Better approach: Optimize for MOST COMMON case (mode), handle edges separately.
+
+**Example scenarios:**
+
+| Claim time distribution | Optimal timeout | Optimal buffer | Rationale |
+|------------------------|-----------------|----------------|-----------|
+| 80% claim within 6h | 12h | 5% | Most covered, 20% edge case handled by shorter volatility window |
+| 60% claim within 3h | 6h | 4% | Fast claims = minimal volatility exposure |
+| 40% claim within 12h | 24h | 7% | Slow claims = need more buffer |
+
+**Phase 0 validation strategy:**
+
+1. **Measure time-to-claim distribution (histogram):**
+   ```
+   0-3h:  __% of claims
+   3-6h:  __% of claims
+   6-12h: __% of claims
+   12-24h: __% of claims
+   >24h:  __% of claims (timeouts)
+   ```
+
+2. **Measure BCH volatility correlation:**
+   - 6-hour volatility (±__% typical)
+   - 12-hour volatility (±__% typical)
+   - 24-hour volatility (±__% typical)
+   - **Key insight:** If mode is 6h, measure volatility in 6h windows, not 24h
+
+3. **Calculate optimal parameters based on actual behavior:**
+   ```
+   If 80% claim within 6h:
+   → Set timeout to 12h (covers 90%+)
+   → Measure 12h volatility
+   → Set buffer to 95th percentile of 12h moves (likely ~5%)
+   → Result: Less capital locked + fewer margin calls
+   ```
+
+**Adjustment matrix (after Phase 0 data):**
+
+| Mode claim time | Measured volatility (95th %ile) | Recommended timeout | Recommended buffer |
+|-----------------|--------------------------------|--------------------|--------------------|
+| 3h | ±3% in 6h | 6h | 4% |
+| 6h | ±4% in 12h | 12h | 5% |
+| 12h | ±6% in 24h | 24h | 7% |
+| >18h | ±8% in 36h | 36h | 9% |
+
+**Benefits of this optimization:**
+
+✅ **Reduced margin call frequency:** Shorter windows = less time for extreme moves
+✅ **Better capital efficiency:** Lower buffer % = more BCH available for other transactions
+✅ **Same safety level:** Optimize for actual behavior, not hypothetical worst case
+✅ **Data-driven:** Adjust parameters based on empirical evidence
+
+**Risks to monitor:**
+
+⚠️ **Mode shift:** If claim patterns change (e.g., rural recipients slower than urban), mode shifts
+⚠️ **Black swan events:** Extreme volatility (±15% in 1h) breaks any buffer—need circuit breaker
+⚠️ **Corridor differences:** Spain→Venezuela may differ from US→Mexico claim times
+
+**Success criteria:**
+
+- Margin call frequency <5% (vs current hypothesis: <10%)
+- Capital efficiency: Average lockup time <12h (vs current: 24h)
+- No merchant underpayment incidents
+- Seller satisfaction: Buffer feels "right-sized" (not excessive, not too tight)
+
+**Next steps:**
+
+1. **Phase 0:** Start with 7% × 24h (conservative baseline)
+2. **After 30 days:** Analyze time-to-claim distribution
+3. **Calculate:** Optimal timeout to cover 90% of claims (mode + 1 std dev)
+4. **Measure:** BCH volatility in that optimal window
+5. **Adjust:** Set buffer to 95th percentile volatility + 1-2% safety margin
+6. **Re-test:** Deploy new parameters, measure for another 30 days
+7. **Iterate:** Continuous improvement based on data
+
+**Documentation:**
+- This interdependency affects: Sections 2.3 (Timeout) and 3.1 (Overcollateralization)
+- Cross-reference when adjusting either parameter
+- Always consider both together, never in isolation
+
+**Key principle:** Don't optimize for hypothetical worst case. Measure actual behavior, engineer for the mode, have circuit breakers for black swans.
+
+---
+
 ## Operational Limits
 
 ### 📦 Transaction Size Limits
