@@ -1,2462 +1,322 @@
 ==============================================
-ASGAYA DESIGN DECISIONS
+ASGAYA DESIGN DECISIONS (HOW)
 ==============================================
 
-This file contains all design decision documents explaining HOW Asgaya is implemented.
-
-Generated: 2026-05-05
-Source: /decisions/*.md
-
-==============================================
-
-← [Back to Home](README.md)
-
-# Design Decisions
-
-This directory documents the **"how"** - the tradeoffs and constraints that shaped Asgaya's implementation. The [Core Architecture](core-architecture/) explains **what** we need and **why** it matters. This directory explains **how** we achieved it through real-world constraints and pragmatic choices.
-
-**Each decision follows this pattern:**
-1. **The Goal** - What we wanted architecturally
-2. **The Constraint** - What reality showed us (with research/testing evidence)
-3. **Alternatives Considered** - Options we evaluated
-4. **The Decision** - What we chose and why
-5. **Trade-offs** - What we gained and what we lost
-6. **Validation** - How we verify it works
-
----
-
-## How We Achieve The 3 Core Requirements
-
-### 1️⃣ How: Cheaper Than Legacy (<1% fees)
-
-**Requirement:** Beat 6.49% average remittance costs through market-rate exchanges and free peer-to-peer rails.
-
-**Implementation decisions:**
-
-- **[Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Use DolarAPI for blue dollar local currency rates + Kraken EUR/USD rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.
-
-- **[Two-Step Settlement](decisions/two-step-settlement-timing.md)** — Fiat transfer happens first (EUR→local currency), then escrow buys BCH after merchant confirms receipt. Eliminates BCH volatility risk from remittance. Trade-off: Two-phase process, but zero volatility exposure.
-
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Equal three-way split of 1% fee among escrow/merchant/LP (€0.247 each on €74 transfer). Not optimized per participant, but simple and fair. Creates aligned incentives across all network participants.
-
-**Key principle:** Market rates with zero hidden markups. Transparent economics beats optimization.
-
----
-
-### 2️⃣ How: Promote Adoption
-
-**Requirement:** Every transaction must create economic incentives for participants to join and grow the network.
-
-**Implementation decisions:**
-
-- **Fee Distribution** — Three-way split ensures all participants benefit from each transaction (see Fee Splitting Model above). Merchant earns even on failed cash-outs (gets full BCH payment). LP earns for providing instant liquidity. Escrow earns for coordination work.
-
-- **Merchant Incentive Structure** — Merchants earn from fee split (1/3 if LP provides instant settlement, 1/2 if direct merchant settlement). No rate markup allowed - Asgaya enforces market rates (see Market-Rate Exchanges). Merchant profits from fee share, not from exploiting exchange rates.
-
-- **LP Instant Settlement** — LPs front local currency to merchants, receive BCH after settlement. Earn fee share + potential arbitrage between local and Kraken rates. Risk: BCH price movement during settlement window.
-
-- **BCH Usage Incentives** — Near-zero fee BCH payments vs 1% remittance cash-outs. Goal: make Asgaya redundant except for legacy system interaction. Recipients incentivized to keep BCH for future payments instead of cashing out.
-
-**Key principle:** Economic incentives over ideology. Make participation profitable for everyone.
-
----
-
-### 3️⃣ How: Permissionless
-
-**Requirement:** Anyone can participate without KYC, using minimal hardware and knowledge.
-
-**Implementation decisions:**
-
-- **[Bizum Concept Field](decisions/bizum-concept-field.md)** — Wanted semantic IDs like `ASG_VEN_001`, bank rejected underscores/hyphens. Use recipient phone numbers instead. Lost semantics, gained reliability. Critical for notification matching without central coordination.
-
-- **[Payment Timeout Window](decisions/payment-timeout-window.md)** — Sender manually funds escrow in their own banking app (Asgaya can't initiate payments without KYC/integration). Need 10-minute window for sender to complete payment. Multiple funding options preserve permissionless access. Trade-off: Slower UX, but anyone can be an escrow without payment processor integration.
-
-- **[Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)** — Recipients have 24 hours to claim remittances before automatic refund. Prevents funds from locking indefinitely in escrow. Proactive notifications to both sender and recipient. Processing fee (€0.10) covers manual refund work + liquidity lock. Trade-off: Time pressure vs escrow risk protection.
-
-- **[Dispute Resolution Framework](decisions/dispute-resolution.md)** — Two-sided confirmation disputes resolved by escrow (MVP) in 24h. 3-strike merchant system (Strike 1 permanent, Strike 2 redeemable at €2K, Strike 3 final). Evidence via email. Default: favor merchant. Safe confirmation sequence prevents most disputes. Trade-off: Manual resolution vs network trust.
-
-- **No KYC Payment Rails** — Use consumer payment systems (Bizum, Nequi, etc.) that don't require business accounts or KYC. Anyone with a bank account can be an escrow. Constraint: Must work within each system's rules (see Bizum Concept Field decision).
-
-- **Minimal Hardware** — QR codes, RFID stickers, basic smartphones all supported. No requirement for constant connectivity. Offline-first design with sync when available. From cardboard printouts to RFID tags to full smartphones, all participation levels enabled.
-
-- **Minimal Knowledge** — No crypto jargon in UI. Simple terminology: "claim money" not "receive BCH", "backup code" not "seed phrase". Auto-calculation of all amounts. QR code scanning prevents manual entry errors. Guided flows with clear next steps.
-
-- **Self-Custody Key Management** — Users control private keys, Asgaya has zero access. Trade-off: Users bear responsibility for backups, but no centralized trust. Mandatory backup verification before first use prevents loss. Multiple backup methods: screenshot, paper, cloud (user choice).
-
-- **Error Mitigation** — QR codes for addresses (no manual typing). Auto-complete for phone numbers (no typos). Guided flows with confirmation screens. Auto-calculation of fees and amounts (no math errors). Warning screens before irreversible actions.
-
-**Key principle:** Maximum freedom, minimum risk. No gatekeepers, but secure key management where essential.
-
----
-
-## Design Principles
-
-These principles guide all implementation decisions:
-
-1. **Pragmatism Over Perfection** — Build what works in the real world, not what works in theory
-2. **Constraints Drive Design** — Real testing reveals constraints; decisions adapt to reality
-3. **Transparent Trade-offs** — Document what we gave up and what we gained
-4. **Revisitable Decisions** — No decision is permanent; circumstances change, data improves
-5. **Simplicity Over Optimization** — Simple and reliable beats complex and theoretically better
-6. **Evidence-Based** — Every decision backed by research, testing, or real-world validation
-
----
-
-## How to Use This Index
-
-**Each decision document includes:**
-- The goal (what we wanted architecturally)
-- The constraint (what reality showed us)
-- Alternatives considered (what we evaluated and rejected)
-- The decision (what we chose and why)
-- Trade-offs (what we gained and lost)
-- Validation (how we verify it works)
-
-**Start with the requirement that interests you most:**
-- Want to understand cost model? → Start with [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)
-- Curious about settlement mechanics? → Start with [Two-Step Settlement](decisions/two-step-settlement-timing.md)
-- Understanding notification matching? → Start with [Bizum Concept Field](decisions/bizum-concept-field.md)
-
-**For deeper context:**
-- See [Core Architecture](core-architecture/) for the "what" and "why"
-- See [Research](../research/) for testing data and validation
-- See [Concepts](concepts/) for theoretical foundations
-
----
-
-## Decision Status
-
-| Decision | Status | Can Revisit? |
-|----------|--------|--------------|
-| Market-Rate Exchanges | **Active** | Yes, if better rate sources emerge or DEX liquidity improves |
-| Bizum Concept Field | **Active** | Yes, if bank rules change or better matching available |
-| Payment Timeout | **Active** | Yes, if SMS delays improve or alternative notification method found |
-| Unclaimed Transaction Expiry | **Active** | Yes, if real data shows 24h is too short/long for specific corridors |
-| Dispute Resolution | **Active** | Yes, strike thresholds and evidence requirements based on trial data |
-| Fee Splitting | **Active** | Yes, in V1.1 with dynamic rewards based on real usage data |
-| Two-Step Settlement | **Active** | Only if BCH volatility becomes negligible (<1% daily for months) |
-
----
-
-## Contributing
-
-When proposing changes to existing decisions:
-
-1. **Read the decision doc first** — Understand what was already considered
-2. **Identify what changed** — New data? New constraints? New technology?
-3. **Propose alternative** — How would you solve it differently?
-4. **Show validation** — Testing? Research? Real-world evidence?
-
-**Don't assume decisions are arbitrary** — there's usually a good reason rooted in real-world testing or constraints.
-
----
-
-*Decisions index created: April 2026*
-*Maintained by: Asgaya Contributors*
-*Last updated: May 1, 2026*
-*Philosophy: Pragmatism over perfection*
-
+AI-Optimized: How Asgaya implements its architecture
+Version: 2.0 (Covenant Architecture) | Generated: 2026-05-11
+Lines: <400 (optimized for full AI ingestion)
 
 ==============================================
-BIZUM CONCEPT FIELD
+DECISION FRAMEWORK
 ==============================================
 
-# Decision: Bizum Concept Field - Phone Numbers
-
-**Decision Date:** April 22, 2026
-**Status:** Implemented
-**Related Requirement:** [Permissionless](core-architecture/why-permissionless.md) (Error Prevention)
-
----
-
-## The Goal (Architectural Ideal)
-
-Use **semantic identifiers** in the Bizum concept field to enable automated matching and reduce errors.
-
-**Ideal format:** `ASG_VEN_001` or `ASG-recipient-phone`
-
-**Why we wanted this:**
-- Clear signal that payment is Asgaya-related
-- Easy pattern matching for notification listener
-- Enables automated verification (escrow can validate format)
-- Reduces risk of receiving unrelated Bizum payments
-- Self-documenting (anyone can see what the transfer is for)
-
----
-
-## The Constraint (Reality Check)
-
-**Discovery:** Bank rejects Bizum transfers with underscores in the concept field.
-
-**How we discovered this:**
-- Real-world testing with €1 Bizum transfer (April 22, 2026)
-- Used format: `ASG_VEN_001`
-- Result: **Transfer rejected by bank**
-- Error message: "Invalid characters in concept field"
-
-**Research reference:** `../research/RS042_bizum_concept_field_constraints.md`
-
-**Testing details:**
-- Amount: €1.00
-- From: Personal Bizum account (Spain)
-- To: Test merchant account
-- Concept: `ASG_VEN_001`
-- Result: Rejected within seconds
-
-**Additional constraint discovered:**
-- Hyphens (`-`) also rejected
-- Spaces allowed but discouraged (inconsistent SMS encoding)
-- Special characters (`@`, `#`, `$`) rejected
-- **Only alphanumeric and spaces reliably accepted**
-
----
-
-## Alternatives Considered
-
-### Option 1: Use Hyphens Instead
-**Format:** `ASG-VEN-001`
-
-**Pros:**
-- More readable than underscores
-- Common in identifiers
-
-**Cons:**
-- Also rejected by bank (tested)
-- Same problem as underscores
-
-**Verdict:** ❌ Rejected by real-world testing
-
----
-
-### Option 2: Use Spaces
-**Format:** `ASG VEN 001`
-
-**Pros:**
-- Accepted by bank
-- Human-readable
-
-**Cons:**
-- Spaces cause issues in SMS encoding (different character sets handle spaces differently)
-- Risk of spaces being collapsed/removed in notification parsing
-- Less machine-friendly for pattern matching
-
-**Verdict:** ❌ Too risky for automated parsing
-
----
-
-### Option 3: Numeric-Only Codes
-**Format:** `ASG001` or `123456`
-
-**Pros:**
-- Definitely accepted by bank
-- Easy to parse
-
-**Cons:**
-- Not semantic (what does `ASG001` mean?)
-- Requires lookup table (escrow must maintain code→recipient mapping)
-- Collision risk (what if two transfers use same code?)
-- Doesn't include corridor info (VEN, ARG, etc.)
-
-**Verdict:** ⚠️ Possible but adds complexity
-
----
-
-### Option 4: Recipient Phone Number
-**Format:** `+584121234567` or `584121234567`
-
-**Pros:**
-- Accepted by bank (alphanumeric + symbols work in this format)
-- Globally unique (no collision risk)
-- Self-documenting (phone number identifies recipient)
-- No lookup table needed
-- Escrow can verify recipient owns this phone
-- Corridor implicit (phone prefix indicates country)
-- Easy to understand to the sender
-- Most devices copy phone numbers to the clipboard automatically
-- The recipient public address can be pair to the phone number
-
-**Cons:**
-- Less semantic than `ASG_VEN_001`
-- Reveals recipient phone number (minor privacy concern, but recipient already trusts merchant)
-- Requires phone number validation
-- Requires a phone number
-
-**Verdict:** ✅ Best compromise
-
----
-
-## The Decision
-
-**Use recipient phone numbers in Bizum concept field.**
-
-**Format:** `+584121234567` (international format with `+`)
-
-**Fallback:** `584121234567` (if `+` is rejected, drop it)
-
-**Rationale:**
-1. **Works within bank constraints** (verified by testing)
-2. **Globally unique** (no collision risk)
-3. **Self-documenting** (phone identifies recipient + corridor)
-4. **No lookup table required** (reduces escrow complexity)
-5. **Verifiable** (escrow can confirm recipient owns phone via SMS)
-
----
-
-## Implementation Details
-
-### Sender Flow
-1. Sender enters recipient phone: `+58 412 123 4567`
-2. App formats for Bizum concept: `584121234567` (no spaces no +)
-3. Sender makes Bizum payment with this concept
-4. Merchant receives notification with concept field
-
-### Notification Listener (Merchant)
-1. Parse incoming Bizum SMS/notification
-2. Extract concept field: `584121234567`
-3. Match against pending Asgaya transfers
-4. If match found, proceed with BCH settlement
-
-### Escrow Verification
-1. Sender claims payment sent to `584121234567`
-2. Escrow checks merchant received payment with that concept
-3. If confirmed, triggers BCH purchase and settlement
-
----
-
-## Trade-offs Accepted
-
-### Lost: Semantic Identifiers
-- Can't use formats like `ASG_VEN_001`
-- Concept field is less self-documenting for humans
-- Pattern matching is phone-number-specific (not generic)
-
-### Gained: Reliability
-- Works within real bank constraints
-- No rejected transfers
-- Simpler implementation (no code generation/lookup)
-- Better verification (phone is cryptographically verifiable via SMS)
-
-### Privacy Consideration
-- Recipient phone visible in Bizum concept field
-- **Mitigation:** Merchant already knows recipient phone (it's their customer)
-- **Acceptable risk:** Bizum is P2P between merchant and sender; recipient phone is not exposed beyond this relationship
-
----
-
-## Validation
-
-**How we verify this decision:**
-1. ✅ Successfully completed €1 test transfer (April 22, 2026)
-2. ✅ Notification listener correctly parsed phone from concept
-3. ✅ No transfer rejections in subsequent testing
-4. ⏳ Pending: Full corridor testing (EUR→VES)
-
----
-
-## Future Considerations
-
-### If Bank Constraints Change
-If Bizum starts accepting underscores/hyphens in future:
-- **Do NOT migrate immediately**
-- Phone numbers work reliably; changing adds risk
-- Only consider migration if:
-  - Phone numbers create security/privacy issues
-  - New format provides significant advantage
-  - Backward compatibility can be maintained
-
-### Alternative Payment Systems
-Other corridors may have different constraints:
-- **PagoMóvil (Venezuela):** Test concept field constraints separately
-- **Mercado Pago (Argentina):** May have different rules
-- **SEPA transfers:** Longer concept fields, different character support
-
-**Action:** Document constraints per-corridor, not per-protocol.
-
----
-
-## Lessons Learned
-
-### 1. Test Early with Real Money
-- Paper specifications lie; bank APIs tell the truth
-- €1 test saved weeks of development on wrong approach
-- Always validate constraints with actual transfers
-
-### 2. Semantic != Practical
-- Beautiful identifiers (`ASG_VEN_001`) are worthless if rejected
-- Pragmatic solutions (phone numbers) beat elegant solutions that don't work
-
-### 3. Constraints Shape Design
-- This decision influenced notification listener architecture
-- Pattern matching logic built around phone number format
-- Verification flow designed for phone-based identity
-
-**Result:** The constraint made the implementation simpler, not harder.
-
----
-
-## Related Decisions
-
-- [Payment Timeout Window](decisions/payment-timeout-window.md) — Notification delay constraints
-
----
-
-## References
-
-- **Research:** `../research/RS042_bizum_concept_field_constraints.md`
-- **Implementation:** `/docs/android-app/notification-listener/bizum-android.md`
-- **User Flow:** `/docs/android-app/flows/sender-flows.md` (Step 7: Bizum payment)
-
----
-
-*Decision made: April 22, 2026*
-*Validated: €1 test transfer successful*
-*Status: Active, working as designed*
-
+Each decision documents:
+1. GOAL - What we wanted
+2. CONSTRAINT - Reality we faced
+3. ALTERNATIVES - Options considered
+4. DECISION - What we chose
+5. TRADE-OFFS - Gains/losses
+6. VALIDATION - Phase 0 metrics
+
+Principle: Document arbitrary parameters, validate empirically.
 
 ==============================================
-DISPUTE RESOLUTION
+1. TWO-STEP SETTLEMENT (PULL SYSTEM)
 ==============================================
 
-← [Back to Decisions](README.md)
-
-# Dispute Resolution Framework
-
-**Status:** Active (MVP)  
-**Category:** Trust & Safety  
-**Related:** [Two-Sided Confirmation](android-app/backend-apis/transaction-apis.md), [Merchant Flows](android-app/flows/merchant-flows.md)
-
----
-
-## The Problem
-
-**Two-sided confirmation requires both parties to agree:**
-- Merchant confirms: "I gave cash to recipient"
-- Recipient confirms: "I received cash from merchant"
-
-**What if they don't match?**
-
-| Merchant | Recipient | Scenario | Resolution Needed? |
-|----------|-----------|----------|-------------------|
-| ✅ Confirm | ✅ Confirm | Happy path | No |
-| ✅ Confirm | ❌ Deny | **Disputed delivery** | YES - Who's lying? |
-| ❌ Deny | ✅ Confirm | Merchant backing out | YES - Why no cash? |
-| ❌ Deny | ❌ Deny | Coordination failure | YES - What happened? |
-
-**Most common dispute:** Merchant confirms, recipient denies (fraud by one party).
-
----
-
-## The Decision: Phased Approach
-
-### Phase 0-1 (MVP): Escrow Manual Resolution
-
-**Who decides:** Escrow operator (trusted human)  
-**Timeline:** 24 hours max (accounts for time zones)  
-**Evidence:** Email submission from both parties  
-**Default:** Favor merchant (scarce resource, unless previous strikes)
-
-**Why this works for MVP:**
-- 1-2 trusted merchants (personally vetted)
-- Low volume (manual investigation feasible)
-- Small amounts (€50-100 max)
-- Trusted tester network (fraud unlikely)
-
----
-
-## 3-Strike Merchant System
-
-**Philosophy:** Progressive enforcement + permanent trust history
-
-### Strike 1: Internal Flag (PERMANENT)
-**Trigger:** First disputed transaction  
-**Impact:**
-- Recorded permanently (never removed, even after €20K successful txns)
-- Not visible to recipients
-- Enhanced warning to **recipient**: 
-  > ⚠️ **IMPORTANT:** Tell merchant to accept AFTER they hand you the cash!
-
-**Escrow action:** Internal investigation
-- Circumstances? (Internet outage, safety issue, misunderstanding?)
-- Evidence review (video, photos, witnesses)
-- Decision logged
-
-**Why permanent?** Trust signal - merchants with zero strikes are "pristine"
-
----
-
-### Strike 2: Public Warning (Redeemable)
-**Trigger:** Second disputed transaction  
-**Impact:**
-- Warning visible to recipients:
-  > ⚠️ This merchant has disputed transactions. Use caution.
-- Merchant can still operate
-- Recipients choose whether to proceed
-
-**Redemption:** Removed after **€2,000** worth of successful transactions  
-*(Arbitrary - validate during trials)*
-
-**Why redeemable?** Merchants in challenging environments (Honduras, rural areas) deserve second chance.
-
----
-
-### Strike 3: Final Warning (Permanent)
-**Trigger:** Third disputed transaction  
-**Impact:**
-- Severe warning to recipients:
-  > ⚠️ WARNING: Multiple disputes. Cash out at your own risk.
-- Merchant still operational (permissionless network)
-- Effectively "community flagged"
-
-**No redemption** - Pattern indicates systemic issue.
-
----
-
-## Safe Confirmation Sequence (Critical UX)
-
-**Self-auditing through proper sequencing:**
-
-```
-1. Recipient shows code to merchant
-2. Merchant enters code → Validates amount
-3. ⚠️ Merchant HANDS CASH to recipient (FIRST!)
-4. Merchant presses "I gave cash" (while recipient watches)
-5. Recipient presses "I received cash" (while merchant watches)
-6. Both confirmations FACE-TO-FACE
-```
-
-**UI Enforcement:**
-- Merchant screen: "⚠️ Hand cash BEFORE confirming"
-- Recipient screen: "Confirm AFTER receiving cash, in merchant's presence"
-
----
-
-## Evidence Collection
-
-**Escrow email:** `disputes@asgaya.org` (or similar)
-
-**Evidence hierarchy:**
-1. **Video** of transaction at register (gold standard)
-2. **Photos** of recipient with cash
-3. **GPS proof** (recipient was at merchant location)
-4. **Witness statements** (other customers, merchant staff)
-5. **Word-of-mouth** (lowest weight)
-
-**Merchant onboarding:** Ask "What hardware do you have?" (CCTV, camera, none)
-- Sets evidence expectations
-- Doesn't require it (low-tech environments)
-
-**Both parties can submit:**
-- Merchant: Proof of delivery
-- Recipient: Counter-evidence, explanation
-
----
-
-## Resolution Rules
-
-**Timeline:** 24h max from dispute flag
-
-**Default resolution (if evidence unclear):**
-- **Favor merchant** (scarce resource for network growth)
-- **Exception:** Merchant has Strike 1 or Strike 2 → scrutinize more carefully
-
-**Possible outcomes:**
-1. **Merchant wins** → BCH sent to merchant, transaction complete
-2. **Recipient wins** → EUR refunded to sender (minus €0.10 processing), merchant flagged
-3. **Insufficient evidence** → Favor merchant (default), but Strike 1 applied
-4. **Both at fault** → Split loss, both flagged
-
----
-
-## Open Questions (Validate in Trials)
-
-1. **Strike 2 redemption threshold:** Is €2,000 the right amount? Too high? Too low?
-2. **Strike 1 permanent record:** Should it ever expire? (€20K? €50K? Never?)
-3. **Evidence requirements:** Should video be mandatory at Strike 2?
-4. **Time zones:** Is 24h sufficient for global corridors?
-5. **Appeal process:** Should merchants be able to appeal Strike 2/3?
-
----
-
-## Phase 2+: Community Arbitration (Future)
-
-**Not for MVP - validate approach first:**
-
-### Dispute Pool Fee
-- Voluntary 0.1% fee on transactions → dispute resolution fund
-- Compensates edge cases where neither party has proof
-- First few hundred merchants: Give benefit of doubt (cost of real-world data)
-
-### Community Arbitrators
-- Trusted network members vote on disputes
-- 3-of-5 arbitrator consensus required
-- Arbitrators earn fee for participation
-- Prevents single point of failure (escrow operator)
-
-### Automated Evidence Verification
-- GPS timestamps (recipient at merchant location?)
-- Blockchain analysis (transaction timing patterns)
-- Machine learning fraud detection (repeat offenders)
-
-**When to add:** After 500+ successful transactions, when manual resolution doesn't scale.
-
----
-
-## Success Metrics
-
-**MVP (Phase 0-1):**
-- **<2% dispute rate** (most transactions complete smoothly)
-- **100% resolved in 24h** (no backlog)
-- **Zero Strike 3 merchants** (network stays healthy)
-
-**What would prove us wrong:**
-- **>10% dispute rate** → Trust model broken, need stronger verification
-- **Merchants gaming system** → Strike thresholds too lenient
-- **Recipient fraud epidemic** → Default should favor recipients instead
-
----
-
-## Related Research
-
-- **Safe confirmation UX** prevents most disputes before they happen
-- **Honduras merchant context** (unsafe environments → CCTV likely installed)
-- **Trust networks** (social reputation in local communities)
-
----
-
-## Contributors
-
-- **Framework design:** Suso + Coordination (May 5, 2026)
-- **Critical gap identified:** DeepSeek Review (May 4, 2026)
-
----
-
-**Last updated:** May 5, 2026  
-**Status:** Active (MVP)  
-**Next review:** After Phase 1 (50+ transactions, first dispute)
-
-**Line count:** 195 lines ✅
-
+GOAL: Eliminate BCH volatility for recipients
+CONSTRAINT: Push system exposes recipients to hours of volatility (BCH ±5% daily)
+
+DECISION: Pull system - recipient triggers execution
+- Step 1: Sender → Bizum → BCH seller posts covenant (0.107 BCH for €100)
+- Step 2: Recipient claims at merchant → Both sign → Executes in 30 seconds
+- Volatility window: 30 seconds (not hours)
+
+TRADE-OFFS:
+✅ 99% volatility reduction | ✅ EUR-denominated promise | ✅ No custody
+❌ Two-step process | ❌ 5-10 min covenant creation time
+
+VALIDATION: Track actual volatility impact (expect <0.5% variance)
 
 ==============================================
-FEE SPLITTING MODEL
+2. FEE SPLITTING MODEL (2-WAY)
 ==============================================
 
-# Decision: Fee Splitting Model - Three-Way Split
-
-**Decision Date:** April 2026
-**Status:** Implemented
-**Related Requirement:** [Promote Adoption](core-architecture/why-promote-adoption.md)
-
----
-
-> 💡 **TL;DR: How the 1% fee is split**
->
-> The 1% total fee is NOT split equally as "0.33% each." Instead:
-> - **Kraken exchange fee:** ~0.26% (deducted first)
-> - **Remaining 0.74%:** Split equally three ways = ~0.247% each
->
-> **Example (€100):** €1 total fee → €0.26 to Kraken + (€0.247 × 3) to participants
-
----
-
-## The Goal (Architectural Ideal)
-
-Create **economic incentives** for all participants to join and grow the Asgaya network.
-
-**Participants to incentivize:**
-1. **Escrow operators:** Coordinate transactions, provide infrastructure
-2. **Merchants:** Accept BCH, provide fiat liquidity to recipients
-3. **Liquidity Providers (LPs):** Provide fiat liquidity to merchants
-
-**Goal:** Maximize network growth by rewarding participation.
-
----
-
-## The Constraint (Economic Reality)
-
-**Total fee budget:** 1% of transfer amount (to beat 6.49% legacy average)
-
-**Fixed cost within that 1%:**
-- Exchange costs (Kraken fee): ~0.26%
-- **Remaining to distribute:** ~0.74%
-
-**Challenge:** Split 0.74% among 3 participants fairly while maintaining strong incentives for each.
-
----
-
-## Alternatives Considered
-
-### Option 1: Equal Three-Way Split
-
-**Model:** Divide remaining 0.74% equally among escrow, merchant, LP.
-
-**Distribution (€100 transfer):**
-- Escrow: €0.247 (0.247%)
-- Merchant: €0.247 (0.247%)
-- LP: €0.247 (0.247%)
-
-**Pros:**
-- Simple, fair, easy to understand
-- Each participant has equal stake in network growth
-- No favoritism
-
-**Cons:**
-- Doesn't account for different effort/capital requirements
-- Escrow does most work, same reward as others
-
-**Verdict:** ✅ Best balance despite equal split critique
-
----
-
-### Option 2: Escrow-Weighted (40/30/30)
-
-**Model:** Escrow gets larger share (40%) because they do most work.
-
-**Distribution (€100 transfer):**
-- Escrow: €0.296 (0.296%)
-- Merchant: €0.222 (0.222%)
-- LP: €0.222 (0.222%)
-
-**Pros:**
-- Rewards escrow for infrastructure/coordination work
-- Acknowledges capital requirements
-
-**Cons:**
-- Reduces merchant/LP incentive (network growth depends on them too)
-- More complex to explain
-- Arbitrary percentages (why 40/30/30 and not 50/25/25?)
-
-**Verdict:** ❌ Complexity not worth marginal benefit
-
----
-
-### Option 3: Merchant-Weighted (30/40/30)
-
-**Model:** Merchant gets larger share because they're hardest to recruit.
-
-**Distribution (€100 transfer):**
-- Escrow: €0.222 (0.222%)
-- Merchant: €0.296 (0.296%)
-- LP: €0.222 (0.222%)
-
-**Pros:**
-- Stronger merchant incentive (critical bottleneck)
-- Merchants take most regulatory/banking risk
-
-**Cons:**
-- Reduces escrow incentive (but escrow is easier to recruit)
-- Still arbitrary percentages
-
-**Verdict:** ⚠️ Tempting, but equal split simpler
-
----
-
-### Option 4: Dynamic Split Based on Corridor
-
-**Model:** Adjust split based on corridor difficulty (high-demand corridors pay more to LPs, low-demand pay more to merchants).
-
-**Example:**
-- **Easy corridor (EUR→VES):** 33/34/33 (merchant bonus)
-- **Hard corridor (EUR→CUB):** 33/33/34 (LP bonus)
-
-**Pros:**
-- Optimizes incentives per corridor
-- Attracts participants where most needed
-
-**Cons:**
-- Extremely complex
-- Requires real-time market analysis
-- Participants can't predict earnings
-- Harder to explain/trust
-
-**Verdict:** ❌ Save for V1.1 (dynamic reward modulation)
-
----
-
-### Option 5: Two-Way Split (No LP)
-
-**Model:** Merchants handle their own BCH→fiat conversion. Split only between escrow and merchant.
-
-**Distribution (€100 transfer):**
-- Escrow: €0.37 (0.37%)
-- Merchant: €0.37 (0.37%)
-- LP: €0 (doesn't exist)
-
-**Pros:**
-- Higher rewards for escrow and merchant
-- Simpler model (fewer participants)
-
-**Cons:**
-- **Excludes merchants who can't/won't handle BCH** (banking restrictions, risk aversion)
-- Reduces network growth potential
-- Limits corridors to crypto-friendly merchants only
-
-**Verdict:** ❌ Too limiting for permissionless goal
-
----
-
-## The Decision
-
-**Equal three-way split of remaining fees after exchange costs.**
-
-**Formula:**
-```
-Total fee: 1% of transfer
-Exchange cost: ~0.26%
-Remaining: ~0.74%
-
-Escrow share: 0.74% / 3 = 0.247%
-Merchant share: 0.74% / 3 = 0.247%
-LP share: 0.74% / 3 = 0.247%
-```
-
-**Example (€100 transfer):**
-- Total fee: €1.00
-- Exchange cost: €0.26
-- Escrow earns: €0.247
-- Merchant earns: €0.247
-- LP earns: €0.247
-
-**Rationale:**
-1. **Simple and transparent** (easy to explain, easy to verify)
-2. **Fair to all participants** (equal stake in network growth)
-3. **Maximizes trust** (no perception of favoritism)
-4. **Flexible for future** (can adjust later if data shows imbalance)
-
----
-
-## Implementation Details
-
-### How Fees Are Collected
-
-**Sender pays upfront:**
-- Sender transfers €101 (€100 + €1 fee)
-- Fee collected before BCH purchase
-
-### How Fees Are Distributed in case the merchant slects instant settlement
-
-**After merchant hands out cash to the recipient:**
-
-1. LP sends merchant €100.247 (merchant selected payment)
-2. Escrow sends LP €100.247 worth of BCH
-3. Remaining 0.247€ worth of BCH left at escrows exchange account 
-
-### Verification
-
-**Transparency mechanism:**
-- Every transaction shows itemized breakdown:
-  ```
-  Transfer amount: €100.00
-  Exchange cost:   €0.26 (Kraken)
-  Escrow fee:      €0.247
-  Merchant fee:    €0.247
-  LP fee:          €0.247
-  Total cost:      €1.00
-  ```
-- Participants can independently verify fees match formula
-- Public fee structure (no hidden charges)
-
----
-
-## Trade-offs Accepted
-
-### Lost: Optimized Incentives
-- Not tailored to effort/capital per participant
-- Doesn't account for corridor difficulty
-- Same split for all transfers (no dynamic adjustment)
-
-### Gained: Simplicity & Trust
-- Dead simple to understand
-- No arguments about fairness
-- Easy to verify
-- Builds trust with participants
-
-### Economic Impact
-- €0.247 per €100 transfer may not attract large-scale LPs initially
-- **Mitigation:** Volume growth compensates (100 transfers/day = €741/month)
-- **Future:** Dynamic rewards in V1.1 can optimize per corridor
-
----
-
-## Edge Cases
-
-### Case 1: No LP (Merchant Handles Cash-Out)
-
-**Scenario:** Merchant willing to hold BCH.
-The reward is split equaly between the merchant and the escrow
-
-- Total fee: €1.00
-- Exchange cost: €0.26
-- Escrow earns: €0.37
-- Merchant earns: €0.37
-
-**After merchant hands out cash to the recipient:**
-
-- Escrow buys 101€ worth of BCH
-- Escrow sends 100.37€ worth of BCH to the Merchant earns €0.37 total (50% more)
-- Simpler flow (fewer participants)
-
-**Implementation:** Merchant flags No instant settlement required funds go straigh to the the merchant BCH wallet.
-
----
-
-### Case 2: Escrow is Also LP
-
-**Scenario:** Escrow provides both coordination AND fiat liquidity.
-
-**Solution:**
-- Escrow earns both fees (€0.247 + €0.247 = €0.494)
-- Merchant still earns €0.247
-- Escrow takes on more work/capital, earns more
-
-**Implementation:** Escrow flags "I provide fiat liquidity" in app.
-
----
-
-### Case 3: Multiple LPs (Future)
-
-**Scenario:** 3 LPs compete to provide fiat to merchant.
-
-**Solution:** the fastest LP to accept the bounty gets the fee.
-
-**For now:** Not implemented (single LP per corridor on the initial beta test)
-
----
-
-## Validation
-
-**How we verify this decision:**
-- ✅ Participants understand the model (tested with beta users)
-- ✅ Fee breakdown transparent in app UI
-- ⏳ Pending: Real transfers to validate payout mechanism
-- ⏳ Pending: Participant feedback on incentive adequacy
-
----
-
-## Future Considerations
-
-### V1.1: Dynamic Reward Modulation
-
-**Concept:** Adjust split based on real-time supply/demand.
-
-**Example:**
-- If LPs are scarce in EUR→VES corridor → LP fee increases to 0.35%
-- If merchants are abundant → Merchant fee decreases to 0.20%
-- Escrow fee remains stable (infrastructure provider)
-
-**See:** [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md)
-
-**Why not now:**
-- Need baseline data (what's "scarce"? what's "abundant"?)
-- V1 establishes market rates
-- V1.1 optimizes based on real usage
-
----
-
-## Related Decisions
-
-- [Two-Step Settlement](core-architecture/why-eliminate-volatility.md) — Why we can afford 10-minute timeouts (escrow holds EUR, not BCH)
-- [Promote Adoption](core-architecture/why-promote-adoption.md) — Why incentives matter more than ideology
-
----
-
-## Related Concepts
-
-- [BCH Miners as Escrows](concepts/bch-miners-as-escrows.md) — How miners benefit from dual revenue
-- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Future optimization
-
----
-
-## Lessons Learned
-
-### 1. Simplicity Wins
-- Equal split easier to understand than weighted split
-- Trust comes from transparency, not optimization
-- Can always optimize later with data
-
-### 2. Volume > Percentage
-- Small share of large volume > Large share of small volume
-- Focus on network growth, not fee maximization
-
-### 3. Flexibility Matters
-- Equal split works for merchant-only, escrow-LP hybrid, etc.
-- One formula, multiple configurations
-- Reduces implementation complexity
-
----
-
-## References
-
-- **Architecture:** `/docs/core-architecture/why-promote-adoption.md`
-- **Implementation:** `/docs/android-app/flows/` (all flows show fee breakdown)
-- **Concepts:** `/docs/concepts/bch-miners-as-escrows.md`
-
----
-
-*Decision made: April 2026*
-*Validated: Beta user feedback positive*
-*Status: Active, working as designed*
-
+GOAL: Incentivize participants while maintaining regulatory compliance
+CONSTRAINT: Protocol fee triggers PSD2/MiCA licensing
+
+DECISION: 0.5% Seller + 0.5% Merchant + 0% Protocol
+
+€100 transfer breakdown:
+- Sender pays: €1.00 (1%)
+- BCH seller gets: €100.50 (€0.50 fee + €100 principal)
+- Merchant gets: €0.50 in BCH
+- Protocol gets: €0.00 (regulatory compliance)
+
+BCH SELLER HEDGE: Better than holding in both directions
+- BCH drops 5%: Seller €102.19 vs €101.65 holding (+€0.54)
+- BCH rises 5%: Seller €112.81 vs €112.35 holding (+€0.46)
+- 94% converted to fiat immediately (minimal volatility exposure)
+
+TRADE-OFFS:
+✅ Regulatory compliant | ✅ Both parties incentivized | ✅ Simple
+❌ No protocol revenue | ❌ No dynamic optimization
+
+VALIDATION: Survey if 0.5% attracts sufficient participants (target: >5 active)
 
 ==============================================
-HOW MARKET RATE EXCHANGES
+3. OVERCOLLATERALIZATION RATE (7%)
 ==============================================
 
-# How: Market-Rate Exchanges
+GOAL: Absorb BCH volatility without frequent margin calls
+CONSTRAINT: BCH moves ±3-5% daily, ±8-10% in volatile periods
 
-**Satisfies:** [Why: Market-Rate Exchanges](core-architecture/why-market-rate-exchanges.md)
+ALTERNATIVES: 5% (too risky) | 10% (capital-inefficient) | 15% (kills returns)
 
-**Decision Category:** Implementation Approach
+DECISION: 7% fixed overcollateralization
+- €100 transfer requires 0.107 BCH collateral (€107 at creation)
+- Normal volatility (±3-5%): Buffer absorbs, no action
+- Extreme volatility (>7% drop): Margin call triggered
 
----
+MARGIN CALL: Seller has 60 min to add BCH or let refund trigger
 
-## The Goal
+TRADE-OFFS:
+✅ Absorbs 95% of daily volatility | ✅ Capital-efficient
+❌ 5% edge cases trigger refund | ❌ 7% capital lockup
 
-Use real market exchange rates with zero markup, bypassing both private company spreads and government-imposed rate manipulation.
-
----
-
-## The Constraint
-
-**We need a reliable source for market rates that:**
-1. Provides EUR/BCH pairs (sender currency)
-2. Has sufficient liquidity (can handle our volume)
-3. Exposes public API (we can verify rates)
-4. Is accessible to escrows (no excessive KYC burden)
-5. Has transparent fee structure (we can calculate exact costs)
-
-**Additional constraint:** Recipients need local currency (VES, ARS, HNL, etc.), but exchanges don't offer direct BCH/VES pairs.
-
----
-
-## The Decision
-
-### Two-Stage Rate Discovery
-
-**Stage 1: EUR → BCH (Kraken)**
-- Escrow uses Kraken exchange for fiat-to-BCH conversion
-- Market rate publicly visible and verifiable
-- API access for automated trading
-
-**Stage 2: BCH → Local Currency (Local Market)**
-- Merchant or LP uses local P2P markets
-- Rates set by local supply/demand
-- No artificial government rates
-
-**Why this works:** BCH serves as the bridge currency, bypassing government control at both ends.
-
----
-
-## How It Works
-
-### DolarAPI + Kraken Integration
-
-**EUR → Local Currency rate calculation:**
-
-1. **Local Currency Rate Discovery (DolarAPI):**
-   - Query DolarAPI for real-time blue dollar rate: `https://dolarapi.com/v1/dolares/blue`
-   - Response includes: `venta` (sell rate - what merchant receives), `compra` (buy rate)
-   - Use `venta` for merchant receiving local currency
-   - **Why DolarAPI:** Open source, tracks real market (blue dollar), free, can host/audit/fork/contribute
-   - **Tested:** €1 → 1,659.10 ARS vs hardcoded 1,522.80 = 9% more accurate!
-   - **Research:** [RS047 DolarAPI Venezuela Rates](research/RS047_dolarapi_venezuela_rates.md)
-
-2. **EUR/USD Rate Discovery (Kraken):**
-   - Query Kraken for EUR/USD rate (not BCH directly)
-   - Combine: EUR/USD rate × Local/USD rate = EUR/Local rate
-   - Example: €1 × 1.1685 (EUR/USD) × 1,420 (ARS/USD blue) = 1,659.10 ARS
-   - **Concept:** [Live Exchange Rates](concepts/live-exchange-rates.md)
-
-3. **BCH Purchase (Settlement Phase):**
-   - After merchant confirms local currency received, escrow buys BCH on Kraken
-   - Escrow places market order via Kraken trading API
-   - Amount: €100 worth of BCH at current market rate
-   - Receives: ~0.260 BCH (varies with BCH/EUR price)
-   - **Research:** [RS044 Kraken Trading & Withdrawal](research/RS044_kraken_trading_withdrawal.md)
-
-4. **Fee Calculation:**
-   - Kraken charges ~0.26% maker/taker fee on BCH purchase
-   - Exact fee deducted from BCH amount received
-   - Remaining BCH is what gets distributed to LP/merchant/escrow
-   - **Research:** [RS045 Kraken Complete Fee Analysis](research/RS045_kraken_complete_fee_analysis.md)
-
-5. **Rate Transparency:**
-   - Sender sees in app: "€100 → 1,659.10 ARS" (live DolarAPI rate)
-   - Recipient sees: "Claim 1,659.10 ARS at merchant"
-   - Rates verifiable: DolarAPI.com (public), Kraken EUR/USD (public)
-   - No hidden markup - just Kraken trading fee (~0.26%)
-
-**Why DolarAPI specifically:**
-- **Open source** - We can fork and contribute if needed
-- **Tracks real market** - Blue dollar rate, not government-imposed official rate
-- **Free** - No API fees, no rate limiting issues
-- **Simple** - Clean JSON API, easy integration
-- **Proven accurate** - Real test showed 9% improvement over hardcoded rates (€1 → 1,659.10 ARS vs 1,522.80)
-- **Can self-host** - If DolarAPI goes down, we can run our own instance
-
-**Technical implementation:**
-- Escrow maintains Kraken API credentials (encrypted)
-- DolarAPI queried with 5-minute cache (blue dollar doesn't move that fast)
-- Automated BCH purchase upon settlement confirmation
-- Real-time rate display in sender app
-- **Research:** [RS018 Kraken Setup](research/RS018_kraken_setup.md), [RS019 Kraken Query](research/RS019_kraken_query.md)
-
-### Local Market Rate Discovery
-
-**BCH → Local Currency:**
-
-**Option A: Merchant sets rate (direct cash-out)**
-- Merchant checks local BCH/VES rate on P2P markets
-- Quotes rate to recipient
-- Recipient accepts or declines
-- **Competitive pressure:** If merchant quotes bad rate, recipient goes elsewhere
-
-**Option B: LP provides rate (instant settlement)**
-- LP monitors local exchange rates (e.g., DolarAPI for Venezuela)
-- LP sends fiat to merchant at agreed rate
-- LP receives BCH from escrow
-- **Research:** [RS047 DolarAPI Venezuela Rates](research/RS047_dolarapi_venezuela_rates.md)
-
-**Rate verification:**
-- Recipient can check local P2P market rates online
-- Merchant rate must be within 1-2% of market
-- Competition prevents gouging
-- **Concept:** [Market Making Partners](concepts/market-making-partners.md)
-
----
-
-## Alternatives Considered
-
-### Alternative 1: Use Stablecoin Pegs (USDC, USDT)
-
-**Advantages:**
-- No volatility exposure
-- Predictable amounts
-- Many fiat pairs available
-
-**Disadvantages:**
-- Requires trust in central issuer (defeats permissionless)
-- Subject to account freezes and blacklists
-- Regulatory compliance burden
-- **Decision:** Rejected (conflicts with permissionless requirement)
-
-### Alternative 2: Multiple Exchange Integration
-
-**Advantages:**
-- Route splitting for better rates
-- Redundancy if one exchange fails
-- Arbitrage opportunities
-
-**Disadvantages:**
-- Increased complexity
-- More API integrations to maintain
-- KYC burden multiplied
-- Diminishing returns (Kraken liquidity sufficient)
-- **Decision:** Deferred to V2 (not needed for MVP)
-
-### Alternative 3: DEX (Decentralized Exchange)
-
-**Advantages:**
-- No KYC required
-- Censorship-resistant
-- Aligns with permissionless vision
-
-**Disadvantages:**
-- Low EUR/BCH liquidity on DEXs
-- Higher slippage on large orders
-- Smart contract risks
-- Complexity for escrow operators
-- **Decision:** Monitor for future (not viable today)
-
----
-
-## Trade-offs Made
-
-### ✅ What We Gain
-
-**Transparency:**
-- All rates publicly verifiable
-- No hidden spreads
-- User can audit every transaction
-
-**Bypass government control:**
-- BCH is global, no single government controls price
-- Local P2P markets set fair rates
-- No artificial exchange rate enforcement
-
-**Simplicity:**
-- Single exchange integration (Kraken)
-- Well-documented API
-- Proven reliability
-
-### ❌ What We Give Up
-
-**Optimization:**
-- Could get better rates by splitting orders across exchanges
-- Could arbitrage between exchanges
-- **Trade-off:** Simplicity over optimization
-
-**Decentralization:**
-- Kraken is centralized (single point of failure)
-- Escrows depend on Kraken access
-- **Trade-off:** Pragmatism over purity
-
-**Flexibility:**
-- Locked to Kraken's fee structure
-- Can't negotiate better rates
-- **Trade-off:** Fixed costs for predictability
-
----
-
-## Validation
-
-### How We Verify This Works
-
-**Test 1: Rate Matching**
-- Compare app-displayed rate with Kraken public ticker
-- Should match within 0.1%
-- **Status:** Can verify in real-time
-
-**Test 2: Fee Transparency**
-- Calculate expected BCH received based on rate
-- Compare with actual BCH received
-- Difference should equal Kraken fee only
-- **Status:** Verifiable per transaction
-
-**Test 3: Local Rate Competitiveness**
-- Compare merchant BCH/VES rate with local P2P markets
-- Should be within 1-2% of market rate
-- **Status:** Requires field testing
-
----
-
-## Implementation Status
-
-- ✅ **Research:** Kraken API documented (RS017-RS019, RS036, RS044-RS045)
-- ✅ **Research:** EUR/BCH exchange landscape (RS016)
-- 🔄 **Development:** Kraken integration in escrow app
-- 🔄 **Development:** Rate display in sender app
-- ❌ **Field test:** Local market rate discovery
-- ❌ **Field test:** Merchant rate competitiveness verification
-
----
-
-## Related Decisions
-
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — When BCH is purchased affects rate used
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How exchange fees affect fee distribution
-- Decision: Kraken Exchange Selection (coming soon) — Why Kraken specifically
-
----
-
-## Related Concepts
-
-- [Pull System](concepts/pull-system.md) — How pull-based settlement enables rate locking
-- [Market Making Partners](concepts/market-making-partners.md) — How LPs provide local market rates
-
----
-
-## References
-
-**Research:**
-- [RS016: EUR/BCH Exchanges](research/RS016_EUR_BCH_exchanges.md)
-- [RS017: Kraken Overview](research/RS017_kraken.md)
-- [RS018: Kraken Setup](research/RS018_kraken_setup.md)
-- [RS019: Kraken Query](research/RS019_kraken_query.md)
-- [RS036: Kraken Ticker API](research/RS036_kraken_ticker_api.md)
-- [RS044: Kraken Trading & Withdrawal](research/RS044_kraken_trading_withdrawal.md)
-- [RS045: Kraken Complete Fee Analysis](research/RS045_kraken_complete_fee_analysis.md)
-- [RS041: Cross-Corridor Exchange Rates](research/RS041_cross_corridor_exchange_rates.md)
-- [RS047: DolarAPI Venezuela Rates](research/RS047_dolarapi_venezuela_rates.md)
-
----
-
-*Decision made: April 2026*
-*Last updated: May 1, 2026*
-
+VALIDATION: Track margin call frequency (target: <10%)
+⚠️ CRITICAL: Arbitrary parameter, MUST validate with real data
 
 ==============================================
-PAYMENT TIMEOUT WINDOW
+4. COVENANT TIMEOUT (24 HOURS)
 ==============================================
 
-# Decision: Payment Timeout Window - 10 Minutes
+GOAL: Prevent indefinite lockup, give recipients reasonable claim time
+CONSTRAINT: Recipients need time to reach merchant (rural, work schedules)
 
-**Decision Date:** April 2026
-**Status:** Implemented
-**Related Requirement:** [Permissionless](core-architecture/why-permissionless.md) ([Error Mitigation](core-architecture/why-permissionless.md#error-prevention)), [Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) (Volatility Protection)
+ALTERNATIVES: 6h (too tight) | 12h (better but tight) | 48h (too long)
 
----
+DECISION: 24-hour timeout with split refund
 
-## The Goal (Architectural Ideal)
+HOW IT WORKS:
+- T+0: Covenant created, recipient notified
+- T+18h: Warning notification (6 hours left)
+- T+23h: Final warning (1 hour left)
+- T+24h: Split refund if unclaimed
 
-**Automated payment from Asgaya app** - sender initiates payment without leaving the app.
+SPLIT REFUND:
+- Merchant portion (€100.50) → Sender
+- Seller portion (€6.50 - €0.10 fee) → BCH seller
+- Processing fee: €0.10 (covers BCH network cost)
 
-**Why we wanted this:**
-- Seamless user experience (no app switching)
-- Instant payment confirmation (no waiting for sender to complete payment manually)
-- Zero uncertainty (payment guaranteed once initiated)
+TRADE-OFFS:
+✅ Sufficient time for 95%+ recipients | ✅ Automated refund | ✅ Fair distribution
+❌ Capital locked up to 24h | ❌ Sender uncertainty
 
-**Ideal flow:**
-1. Sender taps "Send €100" in Asgaya app (t=0)
-2. **Asgaya app automatically initiates Bizum payment** via banking API (t=1s)
-3. Escrow receives notification (t=2s)
-4. Escrow confirms funds → notifies recipient (t=3s)
-5. **Total time: <5 seconds**
-
-**Why this is the ideal:**
-- Eliminates sender errors (wrong amount, wrong recipient)
-- Eliminates timeout issues (payment happens instantly)
-- Perfect user experience (one-tap payment)
-
----
-
-## The Constraint (Reality Check)
-
-### Constraint 0: Cannot Automate Payment (Terms of Service)
-
-**The fundamental constraint:** We cannot automate Bizum payments from the Asgaya app.
-
-**Why not:**
-- **Violates banking terms of service** - Taking control of a user's banking app to initiate payments would breach ToS for virtually all banks
-- **Security risk** - Automating banking app interactions requires access to banking credentials (unacceptable security model)
-- **Legal liability** - Unauthorized automation could expose users and Asgaya to legal consequences
-- **Should not, not cannot** - Technically possible in some edge cases, but ethically/legally wrong
-
-**Implication:**
-- **Sender must manually initiate payment** in their banking app (outside Asgaya)
-- This introduces uncertainty: Did sender actually send it? When?
-- This is where the timeout becomes necessary
-
-**Future consideration:**
-- Some banks may offer official APIs for payment initiation (Open Banking, PSD2 in EU)
-- When/if available in supported corridors, we can reduce timeout significantly
-- **For now:** Assume 99%+ of payments require manual initiation
-
----
-
-### Constraint 1: Notification Delays
-
-**Real-world observation:**
-- Banking app notifications arrive **anywhere from seconds to 10 minutes after payment**
-- Delay varies by:
-  - Time of day (peak hours slower)
-  - Mobile carrier (network congestion)
-  - Bank processing time (not consistent)
-  - App vs push notification delivery
-
-**Testing data (from hundreds of Bizum transfers):**
-- Fastest observed: A few seconds
-- Slowest observed: ~8 minutes
-- Median: ~3 minutes
-- 95th percentile: ~7 minutes
-
-**Note:** Most banking apps use push notifications, not SMS. This simplifies implementation but doesn't eliminate delays.
-
----
-
-### Constraint 2: Sender Behavior Variability
-
-**Discovery:** Senders take different amounts of time to complete the payment.
-
-**Real-world scenario:**
-- Some senders have Bizum ready: 30 seconds
-- Others need to set up Bizum first: 5 minutes
-- Some get distracted mid-flow: Could take longer
-
-**Challenge:**
-- Can't rely on sender confirming "I sent it" (what if they forget?)
-- Timer must start when instructions are shown
-- Must accommodate both fast and slow senders
-
-**Result:** Need generous timeout to avoid false failures.
-
----
-
-### Constraint 3: Multiple Payment Sources
-
-**Discovery:** Escrows receive payments from many sources, not just Asgaya.
-
-**Real-world scenario:**
-- Escrow might receive 10 Bizum payments/day
-- Only some are Asgaya-related
-- Others are: personal transfers, refunds, business payments
-
-**Challenge:**
-- Must match notification against pending transfers
-- Requires fuzzy matching (encoding can vary)
-- Need time buffer for matching algorithm
-
----
-
-## Alternatives Considered
-
-### Option 1: 30-Second Timeout (Optimistic)
-
-**Assumption:** Sender completes payment and notification arrives within 30 seconds.
-
-**Pros:**
-- Best user experience
-- Fastest possible flow
-
-**Cons:**
-- Fails for real-world sender behavior (many take >30s just to open bank app)
-- Notification delays mean most transfers would timeout
-- Forces constant manual intervention
-
-**Verdict:** ❌ Unrealistic based on testing
-
----
-
-### Option 2: 5-Minute Timeout (Moderate)
-
-**Assumption:** Most senders complete payment and notification arrives within 5 minutes.
-
-**Pros:**
-- Covers median case (~3 min notification + reasonable sender time)
-- Acceptable user experience
-- Reduces failures significantly
-
-**Cons:**
-- Still fails for slower senders or delayed notifications (~20% of transfers)
-- Forces fallback handling too often
-- Not enough buffer for edge cases
-
-**Verdict:** ⚠️ Close, but insufficient buffer
-
----
-
-### Option 3: 10-Minute Timeout (Pragmatic)
-
-**Assumption:** Nearly all senders complete payment and notifications arrive within 10 minutes.
-
-**Pros:**
-- Covers 95%+ of real-world scenarios
-- Accommodates slow senders + notification delays
-- Rare timeouts (only extreme outliers)
-- Gives buffer for fuzzy matching algorithms
-
-**Cons:**
-- Slightly slower user experience for fast senders (but they still complete in ~3 min)
-- Longer uncertainty window
-
-**Verdict:** ✅ Best balance of reliability vs. speed
-
----
-
-### Option 4: 20-Minute Timeout (Over-Engineered)
-
-**Assumption:** Cover 99.9% of cases.
-
-**Pros:**
-- Almost never times out
-- Maximum reliability
-
-**Cons:**
-- Unnecessarily long for 95% of transfers
-- Poor user experience (perceived as slow)
-- Doesn't add meaningful value over 10 minutes
-
-**Verdict:** ❌ Diminishing returns
-
----
-
-## The Decision
-
-**Use 10-minute timeout window for escrow to receive and confirm payment.**
-
-**Rationale:**
-1. **Covers 95%+ of real-world scenarios** (fast + slow senders, typical notification delays)
-2. **Balances reliability vs. speed** (rare timeouts, acceptable wait time)
-3. **No volatility risk** (escrow holds EUR during this window, BCH purchased AFTER recipient cashes out)
-4. **Simple user experience** (no "confirm I sent it" button - system handles automatically)
-
-**Implementation:**
-- **Timer starts:** When sender receives payment instructions
-- **Timer ends:** When escrow parses notification from sender OR when 10 minutes elapses
-- **If notification received:** Escrow confirms funds → notifies recipient
-- **If timeout (10 min):** System asks sender "Did you send the payment?"
-  - If yes → Manual verification
-  - If no → "Do you still want to proceed?"
-
----
-
-## Implementation Details
-
-### Sender Experience
-
-1. Sender receives payment instructions in Asgaya app (includes escrow Bizum details, amount €101, concept field with recipient phone)
-2. **Timer starts automatically: "Waiting for payment... (0:00 / 10:00)"**
-3. Sender leaves app, opens bank app, sends Bizum
-4. Sender can close bank app and wait (no need to return to Asgaya app)
-5. Typical wait: 2-5 minutes
-6. Notification: "Payment received! Notifying recipient..."
-
-**If timeout:**
-- "We haven't detected your payment yet. Did you send it?"
-- Options: "Yes, I sent it" (manual review) / "No, give me more time" / "Cancel"
-
----
-
-### Escrow Experience
-
-1. Generates payment instructions for sender
-2. **Starts monitoring for notifications** (checks every 15-30 seconds)
-3. Receives Bizum notification from bank app
-4. **Fuzzy matches** notification against pending Asgaya transfers:
-   - Strips non-numeric characters from concept field
-   - Matches phone number
-   - Validates amount (€101)
-5. If match found → Confirms funds received
-6. **Holds EUR** (does NOT buy BCH yet)
-7. Notifies recipient: "Funds ready for cash-out"
-
----
-
-### Recipient Experience
-
-1. Receives notification: "€100 transfer ready - go to merchant to cash out"
-2. Goes to participating merchant
-3. Shows transaction ID to merchant
-4. Merchant enters code in Asgaya merchant app
-5. Merchant hands cash (VES) to recipient
-6. Both confirm cash-out in app
-
----
-
-### Settlement (After Cash-Out Confirmed)
-
-**If merchant selected instant settlement (3 participants):**
-1. LP sends €100 fiat to merchant
-2. Merchant app parses fiat settlement notification from LP
-3. **Escrow buys €101 worth of BCH** (e.g., 0.1007374 BCH lands in hot wallet)
-4. Calculate fee: 0.1007374 - 0.1000000 = 0.0007374 BCH
-5. Split 3 ways: 0.0007374 / 3 = 0.0002458 BCH each
-6. Escrow sends to LP: 0.1002458 BCH (€100 principal + 0.0002458 BCH fee)
-7. Escrow sends to merchant: 0.0002458 BCH (fee only, merchant already has fiat from LP)
-8. Escrow keeps: 0.0002458 BCH
-
-**Volatility window:** Seconds (from BCH purchase to LP receipt)
-
-**If merchant holds BCH (2 participants):**
-1. **Escrow buys €101 worth of BCH** (e.g., 0.1007374 BCH)
-2. Calculate fee: 0.0007374 BCH
-3. Split 2 ways: 0.0007374 / 2 = 0.0003687 BCH each
-4. Escrow sends to merchant: 0.1003687 BCH
-5. Escrow keeps: 0.0003687 BCH
-
-**Volatility window:** Seconds
-
----
-
-## Trade-offs Accepted
-
-### Lost: Instant Confirmation
-- Cannot achieve <1 minute sender-to-escrow confirmation
-- Must accommodate real-world sender behavior + notification delays
-- 2-10 minute typical wait
-
-### Gained: Reliability
-- 95%+ automatic confirmation (no manual intervention)
-- Rare timeouts (<5%)
-- Simple user experience (no "confirm I sent it" button needed)
-
-### Volatility Risk: Near Zero
-- **10-minute timeout is NOT a volatility window**
-- Escrow holds EUR during timeout (zero volatility)
-- BCH only purchased AFTER recipient cashes out (settlement in seconds)
-- **Total volatility exposure: ~5-30 seconds** (from BCH purchase to LP/merchant receipt)
-
----
-
-## Fuzzy Matching Strategy
-
-**Challenge:** Banking app notifications can have minor encoding variations.
-
-**Solution:** Fuzzy matching on concept field (phone number).
-
-**Algorithm:**
-```
-1. Strip all non-numeric characters from concept field
-2. Compare numeric-only phone numbers
-3. If exact match → Accept
-4. If no match → Try Levenshtein distance ≤2
-5. If still no match → Flag for manual review
-```
-
-**Example:**
-```
-Expected: 584121234567
-Received: +58 412 123 4567 (with spaces and +)
-→ Normalize both: 584121234567 vs 584121234567
-→ Exact match → Accept
-```
-
-**Trade-off:** Minimal false positive risk (mitigated by amount validation - must match €101)
-
----
-
-## Validation
-
-**How we verify this decision:**
-- ✅ 95%+ of transfers confirmed within 10 minutes (hundreds of Bizum tested)
-- ✅ Timeout rate <5%
-- ✅ No false positives observed (fuzzy matching + amount validation works)
-- ⏳ Pending: Full corridor testing (EUR→VES with real cash-outs)
-
-**Metrics to track:**
-- Average confirmation time (target: 3-5 minutes)
-- Timeout rate (target: <5%)
-- Manual intervention rate (target: <5%)
-
----
-
-## Future Considerations
-
-### If Notification Delays Improve
-- Monitor median confirmation time over 3+ months
-- If consistently <2 minutes → consider reducing to 5-minute timeout
-- **Do NOT reduce prematurely** (reliability > speed)
-
-### If Notification Delays Worsen
-- Monitor timeout rate
-- If >10% timeouts for 1+ month → extend to 15 minutes
-- Communicate with user community
-
-### Alternative Notification Methods
-- **Bank APIs:** If banks offer webhook APIs, could reduce to 1-2 minute timeout
-- **Direct integrations:** If bank allows direct Bizum API access, eliminate notification dependency
-- **For now:** Banking app notifications are most reliable method
-
----
-
-## Related Decisions
-
-- [Bizum Concept Field](decisions/bizum-concept-field.md) — Why phone numbers (enables simple fuzzy matching)
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — Why escrow holds EUR during timeout (zero volatility)
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees are calculated after BCH lands in wallet
-
----
-
-## Lessons Learned
-
-### 1. Real-World Latency Always Wins
-- Paper specs say "instant" but reality says "minutes"
-- Design for 95th percentile, not median
-- 10-minute buffer is prudent, not wasteful
-
-### 2. Don't Ask Users to Confirm
-- "Did you send it?" button adds friction
-- Better to auto-detect and only ask on timeout
-- Users appreciate "it just works" experience
-
-### 3. Volatility Mitigation Enables Longer Timeouts
-- Because escrow holds EUR (not BCH) during timeout, 10 minutes is completely acceptable
-- Actual volatility window is seconds (settlement phase), not minutes
-- **Two-step settlement architecture enables this pragmatic decision**
-
-### 4. Simple > Perfect
-- Could implement complex retry logic, exponential backoffs, etc.
-- 10-minute timeout with simple fallback is more reliable
-- Users prefer predictable behavior over optimization
-
----
-
-## References
-
-- **Implementation:** `/docs/android-app/notification-listener/bizum-android.md`
-- **User Flow:** `/docs/android-app/flows/sender-flows.md`
-- **Testing Data:** Hundreds of real Bizum transfers (internally tested)
-
----
-
-*Decision made: April 2026*
-*Validated: 95%+ success rate over hundreds of transfers*
-*Status: Active, proven design*
-
+VALIDATION: Track claim times (expect: 80% within 6h, 95% within 12h, 99% within 24h)
 
 ==============================================
-TWO STEP SETTLEMENT TIMING
+5. EXCHANGE RATE HANDLING
 ==============================================
 
-# Decision: Two-Step Settlement - Pull-Based BCH Purchase
-
-**Decision Date:** April 2026
-**Status:** Implemented
-**Related Requirement:** [Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) (Volatility Protection)
-
----
-
-## The Goal (Architectural Ideal)
-
-**Eliminate cryptocurrency volatility risk** from the remittance process.
-
-**Problem to solve:**
-- BCH price can fluctuate 5-10% in minutes
-- If sender commits €100 but BCH drops 5% before settlement, recipient gets €95 worth of value
-- Volatility risk is the #1 barrier to crypto remittances
-
-**Ideal outcome:**
-- Sender knows exact EUR amount at time of transfer
-- Recipient receives exact VES amount expected
-- No surprises from BCH price movements
-
----
-
-## The Constraint (Economic Reality)
-
-**Challenge:** When to buy BCH in the process?
-
-**Critical insight:** Buying BCH too early exposes someone to volatility risk.
-
-**Participants who could bear risk:**
-1. **Sender:** Pays EUR upfront, expects recipient to get exact VES amount
-2. **Escrow:** Receives EUR, must decide when to buy BCH
-3. **Merchant:** Hands cash to recipient, receives BCH later
-4. **LP:** Sends fiat to merchant, receives BCH as payment
-5. **Recipient:** Receives VES, holds BCH until spending
-
-**Question:** Who should bear the volatility risk, and when should BCH be purchased?
-
----
-
-## Alternatives Considered
-
-### Option 1: Immediate BCH Purchase (Push Model)
-
-**Flow:**
-1. Sender pays €101 to escrow (via Bizum)
-2. **Escrow immediately buys BCH** (€100 worth at current rate)
-3. Escrow waits for recipient to cash out at merchant (2-60 min)
-4. Merchant hands VES to recipient
-5. Escrow sends BCH to merchant or LP
-
-**Pros:**
-- Simple, linear flow
-- Sender gets instant BCH price lock
-- No coordination delay
-
-**Cons:**
-- **Escrow holds BCH for unknown duration** (waiting for recipient to cash out)
-- If BCH drops 2% → Escrow loses €2 per €100 transfer
-- If BCH rises 2% → Escrow profits €2 (but can't rely on this)
-- **Unsustainable for escrow** (gambling on volatility)
-
-**Verdict:** ❌ Exposes escrow to unacceptable risk
-
----
-
-### Option 2: Delayed BCH Purchase After Recipient Gets VES
-
-**Flow:**
-1. Sender pays €101 to escrow (via Bizum)
-2. Escrow holds EUR (no BCH purchased yet)
-3. Escrow notifies recipient "funds ready for cash-out"
-4. Recipient goes to merchant, receives VES
-5. **Escrow buys BCH** after merchant confirms cash-out
-6. Escrow sends BCH to merchant or LP
-
-**Pros:**
-- Escrow holds EUR during uncertainty (no volatility risk)
-- BCH purchased only after recipient has VES
-- Volatility window reduced to settlement phase only
-
-**Cons:**
-- Still has brief volatility exposure during BCH settlement (seconds to minutes)
-- Requires merchant to send VES before receiving BCH (trust requirement)
-
-**Verdict:** ✅ Good approach, but can we reduce volatility further?
-
----
-
-### Option 3: Two-Step Settlement (Pull-Based BCH Purchase)
-
-**Flow:**
-1. **Step 1: Fiat transfer (EUR→VES)**
-   - Sender pays €101 to escrow (via Bizum)
-   - Escrow holds EUR (no BCH purchased yet)
-   - Escrow notifies recipient "funds ready for cash-out"
-   - Recipient goes to merchant, shows transaction ID
-   - **Merchant hands VES to recipient** (BCH not involved yet)
-   - Merchant confirms cash-out in app
-
-2. **Step 2: BCH settlement (happens AFTER recipient has VES)**
-   - **If merchant selected instant settlement:**
-     - LP sends €100.247 fiat to merchant
-     - Merchant app parses fiat notification from LP
-     - **Escrow buys BCH** (€101 worth at current rate)
-     - Escrow sends €100.247 worth of BCH to LP
-     - Escrow sends €0.247 worth of BCH to merchant (fee)
-     - Escrow keeps €0.247 worth of BCH (fee)
-
-   - **If merchant holds BCH (no instant settlement):**
-     - **Escrow buys BCH** (€101 worth at current rate)
-     - Escrow sends €100.37 worth of BCH to merchant
-     - Escrow keeps €0.37 worth of BCH (fee split 2 ways)
-
-**Pros:**
-- **Recipient has VES immediately** (no volatility risk on the actual remittance)
-- **Escrow only buys BCH after LP sends fiat** (settlement happens in seconds)
-- Volatility window: **5-30 seconds** (from BCH purchase to LP/merchant receipt)
-- Clear separation: fiat transfer (minutes) + BCH settlement (seconds)
-
-**Cons:**
-- More complex flow (two distinct phases)
-- Merchant must send VES before receiving BCH (trust-minimized via reputation)
-- Requires merchant liquidity (hands out VES before settlement)
-
-**Verdict:** ✅ Best risk mitigation, enables permissionless design
-
----
-
-### Option 4: Stablecoin Intermediary (EUR-Token)
-
-**Flow:**
-1. Sender pays €100 to escrow
-2. Escrow mints EUR-token on BCH (CashTokens)
-3. Escrow sends EUR-token to recipient
-4. Recipient redeems EUR-token for VES via merchant
-5. Merchant redeems EUR-token for EUR via escrow
-
-**Pros:**
-- Zero volatility (EUR-token pegged to EUR)
-- Instant settlement (no waiting for BCH purchase)
-- Simple coordination
-
-**Cons:**
-- **Requires EUR-token infrastructure** (doesn't exist on BCH yet)
-- **Centralization risk** (who backs the EUR-token?)
-- **Regulatory risk** (stablecoins under heavy scrutiny)
-- Defeats purpose of using BCH (just rebuilding fiat system on blockchain)
-
-**Verdict:** ❌ Defeats permissionless goals, adds complexity
-
----
-
-## The Decision
-
-**Use two-step settlement with pull-based BCH purchase.**
-
-**Implementation:**
-
-### Step 1: Fiat Transfer (EUR→VES)
-
-1. Sender pays €101 via Bizum to escrow
-2. **Escrow holds EUR** (does not buy BCH)
-3. Escrow receives notification (2-10 min typical)
-4. Escrow notifies recipient "€100 transfer ready - go to merchant to cash out"
-5. Recipient goes to participating merchant
-6. Recipient shows transaction ID to merchant
-7. Merchant enters code in Asgaya app
-8. **Merchant hands VES cash to recipient**
-9. Both confirm cash-out in app
-
-**Volatility exposure: ZERO** (all fiat, no BCH involved yet)
-
----
-
-### Step 2: BCH Settlement (After Recipient Has VES)
-
-**If merchant selected instant settlement (3 participants):**
-
-10. LP sends €100.247 fiat to merchant (bank transfer/mobile payment)
-11. **Merchant app parses fiat settlement notification from LP**
-12. **Escrow buys €101 worth of BCH** (e.g., 0.1007374 BCH lands in hot wallet)
-13. Calculate fee: 0.1007374 - 0.1000000 = 0.0007374 BCH
-14. Split 3 ways: 0.0007374 / 3 = 0.0002458 BCH each
-15. Escrow sends to LP: 0.1002458 BCH (€100 principal + 0.0002458 BCH fee)
-16. Escrow sends to merchant: 0.0002458 BCH (fee only, merchant has fiat from LP)
-17. Escrow keeps: 0.0002458 BCH
-
-**Volatility exposure:** 5-30 seconds (from BCH purchase to LP receipt)
-
----
-
-**If merchant holds BCH (2 participants):**
-
-10. **Escrow buys €101 worth of BCH** (e.g., 0.1007374 BCH)
-11. Calculate fee: 0.0007374 BCH
-12. Split 2 ways: 0.0007374 / 2 = 0.0003687 BCH each
-13. Escrow sends to merchant: 0.1003687 BCH
-14. Escrow keeps: 0.0003687 BCH
-
-**Volatility exposure:** 5-30 seconds (from BCH purchase to merchant receipt)
-
----
-
-## Rationale
-
-### Why This Works
-
-**1. Recipient gets VES immediately (Step 1)**
-- No volatility risk on the actual remittance
-- Sender achieved their goal (sent money to recipient)
-- Recipient can spend VES while BCH settles in background
-
-**2. Escrow only buys BCH after confirmations (Step 2)**
-- Holds EUR during uncertainty (zero volatility)
-- Only buys BCH after merchant confirms cash-out AND LP confirms fiat sent
-- Volatility window reduced to seconds (settlement phase only)
-
-**3. Merchant liquidity enables permissionless**
-- Merchant hands VES before receiving BCH (trust-minimized via reputation)
-- Merchant gets fiat from LP (if instant settlement) or BCH (if holding) within seconds
-- If merchant doesn't get paid, community reputation system flags the issue
-
-**4. BCH adoption happens organically**
-- Merchants receive BCH fees
-- LPs accumulate BCH from buying at market rate
-- Recipients see growing merchant network, more likely to hold/spend BCH
-
----
-
-## Trade-offs Accepted
-
-### Lost: Instant BCH Settlement
-- BCH settlement delayed until after recipient gets VES
-- Two-phase process (not single atomic transaction)
-- More coordination steps
-- Multiple trust relationships (everyone trusts escrow to coordinate properly)
-
-### Gained: Near-Zero Volatility Risk on Remittance
-- Recipient gets VES regardless of BCH price
-- Escrow protected from volatility during uncertainty (holds EUR)
-- Sender knows exact EUR cost upfront
-- **Volatility window: 5-30 seconds** (settlement phase only, not minutes)
-
-### Trust Requirements
-- **Merchant → Escrow:** Merchant trusts escrow will send BCH after merchant hands VES to recipient
-- **LP → Escrow:** LP trusts escrow will send BCH after LP sends fiat to merchant
-- **Mitigation:** Escrow reputation, open-source code, community oversight
-
----
-
-## Implementation Details
-
-### Timing
-
-**Step 1 (Fiat - EUR to VES):**
-- Duration: 2-10 minutes (notification delay + recipient going to merchant)
-- Escrow holds: EUR (zero volatility)
-
-**Step 2 (BCH Settlement):**
-- Duration: 5-30 seconds (BCH purchase + confirmation)
-- Escrow holds: BCH (only during settlement)
-
-**Total time:** 3-15 minutes (comparable to Western Union)
-
----
-
-### Capital Requirements
-
-**Escrow:**
-- Must hold €100 in EUR during Step 1 (no volatility risk)
-- Must hold €100 in BCH during Step 2 (only 5-30 seconds)
-
-**Merchant:**
-- Must have VES liquidity to hand out before receiving BCH/fiat
-- Recoups via BCH or fiat from LP within seconds
-
-**LP (if instant settlement selected):**
-- Must have €100.247 fiat liquidity to send to merchant
-- Receives €100.247 worth of BCH within seconds
-
----
-
-### Failure Modes
-
-**Scenario 1: Escrow doesn't receive Bizum from sender**
-- Timeout after 10 minutes
-- Ask sender: "Did you send the payment?"
-- If yes → Manual verification
-- If no → Cancel or extend timeout
-- No BCH purchased = no loss
-
-**Scenario 2: Recipient doesn't cash out at merchant**
-- Escrow holds EUR indefinitely (no volatility risk)
-- After 24 hours, sender can request refund
-- Escrow refunds €101 via Bizum
-- No BCH purchased = no loss
-
-**Scenario 3: LP doesn't send fiat to merchant (instant settlement)**
-- Timeout after 10 minutes (starting from merchant cash-out confirmation)
-- **Broadcast bounty again** to other LPs in corridor
-- Next LP sends fiat → settlement proceeds
-- If no LP accepts → Merchant receives BCH directly (fallback to non-instant settlement)
-
-**Scenario 4: Escrow fails to buy BCH**
-- Rare (exchange API failure)
-- Escrow refunds €101 to sender
-- Merchant already handed VES to recipient (merchant accepts loss or coordinates reversal with recipient)
-- **Why rare:** Escrow can retry BCH purchase multiple times before giving up
-
----
-
-## Validation
-
-**How we verify this decision:**
-- ✅ Zero volatility risk on fiat remittance (recipient always gets VES)
-- ✅ Escrow never holds BCH during uncertainty (only during settlement)
-- ✅ Volatility window reduced to 5-30 seconds (not minutes)
-- ⏳ Pending: Real transfers to validate merchant trust model
-- ⏳ Pending: Real transfers to validate LP timeout/bounty re-broadcast
-
-**Metrics to track:**
-- Escrow volatility losses (target: €0 - should never happen)
-- Settlement success rate (target: >99%)
-- LP response time (target: <5 minutes from cash-out to fiat sent)
-- Merchant trust incidents (target: <1% bad actors)
-
----
-
-## Future Considerations
-
-### If CashTokens EUR-Stablecoin Emerges
-- Could simplify to single-step settlement
-- **Trade-off:** Adds centralization risk (stablecoin issuer)
-- **Decision:** Stick with two-step unless stablecoin is proven decentralized
-
-### If BCH Volatility Decreases Significantly
-- If BCH stable for months (< 1% daily volatility) → could merge steps
-- **For now:** Assume volatility is reality, design around it
-
-### If Open Banking APIs Become Available
-- Could automate sender payment (no manual Bizum)
-- Would reduce Step 1 time from minutes to seconds
-- Would enable instant EUR→VES settlement
-
----
-
-## Related Decisions
-
-- [Payment Timeout Window](decisions/payment-timeout-window.md) — Why 10-minute timeout works (escrow holds EUR, not BCH)
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees are calculated after BCH lands in wallet
-
----
-
-## Related Concepts
-
-- [Pull System](concepts/pull-system.md) — Why pull-based BCH purchase is critical
-- [Volatility Protection](core-architecture/why-eliminate-volatility.md) — Architecture overview
-
----
-
-## Lessons Learned
-
-### 1. Volatility Risk Cannot Be Ignored
-- Every crypto remittance project that ignored volatility failed
-- Users will not accept "surprise" losses from price swings
-- Must design around volatility as foundational constraint
-
-### 2. Separate Fiat from Crypto Timelines
-- Fiat transfer can take minutes (notification delays, recipient going to merchant)
-- BCH settlement happens in seconds (exchange purchase + network confirmation)
-- Don't couple them into single atomic transaction
-
-### 3. Trust the Escrow, Verify the Code
-- Merchants and LPs trust escrow to coordinate fairly
-- Open-source code + reputation system enables this trust
-- Community oversight more reliable than attempting "trustless" smart contracts
-
-### 4. Volatility Window Can Be Seconds, Not Minutes
-- By purchasing BCH only after all confirmations, volatility exposure drops from 10+ minutes to 5-30 seconds
-- **This is the key innovation** that makes BCH remittances viable
-
----
-
-## References
-
-- **Architecture:** `/docs/core-architecture/why-eliminate-volatility.md`
-- **Implementation:** `/docs/android-app/flows/sender-flows.md`
-
----
-
-*Decision made: April 2026*
-*Validated: €3 test transfers successful*
-*Status: Active, proven design*
-
+GOAL: Transparent rates with zero markup
+CONSTRAINT: Need real-time EUR→BCH→VES without manual updates
+
+DECISION: Three-layer architecture
+
+1. DISPLAY RATE (indicative, updates every 30s)
+   - Shows estimated recipient value
+   - Not binding, just for UX
+
+2. PROTOCOL RATE (promise rate, locked at creation)
+   - BCH/EUR: CoinGecko
+   - EUR/VES: DolarAPI (blue dollar)
+   - Recorded in covenant metadata
+
+3. LOCAL RATE (execution rate, calculated at claim)
+   - Same sources as protocol rate
+   - Determines final BCH distribution
+
+EXAMPLE: €100 transfer, BCH rises 2% between creation and execution
+- Creation: €100 = 0.100 BCH (promise rate)
+- Execution: €100 = 0.098 BCH (execution rate)
+- Merchant gets: 0.098 BCH (worth €102)
+- Recipient gets: €100 cash (promised EUR value)
+- Seller residual: 0.009 BCH (from 0.107 collateral)
+
+TRADE-OFFS:
+✅ Transparent | ✅ Zero markup | ✅ EUR protection for recipient
+❌ API dependency | ❌ Merchant exposed to 30s volatility (±0.1% typical)
+
+VALIDATION: Track CoinGecko/DolarAPI uptime (target: >99.9%)
 
 ==============================================
-UNCLAIMED TRANSACTION EXPIRY
+6. DISPUTE RESOLUTION (PHASE 0)
 ==============================================
 
-← [Back to Decisions](README.md)
+GOAL: Handle conflicts without requiring mediator
+CONSTRAINT: Human override → Regulated intermediary (MiCA violation)
 
-# Unclaimed Transaction Expiry Policy
+ALTERNATIVES: Mediator (regulatory issue) | DAO (too slow) | Reputation (needs identity)
 
-**Status:** Active (MVP)  
-**Category:** User Protection & Escrow Operations  
-**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Transaction APIs](android-app/backend-apis/transaction-apis.md)
+DECISION: Phase 0 = Autonomous covenant only
 
----
+HOW IT WORKS:
+- Both sign → Executes
+- Timeout → Split refund (automated)
+- No mediator, no override, no investigation
 
-## The Goal
+PHASE 0 PARTICIPANTS:
+- Trusted parties only (sender's family)
+- Small transactions (€50-€200)
+- Known merchants
 
-Prevent funds from being locked indefinitely in escrow when recipients never claim their remittances.
+V1 ENHANCEMENT (Post-Phase 0):
+- Social media transparency (#AsgayaDispute)
+- Parties post evidence on X/Instagram/TikTok
+- Asgaya app aggregates links (like Google Search, no moderation)
+- No covenant override (evidence for reputation only)
 
----
+TRADE-OFFS:
+✅ Regulatory compliant | ✅ Autonomous | ✅ Simple Phase 0
+❌ No formal arbitration | ❌ Must trust merchant in Phase 0
 
-## The Problem
+VALIDATION: Track disputes in Phase 0 (target: 0%)
 
-**Scenario:** Sender sends €100 to recipient Elena in Venezuela. Elena never goes to a merchant to claim. What happens?
+==============================================
+7. BIZUM INTEGRATION
+==============================================
 
-**Without expiry policy:**
-- EUR remains locked in escrow indefinitely
-- Escrow has already bought BCH (to eliminate volatility window)
-- No clear resolution process
-- Sender's money is in limbo
-- Escrow bears ongoing operational costs
+GOAL: Use Bizum as fiat on-ramp without KYC
+CONSTRAINT: Bizum "Concept" field used for matching. Need identifier that works.
 
-**Critical gap identified by:** DeepSeek Review (May 4, 2026)
+ALTERNATIVES: Semantic IDs (rejected by bank) | Numeric codes (collision risk) | Sender name (unparseable)
 
----
+DECISION: Recipient phone number in Bizum concept field
 
-## The Constraint
+HOW IT WORKS:
+1. Sender sends €100 Bizum, concept: "+58 412 1234567"
+2. BCH seller bot parses SMS: "Received €100, concept: +58 412 1234567"
+3. Bot matches phone to pending covenant request
+4. Bot creates covenant with 0.107 BCH
 
-**Escrow operational reality (Pull System):**
-1. Escrow receives €100 via Bizum (instant)
-2. Escrow **HOLDS EUR** (doesn't buy BCH yet - pull system!)
-3. Claim code generated and sent to recipient
-4. **If recipient claims:** Escrow buys BCH, settles transaction
-5. **If recipient never claims:**
-   - EUR sits in escrow account for 24h (liquidity locked)
-   - No BCH purchased (pull system = on-demand purchase)
-   - No revenue earned (transaction never completed)
-   - Escrow must manually send Bizum refund (administrative work)
+FORMAT: "+[country] [area] [number]" (e.g., "+58 412 1234567")
 
-**Escrow costs for unclaimed transaction:**
-- Buy BCH: €0.00 (never purchased - pull system!)
-- Sell BCH: €0.00 (never purchased)
-- Manual refund: ~10 min work
-- Liquidity lock: €100 tied up for 24h (opportunity cost)
-- **Total cost:** Time + opportunity cost (no hard exchange fees)
+TRADE-OFFS:
+✅ Reliable parsing | ✅ Unique | ✅ Works in Bizum rules | ✅ Automated
+❌ No semantic meaning | ❌ Phone visible in transaction
 
----
+VALIDATION: Track parsing success rate (target: 100%)
 
-## Alternatives Considered
+==============================================
+8. MARGIN CALL RESPONSE (60 MINUTES)
+==============================================
 
-### Option 1: No Expiry (Indefinite Hold)
-**How it works:** Funds stay in escrow until claimed (days, weeks, months)
+GOAL: Give sellers time to respond without indefinite lockup
+CONSTRAINT: BCH can drop >7% rapidly
 
-**Pros:**
-- ✅ Recipient can claim anytime (maximum flexibility)
-- ✅ Simple logic (no expiry mechanism needed)
+ALTERNATIVES: 15 min (too tight) | 30 min (still tight) | 2h (too long)
 
-**Cons:**
-- ❌ Escrow bears unlimited volatility risk
-- ❌ Sender's money in limbo indefinitely
-- ❌ Operational costs accumulate
-- ❌ No resolution for forgotten/lost transactions
+DECISION: 60-minute response window
 
-**Verdict:** ❌ **Rejected** — Transfers risk to escrow operator, terrible UX for sender
+HOW IT WORKS:
+1. BCH drops >7% → Seller notified (SMS + app)
+2. Seller chooses: Add BCH (restore 7%) OR Do nothing (→ split refund)
+3. 60 minutes to respond
 
----
+TRADE-OFFS:
+✅ Realistic response time | ✅ Automated fallback | ✅ Fair distribution
+❌ 1-hour delay | ❌ Sender uncertainty
 
-### Option 2: Aggressive Expiry (6-12 hours)
-**How it works:** Short claim window to minimize escrow exposure
+VALIDATION: Track response rate (target: >80% respond within 60 min)
 
-**Pros:**
-- ✅ Minimal escrow risk
-- ✅ Fast resolution
-- ✅ Encourages immediate claiming
+==============================================
+9. SPLIT REFUND MECHANISM
+==============================================
 
-**Cons:**
-- ❌ Too short for recipients in remote areas
-- ❌ Doesn't account for connectivity issues
-- ❌ Forces rushed claims (bad UX)
-- ❌ Sender/recipient may need coordination time
+GOAL: Fair refund when covenant doesn't execute
+CONSTRAINT: Two parties contributed (sender + BCH seller)
 
-**Verdict:** ❌ **Rejected** — Prioritizes escrow convenience over user success
+DECISION: Split based on contributions
 
----
+€100 transfer refund:
+- Merchant portion (€100.50) → Sender
+- Seller portion (€6.40) → BCH seller
+- Processing fee (€0.10) → Deducted from seller portion
 
-### Option 3: 24-Hour Expiry with Refund
-**How it works:** Recipients have 24 hours to claim, then auto-refund sender
+TRIGGERS:
+1. Timeout (24h expires)
+2. Margin call (seller doesn't respond in 60 min)
+3. Cancellation (within 5-min Bizum window)
 
-**Pros:**
-- ✅ Reasonable window for coordination
-- ✅ Bounded escrow risk (24h max volatility exposure)
-- ✅ Clear deadline for all parties
-- ✅ Automatic resolution (no manual intervention)
-- ✅ Sender gets most of their money back
+TRADE-OFFS:
+✅ Fair distribution | ✅ Automated | ✅ Covers costs
+❌ Sender loses processing fee in some scenarios
 
-**Cons:**
-- ⚠️ 24h might be tight for rural/remote recipients
-- ⚠️ Processing fee deducted from refund
-- ⚠️ Requires notification infrastructure
+VALIDATION: Track refund frequency (target: <10%)
 
-**Verdict:** ✅ **SELECTED** — Best balance of user flexibility and escrow protection
-
----
-
-### Option 4: Configurable Expiry (24-72h)
-**How it works:** Sender chooses claim window at transaction creation
-
-**Pros:**
-- ✅ Maximum flexibility
-- ✅ Sender controls their own risk tolerance
-
-**Cons:**
-- ❌ More complex UX (another decision point)
-- ❌ Escrow can't predict exposure
-- ❌ Longer windows = higher escrow costs
-
-**Verdict:** ❌ **Rejected for MVP** — Can add in V1.1 if users request it
-
----
-
-### Option 5: Extension Mechanism
-**How it works:** 24h default, sender can grant 24h extension if needed
-
-**Pros:**
-- ✅ Handles edge cases (recipient traveling, sick, etc.)
-- ✅ Sender retains control
-
-**Cons:**
-- ❌ Adds implementation complexity
-- ❌ Most transactions won't need it (sender/recipient coordinate beforehand)
-- ❌ Extends escrow exposure
-
-**Verdict:** ❌ **Rejected for MVP** — Real usage data will show if needed
-
----
-
-## The Decision
-
-**24-hour claim window with automatic refund and proactive notifications**
-
-**Timeline:**
-```
-Hour 0:  Transaction created → Claim code sent to recipient
-Hour 12: Reminder to recipient ("Claim your money today")
-Hour 18: Status update to sender ("Not claimed yet, auto-refund in 6h")
-Hour 23: URGENT reminder to recipient ("Claim in 1 hour or funds refunded")
-Hour 24: Auto-refund initiated → Both parties notified
-```
-
-**Refund calculation:**
-```
-Original amount:     €100.00
-Processing fee:      -€0.10 (0.1%)
-─────────────────────────────
-Refund to sender:    €99.90
-```
-
-**What processing fee covers:**
-- Manual refund work (escrow sends Bizum back to sender)
-- 24h liquidity lock (escrow's EUR was tied up)
-- Administrative overhead
-
-**What it does NOT cover:**
-- ❌ Exchange fees (no BCH was purchased - pull system!)
-- ❌ Network fees (no blockchain transaction happened)
-
-**Why 0.1%?**
-- Start low, encourage legitimate use
-- Can increase to 0.2-1.0% if abuse detected (discourage fake claims)
-- Real escrow feedback will determine optimal rate
-
-**Who gets notified:**
-- ✅ **Recipient:** Action-oriented reminders (hours 12, 23)
-- ✅ **Sender:** Status updates (hours 18, 24)
-- ✅ **Both:** Final outcome notification (hour 24)
-
----
-
-## Trade-offs
-
-### What We Gained ✅
-- **Clear deadline:** Everyone knows when funds will be refunded
-- **Automatic resolution:** No manual escrow intervention needed
-- **Bounded escrow risk:** 24h max BCH volatility exposure
-- **Fair processing fee:** Only covers actual exchange costs
-- **Sender protection:** Get money back if recipient can't claim
-- **Recipient protection:** Multiple reminders prevent accidental expiry
-
-### What We Lost ❌
-- **Infinite flexibility:** Can't claim weeks/months later
-- **Zero-fee refunds:** Sender loses €0.50 to exchange costs
-- **Edge case handling:** No built-in extension for special circumstances
-
-### What We're Unsure About 🤔
-- **Is 24h enough for rural areas?** (Will monitor success rate)
-- **Do we need corridor-specific timeouts?** (EUR→VES urban vs rural)
-- **Should we allow extensions?** (Wait for user feedback)
-
----
-
-## Implementation Details
-
-### Transaction State Machine Updates
-
-**New states:**
-- `expiring_soon` — Claim window closing (<6h remaining)
-- `expired_unclaimed` — 24h passed, no claim, refund initiated
-- `refunded` — Funds returned to sender
-
-**State transitions:**
-```
-pending → active (escrow funded)
-active → claimed (recipient claims)
-active → expiring_soon (18h elapsed)
-expiring_soon → claimed (recipient claims before expiry)
-expiring_soon → expired_unclaimed (24h elapsed, no claim)
-expired_unclaimed → refunded (BCH sold, EUR returned)
-```
-
-### Notification Requirements
-
-**Recipient notifications (app + SMS):**
-- Hour 12: "Reminder: €100 waiting. Claim at [merchant list]"
-- Hour 23: "URGENT: Claim in 1 hour or €100 will be refunded"
-- Hour 24: "Transaction expired. Funds returned to sender."
-
-**Sender notifications (app):**
-- Hour 18: "Elena hasn't claimed yet. Auto-refund in 6h if unclaimed. Contact: 0412-XXX-5678"
-- Hour 24: "Elena didn't claim. Refunding €99.50 (€0.50 processing fee)"
-
-### API Updates
-
-**GET /transaction/:txId endpoint:**
-```json
-{
-  "status": "expiring_soon",
-  "claim_deadline": "2026-05-06T18:30:00Z",
-  "hours_remaining": 5.2,
-  "refund_amount_eur": 99.50,
-  "processing_fee_eur": 0.50
-}
-```
-
-**Escrow automation:**
-- Cron job checks transactions every 15 minutes
-- At 24h mark: Send Bizum refund to sender (€99.90) → Update state to `refunded`
-- No BCH to sell (pull system - BCH was never purchased)
-
----
-
-## Validation
-
-### Success Metrics
-- **<5% expiry rate** — Most claims should succeed within 24h
-- **<10% support requests** — Notifications should make process clear
-- **Zero stuck funds** — No manual intervention needed
-
-### What Would Prove Us Wrong
-- **>15% expiry rate** — 24h is too short, need longer window
-- **Many extension requests** — Users need flexibility we didn't provide
-- **Corridor-specific patterns** — Rural areas need different timeouts
-
-### Monitoring
-- Track expiry rate by corridor (EUR→VES urban vs rural)
-- Track time-to-claim distribution (most within 1h? 12h? 24h?)
-- Survey recipients who expired: Why didn't you claim?
-
----
-
-## Open Questions
-
-**For Phase 0-1 validation:**
-1. **Is 24h universally adequate?** Or do rural corridors need longer?
-2. **Should notification timing differ by corridor?** (Urban: aggressive reminders, Rural: earlier heads-up)
-3. **Do we need manual extension capability?** (Wait for user feedback)
-4. **Should refund be instant or T+1?** (Depends on Bizum receiving bank policies)
-
-**Will resolve through:**
-- Real transaction data from beta testing
-- User feedback surveys
-- Corridor-specific analytics
-
----
-
-## Future Enhancements (Post-MVP)
-
-**Not committed to these, but worth considering after real usage data:**
-
-### 1. Dynamic Processing Fee (Anti-Abuse)
-**Rationale:** Prevent users from abusing the system by creating fake transactions
-
-**Current:** Fixed 0.1% processing fee (€0.10 on €100)
-
-**If abuse detected (>10% expiry rate from same user):**
-- First expiry: €0.10 (0.1%) - benefit of the doubt
-- Second expiry: €0.50 (0.5%) - warning
-- Third+ expiry: €1.00 (1.0%) - full fee to discourage abuse
-
-**Abuse patterns to watch:**
-- Same sender repeatedly creating transactions that expire
-- Sender creates transaction, recipient never attempts to claim
-- Pattern suggests using Asgaya as "free parking" for EUR
-
-**When to add:** If expiry rate >5% AND pattern analysis shows deliberate abuse
-
-**Trade-off:** Penalizes legitimate users who have multiple coordination failures
-
----
-
-### 2. Corridor-Specific Timeouts
-**Rationale:** Urban areas might succeed faster than remote villages
-
-**Implementation:**
-- EUR→VES (Caracas): 24h (default)
-- EUR→VES (rural): 48h
-- EUR→HNL (remote): 72h
-
-**When to add:** If expiry rate >10% in specific corridors
-
----
-
-### 2. Sender-Initiated Extension
-**Rationale:** "My sister is traveling, needs 2 more days"
-
-**Implementation:**
-- Before expiry: Sender taps "Extend 24h"
-- Maximum: 1 extension (48h total)
-- Recipient notified of extension
-
-**When to add:** If >5% of users request it
-
----
-
-### 3. Smart Expiry Based on Merchant Availability
-**Rationale:** No point in 24h window if no merchants are available
-
-**Implementation:**
-- Check merchant availability in recipient's area
-- If zero merchants available: Notify sender immediately, shorter timeout (6h)
-- If merchants exist: Standard 24h window
-
-**When to add:** When merchant network is larger (10+ merchants per corridor)
-
----
-
-### 4. Partial Auto-Claim
-**Rationale:** Reduce escrow volatility exposure
-
-**Implementation:**
-- At hour 20: If unclaimed, escrow sells 50% of BCH (locks in half the refund)
-- At hour 24: Sells remaining 50%
-- Reduces price movement risk for escrow
-
-**When to add:** If BCH volatility causes significant variance in refund amounts
-
----
-
-## Related Research
-
-- **[RS010_Bizum.md](../research/RS010_Bizum.md)** — Bizum refund capabilities and timing
-- **[RS015_Kraken_API.md](../research/RS015_Kraken_API.md)** — Round-trip fee calculation
-- **[Two-Step Settlement Timing](two-step-settlement-timing.md)** — Why escrow buys BCH immediately
-
----
-
-## Contributors
-
-- **Initial Policy:** Suso (May 5, 2026)
-- **Critical Gap Identified:** DeepSeek Review (May 4, 2026)
-- **Implementation Design:** Coordination (May 5, 2026)
-
----
-
-**Last updated:** May 5, 2026  
-**Status:** Active (MVP)  
-**Next review:** After Phase 1 (50+ transactions)
+==============================================
+10. UNCLAIMED TRANSACTION EXPIRY
+==============================================
+
+See Section 4 (Covenant Timeout) - 24-hour expiry with split refund.
+
+Proactive notifications: T+0, T+18h, T+23h
+Processing fee: €0.10 compensates BCH seller for capital lockup
+
+==============================================
+KEY DECISIONS SUMMARY
+==============================================
+
+1. Pull system: 30-second volatility window
+2. Fee split: 0.5% seller + 0.5% merchant + 0% protocol
+3. Overcollateralization: 7% (MUST validate Phase 0)
+4. Timeout: 24 hours with split refund
+5. Rates: 3-layer (display, promise, execution)
+6. Disputes: Phase 0 autonomous, V1 social transparency
+7. Bizum: Phone numbers (reliable parsing)
+8. Margin call: 60-minute response window
+9. Split refund: Based on contributions
+10. Processing fee: €0.10 for capital lockup
+
+VALIDATION: Phase 0 trial validates all 12 arbitrary parameters
+with 50-100 transactions over 30 days among trusted parties.
+
+==============================================
+PHASE 0 VALIDATION CHECKLIST (12 PARAMETERS)
+==============================================
+
+1. Fee split (0.5% each) - Attracts participants?
+2. Overcollateralization (7%) - Sufficient buffer?
+3. Timeout (24h) - Right balance?
+4. Bizum window (5 min) - Too tight?
+5. Margin call response (60 min) - Sellers can respond?
+6. Processing fee (€0.10) - Covers costs?
+7. Transaction sizes (€50-€500) - Need limits?
+8. Bounty code (4 digits) - Secure + memorable?
+9. Notification timing - Too many/few?
+10. Geographic variations - Rural vs urban differences?
+11. Market conditions - Volatile vs calm periods?
+12. Corridor parameters - One-size-fits-all works?
+
+For each parameter:
+- Hypothesis (what we believe)
+- Metrics (what we measure)
+- Adjustment criteria (when to change)
+
+Full details: /docs/meta/phase-0-validation-checklist.md
+
+==============================================
+RELATED DOCUMENTS
+==============================================
+
+- core-arch.txt: Why we need these features
+- flows.txt: User experience flows
+- apis.txt: Technical backend specs
+- complete.txt: Full documentation
+
+Main docs: https://github.com/rufitnes/asgayapedia/tree/main/docs
+
+==============================================
+END OF DESIGN DECISIONS
+==============================================
