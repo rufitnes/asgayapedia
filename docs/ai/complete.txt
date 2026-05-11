@@ -5,6 +5,13 @@ ASGAYA COMPLETE DOCUMENTATION
 This file contains ALL Asgaya documentation in one place.
 Recommended for large context models (100K+ tokens).
 
+⚠️ AI REVIEWER NOTICE:
+This file exceeds 3,800 lines. Some AI retrieval systems can only access
+the first ~400-500 lines of a single file, which may truncate sections 2-8.
+
+FOR FULL INGESTION: Use index.txt to access individual topic files, each
+under 400 lines for complete retrieval without truncation.
+
 Generated: 2026-05-11
 Version: 2.0 (Covenant Architecture)
 
