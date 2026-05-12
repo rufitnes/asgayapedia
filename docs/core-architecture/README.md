@@ -32,9 +32,9 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Requirement:** Beat 6.49% average remittance costs through market-rate exchanges and free peer-to-peer rails.
 
 **Architecture solutions:**
-- **[Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)** — Economic model breakdown: how free rails + market rates achieve <1%
-- **[Exchange Rate Safeguard](core-architecture/why-market-rate-exchanges.md)** — Real-time Kraken rates with zero markup
-- **[Volatility Protection](core-architecture/why-eliminate-volatility.md)** — Two-step settlement eliminates Bitcoin Cash volatility concerns
+- **[Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)** — Economic model breakdown: how covenant rails + market rates achieve <1%
+- **[Exchange Rate Safeguard](core-architecture/why-market-rate-exchanges.md)** — Real-time market rates (CoinGecko + DolarAPI) with zero markup
+- **[Volatility Protection](core-architecture/why-eliminate-volatility.md)** — Pull system eliminates Bitcoin Cash volatility concerns
 
 **Key principle:** Transparent economics with no hidden markups.
 
