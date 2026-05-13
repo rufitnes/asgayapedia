@@ -67,10 +67,10 @@ Someone wants VES cash, offering BCH
 
 ---
 
-## Screen 1: VES Sell Opportunities (Dashboard)
+## Screen 1: Customer Lookup (Dashboard)
 
 ### Purpose
-Browse active bounties offering BCH for VES cash. Customer provides code to claim.
+Customer walks in, merchant enters their Cash Account to see their active bounties.
 
 ### Wireframe
 
@@ -79,36 +79,32 @@ Browse active bounties offering BCH for VES cash. Customer provides code to clai
 │ ☰      Asgaya Merchant          👤  │
 ├─────────────────────────────────────┤
 │                                     │
-│  💰 VES Sell Opportunities          │
+│  💰 VES Cash Out Service            │
 │                                     │
-│  Active bounties waiting for you:   │
+│  Customer here to claim remittance? │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │ 🔵 Elena#142                │   │◄─ Sender Cash Account (human-readable!)
-│  │ Wants: 500,000 VES          │   │
-│  │ You get: 0.0995 BCH         │   │
-│  │ (~505,000 VES value)        │   │◄─ VES-centric display
-│  │ Expires in: 23h 45m         │   │
-│  │ Code: 4729                  │   │◄─ Bounty code (for claim)
+│  │                             │   │
+│  │  👤 Enter Cash Account:     │   │
+│  │                             │   │
+│  │  Elena#142                  │   │◄─ Customer tells you their name
+│  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │ 🔵 Carlos#5890              │   │◄─ Repeat customer recognition
-│  │ Wants: 750,000 VES          │   │
-│  │ You get: 0.1493 BCH         │   │
-│  │ (~757,500 VES value)        │   │
-│  │ Expires in: 22h 18m         │   │
-│  │ Code: 5812                  │   │
+│  │         Look Up             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│  Customer has code?                 │
-│  ┌─────────────────────────────┐   │
-│  │  Enter Code: ____           │   │◄─ 4-digit input
-│  └─────────────────────────────┘   │
+│  💡 Customer says their Cash        │
+│     Account name (e.g., Elena#142)  │
+│     and you'll see their active     │
+│     bounties to claim               │
 │                                     │
-│  [Numeric keypad: 1-9, ←, 0, ✓]    │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  [ 📋 Browse All Bounties ]         │◄─ Optional: see market demand
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
@@ -120,102 +116,135 @@ Browse active bounties offering BCH for VES cash. Customer provides code to clai
 ```
 
 **Interactions:**
-- **Browse bounties:** Scroll to see all active bounties (publicly visible)
-- **Customer arrives:** Says "I have bounty code 8923"
-- **Merchant enters code:** Type 8-9-2-3 on keypad → Tap ✓
-- **If valid:** Go to Screen 2 (Confirm Sale)
-- **If invalid:** Error message (see below)
+- **Customer arrives:** Says "I'm Elena#142"
+- **Merchant enters:** Type `Elena#142` in Cash Account field
+- **Tap "Look Up":** Backend fetches all active bounties for Elena#142
+- **If bounties found:** Go to Screen 1b (Select Bounty)
+- **If no bounties:** Show error "No active bounties for Elena#142"
+- **Optional:** Tap "Browse All Bounties" → See full bulletin board (market demand view)
 
-**Bounty Display:**
-- **Sender Cash Account:** Human-readable name (e.g., `Elena#142`) instead of truncated address
-- **VES-centric:** Show VES amounts prominently (what merchant sells)
-- **BCH amount:** Show what merchant receives
-- **VES value equivalency:** Show BCH worth in VES at current rate (~505,000 VES)
-- **Expiration:** Covenant timeout (typically 24h)
-- **Bounty code:** Last 4 digits for customer to provide
-- **Status indicator:** 🔵 Active | 🟡 Expiring soon (<2h) | 🔴 Expired
-
-**Why Cash Accounts matter for merchants:**
-- **Repeat customer recognition:** "Elena#142 again - she's been here 3 times, reliable!"
-- **Trust signal:** Real name (even if not verified) vs anonymous `bitcoincash:qp3...`
-- **Market demand visibility:** See how many unique customers need VES
-- **Transparent:** All bounties public (no hidden orders)
-
-**Code Format:**
-- Full remittance ID: REM-89234
-- Last 4 digits used as bounty code: 9234 (or middle 4: 8923)
-- Easy to remember, fast to type
-- Links customer to specific covenant on bulletin board
+**Why this is better:**
+- ✅ **Direct lookup** - No browsing hundreds of bounties
+- ✅ **No 4-digit codes** - Cash Account IS the identifier
+- ✅ **Handles multiple remittances** - Elena might have 2-3 active bounties
+- ✅ **More private** - Merchant only sees bounties for customers physically present
+- ✅ **Faster** - Customer walks in → Says name → Merchant looks up → Done
 
 **Validation:**
 ```
-Code entered: 8923
+Input: Elena#142
 Backend checks:
-1. Valid format? ✓ (4 digits)
-2. Matches active covenant? ✓
-3. Covenant mature (sender funded)? ✓
-4. Not already claimed? ✓
-5. Not expired? ✓
+1. Valid Cash Account format? ✓ (Name#Number)
+2. Resolve Cash Account → BCH address
+3. Query active bounties for that address
+4. Filter: Not claimed, not expired, funded by sender
+5. Return list of active bounties
 
-If valid → Show Screen 2 (Confirm Sale)
-If invalid → Error message
+If bounties found → Show Screen 1b (Select Bounty)
+If no bounties → Error message
 ```
 
 **Error Handling:**
 
-**Code not found:**
+**No bounties found:**
 ```
 ┌─────────────────────────────────────┐
-│         ⚠️ Code Not Found           │
+│         ⚠️ No Active Bounties       │
 ├─────────────────────────────────────┤
 │                                     │
-│  Bounty code 8923 not found         │
+│  No active bounties for Elena#142   │
 │                                     │
 │  Possible reasons:                  │
-│  • Customer entered wrong code      │
-│  • Bounty already claimed           │
-│  • Bounty expired (timeout)         │
+│  • No remittances sent to this      │
+│    Cash Account                     │
+│  • All bounties already claimed     │
+│  • Bounties expired (24h timeout)   │
 │                                     │
-│  Ask customer to verify code        │
-│  in their Asgaya app                │
-│                                     │
-│  [ OK - Back to Dashboard ]         │
-│                                     │
-└─────────────────────────────────────┘
-```
-
-**Already claimed:**
-```
-┌─────────────────────────────────────┐
-│      ⚠️ Already Claimed             │
-├─────────────────────────────────────┤
-│                                     │
-│  This bounty was already claimed    │
-│  on May 10, 2026 at 14:32           │
-│                                     │
-│  Ask customer if they have          │
-│  a different code                   │
+│  Ask customer to verify their       │
+│  Cash Account name                  │
 │                                     │
 │  [ OK - Back to Dashboard ]         │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
-**Expired:**
+**Invalid Cash Account:**
 ```
 ┌─────────────────────────────────────┐
-│          ⚠️ Expired                 │
+│      ⚠️ Invalid Cash Account        │
 ├─────────────────────────────────────┤
 │                                     │
-│  This bounty expired (24h timeout)  │
+│  Cannot resolve "Elena142"          │
 │                                     │
-│  Customer should contact sender     │
-│  for refund or new covenant         │
+│  Cash Accounts must include the     │
+│  # symbol and number:               │
+│  Example: Elena#142                 │
+│                                     │
+│  Ask customer for their full        │
+│  Cash Account name                  │
 │                                     │
 │  [ OK - Back to Dashboard ]         │
 │                                     │
 └─────────────────────────────────────┘
 ```
+
+---
+
+## Screen 1b: Select Bounty (If Multiple Found)
+
+### Purpose
+Show all active bounties for the customer, let merchant select which one to process.
+
+### Wireframe
+
+```
+┌─────────────────────────────────────┐
+│ ◄ Back    Elena#142's Bounties      │
+├─────────────────────────────────────┤
+│                                     │
+│  Active bounties for Elena#142:     │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │ From: Iris#5832             │   │
+│  │ Amount: 500,000 VES         │   │
+│  │ You get: 0.0995 BCH         │   │
+│  │ Expires: 23h 15m            │   │
+│  │ [ Process This ]            │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │ From: Carlos#2341           │   │
+│  │ Amount: 300,000 VES         │   │
+│  │ You get: 0.0597 BCH         │   │
+│  │ Expires: 12h 42m            │   │
+│  │ [ Process This ]            │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  💡 Customer may have multiple      │
+│     remittances. Ask which sender   │
+│     to confirm the right one.       │
+│                                     │
+│  [ Cancel - Back to Dashboard ]     │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Interactions:**
+- See all active bounties for this customer
+- Ask customer: "Who sent you money? Iris or Carlos?"
+- Customer confirms: "Iris sent it"
+- Tap "Process This" on Iris's bounty → Go to Screen 2 (Confirm Sale)
+
+**Why this matters:**
+- Elena might receive remittances from multiple senders (family, friends, employer)
+- All remittances go to same Elena#142 Cash Account
+- Merchant helps Elena identify which remittance to claim
+- After claiming one, others remain active for later
+
+**Common case:**
+- Usually only 1 active bounty per customer
+- Screen 1b skipped automatically → Go straight to Screen 2
+- Only shows if 2+ active bounties found
 
 ---
 
