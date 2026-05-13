@@ -44,7 +44,7 @@ On a **€100 transfer**, the ~1% (€1.00) is distributed as:
 
 **Key Innovation:** EUR-denominated covenants with BCH settlement eliminate custody and intermediation risk.
 
-**⚠️ Important:** Asgaya is an **experimental, unregulated protocol**. By exploring this documentation or participating in any capacity, you accept full responsibility for understanding and complying with laws in your jurisdiction. **[Read full risks and disclaimers →](risks-and-disclaimers.md)**
+**⚠️ Important:** Asgaya is an **early-stage, experimental protocol**. By exploring this documentation or participating in any capacity, you accept full responsibility for understanding and complying with laws in your jurisdiction. **[Read full risks and disclaimers →](risks-and-disclaimers.md)**
 
 ---
 
