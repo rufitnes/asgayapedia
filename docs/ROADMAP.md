@@ -195,7 +195,7 @@
 **Priority 2: OP_RETURN Notifications**
 - Replace push notifications with OP_RETURN
 - Merchants monitor BCH address for bounties
-- More censorship-resistant
+- More resilient notification delivery
 - Keep push notifications as backup
 
 **Priority 3: Automated Timeout Cascade**
