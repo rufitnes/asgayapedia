@@ -184,10 +184,10 @@ When systems require permission (KYC, bank accounts, expensive hardware), they c
 Asgaya inverts this:
 - **Inclusion:** Anyone with a phone (or even a QR code) can participate
 - **Privacy:** Peer-to-peer coordination, no central database
-- **Censorship-resistance:** No central authority to freeze accounts
+- **Resilience:** Distributed architecture means no single point of control or failure
 - **Freedom:** Open-source protocol, anyone can build on it
 
-**We're not asking permission to build a better financial system. We're just building it.**
+This is an open-source protocol—anyone can participate, anyone can build on it. No gatekeepers, no approvals needed.
 
 ---
 
