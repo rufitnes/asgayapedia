@@ -193,27 +193,38 @@ Outputs:
 
 ### Margin Call Mechanism
 
-**If BCH price drops beyond the overfunding buffer:**
+**If BCH price drops beyond the overfunding buffer during the 24-hour window:**
 
 1. **Alert sent to seller:**
    ```
    ⚠️ MARGIN CALL — Bounty #4729
    BCH dropped 8% since you locked funds.
-   Add 0.0003 BCH within 60 minutes or deal will refund.
+   Add 0.0003 BCH within 60 minutes or contract matures early.
    ```
 
 2. **Seller has three options:**
-   - **Add more BCH** to the contract (top up collateral)
-   - **Let it refund** (timeout triggers, Iris gets refund, seller's reputation penalized)
-   - **Hope price recovers** within the grace period
+   - **Add more BCH** to the contract (top up collateral manually)
+   - **Let contract mature early** (all BCH goes to sender, seller keeps the €100 fiat already received)
+   - **Hope price recovers** within the 60-minute grace period
 
-3. **If seller doesn't respond:**
-   - Contract triggers timeout clause
-   - Seller's BCH returns to them
-   - Iris is notified: "Deal canceled — seller couldn't cover price drop"
-   - Bulletin board marks seller with failed bounty (reputation impact)
+3. **How seller tops up (manual transaction):**
+   - Seller already received €100 Bizum from sender (Iris)
+   - Seller can buy more BCH with that EUR (on exchange or via Asgaya bulletin)
+   - Seller broadcasts additional BCH to covenant address
+   - **Note:** Automated Bizum→BCH purchase likely violates banking TOS, so manual intervention required
 
-**This is economically similar to MakerDAO liquidations,** but on a per-transaction basis.
+4. **If seller doesn't respond within 60 minutes:**
+   - **Contract matures early** (before 24-hour timeout)
+   - **All BCH goes to sender** (Iris receives full covenant balance)
+   - Seller keeps: €100 Bizum received (covered fiat leg)
+   - Seller loses: BCH collateral posted (penalty for non-response)
+   - Bulletin board marks seller with failed margin call (reputation impact)
+
+**Economic model:**
+- Seller has capital to respond (€100 fiat in hand)
+- Early maturity penalty incentivizes fast response
+- Similar to MakerDAO liquidations, but on per-transaction basis
+- 60-minute window balances seller convenience vs sender protection
 
 ---
 

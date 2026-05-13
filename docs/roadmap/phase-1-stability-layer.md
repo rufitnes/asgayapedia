@@ -310,6 +310,45 @@ If MUSD depegs permanently or Moria Protocol shuts down:
 
 ---
 
+## Future Enhancements (Phase 1+)
+
+### Seller-Configurable Timeouts
+
+**Current Phase 0 design (hardcoded):**
+- 24-hour covenant timeout (recipient claim window)
+- 5-minute Bizum confirmation window (sender must pay)
+- 60-minute margin call grace period (seller must top up)
+
+**Phase 1+ enhancement:**
+
+Allow BCH Sellers to configure timeout parameters based on their risk tolerance:
+
+| Seller Profile | Covenant Timeout | Margin Call Window | Rationale |
+|---------------|------------------|-------------------|-----------|
+| **Conservative** | 12 hours | 30 minutes | Lower volatility exposure, tighter windows |
+| **Standard** | 24 hours | 60 minutes | Balanced (Phase 0 default) |
+| **Flexible** | 48 hours | 90 minutes | Higher volume opportunity, willing to manage risk |
+
+**Trade-offs:**
+- ✅ **Benefits:** Sellers customize risk vs reward, competition on service quality
+- ⚠️ **Risks:** Too many options overwhelm users, fragments liquidity, complicates UX
+
+**Implementation approach:**
+1. **Phase 0:** Keep hardcoded defaults (simplicity, validate baseline)
+2. **Phase 1:** If seller demand emerges, add 2-3 preset profiles (not arbitrary values)
+3. **Phase 2+:** If advanced sellers request, allow custom configurations
+
+**Validation criteria (Phase 0 → Phase 1 decision):**
+- Do sellers frequently encounter timeout issues with 24h window? (Measure timeout rate)
+- Do sellers request shorter windows for lower volatility exposure? (Survey feedback)
+- Does BCH price move significantly during 24h windows? (Price volatility data)
+
+**Design principle:** Start simple (hardcoded), add flexibility only when data justifies complexity.
+
+**Related:** [Phase 0 Validation Checklist](../decisions/phase-0-validation-checklist.md) - Parameter #3 (Covenant timeout)
+
+---
+
 ## Success Metrics (Phase 1)
 
 **Phase 1.0 (Rate Display):**
