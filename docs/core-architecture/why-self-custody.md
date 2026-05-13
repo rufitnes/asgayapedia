@@ -63,14 +63,14 @@
 - Peer-to-peer coordinator (regulatory gray zone, not clearly prohibited)
 - **Can launch and serve users immediately**
 
-### 3. Custodial Enables Censorship
+### 3. Custodial Concentrates Control
 
-**If Asgaya controlled funds, authorities could compel us to:**
-- Freeze accounts from certain countries
-- Block transactions to certain addresses
-- Report all transactions to government
-- Deny service to "high-risk" users
-- **We'd become the gatekeepers we're trying to replace**
+If Asgaya controlled funds, it would have the power to restrict access—something the protocol is designed to avoid. Examples of custodial limitations:
+- Account restrictions by jurisdiction
+- Transaction filtering by address
+- Mandatory reporting requirements
+- Risk-based service denial
+- **With self-custody, only the user controls their assets**
 
 **With self-custody:**
 - Can't freeze what we don't control
@@ -128,11 +128,11 @@
 - No one can confiscate your wealth
 - **Financial sovereignty**
 
-**Censorship resistance:**
-- No one can stop your transactions
-- No one can block your access
-- No one can discriminate based on nationality, politics, or beliefs
-- **Permissionless by design**
+**Permissionless access:**
+- Transactions proceed without central approval
+- Access doesn't depend on nationality, politics, or beliefs
+- The protocol treats all participants equally
+- **Open by design**
 
 **Privacy:**
 - No central database of your transactions
