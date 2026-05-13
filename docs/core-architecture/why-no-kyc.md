@@ -78,7 +78,7 @@ The people who most need affordable remittances—those sending €100-500 to su
 
 If Asgaya requires KYC, we're not serving our users. We're serving the people who already have financial access.
 
-### 2. KYC Is Surveillance
+### 2. KYC Creates Permanent Data Trails
 
 Every KYC verification creates a paper trail:
 - Who sent money
@@ -101,13 +101,13 @@ Every KYC verification creates a paper trail:
 
 **No KYC isn't just convenient—it's necessary for safety.**
 
-### 3. KYC Enables Gatekeeping
+### 3. KYC Limits Access
 
-With KYC, someone decides who gets access:
-- Bank says "we don't serve your country"
-- Exchange says "your risk profile is too high"
-- Regulator says "this corridor is prohibited"
-- **Arbitrary decisions exclude millions**
+KYC requirements can exclude people:
+- Banks may not serve certain countries
+- Exchanges may deny service based on risk profiles
+- Some corridors face regulatory restrictions
+- **These barriers disproportionately affect those who need access most**
 
 **Without KYC:**
 - No one to ask permission from
@@ -271,18 +271,11 @@ See the **Decisions** section for how we achieve no KYC while managing risks:
 
 ## The Bottom Line
 
-**KYC is designed to exclude.**
+KYC requirements, however well-intentioned, create barriers. The poor may lack ID. Migrants may fear exposing their status. Refugees may have fled without documents.
 
-It excludes the poor (who can't get IDs).
-It excludes migrants (who fear deportation).
-It excludes dissidents (who need privacy).
-It excludes refugees (who fled their countries).
+**Asgaya's approach:** If you have a phone, you can receive money. That's it.
 
-**Asgaya is designed to include.**
-
-If you have a phone, you can receive money. That's it.
-
-**Not your papers, not your permission, not your problem.**
+**Access through technology, not paperwork.**
 
 ---
 
