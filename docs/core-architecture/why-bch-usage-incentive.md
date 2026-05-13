@@ -208,9 +208,9 @@ See the **Decisions** section for how we achieve this:
 
 ## The Bottom Line
 
-**Ideology has failed to spread BCH adoption.**
+**Technical merit alone hasn't driven widespread adoption.**
 
-**Economics won't fail.**
+**Clear economic incentives create a stronger foundation.**
 
 Give recipients a clear financial reason to hold BCH (lower fees + more merchants), and they will. Give merchants a clear financial reason to accept BCH (passive remittance income), and they will.
 
