@@ -8,7 +8,7 @@
 
 ## The Problem
 
-**Ideology alone has failed to spread the use of Bitcoin Cash.**
+**Technical benefits alone haven't driven widespread adoption.**
 
 For years, the BCH community has promoted the technical benefits (fast, cheap, reliable), but adoption remains limited. Why? Because there's no compelling reason for merchants to accept BCH when 99.9% of their customers want to pay with fiat.
 
@@ -28,7 +28,7 @@ To promote adoption, Asgaya must satisfy these requirements:
 
 **Requirement:** Merchants must profit from participating in the network.
 
-**Why this matters:** Merchants are rational economic actors. They won't adopt BCH out of ideology—they need to make more money by accepting it than by refusing it.
+**Why this matters:** Merchants are rational economic actors. They need a clear business case—accepting BCH must be more profitable than refusing it.
 
 **How it works:**
 - Every remittance that flows through a merchant earns them a share of the 1% fee
