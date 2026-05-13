@@ -10,7 +10,7 @@
 
 ## The Goal
 
-Use real market exchange rates with zero markup, bypassing both private company spreads and government-imposed rate manipulation.
+Use real market exchange rates with zero markup, avoiding both private company spreads and official exchange rate constraints.
 
 **Key insight:** The protocol operates purely in BCH. Exchange rates are only for user experience (showing "€100 = 500,000 VES"), not for system mechanics.
 
@@ -210,14 +210,14 @@ EUR (Spain) → BCH (global) → VES (Venezuela)
 Government-controlled    Government-controlled
 exchange rates          exchange rates
      ↓                            ↓
-Bypass via Bizum P2P    Bypass via P2P cash market
+Access market rate via Bizum P2P    Access market rate via P2P cash market
 ```
 
 **Key properties:**
 - ✅ **No central authority** sets BCH price (global market)
-- ✅ **Sender bypasses** official EUR/VES rate (uses BCH bridge)
-- ✅ **Recipient bypasses** official VES rate (gets real market rate)
-- ✅ **Merchant bypasses** capital controls (holds BCH, not sanctioned currency)
+- ✅ **Sender accesses market EUR/VES rate** (via BCH bridge)
+- ✅ **Recipient receives at market VES rate** (real market value)
+- ✅ **Merchant holds BCH**, outside currency restrictions
 
 **Example (Venezuela):**
 - Government official rate: 1 USD = 36.5 VES (not accessible to citizens for remittances)
