@@ -95,7 +95,7 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 
 ---
 
-### Screen 2: Enter Recipient Phone
+### Screen 2: Enter Recipient Cash Account
 
 ```
 ┌─────────────────────────────────────┐
@@ -105,20 +105,22 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 │   Who are you sending money to?     │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │                              │   │
-│  │  📱 Recipient phone number    │   │
 │  │                             │   │
-│  │  +58  ___________________   │   │◄─ From contact list
+│  │  👤 Cash Account or Address │   │
+│  │                             │   │
+│  │  Elena#142                  │   │◄─ Primary: Cash Account
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
 │   Recent recipients:                │◄─ Quick send
-│   • Elena (+58-412-XXX-XXXX)        │
-│   • Carlos (+54-911-XXX-XXXX)       │
+│   • Elena#142 (🇻🇪 Venezuela)       │
+│   • Carlos#5890 (🇦🇷 Argentina)     │
 │                                     │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  [ 📷 Scan QR ]  [ 📱 From Contacts ]│◄─ Quick access
 │                                     │
 │  ┌─────────────────────────────┐    │
 │  │         Continue            │    │
@@ -135,30 +137,41 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 ```
 
 **Interactions:**
-- Add phone number from contact list (has country code, less error-prone)
+- Enter Cash Account (e.g., `Elena#142`) or paste BCH address
 - Tap recent recipient → Auto-fill
+- Tap "From Contacts" → Select contact with saved Cash Account
+- Tap "Scan QR" → Scan recipient's Cash Account QR code
 - Tap "View Merchant Map" → Show merchants in recipient's country
-- Tap "Continue" → Check corridor availability → Go to Screen 3
+- Tap "Continue" → Resolve Cash Account → Check corridor availability → Go to Screen 3
 
 **Validation:**
 ```
-Input: +58-412-XXX-XXXX
+Input: Elena#142
 Checks:
-1. Valid phone format? ✓
-2. Corridor available (EUR→VES)? ✓
-3. Active merchants in Venezuela? ✓
-4. Phone has BCH address associated? ✓
+1. Valid Cash Account format? ✓ (Name#Number)
+2. Resolve via cashaccounts.bchdata.cash → bitcoincash:qp3...
+3. Corridor available (EUR→VES)? ✓
+4. Active merchants in Venezuela? ✓
 
 If any check fails:
-"Sorry, recipient needs Asgaya app to receive.
- Send them: https://asgaya.org/app"
+"Cannot resolve Elena#142. Ask recipient to verify their Cash Account name."
+```
+
+**Alternative input (fallback):**
+```
+Input: bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy
+Checks:
+1. Valid BCH address format? ✓
+2. Detect country from address metadata or manual selection
+3. Proceed to amount entry
 ```
 
 **Notes:**
-- Recent recipients enable quick re-sends (recurrent payments pattern)
-- Country code auto-detected from phone format
-- Corridor check happens before amount entry (fail fast)
-- Merchant map preview builds confidence (shows network exists)
+- Cash Accounts replace phone numbers as primary identifier (BCH-native, no centralized database)
+- Recent recipients show Cash Account + country flag (visual corridor indicator)
+- Contact integration: User saves `Elena#142` in phone contacts → One-tap send
+- QR code scanning works with Cash Account QR or standard BCH address QR
+- Corridor auto-detected from Cash Account metadata (block height → historical country data) or manual selection
 
 ---
 

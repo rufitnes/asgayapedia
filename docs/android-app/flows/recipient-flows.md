@@ -53,7 +53,7 @@ Notification → View details → Find merchant → Navigate → Co-sign covenan
 │  💰 Asgaya                          │
 │                                     │
 │  You received 500,000 VES           │
-│  from Iris M.                       │
+│  from Iris#5832                     │◄─ Sender Cash Account (if available)
 │                                     │
 │  Tap to claim at nearby merchant    │
 │                                     │
@@ -69,7 +69,7 @@ Notification → View details → Find merchant → Navigate → Co-sign covenan
 ```
 💰 Asgaya Remittance
 
-You received 500,000 VES from Iris M.
+You received 500,000 VES from Iris#5832
 
 📍 Claim at nearby merchant within 24h
 🔑 Code: 8923
@@ -120,7 +120,7 @@ Show recipient what they're claiming and where to claim it.
 │  │                             │   │
 │  │  Amount: 500,000 VES        │   │
 │  │                             │   │
-│  │  From: Iris M.              │   │
+│  │  From: Iris#5832            │   │◄─ Sender Cash Account
 │  │  (Your friend)              │   │
 │  │                             │   │
 │  │  Message: "Para la comida"  │   │
@@ -497,6 +497,20 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 │  │                             │   │
 │  │  [ Learn More ]             │   │
 │  └─────────────────────────────┘   │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  💡 Make future remittances easier: │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  Register Cash Account      │   │◄─ Optional onboarding
+│  └─────────────────────────────┘   │
+│                                     │
+│  Get a name like Elena#142 so      │
+│  senders can save you in contacts  │
+│  for one-tap sending. Cost: ~$0.01 │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │      Back to Home           │   │

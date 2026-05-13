@@ -84,19 +84,21 @@ Browse active bounties offering BCH for VES cash. Customer provides code to clai
 │  Active bounties waiting for you:   │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │ 🔵 Bounty #4729             │   │
+│  │ 🔵 Elena#142                │   │◄─ Sender Cash Account (human-readable!)
 │  │ Wants: 500,000 VES          │   │
 │  │ You get: 0.0995 BCH         │   │
 │  │ (~505,000 VES value)        │   │◄─ VES-centric display
 │  │ Expires in: 23h 45m         │   │
+│  │ Code: 4729                  │   │◄─ Bounty code (for claim)
 │  └─────────────────────────────┘   │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │ 🔵 Bounty #5812             │   │
+│  │ 🔵 Carlos#5890              │   │◄─ Repeat customer recognition
 │  │ Wants: 750,000 VES          │   │
 │  │ You get: 0.1493 BCH         │   │
 │  │ (~757,500 VES value)        │   │
 │  │ Expires in: 22h 18m         │   │
+│  │ Code: 5812                  │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
@@ -125,16 +127,19 @@ Browse active bounties offering BCH for VES cash. Customer provides code to clai
 - **If invalid:** Error message (see below)
 
 **Bounty Display:**
+- **Sender Cash Account:** Human-readable name (e.g., `Elena#142`) instead of truncated address
 - **VES-centric:** Show VES amounts prominently (what merchant sells)
 - **BCH amount:** Show what merchant receives
 - **VES value equivalency:** Show BCH worth in VES at current rate (~505,000 VES)
 - **Expiration:** Covenant timeout (typically 24h)
+- **Bounty code:** Last 4 digits for customer to provide
 - **Status indicator:** 🔵 Active | 🟡 Expiring soon (<2h) | 🔴 Expired
 
-**Why bounties shown:**
-- Merchant sees market demand (how many customers need VES)
-- Merchant can gauge volume (plan cash inventory)
-- Transparent: All bounties public (no hidden orders)
+**Why Cash Accounts matter for merchants:**
+- **Repeat customer recognition:** "Elena#142 again - she's been here 3 times, reliable!"
+- **Trust signal:** Real name (even if not verified) vs anonymous `bitcoincash:qp3...`
+- **Market demand visibility:** See how many unique customers need VES
+- **Transparent:** All bounties public (no hidden orders)
 
 **Code Format:**
 - Full remittance ID: REM-89234

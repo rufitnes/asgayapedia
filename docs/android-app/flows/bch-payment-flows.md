@@ -82,15 +82,15 @@ Sender → Scans BCH address → Pays Bizum → Escrow converts EUR→BCH → Me
 
 ---
 
-## Screen 2: Scan BCH Address QR Code
+## Screen 2: Scan Cash Account or BCH Address
 
 ```
 ┌─────────────────────────────────────┐
 │ ◄ Back           Pay with BCH       │
 ├─────────────────────────────────────┤
 │                                     │
-│   Scan Bitcoin Cash address         │
-│   or payment QR code                │
+│   Scan merchant QR code or          │
+│   enter Cash Account                │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
@@ -107,26 +107,33 @@ Sender → Scans BCH address → Pays Bizum → Escrow converts EUR→BCH → Me
 │                                    │
 │  ┄┄┄┄┄┄┄┄┄┄ OR ┄┄┄┄┄┄┄┄┄┄          │
 │                                    │
-│  [ Enter address manually ]        │
+│  👤 Enter Cash Account:             │
+│  CafeBarcelona#8234                 │
+│                                    │
+│  [ Enter BCH address manually ]    │◄─ Fallback
 │                                    │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    │
 │                                    │
-│  💡 Tip: Most merchants display     │
-│     their QR code at the counter   │
+│  💡 Tip: Ask merchant for their     │
+│     Cash Account (like Elena#142)  │
+│     - no cardboard QR needed!      │
 │                                    │
 └────────────────────────────────────┘
 ```
 
 **Interactions:**
 - Camera opens automatically
-- Scan QR code → Detect BCH address → Go to Screen 3
-- Tap "Enter manually" → Show text input field
+- Scan QR code → Detect Cash Account or BCH address → Go to Screen 3
+- Enter Cash Account manually (e.g., `CafeBarcelona#8234`) → Resolve → Go to Screen 3
+- Tap "Enter BCH address manually" → Show text input field for fallback
 
 **Notes:**
 - Permission request for camera (first time only)
-- Validate BCH address format (bitcoincash:q...)
-- Show error if invalid QR code
-- Works with any BCH address (merchant, friend, self)
+- Validate Cash Account format (Name#Number) or BCH address format (bitcoincash:q...)
+- If Cash Account: Resolve via cashaccounts.bchdata.cash → Show resolved address
+- Show error if invalid QR code or unresolvable Cash Account
+- Works with any BCH address or Cash Account (merchant, friend, self)
+- **UX win:** Merchants can just tell you their Cash Account verbally - no QR scanning needed!
 
 ---
 
@@ -138,8 +145,8 @@ Sender → Scans BCH address → Pays Bizum → Escrow converts EUR→BCH → Me
 ├─────────────────────────────────────┤
 │                                     │
 │   Paying to:                        │
-│   Café Barcelona                    │◄─ Merchant name (if available)
-│   bitcoincash:qr5h8w9t...           │
+│   CafeBarcelona#8234                │◄─ Cash Account (human-readable!)
+│   bitcoincash:qr5h8w9t...           │◄─ Resolved address (for verification)
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
