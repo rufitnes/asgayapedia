@@ -51,7 +51,7 @@ Users need to verify that Asgaya isn't hiding markups like legacy systems do.
 
 **Success metric:** Users can independently verify exchange rates match publicly available market rates at the time of transfer.
 
-### 2. Bypassing Financial Repression
+### 2. Accessing Market-Driven Exchange Rates
 
 Bitcoin Cash is global, permissionless, and market-driven:
 - No government can dictate BCH/EUR rate
@@ -66,17 +66,17 @@ EUR → Bank → Government-imposed rate → Local currency
 Result: Government captures spread
 ```
 
-**Asgaya (escapes control):**
+**Asgaya flow:**
 ```
 EUR → Exchange (global market) → BCH → Covenant → Local market → Local currency
-Result: Market determines value, government can't intercept
+Result: Market rates determine value throughout, without intermediary markups
 ```
 
 ### 3. Preventing System Replication of Legacy Problems
 
 If Asgaya allowed BCH sellers or merchants to inflate exchange rates, we'd recreate the same extraction mechanisms we're trying to replace.
 
-**The line we draw:** Freedom on convenience, **ZERO flexibility on exchange rates**.
+**The line we draw:** Freedom on convenience, **exchange rate integrity is non-negotiable**.
 
 **BCH Sellers CANNOT:**
 - Inflate exchange rate
