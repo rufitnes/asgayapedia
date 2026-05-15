@@ -1,318 +1,169 @@
-← [Back to Android App](android-app/README.md)
+# Backend-APIs: How Asgaya Queries the BCH Blockchain
 
-# RS046-5: Backend APIs - INDEX
-
-**Research Type:** Technical Specification
-**Status:** In Progress
-**Created:** 2026-04-27
-**Related:** [RS046 Main Index](android-app/README.md)
+**Status:** Active — Covenant Architecture (NFT-Native)  
+**Last Updated:** 2026-05-16  
+**Version:** 3.0 (Complete Rewrite for NFT-Based Bulletin Board)
 
 ---
 
-## Documents in This Section
+## TL;DR
 
-### Core APIs (MVP Required)
-- [rate-apis.md](android-app/backend-apis/rate-apis.md) - Exchange rates and transaction cost estimation
-- [transaction-apis.md](android-app/backend-apis/transaction-apis.md) - Remittance transactions and status tracking
-- [settlement-apis.md](android-app/backend-apis/settlement-apis.md) - Liquidity provider settlement opportunities
+**Asgaya does not have a traditional backend.** In production, the mobile app queries the Bitcoin Cash blockchain directly via public Electrum servers. There is no central server, no REST API, no database. The blockchain IS the database.
 
-### User Management (MVP - Minimal)
-- [user-apis.md](android-app/backend-apis/user-apis.md) - User registration and preferences
-- [notification-apis.md](android-app/backend-apis/notification-apis.md) - Push notification registration and delivery
+**What this folder documents:**
+- How the mobile app discovers sellers and merchants (by scanning the blockchain for NFTs)
+- How covenants track remittance state (on-chain, no server needed)
+- How sellers run their own automation (locally, not as an Asgaya service)
+- How we test everything locally (pichan + regtest for development)
 
-### Discovery & Network (Post-MVP)
-- [merchant-apis.md](android-app/backend-apis/merchant-apis.md) - Merchant discovery and availability
-- [leaderboard-apis.md](android-app/backend-apis/leaderboard-apis.md) - LP rankings and gamification
-
-### Infrastructure
-- [common-patterns.md](android-app/backend-apis/common-patterns.md) - Authentication, error handling, rate limiting
-- [bch-native-architecture.md](android-app/backend-apis/bch-native-architecture.md) - BCH-native design philosophy
+**If you're looking for REST API docs, there aren't any.** This folder explains why, and what replaces them.
 
 ---
 
-## 💡 Documentation-First Philosophy
+## Why No Backend?
 
-> **This is a documentation-first project.** We're building the API specifications collaboratively before implementation. Nothing is set in stone. Every endpoint, every design decision, and every architectural choice is open for discussion and improvement.
->
-> **We're seeking the best ideas from the community.** If you see a better way to structure an API, a smarter design pattern, or an improvement to any specification—please contribute! Your feedback shapes the foundation of Asgaya.
->
-> **The status "💡 Open for Design" means:** This API is ready for discussion, feedback, and collaborative refinement. We want your input to make it better.
+| Traditional Backend | Asgaya |
+|---------------------|--------|
+| REST API endpoints | Electrum JSON-RPC (blockchain queries) |
+| PostgreSQL / MongoDB | BCH blockchain (UTXO set + NFT commitments) |
+| JWT authentication | BCH signatures (prove address ownership) |
+| WebSocket heartbeats | UTXO existence = liveness |
+| Server tracks transaction state | Covenant UTXO IS the state |
+| Sellers register via API | Sellers broadcast NFT covenant transaction |
+| Notifications via push server | OP_RETURN on blockchain |
 
----
-
-## Overview
-
-This folder contains the REST API specifications for Asgaya backend services. Each file focuses on one domain area and serves as a collaborative design document.
-
-**Architecture principle:** Keep backend minimal. Phone = identity, local storage only.
-
-**API design goal:** Simple enough for humans to understand, structured enough for AI agents to consume.
+**The blockchain is permissionless.** Anyone can post a seller NFT. Anyone can query it. No approval needed. No server to shut down.
 
 ---
 
-## API Categories
+## Architecture Overview
 
-### Core APIs (MVP Required)
-
-1. **[Rate APIs](android-app/backend-apis/rate-apis.md)** 💡 Open for Design
-   - Get current exchange rates
-   - Calculate transaction estimates
-   - Dynamic reward split (BCH volatility)
-   - **Why needed:** Show users accurate rates before sending money
-   - **How to contribute:** Review the design, suggest simplifications, propose alternative endpoints
-
-2. **[Transaction APIs](android-app/backend-apis/transaction-apis.md)** 💡 Open for Design
-   - Create remittance transaction
-   - Track transaction status
-   - Recipient claim (select merchant)
-   - Two-sided confirmation
-   - **Why needed:** Core flow from sender → recipient → merchant
-   - **How to contribute:** Discuss confirmation flows, error handling, edge cases
-
-3. **[Settlement APIs](android-app/backend-apis/settlement-apis.md)** 💡 Open for Design
-   - LP settlement opportunities
-   - Accept settlement
-   - Settlement history
-   - **Why needed:** LPs provide instant liquidity to merchants
-   - **How to contribute:** Review settlement guarantees, timing constraints, LP incentives
-
-### User Management (MVP - Minimal)
-
-4. **[User APIs](android-app/backend-apis/user-apis.md)** 💡 Open for Design
-   - Register user (phone verification)
-   - User preferences
-   - Transaction history
-   - **Why needed:** Basic identity and settings (keep minimal!)
-   - **How to contribute:** Suggest ways to keep this lightweight while meeting needs
-
-5. **[Notification APIs](android-app/backend-apis/notification-apis.md)** 💡 Open for Design
-   - Register device for push notifications
-   - Send notifications (transaction updates, settlement alerts)
-   - **Why needed:** Real-time updates for all participants
-   - **How to contribute:** Propose notification types, delivery guarantees, retry logic
-
-### Discovery & Network (Post-MVP?)
-
-6. **[Merchant APIs](android-app/backend-apis/merchant-apis.md)** 💡 Open for Design
-   - Find nearby merchants
-   - Register merchant location
-   - Merchant availability
-   - **Why needed:** Recipients need to find merchants to pick up cash
-   - **How to contribute:** Design the merchant discovery UX, location privacy, search filters
-
-7. **[Leaderboard APIs](android-app/backend-apis/leaderboard-apis.md)** 💡 Open for Design
-   - LP rankings (speed, volume, activity)
-   - Gamification mechanics
-   - **Why needed:** Incentivize LP participation (nice-to-have, not MVP)
-   - **How to contribute:** Suggest fair ranking algorithms, discuss gaming resistance
-
-### Infrastructure
-
-8. **[Common Patterns](android-app/backend-apis/common-patterns.md)** 💡 Open for Design
-   - Authentication (JWT)
-   - Error handling
-   - Rate limiting
-   - API versioning
-   - Security best practices
-   - **Why needed:** Consistent patterns across all endpoints
-   - **How to contribute:** Propose security best practices, discuss API versioning strategy
-
----
-
-## How These Connect to the App
-
-### Sender Flow (RS046-2)
 ```
-User opens app → Calls Rate APIs → Shows estimate
-User sends Bizum → Transaction APIs create txn
-User tracks → Transaction APIs poll status
-```
+┌─────────────────────────────────────────────────────────┐
+│                   PRODUCTION (Phase 0+)                   │
+│                                                          │
+│  Mobile App ──── Electrum JSON-RPC ──── BCH Blockchain   │
+│  (Pixel/Moto)      (public server)      (mainnet)        │
+│                                                          │
+│  Seller Bot (smsbridge_loop.py)                          │
+│  └── Run by individual sellers, NOT by Asgaya            │
+│                                                          │
+│  No central server. No REST API. No database.            │
+└─────────────────────────────────────────────────────────┘
 
-### Merchant Flow (RS046-3)
-```
-Recipient selects merchant → Merchant APIs (nearby search)
-Merchant gets notification → Notification APIs
-Merchant confirms cash → Transaction APIs (confirm)
-LP settles → Settlement APIs
-```
-
-### LP Flow (RS046-4)
-```
-LP deposits BCH → (handled in wallet, not backend)
-LP sees opportunities → Settlement APIs (poll or push)
-LP accepts → Settlement APIs (accept)
-LP tracks earnings → Settlement APIs (history)
-LP sees leaderboard → Leaderboard APIs
+┌─────────────────────────────────────────────────────────┐
+│                  DEVELOPMENT (Husk v0.1-v0.2)             │
+│                                                          │
+│  Mobile App ──── Electrum JSON-RPC ──── pichan (local)   │
+│                     192.168.1.42:50002    └── bitcoind   │
+│                                              └── Fulcrum │
+│  Same code, different endpoint.                          │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## MVP Scope Decision (Collaborative & Flexible)
-
-**What we LIKELY need for MVP** (open for discussion):
-- 💡 Rate APIs (users need accurate estimates)
-- 💡 Transaction APIs (core remittance flow)
-- 💡 Settlement APIs (LP liquidity provision)
-- 💡 Notification APIs (real-time updates critical)
-- 💡 Common Patterns (auth, errors, etc.)
-
-**What we CAN probably defer** (post-MVP, but let's discuss):
-- 💡 User APIs (can start with local-only storage, add backend sync later)
-- 💡 Merchant APIs (can manually add test merchants initially)
-- 💡 Leaderboard APIs (nice-to-have, but maybe we add gamification earlier?)
-
-**Current thinking:** Focus on APIs 1-3, 5, 8 first. Add 4, 6, 7 after MVP proven.
-
-**But:** This is a proposal, not a mandate. Do you see a better approach? Should we prioritize differently?
-
----
-
-## Architecture Context
-
-### What Lives Where
-
-**On mobile device (Android app):**
-- User identity (phone number)
-- BCH wallet (seed phrase, private keys)
-- Transaction history (local cache)
-- Preferences and settings
-
-**On escrow backend (Python service):**
-- Bizum notification parsing (NotificationListener → Backend)
-- Kraken API integration (buy/sell BCH)
-- Transaction coordination (matching sender → recipient → merchant → LP)
-- Rate aggregation (DolarAPI + Kraken)
-- Settlement verification
-
-**External services:**
-- Kraken: BCH exchange
-- DolarAPI: VES/ARS exchange rates
-- BCH network: Blockchain verification
-- Bizum: Payment rail (via Sabadell SMS)
-
----
-
-## Communication Flow
+## Folder Structure
 
 ```
-┌─────────────────────────────────────────────────┐
-│                 Mobile Apps                     │
-│  (Sender, Merchant, LP, Recipient)              │
-└──────────────────┬──────────────────────────────┘
-                   │
-                   │ HTTPS REST APIs (this folder)
-                   │
-┌──────────────────▼──────────────────────────────┐
-│            Escrow Backend (Python)              │
-│  • Transaction coordination                     │
-│  • Notification parsing                         │
-│  • Rate aggregation                             │
-│  • BCH operations (via Kraken)                  │
-└──────┬────────────────┬────────────┬────────────┘
-       │                │            │
-       ▼                ▼            ▼
-   ┌────────┐     ┌──────────┐  ┌─────────┐
-   │ Kraken │     │ DolarAPI │  │   BCH   │
-   │  API   │     │          │  │ Network │
-   └────────┘     └──────────┘  └─────────┘
+backend-apis/
+├── README.md                     ← YOU ARE HERE
+│
+├── blockchain-scanner/           How mobile app reads the blockchain
+│   ├── nft-scanner.md            Discover sellers/merchants via NFTs
+│   ├── covenant-watcher.md       Track remittance state on-chain
+│   └── cashaccount-resolver.md   Resolve human-readable names
+│
+├── seller-bot/                   For sellers to run (NOT centralized)
+│   ├── README.md                 "How to become a BCH seller"
+│   ├── smsbridge_loop.md         Parse payment notifications
+│   ├── nft-manager.md            Create/update your seller NFT
+│   └── covenant-signer.md        Sign covenants to release BCH
+│
+├── mobile-wallet/                BCH operations on the phone
+│   ├── electrum-client.md        Connect to Electrum servers
+│   ├── covenant-creation.md      Build covenant transactions (CashScript)
+│   └── transaction-building.md   General BCH transaction utilities
+│
+├── development-tools/            Local testing infrastructure
+│   ├── pichan-regtest-setup.md   Run BCH node + Fulcrum on Raspberry Pi
+│   ├── multi-device-test-plan.md Test with Pixel + Moto + pichan
+│   └── covenant-testing.md       Test CashScript contracts on regtest/chipnet
+│
+├── rate-apis.md                  Exchange rate estimates (CoinGecko + DolarAPI)
+├── user-apis.md                  BCH address = user identity
+├── common-patterns.md            BCH signature authentication
+├── bch-native-architecture.md    WHY BCH was chosen (architectural rationale)
+│
+├── archive/                      Pre-covenant architecture (April 2026)
+│   └── ENGINEERING_JOURNEY.md    Evolution story (escrow → covenant)
+│
+└── llm.txt                       AI context file
 ```
 
 ---
 
-## Design Status & Contribution Opportunities
+## Key Concepts
 
-| Document | MVP Priority | Status | Key Open Questions | How to Help |
-|----------|-------------|--------|-------------------|------------|
-| 1. Rate APIs | 🔴 Critical | 💡 Open for Design | How often to refresh rates? Which sources to trust? | Review rate aggregation logic, suggest data sources |
-| 2. Transaction APIs | 🔴 Critical | 💡 Open for Design | How to handle failures mid-flow? Timeout strategies? | Discuss confirmation flows, error scenarios |
-| 3. Settlement APIs | 🔴 Critical | 💡 Open for Design | What are fair LP incentives? How to prevent gaming? | Design settlement economics, discuss fairness |
-| 4. User APIs | 🟡 Important | 💡 Open for Design | How minimal can we go? Local-first sync strategy? | Suggest lean architecture, privacy considerations |
-| 5. Notification APIs | 🔴 Critical | 💡 Open for Design | Delivery guarantees? Retry strategy? | Design notification semantics, discuss reliability |
-| 6. Merchant APIs | 🟡 Important | 💡 Open for Design | How to ensure merchant verification? Privacy approach? | Design discovery UX, location privacy model |
-| 7. Leaderboard APIs | 🟢 Nice-to-have | 💡 Open for Design | Fair ranking metrics? Smurf-proof algorithm? | Propose ranking algorithms, gaming resistance |
-| 8. Common Patterns | 🔴 Critical | 💡 Open for Design | Which auth mechanism? Rate limit strategy? | Contribute security expertise, design patterns |
+### 1. Blockchain IS the Database
 
-**Legend:**
-- 🔴 Critical: Must have for MVP
-- 🟡 Important: Needed soon after MVP
-- 🟢 Nice-to-have: Can defer to V2
-- 💡 Open for Design: Ready for collaborative input and improvement
+**Sellers don't call an API to register.** They broadcast a BCH transaction that creates an NFT (CashToken) with an `ASGAYA_SELLER_V1` category. The NFT commitment (128 bytes) contains their offer: payment methods, limits, fee, contact info.
 
----
+**The mobile app discovers sellers by querying Electrum:** "Give me all UTXOs with category `ASGAYA_SELLER_V1`." Each UTXO represents an available seller. The UTXO value = how much BCH they have available to sell. No database, no server.
 
-## How to Use This Index
+### 2. Covenant = State Machine
 
-**For understanding:**
-1. Start here (index) to see big picture
-2. Read one API file at a time
-3. Ask questions when concepts unclear
-4. Connect APIs to user flows (RS046-2, 3, 4)
+**Transaction state is NOT tracked in a database.** When a covenant is created, a UTXO appears on the blockchain. Its locking script enforces the conditions. The mobile app checks covenant state by querying: does the UTXO exist? Has it been spent? What signatures are still needed?
 
-**For implementation:**
-1. Pick highest priority API (Critical first)
-2. Read the spec
-3. Implement endpoints one at a time
-4. Test with mobile app
-5. Move to next API
+| Covenant State | What's on Blockchain |
+|----------------|---------------------|
+| Created | UTXO exists, no signatures yet |
+| Funded | BCH locked in covenant, NFT attached |
+| Merchant Signed | One signature present |
+| Recipient Signed | Both signatures present → UTXO spent → Complete |
+| Expired | Timelock passed → UTXO refundable |
 
-**For review:**
-1. Open specific API file
-2. Update based on learnings
-3. Keep this index updated (status, dates)
+### 3. No Central Coordination
+
+**The BCH seller runs their own bot.** `smsbridge_loop.py` monitors their bank notifications. When a Bizum payment arrives, the bot matches it to an open bounty, signs the covenant, and BCH is released. Asgaya does not provide this as a service—it provides the **documentation** so anyone can set it up themselves.
+
+### 4. Development Tools Are Temporary
+
+**pichan (Raspberry Pi 5) runs a local BCH node and Electrum server during development.** This lets us test real covenant contracts on regtest (instant blocks) and chipnet (real testnet) before deploying to mainnet. In production, the mobile app queries public Electrum servers. pichan becomes the seller bot (if the developer chooses to run a seller).
 
 ---
 
-## Current Focus
+## For Reviewers
 
-**Today (2026-04-27):**
-- [x] Create folder structure
-- [x] Write index.md
-- [ ] Review and explain rate-apis.md concept
-- [ ] Create rate-apis.md together
-
-**This Week:**
-- [ ] Complete critical APIs (1, 2, 3, 5, 8)
-- [ ] Review with Suso for understanding
-- [ ] Connect to user flows
+**You might be wondering:**
+- **"Where are the REST API docs?"** — There aren't any. Asgaya queries the blockchain directly via Electrum JSON-RPC. This folder documents how.
+- **"How do sellers sign up?"** — They broadcast a transaction. No approval. No API key.
+- **"How do you prevent spam/fake sellers?"** — UTXOs require real BCH collateral. A fake seller with no BCH in their covenant UTXO has nothing to sell. Reputation can be built via on-chain transaction history.
+- **"What about disputes?"** — The covenant executes autonomously. If both parties sign, BCH is released. If neither signs within the timeout, it refunds. Phase 0 uses trusted parties only.
+- **"Is this really a backend?"** — No. It's documentation of how to query the BCH blockchain. The 'backend' is the blockchain itself.
 
 ---
 
-## Target API Complexity
+## Progression
 
-**Each file should be:**
-- ✅ 150-300 lines max (readable in one sitting)
-- ✅ Focus on 2-5 related endpoints
-- ✅ Clear request/response examples
-- ✅ Explain WHY endpoint exists (connect to user need)
-- ✅ Note MVP vs post-MVP
-
-**Avoid:**
-- ❌ 1000+ line files (too overwhelming)
-- ❌ Mixing unrelated endpoints
-- ❌ Over-engineering (keep it simple!)
-
----
-
-## Next Steps
-
-**Immediate:**
-1. Explain Rate APIs concept to Suso
-2. Get alignment on what's needed
-3. Create rate-apis.md together
-4. Repeat for each API category
-
-**Goal:** Suso understands each API and how it connects to the app before we write the spec.
+| Phase | Electrum Endpoint | Blockchain | Backend? |
+|-------|-------------------|------------|----------|
+| Husk v0.1 | pichan:50002 | regtest (local) | pichan (dev tool) |
+| Husk v0.2 | pichan:50002 | chipnet (testnet) | pichan (dev tool) |
+| Phase 0 | fulcrum.fountainhead.cash:50002 | mainnet | **None** |
+| Phase 1+ | Multiple public Electrum servers | mainnet | **None** |
 
 ---
 
 ## Related Documents
 
-- **Parent:** [RS046 Main Index](android-app/README.md)
-- **User Flows:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md), [RS046-3 Merchant](android-app/flows/merchant-flows.md), [RS046-4 LP](android-app/flows/lp-flows.md)
-- **Technical:** [RS046-6 NotificationListener](android-app/notification-listener/README.md)
+- [BCH Native Architecture](bch-native-architecture.md) — Why BCH was chosen
+- [Engineering Journey](archive/ENGINEERING_JOURNEY.md) — Evolution from escrow to covenant architecture
+- [Pichan Regtest Setup](pichan-regtest-setup.md) — Local development environment
+- [Multi-Device Test Plan](multi-device-test-plan.md) — Systematic testing
+- [Phase 0 Decentralization Plan](../../decisions/phase-0-progressive-decentralization.md) — Full progression strategy
 
 ---
 
-*Created: April 27, 2026*
-*Philosophy: Atomic documents, one domain at a time, explain before writing*
-*Status: Index complete, ready to build APIs incrementally*
+*Last rewrite: 2026-05-16 (Version 3.0)*  
+*Previous version: Centralized escrow model (see archive/ENGINEERING_JOURNEY.md)*
