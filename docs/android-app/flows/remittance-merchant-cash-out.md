@@ -209,8 +209,10 @@ Checks:
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
-│   ⚠️ Exchange rate locked when you  │◄─ Clarified timing
-│      confirm (not when Elena claims)│
+│   ⚠️ Exchange rate determined when  │◄─ Pull system: rate at claim time
+│      Elena claims (she controls     │
+│      timing & gets rate at that     │
+│      moment)                        │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │         Continue            │   │
@@ -264,9 +266,9 @@ if (selectedCurrency !== defaultCurrency) {
 - **BCH amount shown:** Recipient receives BCH (not EUR) - wallet-first UX
 - **Sender fee only:** 0.5% to BCH Seller (merchant fee optional, recipient pays)
 - **Educational note:** Explains recipient choice (BCH free, cash 0.5% extra)
-- **Rate locked at confirmation:** Not when recipient claims (covenant creation time)
+- **Pull system exchange rate:** Rate determined when recipient claims (NOT when sender confirms) - recipient controls timing and gets rate at claim moment
 - **Dynamic limits:** Min €10 (or lower if sellers accept), varies by active sellers with smsbridge_loop
-- **Exchange rate:** Real-time from DolarAPI (VES) + CoinGecko (BCH/EUR)
+- **Exchange rate display:** Current rate shown for estimation only (actual rate at claim time may differ)
 
 **Related decisions:** 
 - [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
