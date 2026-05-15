@@ -1,8 +1,8 @@
 # BCH-Native Architecture Summary
 
-**Date:** April 27, 2026
-**Status:** Architecture Finalized
-**Philosophy:** Maximize BCH-native features, minimize centralized dependencies
+**Date:** May 16, 2026 (Updated from April 2026 - Covenant Architecture)
+**Status:** NFT-Native Architecture Finalized
+**Philosophy:** Blockchain IS the database - zero backend servers
 
 ---
 
@@ -100,52 +100,58 @@ Escrow BCH float: 0.01 BCH (€9) total
 
 ---
 
-### 3. Pull System = Volatility Protection
+### 3. Covenant-Based Pull System = Recipient Chooses When to Claim
 
-**Problem:** BCH price can change during transaction lifetime (30 min - 2 hours)
+**Problem:** BCH price can change during transaction lifetime (minutes to hours)
 
-**Traditional approach:**
+**Traditional crypto remittance:**
 ```
-Escrow receives EUR → Buys BCH immediately → Holds BCH → Sends BCH later
-❌ Risk: BCH price drops 5% while waiting = escrow loses money
+Sender buys BCH → Sends BCH → Recipient must sell immediately or hold risk
+❌ Risk: Recipient bears volatility exposure
+❌ Risk: Recipient needs to find buyer for BCH
 ```
 
-**Pull system (what we ARE doing):**
+**Asgaya covenant system (what we ARE doing):**
 ```
-Escrow receives EUR → Holds EUR in bank → Waits for confirmations → Buys BCH → Sends BCH
-✅ No volatility exposure! BCH bought at exact moment everyone is ready
+BCH Seller creates covenant → Locks BCH upfront → Recipient claims when ready
+✅ Recipient chooses WHEN to claim (pulls at their preferred exchange rate)
+✅ BCH seller provides liquidity, earns 0.5% fee
+✅ Covenant enforces delivery (trustless)
 ```
 
 **Timeline:**
 ```
-T+0:00  Sender sends €100 via Bizum
-        Escrow receives EUR, holds as EUR (not BCH)
+T-24h   BCH Seller creates ASGAYA_SELLER_V1 NFT covenant
+        Locks 0.5 BCH in covenant (available for sale)
+        Sets terms: Bizum accepted, 0.5% fee, €10-500 limits
 
-T+0:05  Recipient enters code, sees estimate
+T+0:00  Sender finds seller via mobile app (blockchain NFT scan)
+        Pays €100 via Bizum to seller's bank account
+        Seller receives EUR, creates covenant for recipient
 
-T+0:30  Merchant confirms, hands cash
-        ⚠️ BCH price may have changed, but merchant committed to VES amount
+T+0:05  Covenant UTXO appears on blockchain
+        Recipient's app detects it (OP_RETURN notification)
+        Shows estimate: "€100 = ~6,210 Bs (current rate)"
 
-T+0:31  Recipient confirms
+T+0:30  Recipient goes to merchant Jorge
+        Merchant confirms, hands 6,210 Bs cash
+        Both sign covenant (merchant + recipient signatures)
 
-T+0:32  🚨 NOW: Escrow buys BCH with €100
-        Gets current BCH price (may be slightly different)
-
-T+0:33  Escrow sends BCH to merchant/LP
-
-T+0:35  Complete!
+T+0:31  Covenant executes autonomously
+        BCH released to merchant (0.002845 BCH)
+        Transaction complete!
 ```
 
 **Volatility exposure:**
-- Escrow: 0 minutes (holds EUR until ready to buy)
-- Merchant: ~30 minutes (from confirm to BCH purchase)
-- Recipient: 0 minutes (gets fixed VES amount)
+- BCH Seller: Locks BCH upfront (earns 0.5% fee as compensation)
+- Recipient: Zero (gets fixed fiat amount)
+- Merchant: Zero (gets BCH, can choose to hold or sell immediately)
 
-**30-minute exposure is MINIMAL compared to hours/days.**
+**Key innovation: Recipient controls WHEN to claim.** If exchange rate is bad, they can wait hours/days for better rate (within covenant timeout window).
 
 **Implementation:**
-- See: `transaction-apis.md` - State machine shows `escrow_buying_bch` AFTER confirmations
-- See: `settlement-apis.md` - Lines 441-448 show BCH bought after VES confirmed
+- See: `covenant-creation.md` - How covenants are built (CashScript)
+- See: `blockchain-scanner/covenant-watcher.md` - How state is tracked on-chain
 
 ---
 
@@ -194,7 +200,9 @@ T+0:35  Complete!
 - **Sender:** Iris (Spain) - wants to send €100
 - **Recipient:** Elena (Venezuela) - needs cash
 - **Merchant:** Jorge (Venezuela) - provides cash, wants BCH
-- **Escrow:** Asgaya backend - orchestrates everything
+- **BCH Seller:** Ana (Spain) - provides BCH liquidity, runs seller bot
+
+**Note:** No central server. Mobile apps query BCH blockchain directly via Electrum.
 
 ### Step-by-Step:
 
@@ -211,151 +219,173 @@ This is Elena's user ID (no phone verification needed)
 App shows seed phrase ONCE: "abandon ability able..." (for recovery)
 ```
 
-**2. Iris creates transaction**
+**2. Iris finds BCH seller**
 ```
-Iris opens app/website (maybe doesn't even install app)
+Iris opens app (queries blockchain via Electrum)
   ↓
-Enters: Elena's BCH address (copied from WhatsApp)
+App scans for ASGAYA_SELLER_V1 NFTs on blockchain
+  Finds Ana (0.5 BCH available, Bizum accepted, 0.5% fee)
+  ↓
+Iris enters: Elena's BCH address (copied from WhatsApp)
+            Amount: €100
+  ↓
+App shows Ana's Bizum payment instructions:
+  Phone: +34609123456
   Amount: €100
-  Corridor: EUR → VES
+  Concept: "ASGAYA_txn_7Hk9mNpQ2wX"
   ↓
-POST /api/v1/transactions
-  ↓
-Gets back:
-  - 4-digit code: "7382"
-  - Bizum instructions: Send €100 to +34609123456
-  - Concept: "34ASGAYAtxn_7Hk9mNpQ2wX"
-  ↓
-Iris sends Bizum: €100 to +34609123456
-  ↓
-Escrow bank account receives EUR (held as EUR, NOT converted to BCH yet)
+Iris sends Bizum: €100 to Ana
 ```
 
-**3. Elena gets notified (via OP_RETURN)**
+**3. Ana's seller bot creates covenant**
 ```
-Escrow sends OP_RETURN to Elena's BCH address:
+Ana's bank receives €100 via Bizum
+  ↓
+Ana's seller bot (smsbridge_loop.py) detects payment
+  Parses: Amount €100, concept matches ASGAYA pattern
+  ↓
+Bot creates covenant UTXO on blockchain:
+  Locks 0.00284 BCH (€99.50 worth)
+  Requires: Elena + merchant signatures to release
+  Timeout: 24 hours (refund to Ana if unclaimed)
+  NFT commitment: Elena's address, merchant TBD
+  ↓
+Bot broadcasts covenant transaction to BCH network
+```
+
+**4. Elena gets notified (via OP_RETURN)**
+```
+Covenant UTXO appears on blockchain with OP_RETURN:
   Amount: 546 sats (dust)
-  OP_RETURN: "ASGAYA_TXN_READY_7382"
+  OP_RETURN: "ASGAYA_READY_Elena"
   ↓
-Elena's app (running SPV wallet) sees transaction
+Elena's app (SPV wallet) detects transaction
   ↓
-Shows notification: "€100 ready! Code: 7382. Go to any Asgaya merchant."
+Shows notification: "€100 ready! Go to any Asgaya merchant."
   ↓
 Elena also got 546 sats (first BCH ever!)
 ```
 
-**4. Elena goes to merchant Jorge**
+**5. Elena goes to merchant Jorge**
 ```
-Elena opens app → Sees map with Jorge's bodega (500m away)
+Elena opens app → Queries blockchain for ASGAYA_MERCHANT_V1 NFTs
+  Finds Jorge's bodega (500m away)
   ↓
-Walks to bodega, says: "I have code 7382"
+Walks to bodega, shows app QR code
   ↓
-Jorge opens app → Taps "Provide Cash" → Enters code: 7382
-  ↓
-App shows: €100 = 6,210 Bs (Jorge chooses "Hold BCH")
+Jorge scans QR → App queries covenant UTXO
+  Shows: €100 = 6,210 Bs
   ↓
 Jorge hands 6,210 Bs cash to Elena
   ↓
-Jorge confirms in app (signs with his BCH private key)
+Jorge signs covenant with his BCH private key
 ```
 
-**5. Elena confirms**
+**6. Elena confirms**
 ```
-Elena confirms receiving cash (signs with her BCH private key)
+Elena confirms receiving cash (signs covenant with her BCH private key)
   ↓
-Backend receives BOTH confirmations
+Covenant has BOTH signatures → Executes autonomously
   ↓
-🚨 NOW: Escrow buys BCH with €100 on Kraken
-  Gets: 0.002845 BCH (€99.76 after 0.24% fee)
+BCH released to Jorge's address: 0.00284 BCH
+  Jorge gets 0.00284 BCH (~€99.50 worth)
   ↓
-Margin: €0.24
-Minus notifications: €0.006 (just 1 notification for Path A)
-Net margin: €0.234
-  ↓
-Jorge gets ALL the margin (in BCH): 0.002845 BCH
-  (Because Jorge is holding BCH, no LP needed!)
-  ↓
-Escrow sends BCH to Jorge's address
+Ana earned fee: €0.50 (0.5% of €100)
 ```
 
-**6. Complete!**
+**7. Complete!**
 ```
-All parties notified via OP_RETURN
+Covenant UTXO spent → Transaction complete
   ↓
-Iris sees: "€100 delivered to Elena ✅"
 Elena has: 6,210 Bs cash
-Jorge has: 0.002845 BCH (~€99.76 worth)
+Jorge has: 0.00284 BCH (~€99.50 worth, can sell or hold)
+Ana earned: €0.50 fee (kept €100 - €99.50 = €0.50)
+Iris sent: €100
   ↓
-Transaction complete in ~35 minutes from start to finish
+Transaction complete in ~30 minutes, no backend server involved
 ```
 
 ---
 
 ## Cost Breakdown (Per €100 Transaction)
 
-**Costs:**
+**Recipient Choice Fee Model:**
 ```
-Kraken fee: €0.24 (0.24% maker fee)
-OP_RETURN notification (Elena): €0.006
-OP_RETURN notification (Jorge): €0.006
-Total costs: €0.252
+Iris sends: €100 via Bizum to Ana (BCH seller)
+Ana creates covenant with: €99.50 worth of BCH
+Ana's fee: €0.50 (0.5% of €100)
+
+Elena receives: 6,210 Bs cash from Jorge
+Jorge pays: 0 (no fee to Jorge, just provides cash service)
+
+Total fees paid by sender: €0.50 (0.5%)
 ```
 
-**Margin split (if Jorge sells BCH instead of holding):**
+**If Elena chooses merchant cash-out (Jorge wants fee):**
 ```
-Total margin: €0.24
-Minus 3 notifications: €0.018
-Net margin: €0.222
+Iris sends: €100
+Ana locks in covenant: €99.00 worth of BCH
+Ana's fee: €0.50 (0.5%)
+Jorge's merchant fee: €0.50 (0.5%)
 
-Split 3 ways:
-- Escrow: €0.074 (33.3%)
-- Merchant: €0.074 (33.3%)
-- LP: €0.074 (33.3%)
+Elena receives: 6,138 Bs cash (€99 worth)
+Total fees: €1.00 (1.0% = 0.5% seller + 0.5% merchant)
 ```
 
-**If Jorge holds BCH (Path A):**
+**On-chain costs (covered by seller):**
 ```
-Total margin: €0.24
-Minus 1 notification: €0.006
-Net margin: €0.234
+OP_RETURN notification: ~€0.006 (546 sats dust + fee)
+Covenant creation: ~€0.002 (BCH transaction fee)
+Covenant execution: ~€0.002 (BCH transaction fee)
+Total on-chain: ~€0.01 per transaction
 
-Jorge gets ALL: €0.234 in BCH (no LP split!)
+(Ana earns €0.50, pays €0.01 on-chain = €0.49 net profit)
 ```
+
+**No exchange fees, no LP splits, no escrow margins** - just transparent per-party fees.
 
 ---
 
-## API Endpoints Summary
+## Blockchain Query Summary (No REST API)
 
-### 5_user_apis.md (2 endpoints)
-1. `GET /api/v1/users/me` - Get user profile (auto-creates on first call)
-2. `PUT /api/v1/users/me` - Update display name
+**Asgaya does not have traditional API endpoints.** Mobile apps query the BCH blockchain directly via Electrum servers.
 
-### transaction-apis.md (4 endpoints)
-1. `POST /api/v1/transactions` - Create transaction (get payment instructions + code)
-2. `GET /api/v1/transactions/{id}` - Get transaction status
-3. `POST /api/v1/transactions/{id}/confirm` - Two-sided confirmation (merchant + recipient)
-4. `POST /api/v1/transactions/{id}/cancel` - Cancel transaction (sender only, before payment)
+### How Mobile App Discovers Sellers
+```javascript
+// Query blockchain for ASGAYA_SELLER_V1 NFTs
+const sellers = await electrum.getUTXOsByCategory("ASGAYA_SELLER_V1");
+// Each UTXO = available seller
+// UTXO value = BCH available for sale
+// NFT commitment (128 bytes) = seller terms (payment methods, fees, limits)
+```
 
-### settlement-apis.md (6 endpoints)
-1. `POST /api/v1/settlements/create` - Create settlement (internal)
-2. `GET /api/v1/settlements/pending` - Get pending settlements (LP)
-3. `POST /api/v1/settlements/{id}/accept` - LP accepts settlement
-4. `POST /api/v1/settlements/{id}/confirm-payment` - LP confirms VES sent
-5. `POST /api/v1/admin/settlements/{id}/confirm-ves` - NotificationListener confirms VES received
-6. `POST /api/v1/admin/settlements/{id}/complete` - Complete settlement (internal)
+### How Mobile App Discovers Merchants
+```javascript
+// Query blockchain for ASGAYA_MERCHANT_V1 NFTs
+const merchants = await electrum.getUTXOsByCategory("ASGAYA_MERCHANT_V1");
+// NFT commitment contains: location, cash currency, operating hours
+```
 
-### 4_merchant_apis.md (6 endpoints)
-1. `GET /api/v1/merchants/nearby` - Find nearby merchants (public)
-2. `GET /api/v1/merchants/{id}` - Get merchant details (public)
-3. `POST /api/v1/merchants/profile` - Create merchant listing
-4. `PUT /api/v1/merchants/profile` - Update merchant listing
-5. `DELETE /api/v1/merchants/profile` - Remove merchant listing
-6. `GET /api/v1/merchants/my-profile` - View own merchant stats
+### How Mobile App Tracks Covenant State
+```javascript
+// Query specific covenant UTXO
+const covenant = await electrum.getUTXO(covenantTxId);
+if (covenant.exists) { state = 'funded'; }
+if (covenant.spent) { state = 'completed'; }
+// Covenant locking script encodes rules (signatures, timelock, etc.)
+```
 
-### rate-apis.md (1 endpoint)
-1. `GET /api/v1/estimate` - Get exchange rate estimate
+### How Mobile App Monitors Notifications
+```javascript
+// SPV wallet monitors user's BCH address
+electrum.subscribeToAddress(userAddress);
+// Detects OP_RETURN transactions (0-conf)
+// Parses OP_RETURN data: "ASGAYA_READY_Elena"
+```
 
-**Total: 19 endpoints** for complete MVP functionality!
+**See:** [Backend-APIs README](README.md) for complete blockchain query documentation.
+
+**For old REST API architecture (April 2026), see:** [archive/ENGINEERING_JOURNEY.md](archive/ENGINEERING_JOURNEY.md)
 
 ---
 
@@ -439,24 +469,39 @@ class User:
 
 ---
 
-## BCH-Native Features We're Using (MVP)
+## BCH-Native Features We're Using (Phase 0)
 
-1. **ECDSA Signatures** - Off-chain authentication
-2. **OP_RETURN** - On-chain notifications
-3. **SPV Wallets** - Light clients monitoring addresses
-4. **Dust Outputs** - 546 sats notifications
-5. **0-conf** - Instant notification detection
+1. **CashTokens NFTs** (May 2023 upgrade) - Seller/merchant bulletin board
+   - ASGAYA_SELLER_V1 NFTs (128-byte commitments with seller terms)
+   - ASGAYA_MERCHANT_V1 NFTs (location, cash currency, hours)
+   - Permissionless registration (just broadcast transaction)
+
+2. **Native Introspection Covenants** (May 2022 upgrade) - Trustless escrow
+   - Covenant enforces delivery conditions (signatures, timelock)
+   - BCH locked on-chain until conditions met
+   - Autonomous execution (no server orchestration)
+
+3. **ECDSA Signatures** - Off-chain authentication
+   - Prove address ownership without transaction fee
+
+4. **OP_RETURN** (220 bytes) - On-chain notifications
+   - "ASGAYA_READY_Elena" triggers app notification
+
+5. **SPV Wallets** - Light clients monitoring addresses
+   - Mobile app doesn't need full BCH node
+
+6. **0-conf** - Instant notification detection
+   - See OP_RETURN immediately (no block confirmation needed)
 
 ---
 
-## BCH-Native Features to Explore (Post-MVP)
+## BCH-Native Features to Explore (Post-Phase 0)
 
-After RS046 complete, deep-dive on:
+Future enhancements to investigate:
 
-1. **CashTokens** - NFTs/fungible tokens on BCH
-   - Could merchant listings be CashTokens?
-   - Could reputation be tokenized?
-   - Could transaction receipts be NFTs?
+1. **Cash Accounts** - Human-readable BCH addresses
+   - Elena#142 instead of bitcoincash:qzxyz...
+   - Better UX for address sharing
 
 2. **Schnorr Signatures** - More efficient signatures
    - Smaller transaction sizes
@@ -560,35 +605,38 @@ Total: ~€6/month
 
 ---
 
-## Files Updated in This Session
+## Files Updated in May 2026 Rewrite
 
-1. ✅ **5_user_apis.md** - Created (BCH signature auth, OP_RETURN notifications)
-2. ✅ **transaction-apis.md** - Updated (removed phone auth, added OP_RETURN, pull system)
-3. ✅ **settlement-apis.md** - Updated (removed WhatsApp, BCH signature auth, margin with notification costs)
-4. ✅ **4_merchant_apis.md** - Already had permissionless merchant listings (no changes needed)
-5. ✅ **rate-apis.md** - Already correct (no auth needed for estimates)
+1. ✅ **README.md** - Complete rewrite (blockchain query guide, not REST API index)
+2. ✅ **bch-native-architecture.md** - This file (sections 3-5 rewritten for covenant model)
+3. ✅ **archive/ENGINEERING_JOURNEY.md** - Created (documents escrow → covenant evolution)
+4. 🔄 **covenant-creation.md** - Pending (renamed from transaction-apis.md)
+5. 🔄 **rate-apis.md** - Pending (remove Kraken narrative)
+6. 🔄 **user-apis.md** - Pending (minimal edits)
+7. 🔄 **blockchain-scanner/nft-scanner.md** - Pending (new file)
+8. 🔄 **seller-bot/README.md** - Pending (new file)
 
 ---
 
 ## Next Steps
 
-**Immediate (this research session):**
-- [ ] Review all 5 API files for consistency
-- [ ] Upload RS046 to asgaya.org for model fact-checking
+**Immediate (May 2026 - Documentation):**
+- [x] Rewrite bch-native-architecture.md sections 3-5 (this file)
+- [ ] Complete backend-APIs rewrite (6 more commits)
+- [ ] Share updated docs on bitcoincashresearch.org
 
-**Post-research (after RS046 complete):**
-- [ ] BCH deep-dive session - explore CashTokens, Schnorr, PayMail, etc.
-- [ ] Prototype OP_RETURN notification system
-- [ ] Test BCH signature verification
-- [ ] Build SPV wallet integration
-- [ ] Test seed phrase recovery flow
+**Development (Week 1-2: Husk v0.1):**
+- [ ] Set up pichan (Bitcoin Cash Node + Fulcrum on regtest)
+- [ ] Build NFT scanner (query ASGAYA_SELLER_V1 UTXOs)
+- [ ] Implement covenant creation (CashScript)
+- [ ] Test seller bot (smsbridge_loop.py)
+- [ ] Multi-device testing (Pixel + Moto G + pichan)
 
-**Development priorities:**
-1. Backend: Implement BCH signature verification
-2. Mobile: Integrate SPV wallet library (bitcoincashjs)
-3. Mobile: Implement OP_RETURN monitoring
-4. Backend: Implement pull system (buy BCH after confirmations)
-5. Test end-to-end with 1-2 beta users
+**Development (Week 3-4: Phase 0):**
+- [ ] Switch to chipnet (testnet validation)
+- [ ] Deploy to mainnet with 3-5 trusted testers
+- [ ] Real BCH, real covenants, real transactions
+- [ ] Zero backend infrastructure
 
 ---
 
@@ -605,6 +653,7 @@ Total: ~€6/month
 
 ---
 
-*Created: April 27, 2026*
-*Philosophy: Maximize BCH-native primitives, minimize centralized dependencies*
-*Result: 93% cost reduction, 100% privacy improvement, infinite decentralization*
+*Created: April 27, 2026*  
+*Updated: May 16, 2026 (Covenant Architecture Rewrite)*  
+*Philosophy: Blockchain IS the database - zero backend servers*  
+*Result: 100% backend elimination, infinite scalability, censorship-resistant*
