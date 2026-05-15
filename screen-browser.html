@@ -484,7 +484,7 @@
 │  │ Limits: €10 - €500            │  │
 │  │ Payment: Bizum, SEPA          │  │
 │  │ Fee: 0.5%                     │  │
-│  │ Avg response: 2 min           │  │
+│  │ Avg response: 8 sec           │  │
 │  │                               │  │
 │  │ [ Select ]                    │  │
 │  └───────────────────────────────┘  │
@@ -495,7 +495,7 @@
 │  │ Limits: €50 - €1,000          │  │
 │  │ Payment: SEPA, Cash, ATM      │  │
 │  │ Fee: 0.4% (lower!)            │  │
-│  │ Avg response: 5 min           │  │
+│  │ Avg response: 15 sec          │  │
 │  │                               │  │
 │  │ [ Select ]                    │  │
 │  └───────────────────────────────┘  │
@@ -505,7 +505,7 @@
 │                                     │
 └─────────────────────────────────────┘`,
                 interactions: 'Tap seller → See details | Tap "Select" → Go to Screen 5 with selected seller details | Sort/Filter sellers',
-                notes: '✅ THE P2P MARKETPLACE! ✅ Shows competitive market (fees vary) ✅ Liveness signals (🟢 online) ✅ Multiple payment methods ✅ Future: multi-currency, multi-crypto ✅ Permissionless (anyone can be seller)'
+                notes: '✅ THE P2P MARKETPLACE! ✅ Bot parsing = 5-30 sec response times ✅ Merchants are natural sellers (circular flow: receive BCH from cash-outs → sell to senders) ✅ Competitive market (fees vary 0.3-0.8%) ✅ Liveness signals (🟢 = smsbridge_loop.py active) ✅ Phase 0 testing: How fast can bots parse Bizum vs SEPA vs ATM?'
             },
             {
                 flow: 'sender',

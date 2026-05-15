@@ -402,7 +402,7 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 │  │ Limits: €10 - €500            │  │
 │  │ Payment: Bizum, SEPA          │  │
 │  │ Fee: 0.5%                     │  │
-│  │ Avg response: 2 min           │  │
+│  │ Avg response: 8 sec           │  │◄─ Bot parsing is near-instant
 │  │                               │  │
 │  │ [ Select ]                    │  │
 │  └───────────────────────────────┘  │
@@ -413,7 +413,7 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 │  │ Limits: €50 - €1,000          │  │
 │  │ Payment: SEPA, Cash, ATM      │  │
 │  │ Fee: 0.4% (lower!)            │  │
-│  │ Avg response: 5 min           │  │
+│  │ Avg response: 15 sec          │  │◄─ Slower API polling
 │  │                               │  │
 │  │ [ Select ]                    │  │
 │  └───────────────────────────────┘  │
@@ -424,7 +424,7 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 │  │ Limits: €5 - €200             │  │
 │  │ Payment: Bizum only           │  │
 │  │ Fee: 0.5%                     │  │
-│  │ Avg response: 10 min          │  │
+│  │ Avg response: 45 sec          │  │◄─ Manual verification
 │  │                               │  │
 │  │ [ Select ]                    │  │
 │  └───────────────────────────────┘  │
@@ -456,10 +456,10 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 - Grayed out if amount doesn't fit
 
 **3. Payment Methods:**
-- **Bizum** - Instant (2-3 min avg)
-- **SEPA** - 1-2 hours
+- **Bizum** - Instant (5-15 sec avg) ← Bot parses Bizum API notifications
+- **SEPA** - Slower (30-60 sec) ← API polling delay
 - **Cash** - Meetup required
-- **ATM deposit** - Manual verification
+- **ATM deposit** - Manual verification (varies)
 - **Future:** Other cryptos (BTC, ETH, USDT) - seller accepts crypto for BCH
 
 **4. Fee:**
@@ -469,9 +469,10 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 
 **5. Average Response Time:**
 - Based on historical data (smsbridge_loop.py notification parsing)
-- Fast: <5 min
-- Normal: 5-10 min
-- Slow: >10 min
+- **Fast:** 5-15 sec (Bizum API, automated verification)
+- **Normal:** 15-30 sec (SEPA polling, slower APIs)
+- **Slow:** 30-60+ sec (manual verification, ATM deposits)
+- **Phase 0 testing needed:** How fast can seller bot parse different payment methods?
 
 **Selection Logic:**
 ```javascript
@@ -521,6 +522,15 @@ if (availableSellers.length > 1) {
 - Competitive: Sellers compete on fee, speed, limits
 - Flexible: Multiple payment methods, currencies (future)
 - Antifragile: If top sellers go offline, others visible immediately
+
+**Merchant Circular Flow (Key Insight!):**
+- **Merchants are natural BCH sellers** - they accumulate BCH from cash-outs, then sell it back to new senders
+- **Two-way liquidity:**
+  - Receive BCH → Give cash (cash-out service, earn 0.5%)
+  - Receive cash → Post BCH (BCH selling, earn 0.5%)
+- **Self-sustaining:** Merchants keep BCH circulating without needing to buy/sell on exchanges
+- **Same infrastructure:** Merchant already has smsbridge_loop.py for cash-out notifications, can reuse for BCH selling
+- **Example:** Merchant does 10 cash-outs (gets 1 BCH) → Sells that 1 BCH to 10 new senders → Those recipients do cash-outs → Loop continues
 
 **Why this screen is critical:**
 - Shows Asgaya is truly P2P (not single seller, not company)
