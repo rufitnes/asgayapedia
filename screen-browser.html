@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asgaya Screen Browser - Flow Prototype</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .flow-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .flow-button {
+            background: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .flow-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .flow-button.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .screen-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .screen-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .screen-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .screen-title {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .screen-flow {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        .screen-body {
+            padding: 20px;
+            background: #f8f9fa;
+            min-height: 400px;
+        }
+
+        .screen-wireframe {
+            background: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75em;
+            line-height: 1.4;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .screen-notes {
+            margin-top: 15px;
+            padding: 12px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .screen-interactions {
+            margin-top: 15px;
+            padding: 12px;
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: sticky;
+            top: 0;
+            right: 0;
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1.1em;
+            border-radius: 0 20px 0 0;
+            z-index: 10;
+            float: right;
+        }
+
+        .navigation-arrows {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .nav-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover {
+            background: #764ba2;
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .legend {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .legend h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .legend-item {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Asgaya Screen Browser</h1>
+        <p class="subtitle">Navigate through all user flows - Click any screen to expand</p>
+
+        <div class="legend">
+            <h3>📚 Flows:</h3>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #2196F3;"></span>
+                <span>Sender (Remittance)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #4CAF50;"></span>
+                <span>Recipient</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #FF9800;"></span>
+                <span>Merchant</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #9C27B0;"></span>
+                <span>BCH Payment</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #F44336;"></span>
+                <span>LP (Liquidity Provider)</span>
+            </div>
+        </div>
+
+        <div class="flow-selector">
+            <button class="flow-button active" data-flow="all">All Flows</button>
+            <button class="flow-button" data-flow="sender">Sender</button>
+            <button class="flow-button" data-flow="recipient">Recipient</button>
+            <button class="flow-button" data-flow="merchant">Merchant</button>
+            <button class="flow-button" data-flow="bch-payment">BCH Payment</button>
+            <button class="flow-button" data-flow="lp">LP</button>
+        </div>
+
+        <div class="screens-grid" id="screensGrid"></div>
+    </div>
+
+    <div class="modal" id="screenModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕ Close</button>
+            <div id="modalBody"></div>
+            <div class="navigation-arrows">
+                <button class="nav-button" id="prevButton" onclick="navigateScreen(-1)">← Previous</button>
+                <button class="nav-button" id="nextButton" onclick="navigateScreen(1)">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Screen data - extracted from flow documents
+        const screens = [
+            // SENDER FLOW (Remittance)
+            {
+                flow: 'sender',
+                title: 'Home (Entry Point)',
+                number: 1,
+                wireframe: `┌─────────────────────────────────────┐
+│ ☰                    Asgaya      🌐 │
+├─────────────────────────────────────┤
+│                                     │
+│     Welcome to Asgaya               │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │                               │  │
+│  │   💸 Send Money               │  │
+│  │   Transfer to family/friends  │  │
+│  │                               │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │                               │  │
+│  │   🪙 Pay with Bitcoin Cash    │  │
+│  │   Scan & pay merchants        │  │
+│  │                               │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  Recent activity:                   │
+│  • Sent €100 to Elena ✓            │
+│  • Sent €50 to Carlos ✓            │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Tap "Send Money" → Go to Screen 2',
+                notes: 'Clear visual separation between payment and remittance flows'
+            },
+            {
+                flow: 'sender',
+                title: 'Enter Recipient Cash Account',
+                number: 2,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back         Send Money           │
+├─────────────────────────────────────┤
+│                                     │
+│   Who are you sending money to?     │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │  👤 Cash Account or Address │   │
+│  │                             │   │
+│  │  Elena#142                  │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│   Recent recipients:                │
+│   • Elena#142 (🇻🇪 Venezuela)       │
+│   • Carlos#5890 (🇦🇷 Argentina)     │
+│                                     │
+│  [ 📷 Scan QR ]  [ 📱 From Contacts ]│
+│                                     │
+│  ┌─────────────────────────────┐    │
+│  │         Continue            │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  💡 Recipient will be notified      │
+│     and can choose where to pick    │
+│     up the cash                     │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Enter Cash Account (Elena#142) → Tap Continue → Resolve & check corridor → Go to Screen 3',
+                notes: '✅ Cash Accounts replace phone numbers! BCH-native, no centralized database, contact-friendly'
+            },
+            {
+                flow: 'sender',
+                title: 'Enter Amount',
+                number: 3,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back         Send Money           │
+├─────────────────────────────────────┤
+│                                     │
+│   Sending to: Elena#142             │
+│   🇻🇪 Venezuela                     │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │        €  100.00            │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│   Exchange rate: 1 EUR = 50,500 VES│
+│   (Real market rate via BCH)        │
+│                                     │
+│   Elena receives: ~€99.50 worth     │
+│   Estimated: 5,024,750 VES          │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │         Continue            │   │
+│  └─────────────────────────────┘   │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Enter amount → See exchange rate → Tap Continue',
+                notes: 'EUR-denominated covenant, BCH settlement at market rate'
+            },
+            // RECIPIENT FLOW
+            {
+                flow: 'recipient',
+                title: 'Notification',
+                number: 1,
+                wireframe: `┌─────────────────────────────────────┐
+│  💰 Asgaya                          │
+│                                     │
+│  You received 500,000 VES           │
+│  from Iris#5832                     │
+│                                     │
+│  Tap to claim at nearby merchant    │
+│                                     │
+│  Expires in 24 hours                │
+└─────────────────────────────────────┘`,
+                interactions: 'Tap notification → Opens app to Remittance Details',
+                notes: '✅ Shows sender Cash Account (Iris#5832) for recognition'
+            },
+            {
+                flow: 'recipient',
+                title: 'Remittance Details',
+                number: 2,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Home      Remittance Details      │
+├─────────────────────────────────────┤
+│                                     │
+│   💰 You Received Money!             │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │  Amount: 500,000 VES        │   │
+│  │                             │   │
+│  │  From: Iris#5832            │   │
+│  │  (Your friend)              │   │
+│  │                             │   │
+│  │  Message: "Para la comida"  │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ⏱️ Claim within: 23h 45min         │
+│     (Expires if unclaimed)          │
+│                                     │
+│  📍 Find Merchant to Claim Cash     │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │    View Merchant Map        │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  💡 Tip: Keep it in Bitcoin Cash    │
+│     instead! Pay anywhere, no fees. │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Tap "View Merchant Map" → Go to Merchant Map',
+                notes: '24-hour claim window, educational nudge about holding BCH'
+            },
+            {
+                flow: 'recipient',
+                title: 'Show Bounty Code',
+                number: 5,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back      Claim Cash          ⚙️  │
+├─────────────────────────────────────┤
+│                                     │
+│   🏪 Bodega María                    │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │  You're claiming:           │   │
+│  │  500,000 VES                │   │
+│  │                             │   │
+│  │  📱 Bounty Code:            │   │
+│  │                             │   │
+│  │      8  9  2  3             │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  Instructions:                      │
+│  1️⃣ Tell merchant: "8923"           │
+│  2️⃣ Merchant enters code in app     │
+│  3️⃣ Merchant hands you cash         │
+│  4️⃣ COUNT your cash carefully       │
+│  5️⃣ After receiving cash, both      │
+│     co-sign covenant to complete    │
+│                                     │
+│  Waiting for merchant to accept...  │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Tell code to merchant → Wait for merchant acceptance → Auto-advance to co-sign',
+                notes: '4-digit code links to specific covenant on merchant bulletin board'
+            },
+            {
+                flow: 'recipient',
+                title: 'Co-Sign Covenant',
+                number: 6,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back    Confirm Receipt       ⚙️  │
+├─────────────────────────────────────┤
+│                                     │
+│  ✅ Merchant accepted your bounty!  │
+│                                     │
+│  ⚠️ CRITICAL - Safe Cash-Out:       │
+│                                     │
+│  1️⃣ Merchant hands you cash         │
+│  2️⃣ COUNT cash: 500,000 VES         │
+│  3️⃣ Verify amount is correct        │
+│  4️⃣ Co-sign ONLY AFTER getting      │
+│     ALL the cash in your hand       │
+│                                     │
+│  💡 What is co-signing?             │
+│                                     │
+│  You and merchant both sign the     │
+│  covenant with your private keys.   │
+│  Both signatures needed to complete │
+│                                     │
+│  🔒 Protection:                     │
+│  - Merchant cannot complete without │
+│    your signature                   │
+│  - You cannot complete without      │
+│    merchant's signature             │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  ✅ Co-Sign Covenant        │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ⚠️ Only tap after receiving cash!  │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Receive cash → Count → Tap Co-Sign → Wait for merchant signature → Complete',
+                notes: 'Cryptographic co-signing (secp256k1), not numeric completion codes'
+            },
+            {
+                flow: 'recipient',
+                title: 'Success / Receipt',
+                number: 7,
+                wireframe: `┌─────────────────────────────────────┐
+│            ✅ Success!               │
+├─────────────────────────────────────┤
+│                                     │
+│   You received 500,000 VES!          │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  From: Iris#5832            │   │
+│  │  Amount: 500,000 VES        │   │
+│  │  Merchant: Bodega María     │   │
+│  │  Date: May 10, 2026 3:45pm  │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  💡 You also received Bitcoin Cash!  │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  +0.0995 BCH                │   │
+│  │  (~505,000 VES value)       │   │
+│  │                             │   │
+│  │  Keep it to pay anywhere    │   │
+│  │  with near-zero fees!       │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  💡 Make future remittances easier: │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  Register Cash Account      │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  Get a name like Elena#142 so      │
+│  senders can save you in contacts  │
+│  for one-tap sending. Cost: ~$0.01 │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'View receipt → Optional: Register Cash Account → Back to home',
+                notes: '✅ Prompts Cash Account registration for easier future remittances'
+            },
+            // MERCHANT FLOW
+            {
+                flow: 'merchant',
+                title: 'Customer Lookup (Dashboard)',
+                number: 1,
+                wireframe: `┌─────────────────────────────────────┐
+│ ☰      Asgaya Merchant          👤  │
+├─────────────────────────────────────┤
+│                                     │
+│  💰 VES Cash Out Service            │
+│                                     │
+│  Customer here to claim remittance? │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │  👤 Enter Cash Account:     │   │
+│  │                             │   │
+│  │  Elena#142                  │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │         Look Up             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  💡 Customer says their Cash        │
+│     Account name (e.g., Elena#142)  │
+│     and you'll see their active     │
+│     bounties to claim               │
+│                                     │
+│  [ 📋 Browse All Bounties ]         │
+│                                     │
+│  Today's Stats:                     │
+│  💰 2 sales • 0.18 BCH earned       │
+│  📈 ~912,000 VES value              │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Customer says "I\'m Elena#142" → Merchant enters Elena#142 → Tap Look Up → See bounties',
+                notes: '✅ SIMPLIFIED! Direct lookup by Cash Account - no browsing, no 4-digit codes needed'
+            },
+            {
+                flow: 'merchant',
+                title: 'Select Bounty (If Multiple)',
+                number: '1b',
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back    Elena#142's Bounties      │
+├─────────────────────────────────────┤
+│                                     │
+│  Active bounties for Elena#142:     │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │ From: Iris#5832             │   │
+│  │ Amount: 500,000 VES         │   │
+│  │ You get: 0.0995 BCH         │   │
+│  │ Expires: 23h 15m            │   │
+│  │ [ Process This ]            │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │ From: Carlos#2341           │   │
+│  │ Amount: 300,000 VES         │   │
+│  │ You get: 0.0597 BCH         │   │
+│  │ Expires: 12h 42m            │   │
+│  │ [ Process This ]            │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  💡 Customer may have multiple      │
+│     remittances. Ask which sender   │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Ask customer "Who sent you money?" → Tap Process This on correct bounty → Confirm sale',
+                notes: 'Edge case: Customer has 2+ active remittances. Usually skipped (most customers have just 1).'
+            },
+            {
+                flow: 'merchant',
+                title: 'Confirm VES Sale',
+                number: 2,
+                wireframe: `┌─────────────────────────────────────┐
+│           Confirm VES Sale          │
+├─────────────────────────────────────┤
+│                                     │
+│  ✅ Bounty #8923 verified!          │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │  🎯 Customer wants:         │   │
+│  │                             │   │
+│  │     500,000 VES             │   │
+│  │                             │   │
+│  │  💰 You receive:            │   │
+│  │                             │   │
+│  │     0.0995 BCH              │   │
+│  │     (~505,000 VES value)    │   │
+│  │                             │   │
+│  │  Current rate: 1 BCH ≈      │   │
+│  │  5,075,377 VES              │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  💡 Note: BCH worth ~1% more than   │
+│  VES you hand out (your spread)     │
+│                                     │
+│  Do you have 500,000 VES cash?      │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  ✅ Yes, I'll Sell          │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  [ ❌ Cancel - Not Enough Cash ]    │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Verify cash available → Tap "Yes, I\'ll Sell" → Go to Hand Cash & Co-Sign',
+                notes: 'VES-centric display, merchant sees profit spread clearly'
+            },
+            {
+                flow: 'merchant',
+                title: 'Hand Cash & Co-Sign',
+                number: 3,
+                wireframe: `┌─────────────────────────────────────┐
+│      Hand Cash & Co-Sign            │
+├─────────────────────────────────────┤
+│                                     │
+│  ⚠️ Safe Handout Instructions:      │
+│                                     │
+│  1. Count 500,000 VES carefully     │
+│  2. Hand ALL cash to customer       │
+│  3. After customer receives cash,   │
+│     both of you co-sign covenant    │
+│                                     │
+│  💡 Co-signing means:               │
+│  - You confirm you gave the cash    │
+│  - Customer confirms they received  │
+│  - Both signatures trigger payment  │
+│                                     │
+│  🔒 Protection:                     │
+│  Customer cannot complete without   │
+│  your signature. You cannot get     │
+│  paid without customer's signature. │
+│                                     │
+│  Both must agree sale is complete.  │
+│                                     │
+│  ⏸️  When you've handed cash:       │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │     Co-Sign Covenant        │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ⚠️ Only tap after handing cash!    │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Hand cash → Tap Co-Sign → Wait for customer signature → Settlement triggered',
+                notes: 'Both parties must sign for covenant to mature and distribute BCH'
+            },
+            {
+                flow: 'merchant',
+                title: 'Sale Complete',
+                number: 4,
+                wireframe: `┌─────────────────────────────────────┐
+│       ✅ Sale Complete!             │
+├─────────────────────────────────────┤
+│                                     │
+│  Transaction successful!            │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │         ✓                   │   │
+│  │    Large checkmark          │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  Bounty: #8923                      │
+│  VES handed out: 500,000 VES        │
+│                                     │
+│  💰 BCH Received:                   │
+│                                     │
+│  0.0995 BCH                         │
+│  (~505,000 VES value)               │
+│                                     │
+│  What do you want to do?            │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  💎 Hold BCH (Recommended)  │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  💡 Holding BCH means:              │
+│  - Use for suppliers accepting BCH  │
+│  - Sell to BCH buyers when needed   │
+│  - Participate in circular economy  │
+│                                     │
+│  [ 💵 Sell BCH Now ]                │
+│                                     │
+│  Today's Total:                     │
+│  3 sales • 0.28 BCH earned          │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'View completion → Choose: Hold BCH or Sell → Back to dashboard',
+                notes: 'Merchant receives BCH directly to wallet, can hold or sell on BCH buyer bulletin'
+            },
+            // BCH PAYMENT FLOW
+            {
+                flow: 'bch-payment',
+                title: 'Scan Cash Account or Address',
+                number: 2,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back           Pay with BCH       │
+├─────────────────────────────────────┤
+│                                     │
+│   Scan merchant QR code or          │
+│   enter Cash Account                │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │    ╔═══════════════════╗    │   │
+│  │    ║                   ║    │   │
+│  │    ║   [QR Scanner]    ║    │   │
+│  │    ║                   ║    │   │
+│  │    ║   Point camera    ║    │   │
+│  │    ║   at QR code      ║    │   │
+│  │    ║                   ║    │   │
+│  │    ╚═══════════════════╝    │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                    │
+│  ┄┄┄┄┄┄┄┄┄┄ OR ┄┄┄┄┄┄┄┄┄┄          │
+│                                    │
+│  👤 Enter Cash Account:             │
+│  CafeBarcelona#8234                 │
+│                                    │
+│  [ Enter BCH address manually ]    │
+│                                    │
+│  💡 Tip: Ask merchant for their     │
+│     Cash Account (like Elena#142)  │
+│     - no cardboard QR needed!      │
+│                                    │
+└────────────────────────────────────┘`,
+                interactions: 'Scan QR OR enter Cash Account manually → Resolve → Go to Enter Amount',
+                notes: '✅ HUGE UX WIN: No QR scanner needed! Just type merchant Cash Account verbally'
+            },
+            {
+                flow: 'bch-payment',
+                title: 'Enter Amount',
+                number: 3,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back           Pay with BCH       │
+├─────────────────────────────────────┤
+│                                     │
+│   Paying to:                        │
+│   CafeBarcelona#8234                │
+│   bitcoincash:qr5h8w9t...           │
+│                                     │
+│  ┌─────────────────────────────┐    │
+│  │                             │    │
+│  │        5,750 VES            │    │
+│  │                             │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│   Exchange rate: 1 EUR = 1,150 VES  │
+│   (Updated 2 min ago)               │
+│                                     │
+│   ⚠️ Small service fee: €0.05       │
+│      (or hold BCH for free!)        │
+│                                     │
+│  ┌─────────────────────────────┐    │
+│  │      Continue to Pay        │    │
+│  └─────────────────────────────┘    │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Enter amount → See fee → Tap Continue → Payment instructions',
+                notes: '✅ Shows resolved Cash Account + address for verification'
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentModalIndex = -1;
+
+        function getFlowColor(flow) {
+            const colors = {
+                'sender': '#2196F3',
+                'recipient': '#4CAF50',
+                'merchant': '#FF9800',
+                'bch-payment': '#9C27B0',
+                'lp': '#F44336'
+            };
+            return colors[flow] || '#666';
+        }
+
+        function renderScreens() {
+            const grid = document.getElementById('screensGrid');
+            const filtered = currentFilter === 'all'
+                ? screens
+                : screens.filter(s => s.flow === currentFilter);
+
+            grid.innerHTML = filtered.map((screen, index) => `
+                <div class="screen-card" onclick="openModal(${screens.indexOf(screen)})">
+                    <div class="screen-header" style="background: ${getFlowColor(screen.flow)}">
+                        <div class="screen-title">${screen.flow.toUpperCase()} - ${screen.title}</div>
+                        <div class="screen-flow">Screen #${screen.number}</div>
+                    </div>
+                    <div class="screen-body">
+                        <div class="screen-wireframe">${screen.wireframe}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(index) {
+            currentModalIndex = index;
+            const screen = screens[index];
+            const modal = document.getElementById('screenModal');
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div class="screen-header" style="background: ${getFlowColor(screen.flow)}">
+                    <div class="screen-title">${screen.flow.toUpperCase()} - ${screen.title}</div>
+                    <div class="screen-flow">Screen #${screen.number}</div>
+                </div>
+                <div class="screen-body">
+                    <div class="screen-wireframe">${screen.wireframe}</div>
+                    ${screen.interactions ? `
+                        <div class="screen-interactions">
+                            <strong>🎯 Interactions:</strong><br>
+                            ${screen.interactions}
+                        </div>
+                    ` : ''}
+                    ${screen.notes ? `
+                        <div class="screen-notes">
+                            <strong>💡 Notes:</strong><br>
+                            ${screen.notes}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            updateNavigationButtons();
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('screenModal').classList.remove('active');
+        }
+
+        function navigateScreen(direction) {
+            const newIndex = currentModalIndex + direction;
+            if (newIndex >= 0 && newIndex < screens.length) {
+                openModal(newIndex);
+            }
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prevButton').disabled = currentModalIndex === 0;
+            document.getElementById('nextButton').disabled = currentModalIndex === screens.length - 1;
+        }
+
+        // Flow selector buttons
+        document.querySelectorAll('.flow-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.flow-button').forEach(b => b.classList.remove('active'));
+                button.classList.add('active');
+                currentFilter = button.dataset.flow;
+                renderScreens();
+            });
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') navigateScreen(-1);
+            if (e.key === 'ArrowRight') navigateScreen(1);
+        });
+
+        // Initial render
+        renderScreens();
+    </script>
+</body>
+</html>

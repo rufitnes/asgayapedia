@@ -59,39 +59,40 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 ├─────────────────────────────────────┤
 │                                     │
 │     Welcome to Asgaya               │
-│                                     │
+│     Your Bitcoin Cash Wallet        │◄─ Position as wallet
 │                                     │
 │  ┌───────────────────────────────┐  │
 │  │                               │  │
-│  │   💸 Send Money               │  │◄─ Sender taps this
-│  │   Transfer to family/friends  │  │
+│  │   💸 Send BCH                 │  │◄─ Sender taps this
+│  │   Buy & send to anyone        │  │
 │  │                               │  │
 │  └───────────────────────────────┘  │
 │                                     │
 │  ┌───────────────────────────────┐  │
 │  │                               │  │
-│  │   🪙 Pay with Bitcoin Cash    │  │
-│  │   Scan & pay merchants        │  │
+│  │   🪙 Pay Merchant             │  │
+│  │   Scan & pay with BCH         │  │
 │  │                               │  │
 │  └───────────────────────────────┘  │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
 │  Recent activity:                   │
-│  • Sent €100 to Elena ✓            │
-│  • Sent €50 to Carlos ✓            │
+│  • Sent 0.0198 BCH to Elena ✓      │◄─ Show BCH amounts
+│  • Sent 0.0099 BCH to Carlos ✓     │
 │                                     │
 │  [ Settings ]      [ Help ]         │
 └─────────────────────────────────────┘
 ```
 
 **Interaction:**
-- Tap "Send Money" → Go to Screen 2
+- Tap "Send BCH" → Go to Screen 2
 
 **Notes:**
-- Clear visual separation between payment and remittance flows
-- Recent activity shows remittance history
-- Builds trust through completed transactions
+- Positioned as Bitcoin wallet (regulatory framing)
+- "Send BCH" instead of "Send Money" (not a remittance service)
+- Recent activity shows BCH amounts (crypto-first UX)
+- Recipient chooses claim method later (BCH or cash)
 
 ---
 
@@ -179,65 +180,98 @@ Checks:
 
 ```
 ┌─────────────────────────────────────┐
-│ ◄ Back         Send Money           │
+│ ◄ Back         Send BCH             │◄─ "Send BCH" (wallet framing)
 ├─────────────────────────────────────┤
 │                                     │
-│   Sending to: Elena                 │
-│   📱 +58-412-XXX-XXXX               │
+│   Sending to: Elena#142             │
 │   🇻🇪 Venezuela                     │
-│                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
 │   How much do you want to send?     │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │                             │   │
-│  │        €  100.00            │   │◄─ Large input (EUR)
+│  │ [VES ▼]  500,000.00         │   │◄─ Currency selector + amount
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
-│   Exchange rate: 1 EUR = 50,500 VES│
-│   (Real market rate via BCH)        │
+│   Exchange rate: 1 EUR = 50,500 VES│◄─ Only if VES ≠ default
+│   €9.95 (incl. 0.5% fee)           │◄─ EUR with sender fee
 │   (Updated 3 min ago)               │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
-│   Elena receives: ~€99.50 worth     │
-│   Estimated: 5,024,750 VES          │
+│   Elena receives: 0.0198 BCH        │◄─ BCH amount (crypto-first)
+│   (~€9.90 worth)                    │
 │                                     │
-│   ⚠️ Rate determined when Elena     │
-│      claims cash (usually same)     │
+│   💡 Elena can claim instantly as   │◄─ Educational note
+│      BCH, or cash out at merchant   │
+│      (she pays 0.5% for cash)       │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│   ⚠️ Exchange rate locked when you  │◄─ Clarified timing
+│      confirm (not when Elena claims)│
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │         Continue            │   │
 │  └─────────────────────────────┘   │
 │                                     │
-│  💡 Min: €10  •  Max: €500          │
+│  💡 Min: €10 (varies by seller)     │◄─ Dynamic limits
 │                                     │
 └─────────────────────────────────────┘
 ```
 
 **Calculations:**
 ```
-User sends: €100
-Sender fee: 0.5% = €0.50
-Elena gets: €99.50 worth of BCH (settled at maturity rate)
-VES amount: €99.50 × 50,500 = 5,024,750 VES (estimate at current rate)
-(Final rate when she claims)
+User enters: 500,000 VES
+Exchange rate: 1 EUR = 50,500 VES
+Base amount: 500,000 ÷ 50,500 = €9.90
+Sender fee (0.5%): €9.90 × 1.005 = €9.95
+Sender pays: €9.95
+Elena receives: 0.0198 BCH (~€9.90 worth at current rate)
 ```
 
 **Interactions:**
-- Type amount (validates: €10-500)
-- Rate updates every 5 minutes (DolarAPI cache)
+- Tap currency selector [VES ▼] → Choose EUR, VES, USD, ARS, etc.
+- Type amount in selected currency
+- If currency ≠ default (EUR for Spain sender): Show exchange rate + EUR conversion
+- If currency = default (EUR): Hide exchange rate line, just show amount
+- Rate updates every 5 minutes (DolarAPI + CoinGecko)
 - Tap "Continue" → Go to Screen 4
 
-**Notes:**
-- Real-time rate from DolarAPI (blue dollar market rate)
-- Warning: covenant EUR-denominated, settled in BCH at maturity rate
-- Min/max amounts prevent abuse and ensure viability
-- VES equivalency helps sender understand what recipient will receive
+**Currency Selector Logic:**
+```javascript
+// App settings define default (EUR for Spain, VES for Venezuela)
+if (selectedCurrency === defaultCurrency) {
+  // Hide exchange rate, show only selected currency
+  "€100.00"
+  "Your fee: €0.50 (0.5%)"
+  "You pay: €100.50"
+  "Elena receives: 0.0198 BCH"
+}
 
-**Related decision:** [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
+if (selectedCurrency !== defaultCurrency) {
+  // Show exchange rate + conversion to default currency
+  "[VES ▼]  500,000.00"
+  "Exchange rate: 1 EUR = 50,500 VES"
+  "€9.95 (incl. 0.5% fee)"
+  "Elena receives: 0.0198 BCH"
+}
+```
+
+**Notes:**
+- **Currency selector:** Adapts to sender/recipient preferences (EUR default for Spain)
+- **BCH amount shown:** Recipient receives BCH (not EUR) - wallet-first UX
+- **Sender fee only:** 0.5% to BCH Seller (merchant fee optional, recipient pays)
+- **Educational note:** Explains recipient choice (BCH free, cash 0.5% extra)
+- **Rate locked at confirmation:** Not when recipient claims (covenant creation time)
+- **Dynamic limits:** Min €10 (or lower if sellers accept), varies by active sellers with smsbridge_loop
+- **Exchange rate:** Real-time from DolarAPI (VES) + CoinGecko (BCH/EUR)
+
+**Related decisions:** 
+- [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
+- [UI Language Regulatory Implications](decisions/ui-language-regulatory-implications.md) - "Send BCH" vs "Send Money"
+- [Fee Splitting Model](decisions/fee-splitting-model.md) - Recipient choice affects total fees
 
 ---
 

@@ -102,10 +102,117 @@ Questions? Reply to this message.
 
 ---
 
+## Screen 1.5: Claim Method Choice
+
+### Purpose
+Let recipient choose how to claim: instant BCH (free) or cash pickup (0.5% fee)
+
+### Wireframe
+
+```
+┌─────────────────────────────────────┐
+│ ◄ Back      Claim Your BCH          │
+├─────────────────────────────────────┤
+│                                     │
+│   How do you want to claim?         │
+│                                     │
+│   You received: 0.0198 BCH          │
+│   From: Iris#5832                   │◄─ Sender Cash Account
+│   (~€9.90 worth)                    │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │                               │  │
+│  │  🪙 Claim as BCH (Instant)    │  │◄─ Default/recommended
+│  │                               │  │
+│  │  ✓ FREE (no fees)             │  │
+│  │  ✓ Available immediately      │  │
+│  │  ✓ Co-sign and done           │  │
+│  │                               │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │                               │  │
+│  │  💵 Cash Pickup (24h window)  │  │◄─ Alternative
+│  │                               │  │
+│  │  0.5% fee (~€9.85 cash)       │  │
+│  │  Find merchant on map         │  │
+│  │  Walk to shop, claim cash     │  │
+│  │                               │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│  💡 Most people claim BCH (free).   │◄─ Social proof
+│     Cash pickup available if you    │
+│     need physical money.            │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+### Interactions
+
+**User taps "🪙 Claim as BCH (Instant)":**
+- Skip merchant map/navigation
+- Go directly to Screen 5b (Co-Sign Covenant)
+- No merchant involved (recipient co-signs with sender)
+- Covenant matures instantly
+- Recipient receives full BCH amount (no merchant fee)
+- Total fees: 0.5% (sender fee only)
+
+**User taps "💵 Cash Pickup (24h window)":**
+- Go to Screen 2 (Remittance Details)
+- Continue to Screen 3 (Merchant Map)
+- Find merchant, navigate, claim cash
+- Merchant co-signs covenant
+- Merchant earns 0.5% fee
+- Recipient gets cash minus 0.5% merchant fee
+- Total fees: 1% (sender 0.5% + merchant 0.5%)
+
+### Design Principles
+
+**1. Default to BCH (Nudge without forcing):**
+- ✅ BCH option shown first (top position)
+- ✅ "FREE" badge (psychological advantage)
+- ✅ Fewer steps (instant vs 24h window)
+- ✅ No merchant coordination needed
+
+**2. Cash option clearly available:**
+- ✅ Shows fee (0.5%) upfront (no surprises)
+- ✅ 24h window explained
+- ✅ Not hidden or discouraged, just factual
+
+**3. Educational moment:**
+- "Most people claim BCH" (social proof)
+- Explains why: free, instant, convenient
+- Cash option for those who need it
+
+### Fee Comparison
+
+| Choice | Recipient Gets | Merchant Earns | Total Fees |
+|--------|---------------|----------------|------------|
+| **BCH Claim** | 0.0198 BCH (~€9.90) | €0 (no merchant) | 0.5% (sender only) |
+| **Cash Pickup** | ~€9.85 cash | €0.05 (0.5% of €9.90) | 1% (sender + merchant) |
+
+### Notes
+
+- **Positioning:** Bitcoin wallet, not remittance service
+- **Sender paid 0.5%:** Already paid to BCH Seller (sunk cost for recipient)
+- **Recipient choice:** BCH free, cash costs 0.5% extra
+- **Merchant incentive:** Only earn if recipient chooses cash (aligned)
+- **BCH adoption:** Natural incentive to hold BCH (save 0.5% + instant)
+
+**Why this works:**
+- ✅ Transparent (fees shown upfront)
+- ✅ Flexible (recipient controls method)
+- ✅ Nudges BCH (free + instant)
+- ✅ Doesn't force (cash available if needed)
+
+---
+
 ## Screen 2: Remittance Details
 
 ### Purpose
-Show recipient what they're claiming and where to claim it.
+Show recipient what they're claiming and where to claim it (merchant cash-out path only).
 
 ### Wireframe
 

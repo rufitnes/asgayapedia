@@ -127,6 +127,80 @@ Merchant accepts: Sends BCH, receives €99.00 fiat
 
 ---
 
+### Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)
+
+**Asgaya = Bitcoin wallet where recipient chooses claim method.**
+
+**Sender always pays 0.5%** (to BCH Seller for sourcing BCH via covenant)
+
+**Recipient chooses:**
+- 🪙 **Claim as BCH (FREE):** No merchant involved, instant co-sign
+- 💵 **Cash Pickup (0.5% fee):** Find merchant, hand cash, merchant earns 0.5%
+
+#### Scenario A: Recipient Claims BCH (Direct)
+
+**Sender pays:** €10.00 to BCH Seller (incl. 0.5% fee)
+
+**Covenant distribution when mature:**
+```
+BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus
+Recipient receives: €9.90 worth of BCH (0.0198 BCH)
+Merchant receives: €0 (no merchant involved)
+```
+
+**Total system fee:** 0.5% (sender only)
+
+**Net result:**
+- Sender paid: €10.00
+- BCH Seller earned: €0.50 (0.5%)
+- Recipient got: €9.90 worth of BCH (0.0198 BCH)
+- Merchant earned: €0 (not involved)
+- **Total fees: 0.5%**
+
+#### Scenario B: Recipient Chooses Cash Pickup
+
+**Sender pays:** €10.00 to BCH Seller (incl. 0.5% fee)
+
+**Covenant distribution when mature:**
+```
+BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus  
+Merchant receives: €9.90 worth of BCH
+Merchant hands: €9.85 cash to recipient
+Merchant keeps: €0.05 in BCH (0.5% of €9.90)
+```
+
+**Total system fee:** 1% (sender 0.5% + recipient pays 0.5% for merchant convenience)
+
+**Net result:**
+- Sender paid: €10.00
+- BCH Seller earned: €0.50 (0.5%)
+- Merchant earned: €0.05 (0.5% of merchant portion)
+- Recipient got: €9.85 cash
+- **Total fees: 1%** (but sender only sees 0.5%, recipient chooses to pay extra 0.5%)
+
+#### Fee Comparison Table
+
+| Claim Method | Sender Pays | Recipient Pays | BCH Seller Earns | Merchant Earns | Total System Fee | Recipient Gets |
+|--------------|-------------|----------------|------------------|----------------|------------------|----------------|
+| **BCH Claim (Direct)** | 0.5% | 0% | 0.5% | 0% | **0.5%** | 0.0198 BCH (~€9.90) |
+| **Cash Pickup** | 0.5% | 0.5% | 0.5% | 0.5% | **1%** | €9.85 cash |
+
+**Key insights:**
+- ✅ Sender experience **always 0.5%** (consistent, predictable)
+- ✅ Recipient controls method **and their own fees**
+- ✅ BCH claim **nudged** (free vs 0.5% cost)
+- ✅ Merchant only earns **if recipient chooses cash** (aligned incentives)
+- ✅ Bitcoin wallet framing (not remittance service)
+
+**Why this structure works:**
+1. **Simpler sender UX:** One flow, always 0.5%, no choice paralysis
+2. **Flexible recipient:** Free BCH or pay for cash convenience
+3. **Natural BCH adoption:** Free claim incentivizes trying BCH
+4. **Merchant aligned:** Only involved if recipient wants cash
+5. **Regulatory:** "Bitcoin wallet" not "remittance service"
+
+---
+
 ## The Economic Lesson: Instant Settlement Costs Your Reward
 
 **This is intentional design.**
