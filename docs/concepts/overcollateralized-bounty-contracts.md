@@ -43,7 +43,50 @@ Excess BCH returns to the seller. The recipient gets exactly the promised amount
 
 ## How It Works — The Full Flow
 
-### Step 1: Bounty Contract Creation
+### Covenant Creation & Claim Paths
+
+**Key Architectural Decision:** Sender always creates the covenant (for simplicity), but recipient chooses how to claim.
+
+**Covenant Creation:**
+- Sender creates EUR-denominated covenant with recipient's address
+- BCH Seller posts overcollateralized BCH (107%)
+- Covenant published to bulletin board
+- 24-hour claim window starts
+
+**Two Claim Paths:**
+
+#### Path A: Direct BCH Claim (Recipient Only)
+```
+Maturity condition: Recipient signature only
+├─ Recipient signs covenant → Claims BCH to wallet
+├─ No merchant involved
+├─ Instant settlement (~30 seconds)
+└─ Total fees: 0.5% (sender to BCH Seller only)
+```
+
+**Use case:** Recipient wants to hold BCH (or convert via Cauldron DEX, or sell P2P later)
+
+#### Path B: Merchant Cash-Out (Recipient + Merchant)
+```
+Maturity conditions: Recipient AND Merchant signatures
+├─ Recipient goes to merchant
+├─ Merchant hands cash
+├─ Both co-sign covenant → Merchant receives BCH
+├─ Settlement in ~30 seconds
+└─ Total fees: 1% (sender 0.5% + merchant 0.5%)
+```
+
+**Use case:** Recipient needs physical cash immediately
+
+**Architectural simplicity:**
+- Sender doesn't need to know recipient's claim preference
+- Same covenant supports both paths
+- Recipient controls timing AND format (pull system)
+- Merchant only involved if recipient chooses cash
+
+---
+
+### Step 1: Bounty Contract Creation (Sender Side)
 
 **Elena (recipient in Venezuela) goes to a merchant.**
 

@@ -466,6 +466,113 @@
                 interactions: 'Tap "Send from My BCH" → Use own BCH, skip Screen 5 → Go to Screen 6 | Tap "Buy BCH from Seller" → Go to Screen 5',
                 notes: '✅ NEW: Payment method choice ✅ Bitcoin wallet functionality (use own BCH or buy) ✅ Fee difference (own BCH = FREE, buy = 0.5%) ✅ Nudges holding BCH'
             },
+            {
+                flow: 'sender',
+                title: 'Payment Instructions (Bizum)',
+                number: 5,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back      Payment Instructions    │
+├─────────────────────────────────────┤
+│                                     │
+│   📱 Send Bizum Payment              │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  To: 612-XXX-XXX            │   │
+│  │  Amount: €100.00            │   │
+│  │  Concept: REM-89234         │   │
+│  │  [ Copy details ]           │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  Instructions:                      │
+│  1. Open your bank app              │
+│  2. Send Bizum with exact details   │
+│  3. Return here when sent           │
+│                                     │
+│  ⏱️ Complete within: 5 min          │
+│     (Seller's volatility window)    │
+│                                     │
+│  💡 You're paying the BCH seller    │
+│     who provides collateral         │
+│                                     │
+│  ┌─────────────────────────────┐    │
+│  │   I've sent the Bizum       │    │
+│  └─────────────────────────────┘    │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Copy details → Send Bizum → Tap "I\'ve sent the Bizum" → Go to Screen 6',
+                notes: 'Only shown if user chose "Buy BCH from Seller" in Screen 4. Skipped if using own BCH.'
+            },
+            {
+                flow: 'sender',
+                title: 'Tracking (Waiting for Claim)',
+                number: 6,
+                wireframe: `┌─────────────────────────────────────┐
+│         Order #REM-89234            │
+├─────────────────────────────────────┤
+│                                     │
+│      📱 Notifying Elena...          │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  ████████░░░░░░░░  40%      │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│   To: Elena#142                     │
+│   Amount: 0.0198 BCH (~€9.90)       │
+│                                     │
+│   Progress:                         │
+│   ✅ Covenant created (24h window)  │
+│   ✅ Elena notified                 │
+│   🔄 Waiting for claim...           │
+│                                     │
+│   Elena can claim as:               │
+│   • BCH (instant, free)             │
+│   • Cash at merchant (0.5% fee)     │
+│                                     │
+│   ⏱️ Claim window: 23h 58m          │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Auto-updates when Elena claims → Go to Screen 7',
+                notes: 'Pull system: Sender waits for recipient to claim (recipient controls timing). Multiple states: waiting, expiring soon, claimed.'
+            },
+            {
+                flow: 'sender',
+                title: 'Completion & Savings',
+                number: 7,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back      ✅ Complete!            │
+├─────────────────────────────────────┤
+│                                     │
+│   Transfer successful!              │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │         ✓                   │   │
+│  │    Large checkmark          │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│   Order: #REM-89234                 │
+│   Sent: 0.0198 BCH                  │
+│   Elena received: 0.0198 BCH        │
+│   (or ~€9.85 cash if merchant)      │
+│                                     │
+│   Your cost: €0 (own BCH)           │
+│   or €0.50 (0.5% if bought)         │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│  💡 Asgaya is a P2P network         │
+│     How can you contribute?         │
+│                                     │
+│  • Become a BCH seller (earn fees)  │
+│  • Become a merchant (earn spread)  │
+│                                     │
+│  ┌─────────────────────────────┐    │
+│  │      Send Another           │    │
+│  └─────────────────────────────┘    │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Tap "Send Another" → Return to Screen 1 | Tap "Back" → Home',
+                notes: 'Shows final cost (€0 if own BCH, €0.50 if bought). Educational moment: recruit participants.'
+            },
             // RECIPIENT FLOW
             {
                 flow: 'recipient',
