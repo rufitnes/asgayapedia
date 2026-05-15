@@ -22,7 +22,7 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 **Implementation decisions:**
 
-- **[Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Use DolarAPI for blue dollar local currency rates + Kraken EUR/USD rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.
+- **[Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Use DolarAPI for parallel market local currency rates (VES/ARS) + CoinGecko for BCH/EUR rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.
 
 - **[Two-Step Settlement](decisions/two-step-settlement-timing.md)** — Covenant-based pull system: BCH seller posts overcollateralized BCH to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through overcollateralization buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).
 

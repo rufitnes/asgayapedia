@@ -364,7 +364,7 @@ wallet.on('transaction', (tx) => {
     })
 
     // User also got 546 sats!
-    console.log(`Received ${tx.value} sats from escrow`)
+    console.log(`Received notification: ${tx.value} sats (covenant OP_RETURN)`)
   }
 })
 ```

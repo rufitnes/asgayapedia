@@ -63,11 +63,11 @@ Backend → Firebase/APNs → User's device
 
 **BCH-native approach (what we ARE doing):**
 ```
-Escrow → OP_RETURN transaction to user's BCH address
+Covenant transaction includes OP_RETURN with recipient pubkey
        → User's SPV wallet detects transaction (0-conf)
-       → App parses OP_RETURN data
+       → App parses OP_RETURN data (filters by pubkey)
        → Shows notification
-       → User also gets 546 sats (dust) as bonus
+       → No separate notification tx needed (embedded in covenant)
 ```
 
 **Example notifications:**
@@ -88,9 +88,9 @@ ASGAYA_COMPLETE_7382         → "Transaction completed!"
 
 **Cost:**
 ```
-Per notification: 546 sats + 100 sats fee = €0.006
-For 100 transactions: €0.60
-Escrow BCH float: 0.01 BCH (€9) total
+No separate notification cost (OP_RETURN embedded in covenant tx)
+Covenant transaction fee: ~€0.01 (includes OP_RETURN data)
+For 100 covenants: ~€1.00 total (blockchain fees only)
 ```
 
 **Implementation:**
@@ -476,7 +476,7 @@ class User:
    - ASGAYA_MERCHANT_V1 NFTs (location, cash currency, hours)
    - Permissionless registration (just broadcast transaction)
 
-2. **Native Introspection Covenants** (May 2022 upgrade) - Trustless escrow
+2. **Native Introspection Covenants** (May 2022 upgrade) - Trustless settlement
    - Covenant enforces delivery conditions (signatures, timelock)
    - BCH locked on-chain until conditions met
    - Autonomous execution (no server orchestration)
@@ -513,14 +513,14 @@ Future enhancements to investigate:
 
 4. **CHIP** - CHained 1-of-3 Multisig
    - Advanced payment channels
-   - Lower trust escrow
+   - Covenant-based multi-party settlement
 
 5. **AnyHedge** - BCH-native hedging contracts
    - Protect against BCH volatility
-   - Could replace EUR escrow entirely?
+   - Complements covenant overcollateralization
 
 6. **SmartBCH** - EVM-compatible sidechain
-   - Smart contracts for escrow logic
+   - Smart contracts for covenant logic
    - DEX integration
 
 7. **CashFusion** - Privacy protocol
