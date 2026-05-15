@@ -416,6 +416,56 @@
                 interactions: 'Select currency [VES ▼] → Enter amount → See BCH equivalent → Tap Continue',
                 notes: '✅ Currency selector ✅ BCH amount shown (crypto-first) ✅ Sender fee 0.5% only ✅ Educational note about recipient choice ✅ Dynamic limits'
             },
+            {
+                flow: 'sender',
+                title: 'Confirm Order (Payment Method)',
+                number: 4,
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back         Confirm Order        │
+├─────────────────────────────────────┤
+│                                     │
+│   Review your transfer              │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  You send: €100.00          │   │
+│  │  Elena receives: 0.0198 BCH │   │
+│  │  (~€99.50 worth)            │   │
+│  │  Exchange rate: 1 EUR =     │   │
+│  │  50,500 VES                 │   │
+│  │  Corridor: 🇪🇸 → 🇻🇪         │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│   How do you want to pay?           │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │  🪙 Send from My BCH Wallet   │  │
+│  │  Balance: 0.0500 BCH          │  │
+│  │  Fee: FREE (no seller needed) │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │  💳 Buy BCH from Seller       │  │
+│  │  Pay with Bizum (€100.00)     │  │
+│  │  Fee: €0.50 (0.5% to seller)  │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│  What happens next:                 │
+│  1. Covenant created (24h window)   │
+│  2. Elena gets notified             │
+│  3. She claims (BCH or cash)        │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │         Confirm             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Tap "Send from My BCH" → Use own BCH, skip Screen 5 → Go to Screen 6 | Tap "Buy BCH from Seller" → Go to Screen 5',
+                notes: '✅ NEW: Payment method choice ✅ Bitcoin wallet functionality (use own BCH or buy) ✅ Fee difference (own BCH = FREE, buy = 0.5%) ✅ Nudges holding BCH'
+            },
             // RECIPIENT FLOW
             {
                 flow: 'recipient',

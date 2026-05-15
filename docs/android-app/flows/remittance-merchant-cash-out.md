@@ -305,17 +305,33 @@ if (selectedCurrency !== defaultCurrency) {
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
-│  What happens next:                 │
-│  1. You send Bizum to BCH seller    │
-│  2. Covenant created (24h window)   │
-│  3. Elena gets notified             │
-│  4. She picks a nearby merchant     │
-│  5. Both co-sign covenant           │
+│   How do you want to pay?           │◄─ Payment method choice
 │                                     │
-│  Estimated time: 30-60 minutes      │
+│  ┌───────────────────────────────┐  │
+│  │  🪙 Send from My BCH Wallet   │  │◄─ Option A: Own BCH
+│  │  Balance: 0.0500 BCH          │  │
+│  │  (Enough for this transfer ✓) │  │
+│  │  Fee: FREE (no seller needed) │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │  💳 Buy BCH from Seller       │  │◄─ Option B: Buy BCH
+│  │  Pay with Bizum (€100.00)     │  │
+│  │  Fee: €0.50 (0.5% to seller)  │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│  What happens next:                 │
+│  1. Covenant created (24h window)   │
+│  2. Elena gets notified             │
+│  3. She claims (BCH or cash)        │
+│                                     │
+│  Estimated time: Minutes to hours   │
+│  (depends on when Elena claims)     │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │    Confirm & Pay            │   │
+│  │         Confirm             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │  [ Back to edit ]                   │
@@ -324,14 +340,44 @@ if (selectedCurrency !== defaultCurrency) {
 ```
 
 **Interactions:**
-- Tap "Confirm & Pay" → Go to Screen 5
-- Tap "Back to edit" → Return to Screen 3
+
+**Option A: Send from My BCH Wallet (if balance sufficient)**
+- Shows current BCH balance
+- Calculates if enough for transfer + covenant creation
+- If selected → Deduct BCH from wallet → Create covenant → Go to Screen 6 (Tracking)
+- **No Screen 5 needed** (no Bizum payment required)
+
+**Option B: Buy BCH from Seller**
+- Shows Bizum payment amount
+- If selected → Go to Screen 5 (Payment Instructions)
+- Then Screen 6 (Tracking)
+
+**Always available:**
+- Tap "Back to edit" → Return to Screen 3 (change amount)
+
+**Payment Method Logic:**
+```javascript
+// Check sender's BCH balance
+const senderBalance = 0.0500 BCH; // Example
+const transferNeeds = 0.0198 BCH; // €9.90 worth at current rate
+const covenantCreationFee = 0.0001 BCH; // ~$0.01
+
+if (senderBalance >= transferNeeds + covenantCreationFee) {
+  // Show Option A: "Send from My BCH Wallet" (recommended)
+  // No seller fee (FREE)
+}
+
+// Always show Option B: "Buy BCH from Seller"
+// Seller fee: 0.5%
+```
 
 **Notes:**
-- Clear expectations (timeline, process)
-- Final chance to review before paying
-- Honest time estimate (30-60 min, not instant)
-- Explains covenant model (BCH seller, not central entity)
+- **Bitcoin wallet functionality:** Sender can use own BCH (like any wallet)
+- **Or buy BCH:** If wallet empty or wants to save BCH, buy from seller
+- **Fee difference:** Own BCH = FREE, Buy BCH = 0.5% seller fee
+- **Nudge own BCH:** Shown first if balance sufficient (save 0.5%)
+- **Clear expectations:** Timeline updated (depends on recipient claim time)
+- **Simplified flow:** Removed step-by-step (covenant handles automatically)
 
 ---
 
