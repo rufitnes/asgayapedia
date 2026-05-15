@@ -298,7 +298,7 @@
     <script>
         // Screen data - extracted from flow documents
         const screens = [
-            // SENDER FLOW (Remittance)
+            // SENDER FLOW (Bitcoin Wallet)
             {
                 flow: 'sender',
                 title: 'Home (Entry Point)',
@@ -308,28 +308,29 @@
 ├─────────────────────────────────────┤
 │                                     │
 │     Welcome to Asgaya               │
+│     Your Bitcoin Cash Wallet        │
 │                                     │
 │  ┌───────────────────────────────┐  │
 │  │                               │  │
-│  │   💸 Send Money               │  │
-│  │   Transfer to family/friends  │  │
+│  │   💸 Send BCH                 │  │
+│  │   Buy & send to anyone        │  │
 │  │                               │  │
 │  └───────────────────────────────┘  │
 │                                     │
 │  ┌───────────────────────────────┐  │
 │  │                               │  │
-│  │   🪙 Pay with Bitcoin Cash    │  │
-│  │   Scan & pay merchants        │  │
+│  │   🪙 Pay Merchant             │  │
+│  │   Scan & pay with BCH         │  │
 │  │                               │  │
 │  └───────────────────────────────┘  │
 │                                     │
 │  Recent activity:                   │
-│  • Sent €100 to Elena ✓            │
-│  • Sent €50 to Carlos ✓            │
+│  • Sent 0.0198 BCH to Elena ✓      │
+│  • Sent 0.0099 BCH to Carlos ✓     │
 │                                     │
 └─────────────────────────────────────┘`,
-                interactions: 'Tap "Send Money" → Go to Screen 2',
-                notes: 'Clear visual separation between payment and remittance flows'
+                interactions: 'Tap "Send BCH" → Go to Screen 2',
+                notes: '✅ Bitcoin wallet positioning (not remittance service) ✅ Shows BCH amounts (crypto-first UX)'
             },
             {
                 flow: 'sender',
@@ -372,31 +373,47 @@
                 title: 'Enter Amount',
                 number: 3,
                 wireframe: `┌─────────────────────────────────────┐
-│ ◄ Back         Send Money           │
+│ ◄ Back         Send BCH             │
 ├─────────────────────────────────────┤
 │                                     │
 │   Sending to: Elena#142             │
 │   🇻🇪 Venezuela                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│   How much do you want to send?     │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │                             │   │
-│  │        €  100.00            │   │
+│  │ [VES ▼]  500,000.00         │   │
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │   Exchange rate: 1 EUR = 50,500 VES│
-│   (Real market rate via BCH)        │
+│   €9.95 (incl. 0.5% fee)           │
+│   (Updated 3 min ago)               │
 │                                     │
-│   Elena receives: ~€99.50 worth     │
-│   Estimated: 5,024,750 VES          │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│   Elena receives: 0.0198 BCH        │
+│   (~€9.90 worth)                    │
+│                                     │
+│   💡 Elena can claim instantly as   │
+│      BCH, or cash out at merchant   │
+│      (she pays 0.5% for cash)       │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│   ⚠️ Exchange rate locked when you  │
+│      confirm (not when Elena claims)│
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │         Continue            │   │
 │  └─────────────────────────────┘   │
 │                                     │
+│  💡 Min: €10 (varies by seller)     │
+│                                     │
 └─────────────────────────────────────┘`,
-                interactions: 'Enter amount → See exchange rate → Tap Continue',
-                notes: 'EUR-denominated covenant, BCH settlement at market rate'
+                interactions: 'Select currency [VES ▼] → Enter amount → See BCH equivalent → Tap Continue',
+                notes: '✅ Currency selector ✅ BCH amount shown (crypto-first) ✅ Sender fee 0.5% only ✅ Educational note about recipient choice ✅ Dynamic limits'
             },
             // RECIPIENT FLOW
             {
@@ -406,15 +423,57 @@
                 wireframe: `┌─────────────────────────────────────┐
 │  💰 Asgaya                          │
 │                                     │
-│  You received 500,000 VES           │
-│  from Iris#5832                     │
+│  You received BCH from Iris!        │
+│  0.0198 BCH (~€9.90)                │
 │                                     │
-│  Tap to claim at nearby merchant    │
+│  Tap to claim                       │
 │                                     │
 │  Expires in 24 hours                │
 └─────────────────────────────────────┘`,
-                interactions: 'Tap notification → Opens app to Remittance Details',
-                notes: '✅ Shows sender Cash Account (Iris#5832) for recognition'
+                interactions: 'Tap notification → Opens app to Claim Method Choice',
+                notes: '✅ Shows BCH amount (crypto-first) ✅ Sender Cash Account for recognition'
+            },
+            {
+                flow: 'recipient',
+                title: 'Claim Method Choice (NEW)',
+                number: '1.5',
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back      Claim Your BCH          │
+├─────────────────────────────────────┤
+│                                     │
+│   How do you want to claim?         │
+│                                     │
+│   You received: 0.0198 BCH          │
+│   From: Iris#5832                   │
+│   (~€9.90 worth)                    │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │                               │  │
+│  │  🪙 Claim as BCH (Instant)    │  │
+│  │                               │  │
+│  │  ✓ FREE (no fees)             │  │
+│  │  ✓ Available immediately      │  │
+│  │  ✓ Co-sign and done           │  │
+│  │                               │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │                               │  │
+│  │  💵 Cash Pickup (24h window)  │  │
+│  │                               │  │
+│  │  0.5% fee (~€9.85 cash)       │  │
+│  │  Find merchant on map         │  │
+│  │  Walk to shop, claim cash     │  │
+│  │                               │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  💡 Most people claim BCH (free).   │
+│     Cash pickup available if you    │
+│     need physical money.            │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Tap "Claim as BCH" → Co-sign covenant → Done (no merchant) | Tap "Cash Pickup" → Go to Merchant Map',
+                notes: '✅ NEW SCREEN ✅ Recipient choice (BCH free vs cash 0.5%) ✅ Nudges BCH adoption ✅ Bitcoin wallet framing'
             },
             {
                 flow: 'recipient',
