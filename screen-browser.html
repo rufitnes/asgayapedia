@@ -463,8 +463,49 @@
 │  └─────────────────────────────┘   │
 │                                     │
 └─────────────────────────────────────┘`,
-                interactions: 'Tap "Send from My BCH" → Use own BCH, skip Screen 5 → Go to Screen 6 | Tap "Buy BCH from Seller" → Go to Screen 5',
+                interactions: 'Tap "Send from My BCH" → Use own BCH, skip Screens 4.5 & 5 → Go to Screen 6 | Tap "Buy BCH from Seller" → Go to Screen 4.5',
                 notes: '✅ NEW: Payment method choice ✅ Bitcoin wallet functionality (use own BCH or buy) ✅ Fee difference (own BCH = FREE, buy = 0.5%) ✅ Nudges holding BCH'
+            },
+            {
+                flow: 'sender',
+                title: 'Select BCH Seller (Bulletin Board)',
+                number: '4.5',
+                wireframe: `┌─────────────────────────────────────┐
+│ ◄ Back      Select BCH Seller       │
+├─────────────────────────────────────┤
+│                                     │
+│   Buy 0.0198 BCH (~€9.90)           │
+│                                     │
+│  Active sellers:                    │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │ 🟢 Seller#3421                │  │
+│  │                               │  │
+│  │ Limits: €10 - €500            │  │
+│  │ Payment: Bizum, SEPA          │  │
+│  │ Fee: 0.5%                     │  │
+│  │ Avg response: 2 min           │  │
+│  │                               │  │
+│  │ [ Select ]                    │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │ 🟢 Seller#8190                │  │
+│  │                               │  │
+│  │ Limits: €50 - €1,000          │  │
+│  │ Payment: SEPA, Cash, ATM      │  │
+│  │ Fee: 0.4% (lower!)            │  │
+│  │ Avg response: 5 min           │  │
+│  │                               │  │
+│  │ [ Select ]                    │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  💡 Sort by: [ Fee ▼ ]             │
+│     Filter: [ Bizum only ]          │
+│                                     │
+└─────────────────────────────────────┘`,
+                interactions: 'Tap seller → See details | Tap "Select" → Go to Screen 5 with selected seller details | Sort/Filter sellers',
+                notes: '✅ THE P2P MARKETPLACE! ✅ Shows competitive market (fees vary) ✅ Liveness signals (🟢 online) ✅ Multiple payment methods ✅ Future: multi-currency, multi-crypto ✅ Permissionless (anyone can be seller)'
             },
             {
                 flow: 'sender',

@@ -381,6 +381,160 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 
 ---
 
+### Screen 4.5: Select BCH Seller (Bulletin Board)
+
+**Only shown if user selected "Buy BCH from Seller" in Screen 4**
+
+**Purpose:** Browse active BCH sellers and choose one based on limits, payment method, and availability.
+
+```
+┌─────────────────────────────────────┐
+│ ◄ Back      Select BCH Seller       │
+├─────────────────────────────────────┤
+│                                     │
+│   Buy 0.0198 BCH (~€9.90)           │
+│                                     │
+│  Active sellers:                    │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │ 🟢 Seller#3421                │  │◄─ Online (liveness signal)
+│  │                               │  │
+│  │ Limits: €10 - €500            │  │
+│  │ Payment: Bizum, SEPA          │  │
+│  │ Fee: 0.5%                     │  │
+│  │ Avg response: 2 min           │  │
+│  │                               │  │
+│  │ [ Select ]                    │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │ 🟢 Seller#8190                │  │
+│  │                               │  │
+│  │ Limits: €50 - €1,000          │  │
+│  │ Payment: SEPA, Cash, ATM      │  │
+│  │ Fee: 0.4% (lower!)            │  │
+│  │ Avg response: 5 min           │  │
+│  │                               │  │
+│  │ [ Select ]                    │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │ 🟡 Seller#5029                │  │◄─ Slow response
+│  │                               │  │
+│  │ Limits: €5 - €200             │  │
+│  │ Payment: Bizum only           │  │
+│  │ Fee: 0.5%                     │  │
+│  │ Avg response: 10 min          │  │
+│  │                               │  │
+│  │ [ Select ]                    │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  💡 Sort by: [ Fee ▼ ]             │
+│     Filter: [ Bizum only ]          │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Interactions:**
+- Tap a seller card → Expand to see details (reputation, history, etc.)
+- Tap "Select" → Confirms seller choice → Go to Screen 5 (Payment Instructions for this seller)
+- Sort by: Fee (lowest first), Response time (fastest first), Limits (highest first)
+- Filter: Payment method (Bizum, SEPA, Cash, ATM), Currency (EUR, USD, GBP)
+
+**Seller Information Displayed:**
+
+**1. Availability Status:**
+```javascript
+🟢 Online (liveness signal active in last 5 min)
+🟡 Slow (liveness signal 5-15 min ago)
+🔴 Offline (no signal >15 min)
+```
+
+**2. Limits:**
+- Min/Max transaction amounts
+- Validates sender's €9.90 is within range
+- Grayed out if amount doesn't fit
+
+**3. Payment Methods:**
+- **Bizum** - Instant (2-3 min avg)
+- **SEPA** - 1-2 hours
+- **Cash** - Meetup required
+- **ATM deposit** - Manual verification
+- **Future:** Other cryptos (BTC, ETH, USDT) - seller accepts crypto for BCH
+
+**4. Fee:**
+- Standard: 0.5%
+- Some sellers may charge less (0.3-0.4%) to attract volume
+- Or more (0.6-0.8%) for instant service
+
+**5. Average Response Time:**
+- Based on historical data (smsbridge_loop.py notification parsing)
+- Fast: <5 min
+- Normal: 5-10 min
+- Slow: >10 min
+
+**Selection Logic:**
+```javascript
+// Sender needs €9.90 worth of BCH
+const senderAmount = 9.90;
+
+// Filter sellers
+const availableSellers = allSellers.filter(seller => 
+  seller.status === 'online' &&
+  seller.minLimit <= senderAmount &&
+  seller.maxLimit >= senderAmount &&
+  seller.paymentMethods.includes('Bizum') // If sender filtered by Bizum
+);
+
+// Sort by fee (default) or response time
+availableSellers.sort((a, b) => a.fee - b.fee);
+
+// Display top 5-10 sellers
+```
+
+**Smart Defaults:**
+```javascript
+// Auto-select if only one seller matches
+if (availableSellers.length === 1) {
+  autoSelect(availableSellers[0]);
+  // Skip to Screen 5 with pre-selected seller
+}
+
+// Recommend best option
+if (availableSellers.length > 1) {
+  // Highlight seller with: lowest fee + fastest response + online
+  const recommended = findBestMatch(availableSellers);
+  // Show "⭐ Recommended" badge
+}
+```
+
+**Future Enhancements (Phase 1+):**
+- **Reputation system:** Star rating, completed transactions, dispute rate
+- **Seller profiles:** "BCH Miner since 2019, 500+ transactions, 0 disputes"
+- **Multi-currency:** Accept USD via Wise/Revolut, swap to BCH
+- **Multi-crypto:** Accept BTC/ETH/USDT, swap to BCH (via atomic swaps or DEX)
+- **Seller notes:** "Fast response, friendly, available 9am-9pm CET"
+
+**Notes:**
+- This is the **P2P marketplace core** - bulletin board in action
+- Permissionless: Anyone can be a seller (post liveness signal)
+- Competitive: Sellers compete on fee, speed, limits
+- Flexible: Multiple payment methods, currencies (future)
+- Antifragile: If top sellers go offline, others visible immediately
+
+**Why this screen is critical:**
+- Shows Asgaya is truly P2P (not single seller, not company)
+- User sees market competition (fees vary, choose best deal)
+- Transparency (all terms shown upfront)
+- Choice (pick based on preference: fastest, cheapest, or highest limit)
+
+**Phase 0 simplification:**
+- May only have 1-2 sellers (you + trusted friend)
+- Auto-select if only one available
+- Build UI for future scalability (5-10+ sellers)
+
+---
+
 ### Screen 5: Payment Instructions (Bizum to BCH Seller)
 
 ```
