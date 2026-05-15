@@ -1,8 +1,8 @@
-# 5. User APIs
+# User Identity & Authentication
 
-**Category:** Core APIs (MVP Required)
-**Priority:** 🔴 Critical (Foundation for all other APIs)
-**Related:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md), [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md)
+**Category:** Core Blockchain Operations
+**Priority:** 🔴 Critical (Phase 0)
+**Related:** [Covenant Creation](covenant-creation.md), [Sender Flow](../flows/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
 
 ---
 
@@ -84,16 +84,20 @@ def verify_bch_signature(request):
 
 ---
 
-## API Endpoints
+## API Endpoints (Phase 1+ - Optional)
 
-**Total: 2 endpoints** (that's it!)
+**⚠️ Phase 0 Note:** Asgaya has no backend server in Phase 0. User profile data (display name, stats) is stored locally on-device. These endpoints are documented for potential Phase 1 implementation if caching/sync becomes needed.
 
-1. **GET /api/v1/users/me** - Get my profile
-2. **PUT /api/v1/users/me** - Update my profile
+**If implemented (Phase 1+):**
+
+**Total: 2 endpoints**
+
+1. **GET /api/v1/users/me** - Get my profile (cached stats)
+2. **PUT /api/v1/users/me** - Update my profile (sync display name)
 
 ---
 
-### 1. GET /api/v1/users/me
+### 1. GET /api/v1/users/me (Phase 1+)
 
 **Purpose:** Get user profile and stats
 
@@ -190,9 +194,9 @@ App shows: "Welcome! You're ready to receive remittances."
 
 ---
 
-### 2. PUT /api/v1/users/me
+### 2. PUT /api/v1/users/me (Phase 1+)
 
-**Purpose:** Update user profile (display name only for MVP)
+**Purpose:** Update user profile (display name sync across devices)
 
 **Authentication:** BCH signature (required)
 
@@ -250,9 +254,11 @@ Now transactions show: "Elena" instead of "bitcoincash:qp3w..."
 
 ---
 
-## Database Schema
+## Database Schema (Phase 1+ - If Backend Added)
 
-**Minimal users table:**
+**⚠️ Phase 0:** No database. User data stored locally on-device (IndexedDB/SQLite).
+
+**If backend added (Phase 1+), minimal schema:**
 
 ```python
 class User:
@@ -307,35 +313,35 @@ Backend → Firebase/APNs → User's device
 
 **BCH-native way (what we ARE doing):**
 ```
-Escrow sends OP_RETURN transaction to recipient's BCH address
+Covenant transaction includes OP_RETURN with recipient pubkey
   ↓
-App's SPV wallet detects incoming transaction (0-conf)
+App monitors blockchain for OP_RETURN with ASGAYA_V1 prefix
   ↓
-App parses OP_RETURN data: "ASGAYA_TXN_READY_7382"
+App filters by recipient's pubkey (matches wallet)
   ↓
-Shows notification: "€100 ready! Code: 7382"
+Shows notification: "€99.00 worth received from Iris"
   ↓
-Recipient also got 546 sats (dust) as bonus!
+No separate notification transaction needed!
 ```
 
-**Example OP_RETURN notification:**
+**Example OP_RETURN in covenant:**
 
-```python
-def notify_recipient(recipient_address, code):
-    """
-    Send OP_RETURN notification to recipient
+```typescript
+// OP_RETURN included in covenant creation transaction
+const covenantTx = await contract
+  .functions
+  .claimBCH(recipientSig)
+  .to(contract.address, bchAmount)
+  .withOpReturn([
+    'ASGAYA_V1',              // Protocol prefix
+    recipientPubkey,           // Who to notify (33 bytes)
+    eurAmount,                 // €99.00 (2 bytes)
+    timestamp                  // Unix timestamp (4 bytes)
+  ])
+  .build();
 
-    Cost: ~€0.006 (from escrow's BCH float)
-    """
-    tx = create_bch_transaction(
-        to=recipient_address,
-        amount_sats=546,  # Dust
-        op_return=f"ASGAYA_TXN_READY_{code}",
-        from_wallet=escrow_float_wallet
-    )
-
-    broadcast_transaction(tx)
-    # Done! Recipient will see notification when app syncs
+// Broadcast covenant transaction
+// OP_RETURN data is embedded, no separate tx needed
 ```
 
 **Recipient app (SPV wallet monitoring):**
@@ -371,65 +377,20 @@ wallet.on('transaction', (tx) => {
 - ✅ Recipient gets free sats (546 sats dust)
 - ✅ No monthly service costs
 
-**OP_RETURN message types:**
+**OP_RETURN format:**
 
 ```
-ASGAYA_TXN_READY_7382        → New transaction ready
-ASGAYA_SETTLE_READY_txn_abc  → Settlement ready (for merchants/LPs)
-ASGAYA_COMPLETE_7382         → Transaction completed
+ASGAYA_V1 <recipient_pubkey> <eur_amount> <timestamp>
+
+Example:
+ASGAYA_V1 03abc123...def (33 bytes) 0x26AC (€99.00) 0x6542A3F0 (timestamp)
 ```
 
----
-
-## Escrow's BCH Float (For Notifications)
-
-**Escrow maintains small BCH balance for OP_RETURN notifications:**
-
-**Float size:**
-```
-Per notification: 546 sats + 100 sats fee = 646 sats ≈ €0.006
-
-For 100 transactions: 64,600 sats = 0.000646 BCH ≈ €0.60
-
-Escrow keeps: 0.01 BCH (€9) as float
-Refilled from transaction margins periodically
-```
-
-**Float is TINY compared to transaction volumes:**
-- Transaction: €100 (sender pays)
-- Escrow's BCH exposure: €0.006 (notification cost)
-- **99.994% of funds in EUR** (not exposed to BCH volatility)
-
-**Float management:**
-
-```python
-def check_notification_float():
-    """
-    Monitor escrow's BCH float, refill if needed
-    """
-    balance = get_wallet_balance(escrow_float_wallet)
-
-    if balance < 0.005:  # Below 0.005 BCH
-        # Refill from transaction margins
-        needed = 0.01 - balance
-        buy_bch_for_float(needed)
-        log(f"Float refilled: {needed} BCH")
-```
-
-**Cost from margin:**
-
-```
-Per €100 transaction:
-- Margin: €0.24
-- Notifications: €0.018 (3 notifications × €0.006)
-  - Recipient: €0.006
-  - Merchant: €0.006
-  - LP: €0.006
-- Remaining margin: €0.222
-- Split 3 ways: €0.074 each (escrow, merchant, LP)
-```
-
-**Notifications cost only 7.5% of margin!** Totally sustainable.
+**Benefits:**
+- ✅ No separate notification transaction (embedded in covenant)
+- ✅ No notification costs (OP_RETURN included in covenant tx)
+- ✅ Immutable proof (on-chain, can't be faked)
+- ✅ Privacy-preserving (only recipient knows their pubkey)
 
 ---
 
@@ -623,52 +584,61 @@ if now - timestamp > timedelta(minutes=5):
 
 ---
 
-## BCH-Native Features to Explore (Post-MVP)
+## BCH-Native Features (Phase 0+)
 
-**After RS046 research complete, deep-dive on:**
+**Already integrated in Phase 0:**
 
-1. **CashTokens** - NFTs/fungible tokens on BCH
-   - Could merchant listings be CashTokens?
-   - Could reputation be tokenized?
+1. ✅ **CashTokens** - NFTs for seller/merchant discovery
+   - Seller listings = ASGAYA_SELLER_V1 NFT (128-byte commitment)
+   - Merchant availability = ASGAYA_MERCHANT_V1 NFT
+   - Bulletin board = query blockchain by NFT category
+   - See: [Covenant Creation](covenant-creation.md)
 
-2. **Schnorr Signatures** - More efficient signatures
-   - Smaller transaction sizes
-   - Multi-sig improvements
+2. ✅ **Native Introspection Covenants** - EUR-denominated smart contracts
+   - SenderCovenantV1 (recipient claims, timeout refund)
+   - SellerLiquidity (BCH for sale via covenant)
+   - MerchantAvailability (cash-out signal)
 
-3. **PayMail** - Email-like addresses for BCH
-   - `elena@asgaya.com` instead of `bitcoincash:qp3w...`
-   - Makes UX much friendlier
+3. ✅ **Cash Accounts** - Human-readable BCH addresses
+   - `Elena#142` instead of `bitcoincash:qp3w...`
+   - On-chain registration via OP_RETURN
+   - Trustless resolution (blockchain query)
 
-4. **CHIP (CHained 1-of-3 Multisig)** - Advanced payment channels
-   - Could enable escrow improvements
-   - Lower trust requirements
+**Exploring for Phase 1+:**
 
-5. **AnyHedge** - BCH-native hedging contracts
-   - Protect against BCH volatility
-   - Could replace fiat escrow entirely?
+4. 🔄 **Schnorr Signatures** - More efficient multi-party signing
+   - Smaller covenant transactions
+   - Batch signature verification
+   - Privacy improvements (indistinguishable multi-sig)
 
-6. **SmartBCH** - EVM-compatible sidechain
-   - Smart contracts for complex escrow logic
-   - DEX integration
+5. 🔄 **AnyHedge** - BCH-native hedging contracts
+   - Protect merchant/seller from BCH volatility
+   - Non-custodial hedging (no exchange needed)
+   - Could complement overcollateralization
 
-**TODO:** Schedule deep-dive session after RS046 complete to explore these! 🚀
+6. 🔄 **MUSD (MistSwap USD)** - BCH sidechain stablecoin
+   - Phase 1 integration planned
+   - Merchants hold MUSD instead of BCH (stability)
+   - Still non-custodial, covenant-compatible
 
 ---
 
 ## Related Documents
 
+- **Covenant Operations:**
+  - [Covenant Creation](covenant-creation.md) - How BCH signatures authorize covenant creation
+  - [BCH-Native Architecture](bch-native-architecture.md) - OP_RETURN notification design
 - **User Flows:**
-  - [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - User creates transactions
-  - [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md) - User as merchant
-- **Other APIs:**
-  - [transaction-apis.md](android-app/backend-apis/transaction-apis.md) - Uses BCH signature auth
-  - [merchant-apis.md](android-app/backend-apis/merchant-apis.md) - User creates merchant profile
-- **Backend Index:** [RS046-5 Backend APIs Index](android-app/backend-apis/README.md)
+  - [Sender Flow](../flows/remittance-merchant-cash-out.md) - Creating covenants
+  - [Recipient Flow](../flows/recipient-flows.md) - Claiming covenants
+  - [Merchant Flow](../flows/merchant-flows.md) - Cash-out co-signing
+- **Phase 0:** [Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md)
+- **Backend Index:** [README.md](README.md)
 
 ---
 
-*Created: April 27, 2026*
-*Status: Complete*
-*Philosophy: BCH address = identity. Self-sovereign, permissionless, private.*
-*MVP: 2 endpoints. No phone, no email, no KYC. Just cryptography.*
-*Innovation: OP_RETURN notifications instead of push services = fully decentralized*
+*Created: April 27, 2026*  
+*Updated: May 16, 2026 (Removed escrow references, covenant-based notifications)*  
+*Philosophy: BCH address = identity. Self-sovereign, permissionless, private.*  
+*Phase 0: No backend APIs - just BCH signatures + OP_RETURN notifications.*  
+*Innovation: Covenant transactions include OP_RETURN (no separate notification tx needed)*
