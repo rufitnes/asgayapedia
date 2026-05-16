@@ -63,36 +63,53 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 │                                     │
 │  ┌───────────────────────────────┐  │
 │  │                               │  │
-│  │   💸 Send BCH                 │  │◄─ Sender taps this
-│  │   Buy & send to anyone        │  │
+│  │   💸 Send to Asgaya User      │  │◄─ Covenant-based flow
+│  │   Recipient chooses BCH/cash  │  │
 │  │                               │  │
 │  └───────────────────────────────┘  │
 │                                     │
 │  ┌───────────────────────────────┐  │
 │  │                               │  │
-│  │   🪙 Pay Merchant             │  │
-│  │   Scan & pay with BCH         │  │
+│  │   🪙 Pay with Bitcoin Cash    │  │◄─ Standard BCH payment
+│  │   Direct payment to merchant  │  │
 │  │                               │  │
 │  └───────────────────────────────┘  │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
 │  Recent activity:                   │
-│  • Sent 0.0198 BCH to Elena ✓      │◄─ Show BCH amounts
-│  • Sent 0.0099 BCH to Carlos ✓     │
+│  • Sent 0.1 BCH to Elena ✓         │◄─ Show BCH amounts
+│  • Paid 0.01 BCH to Café Rosa ✓    │
 │                                     │
 │  [ Settings ]      [ Help ]         │
 └─────────────────────────────────────┘
 ```
 
-**Interaction:**
-- Tap "Send BCH" → Go to Screen 2
+**Interactions:**
+- Tap "Send to Asgaya User" → Go to Screen 2 (covenant-based flow)
+- Tap "Pay with Bitcoin Cash" → Go to standard BCH payment flow (wallet functionality)
 
 **Notes:**
+- **Two distinct flows clearly separated:**
+  
+  **Button 1: "Send to Asgaya User"**
+  - For people in Asgaya network (family, friends, contacts)
+  - Creates covenant (24-hour claim window)
+  - Recipient chooses: BCH (free) or Cash at merchant (0.5% fee)
+  - Uses Cash Accounts (Elena#142)
+  - Covenant-based architecture
+  
+  **Button 2: "Pay with Bitcoin Cash"**
+  - For merchants/anyone who accepts BCH but NOT in Asgaya network
+  - Standard BCH wallet transaction (no covenant)
+  - Direct payment (instant settlement, no claim process)
+  - Uses standard BCH addresses or Cash Accounts
+  - No Asgaya infrastructure needed (pure wallet functionality)
+
+- **Fail-safe design:** Even if user picks wrong button, BCH ends up at recipient (just different UX)
+- **This merges bch-payment-flows.md:** "Pay with Bitcoin Cash" handles non-Asgaya merchants
 - Positioned as Bitcoin wallet (regulatory framing)
-- "Send BCH" instead of "Send Money" (not a remittance service)
-- Recent activity shows BCH amounts (crypto-first UX)
-- Recipient chooses claim method later (BCH or cash)
+- Recent activity shows both types: "Sent" (Asgaya) vs "Paid" (direct)
 
 ---
 
@@ -107,7 +124,7 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
-│  │  👤 Cash Account or Address │   │
+│  │  👤 Cash Account or Address  │   │
 │  │                             │   │
 │  │  Elena#142                  │   │◄─ Primary: Cash Account
 │  │                             │   │
@@ -115,9 +132,9 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 │                                     │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
-│   Recent recipients:                │◄─ Quick send
-│   • Elena#142 (🇻🇪 Venezuela)       │
-│   • Carlos#5890 (🇦🇷 Argentina)     │
+│   Recent recipients:                │◄─ Quick send (currency preselected)
+│   • Elena#142 (🇻🇪 VES)             │
+│   • Carlos#5890 (🇦🇷 ARS)           │
 │                                     │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
@@ -169,10 +186,13 @@ Checks:
 
 **Notes:**
 - Cash Accounts replace phone numbers as primary identifier (BCH-native, no centralized database)
-- Recent recipients show Cash Account + country flag (visual corridor indicator)
+- **Recent recipients:** Cash Account + currency preselected (makes recurring payments easier)
+  - Tap "Elena#142 (🇻🇪 VES)" → Auto-fills recipient AND currency in Screen 3
+  - Reduces taps for frequent senders
 - Contact integration: User saves `Elena#142` in phone contacts → One-tap send
 - QR code scanning works with Cash Account QR or standard BCH address QR
 - Corridor auto-detected from Cash Account metadata (block height → historical country data) or manual selection
+- **Merchant map preview:** "View Merchant Map" shows available merchants in recipient's country (builds confidence)
 
 ---
 
@@ -194,13 +214,13 @@ Checks:
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
-│   Exchange rate: 1 EUR = 50,500 VES│◄─ Only if VES ≠ default
+│   Exchange rate: 1 EUR = 500 VES│◄─ Only if VES ≠ default
 │   €9.95 (incl. 0.5% fee)           │◄─ EUR with sender fee
 │   (Updated 3 min ago)               │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
-│   Elena receives: 0.0198 BCH        │◄─ BCH amount (crypto-first)
+│   Elena receives: 0.1 BCH        │◄─ BCH amount (crypto-first)
 │   (~€9.90 worth)                    │
 │                                     │
 │   💡 Elena can claim instantly as   │◄─ Educational note
@@ -225,12 +245,12 @@ Checks:
 
 **Calculations:**
 ```
-User enters: 500,000 VES
-Exchange rate: 1 EUR = 50,500 VES
+User enters: 50,000 VES
+Exchange rate: 1 EUR = 500 VES
 Base amount: 500,000 ÷ 50,500 = €9.90
 Sender fee (0.5%): €9.90 × 1.005 = €9.95
 Sender pays: €9.95
-Elena receives: 0.0198 BCH (~€9.90 worth at current rate)
+Elena receives: 0.1 BCH (~€9.90 worth at current rate)
 ```
 
 **Interactions:**
@@ -239,7 +259,23 @@ Elena receives: 0.0198 BCH (~€9.90 worth at current rate)
 - If currency ≠ default (EUR for Spain sender): Show exchange rate + EUR conversion
 - If currency = default (EUR): Hide exchange rate line, just show amount
 - Rate updates every 5 minutes (DolarAPI + CoinGecko)
-- Tap "Continue" → Go to Screen 4
+- Tap "Continue" → Check for pending covenant → Go to Screen 4 (or show error)
+
+**Validation before Screen 4:**
+```javascript
+// Check: Does sender already have pending covenant for this recipient?
+const hasPendingCovenant = checkBlockchain({
+  sender: currentUserAddress,
+  recipient: "Elena#142", // Resolved from Cash Account
+  status: "pending" // Not expired, not matured
+});
+
+if (hasPendingCovenant) {
+  showPendingCovenantError(); // See error screen below
+} else {
+  goToScreen4(); // Continue to payment method
+}
+```
 
 **Currency Selector Logic:**
 ```javascript
@@ -249,15 +285,15 @@ if (selectedCurrency === defaultCurrency) {
   "€100.00"
   "Your fee: €0.50 (0.5%)"
   "You pay: €100.50"
-  "Elena receives: 0.0198 BCH"
+  "Elena receives: 0.1 BCH"
 }
 
 if (selectedCurrency !== defaultCurrency) {
   // Show exchange rate + conversion to default currency
   "[VES ▼]  500,000.00"
-  "Exchange rate: 1 EUR = 50,500 VES"
+  "Exchange rate: 1 EUR = 500 VES"
   "€9.95 (incl. 0.5% fee)"
-  "Elena receives: 0.0198 BCH"
+  "Elena receives: 0.1 BCH"
 }
 ```
 
@@ -277,7 +313,103 @@ if (selectedCurrency !== defaultCurrency) {
 
 ---
 
-### Screen 4: Confirm Order
+### Screen 3.5: Pending Covenant Error (Only if Validation Fails)
+
+**Only shown if sender already has pending covenant for this recipient**
+
+```
+┌─────────────────────────────────────┐
+│ ◄ Back    ⚠️ Pending Transaction    │
+├─────────────────────────────────────┤
+│                                     │
+│   You already sent to Elena#142     │
+│   and she hasn't claimed it yet.    │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │  Recipient: Elena#142       │   │
+│  │  Amount: €100.00            │   │
+│  │  Status: Waiting for claim  │   │
+│  │                             │   │
+│  │  Time remaining: 18h 23m    │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│  You can send another transaction   │
+│  after Elena claims this one or     │
+│  it expires (24 hours).             │
+│                                     │
+│  💡 Reason: Prevents duplicate      │
+│     transactions and ensures        │
+│     clean matching in Bizum         │
+│     concept field.                  │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │   Track This Transaction    │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  Choose Different Recipient │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  [ Back to Home ]                   │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Interactions:**
+- Tap "Track This Transaction" → Go to Screen 6 (tracking page for existing covenant)
+- Tap "Choose Different Recipient" → Go back to Screen 2
+- Tap "Back to Home" → Return to home screen
+
+**Notes:**
+- Prevents duplicate covenants per (sender → recipient) pair
+- Ensures clean 1:1 matching for Bizum concept field (Cash Account)
+- User can track existing transaction or choose different recipient
+- After covenant matures/expires, user can send to same recipient again
+
+---
+
+### Screen 4: Select Payment Method
+
+**User chooses how to fund the transfer:**
+
+```
+┌─────────────────────────────────────┐
+│ ◄ Back         Select Payment       │
+├─────────────────────────────────────┤
+│                                     │
+│   How do you want to pay?           │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │  From your wallet           │   │
+│  │  2.1 BCH available          │   │◄─ Balance shown
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │  Buy Bitcoin Cash in        │   │◄─ Fixed typo
+│  │  Asgaya's bulletin board    │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│  [ Back to edit ]                   │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Interactions:**
+- Tap "From your wallet" → Go to Screen 4A
+- Tap "Buy Bitcoin Cash in Asgaya's bulletin board" → Go to Screen 4B
+
+---
+
+### Screen 4A: Sending BCH from Your Wallet Balance
 
 ```
 ┌─────────────────────────────────────┐
@@ -288,79 +420,105 @@ if (selectedCurrency !== defaultCurrency) {
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │                             │   │
-│  │  You send:                  │   │
-│  │  €100.00                    │   │
+│  │  Elena#142 receives:        │   │
+│  │  0.1 BCH                    │   │◄─ Fixed spacing
 │  │                             │   │
-│  │  Elena receives:            │   │
-│  │  ~5,024,750 VES             │   │
-│  │  (€99.50 worth in BCH)      │   │
+│  │  (~50,000 VES) = (~€100)    │   │◄─ Fiat equivalent
 │  │                             │   │
 │  │  Exchange rate:             │   │
-│  │  1 EUR = 50,500 VES         │   │
+│  │  1 EUR = 500 VES         │   │
 │  │                             │   │
-│  │  Corridor:                  │   │
-│  │  🇪🇸 Spain → 🇻🇪 Venezuela  │   │
+│  │  Network fee: €0.002        │   │◄─ BCH network fee only
 │  │                             │   │
 │  └─────────────────────────────┘   │
-│                                     │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
-│                                     │
-│   How do you want to pay?           │◄─ Payment method choice
-│                                     │
-│  ┌───────────────────────────────┐  │
-│  │  🪙 Send from My BCH Wallet   │  │◄─ Option A: Own BCH
-│  │  Balance: 0.0500 BCH          │  │
-│  │  (Enough for this transfer ✓) │  │
-│  │  Fee: FREE (no seller needed) │  │
-│  └───────────────────────────────┘  │
-│                                     │
-│  ┌───────────────────────────────┐  │
-│  │  💳 Buy BCH from Seller       │  │◄─ Option B: Buy BCH
-│  │  Pay with Bizum (€100.00)     │  │
-│  │  Fee: €0.50 (0.5% to seller)  │  │
-│  └───────────────────────────────┘  │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
 │  What happens next:                 │
-│  1. Covenant created (24h window)   │
-│  2. Elena gets notified             │
-│  3. She claims (BCH or cash)        │
-│                                     │
-│  Estimated time: Minutes to hours   │
-│  (depends on when Elena claims)     │
+│  1. Elena#142 gets notified         │
+│  2. Can claim BCH immediately       │
+│  3. Or cash out at merchant (24h)   │
 │                                     │
 │  ┌─────────────────────────────┐   │
-│  │         Confirm             │   │
+│  │   Confirm & Send BCH        │   │◄─ Fixed button text!
 │  └─────────────────────────────┘   │
 │                                     │
+│  [ Change payment method ]          │◄─ Switch to bulletin
 │  [ Back to edit ]                   │
 │                                     │
 └─────────────────────────────────────┘
 ```
 
 **Interactions:**
+- Tap "Confirm & Send BCH" → Create covenant → Go to Screen 6 (Tracking)
+- **No Screen 4.5 or 5 needed** (no seller, no Bizum)
+- Tap "Change payment method" → Go back to Screen 4
+- Tap "Back to edit" → Return to Screen 3
 
-**Option A: Send from My BCH Wallet (if balance sufficient)**
-- Shows current BCH balance
-- Calculates if enough for transfer + covenant creation
-- If selected → Deduct BCH from wallet → Create covenant → Go to Screen 6 (Tracking)
-- **No Screen 5 needed** (no Bizum payment required)
+---
 
-**Option B: Buy BCH from Seller**
-- Shows Bizum payment amount
-- If selected → Go to Screen 5 (Payment Instructions)
+### Screen 4B: Buying BCH from Seller
+
+```
+┌─────────────────────────────────────┐
+│ ◄ Back         Confirm Order        │
+├─────────────────────────────────────┤
+│                                     │
+│   Review your transfer              │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │  You pay:                   │   │
+│  │  €100.50 (Bizum)            │   │◄─ EUR amount + seller fee
+│  │                             │   │
+│  │  BCH purchased:             │   │
+│  │  0.1005 BCH                 │   │◄─ BCH being bought from seller
+│  │  (~€100.50 worth)           │   │
+│  │                             │   │
+│  │  Elena#142 receives:        │   │
+│  │  0.1 BCH                 │   │◄─ Amount after fees
+│  │  (~50,000 VES)           │   │
+│  │                             │   │
+│  │  Exchange rate:             │   │
+│  │  1 EUR = 500 VES         │   │
+│  │                             │   │
+│  │  Corridor:                  │   │
+│  │  🇪🇸 Spain → 🇻🇪 Venezuela  │   │
+│  │                             │   │
+│  │  Seller fee: €0.50 (0.5%)   │   │◄─ Clear fee display
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                     │
+│  What happens next:                 │
+│  1. Elena#142 gets notified         │
+│  2. Can claim BCH immediately       │
+│  3. Or cash out at merchant (24h)   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │   Confirm & Pay Seller      │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  [ Change payment method ]          │◄─ Switch to own BCH
+│  [ Back to edit ]                   │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+**Interactions:**
+- Tap "Confirm & Pay Seller" → Go to Screen 4.5 (Bulletin Board with preselected seller)
+- Then Screen 5 (Payment Instructions)
 - Then Screen 6 (Tracking)
-
-**Always available:**
-- Tap "Back to edit" → Return to Screen 3 (change amount)
+- Tap "Change payment method" → Go back to Screen 4
+- Tap "Back to edit" → Return to Screen 3
 
 **Payment Method Logic:**
 ```javascript
 // Check sender's BCH balance
-const senderBalance = 0.0500 BCH; // Example
-const transferNeeds = 0.0198 BCH; // €9.90 worth at current rate
-const covenantCreationFee = 0.0001 BCH; // ~$0.01
+const senderBalance = 0.5 BCH; // Example: €500 worth
+const transferNeeds = 0.1 BCH; // €100 worth at current rate
+const covenantCreationFee = 0.0001 BCH; // ~€0.10
 
 if (senderBalance >= transferNeeds + covenantCreationFee) {
   // Show Option A: "Send from My BCH Wallet" (recommended)
@@ -385,27 +543,33 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 
 **Only shown if user selected "Buy BCH from Seller" in Screen 4**
 
-**Purpose:** Browse active BCH sellers and choose one based on limits, payment method, and availability.
+**Purpose:** Browse active BCH sellers and choose one based on limits, payment method, and availability. **Recommended seller preselected** based on user preferences.
 
 ```
 ┌─────────────────────────────────────┐
 │ ◄ Back      Select BCH Seller       │
 ├─────────────────────────────────────┤
 │                                     │
-│   Buy 0.0198 BCH (~€9.90)           │
+│   Buy 0.1 BCH (~€100)            │
 │                                     │
-│  Active sellers:                    │
+│  ⭐ Recommended for you:             │◄─ Preselected seller
 │                                     │
-│  ┌───────────────────────────────┐  │
-│  │ 🟢 Seller#3421                │  │◄─ Online (liveness signal)
+│  ┌═══════════════════════════════┐  │◄─ Highlighted border
+│  │ 🟢 Seller#3421  ⭐ SELECTED   │  │
 │  │                               │  │
 │  │ Limits: €10 - €500            │  │
 │  │ Payment: Bizum, SEPA          │  │
 │  │ Fee: 0.5%                     │  │
-│  │ Avg response: 8 sec           │  │◄─ Bot parsing is near-instant
+│  │ Avg response: 8 sec           │  │◄─ Fastest response
+│  │ Completed: 1,247 tx           │  │◄─ Most experienced
 │  │                               │  │
-│  │ [ Select ]                    │  │
-│  └───────────────────────────────┘  │
+│  │ ✓ Best match for your         │  │◄─ Why recommended
+│  │   preferences (fast response) │  │
+│  │                               │  │
+│  │ [ Continue with this seller ] │  │◄─ Primary action
+│  └═══════════════════════════════┘  │
+│                                     │
+│  Other sellers:                     │◄─ Can still browse
 │                                     │
 │  ┌───────────────────────────────┐  │
 │  │ 🟢 Seller#8190                │  │
@@ -436,10 +600,13 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 ```
 
 **Interactions:**
-- Tap a seller card → Expand to see details (reputation, history, etc.)
-- Tap "Select" → Confirms seller choice → Go to Screen 5 (Payment Instructions for this seller)
+- **Recommended seller preselected** (highlighted with ⭐ badge)
+- Tap "Continue with this seller" → Go to Screen 5 (Payment Instructions)
+- Tap any other seller card → Deselect recommended, select new seller
+- Tap "Select" on alternative seller → Updates selection → Go to Screen 5
 - Sort by: Fee (lowest first), Response time (fastest first), Limits (highest first)
 - Filter: Payment method (Bizum, SEPA, Cash, ATM), Currency (EUR, USD, GBP)
+- User can scroll and compare all sellers before confirming
 
 **Seller Information Displayed:**
 
@@ -474,10 +641,17 @@ if (senderBalance >= transferNeeds + covenantCreationFee) {
 - **Slow:** 30-60+ sec (manual verification, ATM deposits)
 - **Phase 0 testing needed:** How fast can seller bot parse different payment methods?
 
+**6. Transaction Counter:**
+- Shows completed transactions (experience indicator)
+- "Completed: 1,247 tx" → Experienced, trustworthy seller
+- "Completed: 12 tx" → New seller, less history
+- Helps senders choose reliable sellers
+- Combined with other metrics (response time, fee, limits)
+
 **Selection Logic:**
 ```javascript
-// Sender needs €9.90 worth of BCH
-const senderAmount = 9.90;
+// Sender needs €100 worth of BCH
+const senderAmount = 100.00;
 
 // Filter sellers
 const availableSellers = allSellers.filter(seller => 
@@ -493,21 +667,36 @@ availableSellers.sort((a, b) => a.fee - b.fee);
 // Display top 5-10 sellers
 ```
 
-**Smart Defaults:**
+**Preselection Logic (Compliance-Friendly):**
 ```javascript
-// Auto-select if only one seller matches
-if (availableSellers.length === 1) {
-  autoSelect(availableSellers[0]);
-  // Skip to Screen 5 with pre-selected seller
-}
+// Preselect recommended seller based on user preferences
+const recommendedSeller = selectBestSeller({
+  sellers: availableSellers,
+  criteria: userPreference, // "fastest" | "cheapest" | "most_experienced"
+  amount: 100.00,
+  paymentMethod: "Bizum"
+});
 
-// Recommend best option
-if (availableSellers.length > 1) {
-  // Highlight seller with: lowest fee + fastest response + online
-  const recommended = findBestMatch(availableSellers);
-  // Show "⭐ Recommended" badge
-}
+// ALWAYS show Screen 4.5 (never skip)
+// Recommended seller is PRESELECTED with ⭐ badge
+// User sees who they're paying and can change if desired
+showScreen4_5({
+  preselected: recommendedSeller,
+  alternatives: otherSellers
+});
+
+// Transparency for compliance:
+// - User sees bulletin board (not hidden)
+// - Preselection is visual hint, not forced
+// - User can change seller before continuing
+// - Clear "Why recommended" explanation shown
 ```
+
+**Why preselect instead of auto-skip:**
+1. **Compliance:** User sees who they're paying (transparent)
+2. **Trust:** User understands recommendation logic ("Best match for fast response")
+3. **Choice:** User can still browse and compare alternatives
+4. **Consent:** Explicit tap on "Continue with this seller" (not automatic)
 
 **Future Enhancements (Phase 1+):**
 - **Reputation system:** Star rating, completed transactions, dispute rate
@@ -560,7 +749,7 @@ if (availableSellers.length > 1) {
 │  │                             │   │
 │  │  Amount: €100.00            │   │
 │  │                             │   │
-│  │  Concept: REM-89234         │   │◄─ Covenant ID
+│  │  Concept: Elena#142         │   │◄─ Recipient Cash Account
 │  │                             │   │
 │  │  [ Copy details ]           │   │
 │  │                             │   │
@@ -600,9 +789,33 @@ if (availableSellers.length > 1) {
 
 **Notes:**
 - 5-minute window (seller's BCH volatility exposure)
-- Concept field = covenant ID (links Bizum payment to specific covenant)
+- **Concept field = recipient Cash Account** (Elena#142) - links Bizum payment to covenant
+- Human-readable identifier (seller can manually verify if needed)
+- One pending covenant per (sender → recipient) pair ensures clean 1:1 matching
 - Copy button reduces manual entry errors
 - Explains BCH seller role (not central entity)
+- **Android autocomplete enhancement:** If autocomplete can copy these details directly to banking app → simpler UX, less manual errors
+  - Implementation: Use Android's autofill framework
+  - Pre-fill Bizum fields in banking app
+  - Reduces context switching and typing errors
+
+**Seller Bot Matching Logic:**
+```python
+# Seller receives Bizum SMS notification
+bizum_sender = "Iris"       # From Bizum sender field
+bizum_amount = 100.00       # From SMS
+concept = "Elena#142"       # From concept field
+
+# Find matching covenant (always exactly one)
+covenant = find_pending_covenant(
+    sender=resolve_address(bizum_sender),  # Iris's BCH address
+    recipient=concept,                      # Elena#142
+    amount_eur=bizum_amount                # €100
+)
+
+# Sign and fund covenant with BCH collateral
+sign_and_fund_covenant(covenant)
+```
 
 **Why 5 minutes:**
 - Seller has full BCH exposure until Bizum received
@@ -620,7 +833,7 @@ if (availableSellers.length > 1) {
 
 ```
 ┌─────────────────────────────────────┐
-│         Order #REM-89234            │
+│  Sending 0.1 BCH to Elena#142      │◄─ BCH amount + Cash Account
 ├─────────────────────────────────────┤
 │                                     │
 │      ⏳ Waiting for payment...      │
@@ -630,15 +843,14 @@ if (availableSellers.length > 1) {
 │  │  ████░░░░░░░░░░░░░░  20%    │   │
 │  └─────────────────────────────┘   │
 │                                     │
-│   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → ~5,024,750 VES     │
+│   To: Elena#142                     │◄─ Cash Account only
+│   Amount: €100 → 50,000 VES        │
 │                                     │
 │   Progress:                         │
+│   ✅ Covenant created               │◄─ Covenant first
 │   ⏳ Bizum to BCH seller pending... │
-│   ⏸️  Creating covenant...          │
 │   ⏸️  Notifying Elena...            │
-│   ⏸️  Merchant co-signing...        │
-│   ⏸️  Cash delivery...              │
+│   ⏸️  Waiting for claim...          │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │                                     │
@@ -651,9 +863,12 @@ if (availableSellers.length > 1) {
 ```
 
 **Notes:**
+- **Title shows:** BCH amount being sent + recipient Cash Account (not order ID)
+- **Progress order:** Covenant created FIRST, then Bizum payment (covenant exists before funding)
 - 5-minute Bizum window (seller's volatility exposure)
-- Sender can cancel before Bizum confirmed (full refund, no covenant created)
+- Sender can cancel before Bizum confirmed (full refund, covenant unfunded)
 - Automatic timeout if Bizum not received within 5 minutes
+- Simplified progress steps (removed "Merchant co-signing" and "Cash delivery" - happens later)
 
 #### State 2: Covenant Created, Notifying Recipient
 
@@ -670,7 +885,7 @@ if (availableSellers.length > 1) {
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → ~5,024,750 VES     │
+│   Amount: €100 → 50,000 VES        │
 │                                     │
 │   Progress:                         │
 │   ✅ Bizum received (seller paid)   │
@@ -713,7 +928,7 @@ if (availableSellers.length > 1) {
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → ~5,024,750 VES     │
+│   Amount: €100 → 50,000 VES        │
 │                                     │
 │   Progress:                         │
 │   ✅ Covenant created               │
@@ -771,7 +986,7 @@ if (availableSellers.length > 1) {
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → ~5,024,750 VES     │
+│   Amount: €100 → 50,000 VES        │
 │   Code: 8923                        │
 │                                     │
 │   Progress:                         │
@@ -815,7 +1030,7 @@ if (availableSellers.length > 1) {
 │  └─────────────────────────────┘   │
 │                                     │
 │   To: Elena (+58-412-XXX)           │
-│   Amount: €100 → 5,021,385 VES      │
+│   Amount: €100 → 50,000 VES      │
 │                                     │
 │   Progress:                         │
 │   ✅ Covenant created               │
@@ -864,11 +1079,11 @@ if (availableSellers.length > 1) {
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
-│   Order: #REM-89234                 │
+│   0.1 BCH sent to Elena#142        │◄─ BCH amount + Cash Account
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │   Sent: €100.00                     │
-│   Elena received: 5,021,385 VES     │
-│   (€99.50 worth at final rate)      │
+│   Elena received: 50,000 VES        │
+│   (€100 worth at final rate)        │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │   Your cost: €0.50 (0.50%)          │
 │                                     │
@@ -957,7 +1172,7 @@ if (availableSellers.length > 1) {
 **Fee breakdown explanation:**
 - **Sender pays:** €0.50 (0.5% of €100)
 - **Elena gets:** €99.50 worth of BCH (calculated at maturity spot rate)
-- **Merchant spread:** ~€0.25 (sells 500,000 VES for 0.0995 BCH worth ~€100.25)
+- **Merchant spread:** ~€0.25 (sells 50,000 VES for 0.0995 BCH worth ~€99.75)
 - **BCH seller fee:** ~€0.25 (earned for posting collateral and service)
 
 **Related decision:** [Fee Splitting Model](decisions/fee-splitting-model.md)
@@ -1073,7 +1288,7 @@ if (availableSellers.length > 1) {
 **Notes:**
 - **Split refund mechanism:**
   - Merchant portion (0.0995 BCH worth €99.50) → Refunded to you (Iris)
-  - Seller fee (0.0075 BCH worth €0.50) → Kept by BCH seller
+  - Seller fee (0.0005 BCH worth €0.50) → Kept by BCH seller
 - **Why seller keeps fee:**
   - Seller posted BCH collateral for 24 hours
   - Seller had volatility risk exposure
@@ -1236,7 +1451,7 @@ Secondary (outline):
 - Covenant marked as expired
 - Split refund triggered:
   - Merchant portion (0.0995 BCH worth €99.50) → Sender's address (Iris)
-  - Seller fee (0.0075 BCH worth €0.50) → BCH seller
+  - Seller fee (0.0005 BCH worth €0.50) → BCH seller
 - Recipient can no longer claim
 - Sender and recipient both notified
 

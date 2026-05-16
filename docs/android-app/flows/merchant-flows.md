@@ -27,7 +27,7 @@ This document details **every screen** a merchant sees when selling VES cash for
 ```
 Someone wants VES cash, offering BCH
 ├─ Bulletin board shows: "Wants: 500,000 VES | You get: 0.0995 BCH"
-├─ Customer arrives, provides code to claim specific bounty
+├─ Customer arrives, provides their Cash Account (Elena#142) to claim bounty
 ├─ Merchant decides if they have enough VES cash to sell
 ├─ If yes: Hand VES cash → Both co-sign covenant → BCH received
 └─ If no: Decline bounty → Customer tries different merchant
@@ -50,13 +50,13 @@ Someone wants VES cash, offering BCH
 
 ## Merchant Flow: VES Cash Sale for BCH
 
-**Use case:** Elena walks into Bodega María with bounty code
+**Use case:** Elena walks into Bodega María to claim her remittance
 
 **Complete flow:**
 ```
 1. Merchant browses bulletin board (active bounties waiting)
-2. Customer arrives, says: "I have bounty code 8923"
-3. Merchant enters code → Sees VES amount to sell & BCH to receive
+2. Customer arrives, says: "I'm Elena#142"
+3. Merchant enters Cash Account → Sees VES amount to sell & BCH to receive
 4. Merchant confirms they have enough VES cash
 5. Merchant hands VES cash to customer
 6. Both co-sign covenant → Settlement triggered → Merchant receives BCH
@@ -762,9 +762,9 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 
 ---
 
-### Scenario 3: Code Already Used
+### Scenario 3: Covenant Already Claimed
 
-**What happened:** Customer provides code, but covenant already claimed by different merchant
+**What happened:** Customer provides Cash Account, but covenant already claimed by different merchant
 
 **Merchant sees:**
 ```
@@ -772,7 +772,7 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 │      ⚠️ Already Claimed             │
 ├─────────────────────────────────────┤
 │                                     │
-│  Bounty code 8923 was already       │
+│  Covenant for Elena#142 was already │
 │  claimed by another merchant        │
 │                                     │
 │  Completed: May 10, 2026 at 14:32   │
@@ -782,10 +782,10 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 │                                     │
 │  Customer might have:               │
 │  • Already claimed at other shop    │
-│  • Given you wrong code             │
-│  • Code belongs to different person │
+│  • Given you wrong Cash Account     │
+│  • Different person's remittance    │
 │                                     │
-│  Ask customer to verify code        │
+│  Ask customer to verify Cash Account│
 │  in their Asgaya app                │
 │                                     │
 │  [ OK - Back to Dashboard ]         │
@@ -795,7 +795,7 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 
 **Prevention:**
 - Covenant can only settle once (blockchain enforced)
-- Elena's app shows "Already claimed" if she tries to reuse code
+- Elena's app shows "Already claimed" if she tries to reuse it
 - Merchant sees who claimed it (other merchant name/ID)
 
 ---
@@ -810,7 +810,7 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 │          ⚠️ Expired                 │
 ├─────────────────────────────────────┤
 │                                     │
-│  Bounty code 8923 expired           │
+│  Covenant for Elena#142 expired     │
 │  (24-hour timeout reached)          │
 │                                     │
 │  Created: May 9, 2026 at 14:00      │
@@ -853,35 +853,50 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 
 ## Technical Notes
 
-### Code Format & Validation
+### Cash Account Format & Validation
 
-**Full remittance ID:** REM-89234  
-**Bounty code:** Last 4 digits (9234) or middle 4 (8923)
+**Format:** Name#Number (e.g., Elena#142)
 
-**Why 4 digits:**
-- Easy to remember for customer
-- Fast to type for merchant
-- Unique enough for daily transactions (10,000 combinations)
-- Collision unlikely (<100 transactions/day in beta)
+**Why Cash Accounts:**
+- **Human-readable:** "Elena#142" instead of random codes
+- **Global uniqueness:** BCH-native identity system (blockchain registered)
+- **No database needed:** Resolves to BCH address via Cash Accounts protocol
+- **Privacy-preserving:** Merchant doesn't need customer's phone number or ID
+- **Verifiable:** Customer can prove ownership by signing with private key
 
-**Collision handling:**
-- If duplicate codes exist, add context (customer name or recipient initial)
-- Merchant sees: "Code 8923 - Elena" vs "Code 8923 - Carlos"
+**Resolution:**
+```javascript
+// Merchant enters: Elena#142
+const cashAccount = "Elena#142";
+
+// Resolve to BCH address
+const address = await resolveCashAccount(cashAccount);
+// Returns: bitcoincash:qr2x8w9t3fjlk042z2wv7hahsldgwhwy0rq9sywjpyy
+
+// Check for active covenant to this address
+const covenant = await getActiveCovenant(address);
+```
 
 **Backend validation:**
 ```
-Code entered: 8923
+Cash Account entered: Elena#142
 
 Backend checks:
-1. Format valid? (4 digits)
-2. Matches active covenant on chain?
-3. Covenant funded by BCH seller?
-4. Not already claimed? (covenant not mature yet)
-5. Not expired? (< 24h since creation)
+1. Format valid? (Name#Number)
+2. Resolves to valid BCH address?
+3. Active covenant exists for this address?
+4. Covenant funded by BCH seller?
+5. Not already claimed? (covenant not mature yet)
+6. Not expired? (< 24h since creation)
 
 If all checks pass → Show confirm screen
 Otherwise → Show specific error
 ```
+
+**Collision handling:**
+- Cash Accounts are globally unique (blockchain enforced)
+- No two users can have the same Name#Number
+- If merchant enters wrong account → Customer's name won't match, merchant notices
 
 ---
 
@@ -964,9 +979,9 @@ Otherwise → Show specific error
 ## Related Documentation
 
 **Flows:**
-- [Recipient Flows](android-app/flows/recipient-flows.md) — Elena's perspective (other side of co-signing)
-- [Sender Flows](android-app/flows/sender-flows.md) — Iris creates covenant and sends
-- [BCH Seller Flows](android-app/flows/bch-seller-flows.md) — How sellers post collateral
+- [Recipient Flows](recipient-flows.md) — Elena's perspective (other side of co-signing)
+- [Sender Flows](sender-flows/) — Iris creates covenant and sends
+- [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
 - [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement

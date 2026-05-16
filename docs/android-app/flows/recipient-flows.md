@@ -351,10 +351,10 @@ Show nearby merchants where recipient can claim cash.
 
 ---
 
-## Screen 5a: Show Bounty Code to Merchant
+## Screen 5a: Show Cash Account to Merchant
 
 ### Purpose
-Display bounty code for recipient to tell merchant.
+Display recipient's Cash Account for merchant to look up covenant.
 
 ### Wireframe
 
@@ -372,12 +372,12 @@ Display bounty code for recipient to tell merchant.
 │  │                             │   │
 │  │  ━━━━━━━━━━━━━━━━━━━━━━     │   │
 │  │                             │   │
-│  │  📱 Bounty Code:            │   │
+│  │  👤 Your Cash Account:      │   │
 │  │                             │   │
-│  │      8  9  2  3             │   │◄─ Large 4-digit code
+│  │      Elena#142              │   │◄─ Large text
 │  │                             │   │
 │  │  ┌─────────────────────┐   │   │
-│  │  │  Copy: 8923         │   │   │
+│  │  │  Copy: Elena#142    │   │   │
 │  │  └─────────────────────┘   │   │
 │  │                             │   │
 │  └─────────────────────────────┘   │
@@ -386,8 +386,8 @@ Display bounty code for recipient to tell merchant.
 │                                     │
 │  ⚠️ Instructions:                   │
 │                                     │
-│  1️⃣ Tell merchant: "8923"           │
-│  2️⃣ Merchant enters code in app     │
+│  1️⃣ Tell merchant: "Elena#142"      │
+│  2️⃣ Merchant enters in their app    │
 │  3️⃣ Merchant hands you cash         │
 │  4️⃣ COUNT your cash carefully       │
 │     (verify 500,000 VES)            │
@@ -398,7 +398,7 @@ Display bounty code for recipient to tell merchant.
 │                                     │
 │  Waiting for merchant to accept...  │
 │  (This screen auto-advances when    │
-│   merchant accepts your bounty)     │
+│   merchant accepts your covenant)   │
 │                                     │
 │  [ Problem? Contact Support ]       │
 │                                     │
@@ -406,22 +406,23 @@ Display bounty code for recipient to tell merchant.
 ```
 
 **Interactions:**
-- Display bounty code: 8923 (4 digits)
+- Display Cash Account: Elena#142
 - Tap "Copy" → Copies to clipboard
-- Recipient tells code to merchant verbally
+- Recipient tells Cash Account to merchant verbally
 - When merchant accepts → Auto-advance to Screen 5b
 - Tap "Contact Support" → Opens support chat/phone
 
 **Notes:**
 - Recipient doesn't tap anything to proceed (auto-advances)
-- Code identifies this specific covenant on bulletin board
-- Merchant enters code, sees VES amount and BCH to receive, accepts bounty
+- Cash Account identifies recipient's active covenant
+- Merchant enters Cash Account, sees VES amount and BCH to receive
 - After merchant hands cash → both co-sign covenant
 
-**Code format:**
-- Full remittance ID: REM-89234
-- Last 4 digits used as bounty code: 9234 (or middle 4: 8923)
-- Links recipient to specific covenant on merchant bulletin board
+**Cash Account format:**
+- Format: Name#Number (e.g., Elena#142)
+- Human-readable and easy to communicate verbally
+- Resolves to BCH address on blockchain
+- Merchant uses it to find active covenant for this recipient
 
 ---
 
@@ -1003,16 +1004,14 @@ pending → claimed → accepted → partially_signed → completed
                                timed_out (if only one signature after 5 min)
 ```
 
-**See:** [Settlement APIs](android-app/backend-apis/settlement-apis.md) for complete API specification
-
 ---
 
 ## Related Documentation
 
 **Flows:**
-- [Sender Flows](android-app/flows/sender-flows.md) — How Iris creates covenant and sends
-- [Merchant Flows](android-app/flows/merchant-flows.md) — How merchant sells VES for BCH (other side of co-signing)
-- [BCH Seller Flows](android-app/flows/bch-seller-flows.md) — How sellers post collateral
+- [Sender Flows](sender-flows/) — How Iris creates covenant and sends
+- [Merchant Flows](merchant-flows.md) — How merchant sells VES for BCH (other side of co-signing)
+- [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
 - [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement

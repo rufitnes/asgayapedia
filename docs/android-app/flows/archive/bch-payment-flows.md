@@ -1,8 +1,13 @@
 # BCH Payment Flows - Fiat On-Ramp
 
+**⚠️ STALE - PENDING REVIEW ⚠️**
+**Issue:** Uses escrow architecture (lines 23, 213, 436-470). Needs rewrite for covenant architecture or deletion.
+**Decision:** Everything covenant-based (sender flow covers this). Standard BCH payments (no Asgaya) handled separately.
+**Status:** TO BE ARCHIVED OR REWRITTEN
+
 **Part of:** [Android App Flows](android-app/flows/README.md)
 **Date:** 2026-05-02
-**Status:** Active - Priority 1 (Build FIRST)
+**Status:** ~~Active~~ STALE - Priority 1 (Build FIRST)
 
 ---
 

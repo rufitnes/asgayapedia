@@ -1,8 +1,16 @@
 # LP (Liquidity Provider) Flows - Fiat-to-Merchant Settlement
 
+**⚠️ STALE - PENDING REVIEW ⚠️**
+**Issue:** Uses escrow/LP architecture. LPs don't exist in covenant model.
+**Valid concepts to salvage:**
+- **Gamification**: Leaderboard, first-to-accept bounties, competitive rewards
+- **BCH Buyers**: People who buy BCH from merchants (circular economy)
+- **Merchant liquidity**: Merchants accumulate BCH → sell to BCH buyers → buyers become senders
+**Status:** TO BE REWRITTEN AS "BCH BUYER FLOWS" WITH GAMIFICATION
+
 **Part of:** [Android App Flows](android-app/flows/README.md)
 **Date:** 2026-05-03
-**Status:** Active - Critical for instant settlement
+**Status:** ~~Active~~ STALE - Critical for instant settlement
 
 ---
 
