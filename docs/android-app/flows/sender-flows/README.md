@@ -18,21 +18,22 @@ This directory contains all **sender-side screens** for creating and tracking BC
 
 ## Flow Structure
 
+**Entry point:** [Home Screen](../home-screen.md) → Tap "Send to Asgaya User"
+
 ### Common Path (All Senders)
-1. **[Home Screen](covenant-setup/1-home.md)** - Entry point (choose Asgaya vs Direct payment)
-2. **[Recipient Selection](covenant-setup/2-recipient-selection.md)** - Enter Cash Account (Elena#142)
-3. **[Amount Entry](covenant-setup/3-amount-entry.md)** - Enter amount + currency
-4. **[Payment Method](covenant-setup/4-payment-method.md)** - Choose: Own wallet vs Buy from seller
+1. **[Recipient Selection](covenant-setup/2-recipient-selection.md)** - Enter Cash Account (Elena#142)
+2. **[Amount Entry](covenant-setup/3-amount-entry.md)** - Enter amount + currency
+3. **[Payment Method](covenant-setup/4-payment-method.md)** - Choose: Own wallet vs Buy from seller
 
 ### Branch A: Own Wallet Path
-5A. **[Confirm Send](own-wallet-path/4a-confirm-send.md)** - Review transfer from wallet  
-6A. **[Tracking](own-wallet-path/6a-tracking.md)** - Monitor covenant state  
-7A. **[Completion](own-wallet-path/7a-completion.md)** - Success + savings breakdown
+4A. **[Confirm Send](own-wallet-path/4a-confirm-send.md)** - Review transfer from wallet  
+5A. **[Tracking](own-wallet-path/6a-tracking.md)** - Monitor covenant state  
+6A. **[Completion](own-wallet-path/7a-completion.md)** - Success + savings breakdown
 
 ### Branch B: Buy from Seller Path
-5B. **[Confirm Purchase](buy-seller-path/4b-confirm-purchase.md)** - Review purchase details  
-5B.5. **[Select Seller](buy-seller-path/4.5-select-seller.md)** - Bulletin board (preselected seller)  
-5B.6. **[Payment Instructions](buy-seller-path/5-payment-instructions.md)** - Bizum to seller  
+4B. **[Confirm Purchase](buy-seller-path/4b-confirm-purchase.md)** - Review purchase details  
+4.5. **[Select Seller](buy-seller-path/4.5-select-seller.md)** - Bulletin board (preselected seller)  
+5. **[Payment Instructions](buy-seller-path/5-payment-instructions.md)** - Bizum to seller  
 6B. **[Tracking](buy-seller-path/6b-tracking.md)** - Monitor covenant + Bizum  
 7B. **[Completion](buy-seller-path/7b-completion.md)** - Success + savings breakdown
 
@@ -47,22 +48,24 @@ This directory contains all **sender-side screens** for creating and tracking BC
 ## Flow Diagram
 
 ```
-                    ┌─────────────┐
-                    │  1. Home    │
-                    └──────┬──────┘
-                           │
-                    ┌──────▼──────┐
-                    │ 2. Recipient│
-                    └──────┬──────┘
-                           │
-                    ┌──────▼──────┐
-                    │  3. Amount  │
-                    └──────┬──────┘
-                           │
-                    ┌──────▼──────────┐
-                    │ 4. Payment      │
-                    │    Method       │
-                    └────┬─────┬──────┘
+         ┌──────────────────────┐
+         │  Home Screen         │
+         │  (Tap "Send to       │
+         │   Asgaya User")      │
+         └──────────┬───────────┘
+                    │
+             ┌──────▼──────┐
+             │ 1. Recipient│
+             └──────┬──────┘
+                    │
+             ┌──────▼──────┐
+             │  2. Amount  │
+             └──────┬──────┘
+                    │
+             ┌──────▼──────────┐
+             │ 3. Payment      │
+             │    Method       │
+             └────┬─────┬──────┘
                          │     │
         ┌────────────────┘     └────────────────┐
         │                                       │

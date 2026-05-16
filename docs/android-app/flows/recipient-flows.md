@@ -264,7 +264,7 @@ Show recipient what they're claiming and where to claim it (merchant cash-out pa
 - Shows sender name and optional message (personal context)
 - 24-hour countdown starts from covenant creation
 - Educational nudge to keep BCH instead of cashing out
-- Bounty code: 8923 (last 4 digits of remittance ID, shown in top bar or details)
+- Covenant transaction can be viewed on block explorer
 
 ---
 
@@ -587,8 +587,9 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 │  │  Merchant: Bodega María     │   │
 │  │  Date: May 10, 2026 3:45pm  │   │
 │  │                             │   │
-│  │  Transaction ID:            │   │
-│  │  REM-89234                  │   │
+│  │  Transaction:               │   │
+│  │  a3f2bc47...8d9c            │   │◄─ BCH txid
+│  │  [ View on Explorer ]       │   │
 │  │                             │   │
 │  └─────────────────────────────┘   │
 │                                     │
@@ -666,7 +667,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 │  This remittance expired because    │
 │  it wasn't claimed within 24 hours. │
 │                                     │
-│  Remittance ID: REM-89234           │
+│  Covenant: a3f2bc47...8d9c          │
 │  Amount: 500,000 VES                │
 │  From: Iris M.                      │
 │                                     │
@@ -726,7 +727,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 │  • Witness statements               │
 │  • Your location data               │
 │                                     │
-│  Order: REM-89234                   │
+│  Covenant: a3f2bc47...8d9c          │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │  Email Evidence Now         │   │

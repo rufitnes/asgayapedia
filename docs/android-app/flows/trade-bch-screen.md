@@ -151,7 +151,7 @@ Volume: ~10 recipients/day = 1 BCH/week
 
 **Access criteria:**
 ```
-✅ Asgaya core team member
+✅ Asgaya contributor
 ✅ Creating new corridor (e.g., EUR→ARS)
 ✅ Onboarded 5+ merchants (future: NFT incentive)
 ✅ Vouched by 2 existing contributors
@@ -189,7 +189,7 @@ Volume: ~10 recipients/day = 1 BCH/week
 │  │ Selling: 0.5 BCH            │   │
 │  │ Price: €1,000/BCH           │   │
 │  │ Payment: Bizum, SEPA        │   │
-│  │ ⭐⭐⭐⭐⭐ (1,247 tx)         │   │
+│  │ ⭐⭐⭐⭐⭐ (1,247 tx)            │   │
 │  │ [ Match Offer ]             │   │
 │  └─────────────────────────────┘   │
 │                                     │
@@ -200,7 +200,7 @@ Volume: ~10 recipients/day = 1 BCH/week
 │  │ Buying: Any amount          │   │
 │  │ Payment: VES cash           │   │
 │  │ Location: Caracas (0.5km)   │   │
-│  │ ⭐⭐⭐⭐⭐ (247 tx)            │   │
+│  │ ⭐⭐⭐⭐⭐ (247 tx)             │   │
 │  │ [ Match Offer ]             │   │
 │  └─────────────────────────────┘   │
 │                                     │
