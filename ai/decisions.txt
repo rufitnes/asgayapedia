@@ -1,0 +1,322 @@
+==============================================
+ASGAYA DESIGN DECISIONS (HOW)
+==============================================
+
+AI-Optimized: How Asgaya implements its architecture
+Version: 2.0 (Covenant Architecture) | Generated: 2026-05-11
+Lines: <400 (optimized for full AI ingestion)
+
+==============================================
+DECISION FRAMEWORK
+==============================================
+
+Each decision documents:
+1. GOAL - What we wanted
+2. CONSTRAINT - Reality we faced
+3. ALTERNATIVES - Options considered
+4. DECISION - What we chose
+5. TRADE-OFFS - Gains/losses
+6. VALIDATION - Phase 0 metrics
+
+Principle: Document arbitrary parameters, validate empirically.
+
+==============================================
+1. TWO-STEP SETTLEMENT (PULL SYSTEM)
+==============================================
+
+GOAL: Eliminate BCH volatility for recipients
+CONSTRAINT: Push system exposes recipients to hours of volatility (BCH ±5% daily)
+
+DECISION: Pull system - recipient triggers execution
+- Step 1: Sender → Bizum → BCH seller posts covenant (0.107 BCH for €100)
+- Step 2: Recipient claims at merchant → Both sign → Executes in 30 seconds
+- Volatility window: 30 seconds (not hours)
+
+TRADE-OFFS:
+✅ 99% volatility reduction | ✅ EUR-denominated promise | ✅ No custody
+❌ Two-step process | ❌ 5-10 min covenant creation time
+
+VALIDATION: Track actual volatility impact (expect <0.5% variance)
+
+==============================================
+2. FEE SPLITTING MODEL (2-WAY)
+==============================================
+
+GOAL: Incentivize participants while maintaining regulatory compliance
+CONSTRAINT: Protocol fee triggers PSD2/MiCA licensing
+
+DECISION: 0.5% Seller + 0.5% Merchant + 0% Protocol
+
+€100 transfer breakdown:
+- Sender pays: €1.00 (1%)
+- BCH seller gets: €100.50 (€0.50 fee + €100 principal)
+- Merchant gets: €0.50 in BCH
+- Protocol gets: €0.00 (regulatory compliance)
+
+BCH SELLER HEDGE: Better than holding in both directions
+- BCH drops 5%: Seller €102.19 vs €101.65 holding (+€0.54)
+- BCH rises 5%: Seller €112.81 vs €112.35 holding (+€0.46)
+- 94% converted to fiat immediately (minimal volatility exposure)
+
+TRADE-OFFS:
+✅ Regulatory compliant | ✅ Both parties incentivized | ✅ Simple
+❌ No protocol revenue | ❌ No dynamic optimization
+
+VALIDATION: Survey if 0.5% attracts sufficient participants (target: >5 active)
+
+==============================================
+3. OVERCOLLATERALIZATION RATE (7%)
+==============================================
+
+GOAL: Absorb BCH volatility without frequent margin calls
+CONSTRAINT: BCH moves ±3-5% daily, ±8-10% in volatile periods
+
+ALTERNATIVES: 5% (too risky) | 10% (capital-inefficient) | 15% (kills returns)
+
+DECISION: 7% fixed overcollateralization
+- €100 transfer requires 0.107 BCH collateral (€107 at creation)
+- Normal volatility (±3-5%): Buffer absorbs, no action
+- Extreme volatility (>7% drop): Margin call triggered
+
+MARGIN CALL: Seller has 60 min to add BCH or let refund trigger
+
+TRADE-OFFS:
+✅ Absorbs 95% of daily volatility | ✅ Capital-efficient
+❌ 5% edge cases trigger refund | ❌ 7% capital lockup
+
+VALIDATION: Track margin call frequency (target: <10%)
+⚠️ CRITICAL: Arbitrary parameter, MUST validate with real data
+
+==============================================
+4. COVENANT TIMEOUT (24 HOURS)
+==============================================
+
+GOAL: Prevent indefinite lockup, give recipients reasonable claim time
+CONSTRAINT: Recipients need time to reach merchant (rural, work schedules)
+
+ALTERNATIVES: 6h (too tight) | 12h (better but tight) | 48h (too long)
+
+DECISION: 24-hour timeout with split refund
+
+HOW IT WORKS:
+- T+0: Covenant created, recipient notified
+- T+18h: Warning notification (6 hours left)
+- T+23h: Final warning (1 hour left)
+- T+24h: Split refund if unclaimed
+
+SPLIT REFUND:
+- Merchant portion (€100.50) → Sender
+- Seller portion (€6.50 - €0.10 fee) → BCH seller
+- Processing fee: €0.10 (covers BCH network cost)
+
+TRADE-OFFS:
+✅ Sufficient time for 95%+ recipients | ✅ Automated refund | ✅ Fair distribution
+❌ Capital locked up to 24h | ❌ Sender uncertainty
+
+VALIDATION: Track claim times (expect: 80% within 6h, 95% within 12h, 99% within 24h)
+
+==============================================
+5. EXCHANGE RATE HANDLING
+==============================================
+
+GOAL: Transparent rates with zero markup
+CONSTRAINT: Need real-time EUR→BCH→VES without manual updates
+
+DECISION: Three-layer architecture
+
+1. DISPLAY RATE (indicative, updates every 30s)
+   - Shows estimated recipient value
+   - Not binding, just for UX
+
+2. PROTOCOL RATE (promise rate, locked at creation)
+   - BCH/EUR: CoinGecko
+   - EUR/VES: DolarAPI (blue dollar)
+   - Recorded in covenant metadata
+
+3. LOCAL RATE (execution rate, calculated at claim)
+   - Same sources as protocol rate
+   - Determines final BCH distribution
+
+EXAMPLE: €100 transfer, BCH rises 2% between creation and execution
+- Creation: €100 = 0.100 BCH (promise rate)
+- Execution: €100 = 0.098 BCH (execution rate)
+- Merchant gets: 0.098 BCH (worth €102)
+- Recipient gets: €100 cash (promised EUR value)
+- Seller residual: 0.009 BCH (from 0.107 collateral)
+
+TRADE-OFFS:
+✅ Transparent | ✅ Zero markup | ✅ EUR protection for recipient
+❌ API dependency | ❌ Merchant exposed to 30s volatility (±0.1% typical)
+
+VALIDATION: Track CoinGecko/DolarAPI uptime (target: >99.9%)
+
+==============================================
+6. DISPUTE RESOLUTION (PHASE 0)
+==============================================
+
+GOAL: Handle conflicts without requiring mediator
+CONSTRAINT: Human override → Regulated intermediary (MiCA violation)
+
+ALTERNATIVES: Mediator (regulatory issue) | DAO (too slow) | Reputation (needs identity)
+
+DECISION: Phase 0 = Autonomous covenant only
+
+HOW IT WORKS:
+- Both sign → Executes
+- Timeout → Split refund (automated)
+- No mediator, no override, no investigation
+
+PHASE 0 PARTICIPANTS:
+- Trusted parties only (sender's family)
+- Small transactions (€50-€200)
+- Known merchants
+
+V1 ENHANCEMENT (Post-Phase 0):
+- Social media transparency (#AsgayaDispute)
+- Parties post evidence on X/Instagram/TikTok
+- Asgaya app aggregates links (like Google Search, no moderation)
+- No covenant override (evidence for reputation only)
+
+TRADE-OFFS:
+✅ Regulatory compliant | ✅ Autonomous | ✅ Simple Phase 0
+❌ No formal arbitration | ❌ Must trust merchant in Phase 0
+
+VALIDATION: Track disputes in Phase 0 (target: 0%)
+
+==============================================
+7. BIZUM INTEGRATION
+==============================================
+
+GOAL: Use Bizum as fiat on-ramp without KYC
+CONSTRAINT: Bizum "Concept" field used for matching. Need identifier that works.
+
+ALTERNATIVES: Semantic IDs (rejected by bank) | Numeric codes (collision risk) | Sender name (unparseable)
+
+DECISION: Recipient phone number in Bizum concept field
+
+HOW IT WORKS:
+1. Sender sends €100 Bizum, concept: "+58 412 1234567"
+2. BCH seller bot parses SMS: "Received €100, concept: +58 412 1234567"
+3. Bot matches phone to pending covenant request
+4. Bot creates covenant with 0.107 BCH
+
+FORMAT: "+[country] [area] [number]" (e.g., "+58 412 1234567")
+
+TRADE-OFFS:
+✅ Reliable parsing | ✅ Unique | ✅ Works in Bizum rules | ✅ Automated
+❌ No semantic meaning | ❌ Phone visible in transaction
+
+VALIDATION: Track parsing success rate (target: 100%)
+
+==============================================
+8. MARGIN CALL RESPONSE (60 MINUTES)
+==============================================
+
+GOAL: Give sellers time to respond without indefinite lockup
+CONSTRAINT: BCH can drop >7% rapidly
+
+ALTERNATIVES: 15 min (too tight) | 30 min (still tight) | 2h (too long)
+
+DECISION: 60-minute response window
+
+HOW IT WORKS:
+1. BCH drops >7% → Seller notified (SMS + app)
+2. Seller chooses: Add BCH (restore 7%) OR Do nothing (→ split refund)
+3. 60 minutes to respond
+
+TRADE-OFFS:
+✅ Realistic response time | ✅ Automated fallback | ✅ Fair distribution
+❌ 1-hour delay | ❌ Sender uncertainty
+
+VALIDATION: Track response rate (target: >80% respond within 60 min)
+
+==============================================
+9. SPLIT REFUND MECHANISM
+==============================================
+
+GOAL: Fair refund when covenant doesn't execute
+CONSTRAINT: Two parties contributed (sender + BCH seller)
+
+DECISION: Split based on contributions
+
+€100 transfer refund:
+- Merchant portion (€100.50) → Sender
+- Seller portion (€6.40) → BCH seller
+- Processing fee (€0.10) → Deducted from seller portion
+
+TRIGGERS:
+1. Timeout (24h expires)
+2. Margin call (seller doesn't respond in 60 min)
+3. Cancellation (within 5-min Bizum window)
+
+TRADE-OFFS:
+✅ Fair distribution | ✅ Automated | ✅ Covers costs
+❌ Sender loses processing fee in some scenarios
+
+VALIDATION: Track refund frequency (target: <10%)
+
+==============================================
+10. UNCLAIMED TRANSACTION EXPIRY
+==============================================
+
+See Section 4 (Covenant Timeout) - 24-hour expiry with split refund.
+
+Proactive notifications: T+0, T+18h, T+23h
+Processing fee: €0.10 compensates BCH seller for capital lockup
+
+==============================================
+KEY DECISIONS SUMMARY
+==============================================
+
+1. Pull system: 30-second volatility window
+2. Fee split: 0.5% seller + 0.5% merchant + 0% protocol
+3. Overcollateralization: 7% (MUST validate Phase 0)
+4. Timeout: 24 hours with split refund
+5. Rates: 3-layer (display, promise, execution)
+6. Disputes: Phase 0 autonomous, V1 social transparency
+7. Bizum: Phone numbers (reliable parsing)
+8. Margin call: 60-minute response window
+9. Split refund: Based on contributions
+10. Processing fee: €0.10 for capital lockup
+
+VALIDATION: Phase 0 trial validates all 12 arbitrary parameters
+with 50-100 transactions over 30 days among trusted parties.
+
+==============================================
+PHASE 0 VALIDATION CHECKLIST (12 PARAMETERS)
+==============================================
+
+1. Fee split (0.5% each) - Attracts participants?
+2. Overcollateralization (7%) - Sufficient buffer?
+3. Timeout (24h) - Right balance?
+4. Bizum window (5 min) - Too tight?
+5. Margin call response (60 min) - Sellers can respond?
+6. Processing fee (€0.10) - Covers costs?
+7. Transaction sizes (€50-€500) - Need limits?
+8. Bounty code (4 digits) - Secure + memorable?
+9. Notification timing - Too many/few?
+10. Geographic variations - Rural vs urban differences?
+11. Market conditions - Volatile vs calm periods?
+12. Corridor parameters - One-size-fits-all works?
+
+For each parameter:
+- Hypothesis (what we believe)
+- Metrics (what we measure)
+- Adjustment criteria (when to change)
+
+Full details: /docs/meta/phase-0-validation-checklist.md
+
+==============================================
+RELATED DOCUMENTS
+==============================================
+
+- core-arch.txt: Why we need these features
+- flows.txt: User experience flows
+- apis.txt: Technical backend specs
+- complete.txt: Full documentation
+
+Main docs: https://github.com/rufitnes/asgayapedia/tree/main/docs
+
+==============================================
+END OF DESIGN DECISIONS
+==============================================

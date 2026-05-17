@@ -1,0 +1,4993 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BCH covenant-based remittance protocol for Spain-Venezuela corridor">
+      
+      
+      
+        <link rel="canonical" href="https://docs.asgaya.org/decisions/fee-splitting-model/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../two-step-settlement-timing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Fee Splitting Model - Asgaya Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/bch-colors.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#decision-fee-splitting-model-two-participant-split" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Asgaya Documentation" class="md-header__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Asgaya Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fee Splitting Model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/" class="md-tabs__link">
+          
+  
+  
+  Android App
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../research/RS053_MUSD/" class="md-tabs__link">
+          
+  
+  
+  Research
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Asgaya Documentation" class="md-nav__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Asgaya Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android App
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android App
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/home-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sender Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sender Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_2" id="__nav_2_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Covenant Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/2-recipient-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/3-amount-entry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amount Entry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/4-payment-method/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_3" id="__nav_2_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Own Wallet Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Own Wallet Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/4a-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/6a-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/7a-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_4" id="__nav_2_2_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buy Seller Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Buy Seller Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Purchase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4.5-select-seller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Select Seller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/5-payment-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Instructions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/6b-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/7b-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_5" id="__nav_2_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Screens
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Error Screens
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/pending-covenant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Covenant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/seller-non-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Non-Delivery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/bizum-timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Timeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/network-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/recipient-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Direct Payment Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/1-scan-merchant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Merchant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/2-enter-amount/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enter Amount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/3-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/4-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/trade-bch-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trade BCH Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/merchant-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backend APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/rate-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/user-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/common-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/covenant-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_7" id="__nav_2_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blockchain Scanner
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blockchain Scanner
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/blockchain-scanner/nft-scanner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NFT Scanner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_8" id="__nav_2_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Bot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Seller Bot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/seller-bot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_9" id="__nav_2_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/pichan-regtest-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pichan Regtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/multi-device-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Device Test Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_10" id="__nav_2_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/archive/ENGINEERING_JOURNEY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Journey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-permissionless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Permissionless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-self-custody/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Self-Custody
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-no-kyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why No KYC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-market-rate-exchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Market Rates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-cheaper-than-legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Cheaper Than Legacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-promote-adoption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Promote Adoption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-bch-usage-incentive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why BCH Usage Incentive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-minimal-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Minimal Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-sellers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-buyers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overcollateralized Bounty Contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/rfid-card-recipients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RFID Card Recipients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/dynamic-reward-modulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic Reward Modulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-goal-architectural-ideal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Goal (Architectural Ideal)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-constraint-economic-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Constraint (Economic Reality)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Decision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fee-distribution-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fee Distribution Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fee Distribution Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#standard-transaction-100-transfer-merchant-holds-bch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standard Transaction (€100 transfer, merchant holds BCH)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-instant-settlement-merchant-sells-bch-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With Instant Settlement (Merchant sells BCH immediately)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipient-choice-bch-claim-vs-cash-pickup-new-2026-05-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-a-recipient-claims-bch-direct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario A: Recipient Claims BCH (Direct)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-b-recipient-chooses-cash-pickup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario B: Recipient Chooses Cash Pickup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fee-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fee Comparison Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-economic-lesson-instant-settlement-costs-your-reward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Economic Lesson: Instant Settlement Costs Your Reward
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bch-seller-sourcing-flexibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BCH Seller Sourcing Flexibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BCH Seller Sourcing Flexibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-use-own-bch-holdings-miners-hodlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A: Use Own BCH Holdings (Miners, HODLers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-buy-from-exchange" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B: Buy from Exchange
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-c-hybrid-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option C: Hybrid Approach
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overcollateralization-economics-separate-from-fee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overcollateralization Economics (Separate from Fee)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bch-buyer-economics-optional-instant-settlement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BCH Buyer Economics (Optional Instant Settlement)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-to-old-escrow-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison to Old Escrow Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-fees-are-collected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Fees Are Collected
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-fees-are-distributed-covenant-maturity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Fees Are Distributed (Covenant Maturity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trade-offs-accepted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs Accepted
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trade-offs Accepted">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lost-three-way-incentive-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lost: Three-Way Incentive Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gained-simplicity-bch-holding-incentive-mica-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gained: Simplicity, BCH Holding Incentive, MiCA Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#economic-impact-on-merchant-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Economic Impact on Merchant Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Edge Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-merchant-holds-bch-no-instant-settlement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 1: Merchant Holds BCH (No Instant Settlement)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2-merchant-wants-instant-settlement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 2: Merchant Wants Instant Settlement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-3-multiple-bch-buyers-compete-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 3: Multiple BCH Buyers Compete (Future)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Future Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v11-dynamic-spread-based-rewards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        V1.1: Dynamic Spread-Based Rewards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v2-merchant-circular-economy-incentives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        V2: Merchant Circular Economy Incentives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Decisions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Concepts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../two-step-settlement-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-Step Settlement Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dispute-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dispute Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../payment-timeout-window/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Timeout Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unclaimed-transaction-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unclaimed Transaction Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bizum-concept-field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Concept Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-exchange-rates-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Exchange Rates Work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../musd-integration-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MUSD Integration Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase-0-progressive-decentralization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Progressive Decentralization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase-0-validation-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Validation Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RS053_MUSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS053 MUSD Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RS054_cashtoken_swaps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS054 CashToken Swaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-goal-architectural-ideal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Goal (Architectural Ideal)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-constraint-economic-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Constraint (Economic Reality)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Decision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fee-distribution-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fee Distribution Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fee Distribution Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#standard-transaction-100-transfer-merchant-holds-bch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standard Transaction (€100 transfer, merchant holds BCH)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-instant-settlement-merchant-sells-bch-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With Instant Settlement (Merchant sells BCH immediately)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipient-choice-bch-claim-vs-cash-pickup-new-2026-05-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-a-recipient-claims-bch-direct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario A: Recipient Claims BCH (Direct)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-b-recipient-chooses-cash-pickup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario B: Recipient Chooses Cash Pickup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fee-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fee Comparison Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-economic-lesson-instant-settlement-costs-your-reward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Economic Lesson: Instant Settlement Costs Your Reward
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bch-seller-sourcing-flexibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BCH Seller Sourcing Flexibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BCH Seller Sourcing Flexibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-use-own-bch-holdings-miners-hodlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A: Use Own BCH Holdings (Miners, HODLers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-buy-from-exchange" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B: Buy from Exchange
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-c-hybrid-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option C: Hybrid Approach
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overcollateralization-economics-separate-from-fee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overcollateralization Economics (Separate from Fee)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bch-buyer-economics-optional-instant-settlement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BCH Buyer Economics (Optional Instant Settlement)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-to-old-escrow-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison to Old Escrow Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-fees-are-collected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Fees Are Collected
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-fees-are-distributed-covenant-maturity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Fees Are Distributed (Covenant Maturity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trade-offs-accepted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs Accepted
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trade-offs Accepted">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lost-three-way-incentive-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lost: Three-Way Incentive Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gained-simplicity-bch-holding-incentive-mica-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gained: Simplicity, BCH Holding Incentive, MiCA Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#economic-impact-on-merchant-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Economic Impact on Merchant Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Edge Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-merchant-holds-bch-no-instant-settlement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 1: Merchant Holds BCH (No Instant Settlement)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2-merchant-wants-instant-settlement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 2: Merchant Wants Instant Settlement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-3-multiple-bch-buyers-compete-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 3: Multiple BCH Buyers Compete (Future)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Future Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v11-dynamic-spread-based-rewards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        V1.1: Dynamic Spread-Based Rewards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v2-merchant-circular-economy-incentives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        V2: Merchant Circular Economy Incentives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Decisions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Concepts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="decision-fee-splitting-model-two-participant-split">Decision: Fee Splitting Model - Two-Participant Split<a class="headerlink" href="#decision-fee-splitting-model-two-participant-split" title="Permanent link">&para;</a></h1>
+<p><strong>Decision Date:</strong> April 2026 (Updated May 2026 for covenant architecture)<br />
+<strong>Status:</strong> Implemented (Chipnet testing)<br />
+<strong>Related Requirement:</strong> <a href="../../core-architecture/why-promote-adoption/">Promote Adoption</a></p>
+<hr />
+<blockquote>
+<p>💡 <strong>TL;DR: How the 1% fee is split</strong></p>
+<p>The 1% total fee is split between TWO participants in the covenant:
+- <strong>BCH Seller:</strong> 0.5% (provides overcollateralized BCH to covenant)
+- <strong>Merchant:</strong> 0.5% (hands cash to recipient, receives BCH)</p>
+<p><strong>Example (€100 transfer):</strong>
+- Total fee: €1.00
+- BCH seller earns: €0.50 (0.5%)
+- Merchant earns: €0.50 (0.5%)
+- <strong>Recipient receives:</strong> €99.00 worth of VES cash</p>
+<p><strong>Optional instant settlement:</strong>
+- Merchant can sell BCH immediately to BCH buyer (separate market)
+- Typical spread: 0.5% (merchant loses entire reward to spread)
+- <strong>Result if selling immediately:</strong> Merchant gets €99.00 fiat (same as no reward!)</p>
+</blockquote>
+<hr />
+<h2 id="the-goal-architectural-ideal">The Goal (Architectural Ideal)<a class="headerlink" href="#the-goal-architectural-ideal" title="Permanent link">&para;</a></h2>
+<p>Create <strong>economic incentives</strong> for all participants to join and grow the Asgaya network <strong>while promoting BCH adoption</strong>.</p>
+<p><strong>Primary participants to incentivize:</strong>
+1. <strong>BCH Sellers:</strong> Post overcollateralized BCH to covenants, enable pull system
+2. <strong>Merchants:</strong> Accept BCH payments, provide VES liquidity to recipients</p>
+<p><strong>Secondary market (optional):</strong>
+3. <strong>BCH Buyers:</strong> Buy BCH from merchants who want immediate fiat settlement</p>
+<p><strong>Goal:</strong> Maximize network growth by rewarding participation <strong>AND incentivizing BCH holding over immediate fiat conversion</strong>.</p>
+<hr />
+<h2 id="the-constraint-economic-reality">The Constraint (Economic Reality)<a class="headerlink" href="#the-constraint-economic-reality" title="Permanent link">&para;</a></h2>
+<p><strong>Total fee budget:</strong> 1% of transfer amount (to beat 6.49% legacy average)</p>
+<p><strong>Fixed participants:</strong> 2 (BCH seller + Merchant)</p>
+<p><strong>Challenge:</strong> Split 1% fee to:
+1. Fairly compensate both participants
+2. Incentivize BCH sellers to provide liquidity (post overcollateralized BCH)
+3. Incentivize merchants to hold BCH (not immediately sell)
+4. Make instant settlement available but economically discouraged
+5. Align with Asgaya's mission: BCH adoption, not just fiat conversion</p>
+<hr />
+<h2 id="the-decision">The Decision<a class="headerlink" href="#the-decision" title="Permanent link">&para;</a></h2>
+<p><strong>Equal two-way split of total 1% fee between covenant participants.</strong></p>
+<p><strong>Fixed Formula:</strong>
+<div class="highlight"><pre><span></span><code>Total fee: 1% of transfer amount
+BCH Seller share: 0.5%
+Merchant share: 0.5%
+Recipient receives: 99% (transfer amount minus fees)
+</code></pre></div></p>
+<p><strong>No variable sourcing costs</strong> (unlike old escrow model):
+- BCH seller posts their own BCH as collateral
+- Overcollateralization surplus is separate from fee (seller keeps if BCH rises)
+- Simple, transparent, no hidden costs</p>
+<hr />
+<h2 id="fee-distribution-examples">Fee Distribution Examples<a class="headerlink" href="#fee-distribution-examples" title="Permanent link">&para;</a></h2>
+<h3 id="standard-transaction-100-transfer-merchant-holds-bch">Standard Transaction (€100 transfer, merchant holds BCH)<a class="headerlink" href="#standard-transaction-100-transfer-merchant-holds-bch" title="Permanent link">&para;</a></h3>
+<p><strong>Sender pays:</strong> €100 via Bizum to BCH seller</p>
+<p><strong>Covenant distribution when mature:</strong>
+<div class="highlight"><pre><span></span><code>Total BCH in covenant: €107 (overcollateralized by seller)
+├─ Merchant receives: €99.50 worth of BCH (€99 principal + €0.50 fee)
+└─ BCH seller receives: €7.50 (€7 overcollateralization surplus + €0.50 fee)
+
+Merchant hands to recipient: €99.00 worth of VES cash
+Merchant keeps: €0.50 (0.5% reward in BCH)
+</code></pre></div></p>
+<p><strong>Net result:</strong>
+- Sender paid: €100.00
+- Recipient got: €99.00 worth of VES
+- Merchant earned: €0.50 in BCH (holds for future use)
+- BCH seller earned: €0.50 + overcollateralization surplus</p>
+<hr />
+<h3 id="with-instant-settlement-merchant-sells-bch-immediately">With Instant Settlement (Merchant sells BCH immediately)<a class="headerlink" href="#with-instant-settlement-merchant-sells-bch-immediately" title="Permanent link">&para;</a></h3>
+<p><strong>Merchant chooses instant settlement</strong> (wants fiat, not BCH):</p>
+<p><strong>Step 1: Covenant matures (same as above)</strong>
+<div class="highlight"><pre><span></span><code>Merchant receives: €99.50 worth of BCH from covenant
+</code></pre></div></p>
+<p><strong>Step 2: Merchant sells to BCH buyer (separate market)</strong>
+<div class="highlight"><pre><span></span><code>Merchant posts on bulletin board: &quot;Selling €99.50 BCH now&quot;
+BCH buyer offers: €99.00 fiat (0.5% spread)
+Merchant accepts: Sends BCH, receives €99.00 fiat
+</code></pre></div></p>
+<p><strong>Net result:</strong>
+- Merchant received from covenant: €99.50 BCH
+- Merchant sold for: €99.00 fiat
+- <strong>Merchant's reward consumed by spread:</strong> €0.50 lost!
+- Merchant's final position: €99.00 fiat (same as if no reward existed)</p>
+<p><strong>BCH buyer earns:</strong>
+- Paid merchant: €99.00 fiat
+- Received: €99.50 worth of BCH
+- Profit: €0.50 (the 0.5% spread = merchant's reward transferred to buyer)</p>
+<hr />
+<h3 id="recipient-choice-bch-claim-vs-cash-pickup-new-2026-05-14">Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)<a class="headerlink" href="#recipient-choice-bch-claim-vs-cash-pickup-new-2026-05-14" title="Permanent link">&para;</a></h3>
+<p><strong>Asgaya = Bitcoin wallet where recipient chooses claim method.</strong></p>
+<p><strong>Sender always pays 0.5%</strong> (to BCH Seller for sourcing BCH via covenant)</p>
+<p><strong>Recipient chooses:</strong>
+- 🪙 <strong>Claim as BCH (FREE):</strong> No merchant involved, instant co-sign
+- 💵 <strong>Cash Pickup (0.5% fee):</strong> Find merchant, hand cash, merchant earns 0.5%</p>
+<h4 id="scenario-a-recipient-claims-bch-direct">Scenario A: Recipient Claims BCH (Direct)<a class="headerlink" href="#scenario-a-recipient-claims-bch-direct" title="Permanent link">&para;</a></h4>
+<p><strong>Sender pays:</strong> €10.00 to BCH Seller (incl. 0.5% fee)</p>
+<p><strong>Covenant distribution when mature:</strong>
+<div class="highlight"><pre><span></span><code>BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus
+Recipient receives: €9.90 worth of BCH (0.0198 BCH)
+Merchant receives: €0 (no merchant involved)
+</code></pre></div></p>
+<p><strong>Total system fee:</strong> 0.5% (sender only)</p>
+<p><strong>Net result:</strong>
+- Sender paid: €10.00
+- BCH Seller earned: €0.50 (0.5%)
+- Recipient got: €9.90 worth of BCH (0.0198 BCH)
+- Merchant earned: €0 (not involved)
+- <strong>Total fees: 0.5%</strong></p>
+<h4 id="scenario-b-recipient-chooses-cash-pickup">Scenario B: Recipient Chooses Cash Pickup<a class="headerlink" href="#scenario-b-recipient-chooses-cash-pickup" title="Permanent link">&para;</a></h4>
+<p><strong>Sender pays:</strong> €10.00 to BCH Seller (incl. 0.5% fee)</p>
+<p><strong>Covenant distribution when mature:</strong>
+<div class="highlight"><pre><span></span><code>BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus  
+Merchant receives: €9.90 worth of BCH
+Merchant hands: €9.85 cash to recipient
+Merchant keeps: €0.05 in BCH (0.5% of €9.90)
+</code></pre></div></p>
+<p><strong>Total system fee:</strong> 1% (sender 0.5% + recipient pays 0.5% for merchant convenience)</p>
+<p><strong>Net result:</strong>
+- Sender paid: €10.00
+- BCH Seller earned: €0.50 (0.5%)
+- Merchant earned: €0.05 (0.5% of merchant portion)
+- Recipient got: €9.85 cash
+- <strong>Total fees: 1%</strong> (but sender only sees 0.5%, recipient chooses to pay extra 0.5%)</p>
+<h4 id="fee-comparison-table">Fee Comparison Table<a class="headerlink" href="#fee-comparison-table" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Claim Method</th>
+<th>Sender Pays</th>
+<th>Recipient Pays</th>
+<th>BCH Seller Earns</th>
+<th>Merchant Earns</th>
+<th>Total System Fee</th>
+<th>Recipient Gets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BCH Claim (Direct)</strong></td>
+<td>0.5%</td>
+<td>0%</td>
+<td>0.5%</td>
+<td>0%</td>
+<td><strong>0.5%</strong></td>
+<td>0.0198 BCH (~€9.90)</td>
+</tr>
+<tr>
+<td><strong>Cash Pickup</strong></td>
+<td>0.5%</td>
+<td>0.5%</td>
+<td>0.5%</td>
+<td>0.5%</td>
+<td><strong>1%</strong></td>
+<td>€9.85 cash</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key insights:</strong>
+- ✅ Sender experience <strong>always 0.5%</strong> (consistent, predictable)
+- ✅ Recipient controls method <strong>and their own fees</strong>
+- ✅ BCH claim <strong>nudged</strong> (free vs 0.5% cost)
+- ✅ Merchant only earns <strong>if recipient chooses cash</strong> (aligned incentives)
+- ✅ Bitcoin wallet framing (not remittance service)</p>
+<p><strong>Why this structure works:</strong>
+1. <strong>Simpler sender UX:</strong> One flow, always 0.5%, no choice paralysis
+2. <strong>Flexible recipient:</strong> Free BCH or pay for cash convenience
+3. <strong>Natural BCH adoption:</strong> Free claim incentivizes trying BCH
+4. <strong>Merchant aligned:</strong> Only involved if recipient wants cash
+5. <strong>Regulatory:</strong> "Bitcoin wallet" not "remittance service"</p>
+<hr />
+<h2 id="the-economic-lesson-instant-settlement-costs-your-reward">The Economic Lesson: Instant Settlement Costs Your Reward<a class="headerlink" href="#the-economic-lesson-instant-settlement-costs-your-reward" title="Permanent link">&para;</a></h2>
+<p><strong>This is intentional design.</strong></p>
+<p><strong>Holding BCH:</strong>
+<div class="highlight"><pre><span></span><code>Merchant gets: €99.50 worth of BCH
+Merchant keeps: €0.50 reward ✅
+Can use BCH for: Restocking inventory, paying suppliers, holding as savings
+</code></pre></div></p>
+<p><strong>Selling BCH immediately:</strong>
+<div class="highlight"><pre><span></span><code>Merchant gets: €99.00 fiat (after 0.5% spread)
+Merchant keeps: €0 reward ❌
+Why bother? Same as having no reward at all!
+</code></pre></div></p>
+<p><strong>Message to merchants:</strong></p>
+<blockquote>
+<p>"Your 0.5% reward is REAL if you hold BCH. But if you immediately convert to fiat, you give up that reward to the BCH buyer. Instant settlement is available, but it costs you."</p>
+</blockquote>
+<p><strong>This aligns incentives with Asgaya's mission:</strong>
+- ✅ BCH adoption (merchants hold and use BCH)
+- ✅ Circular economy (merchants pay suppliers with BCH)
+- ✅ Network effects (more BCH in circulation)
+- ⚠️ Instant settlement discouraged but available (merchant freedom preserved)</p>
+<hr />
+<h2 id="bch-seller-sourcing-flexibility">BCH Seller Sourcing Flexibility<a class="headerlink" href="#bch-seller-sourcing-flexibility" title="Permanent link">&para;</a></h2>
+<p><strong>BCH sellers can source their BCH inventory using ANY method:</strong></p>
+<h3 id="option-a-use-own-bch-holdings-miners-hodlers">Option A: Use Own BCH Holdings (Miners, HODLers)<a class="headerlink" href="#option-a-use-own-bch-holdings-miners-hodlers" title="Permanent link">&para;</a></h3>
+<p><strong>Best case for BCH sellers:</strong>
+- Already own BCH (miners from mining rewards, HODLers from past purchases)
+- <strong>Zero acquisition cost</strong>
+- Post overcollateralized BCH to covenant (e.g., €107 for €100 bounty)
+- Earn 0.5% fee (€0.50) + overcollateralization surplus if BCH rises</p>
+<p><strong>Example: BCH miner processes 100 bounties/month:</strong>
+- Fees: 100 × €0.50 = €50/month
+- Overcollateralization surplus: Variable (depends on BCH price movement)
+- <strong>No exchange fees</strong> (using mined BCH)
+- <strong>Total revenue:</strong> Mining rewards + seller fees + surplus</p>
+<p><strong>Why miners are ideal BCH sellers:</strong> See <a href="../../concepts/bch-sellers/">BCH Sellers</a></p>
+<hr />
+<h3 id="option-b-buy-from-exchange">Option B: Buy from Exchange<a class="headerlink" href="#option-b-buy-from-exchange" title="Permanent link">&para;</a></h3>
+<p><strong>For traders or those without BCH inventory:</strong>
+- Buy BCH on exchange (Kraken 0.26%, Binance 0.10%, etc.)
+- Post to covenant as overcollateralized bounty
+- Earn 0.5% fee (€0.50) + overcollateralization surplus</p>
+<p><strong>Net profit calculation:</strong>
+<div class="highlight"><pre><span></span><code>Revenue: €0.50 (seller fee) + surplus (if BCH rises)
+Costs: Exchange fee (e.g., €0.26 on €107 purchase)
+Net: €0.24 + surplus
+</code></pre></div></p>
+<p><strong>Lower exchange fees = higher profit:</strong>
+- Kraken (0.26%): Net €0.24 + surplus
+- Better exchange (0.10%): Net €0.40 + surplus
+- P2P market (0.20%): Net €0.30 + surplus</p>
+<p><strong>Competitive advantage:</strong> BCH sellers with lower acquisition costs earn more.</p>
+<hr />
+<h3 id="option-c-hybrid-approach">Option C: Hybrid Approach<a class="headerlink" href="#option-c-hybrid-approach" title="Permanent link">&para;</a></h3>
+<p><strong>Use own BCH when available, buy when depleted:</strong>
+- Post overcollateralized BCH from holdings first (0% cost)
+- Buy from exchange when holdings run low (0.10-0.26% cost)
+- Mix strategies based on volume and capital availability</p>
+<hr />
+<h2 id="overcollateralization-economics-separate-from-fee">Overcollateralization Economics (Separate from Fee)<a class="headerlink" href="#overcollateralization-economics-separate-from-fee" title="Permanent link">&para;</a></h2>
+<p><strong>BCH seller's additional revenue source:</strong></p>
+<p><strong>When BCH price rises during 24h wait:</strong>
+<div class="highlight"><pre><span></span><code>Seller posted: €107 worth of BCH (at lock time)
+24 hours later: BCH rises 5%
+Covenant holds: €107 × 1.05 = €112.35 worth
+Merchant takes: €99.50 worth (at maturity)
+Seller gets back: €112.35 - €99.50 = €12.85
+Seller&#39;s total: €0.50 fee + €12.85 surplus = €13.35 on €100 bounty!
+</code></pre></div></p>
+<p><strong>When BCH price drops:</strong>
+<div class="highlight"><pre><span></span><code>Seller posted: €107 worth of BCH
+24 hours later: BCH drops 3%
+Covenant holds: €107 × 0.97 = €103.79 worth
+Merchant takes: €99.50 worth
+Seller gets back: €103.79 - €99.50 = €4.29
+Seller&#39;s total: €0.50 fee + €4.29 surplus = €4.79 (still profitable)
+</code></pre></div></p>
+<p><strong>When BCH drops &gt;7% (margin call):</strong>
+<div class="highlight"><pre><span></span><code>Seller must add more BCH or bounty refunds
+Opportunity cost + reputation penalty
+</code></pre></div></p>
+<p><strong>Overcollateralization is:</strong>
+- ✅ Separate from fee (volatility buffer, not compensation)
+- ✅ Profit opportunity (if BCH rises)
+- ⚠️ Risk exposure (if BCH drops &gt;7%)</p>
+<hr />
+<h2 id="bch-buyer-economics-optional-instant-settlement">BCH Buyer Economics (Optional Instant Settlement)<a class="headerlink" href="#bch-buyer-economics-optional-instant-settlement" title="Permanent link">&para;</a></h2>
+<p><strong>BCH buyers participate in a separate market</strong> (not part of covenant):</p>
+<p><strong>Their role:</strong>
+- Monitor bulletin board for merchants wanting instant settlement
+- Compete to offer best spread (lowest fee)
+- Buy BCH from merchants, provide fiat immediately</p>
+<p><strong>Revenue model:</strong>
+<div class="highlight"><pre><span></span><code>Buy from merchant: €99.50 worth of BCH for €99.00 fiat (0.5% spread)
+Sell later or hold: €99.50 worth of BCH
+Profit: €0.50 (the spread)
+</code></pre></div></p>
+<p><strong>In reality, spreads might be competitive:</strong>
+- BCH Buyer A offers: 0.5% spread (€99.00 fiat)
+- BCH Buyer B offers: 0.3% spread (€99.20 fiat) ← Merchant picks this!
+- BCH Buyer C offers: 0.2% spread (€99.30 fiat) ← Even better!</p>
+<p><strong>But in Asgaya examples, we use 0.5% spread</strong> to show:</p>
+<blockquote>
+<p>"If you sell immediately, you lose your entire reward. Hold BCH to keep your reward!"</p>
+</blockquote>
+<p><strong>Why BCH buyers participate:</strong>
+- Accumulate BCH at slight discount (0.2-0.5% below market)
+- Provide valuable service (fiat liquidity for merchants who need it)
+- Profit from spread</p>
+<hr />
+<h2 id="comparison-to-old-escrow-model">Comparison to Old Escrow Model<a class="headerlink" href="#comparison-to-old-escrow-model" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Old (Escrow)</th>
+<th>New (Covenant)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Participants</strong></td>
+<td>3 (Escrow, Merchant, LP)</td>
+<td>2 (BCH Seller, Merchant)</td>
+</tr>
+<tr>
+<td><strong>Fee split</strong></td>
+<td>Variable (depends on sourcing cost)</td>
+<td>Fixed (0.5% each)</td>
+</tr>
+<tr>
+<td><strong>Escrow/Seller earns</strong></td>
+<td>€0.247-€0.333 (depends on BCH source)</td>
+<td>€0.50 + surplus</td>
+</tr>
+<tr>
+<td><strong>Merchant earns</strong></td>
+<td>€0.247-€0.333</td>
+<td>€0.50 (if holds BCH)</td>
+</tr>
+<tr>
+<td><strong>LP/BCH Buyer earns</strong></td>
+<td>€0.247-€0.333 (coordinated by escrow)</td>
+<td>€0-0.50 (competitive market)</td>
+</tr>
+<tr>
+<td><strong>Sourcing cost</strong></td>
+<td>Deducted from fee pool</td>
+<td>Separate (seller's own capital)</td>
+</tr>
+<tr>
+<td><strong>Instant settlement</strong></td>
+<td>LP sends fiat (coordinated)</td>
+<td>BCH buyer competes (market)</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Medium (3-way split formula)</td>
+<td>Low (fixed 0.5% each)</td>
+</tr>
+<tr>
+<td><strong>Transparency</strong></td>
+<td>Variable (depends on escrow method)</td>
+<td>Fixed (always 0.5%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result:</strong> Simpler, more transparent, higher rewards for covenant participants.</p>
+<hr />
+<h2 id="implementation-details">Implementation Details<a class="headerlink" href="#implementation-details" title="Permanent link">&para;</a></h2>
+<h3 id="how-fees-are-collected">How Fees Are Collected<a class="headerlink" href="#how-fees-are-collected" title="Permanent link">&para;</a></h3>
+<p><strong>Sender pays BCH seller directly:</strong>
+- Sender transfers €100 via Bizum to BCH seller
+- Fee included in covenant structure (seller posts €107, merchant gets €99.50, recipient gets €99)
+- No upfront "€101" payment (unlike old escrow model)</p>
+<h3 id="how-fees-are-distributed-covenant-maturity">How Fees Are Distributed (Covenant Maturity)<a class="headerlink" href="#how-fees-are-distributed-covenant-maturity" title="Permanent link">&para;</a></h3>
+<p><strong>When both conditions met (seller paid + merchant confirmed):</strong></p>
+<p><strong>Covenant executes automatically:</strong>
+<div class="highlight"><pre><span></span><code>Input: €107 worth of BCH (posted by seller)
+
+Outputs:
+├─ Merchant address: €99.50 worth of BCH (€99 principal + €0.50 fee)
+└─ Seller address: €7.50 worth of BCH (€7 overcollateralization + €0.50 fee)
+
+On-chain, immutable, deterministic
+</code></pre></div></p>
+<p><strong>No entity distributes fees</strong> (covenant code executes automatically).</p>
+<hr />
+<h3 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h3>
+<p><strong>Transparency mechanism:</strong>
+- Every covenant shows parameters on-chain:
+  <div class="highlight"><pre><span></span><code>Transfer amount:  €100.00
+BCH seller fee:   €0.50 (0.5%)
+Merchant fee:     €0.50 (0.5%)
+Recipient gets:   €99.00 worth of VES
+Total cost:       €1.00 (1%)
+Overcollateralization: €7.00 (7%)
+</code></pre></div>
+- Participants can verify on blockchain (immutable)
+- Public covenant code (open-source, auditable)
+- <strong>No hidden charges</strong> (code enforces fixed 0.5% split)</p>
+<hr />
+<h2 id="trade-offs-accepted">Trade-offs Accepted<a class="headerlink" href="#trade-offs-accepted" title="Permanent link">&para;</a></h2>
+<h3 id="lost-three-way-incentive-distribution">Lost: Three-Way Incentive Distribution<a class="headerlink" href="#lost-three-way-incentive-distribution" title="Permanent link">&para;</a></h3>
+<ul>
+<li>No longer reward liquidity providers directly (LP → BCH buyer)</li>
+<li>BCH buyers earn from market spread (not covenant fee)</li>
+<li>Fewer participants in covenant (2 instead of 3)</li>
+</ul>
+<h3 id="gained-simplicity-bch-holding-incentive-mica-compliance">Gained: Simplicity, BCH Holding Incentive, MiCA Compliance<a class="headerlink" href="#gained-simplicity-bch-holding-incentive-mica-compliance" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Dead simple:</strong> Always 0.5% each (no variable sourcing cost formula)</li>
+<li><strong>Transparent:</strong> Fixed split (no escrow operational decisions)</li>
+<li><strong>BCH adoption focus:</strong> Instant settlement costs your reward (discouraged)</li>
+<li><strong>MiCA compliant:</strong> No entity custody, no intermediation</li>
+<li><strong>Competitive market:</strong> BCH buyers compete on spread (better for merchants over time)</li>
+</ul>
+<h3 id="economic-impact-on-merchant-behavior">Economic Impact on Merchant Behavior<a class="headerlink" href="#economic-impact-on-merchant-behavior" title="Permanent link">&para;</a></h3>
+<p><strong>Desired outcome:</strong> Merchants hold BCH
+- Merchant keeps full €0.50 reward
+- Can use BCH to pay suppliers (circular economy)
+- Benefits from BCH price appreciation</p>
+<p><strong>Discouraged but available:</strong> Instant settlement
+- Merchant loses €0.50 reward to spread
+- Gets €99.00 fiat (same as no reward)
+- <strong>Why use Asgaya if you immediately cash out?</strong> (Defeats the purpose!)</p>
+<p><strong>This is honest framing:</strong>
+- We don't block instant settlement (merchant freedom)
+- We don't hide the cost (0.5% spread examples)
+- We show the math (you lose your reward)
+- <strong>Merchants make informed choice</strong></p>
+<hr />
+<h2 id="edge-cases">Edge Cases<a class="headerlink" href="#edge-cases" title="Permanent link">&para;</a></h2>
+<h3 id="case-1-merchant-holds-bch-no-instant-settlement">Case 1: Merchant Holds BCH (No Instant Settlement)<a class="headerlink" href="#case-1-merchant-holds-bch-no-instant-settlement" title="Permanent link">&para;</a></h3>
+<p><strong>This is the TARGET behavior.</strong></p>
+<p><strong>Covenant flow:</strong>
+<div class="highlight"><pre><span></span><code>Merchant receives: €99.50 BCH from covenant
+Merchant keeps: €99.50 BCH
+Uses BCH for: Inventory restocking, supplier payments, savings
+
+Merchant&#39;s profit:
+├─ €0.50 fee (0.5% reward)
+├─ BCH exposure (potential appreciation)
+└─ Participation in BCH economy
+</code></pre></div></p>
+<p><strong>Fee split (2 participants):</strong>
+- BCH seller: €0.50
+- Merchant: €0.50
+- <strong>No BCH buyer involved</strong> (no instant settlement)</p>
+<hr />
+<h3 id="case-2-merchant-wants-instant-settlement">Case 2: Merchant Wants Instant Settlement<a class="headerlink" href="#case-2-merchant-wants-instant-settlement" title="Permanent link">&para;</a></h3>
+<p><strong>Merchant prefers fiat over BCH.</strong></p>
+<p><strong>Covenant flow (same as Case 1):</strong>
+<div class="highlight"><pre><span></span><code>Merchant receives: €99.50 BCH from covenant
+</code></pre></div></p>
+<p><strong>Separate market transaction:</strong>
+<div class="highlight"><pre><span></span><code>Merchant posts: &quot;Selling €99.50 BCH now&quot;
+BCH buyer responds: &quot;€99.00 fiat&quot; (0.5% spread)
+Merchant accepts: Sends BCH, receives fiat
+</code></pre></div></p>
+<p><strong>Merchant's final position:</strong>
+- Received from covenant: €99.50 BCH
+- Sold for: €99.00 fiat
+- <strong>Net profit: €0</strong> (reward lost to spread)</p>
+<p><strong>BCH buyer's profit:</strong>
+- Bought: €99.50 BCH for €99.00 fiat
+- Spread: €0.50 (0.5%)</p>
+<p><strong>Fee split (effectively 3 participants):</strong>
+- BCH seller: €0.50 (from covenant)
+- Merchant: €0 (lost to spread)
+- BCH buyer: €0.50 (earned from spread, not covenant)</p>
+<p><strong>This shows:</strong> Instant settlement transfers merchant's reward to BCH buyer.</p>
+<hr />
+<h3 id="case-3-multiple-bch-buyers-compete-future">Case 3: Multiple BCH Buyers Compete (Future)<a class="headerlink" href="#case-3-multiple-bch-buyers-compete-future" title="Permanent link">&para;</a></h3>
+<p><strong>Scenario:</strong> 5 BCH buyers compete for merchant's BCH.</p>
+<p><strong>Competitive offers:</strong>
+<div class="highlight"><pre><span></span><code>BCH Buyer A: €99.00 fiat (0.5% spread)
+BCH Buyer B: €99.20 fiat (0.3% spread)
+BCH Buyer C: €99.30 fiat (0.2% spread) ← Merchant picks this!
+BCH Buyer D: €99.10 fiat (0.4% spread)
+BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
+</code></pre></div></p>
+<p><strong>Result:</strong> Competition drives spreads down
+- Merchants get better prices (closer to €99.50)
+- BCH buyers compete on efficiency
+- <strong>Market-based pricing</strong> (better than single LP monopoly)</p>
+<p><strong>In our docs, we still use 0.5% spread examples</strong> to emphasize:</p>
+<blockquote>
+<p>"Even in the best case (competitive market), you lose part of your reward. Hold BCH to keep it all!"</p>
+</blockquote>
+<hr />
+<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h2>
+<p><strong>How we verify this decision:</strong>
+- ⏳ <strong>Pending:</strong> Chipnet testing (May 2026)
+  - Deploy covenant with 0.5% fee split
+  - Test overcollateralization surplus calculation
+  - Verify merchant receives correct BCH amount
+- ⏳ <strong>Pending:</strong> Phase 0 mainnet (June 2026)
+  - Real transfers with 1-2 trusted merchants
+  - Measure merchant holding vs. selling behavior
+  - Track BCH buyer spread competition</p>
+<p><strong>Metrics to track:</strong>
+- Merchant holding rate (target: &gt;70% hold BCH, &lt;30% instant settlement)
+- BCH buyer spread average (target: 0.2-0.5%)
+- BCH seller profitability (target: Positive after fees + surplus - margin calls)
+- Recipient satisfaction (target: 99%+ get expected VES amount)</p>
+<hr />
+<h2 id="future-considerations">Future Considerations<a class="headerlink" href="#future-considerations" title="Permanent link">&para;</a></h2>
+<h3 id="v11-dynamic-spread-based-rewards">V1.1: Dynamic Spread-Based Rewards<a class="headerlink" href="#v11-dynamic-spread-based-rewards" title="Permanent link">&para;</a></h3>
+<p><strong>Concept:</strong> Adjust merchant reward based on holding behavior.</p>
+<p><strong>Example:</strong>
+- Merchants who hold BCH for &gt;30 days: 0.6% reward
+- Merchants who hold &lt;7 days: 0.4% reward
+- Merchants who sell immediately: 0.3% reward (discourage further)</p>
+<p><strong>Why not now:</strong>
+- Need baseline data (what's typical holding period?)
+- V1 establishes behavior patterns
+- V1.1 optimizes based on real usage
+- Covenant logic becomes more complex (requires time-lock logic)</p>
+<hr />
+<h3 id="v2-merchant-circular-economy-incentives">V2: Merchant Circular Economy Incentives<a class="headerlink" href="#v2-merchant-circular-economy-incentives" title="Permanent link">&para;</a></h3>
+<p><strong>Concept:</strong> Bonus rewards for merchants who spend BCH (not just hold).</p>
+<p><strong>Example:</strong>
+- Merchant receives €99.50 BCH from covenant
+- Merchant uses €50 BCH to pay supplier (also on Asgaya)
+- Merchant earns <strong>bonus 0.1%</strong> for BCH circulation
+- <strong>Total reward:</strong> €0.50 base + €0.05 bonus = €0.55</p>
+<p><strong>Why not now:</strong>
+- Requires tracking BCH flow between Asgaya participants
+- Complex covenant logic or off-chain verification
+- V1 focuses on holding (simpler)
+- V2 focuses on circulation (stronger network effects)</p>
+<hr />
+<h2 id="related-decisions">Related Decisions<a class="headerlink" href="#related-decisions" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../two-step-settlement-timing/">Two-Step Settlement</a> — Why covenant-based pull system works</li>
+<li><a href="../dispute-resolution/">Dispute Resolution</a> — How conflicts resolved without central arbiter</li>
+<li><a href="../../core-architecture/why-promote-adoption/">Promote Adoption</a> — Why BCH holding matters more than fiat conversion</li>
+</ul>
+<hr />
+<h2 id="related-concepts">Related Concepts<a class="headerlink" href="#related-concepts" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../concepts/bch-sellers/">BCH Sellers</a> — Who provides liquidity and why (miners especially)</li>
+<li><a href="../../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> — Technical covenant implementation</li>
+<li><a href="../../concepts/pull-system/">Pull System</a> — Why recipient-triggered execution is critical</li>
+<li><a href="../../concepts/dynamic-reward-modulation/">Dynamic Reward Modulation</a> — Future fee optimization</li>
+</ul>
+<hr />
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Architecture:</strong> <code>/docs/core-architecture/why-promote-adoption.md</code></li>
+<li><strong>Implementation:</strong> <code>/docs/android-app/flows/</code> (all flows show 0.5% split)</li>
+<li><strong>Concepts:</strong> <code>/docs/concepts/bch-sellers.md</code></li>
+</ul>
+<hr />
+<p><strong>Decision made:</strong> April 2026<br />
+<strong>Updated for covenant architecture:</strong> May 10, 2026<br />
+<strong>Validated:</strong> Beta user feedback positive (old model), Chipnet testing pending (covenant model)<br />
+<strong>Status:</strong> Active design, undergoing implementation pivot from escrow to covenant</p>
+        <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
+            <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
+        </div>
+        <script>
+        async function copyMarkdownToClipboard() {
+            try {
+                const currentPath = window.location.pathname;
+                const mdPath = currentPath.endsWith('/') ? currentPath + 'index.md' : currentPath.replace(/\.html$/, '.md');
+
+                const response = await fetch(mdPath);
+                if (response.ok) {
+                    const markdown = await response.text();
+                    await navigator.clipboard.writeText(markdown);
+                    // Show feedback
+                    const button = document.querySelector('#llms-copy-button button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007acc';
+                    }, 2000);
+                } else {
+                    throw new Error('Markdown file not found');
+                }
+            } catch (err) {
+                console.error('Failed to copy markdown:', err);
+                alert('Failed to copy markdown content');
+            }
+        }
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.breadcrumbs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

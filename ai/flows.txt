@@ -1,0 +1,337 @@
+==============================================
+ASGAYA USER FLOWS
+==============================================
+
+AI-Optimized: Step-by-step user experience flows
+Version: 2.0 (Covenant Architecture) | Generated: 2026-05-12
+Lines: <400 (optimized for full AI ingestion)
+
+==============================================
+OVERVIEW
+==============================================
+
+Four participant flows:
+1. SENDER - Creates covenant, funds via Bizum (5-10 min)
+2. RECIPIENT - Claims at merchant, receives cash (2 min active)
+3. MERCHANT - Facilitates payout, earns 0.5% BCH (3 min)
+4. BCH SELLER - Posts collateral, automated bot (0 min manual)
+
+Typical end-to-end: 10 min - 24h (recipient chooses timing)
+Covenant execution: 30 seconds (at claim)
+
+==============================================
+1. SENDER FLOW
+==============================================
+
+GOAL: Send €100 to Venezuelan recipient
+DURATION: 5-10 minutes | STEPS: 5
+
+---
+
+STEP 1: CREATE REQUEST
+Input: Recipient phone (+58 412 1234567), Amount (€100), Destination (Venezuela)
+Display: Rate (€1 = 42.5 VES), Total cost (€101), Breakdown (€0.50 seller + €0.50 merchant)
+Action: "Create Covenant" → Generate 4-digit code: 7392
+
+---
+
+STEP 2: WAIT FOR BCH SELLER
+Backend: BCH seller bot accepts, calculates collateral (0.107 BCH for €107)
+Notification: "Pay €101 via Bizum to +34 600 123 456, concept: +58 412 1234567"
+
+---
+
+STEP 3: PAY VIA BIZUM
+Instructions: Send €101 Bizum, include "+58 412 1234567" in concept field
+Timeout: 5 minutes (or request cancelled)
+
+---
+
+STEP 4: COVENANT CREATED
+Backend: BCH seller receives Bizum, posts 0.107 BCH to covenant
+Display: "Covenant created! Code: 7392, Active for 24h"
+Notifications: Recipient SMS + Sender confirmation
+
+---
+
+STEP 5: TRACK STATUS
+Display: Bounty code, time remaining, merchant location
+Updates: T+18h (6h warning), T+23h (1h warning), T+24h (timeout/refund)
+Outcomes: ✅ Claimed | ⏱️ Timeout (refund) | ⚠️ Margin call
+
+==============================================
+2. RECIPIENT FLOW
+==============================================
+
+GOAL: Receive €100 cash equivalent (4,250 VES)
+DURATION: 30 seconds - 24 hours | STEPS: 4
+
+---
+
+STEP 1: RECEIVE SMS
+Content: "€100 ready at [Merchant]. Code: 7392. Claim in 24h."
+Action: Note code, plan merchant visit
+
+---
+
+STEP 2: AT MERCHANT
+Recipient: "Code 7392"
+Merchant: Opens app, enters 7392, shows details
+Merchant asks: "Phone +58 412 1234567?" → Recipient confirms
+
+---
+
+STEP 3: COVENANT EXECUTES (30 SECONDS)
+Backend: Merchant + Recipient sign covenant → Executes on-chain
+Merchant receives: 0.098 BCH (~€102)
+Display: "Payment received!"
+
+---
+
+STEP 4: RECEIVE CASH
+Merchant hands: 4,250 VES
+Recipient: (Optional) Signs receipt, leaves
+SMS: "✅ Completed! You received 4,250 VES"
+
+ERRORS:
+- Wrong code → "Not found"
+- Expired → "Refunded to sender"
+- Already claimed → "Fraud detected"
+
+==============================================
+3. MERCHANT FLOW
+==============================================
+
+GOAL: Facilitate payout, earn 0.5% BCH fee
+DURATION: 2-5 minutes | STEPS: 4
+
+---
+
+DASHBOARD:
+Active covenants in area:
+- #7392: €100 → 4,250 VES (22h left) - Fee: 21.25 VES (0.5%)
+- #8451: €150 → 6,375 VES (18h left) - Fee: 31.88 VES (0.5%)
+
+---
+
+STEP 1: RECIPIENT ARRIVES
+Action: "Claim Bounty" → Enter code 7392
+
+---
+
+STEP 2: VERIFY
+Display: Recipient phone, Amount (4,250 VES), Merchant receives (0.098 BCH)
+Verify: Ask for phone/ID confirmation
+Action: "Confirm Payout" (or "Cancel" if fraud)
+
+---
+
+STEP 3: SIGN COVENANT
+Backend: Generate signatures, execute covenant (30 seconds)
+Display: "Payment received! 0.098 BCH (~€102)"
+
+---
+
+STEP 4: HAND CASH
+Action: Count 4,250 VES, hand to recipient
+App: "Cash handed" (final confirmation)
+Complete: Transaction logged, BCH received
+
+MERCHANT STATS:
+- Today: 12 covenants, 0.58 BCH earned (~€600)
+- Average: 3 min/transaction, 96% success rate
+
+==============================================
+4. BCH SELLER FLOW (AUTOMATED BOT)
+==============================================
+
+GOAL: Post collateral, earn 0.5% + hedge
+DURATION: Automated | MANUAL: Margin calls only
+
+---
+
+BOT DASHBOARD:
+- Inventory: 2.5 BCH available
+- Active: 8 covenants (0.856 BCH locked)
+- Today: €4.50 fees + hedge gains
+
+---
+
+STEP 1: NEW REQUEST (AUTOMATIC)
+Receive: €100 covenant request, +58 412 1234567
+Check: Inventory > 0.107 BCH? Yes → Accept
+Wait: Sender Bizum payment (5 min timeout)
+
+---
+
+STEP 2: RECEIVE BIZUM (AUTOMATIC)
+SMS: "Received €101, concept: +58 412 1234567"
+Parse: Match phone to request
+Action: Post 0.107 BCH to covenant, activate
+
+---
+
+STEP 3: MONITOR (AUTOMATIC)
+Track: BCH price every 30s
+Alert: If BCH drops >7% → Margin call
+Normal: Wait for claim or timeout (24h)
+
+---
+
+STEP 4: MARGIN CALL (MANUAL, 5% cases)
+SMS: "⚠️ Margin call! #7392, BCH -8%, respond in 60 min"
+Options:
+  A) Add 0.010 BCH (restore buffer) → Covenant continues
+  B) Do nothing → Split refund (€100.50 → sender, €6.40 → seller)
+
+---
+
+STEP 5: COMPLETE (AUTOMATIC)
+SUCCESS (95%): Covenant executes → Seller gets €100.50 + 0.009 BCH residual
+TIMEOUT (5%): Split refund → Seller keeps €100.50 from Bizum
+
+ECONOMICS (per €100 transaction):
+- Fee: €0.50 fixed
+- Hedge: ~€0.50 average (BCH volatility gains)
+- Total: ~€1.00 / €7 locked / 12h avg = ~14% daily ROI
+
+==============================================
+ERROR SCENARIOS
+==============================================
+
+SENDER:
+- Bizum timeout (5 min) → Request cancelled, retry
+- Wrong concept field → Bot can't match, manual resolution
+- Insufficient balance → Bank rejects, retry
+
+RECIPIENT:
+- Wrong code → "Not found", check SMS
+- Expired (>24h) → "Refunded to sender"
+- Already claimed → "Fraud detected", contact support
+
+MERCHANT:
+- Verification fails → Reject claim (protect network)
+- No cash on hand → Recipient tries different merchant
+- App crash → Covenant executes anyway (on-chain), refresh
+
+BCH SELLER:
+- Margin call missed → Split refund auto-executes
+- Bot offline → SMS fallback alerts
+- No inventory → Reject requests, refill
+
+==============================================
+END-TO-END TIMING
+==============================================
+
+ACTIVE TIME (human involvement):
+- Sender: 5-10 min (Bizum payment)
+- Recipient: 2 min (at merchant)
+- Merchant: 3 min (verify + payout)
+- BCH seller: 0 min (automated)
+
+WAITING TIME (passive):
+- Covenant creation: ~1 min (bot processes Bizum)
+- Recipient decides when to claim: 0h - 24h
+- Covenant execution: 30 seconds (on-chain)
+
+TOTAL END-TO-END: 10 min - 24h (mostly recipient timing choice)
+
+==============================================
+PHASE 0 SUCCESS METRICS
+==============================================
+
+TARGET RATES:
+- Execution rate: >95% (covenants claimed)
+- Timeout rate: <5% (unclaimed after 24h)
+- Margin call rate: <10% (BCH drops >7%)
+- Dispute rate: 0% (trusted parties)
+
+MEASUREMENT:
+- Time-to-claim distribution (0-3h, 3-6h, 6-12h, 12-24h, >24h)
+- Margin call frequency and response rate
+- User satisfaction surveys (sender, recipient, merchant)
+- Error rates by type
+
+ADJUSTMENTS:
+- If 80% claim <6h: Reduce timeout to 12h, test 5% overcollateralization
+- If margin calls >15%: Increase to 10% overcollateralization
+- If disputes occur: Add social media transparency layer
+
+==============================================
+SCREEN-BY-SCREEN MOCKUPS
+==============================================
+
+SENDER APP (5 screens):
+1. "Send Money" - Input recipient, amount, destination
+2. "Review & Confirm" - Show rate, fees, total cost
+3. "Pay via Bizum" - Instructions, countdown timer
+4. "Covenant Created" - Bounty code, share button
+5. "Track Status" - Time remaining, merchant location
+
+RECIPIENT APP (3 screens):
+1. SMS notification - Bounty code, merchant info
+2. (At merchant) Merchant scans/enters code
+3. (After execution) "Cash received" confirmation
+
+MERCHANT APP (4 screens):
+1. "Dashboard" - Active covenants in area
+2. "Claim Bounty" - Enter code, lookup
+3. "Verify Recipient" - Details, confirm/cancel
+4. "Complete" - Hand cash, final confirmation
+
+BCH SELLER BOT (2 screens):
+1. "Dashboard" - Inventory, active covenants, earnings
+2. "Margin Call Alert" - Add BCH or let refund (manual)
+
+==============================================
+COVENANT STATE MACHINE
+==============================================
+
+States:
+1. PENDING_BIZUM: Request created, waiting for BCH seller
+2. AWAITING_PAYMENT: BCH seller accepted, waiting for sender Bizum
+3. ACTIVE: Covenant on-chain, recipient can claim (24h window)
+4. MARGIN_CALL: BCH dropped >7%, waiting for seller response (60 min)
+5. EXECUTING: Both parties signed, covenant executing (30 sec)
+6. COMPLETED: Covenant executed, cash handed
+7. TIMEOUT_REFUND: 24h expired, split refund processed
+8. MARGIN_REFUND: Margin call unanswered, split refund processed
+9. CANCELLED: Sender Bizum timeout, request cancelled
+
+Transitions:
+- 1→2: BCH seller accepts
+- 2→3: Sender pays Bizum, seller posts collateral
+- 3→4: BCH drops >7%
+- 3→5: Recipient arrives, both sign
+- 4→3: Seller adds BCH (margin call resolved)
+- 4→8: 60 min timeout (no seller response)
+- 5→6: Covenant executes, merchant hands cash
+- 3→7: 24h timeout (no claim)
+- 2→9: 5 min Bizum timeout
+
+==============================================
+DETAILED FLOW DIAGRAMS
+==============================================
+
+See main documentation for visual flowcharts:
+- /docs/android-app/flows/sender-flows.md
+- /docs/android-app/flows/recipient-flows.md
+- /docs/android-app/flows/merchant-flows.md
+
+These AI-optimized flows focus on step-by-step instructions.
+Visual diagrams complement with UI mockups and state transitions.
+
+==============================================
+RELATED DOCUMENTS
+==============================================
+
+- core-arch.txt: Why flows designed this way
+- decisions.txt: Implementation decisions
+- apis.txt: Backend technical specs
+- complete.txt: Full documentation
+
+Main docs: https://github.com/rufitnes/asgayapedia/tree/main/docs
+
+==============================================
+END OF USER FLOWS
+==============================================

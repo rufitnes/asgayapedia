@@ -1,0 +1,4953 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BCH covenant-based remittance protocol for Spain-Venezuela corridor">
+      
+      
+      
+        <link rel="canonical" href="https://docs.asgaya.org/ROADMAP/">
+      
+      
+        <link rel="prev" href="../research/RS054_cashtoken_swaps/">
+      
+      
+        <link rel="next" href="../glossary/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Roadmap - Asgaya Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/bch-colors.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#asgaya-implementation-roadmap" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Asgaya Documentation" class="md-header__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Asgaya Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Roadmap
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../android-app/" class="md-tabs__link">
+          
+  
+  
+  Android App
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../android-app/backend-apis/bch-native-architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../concepts/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../decisions/" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../research/RS053_MUSD/" class="md-tabs__link">
+          
+  
+  
+  Research
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Asgaya Documentation" class="md-nav__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Asgaya Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android App
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android App
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/home-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sender Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sender Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_2" id="__nav_2_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Covenant Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/covenant-setup/2-recipient-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/covenant-setup/3-amount-entry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amount Entry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/covenant-setup/4-payment-method/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_3" id="__nav_2_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Own Wallet Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Own Wallet Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/own-wallet-path/4a-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/own-wallet-path/6a-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/own-wallet-path/7a-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_4" id="__nav_2_2_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buy Seller Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Buy Seller Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Purchase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/buy-seller-path/4.5-select-seller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Select Seller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/buy-seller-path/5-payment-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Instructions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/buy-seller-path/6b-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/buy-seller-path/7b-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_5" id="__nav_2_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Screens
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Error Screens
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/errors/pending-covenant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Covenant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/errors/seller-non-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Non-Delivery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/errors/bizum-timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Timeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/sender-flows/errors/network-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/recipient-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Direct Payment Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/direct-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/direct-payment-flows/1-scan-merchant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Merchant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/direct-payment-flows/2-enter-amount/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enter Amount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/direct-payment-flows/3-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/direct-payment-flows/4-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/trade-bch-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trade BCH Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/flows/merchant-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backend APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/rate-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/user-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/common-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/covenant-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_7" id="__nav_2_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blockchain Scanner
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blockchain Scanner
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/blockchain-scanner/nft-scanner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NFT Scanner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_8" id="__nav_2_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Bot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Seller Bot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/seller-bot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_9" id="__nav_2_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/pichan-regtest-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pichan Regtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/multi-device-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Device Test Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_10" id="__nav_2_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/archive/ENGINEERING_JOURNEY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Journey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-architecture/why-permissionless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Permissionless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-architecture/why-self-custody/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Self-Custody
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-architecture/why-no-kyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why No KYC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-architecture/why-market-rate-exchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Market Rates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-architecture/why-cheaper-than-legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Cheaper Than Legacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-architecture/why-promote-adoption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Promote Adoption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-architecture/why-bch-usage-incentive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why BCH Usage Incentive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-architecture/why-minimal-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Minimal Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/bch-sellers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/bch-buyers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overcollateralized Bounty Contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/rfid-card-recipients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RFID Card Recipients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/dynamic-reward-modulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic Reward Modulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/fee-splitting-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/two-step-settlement-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-Step Settlement Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/dispute-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dispute Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/payment-timeout-window/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Timeout Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/unclaimed-transaction-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unclaimed Transaction Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/bizum-concept-field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Concept Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/how-exchange-rates-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Exchange Rates Work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/musd-integration-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MUSD Integration Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/phase-0-progressive-decentralization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Progressive Decentralization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisions/phase-0-validation-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Validation Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/RS053_MUSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS053 MUSD Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/RS054_cashtoken_swaps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS054 CashToken Swaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#philosophy-incremental-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophy: Incremental Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-asgaya-husk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0: Asgaya Husk
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0: Asgaya Husk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-skip-for-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Skip (For Now)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-automation-layer-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Automation Layer 1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: Automation Layer 1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features-to-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features to Add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-still-skip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Still Skip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-bulletin-board-optional-bch-buyer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Bulletin Board &amp; Optional BCH Buyer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Bulletin Board &amp; Optional BCH Buyer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features-to-add_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features to Add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-still-skip_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Still Skip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-full-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Full Automation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 3: Full Automation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features-to-add_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features to Add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-still-skip-post-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Still Skip (Post-Beta)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4-public-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Public Beta
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 4: Public Beta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features-to-add-based-on-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features to Add Based on Feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-documentation-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Documentation Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5-scale-multi-corridor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Scale &amp; Multi-Corridor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 5: Scale &amp; Multi-Corridor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#potential-expansions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Potential Expansions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risk-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk Mitigation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Risk Mitigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#known-risks-mitigations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Risks &amp; Mitigations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Success Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-0-husk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 (Husk)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-automation-l1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 (Automation L1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-bulletin-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 (Bulletin Board)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-full-automation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3 (Full Automation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-public-beta_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4 (Public Beta)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-term" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long-term
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-debt-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Debt Decisions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Debt Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defer-to-post-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defer to Post-Beta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defer-to-post-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defer to Post-Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#never-build-unless-proven-necessary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Never Build (Unless Proven Necessary)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-for-external-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open Questions for External Review
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-contribute-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Contribute Feedback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#philosophy-incremental-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophy: Incremental Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-asgaya-husk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0: Asgaya Husk
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0: Asgaya Husk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-skip-for-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Skip (For Now)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-automation-layer-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Automation Layer 1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: Automation Layer 1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features-to-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features to Add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-still-skip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Still Skip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-bulletin-board-optional-bch-buyer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Bulletin Board &amp; Optional BCH Buyer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Bulletin Board &amp; Optional BCH Buyer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features-to-add_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features to Add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-still-skip_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Still Skip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-full-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Full Automation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 3: Full Automation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features-to-add_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features to Add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-still-skip-post-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Still Skip (Post-Beta)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4-public-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Public Beta
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 4: Public Beta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features-to-add-based-on-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features to Add Based on Feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-documentation-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Documentation Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5-scale-multi-corridor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Scale &amp; Multi-Corridor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 5: Scale &amp; Multi-Corridor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#potential-expansions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Potential Expansions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risk-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk Mitigation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Risk Mitigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#known-risks-mitigations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Risks &amp; Mitigations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Success Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-0-husk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 (Husk)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-automation-l1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 (Automation L1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-bulletin-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 (Bulletin Board)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-full-automation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3 (Full Automation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-public-beta_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4 (Public Beta)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-term" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long-term
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-debt-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Debt Decisions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Debt Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defer-to-post-beta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defer to Post-Beta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defer-to-post-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defer to Post-Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#never-build-unless-proven-necessary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Never Build (Unless Proven Necessary)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-for-external-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open Questions for External Review
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-contribute-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Contribute Feedback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="asgaya-implementation-roadmap">Asgaya Implementation Roadmap<a class="headerlink" href="#asgaya-implementation-roadmap" title="Permanent link">&para;</a></h1>
+<p><strong>Last Updated:</strong> May 10, 2026<br />
+<strong>Status:</strong> Pre-Launch Planning (Covenant Architecture)<br />
+<strong>Target Corridor:</strong> EUR → VES (Spain → Venezuela)</p>
+<p><strong>Architecture:</strong> Covenant-based (no custody, no intermediation)</p>
+<hr />
+<h2 id="philosophy-incremental-validation">Philosophy: Incremental Validation<a class="headerlink" href="#philosophy-incremental-validation" title="Permanent link">&para;</a></h2>
+<p><strong>Approach:</strong>
+1. Start with <strong>Asgaya Husk</strong> (absolute minimum)
+2. Test end-to-end with real money
+3. Add <strong>one feature</strong> at a time
+4. Test again after each addition
+5. Iterate until fully automated</p>
+<p><strong>Why incremental:</strong>
+- ✅ Prove core concept works before adding complexity
+- ✅ Identify real pain points (not imagined ones)
+- ✅ Build confidence with each successful transaction
+- ✅ Safer with real money on the line</p>
+<hr />
+<h2 id="phase-0-asgaya-husk">Phase 0: Asgaya Husk<a class="headerlink" href="#phase-0-asgaya-husk" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> Complete ONE end-to-end remittance with covenant manually</p>
+<h3 id="what-we-build">What We Build<a class="headerlink" href="#what-we-build" title="Permanent link">&para;</a></h3>
+<p><strong>Sender App (Spain):</strong>
+- Create covenant screen
+- Shows Bizum payment instructions (to BCH seller)
+- Amount input (EUR)
+- Recipient phone number input
+- Generate bounty code (last 4 digits)</p>
+<p><strong>BCH Seller Backend (Suso's computer):</strong>
+- Manually check Sabadell app for Bizum payment (from sender)
+- Manually post BCH collateral to covenant (~107% of EUR value)
+- Manual covenant creation on BCH blockchain
+- Generate bounty code (covenant ID)</p>
+<p><strong>Recipient App (Venezuela):</strong>
+- View covenant notification (via WhatsApp link)
+- Show bounty code: 8923 (4 digits)
+- <strong>List</strong> of merchants (no map)
+  - Name, phone number, address
+  - "Call Merchant" button</p>
+<p><strong>Merchant App (Venezuela):</strong>
+- Enter 4-digit bounty code screen
+- Shows VES amount to sell + BCH to receive
+- Shows "Hand VES &amp; Co-Sign" button
+- Manual co-signing (both merchant and recipient tap button)</p>
+<p><strong>Covenant Settlement:</strong>
+- Manual verification both signatures present
+- Covenant matures → BCH distributed to merchant and seller
+- Seller keeps surplus after merchant paid (~0.5% fee + hedge profit)</p>
+<h3 id="what-we-skip-for-now">What We Skip (For Now)<a class="headerlink" href="#what-we-skip-for-now" title="Permanent link">&para;</a></h3>
+<ul>
+<li>❌ No auto-parsing of Bizum notifications</li>
+<li>❌ No auto-covenant creation (manual BCH collateral posting)</li>
+<li>❌ No bulletin board (send bounty code via WhatsApp)</li>
+<li>❌ No maps</li>
+<li>❌ No timeout cascade automation (manual refund if needed)</li>
+<li>❌ No BCH signature auth (use JWT)</li>
+<li>❌ No merchant hours/limits</li>
+</ul>
+<h3 id="success-criteria">Success Criteria<a class="headerlink" href="#success-criteria" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Sender sends €100 via Bizum to BCH seller</li>
+<li>[ ] BCH seller posts ~0.107 BCH collateral to covenant</li>
+<li>[ ] Recipient receives WhatsApp notification with bounty code</li>
+<li>[ ] Recipient calls merchant, visits location</li>
+<li>[ ] Merchant enters code, sees VES 500,000 and 0.0995 BCH</li>
+<li>[ ] Merchant gives VES cash, both co-sign covenant</li>
+<li>[ ] Covenant matures → Merchant receives ~0.0995 BCH</li>
+<li>[ ] BCH seller keeps surplus (~0.007 BCH) + €100 fiat</li>
+<li>[ ] <strong>Total time:</strong> &lt;2 hours end-to-end</li>
+</ul>
+<p><strong>If this works 3 times → Move to Phase 1</strong></p>
+<hr />
+<h2 id="phase-1-automation-layer-1">Phase 1: Automation Layer 1<a class="headerlink" href="#phase-1-automation-layer-1" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> Reduce manual BCH seller intervention</p>
+<h3 id="features-to-add">Features to Add<a class="headerlink" href="#features-to-add" title="Permanent link">&para;</a></h3>
+<p><strong>Priority 1: Bizum Auto-Detection</strong>
+- Deploy <code>smsbridge_loop.py</code> on seller device
+- Auto-parse Bizum notifications from Sabadell
+- Auto-mark covenant as "funded by sender"
+- <strong>Why first:</strong> Proven reliable, eliminates manual checking</p>
+<p><strong>Priority 2: Automatic Covenant Creation</strong>
+- Script to post BCH collateral to covenant
+- Auto-calculate overcollateralization (7% buffer)
+- Auto-generate bounty code (covenant ID)
+- <strong>Why second:</strong> Eliminates manual BCH posting</p>
+<p><strong>Priority 3: Co-Signing Verification</strong>
+- Verify both merchant and recipient signatures
+- Auto-detect covenant maturity
+- Track covenant state (pending → partially_signed → mature)
+- <strong>Why third:</strong> Eliminates manual signature checking</p>
+<h3 id="what-we-still-skip">What We Still Skip<a class="headerlink" href="#what-we-still-skip" title="Permanent link">&para;</a></h3>
+<ul>
+<li>❌ No BCH buyer bulletin yet (merchant holds BCH or sells P2P)</li>
+<li>❌ No bulletin board (still send bounty codes via WhatsApp)</li>
+<li>❌ No maps (still just list)</li>
+<li>❌ No automated timeout refunds (manual split refund)</li>
+</ul>
+<h3 id="success-criteria_1">Success Criteria<a class="headerlink" href="#success-criteria_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] 10 successful transactions with auto-Bizum detection</li>
+<li>[ ] Zero false positives on Bizum parsing</li>
+<li>[ ] Auto-covenant creation working reliably</li>
+<li>[ ] Both co-signing verified automatically</li>
+<li>[ ] <strong>Total BCH seller manual intervention:</strong> &lt;5 minutes per transaction</li>
+</ul>
+<p><strong>If 10/10 succeed → Move to Phase 2</strong></p>
+<hr />
+<h2 id="phase-2-bulletin-board-optional-bch-buyer">Phase 2: Bulletin Board &amp; Optional BCH Buyer<a class="headerlink" href="#phase-2-bulletin-board-optional-bch-buyer" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> Add bulletin board for merchant discovery, optional BCH buyer market</p>
+<h3 id="features-to-add_1">Features to Add<a class="headerlink" href="#features-to-add_1" title="Permanent link">&para;</a></h3>
+<p><strong>Priority 1: Public Bulletin Board</strong>
+- All active covenants visible on bulletin board
+- Merchants see: "Wants: 500,000 VES | You get: 0.0995 BCH"
+- Recipient provides bounty code to claim specific covenant
+- First merchant to enter valid code wins</p>
+<p><strong>Priority 2: Merchant Decides to Hold or Sell</strong>
+- After receiving BCH from covenant, merchant chooses:
+  - Option A: Hold BCH (recommended, earn full spread)
+  - Option B: Sell to BCH buyer (instant fiat, lose some spread)
+- Setting stored in merchant profile (default: hold BCH)</p>
+<p><strong>Priority 3: BCH Buyer Bulletin (Optional)</strong>
+- Separate bulletin board for BCH buyers
+- Shows: "Seller offers: 0.0995 BCH | Wants: 500,000 VES"
+- <strong>Uses same covenant mechanism</strong> (merchant = seller, BCH buyer = recipient)
+- Merchant posts BCH → BCH buyer sends Pagomóvil → Both co-sign
+- Circular economy enabled (BCH ↔ VES in both directions)</p>
+<p><strong>Priority 4: Notification System</strong>
+- Push notifications for new bounties (Firebase/APNs for MVP)
+- OP_RETURN notifications (Phase 3)
+- Recipient notified when covenant created</p>
+<h3 id="what-we-still-skip_1">What We Still Skip<a class="headerlink" href="#what-we-still-skip_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>❌ No Pagomóvil auto-parsing (manual buyer confirmation)</li>
+<li>❌ No OP_RETURN notifications yet (using push notifications)</li>
+<li>❌ No maps (bulletin board sorted by distance, but no visual map)</li>
+</ul>
+<h3 id="success-criteria_2">Success Criteria<a class="headerlink" href="#success-criteria_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] 10 successful remittances with bulletin board</li>
+<li>[ ] Merchants successfully find and claim bounties</li>
+<li>[ ] 5 merchants hold BCH (full spread earned)</li>
+<li>[ ] 5 merchants sell to BCH buyer (instant fiat received)</li>
+<li>[ ] BCH buyer bulletin working (circular economy)</li>
+<li>[ ] <strong>Zero failed covenant settlements</strong></li>
+</ul>
+<p><strong>If 15/15 succeed → Move to Phase 3</strong></p>
+<hr />
+<h2 id="phase-3-full-automation">Phase 3: Full Automation<a class="headerlink" href="#phase-3-full-automation" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> Minimize manual confirmations, add resilience</p>
+<h3 id="features-to-add_2">Features to Add<a class="headerlink" href="#features-to-add_2" title="Permanent link">&para;</a></h3>
+<p><strong>Priority 1: Pagomóvil Auto-Parsing (for BCH Buyers)</strong>
+- Deploy NotificationListener on BCH buyer device
+- Parse Pagomóvil SMS from Venezuelan banks
+- Auto-confirm fiat received from merchant (seller)
+- <strong>Reuse proven <code>smsbridge_loop.py</code> approach</strong></p>
+<p><strong>Priority 2: OP_RETURN Notifications</strong>
+- Replace push notifications with OP_RETURN
+- Merchants monitor BCH address for bounties
+- More resilient notification delivery
+- Keep push notifications as backup</p>
+<p><strong>Priority 3: Automated Timeout Cascade</strong>
+- 5-minute Bizum timeout (auto-cancel if sender doesn't pay)
+- 24-hour claim timeout (auto-split refund if unclaimed)
+  - Merchant portion → Sender's refund address
+  - Seller fee → BCH seller (earned for service)
+- Auto-handle covenant expiration</p>
+<p><strong>Priority 4: Map-Based Merchant Discovery</strong>
+- Add map view to recipient app
+- Location-based bounty search
+- Distance calculations
+- Only add when 5+ merchants available</p>
+<h3 id="what-we-still-skip-post-beta">What We Still Skip (Post-Beta)<a class="headerlink" href="#what-we-still-skip-post-beta" title="Permanent link">&para;</a></h3>
+<ul>
+<li>❌ BCH signature authentication (JWT works fine)</li>
+<li>❌ Merchant ratings/reviews (trust-based initially)</li>
+<li>❌ Multiple payment methods (Bizum/Pagomóvil enough)</li>
+<li>❌ Multiple corridors (EUR→VES only)</li>
+</ul>
+<h3 id="success-criteria_3">Success Criteria<a class="headerlink" href="#success-criteria_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] 20 successful fully-automated settlements</li>
+<li>[ ] 95%+ auto-parsing success rate (Pagomóvil for BCH buyers)</li>
+<li>[ ] OP_RETURN notifications working reliably</li>
+<li>[ ] Timeout cascade working (3 test cases: Bizum timeout, claim timeout, normal)</li>
+<li>[ ] Map view tested with 5+ merchants</li>
+<li>[ ] <strong>Total manual intervention:</strong> &lt;1 minute per transaction (only edge cases)</li>
+</ul>
+<p><strong>If 20/20 succeed → Public Beta Launch</strong></p>
+<hr />
+<h2 id="phase-4-public-beta">Phase 4: Public Beta<a class="headerlink" href="#phase-4-public-beta" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> Scale to 10-20 testers, gather feedback</p>
+<h3 id="features-to-add-based-on-feedback">Features to Add Based on Feedback<a class="headerlink" href="#features-to-add-based-on-feedback" title="Permanent link">&para;</a></h3>
+<p><strong>Potential additions (priority TBD):</strong>
+- Merchant ratings/reviews (if merchant quality varies)
+- BCH signature authentication (if JWT proves problematic)
+- Multiple payment methods (if users request specific methods)
+- Second corridor EUR→ARS (if Venezuela corridor stable)
+- Merchant reliability tiers (if covenant failures occur)
+- Enhanced error handling (based on real failure modes)
+- Advanced covenant features (multi-sig, longer timeouts, etc.)</p>
+<h3 id="public-documentation-review">Public Documentation Review<a class="headerlink" href="#public-documentation-review" title="Permanent link">&para;</a></h3>
+<p><strong>Before public beta:</strong>
+1. Publish all documentation publicly
+2. Open for external review and feedback
+3. Accountability period (2-3 weeks)
+4. Incorporate outside input
+5. Refine roadmap based on real-world feedback</p>
+<h3 id="success-criteria_4">Success Criteria<a class="headerlink" href="#success-criteria_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] 50+ successful transactions</li>
+<li>[ ] 10+ active users (senders + recipients)</li>
+<li>[ ] 5+ active merchants</li>
+<li>[ ] 2+ active BCH sellers</li>
+<li>[ ] 2+ active BCH buyers (optional)</li>
+<li>[ ] External feedback incorporated</li>
+<li>[ ] Clear feature priorities based on actual usage</li>
+</ul>
+<p><strong>If metrics hit → Scale &amp; Expand</strong></p>
+<hr />
+<h2 id="phase-5-scale-multi-corridor">Phase 5: Scale &amp; Multi-Corridor<a class="headerlink" href="#phase-5-scale-multi-corridor" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> Expand beyond EUR-VES, optimize for growth</p>
+<h3 id="potential-expansions">Potential Expansions<a class="headerlink" href="#potential-expansions" title="Permanent link">&para;</a></h3>
+<p><strong>Geographic:</strong>
+- EUR → ARS (Argentina)
+- EUR → COP (Colombia)<br />
+- EUR → HNL (Honduras)
+- USD → VES (USA → Venezuela)</p>
+<p><strong>Feature:</strong>
+- Mobile app improvements based on feedback
+- Advanced BCH seller features (multi-covenant, batch posting)
+- Merchant onboarding improvements
+- Sender experience polish
+- Analytics dashboard</p>
+<p><strong>Technical:</strong>
+- Performance optimizations
+- Security hardening (covenant review, timeout testing)
+- Decentralization improvements
+- Multi-sig covenants (if needed for trust)</p>
+<hr />
+<h2 id="risk-mitigation">Risk Mitigation<a class="headerlink" href="#risk-mitigation" title="Permanent link">&para;</a></h2>
+<h3 id="known-risks-mitigations">Known Risks &amp; Mitigations<a class="headerlink" href="#known-risks-mitigations" title="Permanent link">&para;</a></h3>
+<p><strong>Risk 1: Bizum auto-parsing fails</strong>
+- <strong>Mitigation:</strong> Manual fallback (admin endpoint)
+- <strong>Monitoring:</strong> Alert if no auto-confirmation in 5 min</p>
+<p><strong>Risk 2: BCH price drops &gt;7% during covenant wait</strong>
+- <strong>Mitigation:</strong> Overcollateralization buffer (seller absorbs)
+- <strong>Monitoring:</strong> Track volatility, adjust buffer if needed
+- <strong>Seller hedge:</strong> Seller receives €100 fiat before price moves (94-97% exposure reduction)</p>
+<p><strong>Risk 3: Merchant doesn't co-sign (Elena's theft risk)</strong>
+- <strong>Mitigation:</strong> Clear warnings, 5-minute timeout
+- <strong>Monitoring:</strong> Track merchant refusal rate, flag bad actors</p>
+<p><strong>Risk 4: Elena doesn't co-sign (Merchant's fraud risk)</strong>
+- <strong>Mitigation:</strong> Elena won't sign without cash (self-enforcing)
+- <strong>Monitoring:</strong> Dispute resolution if both claim opposite</p>
+<p><strong>Risk 5: Covenant expires (24h timeout)</strong>
+- <strong>Mitigation:</strong> Split refund (merchant → sender, seller keeps fee)
+- <strong>Monitoring:</strong> Track expiration rate, remind recipients</p>
+<p><strong>Risk 6: BCH buyer doesn't send fiat (for circular economy)</strong>
+- <strong>Mitigation:</strong> Same covenant timeout mechanism
+- <strong>Monitoring:</strong> Track BCH buyer reliability</p>
+<hr />
+<h2 id="success-metrics">Success Metrics<a class="headerlink" href="#success-metrics" title="Permanent link">&para;</a></h2>
+<h3 id="phase-0-husk">Phase 0 (Husk)<a class="headerlink" href="#phase-0-husk" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Target:</strong> 3 successful covenant settlements</li>
+</ul>
+<h3 id="phase-1-automation-l1">Phase 1 (Automation L1)<a class="headerlink" href="#phase-1-automation-l1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Target:</strong> 10 successful auto-confirmed covenants</li>
+</ul>
+<h3 id="phase-2-bulletin-board">Phase 2 (Bulletin Board)<a class="headerlink" href="#phase-2-bulletin-board" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Target:</strong> 15 successful transactions (10 hold BCH, 5 sell to buyer)</li>
+</ul>
+<h3 id="phase-3-full-automation_1">Phase 3 (Full Automation)<a class="headerlink" href="#phase-3-full-automation_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Target:</strong> 20 successful fully-automated covenants</li>
+</ul>
+<h3 id="phase-4-public-beta_1">Phase 4 (Public Beta)<a class="headerlink" href="#phase-4-public-beta_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Target:</strong> 50+ transactions, 10+ users</li>
+</ul>
+<h3 id="long-term">Long-term<a class="headerlink" href="#long-term" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Target:</strong> 500+ transactions across 2-3 corridors</li>
+<li><strong>Users:</strong> 100+ senders, 50+ recipients, 20+ merchants, 5+ BCH sellers, 5+ BCH buyers</li>
+</ul>
+<hr />
+<h2 id="technical-debt-decisions">Technical Debt Decisions<a class="headerlink" href="#technical-debt-decisions" title="Permanent link">&para;</a></h2>
+<p><strong>Things we're intentionally punting:</strong></p>
+<h3 id="defer-to-post-beta">Defer to Post-Beta<a class="headerlink" href="#defer-to-post-beta" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>BCH signature auth:</strong> JWT is simpler, proven</li>
+<li><strong>OP_RETURN notifications:</strong> Push notifications work fine initially</li>
+<li><strong>Merchant ratings:</strong> Not needed with 1-2 trusted merchants</li>
+<li><strong>Multiple payment methods:</strong> Bizum/Pagomóvil enough</li>
+<li><strong>Merchant hours/limits:</strong> Keep it simple, trust network</li>
+</ul>
+<h3 id="defer-to-post-launch">Defer to Post-Launch<a class="headerlink" href="#defer-to-post-launch" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Multi-sig covenants:</strong> Simple 2-of-2 co-signing works for beta</li>
+<li><strong>Advanced timeout logic:</strong> 24h is enough for MVP</li>
+<li><strong>Covenant pool optimization:</strong> Individual covenants simpler</li>
+<li><strong>Multi-currency support:</strong> BCH-only is fine</li>
+</ul>
+<h3 id="never-build-unless-proven-necessary">Never Build (Unless Proven Necessary)<a class="headerlink" href="#never-build-unless-proven-necessary" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Complex matching algorithms:</strong> First-come-first-served works</li>
+<li><strong>Partial settlements:</strong> One covenant per remittance simpler</li>
+<li><strong>In-app chat:</strong> Users can use WhatsApp/Telegram</li>
+<li><strong>KYC/compliance:</strong> Start permissionless, add if legally required</li>
+</ul>
+<hr />
+<h2 id="open-questions-for-external-review">Open Questions for External Review<a class="headerlink" href="#open-questions-for-external-review" title="Permanent link">&para;</a></h2>
+<p><strong>We'd love feedback on:</strong></p>
+<ol>
+<li>
+<p><strong>Covenant security:</strong> Is 7% overcollateralization enough? Or should we increase buffer?</p>
+</li>
+<li>
+<p><strong>BCH seller trust:</strong> Is permissionless posting safe? Or should we whitelist sellers initially?</p>
+</li>
+<li>
+<p><strong>Merchant reliability:</strong> Should we track individual merchants from day one? Or wait for issues?</p>
+</li>
+<li>
+<p><strong>Privacy vs convenience:</strong> JWT auth vs BCH signatures? Push notifications vs OP_RETURN?</p>
+</li>
+<li>
+<p><strong>Timeout cascade:</strong> Is 24-hour claim window too long/short? Should split refund ratio change?</p>
+</li>
+<li>
+<p><strong>BCH buyer bulletin:</strong> Should this be MVP or post-beta? Is circular economy important early?</p>
+</li>
+<li>
+<p><strong>Corridor priority:</strong> EUR→VES first, or EUR→ARS? Why?</p>
+</li>
+<li>
+<p><strong>Feature priorities:</strong> What did we miss? What should be higher/lower priority?</p>
+</li>
+</ol>
+<hr />
+<h2 id="phase-summary">Phase Summary<a class="headerlink" href="#phase-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Key Features</th>
+<th>Success Metric</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 0: Husk</strong></td>
+<td>Manual covenant, Bizum to seller</td>
+<td>3 successful covenants</td>
+</tr>
+<tr>
+<td><strong>Phase 1: Auto L1</strong></td>
+<td>Auto Bizum, auto covenant creation</td>
+<td>10 successful covenants</td>
+</tr>
+<tr>
+<td><strong>Phase 2: Bulletin</strong></td>
+<td>Public bulletin, BCH buyer market</td>
+<td>15 transactions</td>
+</tr>
+<tr>
+<td><strong>Phase 3: Full Auto</strong></td>
+<td>Timeout cascade, OP_RETURN</td>
+<td>20 automated covenants</td>
+</tr>
+<tr>
+<td><strong>Phase 4: Public Beta</strong></td>
+<td>External feedback</td>
+<td>50+ txns, 10+ users</td>
+</tr>
+<tr>
+<td><strong>Phase 5: Scale</strong></td>
+<td>Multi-corridor expansion</td>
+<td>500+ txns</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="how-to-contribute-feedback">How to Contribute Feedback<a class="headerlink" href="#how-to-contribute-feedback" title="Permanent link">&para;</a></h2>
+<p><strong>We're seeking input on:</strong>
+- 💡 <strong>Architecture:</strong> Is the covenant-based approach sound?
+- 🔒 <strong>Security:</strong> What covenant risks are we missing?
+- 🎯 <strong>Priorities:</strong> Are we building the right things in the right order?
+- 🌍 <strong>Corridors:</strong> Which remittance corridors matter most?
+- ⚡ <strong>Features:</strong> What's critical vs nice-to-have?</p>
+<p><strong>Public review period:</strong> 2-3 weeks before Phase 0 launch</p>
+<p><strong>Where to provide feedback:</strong> [TBD - GitHub issues, forum, etc.]</p>
+<hr />
+<h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><a href="../android-app/flows/">Android App Flows</a></strong> - Screen-by-screen user flows</li>
+<li><strong><a href="../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a></strong> - Covenant specification</li>
+<li><strong><a href="../concepts/bch-sellers/">BCH Sellers</a></strong> - Seller role and hedge mechanism</li>
+<li><strong><a href="../android-app/flows/merchant-flows/">Merchant Flows</a></strong> - Merchant experience</li>
+<li><strong><a href="../decisions/how-exchange-rates-work/">How Exchange Rates Work</a></strong> - EUR-denominated covenants</li>
+</ul>
+<hr />
+<p><strong>Next Step:</strong> Public documentation review → External feedback → Refine roadmap → Build Asgaya Husk (Covenant Edition)</p>
+<p><em>"Start simple, validate, iterate. Ship the husk, grow the tree."</em></p>
+        <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
+            <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
+        </div>
+        <script>
+        async function copyMarkdownToClipboard() {
+            try {
+                const currentPath = window.location.pathname;
+                const mdPath = currentPath.endsWith('/') ? currentPath + 'index.md' : currentPath.replace(/\.html$/, '.md');
+
+                const response = await fetch(mdPath);
+                if (response.ok) {
+                    const markdown = await response.text();
+                    await navigator.clipboard.writeText(markdown);
+                    // Show feedback
+                    const button = document.querySelector('#llms-copy-button button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007acc';
+                    }, 2000);
+                } else {
+                    throw new Error('Markdown file not found');
+                }
+            } catch (err) {
+                console.error('Failed to copy markdown:', err);
+                alert('Failed to copy markdown content');
+            }
+        }
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.breadcrumbs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

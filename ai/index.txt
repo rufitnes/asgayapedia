@@ -1,0 +1,170 @@
+==============================================
+ASGAYA DOCUMENTATION - AI REVIEW ACCESS
+==============================================
+
+Welcome! This directory contains Asgaya protocol documentation optimized for AI consumption.
+
+⚠️ IMPORTANT FOR AI REVIEWERS:
+Many AI retrieval systems can only access the first ~400-500 lines of a single file.
+For complete ingestion without truncation, use the individual topic files listed below
+(each under 400 lines) rather than complete.txt (3,898 lines).
+
+==============================================
+QUICK START
+==============================================
+
+New to Asgaya? Start here:
+→ quick-start.txt (650 lines, ~15 min read) ✅ v2.0 CURRENT
+
+Condensed overview of the entire protocol: what it is, why it exists, how it works.
+Reflects covenant architecture (May 10, 2026 pivot from escrow model).
+
+==============================================
+RECOMMENDED READING ORDER
+==============================================
+
+For comprehensive review (covenant architecture v2.0):
+
+1. quick-start.txt      → Overview & context (650 lines) ✅ v2.0
+2. core-arch.txt        → Why each feature exists (395 lines) ✅ v2.0
+3. decisions.txt        → How we implement it (322 lines) ✅ v2.0
+4. flows.txt            → User experience (337 lines) ✅ v2.0
+5. apis.txt             → Technical specs (392 lines) ✅ v2.0
+
+ALL FILES NOW CURRENT: Covenant architecture throughout, optimized for
+AI retrieval systems (<400 lines per file for full ingestion).
+
+Total: ~2,100 lines, ~1 hour comprehensive review.
+
+==============================================
+FILES BY CONTEXT WINDOW
+==============================================
+
+**Small context models (<8K tokens):**
+→ quick-start.txt only (650 lines)
+
+**Medium context models (8K-32K tokens):**
+→ quick-start.txt + topic files (each <400 lines)
+
+**Large context models (32K+ tokens):**
+→ complete.txt (3,898 lines) ✅ v2.0
+
+⚠️ NOTE: Some AI retrieval systems can only access first ~400-500 lines
+   of complete.txt, truncating sections 2-8. If this affects you, use
+   individual topic files instead.
+
+==============================================
+FILES BY TOPIC
+==============================================
+
+**Strategic/Business:**
+- quick-start.txt       → High-level overview
+- core-arch.txt         → Feature rationale (the WHYs)
+
+**Technical/Implementation:**
+- decisions.txt         → Design decisions (the HOWs)
+- apis.txt              → Backend specifications
+- flows.txt             → UX flows (sender, recipient, merchant, LP)
+
+**Comprehensive:**
+- complete.txt          → All of the above in one file
+- overview.txt          → Optimized summary (llm.txt format)
+
+==============================================
+WHAT TO REVIEW
+==============================================
+
+Focus areas requested:
+1. Consistency - Do decisions match research?
+2. Missing pieces - Critical gaps or edge cases?
+3. Clarity - Can newcomers understand it?
+4. Technical soundness - Security concerns?
+5. Research validation - Do sources support conclusions?
+
+==============================================
+HOW TO PROVIDE FEEDBACK
+==============================================
+
+**GitHub Issues (Preferred):**
+https://github.com/rufitnes/asgayapedia/issues
+
+**Label by severity:**
+- critical: Blocks implementation, must fix
+- warning: Should address before launch
+- improvement: Nice to have, post-MVP
+
+**Format:**
+- Title: Brief description
+- Body: Detailed explanation + location (file, line)
+- Suggestion: Proposed fix (if applicable)
+
+==============================================
+FILE DETAILS
+==============================================
+
+FILE                STATUS              LINES   DESCRIPTION
+--------------------------------------------------------------------------------
+index.txt           ✅ v2.0             ~180    Navigation guide (this file)
+quick-start.txt     ✅ v2.0             650     Condensed overview (covenant)
+complete.txt        ✅ v2.0             3,898   Everything combined (covenant)
+core-arch.txt       ✅ v2.0             395     Core architecture (WHY)
+decisions.txt       ✅ v2.0             322     Design decisions (HOW)
+flows.txt           ✅ v2.0             337     User flows (UX)
+apis.txt            ✅ v2.0             392     Backend APIs (TECHNICAL)
+overview.txt        ⚠️ Pre-covenant    323     Optimized summary (llm.txt)
+
+✅ = Current (covenant architecture v2.0, May 12, 2026)
+⚠️ = Stale (escrow model, pre-May 10, 2026) - Low priority legacy file
+
+==============================================
+DIRECT RAW URLS (COPY-PASTE READY)
+==============================================
+
+GitHub Raw URLs:
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/index.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/quick-start.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/overview.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/core-arch.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/decisions.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/flows.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/apis.txt
+https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/complete.txt
+
+docs.asgaya.org URLs (NOW LIVE):
+https://docs.asgaya.org/ai/index.txt
+https://docs.asgaya.org/ai/quick-start.txt
+https://docs.asgaya.org/ai/overview.txt
+https://docs.asgaya.org/ai/core-arch.txt
+https://docs.asgaya.org/ai/decisions.txt
+https://docs.asgaya.org/ai/flows.txt
+https://docs.asgaya.org/ai/apis.txt
+https://docs.asgaya.org/ai/complete.txt
+
+==============================================
+LAST UPDATED
+==============================================
+
+Version: 2.0 (Covenant Architecture)
+Date: 2026-05-12
+Status: ALL TOPIC FILES CURRENT ✅
+
+Key changes in v2.0:
+- Covenant-based architecture (no custody, no intermediation)
+- 2-way fee split (0.5% seller, 0.5% merchant, 0% protocol)
+- BCH seller hedge mechanism documented
+- Autonomous dispute resolution (Phase 0)
+- All files optimized for AI ingestion (<400 lines per topic)
+- Overcollateralization × Timeout interdependency analysis added
+
+Regeneration complete: quick-start (650), complete (3,898), core-arch (395),
+decisions (322), flows (337), apis (392). Total: ~6,000 lines.
+
+==============================================
+QUESTIONS?
+==============================================
+
+Project maintainer: Suso (jesgf@yahoo.es)
+Repository: https://github.com/rufitnes/asgayapedia
+Human-friendly docs: https://rufitnes.github.io/asgayapedia/
+
+==============================================

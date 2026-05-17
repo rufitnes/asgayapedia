@@ -1,0 +1,4878 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BCH covenant-based remittance protocol for Spain-Venezuela corridor">
+      
+      
+      
+        <link rel="canonical" href="https://docs.asgaya.org/android-app/notification-listener/opreturn-spv/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>3. OP_RETURN SPV Monitor - Asgaya Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/bch-colors.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-op_return-spv-monitor" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Asgaya Documentation" class="md-header__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Asgaya Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. OP_RETURN SPV Monitor
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  Android App
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../backend-apis/bch-native-architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../concepts/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../research/RS053_MUSD/" class="md-tabs__link">
+          
+  
+  
+  Research
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Asgaya Documentation" class="md-nav__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Asgaya Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android App
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android App
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/home-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sender Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sender Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_2" id="__nav_2_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Covenant Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/covenant-setup/2-recipient-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/covenant-setup/3-amount-entry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amount Entry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/covenant-setup/4-payment-method/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_3" id="__nav_2_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Own Wallet Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Own Wallet Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/own-wallet-path/4a-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/own-wallet-path/6a-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/own-wallet-path/7a-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_4" id="__nav_2_2_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buy Seller Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Buy Seller Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/4b-confirm-purchase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Purchase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/4.5-select-seller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Select Seller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/5-payment-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Instructions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/6b-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/7b-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_5" id="__nav_2_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Screens
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Error Screens
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/pending-covenant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Covenant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/seller-non-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Non-Delivery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/bizum-timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Timeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/network-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/recipient-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Direct Payment Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/1-scan-merchant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Merchant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/2-enter-amount/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enter Amount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/3-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/4-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/trade-bch-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trade BCH Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/merchant-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backend APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/rate-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/user-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/common-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/covenant-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_7" id="__nav_2_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blockchain Scanner
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blockchain Scanner
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/blockchain-scanner/nft-scanner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NFT Scanner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_8" id="__nav_2_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Bot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Seller Bot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/seller-bot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_9" id="__nav_2_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/pichan-regtest-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pichan Regtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/multi-device-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Device Test Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_10" id="__nav_2_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/archive/ENGINEERING_JOURNEY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Journey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-permissionless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Permissionless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-self-custody/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Self-Custody
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-no-kyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why No KYC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-market-rate-exchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Market Rates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-cheaper-than-legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Cheaper Than Legacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-promote-adoption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Promote Adoption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-bch-usage-incentive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why BCH Usage Incentive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-minimal-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Minimal Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/bch-sellers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/bch-buyers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overcollateralized Bounty Contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/rfid-card-recipients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RFID Card Recipients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/dynamic-reward-modulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic Reward Modulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/fee-splitting-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/two-step-settlement-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-Step Settlement Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/dispute-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dispute Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/payment-timeout-window/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Timeout Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/unclaimed-transaction-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unclaimed Transaction Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/bizum-concept-field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Concept Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/how-exchange-rates-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Exchange Rates Work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/musd-integration-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MUSD Integration Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/phase-0-progressive-decentralization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Progressive Decentralization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/phase-0-validation-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Validation Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/RS053_MUSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS053 MUSD Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/RS054_cashtoken_swaps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS054 CashToken Swaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#op_return-message-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OP_RETURN Message Formats
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spv-wallet-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SPV Wallet Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SPV Wallet Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-spv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is SPV?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#android-implementation-bitcoincashj" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Android Implementation (bitcoincashj)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spv-wallet-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SPV Wallet Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notification-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notification Display
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cost Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-notification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per Notification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#volume-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volume Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backend-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Backend Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sending-op_return-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sending OP_RETURN (Backend)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-usage-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Usage (Backend)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delivery-time-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delivery Time Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy &amp; Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Privacy &amp; Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#privacy-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy Benefits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testnet-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testnet Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#block-header-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Block Header Download
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Background Sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring &amp; Observability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring &amp; Observability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backend-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#app-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        App Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Enhancements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Future Enhancements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v11-push-notifications-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        V1.1: Push Notifications Fallback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v2-encrypted-op_return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        V2: Encrypted OP_RETURN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v3-cashaccounts-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        V3: CashAccounts Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-platform-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Platform Support
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Platform Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ios-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iOS Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="3-op_return-spv-monitor">3. OP_RETURN SPV Monitor<a class="headerlink" href="#3-op_return-spv-monitor" title="Permanent link">&para;</a></h1>
+<p><strong>Platform:</strong> Android &amp; iOS (cross-platform)
+<strong>Notification System:</strong> BCH on-chain OP_RETURN messages
+<strong>Device:</strong> All users (sender, recipient, merchant, LP)
+<strong>When:</strong> Backend needs to notify users without centralized push services
+<strong>Priority:</strong> ✅ MVP Critical (Week 2)</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><strong>OP_RETURN</strong> is Bitcoin Cash's way to store arbitrary data on the blockchain.</p>
+<p><strong>How it works:</strong>
+- Transaction output with <code>OP_RETURN</code> script
+- Can contain up to 223 bytes of data
+- Data is permanently on-chain
+- Requires small dust amount (546 sats) to be valid</p>
+<p><strong>Why we use it:</strong>
+- ❌ <strong>Replace:</strong> Firebase Cloud Messaging (€50+/month, Google tracking)
+- ❌ <strong>Replace:</strong> Apple Push Notification Service (device tokens, centralized)
+- ✅ <strong>Use:</strong> On-chain BCH notifications (€0.006 each, decentralized, private)</p>
+<p><strong>Philosophy:</strong> Use Bitcoin Cash for everything you can, fiat only when you must.</p>
+<hr />
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+│              Escrow Backend                         │
+│  • Transaction state changes                        │
+│  • Settlement creation                              │
+│  • BCH sent confirmations                           │
+└───────────────────┬─────────────────────────────────┘
+                    │
+                    │ Broadcast OP_RETURN transaction
+                    │ To: user&#39;s BCH address
+                    │ Amount: 546 sats (dust)
+                    │ Data: &quot;ASGAYA_TXN_READY_7382&quot;
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────┐
+│              Bitcoin Cash Network                   │
+│  • Transaction propagates to nodes                  │
+│  • Gets included in next block                      │
+│  • Confirmed on-chain                               │
+└───────────────────┬─────────────────────────────────┘
+                    │
+                    │ SPV wallet monitors address
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────┐
+│           User&#39;s Mobile App                         │
+│  • SPV wallet (lightweight Bitcoin Cash client)     │
+│  • Monitors user&#39;s BCH address                      │
+│  • Detects incoming OP_RETURN transaction           │
+│  • Parses message data                              │
+│  • Shows notification to user                       │
+└─────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>Key insight:</strong> Every Asgaya user generates a BCH address on first app launch. This address IS their identity AND their notification inbox.</p>
+<hr />
+<h2 id="op_return-message-formats">OP_RETURN Message Formats<a class="headerlink" href="#op_return-message-formats" title="Permanent link">&para;</a></h2>
+<p><strong>Defined by backend, parsed by app:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Message Format</th>
+<th>When Sent</th>
+<th>Recipient</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Payment ready</td>
+<td><code>ASGAYA_TXN_READY_7382</code></td>
+<td>Escrow receives EUR from sender</td>
+<td>Recipient</td>
+</tr>
+<tr>
+<td>Transaction completed</td>
+<td><code>ASGAYA_TXN_COMPLETED_txn_7Hk9mNpQ2wX</code></td>
+<td>Recipient confirms cash received</td>
+<td>Sender</td>
+</tr>
+<tr>
+<td>Settlement available</td>
+<td><code>ASGAYA_SETTLEMENT_settle_9kLmP</code></td>
+<td>LP needed for merchant payout</td>
+<td>LP</td>
+</tr>
+<tr>
+<td>BCH sent</td>
+<td><code>ASGAYA_BCH_SENT_0.00008</code></td>
+<td>Escrow sends BCH to merchant/LP</td>
+<td>Merchant/LP</td>
+</tr>
+<tr>
+<td>Merchant confirmed</td>
+<td><code>ASGAYA_MERCHANT_CONFIRMED_7382</code></td>
+<td>Merchant gives cash to recipient</td>
+<td>Sender</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Message structure:</strong>
+- Prefix: <code>ASGAYA_</code> (identifier for filtering)
+- Event type: <code>TXN_READY</code>, <code>TXN_COMPLETED</code>, <code>SETTLEMENT</code>, etc.
+- Data: Transaction code, ID, or amount</p>
+<p><strong>Maximum size:</strong> 223 bytes (BCH OP_RETURN limit)
+<strong>Asgaya messages:</strong> 25-50 bytes (plenty of headroom)</p>
+<hr />
+<h2 id="spv-wallet-integration">SPV Wallet Integration<a class="headerlink" href="#spv-wallet-integration" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-spv">What is SPV?<a class="headerlink" href="#what-is-spv" title="Permanent link">&para;</a></h3>
+<p><strong>Simplified Payment Verification (SPV):</strong>
+- Lightweight Bitcoin Cash client
+- Downloads block headers only (~80 bytes per block)
+- Verifies transactions without full blockchain
+- Monitors specific addresses for incoming transactions</p>
+<p><strong>Why SPV (not full node):</strong>
+- ✅ Mobile-friendly (small data usage)
+- ✅ Fast sync (minutes, not hours)
+- ✅ Privacy (doesn't expose which addresses you're watching)
+- ✅ Decentralized (connects to BCH network directly)</p>
+<p><strong>Libraries:</strong>
+- <strong>Android:</strong> <a href="https://github.com/pokkst/bitcoincashj-thin">bitcoincashj</a> (Java/Kotlin)
+- <strong>iOS:</strong> <a href="https://github.com/horizontalsystems/BitcoinKit.Swift">BitcoinKit</a> (Swift)
+- <strong>Cross-platform:</strong> <a href="https://cashweb.cash/">Cash-Lib</a> (Kotlin Multiplatform)</p>
+<hr />
+<h3 id="android-implementation-bitcoincashj">Android Implementation (bitcoincashj)<a class="headerlink" href="#android-implementation-bitcoincashj" title="Permanent link">&para;</a></h3>
+<p><strong>Dependencies:</strong></p>
+<div class="highlight"><pre><span></span><code>// build.gradle.kts
+dependencies {
+    implementation(&quot;cash.bitcoinj:bitcoinj-core:0.16.2&quot;)
+    implementation(&quot;org.slf4j:slf4j-android:1.7.36&quot;)
+}
+</code></pre></div>
+<hr />
+<h3 id="spv-wallet-setup">SPV Wallet Setup<a class="headerlink" href="#spv-wallet-setup" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">package</span><span class="w"> </span><span class="nn">com.asgaya.wallet</span>
+
+<span class="k">import</span><span class="w"> </span><span class="nn">org.bitcoinj.core.*</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">org.bitcoinj.kits.WalletAppKit</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">org.bitcoinj.params.MainNetParams</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">org.bitcoinj.script.ScriptPattern</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">org.bitcoinj.wallet.Wallet</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
+
+<span class="kd">class</span><span class="w"> </span><span class="nc">AsgayaWallet</span><span class="p">(</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">context</span><span class="p">:</span><span class="w"> </span><span class="n">Context</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MainNetParams</span><span class="p">.</span><span class="na">get</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">walletKit</span><span class="p">:</span><span class="w"> </span><span class="n">WalletAppKit? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">userAddress</span><span class="p">:</span><span class="w"> </span><span class="n">Address? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Initialize SPV wallet</span>
+<span class="cm">     * - Generates BCH address on first launch</span>
+<span class="cm">     * - Starts SPV sync</span>
+<span class="cm">     * - Sets up transaction listener</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="n">onReady</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">walletDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="na">filesDir</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asgaya_wallet&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">walletKit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WalletAppKit</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="w"> </span><span class="n">walletDir</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asgaya&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">walletKit</span><span class="o">?.</span><span class="na">apply</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Set bloom filter (privacy)</span>
+<span class="w">            </span><span class="n">setBlockingStartup</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="w">            </span><span class="n">setDownloadHeaders</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+
+<span class="w">            </span><span class="c1">// Start sync</span>
+<span class="w">            </span><span class="n">startAsync</span><span class="p">()</span>
+
+<span class="w">            </span><span class="c1">// Wait for wallet ready</span>
+<span class="w">            </span><span class="n">addListener</span><span class="p">(</span><span class="k">object</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Service</span><span class="p">.</span><span class="na">Listener</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">running</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">wallet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wallet</span><span class="p">()</span>
+
+<span class="w">                    </span><span class="c1">// Get or create user&#39;s BCH address</span>
+<span class="w">                    </span><span class="n">userAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wallet</span><span class="p">.</span><span class="na">issuedReceiveAddresses</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">wallet</span><span class="p">.</span><span class="na">freshReceiveAddress</span><span class="p">()</span>
+<span class="w">                    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">wallet</span><span class="p">.</span><span class="na">issuedReceiveAddresses</span><span class="p">.</span><span class="na">first</span><span class="p">()</span>
+<span class="w">                    </span><span class="p">}</span>
+
+<span class="w">                    </span><span class="c1">// Set up transaction listener</span>
+<span class="w">                    </span><span class="n">wallet</span><span class="p">.</span><span class="na">addCoinsReceivedEventListener</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">wallet</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">prevBalance</span><span class="p">,</span><span class="w"> </span><span class="n">newBalance</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">                        </span><span class="n">handleIncomingTransaction</span><span class="p">(</span><span class="n">tx</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">}</span>
+
+<span class="w">                    </span><span class="n">onReady</span><span class="p">(</span><span class="n">userAddress</span><span class="o">!!</span><span class="p">)</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">},</span><span class="w"> </span><span class="n">MoreExecutors</span><span class="p">.</span><span class="na">directExecutor</span><span class="p">())</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Handle incoming transaction</span>
+<span class="cm">     * Check if it contains OP_RETURN data</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">handleIncomingTransaction</span><span class="p">(</span><span class="n">tx</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">d</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Transaction received: </span><span class="si">${</span><span class="n">tx</span><span class="p">.</span><span class="na">txId</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// Check each output for OP_RETURN</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">output</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">tx</span><span class="p">.</span><span class="na">outputs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ScriptPattern</span><span class="p">.</span><span class="na">isOpReturn</span><span class="p">(</span><span class="n">output</span><span class="p">.</span><span class="na">scriptPubKey</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">opReturnData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractOpReturnData</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">opReturnData</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OP_RETURN data: </span><span class="si">$</span><span class="n">opReturnData</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="w">                    </span><span class="n">parseAsgayaNotification</span><span class="p">(</span><span class="n">opReturnData</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">)</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Also got some BCH (dust)!</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">receivedAmount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="p">.</span><span class="na">getValue</span><span class="p">(</span><span class="n">walletKit</span><span class="o">?.</span><span class="na">wallet</span><span class="p">())</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">receivedAmount</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">Coin</span><span class="p">.</span><span class="na">ZERO</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Received </span><span class="si">${</span><span class="n">receivedAmount</span><span class="p">.</span><span class="na">toFriendlyString</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Extract OP_RETURN data from output</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">extractOpReturnData</span><span class="p">(</span><span class="n">output</span><span class="p">:</span><span class="w"> </span><span class="n">TransactionOutput</span><span class="p">):</span><span class="w"> </span><span class="kt">String?</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">chunks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="na">scriptPubKey</span><span class="p">.</span><span class="na">chunks</span>
+
+<span class="w">            </span><span class="c1">// OP_RETURN scripts have format: OP_RETURN &lt;data&gt;</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">chunks</span><span class="p">.</span><span class="na">size</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">chunks</span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="p">.</span><span class="na">opcode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">106</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// OP_RETURN = 0x6a = 106</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">dataChunk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chunks</span><span class="o">[</span><span class="m">1</span><span class="o">]</span>
+
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dataChunk</span><span class="p">.</span><span class="na">data</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="kt">String</span><span class="p">(</span><span class="n">dataChunk</span><span class="p">.</span><span class="na">data</span><span class="p">,</span><span class="w"> </span><span class="n">Charsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">)</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="kc">null</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span>
+
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="na">e</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Error extracting OP_RETURN data&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Parse Asgaya notification from OP_RETURN data</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">parseAsgayaNotification</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">message</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;ASGAYA_&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="na">d</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Not an Asgaya notification: </span><span class="si">$</span><span class="n">message</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">when</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">message</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;ASGAYA_TXN_READY_&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Format: &quot;ASGAYA_TXN_READY_7382&quot;</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="na">substringAfter</span><span class="p">(</span><span class="s">&quot;ASGAYA_TXN_READY_&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">handleTransactionReady</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">message</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;ASGAYA_TXN_COMPLETED_&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Format: &quot;ASGAYA_TXN_COMPLETED_txn_7Hk9mNpQ2wX&quot;</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">txnId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="na">substringAfter</span><span class="p">(</span><span class="s">&quot;ASGAYA_TXN_COMPLETED_&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">handleTransactionCompleted</span><span class="p">(</span><span class="n">txnId</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">message</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;ASGAYA_SETTLEMENT_&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Format: &quot;ASGAYA_SETTLEMENT_settle_9kLmP&quot;</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">settlementId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="na">substringAfter</span><span class="p">(</span><span class="s">&quot;ASGAYA_SETTLEMENT_&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">handleSettlementAvailable</span><span class="p">(</span><span class="n">settlementId</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">message</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;ASGAYA_BCH_SENT_&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Format: &quot;ASGAYA_BCH_SENT_0.00008&quot;</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="na">substringAfter</span><span class="p">(</span><span class="s">&quot;ASGAYA_BCH_SENT_&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">handleBchSent</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">message</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;ASGAYA_MERCHANT_CONFIRMED_&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Format: &quot;ASGAYA_MERCHANT_CONFIRMED_7382&quot;</span>
+<span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="na">substringAfter</span><span class="p">(</span><span class="s">&quot;ASGAYA_MERCHANT_CONFIRMED_&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">handleMerchantConfirmed</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">Log</span><span class="p">.</span><span class="na">w</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Unknown Asgaya notification format: </span><span class="si">$</span><span class="n">message</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">handleTransactionReady</span><span class="p">(</span><span class="n">code</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Transaction ready! Code: </span><span class="si">$</span><span class="n">code</span><span class="s">&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// Show notification to user</span>
+<span class="w">        </span><span class="n">showNotification</span><span class="p">(</span>
+<span class="w">            </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Cash Ready! 💵&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;€100 confirmed! Your code: </span><span class="si">$</span><span class="n">code</span><span class="s">. Go to any Asgaya merchant.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">actionUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;asgaya://transactions/code/</span><span class="si">$</span><span class="n">code</span><span class="s">&quot;</span>
+<span class="w">        </span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// Update local transaction state</span>
+<span class="w">        </span><span class="n">transactionRepository</span><span class="p">.</span><span class="na">updateStatus</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">TransactionStatus</span><span class="p">.</span><span class="na">READY_FOR_PICKUP</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// Play notification sound</span>
+<span class="w">        </span><span class="n">playNotificationSound</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">handleTransactionCompleted</span><span class="p">(</span><span class="n">txnId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Transaction completed: </span><span class="si">$</span><span class="n">txnId</span><span class="s">&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">showNotification</span><span class="p">(</span>
+<span class="w">            </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Transaction Complete! ✅&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Your remittance was successful. Tap to view details.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">actionUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;asgaya://transactions/</span><span class="si">$</span><span class="n">txnId</span><span class="s">&quot;</span>
+<span class="w">        </span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">transactionRepository</span><span class="p">.</span><span class="na">updateStatus</span><span class="p">(</span><span class="n">txnId</span><span class="p">,</span><span class="w"> </span><span class="n">TransactionStatus</span><span class="p">.</span><span class="na">COMPLETED</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">handleSettlementAvailable</span><span class="p">(</span><span class="n">settlementId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;New settlement available: </span><span class="si">$</span><span class="n">settlementId</span><span class="s">&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">showNotification</span><span class="p">(</span>
+<span class="w">            </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Settlement Available&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;New settlement ready. Tap to view and accept.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">actionUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;asgaya://settlements/</span><span class="si">$</span><span class="n">settlementId</span><span class="s">&quot;</span>
+<span class="w">        </span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">settlementRepository</span><span class="p">.</span><span class="na">addPendingSettlement</span><span class="p">(</span><span class="n">settlementId</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">handleBchSent</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BCH sent: </span><span class="si">$</span><span class="n">amount</span><span class="s">&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">showNotification</span><span class="p">(</span>
+<span class="w">            </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;BCH Received! 🎉&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You received </span><span class="si">$</span><span class="n">amount</span><span class="s"> BCH. Check your balance.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">actionUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;asgaya://wallet&quot;</span>
+<span class="w">        </span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// Wallet balance already updated by bitcoincashj</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">handleMerchantConfirmed</span><span class="p">(</span><span class="n">code</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Merchant confirmed handoff: </span><span class="si">$</span><span class="n">code</span><span class="s">&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">showNotification</span><span class="p">(</span>
+<span class="w">            </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Merchant Confirmed&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Merchant confirmed cash handoff. Waiting for recipient confirmation.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">actionUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;asgaya://transactions/code/</span><span class="si">$</span><span class="n">code</span><span class="s">&quot;</span>
+<span class="w">        </span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">transactionRepository</span><span class="p">.</span><span class="na">updateStatus</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">TransactionStatus</span><span class="p">.</span><span class="na">MERCHANT_CONFIRMED</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Get user&#39;s BCH address (identity)</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getUserAddress</span><span class="p">():</span><span class="w"> </span><span class="n">Address? </span><span class="o">=</span><span class="w"> </span><span class="n">userAddress</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Get current balance</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getBalance</span><span class="p">():</span><span class="w"> </span><span class="n">Coin</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">walletKit</span><span class="o">?.</span><span class="na">wallet</span><span class="p">()</span><span class="o">?.</span><span class="na">getBalance</span><span class="p">(</span><span class="n">Wallet</span><span class="p">.</span><span class="na">BalanceType</span><span class="p">.</span><span class="na">ESTIMATED</span><span class="p">)</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">Coin</span><span class="p">.</span><span class="na">ZERO</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Clean up</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">walletKit</span><span class="o">?.</span><span class="na">stopAsync</span><span class="p">()</span>
+<span class="w">        </span><span class="n">walletKit</span><span class="o">?.</span><span class="na">awaitTerminated</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">companion</span><span class="w"> </span><span class="kd">object</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">TAG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AsgayaWallet&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="notification-display">Notification Display<a class="headerlink" href="#notification-display" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">showNotification</span><span class="p">(</span>
+<span class="w">    </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">    </span><span class="n">body</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">    </span><span class="n">actionUrl</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">notificationManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getSystemService</span><span class="p">(</span><span class="n">NotificationManager</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">java</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// Create notification channel (Android 8+)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Build</span><span class="p">.</span><span class="na">VERSION</span><span class="p">.</span><span class="na">SDK_INT</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">Build</span><span class="p">.</span><span class="na">VERSION_CODES</span><span class="p">.</span><span class="na">O</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NotificationChannel</span><span class="p">(</span>
+<span class="w">            </span><span class="s">&quot;asgaya_notifications&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;Asgaya Notifications&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">NotificationManager</span><span class="p">.</span><span class="na">IMPORTANCE_HIGH</span>
+<span class="w">        </span><span class="p">).</span><span class="na">apply</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Transaction and settlement notifications&quot;</span>
+<span class="w">            </span><span class="n">enableVibration</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">            </span><span class="n">setShowBadge</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">notificationManager</span><span class="p">.</span><span class="na">createNotificationChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Create intent for tap action</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">intent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Intent</span><span class="p">(</span><span class="n">Intent</span><span class="p">.</span><span class="na">ACTION_VIEW</span><span class="p">,</span><span class="w"> </span><span class="n">Uri</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="n">actionUrl</span><span class="p">)).</span><span class="na">apply</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Intent</span><span class="p">.</span><span class="na">FLAG_ACTIVITY_NEW_TASK</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">Intent</span><span class="p">.</span><span class="na">FLAG_ACTIVITY_CLEAR_TASK</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">pendingIntent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PendingIntent</span><span class="p">.</span><span class="na">getActivity</span><span class="p">(</span>
+<span class="w">        </span><span class="n">context</span><span class="p">,</span>
+<span class="w">        </span><span class="m">0</span><span class="p">,</span>
+<span class="w">        </span><span class="n">intent</span><span class="p">,</span>
+<span class="w">        </span><span class="n">PendingIntent</span><span class="p">.</span><span class="na">FLAG_IMMUTABLE</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// Build notification</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NotificationCompat</span><span class="p">.</span><span class="na">Builder</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asgaya_notifications&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">setSmallIcon</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">drawable</span><span class="p">.</span><span class="na">ic_asgaya_logo</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">setContentTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">setContentText</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">setPriority</span><span class="p">(</span><span class="n">NotificationCompat</span><span class="p">.</span><span class="na">PRIORITY_HIGH</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">setAutoCancel</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">setContentIntent</span><span class="p">(</span><span class="n">pendingIntent</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// Show notification</span>
+<span class="w">    </span><span class="n">notificationManager</span><span class="p">.</span><span class="na">notify</span><span class="p">(</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">().</span><span class="na">toInt</span><span class="p">(),</span><span class="w">  </span><span class="c1">// Unique ID</span>
+<span class="w">        </span><span class="n">notification</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="cost-analysis">Cost Analysis<a class="headerlink" href="#cost-analysis" title="Permanent link">&para;</a></h2>
+<h3 id="per-notification">Per Notification<a class="headerlink" href="#per-notification" title="Permanent link">&para;</a></h3>
+<p><strong>OP_RETURN transaction:</strong>
+- Dust amount: 546 sats (minimum UTXO)
+- Transaction fee: ~100 sats (1 sat/byte × 100 bytes)
+- <strong>Total:</strong> 646 sats</p>
+<p><strong>At BCH price €1000:</strong>
+- 646 sats = 0.00000646 BCH
+- <strong>Cost per notification:</strong> €0.006</p>
+<hr />
+<h3 id="volume-comparison">Volume Comparison<a class="headerlink" href="#volume-comparison" title="Permanent link">&para;</a></h3>
+<p><strong>100 transactions (EUR → VES):</strong>
+- 3 notifications per transaction (recipient, merchant, LP)
+- Total: 300 notifications
+- Cost: 300 × €0.006 = <strong>€1.80</strong></p>
+<p><strong>Firebase alternative:</strong>
+- Free tier: 200 notifications/day (OK for beta)
+- Paid tier: €50+/month at scale
+- <strong>Asgaya savings:</strong> 96% (€50 → €1.80)</p>
+<p><strong>Bonus:</strong>
+- Users receive free BCH (546 sats per notification)
+- 300 notifications = 163,800 sats = €1.64 distributed to users
+- Users can save these micro-amounts and eventually withdraw</p>
+<hr />
+<h2 id="backend-integration">Backend Integration<a class="headerlink" href="#backend-integration" title="Permanent link">&para;</a></h2>
+<h3 id="sending-op_return-backend">Sending OP_RETURN (Backend)<a class="headerlink" href="#sending-op_return-backend" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Backend (Python example)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bitcoincash</span><span class="w"> </span><span class="kn">import</span> <span class="n">PrivateKey</span><span class="p">,</span> <span class="n">Transaction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bitcoincash.network</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetworkAPI</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">send_opreturn_notification</span><span class="p">(</span>
+    <span class="n">recipient_bch_address</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">escrow_private_key</span><span class="p">:</span> <span class="n">PrivateKey</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Send OP_RETURN notification to user&#39;s BCH address</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        recipient_bch_address: User&#39;s BCH address (e.g., &quot;bitcoincash:qp3wjpa3...&quot;)</span>
+<span class="sd">        message: Notification message (e.g., &quot;ASGAYA_TXN_READY_7382&quot;)</span>
+<span class="sd">        escrow_private_key: Escrow&#39;s BCH private key (for signing)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Transaction ID (txid)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Validate message size</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">223</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message too large: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="si">}</span><span class="s2"> bytes (max 223)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Create transaction</span>
+    <span class="n">tx</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">()</span>
+
+    <span class="c1"># Add input (escrow&#39;s BCH for dust + fee)</span>
+    <span class="n">escrow_address</span> <span class="o">=</span> <span class="n">escrow_private_key</span><span class="o">.</span><span class="n">address</span>
+    <span class="n">utxos</span> <span class="o">=</span> <span class="n">NetworkAPI</span><span class="o">.</span><span class="n">get_unspent</span><span class="p">(</span><span class="n">escrow_address</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">utxos</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Escrow has no BCH for notifications&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Use first UTXO</span>
+    <span class="n">utxo</span> <span class="o">=</span> <span class="n">utxos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tx</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">utxo</span><span class="p">[</span><span class="s1">&#39;txid&#39;</span><span class="p">],</span> <span class="n">utxo</span><span class="p">[</span><span class="s1">&#39;vout&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Add OP_RETURN output</span>
+    <span class="n">tx</span><span class="o">.</span><span class="n">add_opreturn_output</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+    <span class="c1"># Add dust output to recipient (makes it appear in their wallet)</span>
+    <span class="n">dust_amount</span> <span class="o">=</span> <span class="mi">546</span>  <span class="c1"># satoshis</span>
+    <span class="n">tx</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">recipient_bch_address</span><span class="p">,</span> <span class="n">dust_amount</span><span class="p">)</span>
+
+    <span class="c1"># Add change output back to escrow (if needed)</span>
+    <span class="n">fee</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># sats</span>
+    <span class="n">total_output</span> <span class="o">=</span> <span class="n">dust_amount</span> <span class="o">+</span> <span class="n">fee</span>
+    <span class="n">change</span> <span class="o">=</span> <span class="n">utxo</span><span class="p">[</span><span class="s1">&#39;amount_satoshis&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">total_output</span>
+
+    <span class="k">if</span> <span class="n">change</span> <span class="o">&gt;</span> <span class="mi">546</span><span class="p">:</span>  <span class="c1"># Only add change if above dust threshold</span>
+        <span class="n">tx</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">escrow_address</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span>
+
+    <span class="c1"># Sign transaction</span>
+    <span class="n">tx</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">escrow_private_key</span><span class="p">)</span>
+
+    <span class="c1"># Broadcast to BCH network</span>
+    <span class="n">txid</span> <span class="o">=</span> <span class="n">NetworkAPI</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="n">tx</span><span class="o">.</span><span class="n">to_hex</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OP_RETURN notification sent! TxID: </span><span class="si">{</span><span class="n">txid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">txid</span>
+</code></pre></div>
+<hr />
+<h3 id="example-usage-backend">Example Usage (Backend)<a class="headerlink" href="#example-usage-backend" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># When escrow receives EUR payment</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_payment_received</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">recipient_bch_address</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="c1"># Update transaction state</span>
+    <span class="n">transaction</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;payment_received&quot;</span>
+    <span class="n">transaction</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="c1"># Generate 4-digit code</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">generate_pickup_code</span><span class="p">()</span>  <span class="c1"># e.g., &quot;7382&quot;</span>
+    <span class="n">transaction</span><span class="o">.</span><span class="n">pickup_code</span> <span class="o">=</span> <span class="n">code</span>
+    <span class="n">transaction</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="c1"># Send OP_RETURN notification to recipient</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ASGAYA_TXN_READY_</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">send_opreturn_notification</span><span class="p">(</span>
+        <span class="n">recipient_bch_address</span><span class="o">=</span><span class="n">recipient_bch_address</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
+        <span class="n">escrow_private_key</span><span class="o">=</span><span class="n">ESCROW_BCH_KEY</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Recipient&#39;s SPV wallet will detect transaction within ~30 seconds</span>
+    <span class="c1"># App shows: &quot;Cash Ready! Code: 7382&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="delivery-time-analysis">Delivery Time Analysis<a class="headerlink" href="#delivery-time-analysis" title="Permanent link">&para;</a></h2>
+<p><strong>Typical flow:</strong></p>
+<ol>
+<li><strong>Backend broadcasts OP_RETURN:</strong> ~1 second</li>
+<li><strong>Transaction propagates to BCH network:</strong> ~2-5 seconds</li>
+<li><strong>SPV wallet detects transaction:</strong> ~10-20 seconds (next block header)</li>
+<li><strong>App shows notification:</strong> Immediate</li>
+</ol>
+<p><strong>Total latency:</strong> 15-30 seconds from backend trigger to user notification</p>
+<p><strong>Compare to:</strong>
+- Firebase: 1-5 seconds (faster, but centralized)
+- SMS: 5-30 seconds (similar, but costs more)
+- Email: 10-60 seconds (slower)</p>
+<p><strong>Trade-off:</strong> Slightly slower than FCM, but:
+- ✅ Fully decentralized
+- ✅ No tracking or device tokens
+- ✅ Works without Google/Apple services
+- ✅ Permanent on-chain record</p>
+<hr />
+<h2 id="privacy-security">Privacy &amp; Security<a class="headerlink" href="#privacy-security" title="Permanent link">&para;</a></h2>
+<h3 id="privacy-benefits">Privacy Benefits<a class="headerlink" href="#privacy-benefits" title="Permanent link">&para;</a></h3>
+<p><strong>Traditional push notifications:</strong>
+- Device tokens stored on Google/Apple servers
+- Can track which users are active
+- Can correlate notifications across apps
+- Can see message metadata</p>
+<p><strong>OP_RETURN notifications:</strong>
+- No device tokens needed
+- No centralized servers
+- No tracking or profiling
+- Fully pseudonymous (BCH address only)</p>
+<p><strong>Only correlation:</strong> On-chain analysis (someone watching the blockchain could see OP_RETURN messages)</p>
+<p><strong>Mitigation:</strong> Messages don't contain PII (just codes/IDs). Only the user knows what they mean.</p>
+<hr />
+<h3 id="security-considerations">Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">&para;</a></h3>
+<p><strong>Spam prevention:</strong></p>
+<p>Anyone could send OP_RETURN to user's address. How do we prevent spam?</p>
+<div class="highlight"><pre><span></span><code><span class="kd">fun</span><span class="w"> </span><span class="nf">parseAsgayaNotification</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Only process messages with ASGAYA_ prefix</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">message</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;ASGAYA_&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w">  </span><span class="c1">// Ignore non-Asgaya OP_RETURN</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Validate sender (optional)</span>
+<span class="w">    </span><span class="c1">// Could check if transaction came from known escrow address</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">fromEscrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="p">.</span><span class="na">inputs</span><span class="p">.</span><span class="na">any</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="n">input</span><span class="p">.</span><span class="na">fromAddress</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ESCROW_BCH_ADDRESS</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">fromEscrow</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">w</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OP_RETURN not from escrow, ignoring&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Parse message...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Rate limiting:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">NotificationRateLimiter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">recentNotifications</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mutableListOf</span><span class="o">&lt;</span><span class="kt">Long</span><span class="o">&gt;</span><span class="p">()</span>
+
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">shouldProcess</span><span class="p">(</span><span class="n">timestamp</span><span class="p">:</span><span class="w"> </span><span class="kt">Long</span><span class="p">):</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Clean old entries (older than 1 hour)</span>
+<span class="w">        </span><span class="n">recentNotifications</span><span class="p">.</span><span class="na">removeAll</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">timestamp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">3</span><span class="n">_600_000</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Allow max 50 notifications per hour</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">recentNotifications</span><span class="p">.</span><span class="na">size</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">50</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="na">w</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Rate limit exceeded&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">recentNotifications</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="testing-strategy">Testing Strategy<a class="headerlink" href="#testing-strategy" title="Permanent link">&para;</a></h2>
+<h3 id="testnet-testing">Testnet Testing<a class="headerlink" href="#testnet-testing" title="Permanent link">&para;</a></h3>
+<p><strong>Use BCH testnet for development:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Use TestNet3Params instead of MainNetParams</span>
+<span class="kd">val</span><span class="w"> </span><span class="nv">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TestNet3Params</span><span class="p">.</span><span class="na">get</span><span class="p">()</span>
+
+<span class="kd">val</span><span class="w"> </span><span class="nv">walletKit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WalletAppKit</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="w"> </span><span class="n">walletDir</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asgaya_test&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Get testnet BCH:</strong>
+- Testnet faucet: https://faucet.fullstack.cash/
+- Free testnet BCH for testing</p>
+<p><strong>Send test OP_RETURN:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Backend sends test notification</span>
+<span class="n">send_opreturn_notification</span><span class="p">(</span>
+    <span class="n">recipient_bch_address</span><span class="o">=</span><span class="s2">&quot;bchtest:qp...&quot;</span><span class="p">,</span>  <span class="c1"># Testnet address</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;ASGAYA_TXN_READY_TEST&quot;</span><span class="p">,</span>
+    <span class="n">escrow_private_key</span><span class="o">=</span><span class="n">testnet_key</span>
+<span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h3 id="unit-tests">Unit Tests<a class="headerlink" href="#unit-tests" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">OpReturnParserTest</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`parse ASGAYA_TXN_READY message`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ASGAYA_TXN_READY_7382&quot;</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parseNotificationType</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">NotificationType</span><span class="p">.</span><span class="na">TXN_READY</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">type</span><span class="p">)</span>
+<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;7382&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`parse ASGAYA_TXN_COMPLETED message`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ASGAYA_TXN_COMPLETED_txn_7Hk9mNpQ2wX&quot;</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parseNotificationType</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="n">NotificationType</span><span class="p">.</span><span class="na">TXN_COMPLETED</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">type</span><span class="p">)</span>
+<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;txn_7Hk9mNpQ2wX&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`ignore non-Asgaya OP_RETURN`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;MEMO:Hello World&quot;</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parseNotificationType</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">assertNull</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">`extract OP_RETURN data from transaction`</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Mock transaction with OP_RETURN output</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createMockOpReturnTx</span><span class="p">(</span><span class="s">&quot;ASGAYA_TEST&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractOpReturnData</span><span class="p">(</span><span class="n">tx</span><span class="p">.</span><span class="na">outputs</span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&quot;ASGAYA_TEST&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="integration-tests">Integration Tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nd">@Test</span>
+<span class="kd">fun</span><span class="w"> </span><span class="nf">`end-to-end OP_RETURN notification flow`</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runTest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 1. Initialize SPV wallet</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">wallet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AsgayaWallet</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+<span class="w">    </span><span class="n">wallet</span><span class="p">.</span><span class="na">initialize</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="c1">// 2. Backend sends OP_RETURN to this address</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">txid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">backendApi</span><span class="p">.</span><span class="na">sendTestNotification</span><span class="p">(</span>
+<span class="w">            </span><span class="n">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="na">toString</span><span class="p">(),</span>
+<span class="w">            </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ASGAYA_TXN_READY_9999&quot;</span>
+<span class="w">        </span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// 3. Wait for SPV wallet to detect</span>
+<span class="w">        </span><span class="n">delay</span><span class="p">(</span><span class="m">30</span><span class="n">_000</span><span class="p">)</span><span class="w">  </span><span class="c1">// 30 seconds</span>
+
+<span class="w">        </span><span class="c1">// 4. Verify notification shown</span>
+<span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">notifications</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getShownNotifications</span><span class="p">()</span>
+<span class="w">        </span><span class="n">assertTrue</span><span class="p">(</span><span class="n">notifications</span><span class="p">.</span><span class="na">any</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;9999&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="performance-optimization">Performance Optimization<a class="headerlink" href="#performance-optimization" title="Permanent link">&para;</a></h2>
+<h3 id="block-header-download">Block Header Download<a class="headerlink" href="#block-header-download" title="Permanent link">&para;</a></h3>
+<p><strong>Initial sync can take 5-10 minutes:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Show sync progress to user</span>
+<span class="n">wallet</span><span class="p">.</span><span class="na">addListener</span><span class="p">(</span><span class="k">object</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">DownloadProgressTracker</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">progress</span><span class="p">(</span><span class="n">pct</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span><span class="w"> </span><span class="n">blocksSoFar</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">date</span><span class="p">:</span><span class="w"> </span><span class="n">Date?)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">d</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sync progress: </span><span class="si">${</span><span class="p">(</span><span class="n">pct</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="p">).</span><span class="na">toInt</span><span class="p">()</span><span class="si">}</span><span class="s">%&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// Update UI</span>
+<span class="w">        </span><span class="n">showSyncProgress</span><span class="p">(</span><span class="n">pct</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">doneDownload</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sync complete!&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="n">hideSyncProgress</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">},</span><span class="w"> </span><span class="n">MoreExecutors</span><span class="p">.</span><span class="na">directExecutor</span><span class="p">())</span>
+</code></pre></div>
+<hr />
+<h3 id="background-sync">Background Sync<a class="headerlink" href="#background-sync" title="Permanent link">&para;</a></h3>
+<p><strong>Keep wallet synced even when app closed:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">WalletSyncWorker</span><span class="p">(</span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">Context</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">WorkerParameters</span><span class="p">)</span><span class="w"> </span><span class="p">:</span>
+<span class="w">    </span><span class="n">CoroutineWorker</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">doWork</span><span class="p">():</span><span class="w"> </span><span class="n">Result</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Start wallet sync</span>
+<span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">wallet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AsgayaWallet</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">)</span>
+<span class="w">            </span><span class="n">wallet</span><span class="p">.</span><span class="na">initialize</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">                </span><span class="n">Log</span><span class="p">.</span><span class="na">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Background sync complete for </span><span class="si">$</span><span class="n">address</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">Result</span><span class="p">.</span><span class="na">success</span><span class="p">()</span>
+
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="na">e</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Background sync failed&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">            </span><span class="n">Result</span><span class="p">.</span><span class="na">retry</span><span class="p">()</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Schedule periodic sync (every 6 hours)</span>
+<span class="n">WorkManager</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="na">enqueueUniquePeriodicWork</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;wallet_sync&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ExistingPeriodicWorkPolicy</span><span class="p">.</span><span class="na">KEEP</span><span class="p">,</span>
+<span class="w">    </span><span class="n">PeriodicWorkRequestBuilder</span><span class="o">&lt;</span><span class="n">WalletSyncWorker</span><span class="o">&gt;</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">HOURS</span><span class="p">).</span><span class="na">build</span><span class="p">()</span>
+<span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="monitoring-observability">Monitoring &amp; Observability<a class="headerlink" href="#monitoring-observability" title="Permanent link">&para;</a></h2>
+<h3 id="backend-metrics">Backend Metrics<a class="headerlink" href="#backend-metrics" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Track OP_RETURN notifications sent</span>
+<span class="n">opreturn_notifications_sent</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span>
+    <span class="s1">&#39;asgaya_opreturn_notifications_sent&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Total OP_RETURN notifications sent&#39;</span><span class="p">,</span>
+    <span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>  <span class="c1"># TXN_READY, TXN_COMPLETED, etc.</span>
+<span class="p">)</span>
+
+<span class="c1"># Track delivery time (estimated)</span>
+<span class="n">opreturn_delivery_duration</span> <span class="o">=</span> <span class="n">Histogram</span><span class="p">(</span>
+    <span class="s1">&#39;asgaya_opreturn_delivery_duration_seconds&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Estimated delivery time for OP_RETURN notifications&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Track BCH spent on notifications</span>
+<span class="n">opreturn_bch_spent</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span>
+    <span class="s1">&#39;asgaya_opreturn_bch_spent_satoshis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Total satoshis spent on OP_RETURN notifications&#39;</span>
+<span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="app-metrics">App Metrics<a class="headerlink" href="#app-metrics" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Track notifications received</span>
+<span class="kd">val</span><span class="w"> </span><span class="nv">notificationsReceived</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Counter</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;asgaya_opreturn_notifications_received&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">labelNames</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+
+<span class="c1">// Track parsing errors</span>
+<span class="kd">val</span><span class="w"> </span><span class="nv">parseErrors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Counter</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;asgaya_opreturn_parse_errors&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">labelNames</span><span class="p">(</span><span class="s">&quot;reason&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+
+<span class="c1">// Track delivery latency (time from tx broadcast to app detection)</span>
+<span class="kd">val</span><span class="w"> </span><span class="nv">deliveryLatency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Histogram</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">name</span><span class="p">(</span><span class="s">&quot;asgaya_opreturn_delivery_latency_seconds&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h2 id="future-enhancements">Future Enhancements<a class="headerlink" href="#future-enhancements" title="Permanent link">&para;</a></h2>
+<h3 id="v11-push-notifications-fallback">V1.1: Push Notifications Fallback<a class="headerlink" href="#v11-push-notifications-fallback" title="Permanent link">&para;</a></h3>
+<p><strong>For users who want faster notifications:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Hybrid approach: OP_RETURN primary, FCM fallback</span>
+<span class="kd">class</span><span class="w"> </span><span class="nc">HybridNotificationManager</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">sendNotification</span><span class="p">(</span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="n">User</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Always send OP_RETURN (decentralized)</span>
+<span class="w">        </span><span class="n">sendOpReturnNotification</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">bch_address</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// If user opted into FCM, also send push</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">fcm_token</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">sendFcmNotification</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">fcm_token</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>User choice:</strong>
+- ✅ OP_RETURN only (privacy-first, 15-30s latency)
+- ✅ OP_RETURN + FCM (faster, but less private)</p>
+<hr />
+<h3 id="v2-encrypted-op_return">V2: Encrypted OP_RETURN<a class="headerlink" href="#v2-encrypted-op_return" title="Permanent link">&para;</a></h3>
+<p><strong>Privacy enhancement: Encrypt message with recipient's public key</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Backend encrypts message before sending</span>
+<span class="kd">fun</span><span class="w"> </span><span class="nf">sendEncryptedOpReturn</span><span class="p">(</span>
+<span class="w">    </span><span class="n">recipient_bch_address</span><span class="p">:</span><span class="w"> </span><span class="n">str</span><span class="p">,</span>
+<span class="w">    </span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="n">str</span><span class="p">,</span>
+<span class="w">    </span><span class="n">recipient_public_key</span><span class="p">:</span><span class="w"> </span><span class="n">PublicKey</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">Encrypt</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">recipient</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">public</span><span class="w"> </span><span class="n">key</span>
+<span class="w">    </span><span class="n">encrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encrypt_with_ecies</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">recipient_public_key</span><span class="p">)</span>
+
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">Send</span><span class="w"> </span><span class="n">encrypted</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">OP_RETURN</span>
+<span class="w">    </span><span class="n">send_opreturn_notification</span><span class="p">(</span>
+<span class="w">        </span><span class="n">recipient_bch_address</span><span class="p">,</span>
+<span class="w">        </span><span class="n">f</span><span class="s">&quot;ASGAYA_ENC_{encrypted}&quot;</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="c1">// App decrypts with private key</span>
+<span class="kd">fun</span><span class="w"> </span><span class="nf">parseEncryptedOpReturn</span><span class="p">(</span><span class="n">encrypted</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">decrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decryptWithBchKey</span><span class="p">(</span><span class="n">encrypted</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">decrypted</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Benefit:</strong> On-chain observers can't read notification content</p>
+<hr />
+<h3 id="v3-cashaccounts-integration">V3: CashAccounts Integration<a class="headerlink" href="#v3-cashaccounts-integration" title="Permanent link">&para;</a></h3>
+<p><strong>Use CashAccounts for human-readable names:</strong></p>
+<p>Instead of:
+- BCH address: <code>bitcoincash:qp3wjpa3tjlj042z2wv7hahsldgwhwy0rq9sywjpyy</code></p>
+<p>Use:
+- CashAccount: <code>iris#12345</code></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Resolve CashAccount to BCH address</span>
+<span class="kd">val</span><span class="w"> </span><span class="nv">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cashAccountResolver</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="s">&quot;iris#12345&quot;</span><span class="p">)</span>
+
+<span class="c1">// Send OP_RETURN to resolved address</span>
+<span class="n">sendOpReturnNotification</span><span class="p">(</span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ASGAYA_TXN_READY_7382&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>User experience:</strong>
+- Sender enters: "iris#12345" instead of long BCH address
+- Backend resolves to address
+- Sends OP_RETURN notification</p>
+<hr />
+<h2 id="cross-platform-support">Cross-Platform Support<a class="headerlink" href="#cross-platform-support" title="Permanent link">&para;</a></h2>
+<h3 id="ios-implementation">iOS Implementation<a class="headerlink" href="#ios-implementation" title="Permanent link">&para;</a></h3>
+<p><strong>Use BitcoinKit.Swift:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kd">import</span><span class="w"> </span><span class="nc">BitcoinKit</span>
+
+<span class="kd">class</span><span class="w"> </span><span class="nc">AsgayaWallet</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">wallet</span><span class="p">:</span><span class="w"> </span><span class="n">Wallet</span><span class="p">?</span>
+
+<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">initialize</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nv">configuration</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Configuration</span><span class="p">(</span>
+<span class="w">            </span><span class="n">network</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">mainnetBCH</span><span class="p">,</span>
+<span class="w">            </span><span class="n">syncMode</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">full</span>
+<span class="w">        </span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">wallet</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">try</span><span class="p">?</span><span class="w"> </span><span class="n">Wallet</span><span class="p">(</span><span class="n">configuration</span><span class="p">:</span><span class="w"> </span><span class="n">configuration</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// Listen for transactions</span>
+<span class="w">        </span><span class="n">wallet</span><span class="p">?.</span><span class="n">transactionReceived</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">transaction</span><span class="w"> </span><span class="k">in</span>
+<span class="w">            </span><span class="kc">self</span><span class="p">.</span><span class="n">handleIncomingTransaction</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Start sync</span>
+<span class="w">        </span><span class="k">try</span><span class="p">?</span><span class="w"> </span><span class="n">wallet</span><span class="p">?.</span><span class="n">start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">func</span><span class="w"> </span><span class="nf">handleIncomingTransaction</span><span class="p">(</span><span class="kc">_</span><span class="w"> </span><span class="n">transaction</span><span class="p">:</span><span class="w"> </span><span class="n">Transaction</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Check for OP_RETURN outputs</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">transaction</span><span class="p">.</span><span class="n">outputs</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">opReturnData</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="n">opReturnData</span><span class="p">,</span>
+<span class="w">               </span><span class="kd">let</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">String</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="n">opReturnData</span><span class="p">,</span><span class="w"> </span><span class="n">encoding</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">utf8</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">parseAsgayaNotification</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Same notification formats work across platforms!</strong></p>
+<hr />
+<h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Index:</strong> <a href="android-app/notification-listener/README.md">NotificationListener Architecture</a> - Overview</li>
+<li><strong>Bizum:</strong> <a href="android-app/notification-listener/bizum-android.md">bizum-android.md</a> - EUR notifications</li>
+<li><strong>PagoMóvil:</strong> <a href="android-app/notification-listener/pagomovil-android.md">pagomovil-android.md</a> - VES notifications</li>
+<li><strong>User APIs:</strong> <a href="android-app/backend-apis/user-apis.md">user-apis.md</a> - OP_RETURN message formats</li>
+<li><strong>Architecture:</strong> <a href="android-app/README.md">README.md</a> - Philosophy</li>
+</ul>
+<hr />
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>OP_RETURN = Decentralized Push Notifications</strong> - No FCM, no tracking, no servers</li>
+<li><strong>BCH address = User ID + Notification Inbox</strong> - Elegant dual purpose</li>
+<li><strong>Cost: €0.006 per notification</strong> - 96% cheaper than Firebase at scale</li>
+<li><strong>Delivery: 15-30 seconds</strong> - Slightly slower than FCM, but fully decentralized</li>
+<li><strong>Works across platforms</strong> - Same messages, Android &amp; iOS</li>
+<li><strong>Privacy-first</strong> - No device tokens, no tracking, pseudonymous</li>
+<li><strong>Bonus: Users earn BCH</strong> - 546 sats dust per notification adds up</li>
+</ol>
+<p><strong>Philosophy:</strong> Bitcoin Cash isn't just for settlement - it's the communication layer too.</p>
+<hr />
+<p><em>Created: April 28, 2026</em>
+<em>Status: Draft (MVP Critical - Week 2)</em>
+<em>Next: Implement and test on BCH testnet</em>
+<em>This is the magic sauce - makes Asgaya feel truly decentralized</em></p>
+        <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
+            <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
+        </div>
+        <script>
+        async function copyMarkdownToClipboard() {
+            try {
+                const currentPath = window.location.pathname;
+                const mdPath = currentPath.endsWith('/') ? currentPath + 'index.md' : currentPath.replace(/\.html$/, '.md');
+
+                const response = await fetch(mdPath);
+                if (response.ok) {
+                    const markdown = await response.text();
+                    await navigator.clipboard.writeText(markdown);
+                    // Show feedback
+                    const button = document.querySelector('#llms-copy-button button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007acc';
+                    }, 2000);
+                } else {
+                    throw new Error('Markdown file not found');
+                }
+            } catch (err) {
+                console.error('Failed to copy markdown:', err);
+                alert('Failed to copy markdown content');
+            }
+        }
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.breadcrumbs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,69 @@
+# Android App Documentation
+
+> Complete specification for Asgaya Android application
+
+## Overview
+
+This section contains detailed documentation for the Asgaya Android app, covering:
+- User flows (how users interact with the app)
+- Backend APIs (19 endpoints the app calls)
+- NotificationListener (the "heart of the app" - bridges fiat and BCH)
+
+## Structure
+
+### User Flows
+- **Remittance & Merchant Cash-Out** (`/android-app/flows/remittance-merchant-cash-out.md`) - How senders initiate remittances
+- **BCH Payment Flows** (`/android-app/flows/bch-payment-flows.md`) - Direct BCH payments
+- **Recipient Flows** (`/android-app/flows/recipient-flows.md`) - How recipients receive cash
+- **Merchant Flows** (`/android-app/flows/merchant-flows.md`) - How merchants provide liquidity
+
+**Start with:** `bch-payment-flows.md` (simplest, foundation for others)
+
+### Backend APIs
+**Navigate:** `/android-app/backend-apis/llm.txt`
+
+19 REST endpoints across 5 categories:
+- Rate APIs (1 endpoint)
+- Transaction APIs (7 endpoints)
+- Settlement APIs (5 endpoints)
+- Merchant APIs (4 endpoints)
+- User APIs (2 endpoints)
+
+**Key innovation:** BCH signatures for auth (no phone verification, no JWT)
+
+### NotificationListener
+**Navigate:** `/android-app/notification-listener/llm.txt`
+
+The "heart of the app" - parses payment notifications to auto-confirm transactions:
+- Bizum (Spain) - EUR → Escrow
+- PagoMóvil (Venezuela) - VES → Merchant
+- OP_RETURN (BCH) - On-chain → All users
+
+**Most critical component** - if this fails, manual fallback required
+
+## For AI Reviewers
+
+**Focus areas for external review:**
+
+1. **NotificationListener Security**
+   - Can you find SMS spoofing vulnerabilities?
+   - Is the bank shortcode whitelist sufficient?
+   - Review: `/android-app/notification-listener/security.md`
+
+2. **Backend API Design**
+   - Are there race conditions in state machine?
+   - Is BCH signature auth secure?
+   - Review: `/android-app/backend-apis/transaction-apis.md`
+
+3. **User Flow Completeness**
+   - What edge cases are missing?
+   - Are error states handled?
+   - Review: `/android-app/flows/remittance-merchant-cash-out.md` and `/android-app/flows/bch-payment-flows.md`
+
+## Status
+
+**Phase:** Documentation Complete (Seeking Review)
+**Implementation:** Not started (docs-first approach)
+**Testing:** Test strategy defined, not executed
+
+**Next:** Implement Phase 1 (Payment Flow - Week 1-2)

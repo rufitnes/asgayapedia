@@ -1,0 +1,5014 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BCH covenant-based remittance protocol for Spain-Venezuela corridor">
+      
+      
+      
+        <link rel="canonical" href="https://docs.asgaya.org/android-app/backend-apis/rate-apis/">
+      
+      
+        <link rel="prev" href="../bch-native-architecture/">
+      
+      
+        <link rel="next" href="../user-apis/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Rate APIs - Asgaya Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/bch-colors.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#exchange-rate-queries" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Asgaya Documentation" class="md-header__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Asgaya Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Rate APIs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  Android App
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../bch-native-architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../concepts/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../research/RS053_MUSD/" class="md-tabs__link">
+          
+  
+  
+  Research
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Asgaya Documentation" class="md-nav__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Asgaya Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android App
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android App
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/home-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sender Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sender Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_2" id="__nav_2_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Covenant Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/covenant-setup/2-recipient-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/covenant-setup/3-amount-entry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amount Entry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/covenant-setup/4-payment-method/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_3" id="__nav_2_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Own Wallet Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Own Wallet Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/own-wallet-path/4a-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/own-wallet-path/6a-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/own-wallet-path/7a-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_4" id="__nav_2_2_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buy Seller Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Buy Seller Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/4b-confirm-purchase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Purchase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/4.5-select-seller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Select Seller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/5-payment-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Instructions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/6b-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/buy-seller-path/7b-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_5" id="__nav_2_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Screens
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Error Screens
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/pending-covenant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Covenant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/seller-non-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Non-Delivery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/bizum-timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Timeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/network-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/recipient-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Direct Payment Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/1-scan-merchant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Merchant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/2-enter-amount/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enter Amount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/3-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/direct-payment-flows/4-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/trade-bch-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trade BCH Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../flows/merchant-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backend APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pull-system-rate-determination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull System Rate Determination
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pull System Rate Determination">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-covenant-rates-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Covenant Rates Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flow-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow Example
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flow Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-sender-sees-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Sender Sees Estimate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-sender-creates-covenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Sender Creates Covenant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-recipient-claims-rate-determined-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Recipient Claims (Rate Determined NOW)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-settlement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Settlement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-query-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Query Sources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Query Sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bcheur-rate-coingecko" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. BCH/EUR Rate (CoinGecko)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-eurves-rate-dolarapi-venezuela" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. EUR/VES Rate (DolarAPI Venezuela)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-calculation-client-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Calculation (Client-Side)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Calculation (Client-Side)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-calculate-eur-ves-covenant-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Calculate EUR → VES Covenant Amount
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback-api-unavailable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fallback: API Unavailable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-sources-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Sources (MVP)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Sources (MVP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primary-dolarapi-confirmed-for-ves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary: DolarAPI (Confirmed for VES!)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback-transaction-average" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fallback: Transaction Average
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#error-response-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Response Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Codes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caching-strategy-client-side-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caching Strategy (Client-Side Only)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-estimates-vs-claim-time-rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Estimates vs Claim-Time Rates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-to-user-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection to User Flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Connection to User Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sender-flow-screen-3-enter-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sender Flow (Screen 3: Enter Amount)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipient-flow-screen-2-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipient Flow (Screen 2: Claim)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-simplifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 Simplifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0 Simplifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-were-not-doing-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We're NOT Doing (Yet)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rate-validation-client-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Validation (Client-Side)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pull-system-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull System Benefits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements-post-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Enhancements (Post-Phase 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Future Enhancements (Post-Phase 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-multiple-rate-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Multiple Rate Sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-rate-alerts-pull-system-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Rate Alerts (Pull System Optimization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-historical-rate-charts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Historical Rate Charts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-automatic-optimal-claiming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Automatic Optimal Claiming
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../common-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../covenant-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_7" id="__nav_2_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blockchain Scanner
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blockchain Scanner
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blockchain-scanner/nft-scanner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NFT Scanner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_8" id="__nav_2_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Bot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Seller Bot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../seller-bot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_9" id="__nav_2_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pichan-regtest-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pichan Regtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-device-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Device Test Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_10" id="__nav_2_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/ENGINEERING_JOURNEY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Journey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-permissionless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Permissionless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-self-custody/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Self-Custody
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-no-kyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why No KYC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-market-rate-exchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Market Rates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-cheaper-than-legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Cheaper Than Legacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-promote-adoption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Promote Adoption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-bch-usage-incentive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why BCH Usage Incentive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core-architecture/why-minimal-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Minimal Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/bch-sellers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/bch-buyers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overcollateralized Bounty Contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/rfid-card-recipients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RFID Card Recipients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/dynamic-reward-modulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic Reward Modulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/fee-splitting-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/two-step-settlement-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-Step Settlement Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/dispute-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dispute Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/payment-timeout-window/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Timeout Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/unclaimed-transaction-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unclaimed Transaction Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/bizum-concept-field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Concept Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/how-exchange-rates-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Exchange Rates Work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/musd-integration-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MUSD Integration Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/phase-0-progressive-decentralization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Progressive Decentralization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../decisions/phase-0-validation-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Validation Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/RS053_MUSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS053 MUSD Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/RS054_cashtoken_swaps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS054 CashToken Swaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pull-system-rate-determination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull System Rate Determination
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pull System Rate Determination">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-covenant-rates-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Covenant Rates Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flow-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow Example
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flow Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-sender-sees-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Sender Sees Estimate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-sender-creates-covenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Sender Creates Covenant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-recipient-claims-rate-determined-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Recipient Claims (Rate Determined NOW)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-settlement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Settlement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-query-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Query Sources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Query Sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bcheur-rate-coingecko" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. BCH/EUR Rate (CoinGecko)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-eurves-rate-dolarapi-venezuela" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. EUR/VES Rate (DolarAPI Venezuela)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-calculation-client-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Calculation (Client-Side)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Calculation (Client-Side)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-calculate-eur-ves-covenant-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Calculate EUR → VES Covenant Amount
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback-api-unavailable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fallback: API Unavailable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-sources-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Sources (MVP)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Sources (MVP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primary-dolarapi-confirmed-for-ves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary: DolarAPI (Confirmed for VES!)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback-transaction-average" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fallback: Transaction Average
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#error-response-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Response Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Codes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caching-strategy-client-side-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caching Strategy (Client-Side Only)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-estimates-vs-claim-time-rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Estimates vs Claim-Time Rates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-to-user-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection to User Flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Connection to User Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sender-flow-screen-3-enter-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sender Flow (Screen 3: Enter Amount)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipient-flow-screen-2-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipient Flow (Screen 2: Claim)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-simplifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 Simplifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0 Simplifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-were-not-doing-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We're NOT Doing (Yet)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rate-validation-client-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Validation (Client-Side)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pull-system-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull System Benefits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements-post-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Enhancements (Post-Phase 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Future Enhancements (Post-Phase 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-multiple-rate-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Multiple Rate Sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-rate-alerts-pull-system-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Rate Alerts (Pull System Optimization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-historical-rate-charts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Historical Rate Charts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-automatic-optimal-claiming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Automatic Optimal Claiming
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="exchange-rate-queries">Exchange Rate Queries<a class="headerlink" href="#exchange-rate-queries" title="Permanent link">&para;</a></h1>
+<p><strong>Category:</strong> Core Blockchain Operations
+<strong>Priority:</strong> 🔴 Critical (Phase 0)
+<strong>Related:</strong> <a href="../covenant-creation/">Covenant Creation</a>, <a href="../bch-native-architecture/">BCH-Native Architecture</a></p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Exchange rate queries provide real-time EUR/VES (and other corridor) rates for covenant creation. Mobile apps query rate APIs directly (no backend needed) to calculate BCH amounts for EUR-denominated covenants.</p>
+<p><strong>Key principle:</strong> Pull system - exchange rate determined when recipient claims, not when sender creates covenant. Sender sees estimate, recipient gets exact rate at claim time.</p>
+<hr />
+<h2 id="pull-system-rate-determination">Pull System Rate Determination<a class="headerlink" href="#pull-system-rate-determination" title="Permanent link">&para;</a></h2>
+<h3 id="how-covenant-rates-work">How Covenant Rates Work<a class="headerlink" href="#how-covenant-rates-work" title="Permanent link">&para;</a></h3>
+<p><strong>Problem with fixed-rate covenants:</strong>
+- Lock exchange rate when sender creates covenant
+- Recipient might wait hours/days to claim
+- BCH price volatility = rate becomes stale
+- Result: Recipient gets unexpected amount</p>
+<p><strong>Pull system approach:</strong>
+1. <strong>Sender creates EUR-denominated covenant:</strong> "€99.00 worth of BCH"
+2. <strong>Rate shown as estimate:</strong> Current BCH/EUR + VES/EUR rates
+3. <strong>Recipient claims when ready:</strong> Rate determined at claim time
+4. <strong>Covenant settles:</strong> BCH amount calculated using current rate</p>
+<p><strong>Benefits:</strong>
+- ✅ Recipient controls timing (can wait for favorable rate)
+- ✅ No stale rates (always current at claim time)
+- ✅ EUR-denominated protection (recipient always gets ~€99 worth)
+- ✅ Transparent (sender sees estimate, recipient sees exact)</p>
+<hr />
+<h2 id="flow-example">Flow Example<a class="headerlink" href="#flow-example" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-sender-sees-estimate">Step 1: Sender Sees Estimate<a class="headerlink" href="#step-1-sender-sees-estimate" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Iris enters: €100
+App queries:
+  - CoinGecko: BCH/EUR = €500 per BCH
+  - DolarAPI: EUR/VES = 57.5 (parallel rate)
+
+App calculates:
+  BCH needed: €99 / €500 = 0.198 BCH
+  VES equivalent: €99 × 57.5 = 5,692.5 VES
+  Sender pays: €99.50 (€99 + 0.5% seller fee)
+
+App shows:
+  Live rate: 1 EUR = 57.5 VES
+  Seller fee: €0.50 (0.5%)
+  Elena receives: ~5,692 VES worth
+
+  [Rate determined when Elena claims - this is an estimate]
+</code></pre></div>
+<p><strong>At this point:</strong>
+- ❌ No covenant created yet
+- ❌ No BCH locked
+- ✅ User can decide if rate acceptable</p>
+<h3 id="step-2-sender-creates-covenant">Step 2: Sender Creates Covenant<a class="headerlink" href="#step-2-sender-creates-covenant" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Iris confirms and creates EUR-denominated covenant:
+  Amount: €99.00 worth of BCH
+  Recipient: Elena#142
+  Timeout: 24 hours
+
+Iris pays Bizum to BCH seller (€99.50)
+  ↓
+BCH seller verifies payment
+  ↓
+BCH seller posts covenant with 0.198 BCH (7% overcollateralized)
+</code></pre></div>
+<p><strong>At this point:</strong>
+- ✅ Covenant exists on-chain (UTXO visible)
+- ✅ BCH locked in covenant (€99 worth)
+- ⏳ Waiting for Elena to claim</p>
+<h3 id="step-3-recipient-claims-rate-determined-now">Step 3: Recipient Claims (Rate Determined NOW)<a class="headerlink" href="#step-3-recipient-claims-rate-determined-now" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Elena (hours later): &quot;I&#39;m ready to claim&quot;
+  ↓
+App queries current rates:
+  - CoinGecko: BCH/EUR = €510 per BCH (BCH price rose!)
+  - DolarAPI: EUR/VES = 57.8 (VES rate changed slightly)
+  ↓
+Covenant calculates:
+  €99 worth at new rate: 0.194 BCH (less BCH, but still €99 worth)
+  VES equivalent: €99 × 57.8 = 5,722 VES (better rate!)
+  ↓
+Elena chooses: Claim as BCH or cash via merchant
+</code></pre></div>
+<p><strong>At this point:</strong>
+- ✅ Rate determined (at claim time, not creation time)
+- ✅ Elena got better VES rate (57.8 vs 57.5 estimate)
+- ✅ EUR value protected (always ~€99 worth)</p>
+<h3 id="step-4-settlement">Step 4: Settlement<a class="headerlink" href="#step-4-settlement" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>If Elena claims as BCH:
+  - Covenant releases 0.194 BCH to Elena
+  - No merchant involved (0% additional fee)
+
+If Elena claims cash via merchant:
+  - Covenant releases 0.194 BCH to merchant
+  - Merchant hands 5,722 VES cash to Elena
+  - Merchant earns 0.5% fee (included in covenant)
+</code></pre></div>
+<p><strong>Pull system benefits:</strong> Elena timed the claim when VES rate improved (57.5 → 57.8). With traditional escrow, she'd be stuck with the creation-time rate.</p>
+<hr />
+<h2 id="rate-query-sources">Rate Query Sources<a class="headerlink" href="#rate-query-sources" title="Permanent link">&para;</a></h2>
+<p>Mobile apps query public APIs directly (no Asgaya backend needed):</p>
+<h3 id="1-bcheur-rate-coingecko">1. BCH/EUR Rate (CoinGecko)<a class="headerlink" href="#1-bcheur-rate-coingecko" title="Permanent link">&para;</a></h3>
+<p><strong>Endpoint:</strong> <code>https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&amp;vs_currencies=eur</code></p>
+<p><strong>Example request:</strong>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span>
+<span class="w">  </span><span class="s1">&#39;https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&amp;vs_currencies=eur&#39;</span>
+<span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">bchPrice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">[</span><span class="s1">&#39;bitcoin-cash&#39;</span><span class="p">].</span><span class="nx">eur</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., 500.00 EUR per BCH</span>
+</code></pre></div></p>
+<p><strong>Response:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;bitcoin-cash&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;eur&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">500.00</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Update frequency:</strong> Real-time (CoinGecko updates every ~60 seconds)<br />
+<strong>Cache:</strong> 30 seconds client-side</p>
+<hr />
+<h3 id="2-eurves-rate-dolarapi-venezuela">2. EUR/VES Rate (DolarAPI Venezuela)<a class="headerlink" href="#2-eurves-rate-dolarapi-venezuela" title="Permanent link">&para;</a></h3>
+<p><strong>Endpoint:</strong> <code>https://ve.dolarapi.com/v1/dolares/paralelo</code></p>
+<p><strong>Example request:</strong>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://ve.dolarapi.com/v1/dolares/paralelo&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">vesRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">promedio</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., 57.5 VES per USD</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">eurVesRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vesRate</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.10</span><span class="p">;</span><span class="w">  </span><span class="c1">// Approximate EUR/VES (EUR ~10% higher than USD)</span>
+</code></pre></div></p>
+<p><strong>Response:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;fuente&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ParaleloVzla&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nombre&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dólar Paralelo&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;compra&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">57.30</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;venta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">57.70</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;promedio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">57.50</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;fechaActualizacion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-16T10:30:00.000Z&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Update frequency:</strong> Real-time (parallel market rate)<br />
+<strong>Cache:</strong> 30 seconds client-side</p>
+<hr />
+<h2 id="rate-calculation-client-side">Rate Calculation (Client-Side)<a class="headerlink" href="#rate-calculation-client-side" title="Permanent link">&para;</a></h2>
+<h3 id="example-calculate-eur-ves-covenant-amount">Example: Calculate EUR → VES Covenant Amount<a class="headerlink" href="#example-calculate-eur-ves-covenant-amount" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Mobile app code (runs on sender&#39;s phone)</span>
+
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">calculateCovenantEstimate</span><span class="p">(</span><span class="nx">eurAmount</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Query BCH/EUR price</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">bchPriceResp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span>
+<span class="w">    </span><span class="s1">&#39;https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&amp;vs_currencies=eur&#39;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">bchData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">bchPriceResp</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">bchEurPrice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">bchData</span><span class="p">[</span><span class="s1">&#39;bitcoin-cash&#39;</span><span class="p">].</span><span class="nx">eur</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., 500 EUR/BCH</span>
+
+<span class="w">  </span><span class="c1">// Query VES/USD rate (parallel market)</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vesRateResp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://ve.dolarapi.com/v1/dolares/paralelo&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vesData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">vesRateResp</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vesUsdRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vesData</span><span class="p">.</span><span class="nx">promedio</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., 57.5 VES/USD</span>
+
+<span class="w">  </span><span class="c1">// Convert to EUR/VES (EUR worth ~10% more than USD)</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">eurVesRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">vesUsdRate</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.10</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., 63.25 VES/EUR</span>
+
+<span class="w">  </span><span class="c1">// Calculate BCH needed for EUR-denominated covenant</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">eurNet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">eurAmount</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., 99.00 (after 0.5% seller fee subtracted earlier)</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">bchNeeded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">eurNet</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">bchEurPrice</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., 99 / 500 = 0.198 BCH</span>
+
+<span class="w">  </span><span class="c1">// Calculate VES equivalent (what recipient sees)</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">vesEquivalent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">eurNet</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">eurVesRate</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., 99 * 63.25 = 6,261.75 VES</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">bchAmount</span><span class="o">:</span><span class="w"> </span><span class="kt">bchNeeded</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">vesEstimate</span><span class="o">:</span><span class="w"> </span><span class="kt">vesEquivalent</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">bchPrice</span><span class="o">:</span><span class="w"> </span><span class="kt">bchEurPrice</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">vesRate</span><span class="o">:</span><span class="w"> </span><span class="kt">eurVesRate</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">(),</span>
+<span class="w">    </span><span class="nx">warning</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;⚠️ VES amount determined when recipient claims (this is an estimate)&#39;</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">estimate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">calculateCovenantEstimate</span><span class="p">(</span><span class="mf">99.00</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Lock </span><span class="si">${</span><span class="nx">estimate</span><span class="p">.</span><span class="nx">bchAmount</span><span class="si">}</span><span class="sb"> BCH for €99.00`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Recipient receives: ~</span><span class="si">${</span><span class="nx">estimate</span><span class="p">.</span><span class="nx">vesEstimate</span><span class="si">}</span><span class="sb"> VES`</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>App displays:</strong>
+<div class="highlight"><pre><span></span><code>Send: €99.50 (€99.00 + €0.50 seller fee)
+Elena receives: ~6,261 VES worth
+
+Exchange rate: 1 EUR = 63.25 VES
+BCH locked: 0.198 BCH
+Rate source: DolarAPI (parallel) + CoinGecko
+
+⚠️ VES amount determined when Elena claims
+   (she can wait for better rate if desired)
+
+vs Western Union: €4.50 fee (4.5%)
+You save: €4.00 ✨
+
+[Continue]
+</code></pre></div></p>
+<hr />
+<h3 id="fallback-api-unavailable">Fallback: API Unavailable<a class="headerlink" href="#fallback-api-unavailable" title="Permanent link">&para;</a></h3>
+<p><strong>If external APIs fail:</strong>
+- CoinGecko down → Fall back to last known BCH price (cached locally)
+- DolarAPI down → Show warning, suggest trying again
+- No recent cache → Cannot proceed (show error)</p>
+<p><strong>Fallback logic:</strong>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">CACHE_DURATION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000</span><span class="p">;</span><span class="w">  </span><span class="c1">// 5 minutes</span>
+
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getRateWithFallback</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Try live API</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetchLiveRate</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Check cache</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">cached</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getCache</span><span class="p">(</span><span class="s1">&#39;bch_rate&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cached</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">cached</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">CACHE_DURATION</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s1">&#39;⚠️ Using cached rate (live API unavailable)&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">cached</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// No cache available</span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;RATE_UNAVAILABLE&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>App displays (fallback):</strong>
+<div class="highlight"><pre><span></span><code>⚠️ Live rates temporarily unavailable
+Using cached rate from 3 minutes ago
+
+Send: €99.50
+Elena receives: ~6,250 VES (estimated)
+Rate: 1 EUR = 63.13 VES (cached)
+
+[I Accept This Rate] [Try Again]
+</code></pre></div></p>
+<hr />
+<h2 id="rate-sources-mvp">Rate Sources (MVP)<a class="headerlink" href="#rate-sources-mvp" title="Permanent link">&para;</a></h2>
+<h3 id="primary-dolarapi-confirmed-for-ves">Primary: DolarAPI (Confirmed for VES!)<a class="headerlink" href="#primary-dolarapi-confirmed-for-ves" title="Permanent link">&para;</a></h3>
+<p><strong>For EUR → VES (Venezuela):</strong>
+- Source: <strong>DolarAPI (https://ve.dolarapi.com)</strong> ✅
+- Rate type: <strong>"Dólar Paralelo"</strong> (parallel/black market dollar - equivalent to Argentina's dólar blue)
+- Endpoint: https://ve.dolarapi.com/v1/dolares (returns parallel + official rates)
+- Update frequency: Real-time (similar to Argentina API)
+- Cache: 30 seconds (reduce API calls)
+- <strong>Confirmed:</strong> Venezuela DOES have official vs black market disconnect (just like Argentina)</p>
+<p><strong>For EUR → ARS (future):</strong>
+- Source: DolarAPI (https://dolarapi.com)
+- Rate type: "Dólar Blue"
+- Already researched (RS043)</p>
+<p><strong>For EUR → HNL (future):</strong>
+- Source: DolarAPI (https://hn.dolarapi.com) or similar
+- Need to research if Honduras has parallel market</p>
+<p><strong>DolarAPI Coverage:</strong>
+- Argentina (ARS) ✅
+- Chile (CLP) ✅
+- Venezuela (VES) ✅
+- Uruguay (UYU)
+- México (MXN)
+- Bolivia (BOB)
+- Brasil (BRL)
+- Colombia (COP)</p>
+<p><strong>This is perfect!</strong> Single API provider for all Latin American corridors.</p>
+<h3 id="fallback-transaction-average">Fallback: Transaction Average<a class="headerlink" href="#fallback-transaction-average" title="Permanent link">&para;</a></h3>
+<p><strong>Source:</strong> Asgaya's own completed transactions
+- Last 10 transactions for corridor
+- Within last 12 hours
+- Real market rate (what people actually paid)</p>
+<hr />
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<h3 id="error-response-format">Error Response Format<a class="headerlink" href="#error-response-format" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CORRIDOR_UNAVAILABLE&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No recent transactions for EUR → VES corridor and live rates unavailable&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;details&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;corridor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EUR_VES&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;transactions_found&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;minimum_required&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="error-codes">Error Codes<a class="headerlink" href="#error-codes" title="Permanent link">&para;</a></h3>
+<p><strong>CORRIDOR_UNAVAILABLE</strong> (503)
+- No live rate AND insufficient transaction history
+- User cannot proceed with this corridor
+- Suggest alternative corridor or try again later</p>
+<p><strong>INVALID_AMOUNT</strong> (400)
+- Amount below minimum (Bizum minimum: €0.50)
+- Amount above maximum (if applicable)</p>
+<p><strong>INVALID_CORRIDOR</strong> (400)
+- Corridor not supported (e.g., EUR → USD)
+- Only supported corridors: EUR → VES, EUR → ARS, EUR → HNL</p>
+<p><strong>RATE_STALE</strong> (503)
+- Rate is older than 10 minutes
+- Backend should refresh, but if still fails, use fallback</p>
+<hr />
+<h2 id="caching-strategy-client-side-only">Caching Strategy (Client-Side Only)<a class="headerlink" href="#caching-strategy-client-side-only" title="Permanent link">&para;</a></h2>
+<p><strong>Cache duration:</strong> 30 seconds
+- User browsing different amounts → Use cached rate
+- Reduces API calls to CoinGecko/DolarAPI
+- Still fresh enough for accurate estimates</p>
+<p><strong>Invalidate cache when:</strong>
+- User changes corridor (EUR → VES to EUR → ARS)
+- 30 seconds elapsed
+- User explicitly taps "Refresh Rate"</p>
+<p><strong>Cache storage:</strong>
+<div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">RateCache</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">bchEurPrice</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">vesUsdRate</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">source</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;coingecko&#39;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;cached&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Save to localStorage</span>
+<span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;rate_cache_ves&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">bchEurPrice</span><span class="o">:</span><span class="w"> </span><span class="kt">500.00</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">vesUsdRate</span><span class="o">:</span><span class="w"> </span><span class="kt">57.5</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">Date.now</span><span class="p">(),</span>
+<span class="w">  </span><span class="nx">source</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;coingecko&#39;</span>
+<span class="p">}));</span>
+
+<span class="c1">// Retrieve and validate</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;rate_cache_ves&#39;</span><span class="p">));</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">cache</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">30</span><span class="nx">_000</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Use cached rate</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Fetch fresh rate</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="rate-estimates-vs-claim-time-rates">Rate Estimates vs Claim-Time Rates<a class="headerlink" href="#rate-estimates-vs-claim-time-rates" title="Permanent link">&para;</a></h2>
+<p><strong>Important distinction:</strong></p>
+<p><strong>Estimate (shown to sender):</strong>
+- Current BCH/EUR + EUR/VES rates
+- Refreshed every 30 seconds (cached)
+- Used to calculate covenant BCH amount
+- Shows sender: "Elena receives ~6,261 VES worth"</p>
+<p><strong>Claim-time rate (actual):</strong>
+- Determined when recipient claims covenant
+- Uses current rates at that moment (minutes/hours later)
+- Could be better or worse than estimate
+- EUR value protected (always €99 worth)</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code>Sender creates covenant (10:00 AM):
+  Rate estimate: 1 EUR = 63.25 VES
+  Shows: &quot;Elena receives ~6,261 VES&quot;
+
+Recipient claims (2:00 PM):
+  Actual rate: 1 EUR = 64.10 VES (improved!)
+  Elena receives: 6,345 VES (more than estimate)
+
+Elena benefited from waiting 4 hours (rate improved by 1.3%)
+</code></pre></div></p>
+<p><strong>No "rate guarantee" needed:</strong> Pull system means recipient controls timing and gets current rate at claim.</p>
+<hr />
+<h2 id="connection-to-user-flows">Connection to User Flows<a class="headerlink" href="#connection-to-user-flows" title="Permanent link">&para;</a></h2>
+<h3 id="sender-flow-screen-3-enter-amount">Sender Flow (Screen 3: Enter Amount)<a class="headerlink" href="#sender-flow-screen-3-enter-amount" title="Permanent link">&para;</a></h3>
+<p><strong>User enters amount:</strong>
+<div class="highlight"><pre><span></span><code>User types: €100
+  ↓
+App queries CoinGecko + DolarAPI (client-side)
+  ↓
+App calculates:
+  - BCH needed: 0.198 BCH
+  - VES estimate: ~6,261 VES
+  - Total sender pays: €99.50 (€99 + €0.50 seller fee)
+  ↓
+App shows estimate with pull system warning
+  ↓
+User clicks &quot;Continue&quot; if happy
+</code></pre></div></p>
+<p><strong>Screen 4: Select BCH Seller</strong>
+- User selects seller from bulletin board (NFT-based)
+- Seller shows: Payment methods, limits, fee
+- Rate estimate shown (but not locked - pull system)</p>
+<p><strong>Screen 5: Payment Instructions</strong>
+- Send Bizum to selected seller
+- Seller verifies payment → Creates covenant
+- Covenant visible on-chain (Elena notified via OP_RETURN)</p>
+<h3 id="recipient-flow-screen-2-claim">Recipient Flow (Screen 2: Claim)<a class="headerlink" href="#recipient-flow-screen-2-claim" title="Permanent link">&para;</a></h3>
+<p><strong>After recipient receives notification:</strong>
+<div class="highlight"><pre><span></span><code>Recipient sees: &quot;You received €99.00 worth from Iris&quot;
+
+App queries current rates:
+  CoinGecko: BCH/EUR (might have changed!)
+  DolarAPI: EUR/VES (might have changed!)
+
+App shows current VES equivalent:
+  &quot;Claim now: ~6,345 VES&quot; (better than 6,261 estimate!)
+
+  Choose:
+  • 🪙 Claim as BCH (free)
+  • 💵 Cash pickup (0.5% fee)
+</code></pre></div></p>
+<p><strong>Recipient benefits from pull system:</strong> Can wait for favorable rate movement before claiming.</p>
+<hr />
+<h2 id="phase-0-simplifications">Phase 0 Simplifications<a class="headerlink" href="#phase-0-simplifications" title="Permanent link">&para;</a></h2>
+<h3 id="what-were-not-doing-yet">What We're NOT Doing (Yet)<a class="headerlink" href="#what-were-not-doing-yet" title="Permanent link">&para;</a></h3>
+<p><strong>❌ Multiple rate sources (averaging):</strong>
+- Single source per rate (CoinGecko for BCH, DolarAPI for VES)
+- Post-MVP: Average multiple sources for reliability (CoinGecko + Kraken + Binance)</p>
+<p><strong>❌ Rate alerts/notifications:</strong>
+- User can't set "notify me when VES rate hits 65"
+- Post-MVP: Add rate alerts so recipient can time claims optimally</p>
+<p><strong>❌ Historical rate charts:</strong>
+- Don't show rate history graphs
+- Post-MVP: Add 7-day/30-day charts so users can see if current rate is favorable</p>
+<p><strong>❌ Automatic optimal claiming:</strong>
+- Recipient must manually choose when to claim
+- Post-MVP: Add "Auto-claim when rate &gt; X" feature</p>
+<p><strong>❌ User-reported rates:</strong>
+- Can't flag "rate seems wrong" yet
+- Post-MVP: Add reporting mechanism for suspicious rates</p>
+<hr />
+<h2 id="testing-checklist">Testing Checklist<a class="headerlink" href="#testing-checklist" title="Permanent link">&para;</a></h2>
+<p><strong>Before Phase 0:</strong>
+- [ ] CoinGecko BCH/EUR query works
+- [ ] DolarAPI VES/USD query works
+- [ ] Client-side calculation accurate (BCH amount, VES estimate)
+- [ ] Cache works (30 second client-side)
+- [ ] Fallback to cached rate works (when API down)
+- [ ] Error handling for API failures
+- [ ] Rate refresh on user tap works
+- [ ] Pull system warning displayed clearly</p>
+<p><strong>Edge cases:</strong>
+- [ ] CoinGecko down → Falls back to cached BCH price (&lt; 5 min old)
+- [ ] DolarAPI down → Shows error, suggests retry
+- [ ] Both APIs down + no cache → Cannot proceed (clear error)
+- [ ] Invalid API response (negative rate, null, etc.) → Validates before using
+- [ ] Large amounts (€1000+) → BCH precision maintained (8 decimals)
+- [ ] Small amounts (€10) → Ensures above min (seller limits)</p>
+<hr />
+<h2 id="security-considerations">Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">&para;</a></h2>
+<h3 id="rate-validation-client-side">Rate Validation (Client-Side)<a class="headerlink" href="#rate-validation-client-side" title="Permanent link">&para;</a></h3>
+<p><strong>All rates must be validated before use:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">validateRate</span><span class="p">(</span><span class="nx">rate</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">,</span><span class="w"> </span><span class="nx">currency</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Must be positive</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">rate</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Must be within reasonable range</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">ranges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s1">&#39;BCH_EUR&#39;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">min</span><span class="o">:</span><span class="w"> </span><span class="kt">100</span><span class="p">,</span><span class="w"> </span><span class="nx">max</span><span class="o">:</span><span class="w"> </span><span class="kt">2000</span><span class="w"> </span><span class="p">},</span><span class="w">    </span><span class="c1">// BCH won&#39;t be €0 or €10,000</span>
+<span class="w">    </span><span class="s1">&#39;VES_USD&#39;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">min</span><span class="o">:</span><span class="w"> </span><span class="kt">10</span><span class="p">,</span><span class="w"> </span><span class="nx">max</span><span class="o">:</span><span class="w"> </span><span class="kt">200</span><span class="w"> </span><span class="p">},</span><span class="w">      </span><span class="c1">// VES won&#39;t be 1:1 or 1000:1 with USD</span>
+<span class="w">    </span><span class="s1">&#39;ARS_USD&#39;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">min</span><span class="o">:</span><span class="w"> </span><span class="kt">100</span><span class="p">,</span><span class="w"> </span><span class="nx">max</span><span class="o">:</span><span class="w"> </span><span class="kt">2000</span><span class="w"> </span><span class="p">}</span><span class="w">     </span><span class="c1">// Similar for ARS</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">range</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ranges</span><span class="p">[</span><span class="sb">`</span><span class="si">${</span><span class="nx">currency</span><span class="si">}</span><span class="sb">_rate`</span><span class="p">];</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">rate</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">range</span><span class="p">.</span><span class="nx">min</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">rate</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">range</span><span class="p">.</span><span class="nx">max</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">bchPrice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetchBCHPrice</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">validateRate</span><span class="p">(</span><span class="nx">bchPrice</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;BCH_EUR&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;INVALID_BCH_PRICE&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="pull-system-benefits">Pull System Benefits<a class="headerlink" href="#pull-system-benefits" title="Permanent link">&para;</a></h3>
+<p><strong>Recipient can't be exploited:</strong>
+- No rate lock means no "sender creates covenant at bad rate"
+- Recipient sees current rate at claim time
+- Can wait for better rate before claiming
+- EUR value protected (always ~€99 worth)</p>
+<p><strong>Sender transparency:</strong>
+- Shows estimate: "Elena receives ~6,261 VES"
+- Warning: "Rate determined when Elena claims"
+- No surprises (sender knows recipient controls timing)</p>
+<hr />
+<h2 id="future-enhancements-post-phase-0">Future Enhancements (Post-Phase 0)<a class="headerlink" href="#future-enhancements-post-phase-0" title="Permanent link">&para;</a></h2>
+<h3 id="phase-1-multiple-rate-sources">Phase 1: Multiple Rate Sources<a class="headerlink" href="#phase-1-multiple-rate-sources" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Average 3+ sources: CoinGecko + Kraken API + Binance API</li>
+<li>More reliable than single source</li>
+<li>Flag outliers (if one source differs &gt;5% from average)</li>
+<li>Auto-exclude suspicious sources</li>
+</ul>
+<h3 id="phase-1-rate-alerts-pull-system-optimization">Phase 1: Rate Alerts (Pull System Optimization)<a class="headerlink" href="#phase-1-rate-alerts-pull-system-optimization" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Recipient sets: "Notify me when EUR/VES &gt; 64"</li>
+<li>Push notification when rate hits target</li>
+<li>Helps recipient time claim optimally</li>
+<li><strong>Example:</strong> "VES rate hit 64.5! Claim now for best value"</li>
+</ul>
+<h3 id="phase-2-historical-rate-charts">Phase 2: Historical Rate Charts<a class="headerlink" href="#phase-2-historical-rate-charts" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Show 7-day/30-day EUR/VES + BCH/EUR charts</li>
+<li>Recipient can see: "Current rate is highest this week!"</li>
+<li>Helps recipient decide when to claim</li>
+<li>Transparency builds trust</li>
+</ul>
+<h3 id="phase-2-automatic-optimal-claiming">Phase 2: Automatic Optimal Claiming<a class="headerlink" href="#phase-2-automatic-optimal-claiming" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Recipient sets: "Auto-claim when VES rate &gt; 64 OR after 20 hours"</li>
+<li>App monitors rates, claims automatically when condition met</li>
+<li>Maximizes recipient value (pull system + automation)</li>
+<li>Requires recipient to delegate claiming signature</li>
+</ul>
+<hr />
+<h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Covenant Creation:</strong> <a href="../covenant-creation/">covenant-creation.md</a> - How EUR-denominated covenants use these rates</li>
+<li><strong>User Flows:</strong> <a href="../flows/remittance-merchant-cash-out.md">Sender Flow</a>, <a href="../../flows/recipient-flows/">Recipient Flow</a></li>
+<li><strong>Architecture:</strong> <a href="../bch-native-architecture/">BCH-Native Architecture</a> - Pull system design</li>
+<li><strong>Phase 0:</strong> <a href="../../../decisions/phase-0-progressive-decentralization/">Progressive Decentralization</a></li>
+<li><strong>Backend Index:</strong> <a href="../">README.md</a></li>
+</ul>
+<hr />
+<p><em>Created: April 27, 2026</em><br />
+<em>Updated: May 16, 2026 (Removed Kraken/escrow narrative, covenant-based rates)</em><br />
+<em>Philosophy: Pull system - recipient controls timing, gets current rate at claim</em><br />
+<em>Phase 0: Client-side queries (CoinGecko + DolarAPI), no backend needed</em></p>
+        <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
+            <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
+        </div>
+        <script>
+        async function copyMarkdownToClipboard() {
+            try {
+                const currentPath = window.location.pathname;
+                const mdPath = currentPath.endsWith('/') ? currentPath + 'index.md' : currentPath.replace(/\.html$/, '.md');
+
+                const response = await fetch(mdPath);
+                if (response.ok) {
+                    const markdown = await response.text();
+                    await navigator.clipboard.writeText(markdown);
+                    // Show feedback
+                    const button = document.querySelector('#llms-copy-button button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007acc';
+                    }, 2000);
+                } else {
+                    throw new Error('Markdown file not found');
+                }
+            } catch (err) {
+                console.error('Failed to copy markdown:', err);
+                alert('Failed to copy markdown content');
+            }
+        }
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.breadcrumbs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
