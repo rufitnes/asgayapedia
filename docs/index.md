@@ -80,7 +80,7 @@ Native token standard enabling EUR commitments and merchant/seller availability 
 **[CashScript](https://cashscript.org/)**  
 Covenant (smart contract) language powering trustless settlement. No custody, no intermediation—just code executing autonomously on-chain.
 
-**[MUSD](https://www.mistcoin.org/)**  
+**[MUSD](https://www.moria.money/)**  
 Stablecoin integration pathway for future versions. Potential to eliminate fiat payment rails entirely.
 
 **OP_RETURN**  
@@ -91,6 +91,16 @@ BCH's data storage opcode bridges fiat payment systems (Bizum, PagoMóvil) with 
 Each of these projects solved hard problems. Asgaya's contribution is **synthesis**—combining them into something useful for people who've never heard of Bitcoin Cash.
 
 **The goal isn't to compete with these projects. It's to prove their value by making them disappear into the user experience.**
+
+### The End Goal
+
+**Asgaya's success is measured by how unnecessary it becomes.**
+
+The ultimate vision: people use Bitcoin Cash (or native instruments like MUSD) directly for everyday transactions—peer-to-peer, no intermediaries, no fees beyond network costs.
+
+Asgaya's role shrinks to a background utility for interacting with legacy payment systems when absolutely necessary. When a Venezuelan merchant can pay suppliers in BCH, buy inventory in BCH, and accept payments in BCH, they won't need to cash out through Asgaya anymore.
+
+**We're not building a platform. We're building a ladder people climb and then kick away.**
 
 ---
 
