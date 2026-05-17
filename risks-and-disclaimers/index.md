@@ -56,6 +56,8 @@ By participating in Asgaya (as a user, merchant, or BCH seller), **you are solel
 
 - **Money transmission laws:** Many jurisdictions classify remittance services, cryptocurrency exchanges, or payment facilitation as regulated money transmission. Merchants and BCH sellers may be operating illegally depending on local laws.
 
+- **MiCA "professional basis" threshold (EU):** Under the Markets in Crypto-Assets Regulation (MiCA), providing crypto services "on a professional basis" triggers CASP licensing requirements. While occasional BCH selling may fall below this threshold, high-volume BCH sellers could cross into regulated territory without clear guidance on where that line is. Volume thresholds are undefined and may be determined retroactively by regulators.
+
 - **Know Your Customer (KYC) violations:** Asgaya deliberately avoids KYC to remain permissionless. This may violate anti-money laundering (AML) laws in jurisdictions that require customer identification.
 
 - **Unlicensed financial services:** Providing remittance services without appropriate licenses can result in criminal prosecution, not just civil penalties. Prison sentences are possible in some jurisdictions.

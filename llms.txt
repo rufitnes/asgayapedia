@@ -105,6 +105,7 @@
 - [DeepSeek Review - May 4, 2026](https://docs.asgaya.org/meta/deepseek-review-2026-05-04/index.md)
 - [Phase 0 validation checklist](https://docs.asgaya.org/meta/phase-0-validation-checklist/index.md)
 - [Review Action Plan](https://docs.asgaya.org/meta/review-action-plan/index.md)
+- [Research Documents](https://docs.asgaya.org/research/index.md)
 - [Research Session RS010: Honduras – Remittance Market, Pulperías, and Strategic Opportunity](https://docs.asgaya.org/research/RS010_Honduras/index.md)
 - [Research Session RS016: EUR/BCH Exchanges – Backup Liquidity for the Escrow](https://docs.asgaya.org/research/RS016_EUR_BCH_exchanges/index.md)
 - [Research Session RS016: Kraken as Backup Liquidity – API, Account Levels, and Escrow Hot Wallet Flow](https://docs.asgaya.org/research/RS017_kraken/index.md)
