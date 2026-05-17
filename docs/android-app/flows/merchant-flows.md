@@ -358,6 +358,21 @@ Merchant hands VES cash, both parties co-sign covenant to trigger settlement.
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
+│  ❓ What if customer doesn't show   │
+│     up to claim?                    │
+│                                     │
+│  No problem! After 24 hours, the    │
+│  covenant automatically refunds:    │
+│  - Your portion → Back to sender    │
+│  - You never gave cash → No loss    │
+│                                     │
+│  Your BCH is safe in the covenant.  │
+│  Timeout protects you from no-shows.│
+│                                     │
+│  See: Timeout Cascade explained     │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
 │  ⏸️  When you've handed cash:       │
 │                                     │
 │  ┌─────────────────────────────┐   │
