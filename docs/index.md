@@ -10,7 +10,7 @@ Welcome to Asgayapedia - the complete documentation for the Asgaya remittance pr
 
 On the surface, it's a cheaper way to send money across borders (<1% vs 6.49% average). Under the hood, it's a **decentralized exchange** synthesizing innovations from across the BCH ecosystem into real-world utility.
 
-**The insight:** Every remittance creates a new BCH merchant. Use the $44.5 billion annually lost to fees to build circular economy infrastructure where it's needed most.
+**The insight:** Every remittance is designed to create a new BCH merchant. Use the $44.5 billion annually lost to fees to build circular economy infrastructure where it's needed most.
 
 ### Core Design Goals
 
@@ -85,6 +85,9 @@ Stablecoin integration pathway for future versions. Potential to eliminate fiat 
 
 **OP_RETURN**  
 BCH's data storage opcode bridges fiat payment systems (Bizum, PagoMóvil) with blockchain settlement. Immutable notification logs without bloating UTXO set.
+
+**[Fulcrum](https://github.com/cculianu/Fulcrum) / [Electrum](https://electroncash.org/)**  
+SPV wallet infrastructure enables mobile apps to function without running full nodes. No backend servers needed—apps connect directly to public Electrum servers for covenant monitoring and transaction broadcasting.
 
 ### Why This Matters
 
