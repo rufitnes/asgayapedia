@@ -14,6 +14,28 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 ---
 
+## ⚠️ Validation Strategy
+
+**Many parameters in these decisions are hypotheses, not validated data.**
+
+Examples:
+- **7% overcollateralization** - Educated guess for BCH volatility buffer
+- **0.5%/0.5% fee split** - Starting assumption for participant incentives
+- **24-hour timeout** - Arbitrary choice pending real usage data
+- **DolarAPI rates** - Phase 0 solution, not production-grade
+
+**The Bitcoin lesson:** Satoshi chose 1MB block size and 10-minute confirmation without empirical validation. These seemed reasonable but later became contentious. We're explicitly tracking our arbitrary parameters to avoid repeating this mistake.
+
+**Our approach:**
+1. Mark ALL hypothesis values with warning boxes in their decision docs
+2. Define success/failure metrics for each parameter
+3. Test during Phase 0 trials with real participants
+4. Adjust based on data, not ideology
+
+**📋 See:** **[Phase 0 Validation Checklist](phase-0-validation-checklist.md)** for complete tracking of arbitrary parameters, success metrics, and adjustment triggers.
+
+---
+
 ## How We Achieve The 3 Core Requirements
 
 ### 1️⃣ How: Cheaper Than Legacy (<1% fees)

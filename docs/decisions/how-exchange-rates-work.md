@@ -30,6 +30,33 @@ Use real market exchange rates with zero markup, avoiding both private company s
 
 ## The Decision
 
+> ⚠️ **PHASE 0 SOLUTION — NOT PRODUCTION-READY**
+> 
+> **DolarAPI is sufficient for Phase 0 testing but has known limitations:**
+> 
+> - **Single point of failure:** API downtime = protocol can't show rates to users
+> - **No manipulation protection:** One source = trust that source
+> - **No fallback mechanism:** If DolarAPI changes/disappears, app breaks
+> 
+> **The Bitcoin lesson:** Early Bitcoin implementations relied on single data 
+> sources (MtGox exchange rates, blockchain.info APIs) that later became 
+> bottlenecks or attack vectors. We're using DolarAPI to move fast, but 
+> acknowledging it's not robust enough for production.
+> 
+> **Phase 1 requirements:**
+> - Multiple rate sources (DolarAPI + Reserve + Monitor Dólar + on-chain oracles)
+> - Outlier detection (reject rates >5% different from median)
+> - Fallback mechanisms (cached rates, manual override, transaction pause)
+> - On-chain oracle integration (e.g., Oracles.cash for BCH/USD)
+> 
+> **Why Phase 0 first:** Validate user flows and economic model before building 
+> robust infrastructure. If Phase 0 reveals fundamental issues, we don't want 
+> to have wasted effort on production-grade rate aggregation.
+> 
+> **See:** [Phase 1 Stability Layer](../roadmap/phase-1-stability-layer.md)
+
+---
+
 ### Three-Layer Rate Display
 
 **Layer 1: Sender UX (EUR → VES equivalency)**

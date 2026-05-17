@@ -454,6 +454,34 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 
 ### Overcollateralization Mechanics
 
+> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
+> 
+> **The 7% overcollateralization rate is an educated guess, not empirical data.**
+> 
+> We don't yet know:
+> - Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
+> - Will sellers accept 7% capital inefficiency for 0.5% fee?
+> - Should it vary by market conditions? (5% calm, 12% volatile)
+> - Should it vary by time window? (5% for 12h, 7% for 24h)
+> 
+> **The Bitcoin lesson:** Satoshi chose a 1MB block size limit without empirical 
+> validation. It seemed reasonable at the time, then became a scaling bottleneck 
+> leading to contentious hard forks. We're explicitly tracking this assumption.
+> 
+> **Phase 0 validation plan:**
+> - Track margin call frequency (target: <5% of transactions)
+> - Measure 95th percentile BCH volatility during trials
+> - Test seller willingness to lock capital at this rate
+> 
+> **Adjustment triggers:**
+> - If margin calls >10% → Increase to 10% overcollateralization
+> - If margin calls <1% → Consider reducing to 5% (free up seller capital)
+> - If underpayment occurs → Immediately increase buffer
+> 
+> **See:** [Phase 0 Validation Checklist](phase-0-validation-checklist.md#-overcollateralization-rate)
+
+---
+
 **How 7% buffer protects:**
 
 | BCH Price Change | Impact | Result |
