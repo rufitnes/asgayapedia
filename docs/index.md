@@ -173,11 +173,16 @@ How to contribute to Asgaya:
 
 This documentation is designed to be navigable by AI agents.
 
-**AI Navigation:** See [llm.txt](llm.txt) for hierarchical navigation guide
+**AI Navigation:**
+- [llms.txt](https://docs.asgaya.org/llms.txt) - Full documentation sitemap (180+ pages)
+- [llms-full.txt](https://docs.asgaya.org/llms-full.txt) - All content concatenated (422 lines, 3.1MB)
+
+**Raw Markdown Access:**  
+Any page at `/path/to/page/` can be read as raw markdown at `/path/to/page/index.md`
 
 **How to help:**
-1. Read [AI Review Guide](meta/ai-review-guide.md)
-2. Choose a section to review
+1. Choose a section to review from the sitemap
+2. Read the raw markdown via the index.md pattern
 3. Provide specific, actionable feedback
 
 ---
@@ -185,9 +190,9 @@ This documentation is designed to be navigable by AI agents.
 ## Links
 
 - **Website:** https://asgaya.org
-- **Root llm.txt:** https://asgaya.org/llm.txt
-- **Docs llm.txt:** https://docs.asgaya.org/llm.txt
-- **GitHub:** https://github.com/asgaya/docs
+- **Documentation:** https://docs.asgaya.org
+- **AI Sitemap:** https://docs.asgaya.org/llms.txt
+- **GitHub:** https://github.com/rufitnes/asgayapedia
 
 ---
 

@@ -1,6 +1,6 @@
 # Why: BCH Usage Incentive (Recipients)
 
-**Sub-requirement of:** [Why: Promote Adoption](core-architecture/why-promote-adoption.md)
+**Sub-requirement of:** [Why: Promote Adoption](why-promote-adoption.md)
 
 **Core Requirement:** Recipients must have a reason to keep received funds in BCH rather than immediately cashing out to fiat.
 
@@ -191,9 +191,9 @@ The answer is obvious once merchants exist. Asgaya's job is to create those merc
 
 ## Related Requirements
 
-- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — The full adoption flywheel
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — The fee savings that fund the incentives
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Why self-custody and no KYC matter for this vision
+- [Why: Promote Adoption](why-promote-adoption.md) — The full adoption flywheel
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — The fee savings that fund the incentives
+- [Why: Permissionless](why-permissionless.md) — Why self-custody and no KYC matter for this vision
 
 ---
 
@@ -201,8 +201,8 @@ The answer is obvious once merchants exist. Asgaya's job is to create those merc
 
 See the **Decisions** section for how we achieve this:
 
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Why recipients holding BCH changes the fee calculation
-- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How settlement creates the merchant network
+- **[Fee Splitting Model](../decisions/fee-splitting-model.md)** — Why recipients holding BCH changes the fee calculation
+- **[Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)** — How settlement creates the merchant network
 
 ---
 

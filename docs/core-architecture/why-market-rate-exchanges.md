@@ -1,6 +1,6 @@
 # Why: Market-Rate Exchanges Only
 
-**Sub-requirement of:** [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
+**Sub-requirement of:** [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md)
 
 **Core Requirement:** Use real market exchange rates with zero markup.
 
@@ -125,8 +125,8 @@ If we compromise on exchange rates, we lose the moral authority to claim we're b
 
 ## Related Requirements
 
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Market rates are required to achieve <1% fees
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Bypassing government control requires permissionless settlement layer
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — Market rates are required to achieve <1% fees
+- [Why: Permissionless](why-permissionless.md) — Bypassing government control requires permissionless settlement layer
 
 ---
 
@@ -134,7 +134,7 @@ If we compromise on exchange rates, we lose the moral authority to claim we're b
 
 See the **Decisions** section for detailed documentation of how we enforce market rates:
 
-- **[How: Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Exchange integration, local rate discovery, alternatives considered
+- **[How Exchange Rates Work](../decisions/how-exchange-rates-work.md)** — Exchange integration, local rate discovery, alternatives considered
 - Decision: Rate verification in user flows (coming soon)
 
 ---

@@ -476,7 +476,7 @@ Both merchant and recipient must cryptographically sign covenant to trigger BCH 
 
 **V1 enhancement:** RFID card tap can replace smartphone signature for recipients without phones.
 
-**Related:** [Covenant (Technical)](#covenant-technical), [RFID Card Recipients](../concepts/rfid-card-recipients.md)
+**Related:** [Covenant (Technical)](#covenant-technical), [RFID Card Recipients](concepts/rfid-card-recipients.md)
 
 ---
 

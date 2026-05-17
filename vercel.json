@@ -1,4 +1,0 @@
-{
-  "buildCommand": "mkdocs build",
-  "outputDirectory": "site"
-}

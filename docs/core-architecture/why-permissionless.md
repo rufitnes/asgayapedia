@@ -41,7 +41,7 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 
 **Success metric:** Verified usage by users who cannot access legacy remittances due to lack of ID.
 
-**Deep dive:** [Why: No KYC](core-architecture/why-no-kyc.md) — Who KYC excludes, why financial access is a human right, the 1:1000 leverage ratio
+**Deep dive:** [Why: No KYC](why-no-kyc.md) — Who KYC excludes, why financial access is a human right, the 1:1000 leverage ratio
 
 ---
 
@@ -78,7 +78,7 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 
 **Success metric:** Verified usage with cardboard QR codes and RFID stickers in at least one corridor.
 
-**Deep dive:** [Why: Minimal Hardware](core-architecture/why-minimal-hardware.md) — The cardboard QR code philosophy, progressive enhancement, why edge cases matter most
+**Deep dive:** [Why: Minimal Hardware](why-minimal-hardware.md) — The cardboard QR code philosophy, progressive enhancement, why edge cases matter most
 
 ---
 
@@ -115,7 +115,7 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 
 **Success metric:** <1% of users losing funds due to lost keys (balanced with security).
 
-**Deep dive:** [Why: Self-Custody](core-architecture/why-self-custody.md) — Why custodial is worse, "not your keys not your coins," harsh reality as feature not bug
+**Deep dive:** [Why: Self-Custody](why-self-custody.md) — Why custodial is worse, "not your keys not your coins," harsh reality as feature not bug
 
 ---
 
@@ -220,8 +220,8 @@ The protocol is unnecesary complicated because of the conditions it has to meet 
 
 ## Related Requirements
 
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Permissionless design reduces compliance costs
-- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — Low barriers enable rapid network growth
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — Permissionless design reduces compliance costs
+- [Why: Promote Adoption](why-promote-adoption.md) — Low barriers enable rapid network growth
 
 ---
 
@@ -229,8 +229,8 @@ The protocol is unnecesary complicated because of the conditions it has to meet 
 
 See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
 
-- **[Bizum Concept Field](decisions/bizum-concept-field.md)** — Why phone numbers instead of semantic IDs (bank constraints)
-- **[Payment Timeout Window](decisions/payment-timeout-window.md)** — Why 10 minutes accommodates SMS delays and encoding issues
+- **[Bizum Concept Field](../decisions/bizum-concept-field.md)** — Why phone numbers instead of semantic IDs (bank constraints)
+- **[Payment Timeout Window](../decisions/payment-timeout-window.md)** — Why 10 minutes accommodates SMS delays and encoding issues
 - Decision: QR codes vs NFC (coming soon)
 - Decision: No universal merchant API (coming soon)
 

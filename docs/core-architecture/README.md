@@ -9,19 +9,19 @@ Core Architecture is the index that connects **requirements** (what and why we n
 ## Documents in This Section
 
 ### Economics & Fees
-- [why-cheaper-than-legacy.md](core-architecture/why-cheaper-than-legacy.md) - Economic model breakdown and fee structure
-- [why-market-rate-exchanges.md](core-architecture/why-market-rate-exchanges.md) - Transparent exchange rates with zero markup
-- [why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md) - Two-step settlement volatility protection
+- [why-cheaper-than-legacy.md](why-cheaper-than-legacy.md) - Economic model breakdown and fee structure
+- [why-market-rate-exchanges.md](why-market-rate-exchanges.md) - Transparent exchange rates with zero markup
+- [why-eliminate-volatility.md](why-eliminate-volatility.md) - Two-step settlement volatility protection
 
 ### Adoption & Incentives
-- [why-promote-adoption.md](core-architecture/why-promote-adoption.md) - Network effects and participant incentives
-- [why-bch-usage-incentive.md](core-architecture/why-bch-usage-incentive.md) - Incentivizing direct BCH payments
+- [why-promote-adoption.md](why-promote-adoption.md) - Network effects and participant incentives
+- [why-bch-usage-incentive.md](why-bch-usage-incentive.md) - Incentivizing direct BCH payments
 
 ### Permissionless Access
-- [why-no-kyc.md](core-architecture/why-no-kyc.md) - Peer-to-peer coordination without gatekeepers
-- [why-permissionless.md](core-architecture/why-permissionless.md) - Open participation principles
-- [why-minimal-hardware.md](core-architecture/why-minimal-hardware.md) - Support for low-tech solutions
-- [why-self-custody.md](core-architecture/why-self-custody.md) - User-controlled cryptography and keys
+- [why-no-kyc.md](why-no-kyc.md) - Peer-to-peer coordination without gatekeepers
+- [why-permissionless.md](why-permissionless.md) - Open participation principles
+- [why-minimal-hardware.md](why-minimal-hardware.md) - Support for low-tech solutions
+- [why-self-custody.md](why-self-custody.md) - User-controlled cryptography and keys
 
 ---
 
@@ -32,9 +32,9 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Requirement:** Beat 6.49% average remittance costs through market-rate exchanges and free peer-to-peer rails.
 
 **Architecture solutions:**
-- **[Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)** — Economic model breakdown: how covenant rails + market rates achieve <1%
-- **[Exchange Rate Safeguard](core-architecture/why-market-rate-exchanges.md)** — Real-time market rates (CoinGecko + DolarAPI) with zero markup
-- **[Volatility Protection](core-architecture/why-eliminate-volatility.md)** — Pull system eliminates Bitcoin Cash volatility concerns
+- **[Why Cheaper Than Legacy](why-cheaper-than-legacy.md)** — Economic model breakdown: how covenant rails + market rates achieve <1%
+- **[Exchange Rate Safeguard](why-market-rate-exchanges.md)** — Real-time market rates (CoinGecko + DolarAPI) with zero markup
+- **[Volatility Protection](why-eliminate-volatility.md)** — Pull system eliminates Bitcoin Cash volatility concerns
 
 **Key principle:** Transparent economics with no hidden markups.
 
@@ -45,14 +45,14 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Requirement:** Every transaction must create economic incentives for participants to join and grow the network.
 
 **Architecture solutions:**
-- **[Merchant & BCH Seller Incentives](core-architecture/why-promote-adoption.md)** — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
-- **[BCH Usage Incentives](core-architecture/bch-usage-incentives.md)** — Near zero-fee BCH payments vs. 1% remittance cash-outs
+- **[Merchant & BCH Seller Incentives](why-promote-adoption.md)** — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
+- **[BCH Usage Incentives](why-bch-usage-incentive.md)** — Near zero-fee BCH payments vs. 1% remittance cash-outs
 
 **Key principle:** the goal is to make asgaya redundant except to interact with the legacy system
 
 **Related concepts:**
-- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions (V1 feature)
-- [BCH Sellers](concepts/bch-sellers.md) — How BCH miners and holders can provide covenant liquidity
+- [Dynamic Reward Modulation](../concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions (V1 feature)
+- [BCH Sellers](../concepts/bch-sellers.md) — How BCH miners and holders can provide covenant liquidity
 
 ---
 
@@ -63,18 +63,18 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Architecture solutions:**
 
 **Access & Usability:**
-- **[No KYC Model](core-architecture/no-kyc.md)** — Peer-to-peer coordination without central gatekeepers
-- **[Permissionless Access](core-architecture/why-permissionless.md)** — Works offline, intermittent connectivity supported
-- **[Minimal Hardware](core-architecture/why-minimal-hardware.md)** — From cardboard QR codes, to RFID stickers, to smartphones
-- **[Minimal Knowledge](core-architecture/why-permissionless.md)** — Simple UI, Basic fucntions, not crypto jargon
+- **[No KYC Model](why-no-kyc.md)** — Peer-to-peer coordination without central gatekeepers
+- **[Permissionless Access](why-permissionless.md)** — Works offline, intermittent connectivity supported
+- **[Minimal Hardware](why-minimal-hardware.md)** — From cardboard QR codes, to RFID stickers, to smartphones
+- **[Minimal Knowledge](why-permissionless.md)** — Simple UI, Basic fucntions, not crypto jargon
 
 **Security & Self-Custody:**
-- **[Self-Custody](core-architecture/why-self-custody.md)** — Users control keys, Asgaya has zero access
-- **[Key Education](core-architecture/why-permissionless.md)** — Mandatory backup verification before first use
-- **[Key Safekeeping](core-architecture/why-permissionless.md)** — Multiple backup methods for different risk profiles
+- **[Self-Custody](why-self-custody.md)** — Users control keys, Asgaya has zero access
+- **[Key Education](why-permissionless.md)** — Mandatory backup verification before first use
+- **[Key Safekeeping](why-permissionless.md)** — Multiple backup methods for different risk profiles
 
 **Error Prevention:**
-- **[Error Mitigation](core-architecture/why-permissionless.md)** — QR codes, guided flows, auto-calculation, auto-complete
+- **[Error Mitigation](why-permissionless.md)** — QR codes, guided flows, auto-calculation, auto-complete
 
 **Key principle:** Maximum freedom, minimum risk — no KYC; secure key management where essential.
 
@@ -102,14 +102,14 @@ These principles guide all architectural decisions across the three requirements
 - Links to related concepts and implementation decisions
 
 **Start with the requirement that interests you most:**
-- Want cheaper fees? → Start with [Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
-- Curious about incentives? → Start with [Merchant & LP Incentives](core-architecture/why-promote-adoption.md)
-- Care about access? → Start with [No KYC Model](core-architecture/no-kyc.md)
+- Want cheaper fees? → Start with [Why Cheaper Than Legacy](why-cheaper-than-legacy.md)
+- Curious about incentives? → Start with [Merchant & LP Incentives](why-promote-adoption.md)
+- Care about access? → Start with [No KYC Model](why-no-kyc.md)
 
 **For deeper understanding:**
-- See [Concepts](concepts/) for theoretical foundations
-- See [Android App](android-app/) for implementation details
-- See [Contributing](meta/contributing.md) to propose changes
+- See [Concepts](../concepts/) for theoretical foundations
+- See [Android App](../android-app/) for implementation details
+- See [Contributing](../meta/contributing.md) to propose changes
 
 ---
 

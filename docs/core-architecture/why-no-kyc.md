@@ -1,6 +1,6 @@
 # Why: No KYC
 
-**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+**Sub-requirement of:** [Why: Permissionless](why-permissionless.md)
 
 **Core Requirement:** No participant needs to provide government ID or personal information to use Asgaya.
 
@@ -215,7 +215,7 @@ Financial access is a human right. If you earned money, you should be able to se
 - Can post overcollateralized BCH to covenants
 - Earn fees without additional setup
 - Natural fit: miners hedge BCH position, earn steady income
-- See: [BCH Sellers](concepts/bch-sellers.md#miners-as-natural-sellers)
+- See: [BCH Sellers](../concepts/bch-sellers.md#miners-as-natural-sellers)
 
 **The vision:** As the network grows, more no-KYC paths emerge. The covenant system is designed to support them.
 
@@ -255,8 +255,8 @@ Financial access is a human right. If you earned money, you should be able to se
 
 ## Related Requirements
 
-- [Why: Permissionless](core-architecture/why-permissionless.md) — No KYC is one aspect of truly permissionless access
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — No KYC reduces compliance costs
+- [Why: Permissionless](why-permissionless.md) — No KYC is one aspect of truly permissionless access
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — No KYC reduces compliance costs
 
 ---
 
@@ -264,8 +264,8 @@ Financial access is a human right. If you earned money, you should be able to se
 
 See the **Decisions** section for how we achieve no KYC while managing risks:
 
-- **[Core Regulatory Constraints](concepts/core-regulatory-constraints.md)** — How covenant architecture avoids custody/intermediation licensing
-- **[BCH Sellers](concepts/bch-sellers.md)** — Who provides BCH collateral and why they don't need special licensing
+- **[Core Regulatory Constraints](../concepts/core-regulatory-constraints.md)** — How covenant architecture avoids custody/intermediation licensing
+- **[BCH Sellers](../concepts/bch-sellers.md)** — Who provides BCH collateral and why they don't need special licensing
 
 ---
 

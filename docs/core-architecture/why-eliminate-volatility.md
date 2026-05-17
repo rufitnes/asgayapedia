@@ -1,6 +1,6 @@
 # Why: Eliminate Volatility Risk
 
-**Sub-requirement of:** [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
+**Sub-requirement of:** [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md)
 
 **Core Requirement:** Protect users from cryptocurrency price fluctuations during the transfer.
 
@@ -132,8 +132,8 @@ Users need the first. If we offer the second, we fail.
 
 ## Related Requirements
 
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Volatility losses erase the 1% fee advantage
-- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — Surprise losses reverse network growth
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — Volatility losses erase the 1% fee advantage
+- [Why: Promote Adoption](why-promote-adoption.md) — Surprise losses reverse network growth
 
 ---
 
@@ -141,7 +141,7 @@ Users need the first. If we offer the second, we fail.
 
 See the **Decisions** section for how we achieve zero volatility:
 
-- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How pull-based BCH purchase eliminates volatility for all parties except LPs
+- **[Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)** — How pull-based BCH purchase eliminates volatility for all parties except LPs
 
 ---
 

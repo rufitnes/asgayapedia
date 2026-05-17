@@ -37,7 +37,7 @@ To promote adoption, Asgaya must satisfy these requirements:
 
 **Success metric:** Merchants signing up for economic reasons, not activism.
 
-**How we achieve this:** [Merchant & LP Incentives](core-architecture/why-promote-adoption.md)
+**How we achieve this:** [Merchant & LP Incentives](why-promote-adoption.md)
 
 ---
 
@@ -56,7 +56,7 @@ To promote adoption, Asgaya must satisfy these requirements:
 
 **Success metric:** Active BCH buyer market in each corridor (optional, not required for MVP).
 
-**How we achieve this:** [BCH Buyer Bulletin](android-app/flows/merchant-flows.md#screen-4a-bch-buyer-bulletin-optional) — Uses same covenant infrastructure
+**How we achieve this:** [BCH Buyer Bulletin](../android-app/flows/merchant-flows.md#screen-4a-bch-buyer-bulletin-optional) — Uses same covenant infrastructure
 
 ---
 
@@ -75,7 +75,7 @@ Every merchant using Asgaya accepts BCH. As the merchant network grows, holding 
 
 **Success metric:** 30%+ of recipients holding and spending BCH long-term (>30 days).
 
-**Deep dive:** [Why: BCH Usage Incentive](core-architecture/why-bch-usage-incentive.md) — Breaking the chicken-and-egg problem, why BCH specifically, the endgame vision
+**Deep dive:** [Why: BCH Usage Incentive](why-bch-usage-incentive.md) — Breaking the chicken-and-egg problem, why BCH specifically, the endgame vision
 
 ---
 
@@ -116,7 +116,7 @@ Every merchant using Asgaya accepts BCH. As the merchant network grows, holding 
 
 **Success metric:** Multiple BCH sellers competing for business in each corridor.
 
-**How we achieve this:** [BCH Sellers](concepts/bch-sellers.md) — Hedge mechanism explanation
+**How we achieve this:** [BCH Sellers](../concepts/bch-sellers.md) — Hedge mechanism explanation
 
 ---
 
@@ -151,8 +151,8 @@ With economic incentives, Asgaya becomes a **network growth engine** that turns 
 
 ## Related Requirements
 
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — The fee savings fund the incentives
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Low barriers enable rapid merchant/BCH seller growth
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — The fee savings fund the incentives
+- [Why: Permissionless](why-permissionless.md) — Low barriers enable rapid merchant/BCH seller growth
 
 ---
 
@@ -160,8 +160,8 @@ With economic incentives, Asgaya becomes a **network growth engine** that turns 
 
 See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
 
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Why equal three-way split among escrow/merchant/LP
-- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How BCH settlement creates adoption flywheel
+- **[Fee Splitting Model](../decisions/fee-splitting-model.md)** — Why equal three-way split among escrow/merchant/LP
+- **[Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)** — How BCH settlement creates adoption flywheel
 - Decision: Dynamic reward modulation approach (coming soon in V1.1)
 
 ---
