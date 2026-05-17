@@ -4085,6 +4085,29 @@
 <p><strong>Additional constraint:</strong> Recipients need local currency (VES, ARS, HNL, etc.), but the protocol operates in BCH. Exchange rates bridge the gap between user expectations and protocol reality.</p>
 <hr />
 <h2 id="the-decision">The Decision<a class="headerlink" href="#the-decision" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>⚠️ <strong>PHASE 0 SOLUTION — NOT PRODUCTION-READY</strong></p>
+<p><strong>DolarAPI is sufficient for Phase 0 testing but has known limitations:</strong></p>
+<ul>
+<li><strong>Single point of failure:</strong> API downtime = protocol can't show rates to users</li>
+<li><strong>No manipulation protection:</strong> One source = trust that source</li>
+<li><strong>No fallback mechanism:</strong> If DolarAPI changes/disappears, app breaks</li>
+</ul>
+<p><strong>The Bitcoin lesson:</strong> Early Bitcoin implementations relied on single data 
+sources (MtGox exchange rates, blockchain.info APIs) that later became 
+bottlenecks or attack vectors. We're using DolarAPI to move fast, but 
+acknowledging it's not robust enough for production.</p>
+<p><strong>Phase 1 requirements:</strong>
+- Multiple rate sources (DolarAPI + Reserve + Monitor Dólar + on-chain oracles)
+- Outlier detection (reject rates &gt;5% different from median)
+- Fallback mechanisms (cached rates, manual override, transaction pause)
+- On-chain oracle integration (e.g., Oracles.cash for BCH/USD)</p>
+<p><strong>Why Phase 0 first:</strong> Validate user flows and economic model before building 
+robust infrastructure. If Phase 0 reveals fundamental issues, we don't want 
+to have wasted effort on production-grade rate aggregation.</p>
+<p><strong>See:</strong> <a href="../../roadmap/phase-1-stability-layer/">Phase 1 Stability Layer</a></p>
+</blockquote>
+<hr />
 <h3 id="three-layer-rate-display">Three-Layer Rate Display<a class="headerlink" href="#three-layer-rate-display" title="Permanent link">&para;</a></h3>
 <p><strong>Layer 1: Sender UX (EUR → VES equivalency)</strong>
 - Show sender: "Sending €100 = 500,000 VES to recipient"

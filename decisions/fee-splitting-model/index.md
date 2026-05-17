@@ -25,6 +25,28 @@
 
 ---
 
+> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
+> 
+> **The 0.5%/0.5% split is an educated guess, not empirical data.**
+> 
+> We don't yet know if:
+> - 0.5% attracts enough BCH sellers (considering capital cost + volatility risk)
+> - 0.5% motivates merchants to provide cash liquidity (vs. just holding fiat)
+> - This balance optimally promotes BCH adoption
+> 
+> **The Bitcoin lesson:** Arbitrary parameters (1MB blocks, 10-minute confirmation) 
+> become contentious if not validated early. We will test this during Phase 0 trials 
+> and adjust based on real participant behavior.
+> 
+> **Adjustment triggers:**
+> - If seller acquisition fails → Consider 0.6% seller / 0.4% merchant
+> - If merchant acquisition fails → Consider 0.4% seller / 0.6% merchant
+> - If both struggle → Consider 0.7% each (1.4% total, still competitive vs. 6.49% legacy)
+> 
+> **See:** [Phase 0 Validation Checklist](phase-0-validation-checklist.md#-fee-split-seller--merchant)
+
+---
+
 ## The Goal (Architectural Ideal)
 
 Create **economic incentives** for all participants to join and grow the Asgaya network **while promoting BCH adoption**.

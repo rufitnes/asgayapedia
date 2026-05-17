@@ -87,6 +87,7 @@
 - [Why Self-Custody](https://docs.asgaya.org/core-architecture/why-self-custody/index.md)
 - [Overview](https://docs.asgaya.org/decisions/index.md)
 - [Bizum Concept Field](https://docs.asgaya.org/decisions/bizum-concept-field/index.md)
+- [Decision: Cold-Start Strategy](https://docs.asgaya.org/decisions/cold-start-strategy/index.md)
 - [Dispute Resolution](https://docs.asgaya.org/decisions/dispute-resolution/index.md)
 - [Fee Splitting Model](https://docs.asgaya.org/decisions/fee-splitting-model/index.md)
 - [How Exchange Rates Work](https://docs.asgaya.org/decisions/how-exchange-rates-work/index.md)

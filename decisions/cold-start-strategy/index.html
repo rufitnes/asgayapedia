@@ -10,13 +10,9 @@
       
       
       
-        <link rel="canonical" href="https://docs.asgaya.org/decisions/fee-splitting-model/">
+        <link rel="canonical" href="https://docs.asgaya.org/decisions/cold-start-strategy/">
       
       
-        <link rel="prev" href="../">
-      
-      
-        <link rel="next" href="../two-step-settlement-timing/">
       
       
         
@@ -27,7 +23,7 @@
     
     
       
-        <title>Fee Splitting Model - Asgaya Documentation</title>
+        <title>Decision: Cold-Start Strategy - Asgaya Documentation</title>
       
     
     
@@ -80,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#decision-fee-splitting-model-two-participant-split" class="md-skip">
+        <a href="#decision-cold-start-strategy" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fee Splitting Model
+              Decision: Cold-Start Strategy
             
           </span>
         </div>
@@ -304,12 +300,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../" class="md-tabs__link">
           
   
@@ -2837,31 +2831,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -2879,7 +2868,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2922,37 +2911,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Fee Splitting Model
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../fee-splitting-model/" class="md-nav__link">
         
   
   
@@ -2968,475 +2930,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-goal-architectural-ideal" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Goal (Architectural Ideal)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-constraint-economic-reality" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Constraint (Economic Reality)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-decision" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Decision
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fee-distribution-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fee Distribution Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Fee Distribution Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#standard-transaction-100-transfer-merchant-holds-bch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standard Transaction (€100 transfer, merchant holds BCH)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#with-instant-settlement-merchant-sells-bch-immediately" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        With Instant Settlement (Merchant sells BCH immediately)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recipient-choice-bch-claim-vs-cash-pickup-new-2026-05-14" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#scenario-a-recipient-claims-bch-direct" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scenario A: Recipient Claims BCH (Direct)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scenario-b-recipient-chooses-cash-pickup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scenario B: Recipient Chooses Cash Pickup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fee-comparison-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fee Comparison Table
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-economic-lesson-instant-settlement-costs-your-reward" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Economic Lesson: Instant Settlement Costs Your Reward
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bch-seller-sourcing-flexibility" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        BCH Seller Sourcing Flexibility
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="BCH Seller Sourcing Flexibility">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-a-use-own-bch-holdings-miners-hodlers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option A: Use Own BCH Holdings (Miners, HODLers)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-b-buy-from-exchange" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option B: Buy from Exchange
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-c-hybrid-approach" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option C: Hybrid Approach
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overcollateralization-economics-separate-from-fee" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Overcollateralization Economics (Separate from Fee)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bch-buyer-economics-optional-instant-settlement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        BCH Buyer Economics (Optional Instant Settlement)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comparison-to-old-escrow-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Comparison to Old Escrow Model
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implementation-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementation Details
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Implementation Details">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#how-fees-are-collected" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How Fees Are Collected
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-fees-are-distributed-covenant-maturity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How Fees Are Distributed (Covenant Maturity)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verification
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#trade-offs-accepted" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Trade-offs Accepted
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Trade-offs Accepted">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#lost-three-way-incentive-distribution" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Lost: Three-Way Incentive Distribution
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gained-simplicity-bch-holding-incentive-mica-compliance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Gained: Simplicity, BCH Holding Incentive, MiCA Compliance
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#economic-impact-on-merchant-behavior" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Economic Impact on Merchant Behavior
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#edge-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Edge Cases
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Edge Cases">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#case-1-merchant-holds-bch-no-instant-settlement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Case 1: Merchant Holds BCH (No Instant Settlement)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#case-2-merchant-wants-instant-settlement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Case 2: Merchant Wants Instant Settlement
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#case-3-multiple-bch-buyers-compete-future" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Case 3: Multiple BCH Buyers Compete (Future)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#future-considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Future Considerations
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Future Considerations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#v11-dynamic-spread-based-rewards" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        V1.1: Dynamic Spread-Based Rewards
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#v2-merchant-circular-economy-incentives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        V2: Merchant Circular Economy Incentives
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-decisions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related Decisions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related Concepts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3897,10 +3390,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-goal-architectural-ideal" class="md-nav__link">
+  <a href="#the-problem" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Goal (Architectural Ideal)
+        The Problem
       
     </span>
   </a>
@@ -3908,44 +3401,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-constraint-economic-reality" class="md-nav__link">
+  <a href="#phase-0-trusted-bootstrapping-june-august-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Constraint (Economic Reality)
+        Phase 0: Trusted Bootstrapping (June-August 2026)
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-decision" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Decision
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fee-distribution-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fee Distribution Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Fee Distribution Examples">
+    <nav class="md-nav" aria-label="Phase 0: Trusted Bootstrapping (June-August 2026)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#standard-transaction-100-transfer-merchant-holds-bch" class="md-nav__link">
+  <a href="#bch-seller-bootstrap" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Standard Transaction (€100 transfer, merchant holds BCH)
+        BCH Seller Bootstrap
       
     </span>
   </a>
@@ -3953,10 +3424,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#with-instant-settlement-merchant-sells-bch-immediately" class="md-nav__link">
+  <a href="#merchant-bootstrap" class="md-nav__link">
     <span class="md-ellipsis">
       
-        With Instant Settlement (Merchant sells BCH immediately)
+        Merchant Bootstrap
       
     </span>
   </a>
@@ -3964,110 +3435,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#recipient-choice-bch-claim-vs-cash-pickup-new-2026-05-14" class="md-nav__link">
+  <a href="#sender-bootstrap" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#scenario-a-recipient-claims-bch-direct" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scenario A: Recipient Claims BCH (Direct)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scenario-b-recipient-chooses-cash-pickup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scenario B: Recipient Chooses Cash Pickup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fee-comparison-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fee Comparison Table
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-economic-lesson-instant-settlement-costs-your-reward" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Economic Lesson: Instant Settlement Costs Your Reward
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bch-seller-sourcing-flexibility" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        BCH Seller Sourcing Flexibility
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="BCH Seller Sourcing Flexibility">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-a-use-own-bch-holdings-miners-hodlers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option A: Use Own BCH Holdings (Miners, HODLers)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-b-buy-from-exchange" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option B: Buy from Exchange
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-c-hybrid-approach" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Option C: Hybrid Approach
+        Sender Bootstrap
       
     </span>
   </a>
@@ -4080,55 +3451,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#overcollateralization-economics-separate-from-fee" class="md-nav__link">
+  <a href="#phase-1-market-driven-growth-september-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overcollateralization Economics (Separate from Fee)
+        Phase 1: Market-Driven Growth (September 2026+)
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bch-buyer-economics-optional-instant-settlement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        BCH Buyer Economics (Optional Instant Settlement)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comparison-to-old-escrow-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Comparison to Old Escrow Model
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implementation-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementation Details
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Implementation Details">
+    <nav class="md-nav" aria-label="Phase 1: Market-Driven Growth (September 2026+)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-fees-are-collected" class="md-nav__link">
+  <a href="#seller-acquisition" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How Fees Are Collected
+        Seller Acquisition
       
     </span>
   </a>
@@ -4136,10 +3474,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#how-fees-are-distributed-covenant-maturity" class="md-nav__link">
+  <a href="#merchant-acquisition" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How Fees Are Distributed (Covenant Maturity)
+        Merchant Acquisition
       
     </span>
   </a>
@@ -4147,10 +3485,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#verification" class="md-nav__link">
+  <a href="#network-effects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verification
+        Network Effects
       
     </span>
   </a>
@@ -4163,44 +3501,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#trade-offs-accepted" class="md-nav__link">
+  <a href="#long-term-protocol-becomes-infrastructure-2027" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Trade-offs Accepted
+        Long-Term: Protocol Becomes Infrastructure (2027+)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Trade-offs Accepted">
+    <nav class="md-nav" aria-label="Long-Term: Protocol Becomes Infrastructure (2027+)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#lost-three-way-incentive-distribution" class="md-nav__link">
+  <a href="#why-asgaya-would-become-redundant" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Lost: Three-Way Incentive Distribution
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gained-simplicity-bch-holding-incentive-mica-compliance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Gained: Simplicity, BCH Holding Incentive, MiCA Compliance
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#economic-impact-on-merchant-behavior" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Economic Impact on Merchant Behavior
+        Why Asgaya Would Become Redundant
       
     </span>
   </a>
@@ -4213,22 +3529,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#edge-cases" class="md-nav__link">
+  <a href="#what-could-go-wrong-and-how-wed-know" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Edge Cases
+        What Could Go Wrong (And How We'd Know)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Edge Cases">
+    <nav class="md-nav" aria-label="What Could Go Wrong (And How We&#39;d Know)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#case-1-merchant-holds-bch-no-instant-settlement" class="md-nav__link">
+  <a href="#failure-mode-1-no-bch-sellers-accept-bounties" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 1: Merchant Holds BCH (No Instant Settlement)
+        Failure Mode 1: No BCH Sellers Accept Bounties
       
     </span>
   </a>
@@ -4236,10 +3552,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#case-2-merchant-wants-instant-settlement" class="md-nav__link">
+  <a href="#failure-mode-2-merchants-dont-list-availability" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 2: Merchant Wants Instant Settlement
+        Failure Mode 2: Merchants Don't List Availability
       
     </span>
   </a>
@@ -4247,10 +3563,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#case-3-multiple-bch-buyers-compete-future" class="md-nav__link">
+  <a href="#failure-mode-3-senders-dont-trust-the-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 3: Multiple BCH Buyers Compete (Future)
+        Failure Mode 3: Senders Don't Trust the System
       
     </span>
   </a>
@@ -4263,10 +3579,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#validation" class="md-nav__link">
+  <a href="#validation-metrics-phase-0-phase-1-transition" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Validation
+        Validation Metrics (Phase 0 → Phase 1 Transition)
       
     </span>
   </a>
@@ -4274,41 +3590,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#future-considerations" class="md-nav__link">
+  <a href="#why-this-is-a-hypothesis" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Future Considerations
+        Why This Is a Hypothesis
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Future Considerations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#v11-dynamic-spread-based-rewards" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        V1.1: Dynamic Spread-Based Rewards
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#v2-merchant-circular-economy-incentives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        V2: Merchant Circular Economy Incentives
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4317,28 +3605,6 @@
     <span class="md-ellipsis">
       
         Related Decisions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related Concepts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
       
     </span>
   </a>
@@ -4365,554 +3631,217 @@
   
 
 
-<h1 id="decision-fee-splitting-model-two-participant-split">Decision: Fee Splitting Model - Two-Participant Split<a class="headerlink" href="#decision-fee-splitting-model-two-participant-split" title="Permanent link">&para;</a></h1>
-<p><strong>Decision Date:</strong> April 2026 (Updated May 2026 for covenant architecture)<br />
-<strong>Status:</strong> Implemented (Chipnet testing)<br />
-<strong>Related Requirement:</strong> <a href="../../core-architecture/why-promote-adoption/">Promote Adoption</a></p>
+<h1 id="decision-cold-start-strategy">Decision: Cold-Start Strategy<a class="headerlink" href="#decision-cold-start-strategy" title="Permanent link">&para;</a></h1>
+<p><strong>Decision Date:</strong> May 17, 2026<br />
+<strong>Status:</strong> Phase 0 Approach Defined<br />
+<strong>Context:</strong> Grok review identified this as missing content</p>
 <hr />
-<blockquote>
-<p>💡 <strong>TL;DR: How the 1% fee is split</strong></p>
-<p>The 1% total fee is split between TWO participants in the covenant:
-- <strong>BCH Seller:</strong> 0.5% (provides overcollateralized BCH to covenant)
-- <strong>Merchant:</strong> 0.5% (hands cash to recipient, receives BCH)</p>
-<p><strong>Example (€100 transfer):</strong>
-- Total fee: €1.00
-- BCH seller earns: €0.50 (0.5%)
-- Merchant earns: €0.50 (0.5%)
-- <strong>Recipient receives:</strong> €99.00 worth of VES cash</p>
-<p><strong>Optional instant settlement:</strong>
-- Merchant can sell BCH immediately to BCH buyer (separate market)
-- Typical spread: 0.5% (merchant loses entire reward to spread)
-- <strong>Result if selling immediately:</strong> Merchant gets €99.00 fiat (same as no reward!)</p>
-</blockquote>
+<h2 id="the-problem">The Problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
+<p><strong>Asgaya has a chicken-and-egg liquidity problem:</strong></p>
+<ul>
+<li><strong>Senders</strong> won't use the protocol if there are no BCH sellers to accept bounties</li>
+<li><strong>BCH sellers</strong> won't participate if there's no transaction volume (low fee income)</li>
+<li><strong>Merchants</strong> won't list availability if there are no recipients to serve</li>
+<li><strong>Recipients</strong> can't claim remittances if there are no local merchants</li>
+</ul>
+<p><strong>This is the cold-start problem:</strong> How do you bootstrap a two-sided marketplace from zero?</p>
 <hr />
-<blockquote>
-<p>⚠️ <strong>HYPOTHESIS — NEEDS PHASE 0 VALIDATION</strong></p>
-<p><strong>The 0.5%/0.5% split is an educated guess, not empirical data.</strong></p>
-<p>We don't yet know if:
-- 0.5% attracts enough BCH sellers (considering capital cost + volatility risk)
-- 0.5% motivates merchants to provide cash liquidity (vs. just holding fiat)
-- This balance optimally promotes BCH adoption</p>
-<p><strong>The Bitcoin lesson:</strong> Arbitrary parameters (1MB blocks, 10-minute confirmation) 
-become contentious if not validated early. We will test this during Phase 0 trials 
-and adjust based on real participant behavior.</p>
-<p><strong>Adjustment triggers:</strong>
-- If seller acquisition fails → Consider 0.6% seller / 0.4% merchant
-- If merchant acquisition fails → Consider 0.4% seller / 0.6% merchant
-- If both struggle → Consider 0.7% each (1.4% total, still competitive vs. 6.49% legacy)</p>
-<p><strong>See:</strong> <a href="../phase-0-validation-checklist/#-fee-split-seller--merchant">Phase 0 Validation Checklist</a></p>
-</blockquote>
+<h2 id="phase-0-trusted-bootstrapping-june-august-2026">Phase 0: Trusted Bootstrapping (June-August 2026)<a class="headerlink" href="#phase-0-trusted-bootstrapping-june-august-2026" title="Permanent link">&para;</a></h2>
+<p><strong>Approach:</strong> Manual coordination with known participants to prove the model works.</p>
+<h3 id="bch-seller-bootstrap">BCH Seller Bootstrap<a class="headerlink" href="#bch-seller-bootstrap" title="Permanent link">&para;</a></h3>
+<p><strong>Target:</strong> 1-2 trusted BCH holders willing to post capital</p>
+<p><strong>Ideal candidates:</strong>
+- BCH miners (steady BCH inflows, long-term holders)
+- Early BCH adopters with significant holdings
+- Bitcoin Cash community members aligned with adoption goals</p>
+<p><strong>Incentives for Phase 0 sellers:</strong>
+- 0.5% fee per transaction (€0.50 on €100)
+- Hedge position (convert 94-97% of exposure to EUR within 5 minutes)
+- Potential price appreciation on surplus
+- Early mover advantage (reputation building)
+- <strong>Mission alignment:</strong> Help bootstrap BCH adoption in Venezuela</p>
+<p><strong>Capital requirement:</strong> €1,000-5,000 (10-50 concurrent bounties at €100 each with 7% overcollateralization)</p>
+<p><strong>Risk mitigation:</strong>
+- Start with small amounts (€50-100 per transaction)
+- 1-2 trusted senders (known family/friends in Venezuela)
+- Monitor volatility closely (pause if &gt;5% daily moves)</p>
+<h3 id="merchant-bootstrap">Merchant Bootstrap<a class="headerlink" href="#merchant-bootstrap" title="Permanent link">&para;</a></h3>
+<p><strong>Target:</strong> 1-2 merchants in Caracas with:
+- Existing cash business (liquidity available)
+- Smartphone with reliable internet
+- Willingness to hold BCH (or access to BCH buyers)
+- Trusted relationship with local recipients</p>
+<p><strong>Incentives:</strong>
+- 0.5% spread (€0.50 on €100 transaction)
+- BCH accumulation opportunity (if holding)
+- First-mover advantage in growing market
+- <strong>Free marketing:</strong> Word-of-mouth from satisfied recipients</p>
+<p><strong>Bootstrap approach:</strong>
+- Identify through Venezuelan Bitcoin Cash community
+- Direct outreach to bodega owners, money changers, or market vendors
+- Start with 1-2 test transactions to build confidence</p>
+<h3 id="sender-bootstrap">Sender Bootstrap<a class="headerlink" href="#sender-bootstrap" title="Permanent link">&para;</a></h3>
+<p><strong>Target:</strong> 1-2 senders in Spain with family in Venezuela</p>
+<p><strong>Why Spain→Venezuela:</strong>
+- High remittance corridor (€44M annually)
+- Significant cost savings (6.49% → 1%)
+- Known recipient addresses (trusted family members)
+- Sender controls timing (can wait for BCH seller acceptance)</p>
 <hr />
-<h2 id="the-goal-architectural-ideal">The Goal (Architectural Ideal)<a class="headerlink" href="#the-goal-architectural-ideal" title="Permanent link">&para;</a></h2>
-<p>Create <strong>economic incentives</strong> for all participants to join and grow the Asgaya network <strong>while promoting BCH adoption</strong>.</p>
-<p><strong>Primary participants to incentivize:</strong>
-1. <strong>BCH Sellers:</strong> Post overcollateralized BCH to covenants, enable pull system
-2. <strong>Merchants:</strong> Accept BCH payments, provide VES liquidity to recipients</p>
-<p><strong>Secondary market (optional):</strong>
-3. <strong>BCH Buyers:</strong> Buy BCH from merchants who want immediate fiat settlement</p>
-<p><strong>Goal:</strong> Maximize network growth by rewarding participation <strong>AND incentivizing BCH holding over immediate fiat conversion</strong>.</p>
-<hr />
-<h2 id="the-constraint-economic-reality">The Constraint (Economic Reality)<a class="headerlink" href="#the-constraint-economic-reality" title="Permanent link">&para;</a></h2>
-<p><strong>Total fee budget:</strong> 1% of transfer amount (to beat 6.49% legacy average)</p>
-<p><strong>Fixed participants:</strong> 2 (BCH seller + Merchant)</p>
-<p><strong>Challenge:</strong> Split 1% fee to:
-1. Fairly compensate both participants
-2. Incentivize BCH sellers to provide liquidity (post overcollateralized BCH)
-3. Incentivize merchants to hold BCH (not immediately sell)
-4. Make instant settlement available but economically discouraged
-5. Align with Asgaya's mission: BCH adoption, not just fiat conversion</p>
-<hr />
-<h2 id="the-decision">The Decision<a class="headerlink" href="#the-decision" title="Permanent link">&para;</a></h2>
-<p><strong>Equal two-way split of total 1% fee between covenant participants.</strong></p>
-<p><strong>Fixed Formula:</strong>
-<div class="highlight"><pre><span></span><code>Total fee: 1% of transfer amount
-BCH Seller share: 0.5%
-Merchant share: 0.5%
-Recipient receives: 99% (transfer amount minus fees)
+<h2 id="phase-1-market-driven-growth-september-2026">Phase 1: Market-Driven Growth (September 2026+)<a class="headerlink" href="#phase-1-market-driven-growth-september-2026" title="Permanent link">&para;</a></h2>
+<p><strong>Transition from trusted bootstrap to open market.</strong></p>
+<h3 id="seller-acquisition">Seller Acquisition<a class="headerlink" href="#seller-acquisition" title="Permanent link">&para;</a></h3>
+<p><strong>Strategy:</strong> Make 0.5% + hedge attractive enough to pull in profit-seeking participants</p>
+<p><strong>Levers to adjust if needed:</strong>
+| Scenario | Adjustment | Trade-off |
+|----------|------------|-----------|
+| Too few sellers | Increase seller fee to 0.6-0.7% | Reduce merchant fee or increase total cost |
+| Seller capital lockup concern | Reduce timeout from 24h to 12h | Less time for recipients to claim |
+| Volatility deterrent | Increase overcollateralization to 10% | Higher capital inefficiency |</p>
+<p><strong>Target metrics:</strong>
+- <strong>Liquidity depth:</strong> &gt;5 active sellers per corridor
+- <strong>Acceptance rate:</strong> &gt;90% of bounties accepted within 30 minutes
+- <strong>Coverage:</strong> 18-hour daily availability (sellers in different time zones)</p>
+<h3 id="merchant-acquisition">Merchant Acquisition<a class="headerlink" href="#merchant-acquisition" title="Permanent link">&para;</a></h3>
+<p><strong>Strategy:</strong> Geographic expansion via word-of-mouth and BCH community</p>
+<p><strong>Approach:</strong>
+1. <strong>Phase 0 success stories</strong> - First merchants share experience
+2. <strong>BCH community outreach</strong> - Existing BCH-accepting merchants
+3. <strong>Financial incentive</strong> - 0.5% spread + BCH accumulation
+4. <strong>Low friction</strong> - No upfront costs, instant payout</p>
+<p><strong>Target metrics:</strong>
+- <strong>Coverage:</strong> 1 merchant per 10km² in metro areas
+- <strong>Availability:</strong> &gt;50% of merchants online during peak hours
+- <strong>Retention:</strong> &gt;80% of merchants active after first transaction</p>
+<h3 id="network-effects">Network Effects<a class="headerlink" href="#network-effects" title="Permanent link">&para;</a></h3>
+<p><strong>Once critical mass is reached:</strong></p>
+<ul>
+<li><strong>More senders</strong> → More transaction volume → Higher fee income for sellers</li>
+<li><strong>More merchants</strong> → Better recipient convenience → More senders</li>
+<li><strong>More BCH holders</strong> → More sellers → Faster bounty acceptance</li>
+<li><strong>More transactions</strong> → More data → Better validation of parameters</li>
+</ul>
+<p><strong>Flywheel:</strong>
+<div class="highlight"><pre><span></span><code>More senders
+    ↓
+Higher volume
+    ↓
+More seller profit
+    ↓
+More BCH sellers
+    ↓
+Faster acceptance
+    ↓
+Better UX
+    ↓
+More senders (loop)
 </code></pre></div></p>
-<p><strong>No variable sourcing costs</strong> (unlike old escrow model):
-- BCH seller posts their own BCH as collateral
-- Overcollateralization surplus is separate from fee (seller keeps if BCH rises)
-- Simple, transparent, no hidden costs</p>
 <hr />
-<h2 id="fee-distribution-examples">Fee Distribution Examples<a class="headerlink" href="#fee-distribution-examples" title="Permanent link">&para;</a></h2>
-<h3 id="standard-transaction-100-transfer-merchant-holds-bch">Standard Transaction (€100 transfer, merchant holds BCH)<a class="headerlink" href="#standard-transaction-100-transfer-merchant-holds-bch" title="Permanent link">&para;</a></h3>
-<p><strong>Sender pays:</strong> €100 via Bizum to BCH seller</p>
-<p><strong>Covenant distribution when mature:</strong>
-<div class="highlight"><pre><span></span><code>Total BCH in covenant: €107 (overcollateralized by seller)
-├─ Merchant receives: €99.50 worth of BCH (€99 principal + €0.50 fee)
-└─ BCH seller receives: €7.50 (€7 overcollateralization surplus + €0.50 fee)
-
-Merchant hands to recipient: €99.00 worth of VES cash
-Merchant keeps: €0.50 (0.5% reward in BCH)
-</code></pre></div></p>
-<p><strong>Net result:</strong>
-- Sender paid: €100.00
-- Recipient got: €99.00 worth of VES
-- Merchant earned: €0.50 in BCH (holds for future use)
-- BCH seller earned: €0.50 + overcollateralization surplus</p>
+<h2 id="long-term-protocol-becomes-infrastructure-2027">Long-Term: Protocol Becomes Infrastructure (2027+)<a class="headerlink" href="#long-term-protocol-becomes-infrastructure-2027" title="Permanent link">&para;</a></h2>
+<p><strong>Vision:</strong> Asgaya becomes unnecessary as BCH adoption reaches critical mass.</p>
+<h3 id="why-asgaya-would-become-redundant">Why Asgaya Would Become Redundant<a class="headerlink" href="#why-asgaya-would-become-redundant" title="Permanent link">&para;</a></h3>
+<p><strong>If successful:</strong>
+- Venezuelan merchants accept BCH directly (no cash-out needed)
+- Recipients hold BCH for future payments (no conversion)
+- BCH circular economy thrives (peer-to-peer payments)
+- Asgaya only needed for legacy fiat interaction (edge cases)</p>
+<p><strong>Success metric:</strong> Asgaya transaction volume DECREASES as BCH usage increases</p>
+<p><strong>The goal is not to build a platform - it's to build a ladder people climb and then kick away.</strong></p>
 <hr />
-<h3 id="with-instant-settlement-merchant-sells-bch-immediately">With Instant Settlement (Merchant sells BCH immediately)<a class="headerlink" href="#with-instant-settlement-merchant-sells-bch-immediately" title="Permanent link">&para;</a></h3>
-<p><strong>Merchant chooses instant settlement</strong> (wants fiat, not BCH):</p>
-<p><strong>Step 1: Covenant matures (same as above)</strong>
-<div class="highlight"><pre><span></span><code>Merchant receives: €99.50 worth of BCH from covenant
-</code></pre></div></p>
-<p><strong>Step 2: Merchant sells to BCH buyer (separate market)</strong>
-<div class="highlight"><pre><span></span><code>Merchant posts on bulletin board: &quot;Selling €99.50 BCH now&quot;
-BCH buyer offers: €99.00 fiat (0.5% spread)
-Merchant accepts: Sends BCH, receives €99.00 fiat
-</code></pre></div></p>
-<p><strong>Net result:</strong>
-- Merchant received from covenant: €99.50 BCH
-- Merchant sold for: €99.00 fiat
-- <strong>Merchant's reward consumed by spread:</strong> €0.50 lost!
-- Merchant's final position: €99.00 fiat (same as if no reward existed)</p>
-<p><strong>BCH buyer earns:</strong>
-- Paid merchant: €99.00 fiat
-- Received: €99.50 worth of BCH
-- Profit: €0.50 (the 0.5% spread = merchant's reward transferred to buyer)</p>
+<h2 id="what-could-go-wrong-and-how-wed-know">What Could Go Wrong (And How We'd Know)<a class="headerlink" href="#what-could-go-wrong-and-how-wed-know" title="Permanent link">&para;</a></h2>
+<h3 id="failure-mode-1-no-bch-sellers-accept-bounties">Failure Mode 1: No BCH Sellers Accept Bounties<a class="headerlink" href="#failure-mode-1-no-bch-sellers-accept-bounties" title="Permanent link">&para;</a></h3>
+<p><strong>Signal:</strong> &lt;50% acceptance rate, &gt;2 hour wait times</p>
+<p><strong>Response:</strong>
+- Increase seller fee (0.6% or 0.7%)
+- Reduce timeout window (12h instead of 24h to reduce capital lockup)
+- Recruit directly from BCH mining community</p>
+<p><strong>Pivot trigger:</strong> If adjustments don't improve acceptance to &gt;80%, pause and reassess model</p>
+<h3 id="failure-mode-2-merchants-dont-list-availability">Failure Mode 2: Merchants Don't List Availability<a class="headerlink" href="#failure-mode-2-merchants-dont-list-availability" title="Permanent link">&para;</a></h3>
+<p><strong>Signal:</strong> &lt;1 merchant per corridor, no availability during peak hours</p>
+<p><strong>Response:</strong>
+- Increase merchant fee (0.6% or higher)
+- Offer BCH buyer introductions (instant fiat settlement option)
+- Reduce competition by limiting new merchant signups (exclusivity = higher volume per merchant)</p>
+<p><strong>Pivot trigger:</strong> If &lt;3 active merchants after 3 months, reassess merchant value proposition</p>
+<h3 id="failure-mode-3-senders-dont-trust-the-system">Failure Mode 3: Senders Don't Trust the System<a class="headerlink" href="#failure-mode-3-senders-dont-trust-the-system" title="Permanent link">&para;</a></h3>
+<p><strong>Signal:</strong> High bounce rate (see protocol, don't send)</p>
+<p><strong>Response:</strong>
+- Publish Phase 0 success stories
+- Add sender insurance option (small fee for guaranteed refund if issues)
+- Video tutorials showing complete flows</p>
+<p><strong>Pivot trigger:</strong> If &lt;10 unique senders after 3 months, UX or trust issue</p>
 <hr />
-<h3 id="recipient-choice-bch-claim-vs-cash-pickup-new-2026-05-14">Recipient Choice: BCH Claim vs Cash Pickup (NEW - 2026-05-14)<a class="headerlink" href="#recipient-choice-bch-claim-vs-cash-pickup-new-2026-05-14" title="Permanent link">&para;</a></h3>
-<p><strong>Asgaya = Bitcoin wallet where recipient chooses claim method.</strong></p>
-<p><strong>Sender always pays 0.5%</strong> (to BCH Seller for sourcing BCH via covenant)</p>
-<p><strong>Recipient chooses:</strong>
-- 🪙 <strong>Claim as BCH (FREE):</strong> No merchant involved, instant co-sign
-- 💵 <strong>Cash Pickup (0.5% fee):</strong> Find merchant, hand cash, merchant earns 0.5%</p>
-<h4 id="scenario-a-recipient-claims-bch-direct">Scenario A: Recipient Claims BCH (Direct)<a class="headerlink" href="#scenario-a-recipient-claims-bch-direct" title="Permanent link">&para;</a></h4>
-<p><strong>Sender pays:</strong> €10.00 to BCH Seller (incl. 0.5% fee)</p>
-<p><strong>Covenant distribution when mature:</strong>
-<div class="highlight"><pre><span></span><code>BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus
-Recipient receives: €9.90 worth of BCH (0.0198 BCH)
-Merchant receives: €0 (no merchant involved)
-</code></pre></div></p>
-<p><strong>Total system fee:</strong> 0.5% (sender only)</p>
-<p><strong>Net result:</strong>
-- Sender paid: €10.00
-- BCH Seller earned: €0.50 (0.5%)
-- Recipient got: €9.90 worth of BCH (0.0198 BCH)
-- Merchant earned: €0 (not involved)
-- <strong>Total fees: 0.5%</strong></p>
-<h4 id="scenario-b-recipient-chooses-cash-pickup">Scenario B: Recipient Chooses Cash Pickup<a class="headerlink" href="#scenario-b-recipient-chooses-cash-pickup" title="Permanent link">&para;</a></h4>
-<p><strong>Sender pays:</strong> €10.00 to BCH Seller (incl. 0.5% fee)</p>
-<p><strong>Covenant distribution when mature:</strong>
-<div class="highlight"><pre><span></span><code>BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus  
-Merchant receives: €9.90 worth of BCH
-Merchant hands: €9.85 cash to recipient
-Merchant keeps: €0.05 in BCH (0.5% of €9.90)
-</code></pre></div></p>
-<p><strong>Total system fee:</strong> 1% (sender 0.5% + recipient pays 0.5% for merchant convenience)</p>
-<p><strong>Net result:</strong>
-- Sender paid: €10.00
-- BCH Seller earned: €0.50 (0.5%)
-- Merchant earned: €0.05 (0.5% of merchant portion)
-- Recipient got: €9.85 cash
-- <strong>Total fees: 1%</strong> (but sender only sees 0.5%, recipient chooses to pay extra 0.5%)</p>
-<h4 id="fee-comparison-table">Fee Comparison Table<a class="headerlink" href="#fee-comparison-table" title="Permanent link">&para;</a></h4>
+<h2 id="validation-metrics-phase-0-phase-1-transition">Validation Metrics (Phase 0 → Phase 1 Transition)<a class="headerlink" href="#validation-metrics-phase-0-phase-1-transition" title="Permanent link">&para;</a></h2>
+<p><strong>To graduate from Phase 0 to Phase 1, we need:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Claim Method</th>
-<th>Sender Pays</th>
-<th>Recipient Pays</th>
-<th>BCH Seller Earns</th>
-<th>Merchant Earns</th>
-<th>Total System Fee</th>
-<th>Recipient Gets</th>
+<th>Metric</th>
+<th>Target</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>BCH Claim (Direct)</strong></td>
-<td>0.5%</td>
-<td>0%</td>
-<td>0.5%</td>
-<td>0%</td>
-<td><strong>0.5%</strong></td>
-<td>0.0198 BCH (~€9.90)</td>
+<td><strong>Transactions completed</strong></td>
+<td>&gt;30 successful</td>
+<td>Prove model works</td>
 </tr>
 <tr>
-<td><strong>Cash Pickup</strong></td>
-<td>0.5%</td>
-<td>0.5%</td>
-<td>0.5%</td>
-<td>0.5%</td>
-<td><strong>1%</strong></td>
-<td>€9.85 cash</td>
+<td><strong>Unique senders</strong></td>
+<td>&gt;5</td>
+<td>Not dependent on one user</td>
+</tr>
+<tr>
+<td><strong>Unique recipients</strong></td>
+<td>&gt;5</td>
+<td>Real use case</td>
+</tr>
+<tr>
+<td><strong>BCH seller acceptance rate</strong></td>
+<td>&gt;80%</td>
+<td>Liquidity sufficient</td>
+</tr>
+<tr>
+<td><strong>Merchant availability</strong></td>
+<td>&gt;50% uptime</td>
+<td>Coverage sufficient</td>
+</tr>
+<tr>
+<td><strong>Dispute rate</strong></td>
+<td>&lt;5%</td>
+<td>System mostly works</td>
+</tr>
+<tr>
+<td><strong>Timeout rate</strong></td>
+<td>&lt;10%</td>
+<td>Recipients claiming reliably</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Key insights:</strong>
-- ✅ Sender experience <strong>always 0.5%</strong> (consistent, predictable)
-- ✅ Recipient controls method <strong>and their own fees</strong>
-- ✅ BCH claim <strong>nudged</strong> (free vs 0.5% cost)
-- ✅ Merchant only earns <strong>if recipient chooses cash</strong> (aligned incentives)
-- ✅ Bitcoin wallet framing (not remittance service)</p>
-<p><strong>Why this structure works:</strong>
-1. <strong>Simpler sender UX:</strong> One flow, always 0.5%, no choice paralysis
-2. <strong>Flexible recipient:</strong> Free BCH or pay for cash convenience
-3. <strong>Natural BCH adoption:</strong> Free claim incentivizes trying BCH
-4. <strong>Merchant aligned:</strong> Only involved if recipient wants cash
-5. <strong>Regulatory:</strong> "Bitcoin wallet" not "remittance service"</p>
+<p><strong>If we hit these targets:</strong> Open to public (Phase 1)<br />
+<strong>If we miss:</strong> Iterate on Phase 0, adjust parameters, retest</p>
 <hr />
-<h2 id="the-economic-lesson-instant-settlement-costs-your-reward">The Economic Lesson: Instant Settlement Costs Your Reward<a class="headerlink" href="#the-economic-lesson-instant-settlement-costs-your-reward" title="Permanent link">&para;</a></h2>
-<p><strong>This is intentional design.</strong></p>
-<p><strong>Holding BCH:</strong>
-<div class="highlight"><pre><span></span><code>Merchant gets: €99.50 worth of BCH
-Merchant keeps: €0.50 reward ✅
-Can use BCH for: Restocking inventory, paying suppliers, holding as savings
-</code></pre></div></p>
-<p><strong>Selling BCH immediately:</strong>
-<div class="highlight"><pre><span></span><code>Merchant gets: €99.00 fiat (after 0.5% spread)
-Merchant keeps: €0 reward ❌
-Why bother? Same as having no reward at all!
-</code></pre></div></p>
-<p><strong>Message to merchants:</strong></p>
+<h2 id="why-this-is-a-hypothesis">Why This Is a Hypothesis<a class="headerlink" href="#why-this-is-a-hypothesis" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p>"Your 0.5% reward is REAL if you hold BCH. But if you immediately convert to fiat, you give up that reward to the BCH buyer. Instant settlement is available, but it costs you."</p>
-</blockquote>
-<p><strong>This aligns incentives with Asgaya's mission:</strong>
-- ✅ BCH adoption (merchants hold and use BCH)
-- ✅ Circular economy (merchants pay suppliers with BCH)
-- ✅ Network effects (more BCH in circulation)
-- ⚠️ Instant settlement discouraged but available (merchant freedom preserved)</p>
-<hr />
-<h2 id="bch-seller-sourcing-flexibility">BCH Seller Sourcing Flexibility<a class="headerlink" href="#bch-seller-sourcing-flexibility" title="Permanent link">&para;</a></h2>
-<p><strong>BCH sellers can source their BCH inventory using ANY method:</strong></p>
-<h3 id="option-a-use-own-bch-holdings-miners-hodlers">Option A: Use Own BCH Holdings (Miners, HODLers)<a class="headerlink" href="#option-a-use-own-bch-holdings-miners-hodlers" title="Permanent link">&para;</a></h3>
-<p><strong>Best case for BCH sellers:</strong>
-- Already own BCH (miners from mining rewards, HODLers from past purchases)
-- <strong>Zero acquisition cost</strong>
-- Post overcollateralized BCH to covenant (e.g., €107 for €100 bounty)
-- Earn 0.5% fee (€0.50) + overcollateralization surplus if BCH rises</p>
-<p><strong>Example: BCH miner processes 100 bounties/month:</strong>
-- Fees: 100 × €0.50 = €50/month
-- Overcollateralization surplus: Variable (depends on BCH price movement)
-- <strong>No exchange fees</strong> (using mined BCH)
-- <strong>Total revenue:</strong> Mining rewards + seller fees + surplus</p>
-<p><strong>Why miners are ideal BCH sellers:</strong> See <a href="../../concepts/bch-sellers/">BCH Sellers</a></p>
-<hr />
-<h3 id="option-b-buy-from-exchange">Option B: Buy from Exchange<a class="headerlink" href="#option-b-buy-from-exchange" title="Permanent link">&para;</a></h3>
-<p><strong>For traders or those without BCH inventory:</strong>
-- Buy BCH on exchange (Kraken 0.26%, Binance 0.10%, etc.)
-- Post to covenant as overcollateralized bounty
-- Earn 0.5% fee (€0.50) + overcollateralization surplus</p>
-<p><strong>Net profit calculation:</strong>
-<div class="highlight"><pre><span></span><code>Revenue: €0.50 (seller fee) + surplus (if BCH rises)
-Costs: Exchange fee (e.g., €0.26 on €107 purchase)
-Net: €0.24 + surplus
-</code></pre></div></p>
-<p><strong>Lower exchange fees = higher profit:</strong>
-- Kraken (0.26%): Net €0.24 + surplus
-- Better exchange (0.10%): Net €0.40 + surplus
-- P2P market (0.20%): Net €0.30 + surplus</p>
-<p><strong>Competitive advantage:</strong> BCH sellers with lower acquisition costs earn more.</p>
-<hr />
-<h3 id="option-c-hybrid-approach">Option C: Hybrid Approach<a class="headerlink" href="#option-c-hybrid-approach" title="Permanent link">&para;</a></h3>
-<p><strong>Use own BCH when available, buy when depleted:</strong>
-- Post overcollateralized BCH from holdings first (0% cost)
-- Buy from exchange when holdings run low (0.10-0.26% cost)
-- Mix strategies based on volume and capital availability</p>
-<hr />
-<h2 id="overcollateralization-economics-separate-from-fee">Overcollateralization Economics (Separate from Fee)<a class="headerlink" href="#overcollateralization-economics-separate-from-fee" title="Permanent link">&para;</a></h2>
-<p><strong>BCH seller's additional revenue source:</strong></p>
-<p><strong>When BCH price rises during 24h wait:</strong>
-<div class="highlight"><pre><span></span><code>Seller posted: €107 worth of BCH (at lock time)
-24 hours later: BCH rises 5%
-Covenant holds: €107 × 1.05 = €112.35 worth
-Merchant takes: €99.50 worth (at maturity)
-Seller gets back: €112.35 - €99.50 = €12.85
-Seller&#39;s total: €0.50 fee + €12.85 surplus = €13.35 on €100 bounty!
-</code></pre></div></p>
-<p><strong>When BCH price drops:</strong>
-<div class="highlight"><pre><span></span><code>Seller posted: €107 worth of BCH
-24 hours later: BCH drops 3%
-Covenant holds: €107 × 0.97 = €103.79 worth
-Merchant takes: €99.50 worth
-Seller gets back: €103.79 - €99.50 = €4.29
-Seller&#39;s total: €0.50 fee + €4.29 surplus = €4.79 (still profitable)
-</code></pre></div></p>
-<p><strong>When BCH drops &gt;7% (margin call):</strong>
-<div class="highlight"><pre><span></span><code>Seller must add more BCH or bounty refunds
-Opportunity cost + reputation penalty
-</code></pre></div></p>
-<p><strong>Overcollateralization is:</strong>
-- ✅ Separate from fee (volatility buffer, not compensation)
-- ✅ Profit opportunity (if BCH rises)
-- ⚠️ Risk exposure (if BCH drops &gt;7%)</p>
-<hr />
-<h2 id="bch-buyer-economics-optional-instant-settlement">BCH Buyer Economics (Optional Instant Settlement)<a class="headerlink" href="#bch-buyer-economics-optional-instant-settlement" title="Permanent link">&para;</a></h2>
-<p><strong>BCH buyers participate in a separate market</strong> (not part of covenant):</p>
-<p><strong>Their role:</strong>
-- Monitor bulletin board for merchants wanting instant settlement
-- Compete to offer best spread (lowest fee)
-- Buy BCH from merchants, provide fiat immediately</p>
-<p><strong>Revenue model:</strong>
-<div class="highlight"><pre><span></span><code>Buy from merchant: €99.50 worth of BCH for €99.00 fiat (0.5% spread)
-Sell later or hold: €99.50 worth of BCH
-Profit: €0.50 (the spread)
-</code></pre></div></p>
-<p><strong>In reality, spreads might be competitive:</strong>
-- BCH Buyer A offers: 0.5% spread (€99.00 fiat)
-- BCH Buyer B offers: 0.3% spread (€99.20 fiat) ← Merchant picks this!
-- BCH Buyer C offers: 0.2% spread (€99.30 fiat) ← Even better!</p>
-<p><strong>But in Asgaya examples, we use 0.5% spread</strong> to show:</p>
-<blockquote>
-<p>"If you sell immediately, you lose your entire reward. Hold BCH to keep your reward!"</p>
-</blockquote>
-<p><strong>Why BCH buyers participate:</strong>
-- Accumulate BCH at slight discount (0.2-0.5% below market)
-- Provide valuable service (fiat liquidity for merchants who need it)
-- Profit from spread</p>
-<hr />
-<h2 id="comparison-to-old-escrow-model">Comparison to Old Escrow Model<a class="headerlink" href="#comparison-to-old-escrow-model" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Factor</th>
-<th>Old (Escrow)</th>
-<th>New (Covenant)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Participants</strong></td>
-<td>3 (Escrow, Merchant, LP)</td>
-<td>2 (BCH Seller, Merchant)</td>
-</tr>
-<tr>
-<td><strong>Fee split</strong></td>
-<td>Variable (depends on sourcing cost)</td>
-<td>Fixed (0.5% each)</td>
-</tr>
-<tr>
-<td><strong>Escrow/Seller earns</strong></td>
-<td>€0.247-€0.333 (depends on BCH source)</td>
-<td>€0.50 + surplus</td>
-</tr>
-<tr>
-<td><strong>Merchant earns</strong></td>
-<td>€0.247-€0.333</td>
-<td>€0.50 (if holds BCH)</td>
-</tr>
-<tr>
-<td><strong>LP/BCH Buyer earns</strong></td>
-<td>€0.247-€0.333 (coordinated by escrow)</td>
-<td>€0-0.50 (competitive market)</td>
-</tr>
-<tr>
-<td><strong>Sourcing cost</strong></td>
-<td>Deducted from fee pool</td>
-<td>Separate (seller's own capital)</td>
-</tr>
-<tr>
-<td><strong>Instant settlement</strong></td>
-<td>LP sends fiat (coordinated)</td>
-<td>BCH buyer competes (market)</td>
-</tr>
-<tr>
-<td><strong>Complexity</strong></td>
-<td>Medium (3-way split formula)</td>
-<td>Low (fixed 0.5% each)</td>
-</tr>
-<tr>
-<td><strong>Transparency</strong></td>
-<td>Variable (depends on escrow method)</td>
-<td>Fixed (always 0.5%)</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Result:</strong> Simpler, more transparent, higher rewards for covenant participants.</p>
-<hr />
-<h2 id="implementation-details">Implementation Details<a class="headerlink" href="#implementation-details" title="Permanent link">&para;</a></h2>
-<h3 id="how-fees-are-collected">How Fees Are Collected<a class="headerlink" href="#how-fees-are-collected" title="Permanent link">&para;</a></h3>
-<p><strong>Sender pays BCH seller directly:</strong>
-- Sender transfers €100 via Bizum to BCH seller
-- Fee included in covenant structure (seller posts €107, merchant gets €99.50, recipient gets €99)
-- No upfront "€101" payment (unlike old escrow model)</p>
-<h3 id="how-fees-are-distributed-covenant-maturity">How Fees Are Distributed (Covenant Maturity)<a class="headerlink" href="#how-fees-are-distributed-covenant-maturity" title="Permanent link">&para;</a></h3>
-<p><strong>When both conditions met (seller paid + merchant confirmed):</strong></p>
-<p><strong>Covenant executes automatically:</strong>
-<div class="highlight"><pre><span></span><code>Input: €107 worth of BCH (posted by seller)
-
-Outputs:
-├─ Merchant address: €99.50 worth of BCH (€99 principal + €0.50 fee)
-└─ Seller address: €7.50 worth of BCH (€7 overcollateralization + €0.50 fee)
-
-On-chain, immutable, deterministic
-</code></pre></div></p>
-<p><strong>No entity distributes fees</strong> (covenant code executes automatically).</p>
-<hr />
-<h3 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h3>
-<p><strong>Transparency mechanism:</strong>
-- Every covenant shows parameters on-chain:
-  <div class="highlight"><pre><span></span><code>Transfer amount:  €100.00
-BCH seller fee:   €0.50 (0.5%)
-Merchant fee:     €0.50 (0.5%)
-Recipient gets:   €99.00 worth of VES
-Total cost:       €1.00 (1%)
-Overcollateralization: €7.00 (7%)
-</code></pre></div>
-- Participants can verify on blockchain (immutable)
-- Public covenant code (open-source, auditable)
-- <strong>No hidden charges</strong> (code enforces fixed 0.5% split)</p>
-<hr />
-<h2 id="trade-offs-accepted">Trade-offs Accepted<a class="headerlink" href="#trade-offs-accepted" title="Permanent link">&para;</a></h2>
-<h3 id="lost-three-way-incentive-distribution">Lost: Three-Way Incentive Distribution<a class="headerlink" href="#lost-three-way-incentive-distribution" title="Permanent link">&para;</a></h3>
+<p>⚠️ <strong>This strategy is untested. We don't know:</strong></p>
 <ul>
-<li>No longer reward liquidity providers directly (LP → BCH buyer)</li>
-<li>BCH buyers earn from market spread (not covenant fee)</li>
-<li>Fewer participants in covenant (2 instead of 3)</li>
+<li>Will 0.5% attract enough sellers? (Maybe needs 0.7%)</li>
+<li>Will merchants participate for 0.5%? (Maybe needs 0.6%)</li>
+<li>Will network effects kick in, or will liquidity stay thin?</li>
+<li>What's the minimum viable density of merchants for good UX?</li>
 </ul>
-<h3 id="gained-simplicity-bch-holding-incentive-mica-compliance">Gained: Simplicity, BCH Holding Incentive, MiCA Compliance<a class="headerlink" href="#gained-simplicity-bch-holding-incentive-mica-compliance" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Dead simple:</strong> Always 0.5% each (no variable sourcing cost formula)</li>
-<li><strong>Transparent:</strong> Fixed split (no escrow operational decisions)</li>
-<li><strong>BCH adoption focus:</strong> Instant settlement costs your reward (discouraged)</li>
-<li><strong>MiCA compliant:</strong> No entity custody, no intermediation</li>
-<li><strong>Competitive market:</strong> BCH buyers compete on spread (better for merchants over time)</li>
-</ul>
-<h3 id="economic-impact-on-merchant-behavior">Economic Impact on Merchant Behavior<a class="headerlink" href="#economic-impact-on-merchant-behavior" title="Permanent link">&para;</a></h3>
-<p><strong>Desired outcome:</strong> Merchants hold BCH
-- Merchant keeps full €0.50 reward
-- Can use BCH to pay suppliers (circular economy)
-- Benefits from BCH price appreciation</p>
-<p><strong>Discouraged but available:</strong> Instant settlement
-- Merchant loses €0.50 reward to spread
-- Gets €99.00 fiat (same as no reward)
-- <strong>Why use Asgaya if you immediately cash out?</strong> (Defeats the purpose!)</p>
-<p><strong>This is honest framing:</strong>
-- We don't block instant settlement (merchant freedom)
-- We don't hide the cost (0.5% spread examples)
-- We show the math (you lose your reward)
-- <strong>Merchants make informed choice</strong></p>
-<hr />
-<h2 id="edge-cases">Edge Cases<a class="headerlink" href="#edge-cases" title="Permanent link">&para;</a></h2>
-<h3 id="case-1-merchant-holds-bch-no-instant-settlement">Case 1: Merchant Holds BCH (No Instant Settlement)<a class="headerlink" href="#case-1-merchant-holds-bch-no-instant-settlement" title="Permanent link">&para;</a></h3>
-<p><strong>This is the TARGET behavior.</strong></p>
-<p><strong>Covenant flow:</strong>
-<div class="highlight"><pre><span></span><code>Merchant receives: €99.50 BCH from covenant
-Merchant keeps: €99.50 BCH
-Uses BCH for: Inventory restocking, supplier payments, savings
-
-Merchant&#39;s profit:
-├─ €0.50 fee (0.5% reward)
-├─ BCH exposure (potential appreciation)
-└─ Participation in BCH economy
-</code></pre></div></p>
-<p><strong>Fee split (2 participants):</strong>
-- BCH seller: €0.50
-- Merchant: €0.50
-- <strong>No BCH buyer involved</strong> (no instant settlement)</p>
-<hr />
-<h3 id="case-2-merchant-wants-instant-settlement">Case 2: Merchant Wants Instant Settlement<a class="headerlink" href="#case-2-merchant-wants-instant-settlement" title="Permanent link">&para;</a></h3>
-<p><strong>Merchant prefers fiat over BCH.</strong></p>
-<p><strong>Covenant flow (same as Case 1):</strong>
-<div class="highlight"><pre><span></span><code>Merchant receives: €99.50 BCH from covenant
-</code></pre></div></p>
-<p><strong>Separate market transaction:</strong>
-<div class="highlight"><pre><span></span><code>Merchant posts: &quot;Selling €99.50 BCH now&quot;
-BCH buyer responds: &quot;€99.00 fiat&quot; (0.5% spread)
-Merchant accepts: Sends BCH, receives fiat
-</code></pre></div></p>
-<p><strong>Merchant's final position:</strong>
-- Received from covenant: €99.50 BCH
-- Sold for: €99.00 fiat
-- <strong>Net profit: €0</strong> (reward lost to spread)</p>
-<p><strong>BCH buyer's profit:</strong>
-- Bought: €99.50 BCH for €99.00 fiat
-- Spread: €0.50 (0.5%)</p>
-<p><strong>Fee split (effectively 3 participants):</strong>
-- BCH seller: €0.50 (from covenant)
-- Merchant: €0 (lost to spread)
-- BCH buyer: €0.50 (earned from spread, not covenant)</p>
-<p><strong>This shows:</strong> Instant settlement transfers merchant's reward to BCH buyer.</p>
-<hr />
-<h3 id="case-3-multiple-bch-buyers-compete-future">Case 3: Multiple BCH Buyers Compete (Future)<a class="headerlink" href="#case-3-multiple-bch-buyers-compete-future" title="Permanent link">&para;</a></h3>
-<p><strong>Scenario:</strong> 5 BCH buyers compete for merchant's BCH.</p>
-<p><strong>Competitive offers:</strong>
-<div class="highlight"><pre><span></span><code>BCH Buyer A: €99.00 fiat (0.5% spread)
-BCH Buyer B: €99.20 fiat (0.3% spread)
-BCH Buyer C: €99.30 fiat (0.2% spread) ← Merchant picks this!
-BCH Buyer D: €99.10 fiat (0.4% spread)
-BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
-</code></pre></div></p>
-<p><strong>Result:</strong> Competition drives spreads down
-- Merchants get better prices (closer to €99.50)
-- BCH buyers compete on efficiency
-- <strong>Market-based pricing</strong> (better than single LP monopoly)</p>
-<p><strong>In our docs, we still use 0.5% spread examples</strong> to emphasize:</p>
-<blockquote>
-<p>"Even in the best case (competitive market), you lose part of your reward. Hold BCH to keep it all!"</p>
+<p><strong>Phase 0 tests these assumptions.</strong> We'll adjust based on real participant behavior.</p>
 </blockquote>
-<hr />
-<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h2>
-<p><strong>How we verify this decision:</strong>
-- ⏳ <strong>Pending:</strong> Chipnet testing (May 2026)
-  - Deploy covenant with 0.5% fee split
-  - Test overcollateralization surplus calculation
-  - Verify merchant receives correct BCH amount
-- ⏳ <strong>Pending:</strong> Phase 0 mainnet (June 2026)
-  - Real transfers with 1-2 trusted merchants
-  - Measure merchant holding vs. selling behavior
-  - Track BCH buyer spread competition</p>
-<p><strong>Metrics to track:</strong>
-- Merchant holding rate (target: &gt;70% hold BCH, &lt;30% instant settlement)
-- BCH buyer spread average (target: 0.2-0.5%)
-- BCH seller profitability (target: Positive after fees + surplus - margin calls)
-- Recipient satisfaction (target: 99%+ get expected VES amount)</p>
-<hr />
-<h2 id="future-considerations">Future Considerations<a class="headerlink" href="#future-considerations" title="Permanent link">&para;</a></h2>
-<h3 id="v11-dynamic-spread-based-rewards">V1.1: Dynamic Spread-Based Rewards<a class="headerlink" href="#v11-dynamic-spread-based-rewards" title="Permanent link">&para;</a></h3>
-<p><strong>Concept:</strong> Adjust merchant reward based on holding behavior.</p>
-<p><strong>Example:</strong>
-- Merchants who hold BCH for &gt;30 days: 0.6% reward
-- Merchants who hold &lt;7 days: 0.4% reward
-- Merchants who sell immediately: 0.3% reward (discourage further)</p>
-<p><strong>Why not now:</strong>
-- Need baseline data (what's typical holding period?)
-- V1 establishes behavior patterns
-- V1.1 optimizes based on real usage
-- Covenant logic becomes more complex (requires time-lock logic)</p>
-<hr />
-<h3 id="v2-merchant-circular-economy-incentives">V2: Merchant Circular Economy Incentives<a class="headerlink" href="#v2-merchant-circular-economy-incentives" title="Permanent link">&para;</a></h3>
-<p><strong>Concept:</strong> Bonus rewards for merchants who spend BCH (not just hold).</p>
-<p><strong>Example:</strong>
-- Merchant receives €99.50 BCH from covenant
-- Merchant uses €50 BCH to pay supplier (also on Asgaya)
-- Merchant earns <strong>bonus 0.1%</strong> for BCH circulation
-- <strong>Total reward:</strong> €0.50 base + €0.05 bonus = €0.55</p>
-<p><strong>Why not now:</strong>
-- Requires tracking BCH flow between Asgaya participants
-- Complex covenant logic or off-chain verification
-- V1 focuses on holding (simpler)
-- V2 focuses on circulation (stronger network effects)</p>
 <hr />
 <h2 id="related-decisions">Related Decisions<a class="headerlink" href="#related-decisions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../two-step-settlement-timing/">Two-Step Settlement</a> — Why covenant-based pull system works</li>
-<li><a href="../dispute-resolution/">Dispute Resolution</a> — How conflicts resolved without central arbiter</li>
-<li><a href="../../core-architecture/why-promote-adoption/">Promote Adoption</a> — Why BCH holding matters more than fiat conversion</li>
+<li><a href="../fee-splitting-model/">Fee Splitting Model</a> - How fees incentivize participants</li>
+<li><a href="../two-step-settlement-timing/">Two-Step Settlement Timing</a> - Why 24h timeout matters for capital efficiency</li>
+<li><a href="../phase-0-validation-checklist/">Phase 0 Validation Checklist</a> - Metrics we're tracking</li>
 </ul>
 <hr />
-<h2 id="related-concepts">Related Concepts<a class="headerlink" href="#related-concepts" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="../../concepts/bch-sellers/">BCH Sellers</a> — Who provides liquidity and why (miners especially)</li>
-<li><a href="../../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> — Technical covenant implementation</li>
-<li><a href="../../concepts/pull-system/">Pull System</a> — Why recipient-triggered execution is critical</li>
-<li><a href="../../concepts/dynamic-reward-modulation/">Dynamic Reward Modulation</a> — Future fee optimization</li>
-</ul>
-<hr />
-<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Architecture:</strong> <code>/docs/core-architecture/why-promote-adoption.md</code></li>
-<li><strong>Implementation:</strong> <code>/docs/android-app/flows/</code> (all flows show 0.5% split)</li>
-<li><strong>Concepts:</strong> <code>/docs/concepts/bch-sellers.md</code></li>
-</ul>
-<hr />
-<p><strong>Decision made:</strong> April 2026<br />
-<strong>Updated for covenant architecture:</strong> May 10, 2026<br />
-<strong>Validated:</strong> Beta user feedback positive (old model), Chipnet testing pending (covenant model)<br />
-<strong>Status:</strong> Active design, undergoing implementation pivot from escrow to covenant</p>
+<p><em>The cold-start problem is real, but not unique. LocalBitcoins, Uber, Airbnb all faced it. The solution: start small, prove value, scale via network effects.</em></p>
         <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
             <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
         </div>

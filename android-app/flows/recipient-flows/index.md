@@ -477,6 +477,22 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
+│  ❓ What if merchant doesn't give   │
+│     me cash?                        │
+│                                     │
+│  DON'T co-sign. After 24 hours,     │
+│  the covenant automatically refunds:│
+│  - Your portion → Back to sender    │
+│  - Seller fee → BCH seller          │
+│                                     │
+│  No one can steal funds by refusing │
+│  to co-sign. The timeout protects   │
+│  everyone.                          │
+│                                     │
+│  See: Timeout Cascade explained     │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
 │  ⏸️  When you've received cash:     │
 │                                     │
 │  ┌─────────────────────────────┐   │

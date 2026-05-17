@@ -8520,6 +8520,21 @@ Merchant hands VES cash, both parties co-sign covenant to trigger settlement.
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
+│  ❓ What if customer doesn't show   │
+│     up to claim?                    │
+│                                     │
+│  No problem! After 24 hours, the    │
+│  covenant automatically refunds:    │
+│  - Your portion → Back to sender    │
+│  - You never gave cash → No loss    │
+│                                     │
+│  Your BCH is safe in the covenant.  │
+│  Timeout protects you from no-shows.│
+│                                     │
+│  See: Timeout Cascade explained     │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
 │  ⏸️  When you've handed cash:       │
 │                                     │
 │  ┌─────────────────────────────┐   │
@@ -9677,6 +9692,22 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 │    complete                         │
 │                                     │
 │  Only tap after you have cash!      │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
+│  ❓ What if merchant doesn't give   │
+│     me cash?                        │
+│                                     │
+│  DON'T co-sign. After 24 hours,     │
+│  the covenant automatically refunds:│
+│  - Your portion → Back to sender    │
+│  - Seller fee → BCH seller          │
+│                                     │
+│  No one can steal funds by refusing │
+│  to co-sign. The timeout protects   │
+│  everyone.                          │
+│                                     │
+│  See: Timeout Cascade explained     │
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
@@ -32352,6 +32383,28 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 ---
 
+## ⚠️ Validation Strategy
+
+**Many parameters in these decisions are hypotheses, not validated data.**
+
+Examples:
+- **7% overcollateralization** - Educated guess for BCH volatility buffer
+- **0.5%/0.5% fee split** - Starting assumption for participant incentives
+- **24-hour timeout** - Arbitrary choice pending real usage data
+- **DolarAPI rates** - Phase 0 solution, not production-grade
+
+**The Bitcoin lesson:** Satoshi chose 1MB block size and 10-minute confirmation without empirical validation. These seemed reasonable but later became contentious. We're explicitly tracking our arbitrary parameters to avoid repeating this mistake.
+
+**Our approach:**
+1. Mark ALL hypothesis values with warning boxes in their decision docs
+2. Define success/failure metrics for each parameter
+3. Test during Phase 0 trials with real participants
+4. Adjust based on data, not ideology
+
+**📋 See:** **[Phase 0 Validation Checklist](phase-0-validation-checklist.md)** for complete tracking of arbitrary parameters, success metrics, and adjustment triggers.
+
+---
+
 ## How We Achieve The 3 Core Requirements
 
 ### 1️⃣ How: Cheaper Than Legacy (<1% fees)
@@ -32383,6 +32436,8 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 - **BCH Seller Hedge Mechanism** — Sellers post overcollateralized BCH (107%), receive EUR from sender within 5 minutes, reducing BCH exposure by 94-97%. Earn 0.5% fee + potential price appreciation on surplus. Natural role for BCH miners with existing inventory.
 
 - **BCH Usage Incentives** — Near-zero fee BCH payments vs 1% remittance cash-outs. Goal: make Asgaya redundant except for legacy system interaction. Recipients incentivized to keep BCH for future payments. Circular economy enabled (merchants can become senders, BCH buyers can become merchants).
+
+- **[Cold-Start Strategy](cold-start-strategy.md)** — Phase 0: Trusted bootstrap with 1-2 sellers/merchants to prove model. Phase 1: Market-driven growth via network effects. Long-term: Protocol becomes unnecessary as BCH adoption reaches critical mass. Addresses liquidity chicken-and-egg problem.
 
 **Key principle:** Economic incentives over ideology. Make participation profitable for everyone.
 
@@ -32642,6 +32697,248 @@ Other corridors may have different constraints:
 *Decision made: April 22, 2026*
 *Validated: €1 test transfer successful*
 *Status: Active, working as designed*
+
+
+## Decision: Cold-Start Strategy
+
+# Decision: Cold-Start Strategy
+
+**Decision Date:** May 17, 2026  
+**Status:** Phase 0 Approach Defined  
+**Context:** Grok review identified this as missing content
+
+---
+
+## The Problem
+
+**Asgaya has a chicken-and-egg liquidity problem:**
+
+- **Senders** won't use the protocol if there are no BCH sellers to accept bounties
+- **BCH sellers** won't participate if there's no transaction volume (low fee income)
+- **Merchants** won't list availability if there are no recipients to serve
+- **Recipients** can't claim remittances if there are no local merchants
+
+**This is the cold-start problem:** How do you bootstrap a two-sided marketplace from zero?
+
+---
+
+## Phase 0: Trusted Bootstrapping (June-August 2026)
+
+**Approach:** Manual coordination with known participants to prove the model works.
+
+### BCH Seller Bootstrap
+
+**Target:** 1-2 trusted BCH holders willing to post capital
+
+**Ideal candidates:**
+- BCH miners (steady BCH inflows, long-term holders)
+- Early BCH adopters with significant holdings
+- Bitcoin Cash community members aligned with adoption goals
+
+**Incentives for Phase 0 sellers:**
+- 0.5% fee per transaction (€0.50 on €100)
+- Hedge position (convert 94-97% of exposure to EUR within 5 minutes)
+- Potential price appreciation on surplus
+- Early mover advantage (reputation building)
+- **Mission alignment:** Help bootstrap BCH adoption in Venezuela
+
+**Capital requirement:** €1,000-5,000 (10-50 concurrent bounties at €100 each with 7% overcollateralization)
+
+**Risk mitigation:**
+- Start with small amounts (€50-100 per transaction)
+- 1-2 trusted senders (known family/friends in Venezuela)
+- Monitor volatility closely (pause if >5% daily moves)
+
+### Merchant Bootstrap
+
+**Target:** 1-2 merchants in Caracas with:
+- Existing cash business (liquidity available)
+- Smartphone with reliable internet
+- Willingness to hold BCH (or access to BCH buyers)
+- Trusted relationship with local recipients
+
+**Incentives:**
+- 0.5% spread (€0.50 on €100 transaction)
+- BCH accumulation opportunity (if holding)
+- First-mover advantage in growing market
+- **Free marketing:** Word-of-mouth from satisfied recipients
+
+**Bootstrap approach:**
+- Identify through Venezuelan Bitcoin Cash community
+- Direct outreach to bodega owners, money changers, or market vendors
+- Start with 1-2 test transactions to build confidence
+
+### Sender Bootstrap
+
+**Target:** 1-2 senders in Spain with family in Venezuela
+
+**Why Spain→Venezuela:**
+- High remittance corridor (€44M annually)
+- Significant cost savings (6.49% → 1%)
+- Known recipient addresses (trusted family members)
+- Sender controls timing (can wait for BCH seller acceptance)
+
+---
+
+## Phase 1: Market-Driven Growth (September 2026+)
+
+**Transition from trusted bootstrap to open market.**
+
+### Seller Acquisition
+
+**Strategy:** Make 0.5% + hedge attractive enough to pull in profit-seeking participants
+
+**Levers to adjust if needed:**
+| Scenario | Adjustment | Trade-off |
+|----------|------------|-----------|
+| Too few sellers | Increase seller fee to 0.6-0.7% | Reduce merchant fee or increase total cost |
+| Seller capital lockup concern | Reduce timeout from 24h to 12h | Less time for recipients to claim |
+| Volatility deterrent | Increase overcollateralization to 10% | Higher capital inefficiency |
+
+**Target metrics:**
+- **Liquidity depth:** >5 active sellers per corridor
+- **Acceptance rate:** >90% of bounties accepted within 30 minutes
+- **Coverage:** 18-hour daily availability (sellers in different time zones)
+
+### Merchant Acquisition
+
+**Strategy:** Geographic expansion via word-of-mouth and BCH community
+
+**Approach:**
+1. **Phase 0 success stories** - First merchants share experience
+2. **BCH community outreach** - Existing BCH-accepting merchants
+3. **Financial incentive** - 0.5% spread + BCH accumulation
+4. **Low friction** - No upfront costs, instant payout
+
+**Target metrics:**
+- **Coverage:** 1 merchant per 10km² in metro areas
+- **Availability:** >50% of merchants online during peak hours
+- **Retention:** >80% of merchants active after first transaction
+
+### Network Effects
+
+**Once critical mass is reached:**
+
+- **More senders** → More transaction volume → Higher fee income for sellers
+- **More merchants** → Better recipient convenience → More senders
+- **More BCH holders** → More sellers → Faster bounty acceptance
+- **More transactions** → More data → Better validation of parameters
+
+**Flywheel:**
+```
+More senders
+    ↓
+Higher volume
+    ↓
+More seller profit
+    ↓
+More BCH sellers
+    ↓
+Faster acceptance
+    ↓
+Better UX
+    ↓
+More senders (loop)
+```
+
+---
+
+## Long-Term: Protocol Becomes Infrastructure (2027+)
+
+**Vision:** Asgaya becomes unnecessary as BCH adoption reaches critical mass.
+
+### Why Asgaya Would Become Redundant
+
+**If successful:**
+- Venezuelan merchants accept BCH directly (no cash-out needed)
+- Recipients hold BCH for future payments (no conversion)
+- BCH circular economy thrives (peer-to-peer payments)
+- Asgaya only needed for legacy fiat interaction (edge cases)
+
+**Success metric:** Asgaya transaction volume DECREASES as BCH usage increases
+
+**The goal is not to build a platform - it's to build a ladder people climb and then kick away.**
+
+---
+
+## What Could Go Wrong (And How We'd Know)
+
+### Failure Mode 1: No BCH Sellers Accept Bounties
+
+**Signal:** <50% acceptance rate, >2 hour wait times
+
+**Response:**
+- Increase seller fee (0.6% or 0.7%)
+- Reduce timeout window (12h instead of 24h to reduce capital lockup)
+- Recruit directly from BCH mining community
+
+**Pivot trigger:** If adjustments don't improve acceptance to >80%, pause and reassess model
+
+### Failure Mode 2: Merchants Don't List Availability
+
+**Signal:** <1 merchant per corridor, no availability during peak hours
+
+**Response:**
+- Increase merchant fee (0.6% or higher)
+- Offer BCH buyer introductions (instant fiat settlement option)
+- Reduce competition by limiting new merchant signups (exclusivity = higher volume per merchant)
+
+**Pivot trigger:** If <3 active merchants after 3 months, reassess merchant value proposition
+
+### Failure Mode 3: Senders Don't Trust the System
+
+**Signal:** High bounce rate (see protocol, don't send)
+
+**Response:**
+- Publish Phase 0 success stories
+- Add sender insurance option (small fee for guaranteed refund if issues)
+- Video tutorials showing complete flows
+
+**Pivot trigger:** If <10 unique senders after 3 months, UX or trust issue
+
+---
+
+## Validation Metrics (Phase 0 → Phase 1 Transition)
+
+**To graduate from Phase 0 to Phase 1, we need:**
+
+| Metric | Target | Purpose |
+|--------|--------|---------|
+| **Transactions completed** | >30 successful | Prove model works |
+| **Unique senders** | >5 | Not dependent on one user |
+| **Unique recipients** | >5 | Real use case |
+| **BCH seller acceptance rate** | >80% | Liquidity sufficient |
+| **Merchant availability** | >50% uptime | Coverage sufficient |
+| **Dispute rate** | <5% | System mostly works |
+| **Timeout rate** | <10% | Recipients claiming reliably |
+
+**If we hit these targets:** Open to public (Phase 1)  
+**If we miss:** Iterate on Phase 0, adjust parameters, retest
+
+---
+
+## Why This Is a Hypothesis
+
+> ⚠️ **This strategy is untested. We don't know:**
+> 
+> - Will 0.5% attract enough sellers? (Maybe needs 0.7%)
+> - Will merchants participate for 0.5%? (Maybe needs 0.6%)
+> - Will network effects kick in, or will liquidity stay thin?
+> - What's the minimum viable density of merchants for good UX?
+> 
+> **Phase 0 tests these assumptions.** We'll adjust based on real participant behavior.
+
+---
+
+## Related Decisions
+
+- [Fee Splitting Model](fee-splitting-model.md) - How fees incentivize participants
+- [Two-Step Settlement Timing](two-step-settlement-timing.md) - Why 24h timeout matters for capital efficiency
+- [Phase 0 Validation Checklist](phase-0-validation-checklist.md) - Metrics we're tracking
+
+---
+
+*The cold-start problem is real, but not unique. LocalBitcoins, Uber, Airbnb all faced it. The solution: start small, prove value, scale via network effects.*
 
 
 ## Dispute Resolution
@@ -33031,6 +33328,28 @@ For recipients without smartphones:
 > - Merchant can sell BCH immediately to BCH buyer (separate market)
 > - Typical spread: 0.5% (merchant loses entire reward to spread)
 > - **Result if selling immediately:** Merchant gets €99.00 fiat (same as no reward!)
+
+---
+
+> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
+> 
+> **The 0.5%/0.5% split is an educated guess, not empirical data.**
+> 
+> We don't yet know if:
+> - 0.5% attracts enough BCH sellers (considering capital cost + volatility risk)
+> - 0.5% motivates merchants to provide cash liquidity (vs. just holding fiat)
+> - This balance optimally promotes BCH adoption
+> 
+> **The Bitcoin lesson:** Arbitrary parameters (1MB blocks, 10-minute confirmation) 
+> become contentious if not validated early. We will test this during Phase 0 trials 
+> and adjust based on real participant behavior.
+> 
+> **Adjustment triggers:**
+> - If seller acquisition fails → Consider 0.6% seller / 0.4% merchant
+> - If merchant acquisition fails → Consider 0.4% seller / 0.6% merchant
+> - If both struggle → Consider 0.7% each (1.4% total, still competitive vs. 6.49% legacy)
+> 
+> **See:** [Phase 0 Validation Checklist](phase-0-validation-checklist.md#-fee-split-seller--merchant)
 
 ---
 
@@ -33662,6 +33981,33 @@ Use real market exchange rates with zero markup, avoiding both private company s
 ---
 
 ## The Decision
+
+> ⚠️ **PHASE 0 SOLUTION — NOT PRODUCTION-READY**
+> 
+> **DolarAPI is sufficient for Phase 0 testing but has known limitations:**
+> 
+> - **Single point of failure:** API downtime = protocol can't show rates to users
+> - **No manipulation protection:** One source = trust that source
+> - **No fallback mechanism:** If DolarAPI changes/disappears, app breaks
+> 
+> **The Bitcoin lesson:** Early Bitcoin implementations relied on single data 
+> sources (MtGox exchange rates, blockchain.info APIs) that later became 
+> bottlenecks or attack vectors. We're using DolarAPI to move fast, but 
+> acknowledging it's not robust enough for production.
+> 
+> **Phase 1 requirements:**
+> - Multiple rate sources (DolarAPI + Reserve + Monitor Dólar + on-chain oracles)
+> - Outlier detection (reject rates >5% different from median)
+> - Fallback mechanisms (cached rates, manual override, transaction pause)
+> - On-chain oracle integration (e.g., Oracles.cash for BCH/USD)
+> 
+> **Why Phase 0 first:** Validate user flows and economic model before building 
+> robust infrastructure. If Phase 0 reveals fundamental issues, we don't want 
+> to have wasted effort on production-grade rate aggregation.
+> 
+> **See:** [Phase 1 Stability Layer](../roadmap/phase-1-stability-layer.md)
+
+---
 
 ### Three-Layer Rate Display
 
@@ -36056,6 +36402,34 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 ---
 
 ### Overcollateralization Mechanics
+
+> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
+> 
+> **The 7% overcollateralization rate is an educated guess, not empirical data.**
+> 
+> We don't yet know:
+> - Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
+> - Will sellers accept 7% capital inefficiency for 0.5% fee?
+> - Should it vary by market conditions? (5% calm, 12% volatile)
+> - Should it vary by time window? (5% for 12h, 7% for 24h)
+> 
+> **The Bitcoin lesson:** Satoshi chose a 1MB block size limit without empirical 
+> validation. It seemed reasonable at the time, then became a scaling bottleneck 
+> leading to contentious hard forks. We're explicitly tracking this assumption.
+> 
+> **Phase 0 validation plan:**
+> - Track margin call frequency (target: <5% of transactions)
+> - Measure 95th percentile BCH volatility during trials
+> - Test seller willingness to lock capital at this rate
+> 
+> **Adjustment triggers:**
+> - If margin calls >10% → Increase to 10% overcollateralization
+> - If margin calls <1% → Consider reducing to 5% (free up seller capital)
+> - If underpayment occurs → Immediately increase buffer
+> 
+> **See:** [Phase 0 Validation Checklist](phase-0-validation-checklist.md#-overcollateralization-rate)
+
+---
 
 **How 7% buffer protects:**
 

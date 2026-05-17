@@ -4736,6 +4736,28 @@ Result:
 - No additional capital requirements</p>
 <hr />
 <h3 id="overcollateralization-mechanics">Overcollateralization Mechanics<a class="headerlink" href="#overcollateralization-mechanics" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>⚠️ <strong>HYPOTHESIS — NEEDS PHASE 0 VALIDATION</strong></p>
+<p><strong>The 7% overcollateralization rate is an educated guess, not empirical data.</strong></p>
+<p>We don't yet know:
+- Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
+- Will sellers accept 7% capital inefficiency for 0.5% fee?
+- Should it vary by market conditions? (5% calm, 12% volatile)
+- Should it vary by time window? (5% for 12h, 7% for 24h)</p>
+<p><strong>The Bitcoin lesson:</strong> Satoshi chose a 1MB block size limit without empirical 
+validation. It seemed reasonable at the time, then became a scaling bottleneck 
+leading to contentious hard forks. We're explicitly tracking this assumption.</p>
+<p><strong>Phase 0 validation plan:</strong>
+- Track margin call frequency (target: &lt;5% of transactions)
+- Measure 95th percentile BCH volatility during trials
+- Test seller willingness to lock capital at this rate</p>
+<p><strong>Adjustment triggers:</strong>
+- If margin calls &gt;10% → Increase to 10% overcollateralization
+- If margin calls &lt;1% → Consider reducing to 5% (free up seller capital)
+- If underpayment occurs → Immediately increase buffer</p>
+<p><strong>See:</strong> <a href="../phase-0-validation-checklist/#-overcollateralization-rate">Phase 0 Validation Checklist</a></p>
+</blockquote>
+<hr />
 <p><strong>How 7% buffer protects:</strong></p>
 <table>
 <thead>

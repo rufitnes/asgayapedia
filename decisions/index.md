@@ -14,6 +14,28 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 ---
 
+## ⚠️ Validation Strategy
+
+**Many parameters in these decisions are hypotheses, not validated data.**
+
+Examples:
+- **7% overcollateralization** - Educated guess for BCH volatility buffer
+- **0.5%/0.5% fee split** - Starting assumption for participant incentives
+- **24-hour timeout** - Arbitrary choice pending real usage data
+- **DolarAPI rates** - Phase 0 solution, not production-grade
+
+**The Bitcoin lesson:** Satoshi chose 1MB block size and 10-minute confirmation without empirical validation. These seemed reasonable but later became contentious. We're explicitly tracking our arbitrary parameters to avoid repeating this mistake.
+
+**Our approach:**
+1. Mark ALL hypothesis values with warning boxes in their decision docs
+2. Define success/failure metrics for each parameter
+3. Test during Phase 0 trials with real participants
+4. Adjust based on data, not ideology
+
+**📋 See:** **[Phase 0 Validation Checklist](phase-0-validation-checklist.md)** for complete tracking of arbitrary parameters, success metrics, and adjustment triggers.
+
+---
+
 ## How We Achieve The 3 Core Requirements
 
 ### 1️⃣ How: Cheaper Than Legacy (<1% fees)
@@ -45,6 +67,8 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 - **BCH Seller Hedge Mechanism** — Sellers post overcollateralized BCH (107%), receive EUR from sender within 5 minutes, reducing BCH exposure by 94-97%. Earn 0.5% fee + potential price appreciation on surplus. Natural role for BCH miners with existing inventory.
 
 - **BCH Usage Incentives** — Near-zero fee BCH payments vs 1% remittance cash-outs. Goal: make Asgaya redundant except for legacy system interaction. Recipients incentivized to keep BCH for future payments. Circular economy enabled (merchants can become senders, BCH buyers can become merchants).
+
+- **[Cold-Start Strategy](cold-start-strategy.md)** — Phase 0: Trusted bootstrap with 1-2 sellers/merchants to prove model. Phase 1: Market-driven growth via network effects. Long-term: Protocol becomes unnecessary as BCH adoption reaches critical mass. Addresses liquidity chicken-and-egg problem.
 
 **Key principle:** Economic incentives over ideology. Make participation profitable for everyone.
 

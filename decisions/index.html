@@ -2957,6 +2957,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#validation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Validation Strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-we-achieve-the-3-core-requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3542,6 +3553,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#validation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Validation Strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-we-achieve-the-3-core-requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3666,6 +3688,21 @@
 5. <strong>Trade-offs</strong> - What we gained and what we lost
 6. <strong>Validation</strong> - How we verify it works</p>
 <hr />
+<h2 id="validation-strategy">⚠️ Validation Strategy<a class="headerlink" href="#validation-strategy" title="Permanent link">&para;</a></h2>
+<p><strong>Many parameters in these decisions are hypotheses, not validated data.</strong></p>
+<p>Examples:
+- <strong>7% overcollateralization</strong> - Educated guess for BCH volatility buffer
+- <strong>0.5%/0.5% fee split</strong> - Starting assumption for participant incentives
+- <strong>24-hour timeout</strong> - Arbitrary choice pending real usage data
+- <strong>DolarAPI rates</strong> - Phase 0 solution, not production-grade</p>
+<p><strong>The Bitcoin lesson:</strong> Satoshi chose 1MB block size and 10-minute confirmation without empirical validation. These seemed reasonable but later became contentious. We're explicitly tracking our arbitrary parameters to avoid repeating this mistake.</p>
+<p><strong>Our approach:</strong>
+1. Mark ALL hypothesis values with warning boxes in their decision docs
+2. Define success/failure metrics for each parameter
+3. Test during Phase 0 trials with real participants
+4. Adjust based on data, not ideology</p>
+<p><strong>📋 See:</strong> <strong><a href="phase-0-validation-checklist/">Phase 0 Validation Checklist</a></strong> for complete tracking of arbitrary parameters, success metrics, and adjustment triggers.</p>
+<hr />
 <h2 id="how-we-achieve-the-3-core-requirements">How We Achieve The 3 Core Requirements<a class="headerlink" href="#how-we-achieve-the-3-core-requirements" title="Permanent link">&para;</a></h2>
 <h3 id="1-how-cheaper-than-legacy-1-fees">1️⃣ How: Cheaper Than Legacy (&lt;1% fees)<a class="headerlink" href="#1-how-cheaper-than-legacy-1-fees" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Beat 6.49% average remittance costs through market-rate exchanges and free peer-to-peer rails.</p>
@@ -3698,6 +3735,9 @@
 </li>
 <li>
 <p><strong>BCH Usage Incentives</strong> — Near-zero fee BCH payments vs 1% remittance cash-outs. Goal: make Asgaya redundant except for legacy system interaction. Recipients incentivized to keep BCH for future payments. Circular economy enabled (merchants can become senders, BCH buyers can become merchants).</p>
+</li>
+<li>
+<p><strong><a href="cold-start-strategy/">Cold-Start Strategy</a></strong> — Phase 0: Trusted bootstrap with 1-2 sellers/merchants to prove model. Phase 1: Market-driven growth via network effects. Long-term: Protocol becomes unnecessary as BCH adoption reaches critical mass. Addresses liquidity chicken-and-egg problem.</p>
 </li>
 </ul>
 <p><strong>Key principle:</strong> Economic incentives over ideology. Make participation profitable for everyone.</p>
