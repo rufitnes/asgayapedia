@@ -6,20 +6,22 @@ Welcome to Asgayapedia - the complete documentation for the Asgaya remittance pr
 
 ## What is Asgaya?
 
-Asgaya is a **permissionless, peer-to-peer bridge** between payment walled gardens, using Bitcoin Cash as the settlement layer.
+**Asgaya is a Bitcoin Cash adoption engine disguised as a remittance protocol.**
 
-### Core Requirements
+On the surface, it's a cheaper way to send money across borders (<1% vs 6.49% average). Under the hood, it's a **decentralized exchange** synthesizing innovations from across the BCH ecosystem into real-world utility.
 
-Asgaya is designed to satisfy three fundamental requirements:
+**The insight:** Every remittance creates a new BCH merchant. Use the $44.5 billion annually lost to fees to build circular economy infrastructure where it's needed most.
 
-**1. Cheaper Than Legacy (<1% fees)**
-Remittances cost 6.49% on average. Asgaya targets <1% through market-rate exchanges and decentralized covenant-based settlement.
+### Core Design Goals
 
-**2. Promote Merchant Adoption**
-Every transaction creates economic incentives for merchants to join the network (earn ~1% spread by selling VES for BCH).
+**1. Promote Adoption First**
+Every transaction must create economic incentives for participants to join and grow the network. Merchants earn ~0.5% spread, BCH sellers earn ~0.5% fee + hedge position.
 
-**3. Permissionless**
-Anyone can participate without KYC, using minimal hardware and knowledge. No custody, no intermediation.
+**2. Cheaper Than Legacy (<1% fees)**
+Beat 6.49% average remittance costs through market-rate exchanges with zero markup and decentralized covenant-based settlement.
+
+**3. Permissionless by Design**
+Anyone can participate without KYC, using minimal hardware and knowledge. No custody, no intermediation, no gatekeepers.
 
 ---
 
@@ -42,7 +44,7 @@ On a **€100 transfer**, the ~1% (€1.00) is distributed as:
 
 ---
 
-**Key Innovation:** EUR-denominated covenants with BCH settlement eliminate custody and intermediation risk.
+**Key Innovation:** EUR-denominated covenants with BCH settlement create a decentralized exchange where every trade builds adoption infrastructure. The merchant receiving the remittance becomes part of the BCH circular economy.
 
 **⚠️ Important:** Asgaya is an **early-stage, experimental protocol**. By exploring this documentation or participating in any capacity, you accept full responsibility for understanding and complying with laws in your jurisdiction. **[Read full risks and disclaimers →](risks-and-disclaimers.md)**
 
@@ -57,6 +59,38 @@ Asgaya offers an alternative by connecting local mobile payment apps (like Bizum
 The goal: mobilize those lost fees to drive adoption, making every transfer create a new merchant on the network.
 
 **The foundation that connects both sides.**
+
+---
+
+## Standing on Giants
+
+Asgaya doesn't reinvent the wheel—it synthesizes proven innovations from the Bitcoin Cash ecosystem into a coherent user experience.
+
+### Key Technologies We Build On
+
+**[CashAccounts](https://www.cashaccount.info/)**  
+Human-readable addresses (`Elena#142`) replace cryptographic hashes. Makes crypto accessible to non-technical users.
+
+**[AnyHedge](https://anyhedge.com/)**  
+Inspiration for overcollateralized contracts and hedge mechanisms. BCH sellers use similar principles to eliminate volatility exposure while earning fees.
+
+**[CashTokens](https://cashtokens.org/)**  
+Native token standard enabling EUR commitments and merchant/seller availability signals. Immutable proof of collateral without trusted oracles.
+
+**[CashScript](https://cashscript.org/)**  
+Covenant (smart contract) language powering trustless settlement. No custody, no intermediation—just code executing autonomously on-chain.
+
+**[MUSD](https://www.mistcoin.org/)**  
+Stablecoin integration pathway for future versions. Potential to eliminate fiat payment rails entirely.
+
+**OP_RETURN**  
+BCH's data storage opcode bridges fiat payment systems (Bizum, PagoMóvil) with blockchain settlement. Immutable notification logs without bloating UTXO set.
+
+### Why This Matters
+
+Each of these projects solved hard problems. Asgaya's contribution is **synthesis**—combining them into something useful for people who've never heard of Bitcoin Cash.
+
+**The goal isn't to compete with these projects. It's to prove their value by making them disappear into the user experience.**
 
 ---
 
