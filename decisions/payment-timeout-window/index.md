@@ -2,7 +2,7 @@
 
 **Decision Date:** April 2026
 **Status:** Implemented
-**Related Requirement:** [Permissionless](core-architecture/why-permissionless.md) ([Error Mitigation](core-architecture/why-permissionless.md#error-prevention)), [Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) (Volatility Protection)
+**Related Requirement:** [Permissionless](../core-architecture/why-permissionless.md) ([Error Mitigation](../core-architecture/why-permissionless.md#error-prevention)), [Cheaper Than Legacy](../core-architecture/why-cheaper-than-legacy.md) (Volatility Protection)
 
 ---
 
@@ -276,9 +276,9 @@ Received: +58 412 123 4567 (with spaces and +)
 
 ## Related Decisions
 
-- [Bizum Concept Field](decisions/bizum-concept-field.md) — Why phone numbers (enables simple fuzzy matching)
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — Why covenant-based architecture eliminates volatility during timeout
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees are calculated in covenant distribution
+- [Bizum Concept Field](bizum-concept-field.md) — Why phone numbers (enables simple fuzzy matching)
+- [Two-Step Settlement Timing](two-step-settlement-timing.md) — Why covenant-based architecture eliminates volatility during timeout
+- [Fee Splitting Model](fee-splitting-model.md) — How fees are calculated in covenant distribution
 
 ---
 

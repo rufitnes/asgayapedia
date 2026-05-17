@@ -620,7 +620,7 @@ if (!validateRate(bchPrice, 'BCH_EUR')) {
 ## Related Documents
 
 - **Covenant Creation:** [covenant-creation.md](covenant-creation.md) - How EUR-denominated covenants use these rates
-- **User Flows:** [Sender Flow](../flows/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
+- **User Flows:** [Sender Flow](../flows/archive/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
 - **Architecture:** [BCH-Native Architecture](bch-native-architecture.md) - Pull system design
 - **Phase 0:** [Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md)
 - **Backend Index:** [README.md](README.md)

@@ -4,7 +4,7 @@
 
 **Status:** ⚠️ **Obsolete - Renamed**  
 **Date:** Originally April 2026, superseded May 10, 2026  
-**Replaced by:** [BCH Sellers](concepts/bch-sellers.md)
+**Replaced by:** [BCH Sellers](bch-sellers.md)
 
 ---
 
@@ -13,7 +13,7 @@
 This concept has been **renamed and updated** to reflect the covenant-based architecture (May 10, 2026 pivot).
 
 **Old name:** BCH Miners as Escrows  
-**New name:** [BCH Sellers](concepts/bch-sellers.md)
+**New name:** [BCH Sellers](bch-sellers.md)
 
 **What changed:**
 - **Architecture:** Escrow model → Covenant smart contracts
@@ -37,7 +37,7 @@ In the covenant redesign (May 10, 2026), we discovered that:
 
 ## For Current Information
 
-**See:** [BCH Sellers](concepts/bch-sellers.md) - The current covenant-based design
+**See:** [BCH Sellers](bch-sellers.md) - The current covenant-based design
 
 **Key differences:**
 - No custody (covenant holds BCH autonomously)
@@ -69,15 +69,15 @@ The "BCH Miners as Escrows" concept was part of the April 2026 escrow-based arch
 ## Related Documents
 
 **Current:**
-- [BCH Sellers](concepts/bch-sellers.md) - Covenant-era replacement
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) - Covenant mechanism
-- [Core Regulatory Constraints](concepts/core-regulatory-constraints.md) - Why no custody
+- [BCH Sellers](bch-sellers.md) - Covenant-era replacement
+- [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md) - Covenant mechanism
+- [Core Regulatory Constraints](core-regulatory-constraints.md) - Why no custody
 
 **Historical:**
-- [Market Making Partners](concepts/market-making-partners.md) - Old LP concept (also obsolete)
-- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) - Deferred (referenced old model)
+- [Market Making Partners](market-making-partners.md) - Old LP concept (also obsolete)
+- [Dynamic Reward Modulation](dynamic-reward-modulation.md) - Deferred (referenced old model)
 
 ---
 
 *This stub created May 12, 2026 to resolve broken references in historical documents.*  
-*For current BCH Seller design, see: [bch-sellers.md](concepts/bch-sellers.md)*
+*For current BCH Seller design, see: [bch-sellers.md](bch-sellers.md)*

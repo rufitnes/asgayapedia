@@ -30,10 +30,7 @@
 
 ## UI Mockups Reference
 
-**All screen designs documented in:**
-- `/home/suso/Documents/asgaya-docs/screen-browser.html`
-- Visual mockups of all 15 screens (sender, recipient, merchant flows)
-- Interactive navigation between screens
+**All screen designs documented in:** [User Flows](../flows/)
 
 **Sender Screens (8 total):**
 1. Home (Entry Point)
@@ -416,7 +413,7 @@ fun testFullSenderFlow_OwnBCH() {
 
 - [Pichan Regtest Setup](./pichan-regtest-setup.md) - Server configuration
 - [Phase 0 Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md) - Overall strategy
-- [Screen Browser](../../../screen-browser.html) - UI mockups
+- [User Flows](../flows/) - UI mockups and flow documentation
 - [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) - Covenant logic
 
 ---

@@ -3,7 +3,7 @@
 **Research Type:** Protocol Analysis
 **Status:** ✅ Draft
 **Date:** 2026-05-09
-**Related:** [RS054 CashToken Swaps](research/RS054_cashtoken_swaps.md), [BCH Sellers](../concepts/bch-sellers.md), [Decentralized Pull System](../decentralized-pull-system.md)
+**Related:** [RS054 CashToken Swaps](RS054_cashtoken_swaps.md), [BCH Sellers](../concepts/bch-sellers.md), [Decentralized Pull System](../concepts/pull-system.md)
 
 ---
 

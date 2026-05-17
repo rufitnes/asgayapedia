@@ -4068,7 +4068,7 @@
 
 
 <h1 id="how-exchange-rates-work">How: Exchange Rates Work<a class="headerlink" href="#how-exchange-rates-work" title="Permanent link">&para;</a></h1>
-<p><strong>Satisfies:</strong> <a href="core-architecture/why-market-rate-exchanges.md">Why: Market-Rate Exchanges</a></p>
+<p><strong>Satisfies:</strong> <a href="../../core-architecture/why-market-rate-exchanges/">Why: Market-Rate Exchanges</a></p>
 <p><strong>Decision Category:</strong> Implementation Approach</p>
 <p><strong>Note:</strong> Replaces the escrow-based Kraken purchase model (abandoned May 9, 2026 due to MiCA compliance issues).</p>
 <hr />
@@ -4128,7 +4128,7 @@
 - ✅ Free (no API costs)
 - ✅ Covers Venezuela, Argentina, other restricted economies
 - ✅ Publicly verifiable (anyone can check DolarAPI.com)
-- <strong>Research:</strong> <a href="research/RS047_dolarapi_venezuela_rates.md">RS047 DolarAPI Venezuela Rates</a></p>
+- <strong>Research:</strong> <a href="../../research/RS047_dolarapi_venezuela_rates/">RS047 DolarAPI Venezuela Rates</a></p>
 <p><strong>Cache strategy:</strong>
 - Cache DolarAPI rates for 5 minutes (blue rate doesn't change that fast)
 - EUR/USD cached for 1 minute (more volatile)
@@ -4396,7 +4396,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 <hr />
 <h2 id="implementation-status">Implementation Status<a class="headerlink" href="#implementation-status" title="Permanent link">&para;</a></h2>
 <ul>
-<li>✅ <strong>Research:</strong> DolarAPI integration (<a href="research/RS047_dolarapi_venezuela_rates.md">RS047</a>)</li>
+<li>✅ <strong>Research:</strong> DolarAPI integration (<a href="../../research/RS047_dolarapi_venezuela_rates/">RS047</a>)</li>
 <li>✅ <strong>Research:</strong> Exchange rate display strategies</li>
 <li>✅ <strong>Concept:</strong> Overcollateralized bounty contracts</li>
 <li>🔄 <strong>Development:</strong> Sender app rate display</li>
@@ -4408,23 +4408,23 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 <hr />
 <h2 id="related-decisions">Related Decisions<a class="headerlink" href="#related-decisions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="decisions/two-step-settlement-timing.md">Two-Step Settlement Timing</a> — How covenant timing affects rate exposure</li>
-<li><a href="decisions/fee-splitting-model.md">Fee Splitting Model</a> — How fees are denominated (BCH, not EUR)</li>
-<li><a href="concepts/core-regulatory-constraints.md">Core Regulatory Constraints</a> — Why covenant model instead of escrow purchase</li>
+<li><a href="../two-step-settlement-timing/">Two-Step Settlement Timing</a> — How covenant timing affects rate exposure</li>
+<li><a href="../fee-splitting-model/">Fee Splitting Model</a> — How fees are denominated (BCH, not EUR)</li>
+<li><a href="../../concepts/core-regulatory-constraints/">Core Regulatory Constraints</a> — Why covenant model instead of escrow purchase</li>
 </ul>
 <hr />
 <h2 id="related-concepts">Related Concepts<a class="headerlink" href="#related-concepts" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="concepts/pull-system.md">Pull System</a> — How recipient timing control affects rate risk</li>
-<li><a href="concepts/overcollateralized-bounty-contracts.md">Overcollateralized Bounty Contracts</a> — How overcollateralization protects against volatility</li>
-<li><a href="concepts/bch-sellers.md">BCH Sellers</a> — Who provides BCH and how they manage inventory</li>
+<li><a href="../../concepts/pull-system/">Pull System</a> — How recipient timing control affects rate risk</li>
+<li><a href="../../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> — How overcollateralization protects against volatility</li>
+<li><a href="../../concepts/bch-sellers/">BCH Sellers</a> — Who provides BCH and how they manage inventory</li>
 </ul>
 <hr />
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <p><strong>Research:</strong>
-- <a href="research/RS047_dolarapi_venezuela_rates.md">RS047: DolarAPI Venezuela Rates</a>
-- <a href="research/RS041_cross_corridor_exchange_rates.md">RS041: Cross-Corridor Exchange Rates</a>
-- <a href="research/RS052_compliance_architecture.md">RS052: Compliance Architecture</a> (regulatory constraints)</p>
+- <a href="../../research/RS047_dolarapi_venezuela_rates/">RS047: DolarAPI Venezuela Rates</a>
+- <a href="../../research/RS041_cross_corridor_exchange_rates/">RS041: Cross-Corridor Exchange Rates</a>
+- <a href="../research/RS052_compliance_architecture.md">RS052: Compliance Architecture</a> (regulatory constraints)</p>
 <p><strong>Archived:</strong>
 - <a href="../archive/ARCHIVE_how-market-rate-exchanges_11052026.md">ARCHIVE: How Market-Rate Exchanges</a> (escrow-based model)</p>
 <hr />

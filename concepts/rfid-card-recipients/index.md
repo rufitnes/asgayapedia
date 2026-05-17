@@ -1,7 +1,7 @@
 # Concept: RFID Card Recipients
 
 **Status:** ⚠️ **FUTURE ENHANCEMENT (Phase 1+)** - Not implemented in Phase 0  
-**Related Requirement:** [Minimal Hardware](core-architecture/why-minimal-hardware.md)
+**Related Requirement:** [Minimal Hardware](../core-architecture/why-minimal-hardware.md)
 
 ---
 
@@ -402,15 +402,15 @@ MERCHANT DEVICE:
 
 ## Related Concepts
 
-- [Pull System](concepts/pull-system.md) — Works with RFID cards (recipient taps to confirm)
-- [Minimal Hardware](core-architecture/why-minimal-hardware.md) — RFID cards make this claim TRUE
+- [Pull System](pull-system.md) — Works with RFID cards (recipient taps to confirm)
+- [Minimal Hardware](../core-architecture/why-minimal-hardware.md) — RFID cards make this claim TRUE
 
 ---
 
 ## Related Decisions
 
-- [Dispute Resolution](decisions/dispute-resolution.md) — RFID tap = cryptographic proof of presence
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Alternative flow for RFID recipients
+- [Dispute Resolution](../decisions/dispute-resolution.md) — RFID tap = cryptographic proof of presence
+- [Merchant Flows](../android-app/flows/merchant-flows.md) — Alternative flow for RFID recipients
 
 ---
 

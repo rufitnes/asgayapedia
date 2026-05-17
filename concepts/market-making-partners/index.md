@@ -2,7 +2,7 @@
 
 **Concept Type:** Strategic Pattern
 **Category:** Network Design
-**Related:** [Bubble Prevention](concepts/bubble-prevention.md), [BCH Sellers as Capital Providers](concepts/bch-miners-as-escrows.md)
+**Related:** [Bubble Prevention](bubble-prevention.md), [BCH Sellers as Capital Providers](bch-miners-as-escrows.md)
 
 **⚠️ NOTE:** This document describes historical concepts for market stability coordination. In the current covenant-based architecture:
 - **BCH sellers** post overcollateralized capital (not "escrow operators")
@@ -10,8 +10,8 @@
 - Market coordination happens through smart contract mechanics rather than centralized coordination
 
 See:
-- **[Core Architecture: Incentives](core-architecture/why-promote-adoption.md)** — Current participant roles
-- **[Pull System](concepts/pull-system.md)** — Covenant-based mechanics
+- **[Core Architecture: Incentives](../core-architecture/why-promote-adoption.md)** — Current participant roles
+- **[Pull System](pull-system.md)** — Covenant-based mechanics
 
 ---
 
@@ -411,9 +411,9 @@ else:
 
 ## Related Concepts
 
-- **Bubble Prevention:** [bubble-prevention.md](concepts/bubble-prevention.md)
-- **BCH Seller Incentives:** [bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)
-- **Pull System:** [pull-system.md](concepts/pull-system.md)
+- **Bubble Prevention:** [bubble-prevention.md](bubble-prevention.md)
+- **BCH Seller Incentives:** [bch-miners-as-escrows.md](bch-miners-as-escrows.md)
+- **Pull System:** [pull-system.md](pull-system.md)
 
 ---
 

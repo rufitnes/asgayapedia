@@ -1,6 +1,6 @@
 # Remittance with Merchant Cash-Out - Complete Flow
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../README.md)
 **Date:** 2026-05-10
 **Status:** Active - Covenant Architecture
 
@@ -36,8 +36,8 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 
 **Total screens:**
 - Sender: 7 screens
-- Recipient: 6 screens (see [recipient-flows.md](android-app/flows/recipient-flows.md))
-- Merchant: 5 screens (see [merchant-flows.md](android-app/flows/merchant-flows.md))
+- Recipient: 6 screens (see [recipient-flows.md](../recipient-flows.md))
+- Merchant: 5 screens (see [merchant-flows.md](../merchant-flows.md))
 
 **Timeline:** 30-60 minutes (mostly waiting for recipient to claim)
 
@@ -307,9 +307,9 @@ if (selectedCurrency !== defaultCurrency) {
 - **Exchange rate display:** Current rate shown for estimation only (actual rate at claim time may differ)
 
 **Related decisions:** 
-- [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
-- [UI Language Regulatory Implications](decisions/ui-language-regulatory-implications.md) - "Send BCH" vs "Send Money"
-- [Fee Splitting Model](decisions/fee-splitting-model.md) - Recipient choice affects total fees
+- [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
+- [UI Language Regulatory Implications](../../../decisions/ui-language-regulatory-implications.md) - "Send BCH" vs "Send Money"
+- [Fee Splitting Model](../../../decisions/fee-splitting-model.md) - Recipient choice affects total fees
 
 ---
 
@@ -823,7 +823,7 @@ sign_and_fund_covenant(covenant)
 - Bizum usually arrives in 2-3 minutes
 - After Bizum received, seller's hedge activates (94-97% exposure reduction)
 
-**Related concept:** [BCH Sellers - Hedge Mechanism](concepts/bch-sellers.md#the-hedge-mechanism-why-sellers-always-win-)
+**Related concept:** [BCH Sellers - Hedge Mechanism](../../../concepts/bch-sellers.md#the-hedge-mechanism-why-sellers-always-win-)
 
 ---
 
@@ -908,7 +908,7 @@ sign_and_fund_covenant(covenant)
 ```
 
 **Notes:**
-- Notification sent via WhatsApp/Telegram/LINE (see [recipient-flows.md](android-app/flows/recipient-flows.md))
+- Notification sent via WhatsApp/Telegram/LINE (see [recipient-flows.md](../recipient-flows.md))
 - Bounty code shown to sender (can share if needed: last 4 digits of covenant ID)
 - 24-hour claim window starts when covenant created
 - Covenant is public on bulletin board (all merchants can see)
@@ -969,7 +969,7 @@ sign_and_fund_covenant(covenant)
 - **Split refund rationale:**
   - Merchant portion (€99.50) → Refunded to you (Iris)
   - Seller fee (€0.50) → Kept by seller (earned for 24h service)
-- Related policy: [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+- Related policy: [Overcollateralized Bounty Contracts - Timeout Cascade](../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 #### State 3: Merchant Co-Signing
 
@@ -1013,7 +1013,7 @@ sign_and_fund_covenant(covenant)
 - No numeric codes (cryptographic co-signing via BCH Script)
 - Settlement triggered when both signatures present
 
-**Related flow:** [Merchant Flows - Co-Sign Covenant](android-app/flows/merchant-flows.md#screen-3-hand-ves--co-sign-covenant)
+**Related flow:** [Merchant Flows - Co-Sign Covenant](../merchant-flows.md#screen-3-hand-ves--co-sign-covenant)
 
 #### State 4: Cash Delivered (Both Co-Signed)
 
@@ -1175,7 +1175,7 @@ sign_and_fund_covenant(covenant)
 - **Merchant spread:** ~€0.25 (sells 50,000 VES for 0.0995 BCH worth ~€99.75)
 - **BCH seller fee:** ~€0.25 (earned for posting collateral and service)
 
-**Related decision:** [Fee Splitting Model](decisions/fee-splitting-model.md)
+**Related decision:** [Fee Splitting Model](../../../decisions/fee-splitting-model.md)
 
 ---
 
@@ -1298,7 +1298,7 @@ sign_and_fund_covenant(covenant)
 - **Refund timing:** Immediate (on-chain BCH transaction)
 - Encourage sender to contact recipient (might try again with coordination)
 
-**Related concept:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+**Related concept:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 ### Corridor Unavailable
 
@@ -1455,7 +1455,7 @@ Secondary (outline):
 - Recipient can no longer claim
 - Sender and recipient both notified
 
-**Related:** [Recipient Flows](android-app/flows/recipient-flows.md) - Recipient claim process
+**Related:** [Recipient Flows](../recipient-flows.md) - Recipient claim process
 
 ### Covenant Settlement Timing
 
@@ -1470,7 +1470,7 @@ Secondary (outline):
 - Seller hedges by receiving €100 fiat before price moves
 - No rate locking needed (covenant calculates BCH at maturity rate)
 
-**Related decision:** [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
+**Related decision:** [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
 
 ### Rate Locking
 
@@ -1484,28 +1484,28 @@ Secondary (outline):
 - Seller hedges volatility (Bizum received before price moves)
 - Overcollateralization protects merchant (always gets €99.50 worth)
 
-**Related decision:** [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
+**Related decision:** [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
 
 ---
 
 ## Related Documentation
 
 **Flows:**
-- [BCH Payment Flows](android-app/flows/bch-payment-flows.md) — Simpler flow, build FIRST
-- [Recipient Flows](android-app/flows/recipient-flows.md) — Recipient claim process (6 screens)
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Merchant VES sale process (5 screens)
-- [BCH Seller Flows](android-app/flows/bch-seller-flows.md) — Seller collateral posting
+- [BCH Payment Flows](../bch-payment-flows.md) — Simpler flow, build FIRST
+- [Recipient Flows](../recipient-flows.md) — Recipient claim process (6 screens)
+- [Merchant Flows](../merchant-flows.md) — Merchant VES sale process (5 screens)
+- [BCH Seller Flows](../bch-seller-flows.md) — Seller collateral posting
 
 **Decisions:**
-- [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — Covenant maturity timing
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees distributed
+- [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
+- [Two-Step Settlement Timing](../../../decisions/two-step-settlement-timing.md) — Covenant maturity timing
+- [Fee Splitting Model](../../../decisions/fee-splitting-model.md) — How fees distributed
 
 **Concepts:**
-- [Pull System](concepts/pull-system.md) — Recipient-driven settlement
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
-- [BCH Sellers](concepts/bch-sellers.md) — Seller role and hedge mechanism
-- [Decentralized Pull System](concepts/decentralized-pull-system.md) — Bulletin board architecture
+- [Pull System](../../../concepts/pull-system.md) — Recipient-driven settlement
+- [Overcollateralized Bounty Contracts](../../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [BCH Sellers](../../../concepts/bch-sellers.md) — Seller role and hedge mechanism
+- [Decentralized Pull System](../../../concepts/pull-system.md) — Bulletin board architecture
 
 ---
 

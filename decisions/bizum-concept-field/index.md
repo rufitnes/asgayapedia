@@ -2,7 +2,7 @@
 
 **Decision Date:** April 22, 2026
 **Status:** Implemented
-**Related Requirement:** [Permissionless](core-architecture/why-permissionless.md) (Error Prevention)
+**Related Requirement:** [Permissionless](../core-architecture/why-permissionless.md) (Error Prevention)
 
 ---
 
@@ -139,7 +139,7 @@ Other corridors may have different constraints:
 
 ## Related Decisions
 
-- [Payment Timeout Window](decisions/payment-timeout-window.md) — Notification delay constraints
+- [Payment Timeout Window](payment-timeout-window.md) — Notification delay constraints
 
 ---
 

@@ -1010,7 +1010,7 @@ class AsgayaWallet {
 - **Bizum:** [bizum-android.md](android-app/notification-listener/bizum-android.md) - EUR notifications
 - **PagoMóvil:** [pagomovil-android.md](android-app/notification-listener/pagomovil-android.md) - VES notifications
 - **User APIs:** [user-apis.md](android-app/backend-apis/user-apis.md) - OP_RETURN message formats
-- **Architecture:** [README.md](android-app/README.md) - Philosophy
+- **Architecture:** [README.md](../README.md) - Philosophy
 
 ---
 

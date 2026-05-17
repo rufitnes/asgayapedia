@@ -3364,10 +3364,7 @@ require(checkSig(merchantSig, merchantPubkey));
 
 ## UI Mockups Reference
 
-**All screen designs documented in:**
-- `/home/suso/Documents/asgaya-docs/screen-browser.html`
-- Visual mockups of all 15 screens (sender, recipient, merchant flows)
-- Interactive navigation between screens
+**All screen designs documented in:** [User Flows](../flows/)
 
 **Sender Screens (8 total):**
 1. Home (Entry Point)
@@ -3750,7 +3747,7 @@ fun testFullSenderFlow_OwnBCH() {
 
 - [Pichan Regtest Setup](./pichan-regtest-setup.md) - Server configuration
 - [Phase 0 Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md) - Overall strategy
-- [Screen Browser](../../../screen-browser.html) - UI mockups
+- [User Flows](../flows/) - UI mockups and flow documentation
 - [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) - Covenant logic
 
 ---
@@ -4958,7 +4955,7 @@ if (!validateRate(bchPrice, 'BCH_EUR')) {
 ## Related Documents
 
 - **Covenant Creation:** [covenant-creation.md](covenant-creation.md) - How EUR-denominated covenants use these rates
-- **User Flows:** [Sender Flow](../flows/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
+- **User Flows:** [Sender Flow](../flows/archive/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
 - **Architecture:** [BCH-Native Architecture](bch-native-architecture.md) - Pull system design
 - **Phase 0:** [Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md)
 - **Backend Index:** [README.md](README.md)
@@ -4977,7 +4974,7 @@ if (!validateRate(bchPrice, 'BCH_EUR')) {
 
 **Category:** Core Blockchain Operations
 **Priority:** 🔴 Critical (Phase 0)
-**Related:** [Covenant Creation](covenant-creation.md), [Sender Flow](../flows/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
+**Related:** [Covenant Creation](covenant-creation.md), [Sender Flow](../flows/archive/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
 
 ---
 
@@ -5604,7 +5601,7 @@ if now - timestamp > timedelta(minutes=5):
   - [Covenant Creation](covenant-creation.md) - How BCH signatures authorize covenant creation
   - [BCH-Native Architecture](bch-native-architecture.md) - OP_RETURN notification design
 - **User Flows:**
-  - [Sender Flow](../flows/remittance-merchant-cash-out.md) - Creating covenants
+  - [Sender Flow](../flows/archive/remittance-merchant-cash-out.md) - Creating covenants
   - [Recipient Flow](../flows/recipient-flows.md) - Claiming covenants
   - [Merchant Flow](../flows/merchant-flows.md) - Cash-out co-signing
 - **Phase 0:** [Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md)
@@ -5625,7 +5622,7 @@ if now - timestamp > timedelta(minutes=5):
 
 **Timeline:** April → May 2026  
 **Status:** Complete rewrite (75% of backend eliminated)  
-**Decision:** [Phase 0 Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md)
+**Decision:** [Phase 0 Progressive Decentralization](../../../decisions/phase-0-progressive-decentralization.md)
 
 ---
 
@@ -5922,9 +5919,9 @@ Forum posts, GitHub issues, or commit messages before **May 2026** may reference
 ## Related Documents
 
 - [Current Backend-APIs README](../README.md) - What exists now
-- [Phase 0 Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md) - Full strategy
+- [Phase 0 Progressive Decentralization](../../../decisions/phase-0-progressive-decentralization.md) - Full strategy
 - [BCH Native Architecture](../bch-native-architecture.md) - Why BCH chosen
-- [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) - Covenant design
+- [Overcollateralized Bounty Contracts](../../../concepts/overcollateralized-bounty-contracts.md) - Covenant design
 
 ---
 
@@ -6630,7 +6627,7 @@ const sellers = utxos
 
 - **Covenant Creation:** [covenant-creation.md](../covenant-creation.md) - How sellers create NFT covenants
 - **BCH-Native Architecture:** [bch-native-architecture.md](../bch-native-architecture.md) - NFT design rationale
-- **User Flows:** [Sender Flow](../../flows/remittance-merchant-cash-out.md) - Where seller selection happens
+- **User Flows:** [Sender Flow](../../flows/archive/remittance-merchant-cash-out.md) - Where seller selection happens
 - **Phase 0:** [Progressive Decentralization](../../../decisions/phase-0-progressive-decentralization.md)
 
 ---
@@ -7398,7 +7395,7 @@ A: Recommended for best visibility, but not required. Your NFT shows "Offline" w
 
 ## Overview
 
-← [Back to Android App](android-app/README.md)
+← [Back to Android App](../README.md)
 
 # Android App Flows
 
@@ -8125,7 +8122,7 @@ const handleNavigation = (destination) => {
 
 # Merchant Flows - VES Cash Sales for BCH
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../flows/README.md)
 **Date:** 2026-05-10
 **Status:** Active - Covenant Architecture
 
@@ -8972,7 +8969,7 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 - Prevents indefinite BCH lock-up (sellers need capital freed)
 - Forces inactive recipients to claim or forfeit
 
-**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
+**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
 
 ---
 
@@ -9067,7 +9064,7 @@ Otherwise → Show specific error
 - Transparent: All amounts, signatures, timing public
 - Immutable: Once settled, cannot be reversed
 
-**See:** [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
+**See:** [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
 
 ---
 
@@ -9109,15 +9106,15 @@ Otherwise → Show specific error
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
-- [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — Where merchant spread comes from
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — When BCH distributed
+- [How Exchange Rates Work](../../decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
+- [Fee Splitting Model](../../decisions/fee-splitting-model.md) — Where merchant spread comes from
+- [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md) — When BCH distributed
 
 **Concepts:**
-- [Pull System](concepts/pull-system.md) — How recipient timing control works
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
-- [BCH Sellers](concepts/bch-sellers.md) — Who provides BCH and why they profit
-- [Decentralized Pull System](concepts/decentralized-pull-system.md) — How bulletin board works
+- [Pull System](../../concepts/pull-system.md) — How recipient timing control works
+- [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [BCH Sellers](../../concepts/bch-sellers.md) — Who provides BCH and why they profit
+- [Decentralized Pull System](../../concepts/pull-system.md) — How bulletin board works
 
 ---
 
@@ -9166,7 +9163,7 @@ Otherwise → Show specific error
 
 # Recipient Flows - Cash Claim Process
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../flows/README.md)
 **Date:** 2026-05-10
 **Status:** Active - Covenant Architecture
 
@@ -9206,7 +9203,7 @@ Notification → View details → Find merchant → Navigate → Co-sign covenan
 - ⏱️ **24 hours** to claim after covenant created (timer starts when sender funds covenant)
 - **Reminders sent at:** 12h (general), 18h (sender notified), 23h (urgent)
 - **After 24h:** Covenant expires → Split refund (merchant portion to Iris, seller fee to seller)
-- Full policy: [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+- Full policy: [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 ---
 
@@ -9863,7 +9860,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - **Iris's loss:** Iris paid sender fee (€0.50), lost to timeout
 - **Merchant unaffected:** Never committed (didn't see bounty until recipient arrived)
 
-**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
+**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
 
 ---
 
@@ -9915,7 +9912,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 **V1 Enhancement (Future):**
 - Parties can post evidence on social media (`#AsgayaDispute`)
 - Community sees evidence and decides merchant trustworthiness
-- Full policy: [Dispute Resolution Framework](decisions/dispute-resolution.md)
+- Full policy: [Dispute Resolution Framework](../../decisions/dispute-resolution.md)
 
 **Should be RARE:** Co-signing mechanism prevents most disputes (both parties must confirm).
 
@@ -10076,7 +10073,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - Not so long that funds are locked unnecessarily
 - Balances recipient convenience vs sender risk
 
-**Related decision:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+**Related decision:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 ---
 
@@ -10149,7 +10146,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - Transparent: All amounts, signatures, timing public
 - Immutable: Once settled, cannot be reversed
 
-**See:** [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
+**See:** [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
 
 ---
 
@@ -10181,14 +10178,14 @@ pending → claimed → accepted → partially_signed → completed
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
-- [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — When BCH distributed
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees work
+- [How Exchange Rates Work](../../decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
+- [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md) — When BCH distributed
+- [Fee Splitting Model](../../decisions/fee-splitting-model.md) — How fees work
 
 **Concepts:**
-- [Pull System](concepts/pull-system.md) — How recipient timing control works
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
-- [Decentralized Pull System](concepts/decentralized-pull-system.md) — How bulletin board works
+- [Pull System](../../concepts/pull-system.md) — How recipient timing control works
+- [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [Decentralized Pull System](../../concepts/pull-system.md) — How bulletin board works
 
 ---
 
@@ -10759,7 +10756,7 @@ New (Direct Payment):
 **Decision:** Everything covenant-based (sender flow covers this). Standard BCH payments (no Asgaya) handled separately.
 **Status:** TO BE ARCHIVED OR REWRITTEN
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../README.md)
 **Date:** 2026-05-02
 **Status:** ~~Active~~ STALE - Priority 1 (Build FIRST)
 
@@ -11008,7 +11005,7 @@ Example: VES 5,750
 - Concept field = sender's phone (auto-matches notification to order)
 - Android autocomplete could streamline this
 
-**Related decision:** [Payment Timeout Window](decisions/payment-timeout-window.md)
+**Related decision:** [Payment Timeout Window](../../../decisions/payment-timeout-window.md)
 
 ---
 
@@ -11228,7 +11225,7 @@ Example: VES 5,750
 - Later: Replenish float by buying BCH on Kraken
 - Result: ~30 second settlement (vs 10-30 min on-demand)
 
-**Related concept:** [Pull System](concepts/pull-system.md)
+**Related concept:** [Pull System](../../../concepts/pull-system.md)
 
 ### Currency Flexibility
 - User selects target currency (EUR, VES, ARS, HNL, etc.)
@@ -11236,7 +11233,7 @@ Example: VES 5,750
 - Escrow calculates EUR equivalent
 - Transparent fee (1%) shown separately
 
-**Related decision:** [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)
+**Related decision:** [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work.md)
 
 ### Payment Rail Agnostic
 - Currently: Bizum (Spain)
@@ -11244,21 +11241,21 @@ Example: VES 5,750
 - Same flow, different payment instructions screen
 - Copy/paste reduces errors (no manual typing)
 
-**Related decision:** [Bizum Concept Field](decisions/bizum-concept-field.md)
+**Related decision:** [Bizum Concept Field](../../../decisions/bizum-concept-field.md)
 
 ---
 
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) — More complex flow with merchant claim
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Merchant perspective (receiving BCH)
-- [LP Flows](android-app/flows/lp-flows.md) — LP perspective (providing liquidity)
+- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — More complex flow with merchant claim
+- [Merchant Flows](../merchant-flows.md) — Merchant perspective (receiving BCH)
+- [LP Flows](../lp-flows.md) — LP perspective (providing liquidity)
 
 **Decisions:**
-- [Payment Timeout Window](decisions/payment-timeout-window.md) — Why 10 minutes
-- [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md) — DolarAPI + Kraken
-- [Two-Step Settlement](decisions/two-step-settlement-timing.md) — EUR first, then BCH
+- [Payment Timeout Window](../../../decisions/payment-timeout-window.md) — Why 10 minutes
+- [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work.md) — DolarAPI + Kraken
+- [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md) — EUR first, then BCH
 
 **Implementation:**
 - `knowledge/code/smsbridge_loop.py` — Working notification listener
@@ -11308,7 +11305,7 @@ Example: VES 5,750
 - **Merchant liquidity**: Merchants accumulate BCH → sell to BCH buyers → buyers become senders
 **Status:** TO BE REWRITTEN AS "BCH BUYER FLOWS" WITH GAMIFICATION
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../README.md)
 **Date:** 2026-05-03
 **Status:** ~~Active~~ STALE - Critical for instant settlement
 
@@ -12009,7 +12006,7 @@ Gamification - show top LPs by settlements completed.
 - Re-enabled after manual review confirms merchant was offline/innocent
 - **Incentivizes merchants to be responsive and reliable**
 
-**Related decision:** [Two-Step Settlement](decisions/two-step-settlement-timing.md)
+**Related decision:** [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md)
 
 ---
 
@@ -12048,16 +12045,16 @@ Referencia: REM-89234
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) — Why LP is needed
-- [Recipient Flows](android-app/flows/recipient-flows.md) — Recipient claims at merchant
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Merchant confirms LP payment
+- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — Why LP is needed
+- [Recipient Flows](../recipient-flows.md) — Recipient claims at merchant
+- [Merchant Flows](../merchant-flows.md) — Merchant confirms LP payment
 
 **Decisions:**
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — Where LP reward comes from
-- [Two-Step Settlement](decisions/two-step-settlement-timing.md) — Why instant settlement is optional
+- [Fee Splitting Model](../../../decisions/fee-splitting-model.md) — Where LP reward comes from
+- [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md) — Why instant settlement is optional
 
 **Concepts:**
-- [Market Making Partners](concepts/market-making-partners.md) — LP role in ecosystem
+- [Market Making Partners](../../../concepts/market-making-partners.md) — LP role in ecosystem
 
 ---
 
@@ -12182,7 +12179,7 @@ Referencia: REM-89234
 - When corridor-wide disable becomes too restrictive
 - When LP/merchant feedback shows need for granular control
 
-**Related concept:** [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) - Could adjust LP rewards based on merchant tier (higher reward for riskier Tier 2/3 merchants)
+**Related concept:** [Dynamic Reward Modulation](../../../concepts/dynamic-reward-modulation.md) - Could adjust LP rewards based on merchant tier (higher reward for riskier Tier 2/3 merchants)
 
 ---
 
@@ -12196,7 +12193,7 @@ Referencia: REM-89234
 
 # Remittance with Merchant Cash-Out - Complete Flow
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../README.md)
 **Date:** 2026-05-10
 **Status:** Active - Covenant Architecture
 
@@ -12232,8 +12229,8 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 
 **Total screens:**
 - Sender: 7 screens
-- Recipient: 6 screens (see [recipient-flows.md](android-app/flows/recipient-flows.md))
-- Merchant: 5 screens (see [merchant-flows.md](android-app/flows/merchant-flows.md))
+- Recipient: 6 screens (see [recipient-flows.md](../recipient-flows.md))
+- Merchant: 5 screens (see [merchant-flows.md](../merchant-flows.md))
 
 **Timeline:** 30-60 minutes (mostly waiting for recipient to claim)
 
@@ -12503,9 +12500,9 @@ if (selectedCurrency !== defaultCurrency) {
 - **Exchange rate display:** Current rate shown for estimation only (actual rate at claim time may differ)
 
 **Related decisions:** 
-- [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
-- [UI Language Regulatory Implications](decisions/ui-language-regulatory-implications.md) - "Send BCH" vs "Send Money"
-- [Fee Splitting Model](decisions/fee-splitting-model.md) - Recipient choice affects total fees
+- [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
+- [UI Language Regulatory Implications](../../../decisions/ui-language-regulatory-implications.md) - "Send BCH" vs "Send Money"
+- [Fee Splitting Model](../../../decisions/fee-splitting-model.md) - Recipient choice affects total fees
 
 ---
 
@@ -13019,7 +13016,7 @@ sign_and_fund_covenant(covenant)
 - Bizum usually arrives in 2-3 minutes
 - After Bizum received, seller's hedge activates (94-97% exposure reduction)
 
-**Related concept:** [BCH Sellers - Hedge Mechanism](concepts/bch-sellers.md#the-hedge-mechanism-why-sellers-always-win-)
+**Related concept:** [BCH Sellers - Hedge Mechanism](../../../concepts/bch-sellers.md#the-hedge-mechanism-why-sellers-always-win-)
 
 ---
 
@@ -13104,7 +13101,7 @@ sign_and_fund_covenant(covenant)
 ```
 
 **Notes:**
-- Notification sent via WhatsApp/Telegram/LINE (see [recipient-flows.md](android-app/flows/recipient-flows.md))
+- Notification sent via WhatsApp/Telegram/LINE (see [recipient-flows.md](../recipient-flows.md))
 - Bounty code shown to sender (can share if needed: last 4 digits of covenant ID)
 - 24-hour claim window starts when covenant created
 - Covenant is public on bulletin board (all merchants can see)
@@ -13165,7 +13162,7 @@ sign_and_fund_covenant(covenant)
 - **Split refund rationale:**
   - Merchant portion (€99.50) → Refunded to you (Iris)
   - Seller fee (€0.50) → Kept by seller (earned for 24h service)
-- Related policy: [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+- Related policy: [Overcollateralized Bounty Contracts - Timeout Cascade](../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 #### State 3: Merchant Co-Signing
 
@@ -13209,7 +13206,7 @@ sign_and_fund_covenant(covenant)
 - No numeric codes (cryptographic co-signing via BCH Script)
 - Settlement triggered when both signatures present
 
-**Related flow:** [Merchant Flows - Co-Sign Covenant](android-app/flows/merchant-flows.md#screen-3-hand-ves--co-sign-covenant)
+**Related flow:** [Merchant Flows - Co-Sign Covenant](../merchant-flows.md#screen-3-hand-ves--co-sign-covenant)
 
 #### State 4: Cash Delivered (Both Co-Signed)
 
@@ -13371,7 +13368,7 @@ sign_and_fund_covenant(covenant)
 - **Merchant spread:** ~€0.25 (sells 50,000 VES for 0.0995 BCH worth ~€99.75)
 - **BCH seller fee:** ~€0.25 (earned for posting collateral and service)
 
-**Related decision:** [Fee Splitting Model](decisions/fee-splitting-model.md)
+**Related decision:** [Fee Splitting Model](../../../decisions/fee-splitting-model.md)
 
 ---
 
@@ -13494,7 +13491,7 @@ sign_and_fund_covenant(covenant)
 - **Refund timing:** Immediate (on-chain BCH transaction)
 - Encourage sender to contact recipient (might try again with coordination)
 
-**Related concept:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+**Related concept:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 ### Corridor Unavailable
 
@@ -13651,7 +13648,7 @@ Secondary (outline):
 - Recipient can no longer claim
 - Sender and recipient both notified
 
-**Related:** [Recipient Flows](android-app/flows/recipient-flows.md) - Recipient claim process
+**Related:** [Recipient Flows](../recipient-flows.md) - Recipient claim process
 
 ### Covenant Settlement Timing
 
@@ -13666,7 +13663,7 @@ Secondary (outline):
 - Seller hedges by receiving €100 fiat before price moves
 - No rate locking needed (covenant calculates BCH at maturity rate)
 
-**Related decision:** [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
+**Related decision:** [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
 
 ### Rate Locking
 
@@ -13680,28 +13677,28 @@ Secondary (outline):
 - Seller hedges volatility (Bizum received before price moves)
 - Overcollateralization protects merchant (always gets €99.50 worth)
 
-**Related decision:** [How Exchange Rates Work](decisions/how-exchange-rates-work.md)
+**Related decision:** [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
 
 ---
 
 ## Related Documentation
 
 **Flows:**
-- [BCH Payment Flows](android-app/flows/bch-payment-flows.md) — Simpler flow, build FIRST
-- [Recipient Flows](android-app/flows/recipient-flows.md) — Recipient claim process (6 screens)
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Merchant VES sale process (5 screens)
-- [BCH Seller Flows](android-app/flows/bch-seller-flows.md) — Seller collateral posting
+- [BCH Payment Flows](../bch-payment-flows.md) — Simpler flow, build FIRST
+- [Recipient Flows](../recipient-flows.md) — Recipient claim process (6 screens)
+- [Merchant Flows](../merchant-flows.md) — Merchant VES sale process (5 screens)
+- [BCH Seller Flows](../bch-seller-flows.md) — Seller collateral posting
 
 **Decisions:**
-- [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — Covenant maturity timing
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees distributed
+- [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
+- [Two-Step Settlement Timing](../../../decisions/two-step-settlement-timing.md) — Covenant maturity timing
+- [Fee Splitting Model](../../../decisions/fee-splitting-model.md) — How fees distributed
 
 **Concepts:**
-- [Pull System](concepts/pull-system.md) — Recipient-driven settlement
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
-- [BCH Sellers](concepts/bch-sellers.md) — Seller role and hedge mechanism
-- [Decentralized Pull System](concepts/decentralized-pull-system.md) — Bulletin board architecture
+- [Pull System](../../../concepts/pull-system.md) — Recipient-driven settlement
+- [Overcollateralized Bounty Contracts](../../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [BCH Sellers](../../../concepts/bch-sellers.md) — Seller role and hedge mechanism
+- [Decentralized Pull System](../../../concepts/pull-system.md) — Bulletin board architecture
 
 ---
 
@@ -16224,7 +16221,7 @@ This screen represents the **bulletin board in action**:
 - [Screen 4B: Confirm Purchase](./4b-confirm-purchase.md) - Previous screen
 - [Screen 5: Payment Instructions](./5-payment-instructions.md) - Next screen
 - [BCH Sellers Concept](../../../../concepts/bch-sellers.md) - Complete seller specification
-- [Decentralized Pull System](../../../../concepts/decentralized-pull-system.md) - Bulletin board architecture
+- [Decentralized Pull System](../../../../concepts/pull-system.md) - Bulletin board architecture
 
 ---
 
@@ -17466,7 +17463,7 @@ if (hasPendingCovenant) {
 
 - **[Screen 4: Payment Method](4-payment-method.md)** - Next step (choose funding source)
 - **[Error: Pending Covenant](../errors/pending-covenant.md)** - Duplicate prevention
-- **[How Exchange Rates Work](../../../../decisions/how-market-rate-exchanges.md)** - Rate mechanics
+- **[How Exchange Rates Work](../../../../decisions/how-exchange-rates-work.md)** - Rate mechanics
 - **[Fee Splitting Model](../../../../decisions/fee-splitting-model.md)** - Fee breakdown
 
 ---
@@ -18685,7 +18682,7 @@ reportError({
 - [Screen 4.5: Select Seller](../buy-seller-path/4.5-select-seller.md) - Bulletin board dependency
 - [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md) - Exchange rate dependency
 - [Bizum Timeout Error](./bizum-timeout.md) - Payment window expiry
-- [Decentralized Pull System](../../../../concepts/decentralized-pull-system.md) - Bulletin board architecture
+- [Decentralized Pull System](../../../../concepts/pull-system.md) - Bulletin board architecture
 
 ---
 
@@ -19856,13 +19853,13 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 ## Index
 
-← [Back to Android App](android-app/README.md)
+← [Back to Android App](../README.md)
 
 # RS046-6: NotificationListener Architecture
 
 **Category:** Core Component (MVP Critical)
 **Priority:** 🔴 Critical (The Heart of the App)
-**Related:** [RS046-5 Backend APIs](../backend-apis/), [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md)
+**Related:** [RS046-5 Backend APIs](../backend-apis/), [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md)
 
 ---
 
@@ -20229,8 +20226,8 @@ Merchant → PagoMóvil → Settlement
   - [User APIs](android-app/backend-apis/user-apis.md) - OP_RETURN notification system
 
 - **User Flows:**
-  - [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - Sender experience
-  - [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md) - Merchant confirmation
+  - [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md) - Sender experience
+  - [RS046-3 Merchant Flows](../flows/merchant-flows.md) - Merchant confirmation
 
 - **Architecture:**
   - [bch-native-architecture.md](android-app/backend-apis/bch-native-architecture.md) - Overall philosophy
@@ -21123,7 +21120,7 @@ Settings > Apps > Asgaya > Notification Access
 
 
 - **APIs:** [RS046-5 Backend APIs](android-app/backend-apis/README.md) - Escrow endpoint spec
-- **UX:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - User journey context
+- **UX:** [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md) - User journey context
 - **Security:** [RS046-8 Security](android-app/notification-listener/security.md) - Full security spec (TBD)
 
 ---
@@ -22148,7 +22145,7 @@ class AsgayaWallet {
 - **Bizum:** [bizum-android.md](android-app/notification-listener/bizum-android.md) - EUR notifications
 - **PagoMóvil:** [pagomovil-android.md](android-app/notification-listener/pagomovil-android.md) - VES notifications
 - **User APIs:** [user-apis.md](android-app/backend-apis/user-apis.md) - OP_RETURN message formats
-- **Architecture:** [README.md](android-app/README.md) - Philosophy
+- **Architecture:** [README.md](../README.md) - Philosophy
 
 ---
 
@@ -24597,42 +24594,42 @@ Key concepts that underpin Asgaya's covenant-based architecture.
 
 ## Core Concepts (Active - Phase 0)
 
-### [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md)
+### [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md)
 The heart of Asgaya: covenant smart contracts that hold BCH with 7% overcollateralization, enabling volatility protection and split refunds without custody.
 
-### [BCH Sellers](concepts/bch-sellers.md)
+### [BCH Sellers](bch-sellers.md)
 Participants who post overcollateralized BCH to covenants, earning 0.5% fees plus hedge benefits. Replaces the old "Escrow Operator" role with a permissionless, automated model.
 
-### [Pull System](concepts/pull-system.md)
+### [Pull System](pull-system.md)
 How recipient timing controls settlement (not sender timing), compressing volatility exposure from hours to 30 seconds and enabling regulatory compliance.
 
-### [Core Regulatory Constraints](concepts/core-regulatory-constraints.md)
+### [Core Regulatory Constraints](core-regulatory-constraints.md)
 The three safe design principles that keep Asgaya outside MiCA/PSD2 licensing: no custody, no intermediation, no protocol fee.
 
-### [Live Exchange Rates](concepts/live-exchange-rates.md)
+### [Live Exchange Rates](live-exchange-rates.md)
 How real-time exchange rates are sourced (CoinGecko, DolarAPI) and used for EUR-denominated promises without markup.
 
 ---
 
 ## Phase 1+ Concepts (Planned)
 
-### [BCH Buyers](concepts/bch-buyers.md) ⚠️ **Phase 1.1+**
+### [BCH Buyers](bch-buyers.md) ⚠️ **Phase 1.1+**
 Global participants who buy BCH from merchants using MUSD (stablecoin), providing instant liquidity without geographic lock-in. Replaces the failed "Liquidity Provider" role.
 
-### [RFID Card Recipients](concepts/rfid-card-recipients.md) ⚠️ **Phase 1+**
+### [RFID Card Recipients](rfid-card-recipients.md) ⚠️ **Phase 1+**
 How recipients without smartphones can claim covenants using NFC-enabled cards. Extends hardware accessibility beyond Android phones.
 
 ---
 
 ## Historical / Deferred Concepts
 
-### [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) ⚠️ **Deferred**
+### [Dynamic Reward Modulation](dynamic-reward-modulation.md) ⚠️ **Deferred**
 Proposed mechanism for adjusting fee splits based on market conditions. Phase 0 uses fixed 0.5% each (BCH Seller + Merchant). May revisit post-validation.
 
-### [Bubble Prevention](concepts/bubble-prevention.md) ⚠️ **Deferred**
+### [Bubble Prevention](bubble-prevention.md) ⚠️ **Deferred**
 Proposed mechanisms to prevent speculative behavior in reward systems. Not implemented in Phase 0 (trusted parties only).
 
-### [Market Making Partners](concepts/market-making-partners.md) ⚠️ **Obsolete (Pre-Covenant)**
+### [Market Making Partners](market-making-partners.md) ⚠️ **Obsolete (Pre-Covenant)**
 Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture.
 
 ---
@@ -24645,7 +24642,7 @@ These concepts are referenced throughout the documentation. Understanding them h
 - How volatility protection works (pull system + overcollateralization)
 - How the system scales (permissionless participation, global BCH buyers)
 
-**Start with:** [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) - the covenant mechanism that makes everything else possible.
+**Start with:** [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md) - the covenant mechanism that makes everything else possible.
 
 ---
 
@@ -25064,7 +25061,7 @@ If Phase 0 proves the covenant model, Phase 1 gives merchants the stability they
 
 **Status:** ⚠️ **Obsolete - Renamed**  
 **Date:** Originally April 2026, superseded May 10, 2026  
-**Replaced by:** [BCH Sellers](concepts/bch-sellers.md)
+**Replaced by:** [BCH Sellers](bch-sellers.md)
 
 ---
 
@@ -25073,7 +25070,7 @@ If Phase 0 proves the covenant model, Phase 1 gives merchants the stability they
 This concept has been **renamed and updated** to reflect the covenant-based architecture (May 10, 2026 pivot).
 
 **Old name:** BCH Miners as Escrows  
-**New name:** [BCH Sellers](concepts/bch-sellers.md)
+**New name:** [BCH Sellers](bch-sellers.md)
 
 **What changed:**
 - **Architecture:** Escrow model → Covenant smart contracts
@@ -25097,7 +25094,7 @@ In the covenant redesign (May 10, 2026), we discovered that:
 
 ## For Current Information
 
-**See:** [BCH Sellers](concepts/bch-sellers.md) - The current covenant-based design
+**See:** [BCH Sellers](bch-sellers.md) - The current covenant-based design
 
 **Key differences:**
 - No custody (covenant holds BCH autonomously)
@@ -25129,18 +25126,18 @@ The "BCH Miners as Escrows" concept was part of the April 2026 escrow-based arch
 ## Related Documents
 
 **Current:**
-- [BCH Sellers](concepts/bch-sellers.md) - Covenant-era replacement
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) - Covenant mechanism
-- [Core Regulatory Constraints](concepts/core-regulatory-constraints.md) - Why no custody
+- [BCH Sellers](bch-sellers.md) - Covenant-era replacement
+- [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md) - Covenant mechanism
+- [Core Regulatory Constraints](core-regulatory-constraints.md) - Why no custody
 
 **Historical:**
-- [Market Making Partners](concepts/market-making-partners.md) - Old LP concept (also obsolete)
-- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) - Deferred (referenced old model)
+- [Market Making Partners](market-making-partners.md) - Old LP concept (also obsolete)
+- [Dynamic Reward Modulation](dynamic-reward-modulation.md) - Deferred (referenced old model)
 
 ---
 
 *This stub created May 12, 2026 to resolve broken references in historical documents.*  
-*For current BCH Seller design, see: [bch-sellers.md](concepts/bch-sellers.md)*
+*For current BCH Seller design, see: [bch-sellers.md](bch-sellers.md)*
 
 
 ## BCH Sellers
@@ -25878,7 +25875,7 @@ By making BCH mining more sustainable—especially in the post-block-reward era�
 
 **Concept Type:** Economic Mechanism
 **Category:** Market Stabilization
-**Related:** [BCH Seller Incentives](concepts/bch-miners-as-escrows.md), [../core-architecture/why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
+**Related:** [BCH Seller Incentives](bch-miners-as-escrows.md), [../core-architecture/why-eliminate-volatility.md](../core-architecture/why-eliminate-volatility.md)
 
 ---
 
@@ -26573,7 +26570,7 @@ For any proposed architectural change, ask:
 
 **Concept Type:** Economic Mechanism
 **Category:** Market Stabilization / Incentive Design
-**Related:** [Volatility Protection](core-architecture/why-eliminate-volatility.md), [Bubble Prevention](concepts/bubble-prevention.md)
+**Related:** [Volatility Protection](../core-architecture/why-eliminate-volatility.md), [Bubble Prevention](bubble-prevention.md)
 
 ---
 
@@ -26692,7 +26689,7 @@ This mechanism works **in concert** with bubble prevention at the escrow level:
 - **What:** 50/50 baseline, shift to 25/75 during bubble risk
 - **Effect:** Dampens supply-side (escrows sell BCH)
 - **Timeline:** Gradual over 6 hours
-- **See:** [bubble-prevention.md](concepts/bubble-prevention.md)
+- **See:** [bubble-prevention.md](bubble-prevention.md)
 
 ### Layer 2: Reward Split Modulation (This Concept)
 - **Who:** BCH Buyers and Merchants see adjusted rewards
@@ -27138,25 +27135,25 @@ def is_bubble_vs_trend(daily_prices):
 - **This concept:** Adjusts merchant/LP incentives
 - **Bubble prevention:** Adjusts escrow reserves
 - **Together:** Two-sided pressure against bubbles
-- **See:** [bubble-prevention.md](concepts/bubble-prevention.md)
+- **See:** [bubble-prevention.md](bubble-prevention.md)
 
 ### Volatility Protection (Core Architecture)
 - **This concept:** Modulates holding incentives dynamically
 - **Volatility protection:** 24h rate guarantee for senders
 - **Together:** Senders protected from variance, merchants guided on holding
-- **See:** [why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
+- **See:** [why-eliminate-volatility.md](../core-architecture/why-eliminate-volatility.md)
 
 ### BCH Seller Incentives
 - **This concept:** Merchant/BCH Buyer split varies
 - **BCH seller incentives:** BCH seller fee fixed (0.5% or lower)
 - **Together:** BCH seller stability + merchant/BCH Buyer flexibility
-- **See:** [bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)
+- **See:** [bch-miners-as-escrows.md](bch-miners-as-escrows.md)
 
 ### Pull System
 - **This concept:** Demand modulation via incentives
 - **Pull system:** Demand modulation via recipient selection
 - **Together:** Multi-layer demand management
-- **See:** [pull-system.md](concepts/pull-system.md)
+- **See:** [pull-system.md](pull-system.md)
 
 ---
 
@@ -27750,7 +27747,7 @@ $233.71 × 1,420 (DolarAPI live) = 331,862 ARS
 
 **Concept Type:** Strategic Pattern
 **Category:** Network Design
-**Related:** [Bubble Prevention](concepts/bubble-prevention.md), [BCH Sellers as Capital Providers](concepts/bch-miners-as-escrows.md)
+**Related:** [Bubble Prevention](bubble-prevention.md), [BCH Sellers as Capital Providers](bch-miners-as-escrows.md)
 
 **⚠️ NOTE:** This document describes historical concepts for market stability coordination. In the current covenant-based architecture:
 - **BCH sellers** post overcollateralized capital (not "escrow operators")
@@ -27758,8 +27755,8 @@ $233.71 × 1,420 (DolarAPI live) = 331,862 ARS
 - Market coordination happens through smart contract mechanics rather than centralized coordination
 
 See:
-- **[Core Architecture: Incentives](core-architecture/why-promote-adoption.md)** — Current participant roles
-- **[Pull System](concepts/pull-system.md)** — Covenant-based mechanics
+- **[Core Architecture: Incentives](../core-architecture/why-promote-adoption.md)** — Current participant roles
+- **[Pull System](pull-system.md)** — Covenant-based mechanics
 
 ---
 
@@ -28159,9 +28156,9 @@ else:
 
 ## Related Concepts
 
-- **Bubble Prevention:** [bubble-prevention.md](concepts/bubble-prevention.md)
-- **BCH Seller Incentives:** [bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)
-- **Pull System:** [pull-system.md](concepts/pull-system.md)
+- **Bubble Prevention:** [bubble-prevention.md](bubble-prevention.md)
+- **BCH Seller Incentives:** [bch-miners-as-escrows.md](bch-miners-as-escrows.md)
+- **Pull System:** [pull-system.md](pull-system.md)
 
 ---
 
@@ -28917,7 +28914,7 @@ MiCA/PSD2 licensing requirements. Zero protocol fee = information society servic
 
 - [Core Regulatory Constraints](./core-regulatory-constraints.md) — Why this architecture is necessary
 - [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) — Full regulatory analysis
-- [Decentralized Pull System](./decentralized-pull-system.md) — Original discovery document
+- [Pull System](./pull-system.md) — Decentralized bulletin board architecture
 - [Core Architecture: Why No Custody](../core-architecture/why-no-custody-no-intermediation.md) — Detailed legal reasoning (to be created)
 
 ---
@@ -29359,7 +29356,7 @@ Each actor controls their part. Complexity hidden from end users. The covenant i
 # Concept: RFID Card Recipients
 
 **Status:** ⚠️ **FUTURE ENHANCEMENT (Phase 1+)** - Not implemented in Phase 0  
-**Related Requirement:** [Minimal Hardware](core-architecture/why-minimal-hardware.md)
+**Related Requirement:** [Minimal Hardware](../core-architecture/why-minimal-hardware.md)
 
 ---
 
@@ -29760,15 +29757,15 @@ MERCHANT DEVICE:
 
 ## Related Concepts
 
-- [Pull System](concepts/pull-system.md) — Works with RFID cards (recipient taps to confirm)
-- [Minimal Hardware](core-architecture/why-minimal-hardware.md) — RFID cards make this claim TRUE
+- [Pull System](pull-system.md) — Works with RFID cards (recipient taps to confirm)
+- [Minimal Hardware](../core-architecture/why-minimal-hardware.md) — RFID cards make this claim TRUE
 
 ---
 
 ## Related Decisions
 
-- [Dispute Resolution](decisions/dispute-resolution.md) — RFID tap = cryptographic proof of presence
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Alternative flow for RFID recipients
+- [Dispute Resolution](../decisions/dispute-resolution.md) — RFID tap = cryptographic proof of presence
+- [Merchant Flows](../android-app/flows/merchant-flows.md) — Alternative flow for RFID recipients
 
 ---
 
@@ -32453,7 +32450,7 @@ When proposing changes to existing decisions:
 
 **Decision Date:** April 22, 2026
 **Status:** Implemented
-**Related Requirement:** [Permissionless](core-architecture/why-permissionless.md) (Error Prevention)
+**Related Requirement:** [Permissionless](../core-architecture/why-permissionless.md) (Error Prevention)
 
 ---
 
@@ -32590,7 +32587,7 @@ Other corridors may have different constraints:
 
 ## Related Decisions
 
-- [Payment Timeout Window](decisions/payment-timeout-window.md) — Notification delay constraints
+- [Payment Timeout Window](payment-timeout-window.md) — Notification delay constraints
 
 ---
 
@@ -33596,7 +33593,7 @@ BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
 
 # How: Exchange Rates Work
 
-**Satisfies:** [Why: Market-Rate Exchanges](core-architecture/why-market-rate-exchanges.md)
+**Satisfies:** [Why: Market-Rate Exchanges](../core-architecture/why-market-rate-exchanges.md)
 
 **Decision Category:** Implementation Approach
 
@@ -33679,7 +33676,7 @@ EUR → VES calculation (display only):
 - ✅ Free (no API costs)
 - ✅ Covers Venezuela, Argentina, other restricted economies
 - ✅ Publicly verifiable (anyone can check DolarAPI.com)
-- **Research:** [RS047 DolarAPI Venezuela Rates](research/RS047_dolarapi_venezuela_rates.md)
+- **Research:** [RS047 DolarAPI Venezuela Rates](../research/RS047_dolarapi_venezuela_rates.md)
 
 **Cache strategy:**
 - Cache DolarAPI rates for 5 minutes (blue rate doesn't change that fast)
@@ -33963,7 +33960,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 
 ## Implementation Status
 
-- ✅ **Research:** DolarAPI integration ([RS047](research/RS047_dolarapi_venezuela_rates.md))
+- ✅ **Research:** DolarAPI integration ([RS047](../research/RS047_dolarapi_venezuela_rates.md))
 - ✅ **Research:** Exchange rate display strategies
 - ✅ **Concept:** Overcollateralized bounty contracts
 - 🔄 **Development:** Sender app rate display
@@ -33976,26 +33973,26 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 
 ## Related Decisions
 
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — How covenant timing affects rate exposure
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees are denominated (BCH, not EUR)
-- [Core Regulatory Constraints](concepts/core-regulatory-constraints.md) — Why covenant model instead of escrow purchase
+- [Two-Step Settlement Timing](two-step-settlement-timing.md) — How covenant timing affects rate exposure
+- [Fee Splitting Model](fee-splitting-model.md) — How fees are denominated (BCH, not EUR)
+- [Core Regulatory Constraints](../concepts/core-regulatory-constraints.md) — Why covenant model instead of escrow purchase
 
 ---
 
 ## Related Concepts
 
-- [Pull System](concepts/pull-system.md) — How recipient timing control affects rate risk
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — How overcollateralization protects against volatility
-- [BCH Sellers](concepts/bch-sellers.md) — Who provides BCH and how they manage inventory
+- [Pull System](../concepts/pull-system.md) — How recipient timing control affects rate risk
+- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) — How overcollateralization protects against volatility
+- [BCH Sellers](../concepts/bch-sellers.md) — Who provides BCH and how they manage inventory
 
 ---
 
 ## References
 
 **Research:**
-- [RS047: DolarAPI Venezuela Rates](research/RS047_dolarapi_venezuela_rates.md)
-- [RS041: Cross-Corridor Exchange Rates](research/RS041_cross_corridor_exchange_rates.md)
-- [RS052: Compliance Architecture](research/RS052_compliance_architecture.md) (regulatory constraints)
+- [RS047: DolarAPI Venezuela Rates](../research/RS047_dolarapi_venezuela_rates.md)
+- [RS041: Cross-Corridor Exchange Rates](../research/RS041_cross_corridor_exchange_rates.md)
+- [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) (regulatory constraints)
 
 **Archived:**
 - [ARCHIVE: How Market-Rate Exchanges](../archive/ARCHIVE_how-market-rate-exchanges_11052026.md) (escrow-based model)
@@ -34381,7 +34378,7 @@ CashToken atomic swap:
 
 **Decision Date:** April 2026
 **Status:** Implemented
-**Related Requirement:** [Permissionless](core-architecture/why-permissionless.md) ([Error Mitigation](core-architecture/why-permissionless.md#error-prevention)), [Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) (Volatility Protection)
+**Related Requirement:** [Permissionless](../core-architecture/why-permissionless.md) ([Error Mitigation](../core-architecture/why-permissionless.md#error-prevention)), [Cheaper Than Legacy](../core-architecture/why-cheaper-than-legacy.md) (Volatility Protection)
 
 ---
 
@@ -34655,9 +34652,9 @@ Received: +58 412 123 4567 (with spaces and +)
 
 ## Related Decisions
 
-- [Bizum Concept Field](decisions/bizum-concept-field.md) — Why phone numbers (enables simple fuzzy matching)
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — Why covenant-based architecture eliminates volatility during timeout
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees are calculated in covenant distribution
+- [Bizum Concept Field](bizum-concept-field.md) — Why phone numbers (enables simple fuzzy matching)
+- [Two-Step Settlement Timing](two-step-settlement-timing.md) — Why covenant-based architecture eliminates volatility during timeout
+- [Fee Splitting Model](fee-splitting-model.md) — How fees are calculated in covenant distribution
 
 ---
 
@@ -36578,7 +36575,7 @@ Re-evaluate this decision if:
 ### Related Updates
 
 **Flow documents updated:**
-- [Sender Flow](../android-app/flows/remittance-merchant-cash-out.md) - Screen 1 + Screen 3
+- [Sender Flow](../android-app/flows/archive/remittance-merchant-cash-out.md) - Screen 1 + Screen 3
 - [Recipient Flow](../android-app/flows/recipient-flows.md) - Screen 1.5 (Claim Choice)
 
 **Decision documents updated:**
@@ -36596,7 +36593,7 @@ Re-evaluate this decision if:
 
 **Status:** Active (MVP)  
 **Category:** User Protection & Covenant Operations  
-**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Transaction APIs](android-app/backend-apis/transaction-apis.md)
+**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Transaction APIs](../android-app/backend-apis/transaction-apis.md)
 
 ---
 
@@ -42231,7 +42228,7 @@ Reward: 1% fee on €350 = €3.50, split 3 ways = €1.17 each
 **Research Type:** API Discovery
 **Status:** ✅ Confirmed
 **Date:** 2026-04-27
-**Related:** [RS043 DolarAPI Argentina](research/RS043_dolarapi_ars_rates.md), [1_rate_apis.md](RS046_android_app_requirements&flows/RS046-5_backend_apis/1_rate_apis.md)
+**Related:** [RS043 DolarAPI Argentina](RS043_dolarapi_ars_rates.md), [1_rate_apis.md](RS046_android_app_requirements&flows/RS046-5_backend_apis/1_rate_apis.md)
 
 ---
 
@@ -42461,7 +42458,7 @@ def get_eur_ves_rate() -> float:
 
 ## Related Documents
 
-- **Argentina rates:** [RS043 DolarAPI ARS](research/RS043_dolarapi_ars_rates.md)
+- **Argentina rates:** [RS043 DolarAPI ARS](RS043_dolarapi_ars_rates.md)
 - **Rate APIs:** [1_rate_apis.md](RS046_android_app_requirements&flows/RS046-5_backend_apis/1_rate_apis.md)
 - **Exchange Rate Safeguard:** [2.2](core_arquitecture/2_2_exchange_rate_safeguard.md)
 
@@ -42488,7 +42485,7 @@ This simplifies our MVP significantly - one API integration instead of researchi
 **Research Type:** Protocol Analysis
 **Status:** ✅ Draft
 **Date:** 2026-05-09
-**Related:** [RS054 CashToken Swaps](research/RS054_cashtoken_swaps.md), [BCH Sellers](../concepts/bch-sellers.md), [Decentralized Pull System](../decentralized-pull-system.md)
+**Related:** [RS054 CashToken Swaps](RS054_cashtoken_swaps.md), [BCH Sellers](../concepts/bch-sellers.md), [Decentralized Pull System](../concepts/pull-system.md)
 
 ---
 
@@ -42637,7 +42634,7 @@ For Phase 0 (MVP), pure BCH is fine. Merchants who want stability can convert ma
 **Research Type:** Architectural Exploration
 **Status:** ✅ Draft
 **Date:** 2026-05-09
-**Related:** [RS053 MUSD Analysis](research/RS053_MUSD.md), [Decentralized Pull System](../decentralized-pull-system.md), [BCH Sellers](../concepts/bch-sellers.md)
+**Related:** [RS053 MUSD Analysis](RS053_MUSD.md), [Decentralized Pull System](../concepts/pull-system.md), [BCH Sellers](../concepts/bch-sellers.md)
 
 ---
 

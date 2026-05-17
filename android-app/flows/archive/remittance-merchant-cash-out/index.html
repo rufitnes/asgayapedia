@@ -3842,7 +3842,7 @@
 
 
 <h1 id="remittance-with-merchant-cash-out-complete-flow">Remittance with Merchant Cash-Out - Complete Flow<a class="headerlink" href="#remittance-with-merchant-cash-out-complete-flow" title="Permanent link">&para;</a></h1>
-<p><strong>Part of:</strong> <a href="android-app/flows/README.md">Android App Flows</a>
+<p><strong>Part of:</strong> <a href="../../">Android App Flows</a>
 <strong>Date:</strong> 2026-05-10
 <strong>Status:</strong> Active - Covenant Architecture</p>
 <hr />
@@ -3868,8 +3868,8 @@ Finds merchant on map → Walks to shop → Claims cash → Both co-sign → Com
 </code></pre></div></p>
 <p><strong>Total screens:</strong>
 - Sender: 7 screens
-- Recipient: 6 screens (see <a href="android-app/flows/recipient-flows.md">recipient-flows.md</a>)
-- Merchant: 5 screens (see <a href="android-app/flows/merchant-flows.md">merchant-flows.md</a>)</p>
+- Recipient: 6 screens (see <a href="../../recipient-flows/">recipient-flows.md</a>)
+- Merchant: 5 screens (see <a href="../../merchant-flows/">merchant-flows.md</a>)</p>
 <p><strong>Timeline:</strong> 30-60 minutes (mostly waiting for recipient to claim)</p>
 <p><strong>Design principles:</strong>
 - ✅ Clear progress indicators (sender sees real-time updates)
@@ -4106,9 +4106,9 @@ Elena receives: 0.1 BCH (~€9.90 worth at current rate)
 - <strong>Dynamic limits:</strong> Min €10 (or lower if sellers accept), varies by active sellers with smsbridge_loop
 - <strong>Exchange rate display:</strong> Current rate shown for estimation only (actual rate at claim time may differ)</p>
 <p><strong>Related decisions:</strong> 
-- <a href="decisions/how-exchange-rates-work.md">How Exchange Rates Work</a>
-- <a href="decisions/ui-language-regulatory-implications.md">UI Language Regulatory Implications</a> - "Send BCH" vs "Send Money"
-- <a href="decisions/fee-splitting-model.md">Fee Splitting Model</a> - Recipient choice affects total fees</p>
+- <a href="../../../../decisions/how-exchange-rates-work/">How Exchange Rates Work</a>
+- <a href="../../../../decisions/ui-language-regulatory-implications/">UI Language Regulatory Implications</a> - "Send BCH" vs "Send Money"
+- <a href="../../../../decisions/fee-splitting-model/">Fee Splitting Model</a> - Recipient choice affects total fees</p>
 <hr />
 <h3 id="screen-35-pending-covenant-error-only-if-validation-fails">Screen 3.5: Pending Covenant Error (Only if Validation Fails)<a class="headerlink" href="#screen-35-pending-covenant-error-only-if-validation-fails" title="Permanent link">&para;</a></h3>
 <p><strong>Only shown if sender already has pending covenant for this recipient</strong></p>
@@ -4561,7 +4561,7 @@ Elena receives: 0.1 BCH (~€9.90 worth at current rate)
 - Typical BCH volatility in 5 min: 0.5-1% (within 7% buffer)
 - Bizum usually arrives in 2-3 minutes
 - After Bizum received, seller's hedge activates (94-97% exposure reduction)</p>
-<p><strong>Related concept:</strong> <a href="concepts/bch-sellers.md#the-hedge-mechanism-why-sellers-always-win-">BCH Sellers - Hedge Mechanism</a></p>
+<p><strong>Related concept:</strong> <a href="../../../../concepts/bch-sellers/#the-hedge-mechanism-why-sellers-always-win-">BCH Sellers - Hedge Mechanism</a></p>
 <hr />
 <h3 id="screen-6-tracking-multiple-states">Screen 6: Tracking (Multiple States)<a class="headerlink" href="#screen-6-tracking-multiple-states" title="Permanent link">&para;</a></h3>
 <h4 id="state-1-waiting-for-bizum">State 1: Waiting for Bizum<a class="headerlink" href="#state-1-waiting-for-bizum" title="Permanent link">&para;</a></h4>
@@ -4636,7 +4636,7 @@ Elena receives: 0.1 BCH (~€9.90 worth at current rate)
 └─────────────────────────────────────┘
 </code></pre></div>
 <p><strong>Notes:</strong>
-- Notification sent via WhatsApp/Telegram/LINE (see <a href="android-app/flows/recipient-flows.md">recipient-flows.md</a>)
+- Notification sent via WhatsApp/Telegram/LINE (see <a href="../../recipient-flows/">recipient-flows.md</a>)
 - Bounty code shown to sender (can share if needed: last 4 digits of covenant ID)
 - 24-hour claim window starts when covenant created
 - Covenant is public on bulletin board (all merchants can see)</p>
@@ -4691,7 +4691,7 @@ Elena receives: 0.1 BCH (~€9.90 worth at current rate)
 - <strong>Split refund rationale:</strong>
   - Merchant portion (€99.50) → Refunded to you (Iris)
   - Seller fee (€0.50) → Kept by seller (earned for 24h service)
-- Related policy: <a href="concepts/overcollateralized-bounty-contracts.md#timeout-cascade">Overcollateralized Bounty Contracts - Timeout Cascade</a></p>
+- Related policy: <a href="../../../../concepts/overcollateralized-bounty-contracts/#timeout-cascade">Overcollateralized Bounty Contracts - Timeout Cascade</a></p>
 <h4 id="state-3-merchant-co-signing">State 3: Merchant Co-Signing<a class="headerlink" href="#state-3-merchant-co-signing" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────┐
 │         Order #REM-89234            │
@@ -4730,7 +4730,7 @@ Elena receives: 0.1 BCH (~€9.90 worth at current rate)
 - Covenant requires both merchant and recipient signatures
 - No numeric codes (cryptographic co-signing via BCH Script)
 - Settlement triggered when both signatures present</p>
-<p><strong>Related flow:</strong> <a href="android-app/flows/merchant-flows.md#screen-3-hand-ves--co-sign-covenant">Merchant Flows - Co-Sign Covenant</a></p>
+<p><strong>Related flow:</strong> <a href="../../merchant-flows/#screen-3-hand-ves--co-sign-covenant">Merchant Flows - Co-Sign Covenant</a></p>
 <h4 id="state-4-cash-delivered-both-co-signed">State 4: Cash Delivered (Both Co-Signed)<a class="headerlink" href="#state-4-cash-delivered-both-co-signed" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────┐
 │         Order #REM-89234            │
@@ -4877,7 +4877,7 @@ Elena receives: 0.1 BCH (~€9.90 worth at current rate)
 - <strong>Elena gets:</strong> €99.50 worth of BCH (calculated at maturity spot rate)
 - <strong>Merchant spread:</strong> ~€0.25 (sells 50,000 VES for 0.0995 BCH worth ~€99.75)
 - <strong>BCH seller fee:</strong> ~€0.25 (earned for posting collateral and service)</p>
-<p><strong>Related decision:</strong> <a href="decisions/fee-splitting-model.md">Fee Splitting Model</a></p>
+<p><strong>Related decision:</strong> <a href="../../../../decisions/fee-splitting-model/">Fee Splitting Model</a></p>
 <hr />
 <h2 id="error-states">Error States<a class="headerlink" href="#error-states" title="Permanent link">&para;</a></h2>
 <h3 id="network-error">Network Error<a class="headerlink" href="#network-error" title="Permanent link">&para;</a></h3>
@@ -4986,7 +4986,7 @@ Elena receives: 0.1 BCH (~€9.90 worth at current rate)
 - <strong>Your net cost:</strong> €0.50 (0.5% sender fee)
 - <strong>Refund timing:</strong> Immediate (on-chain BCH transaction)
 - Encourage sender to contact recipient (might try again with coordination)</p>
-<p><strong>Related concept:</strong> <a href="concepts/overcollateralized-bounty-contracts.md#timeout-cascade">Overcollateralized Bounty Contracts - Timeout Cascade</a></p>
+<p><strong>Related concept:</strong> <a href="../../../../concepts/overcollateralized-bounty-contracts/#timeout-cascade">Overcollateralized Bounty Contracts - Timeout Cascade</a></p>
 <h3 id="corridor-unavailable">Corridor Unavailable<a class="headerlink" href="#corridor-unavailable" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────┐
 │       ❌ Not Available Yet           │
@@ -5105,7 +5105,7 @@ Secondary (outline):
   - Seller fee (0.0005 BCH worth €0.50) → BCH seller
 - Recipient can no longer claim
 - Sender and recipient both notified</p>
-<p><strong>Related:</strong> <a href="android-app/flows/recipient-flows.md">Recipient Flows</a> - Recipient claim process</p>
+<p><strong>Related:</strong> <a href="../../recipient-flows/">Recipient Flows</a> - Recipient claim process</p>
 <h3 id="covenant-settlement-timing">Covenant Settlement Timing<a class="headerlink" href="#covenant-settlement-timing" title="Permanent link">&para;</a></h3>
 <p><strong>Step 1:</strong> Sender pays Bizum to BCH seller (€100)<br />
 <strong>Step 2:</strong> Seller posts BCH collateral to covenant (~0.107 BCH)<br />
@@ -5116,7 +5116,7 @@ Secondary (outline):
 - Overcollateralization absorbs short-term volatility
 - Seller hedges by receiving €100 fiat before price moves
 - No rate locking needed (covenant calculates BCH at maturity rate)</p>
-<p><strong>Related decision:</strong> <a href="decisions/how-exchange-rates-work.md">How Exchange Rates Work</a></p>
+<p><strong>Related decision:</strong> <a href="../../../../decisions/how-exchange-rates-work/">How Exchange Rates Work</a></p>
 <h3 id="rate-locking">Rate Locking<a class="headerlink" href="#rate-locking" title="Permanent link">&para;</a></h3>
 <p><strong>Estimate shown:</strong> When sender creates order (informational only)<br />
 <strong>Final rate:</strong> When recipient claims at merchant (DolarAPI blue dollar rate)<br />
@@ -5126,23 +5126,23 @@ Secondary (outline):
 - Recipient gets latest market rate (fairness)
 - Seller hedges volatility (Bizum received before price moves)
 - Overcollateralization protects merchant (always gets €99.50 worth)</p>
-<p><strong>Related decision:</strong> <a href="decisions/how-exchange-rates-work.md">How Exchange Rates Work</a></p>
+<p><strong>Related decision:</strong> <a href="../../../../decisions/how-exchange-rates-work/">How Exchange Rates Work</a></p>
 <hr />
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">&para;</a></h2>
 <p><strong>Flows:</strong>
-- <a href="android-app/flows/bch-payment-flows.md">BCH Payment Flows</a> — Simpler flow, build FIRST
-- <a href="android-app/flows/recipient-flows.md">Recipient Flows</a> — Recipient claim process (6 screens)
-- <a href="android-app/flows/merchant-flows.md">Merchant Flows</a> — Merchant VES sale process (5 screens)
-- <a href="android-app/flows/bch-seller-flows.md">BCH Seller Flows</a> — Seller collateral posting</p>
+- <a href="../bch-payment-flows.md">BCH Payment Flows</a> — Simpler flow, build FIRST
+- <a href="../../recipient-flows/">Recipient Flows</a> — Recipient claim process (6 screens)
+- <a href="../../merchant-flows/">Merchant Flows</a> — Merchant VES sale process (5 screens)
+- <a href="../bch-seller-flows.md">BCH Seller Flows</a> — Seller collateral posting</p>
 <p><strong>Decisions:</strong>
-- <a href="decisions/how-exchange-rates-work.md">How Exchange Rates Work</a> — EUR-denominated covenant, BCH settlement
-- <a href="decisions/two-step-settlement-timing.md">Two-Step Settlement Timing</a> — Covenant maturity timing
-- <a href="decisions/fee-splitting-model.md">Fee Splitting Model</a> — How fees distributed</p>
+- <a href="../../../../decisions/how-exchange-rates-work/">How Exchange Rates Work</a> — EUR-denominated covenant, BCH settlement
+- <a href="../../../../decisions/two-step-settlement-timing/">Two-Step Settlement Timing</a> — Covenant maturity timing
+- <a href="../../../../decisions/fee-splitting-model/">Fee Splitting Model</a> — How fees distributed</p>
 <p><strong>Concepts:</strong>
-- <a href="concepts/pull-system.md">Pull System</a> — Recipient-driven settlement
-- <a href="concepts/overcollateralized-bounty-contracts.md">Overcollateralized Bounty Contracts</a> — Complete covenant specification
-- <a href="concepts/bch-sellers.md">BCH Sellers</a> — Seller role and hedge mechanism
-- <a href="concepts/decentralized-pull-system.md">Decentralized Pull System</a> — Bulletin board architecture</p>
+- <a href="../../../../concepts/pull-system/">Pull System</a> — Recipient-driven settlement
+- <a href="../../../../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> — Complete covenant specification
+- <a href="../../../../concepts/bch-sellers/">BCH Sellers</a> — Seller role and hedge mechanism
+- <a href="../../../../concepts/pull-system/">Decentralized Pull System</a> — Bulletin board architecture</p>
 <hr />
 <h2 id="accessibility-notes">Accessibility Notes<a class="headerlink" href="#accessibility-notes" title="Permanent link">&para;</a></h2>
 <p><strong>Font sizes:</strong>

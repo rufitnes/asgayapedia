@@ -8,7 +8,7 @@
 - **Merchant liquidity**: Merchants accumulate BCH → sell to BCH buyers → buyers become senders
 **Status:** TO BE REWRITTEN AS "BCH BUYER FLOWS" WITH GAMIFICATION
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../README.md)
 **Date:** 2026-05-03
 **Status:** ~~Active~~ STALE - Critical for instant settlement
 
@@ -709,7 +709,7 @@ Gamification - show top LPs by settlements completed.
 - Re-enabled after manual review confirms merchant was offline/innocent
 - **Incentivizes merchants to be responsive and reliable**
 
-**Related decision:** [Two-Step Settlement](decisions/two-step-settlement-timing.md)
+**Related decision:** [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md)
 
 ---
 
@@ -748,16 +748,16 @@ Referencia: REM-89234
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) — Why LP is needed
-- [Recipient Flows](android-app/flows/recipient-flows.md) — Recipient claims at merchant
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Merchant confirms LP payment
+- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — Why LP is needed
+- [Recipient Flows](../recipient-flows.md) — Recipient claims at merchant
+- [Merchant Flows](../merchant-flows.md) — Merchant confirms LP payment
 
 **Decisions:**
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — Where LP reward comes from
-- [Two-Step Settlement](decisions/two-step-settlement-timing.md) — Why instant settlement is optional
+- [Fee Splitting Model](../../../decisions/fee-splitting-model.md) — Where LP reward comes from
+- [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md) — Why instant settlement is optional
 
 **Concepts:**
-- [Market Making Partners](concepts/market-making-partners.md) — LP role in ecosystem
+- [Market Making Partners](../../../concepts/market-making-partners.md) — LP role in ecosystem
 
 ---
 
@@ -882,7 +882,7 @@ Referencia: REM-89234
 - When corridor-wide disable becomes too restrictive
 - When LP/merchant feedback shows need for granular control
 
-**Related concept:** [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) - Could adjust LP rewards based on merchant tier (higher reward for riskier Tier 2/3 merchants)
+**Related concept:** [Dynamic Reward Modulation](../../../concepts/dynamic-reward-modulation.md) - Could adjust LP rewards based on merchant tier (higher reward for riskier Tier 2/3 merchants)
 
 ---
 

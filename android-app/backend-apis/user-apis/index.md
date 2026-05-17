@@ -2,7 +2,7 @@
 
 **Category:** Core Blockchain Operations
 **Priority:** 🔴 Critical (Phase 0)
-**Related:** [Covenant Creation](covenant-creation.md), [Sender Flow](../flows/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
+**Related:** [Covenant Creation](covenant-creation.md), [Sender Flow](../flows/archive/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
 
 ---
 
@@ -629,7 +629,7 @@ if now - timestamp > timedelta(minutes=5):
   - [Covenant Creation](covenant-creation.md) - How BCH signatures authorize covenant creation
   - [BCH-Native Architecture](bch-native-architecture.md) - OP_RETURN notification design
 - **User Flows:**
-  - [Sender Flow](../flows/remittance-merchant-cash-out.md) - Creating covenants
+  - [Sender Flow](../flows/archive/remittance-merchant-cash-out.md) - Creating covenants
   - [Recipient Flow](../flows/recipient-flows.md) - Claiming covenants
   - [Merchant Flow](../flows/merchant-flows.md) - Cash-out co-signing
 - **Phase 0:** [Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md)

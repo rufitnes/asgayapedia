@@ -1,6 +1,6 @@
 # Recipient Flows - Cash Claim Process
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../flows/README.md)
 **Date:** 2026-05-10
 **Status:** Active - Covenant Architecture
 
@@ -40,7 +40,7 @@ Notification → View details → Find merchant → Navigate → Co-sign covenan
 - ⏱️ **24 hours** to claim after covenant created (timer starts when sender funds covenant)
 - **Reminders sent at:** 12h (general), 18h (sender notified), 23h (urgent)
 - **After 24h:** Covenant expires → Split refund (merchant portion to Iris, seller fee to seller)
-- Full policy: [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+- Full policy: [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 ---
 
@@ -697,7 +697,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - **Iris's loss:** Iris paid sender fee (€0.50), lost to timeout
 - **Merchant unaffected:** Never committed (didn't see bounty until recipient arrived)
 
-**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
+**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
 
 ---
 
@@ -749,7 +749,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 **V1 Enhancement (Future):**
 - Parties can post evidence on social media (`#AsgayaDispute`)
 - Community sees evidence and decides merchant trustworthiness
-- Full policy: [Dispute Resolution Framework](decisions/dispute-resolution.md)
+- Full policy: [Dispute Resolution Framework](../../decisions/dispute-resolution.md)
 
 **Should be RARE:** Co-signing mechanism prevents most disputes (both parties must confirm).
 
@@ -910,7 +910,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - Not so long that funds are locked unnecessarily
 - Balances recipient convenience vs sender risk
 
-**Related decision:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+**Related decision:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
 
 ---
 
@@ -983,7 +983,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - Transparent: All amounts, signatures, timing public
 - Immutable: Once settled, cannot be reversed
 
-**See:** [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
+**See:** [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
 
 ---
 
@@ -1015,14 +1015,14 @@ pending → claimed → accepted → partially_signed → completed
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
-- [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — When BCH distributed
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees work
+- [How Exchange Rates Work](../../decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
+- [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md) — When BCH distributed
+- [Fee Splitting Model](../../decisions/fee-splitting-model.md) — How fees work
 
 **Concepts:**
-- [Pull System](concepts/pull-system.md) — How recipient timing control works
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
-- [Decentralized Pull System](concepts/decentralized-pull-system.md) — How bulletin board works
+- [Pull System](../../concepts/pull-system.md) — How recipient timing control works
+- [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [Decentralized Pull System](../../concepts/pull-system.md) — How bulletin board works
 
 ---
 

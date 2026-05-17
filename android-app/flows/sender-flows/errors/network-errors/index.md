@@ -410,7 +410,7 @@ reportError({
 - [Screen 4.5: Select Seller](../buy-seller-path/4.5-select-seller.md) - Bulletin board dependency
 - [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md) - Exchange rate dependency
 - [Bizum Timeout Error](./bizum-timeout.md) - Payment window expiry
-- [Decentralized Pull System](../../../../concepts/decentralized-pull-system.md) - Bulletin board architecture
+- [Decentralized Pull System](../../../../concepts/pull-system.md) - Bulletin board architecture
 
 ---
 

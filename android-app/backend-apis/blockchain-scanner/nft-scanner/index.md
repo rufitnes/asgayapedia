@@ -674,7 +674,7 @@ const sellers = utxos
 
 - **Covenant Creation:** [covenant-creation.md](../covenant-creation.md) - How sellers create NFT covenants
 - **BCH-Native Architecture:** [bch-native-architecture.md](../bch-native-architecture.md) - NFT design rationale
-- **User Flows:** [Sender Flow](../../flows/remittance-merchant-cash-out.md) - Where seller selection happens
+- **User Flows:** [Sender Flow](../../flows/archive/remittance-merchant-cash-out.md) - Where seller selection happens
 - **Phase 0:** [Progressive Decentralization](../../../decisions/phase-0-progressive-decentralization.md)
 
 ---

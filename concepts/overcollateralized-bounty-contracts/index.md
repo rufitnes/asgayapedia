@@ -733,7 +733,7 @@ MiCA/PSD2 licensing requirements. Zero protocol fee = information society servic
 
 - [Core Regulatory Constraints](./core-regulatory-constraints.md) — Why this architecture is necessary
 - [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) — Full regulatory analysis
-- [Decentralized Pull System](./decentralized-pull-system.md) — Original discovery document
+- [Pull System](./pull-system.md) — Decentralized bulletin board architecture
 - [Core Architecture: Why No Custody](../core-architecture/why-no-custody-no-intermediation.md) — Detailed legal reasoning (to be created)
 
 ---

@@ -1,6 +1,6 @@
 # How: Exchange Rates Work
 
-**Satisfies:** [Why: Market-Rate Exchanges](core-architecture/why-market-rate-exchanges.md)
+**Satisfies:** [Why: Market-Rate Exchanges](../core-architecture/why-market-rate-exchanges.md)
 
 **Decision Category:** Implementation Approach
 
@@ -83,7 +83,7 @@ EUR → VES calculation (display only):
 - ✅ Free (no API costs)
 - ✅ Covers Venezuela, Argentina, other restricted economies
 - ✅ Publicly verifiable (anyone can check DolarAPI.com)
-- **Research:** [RS047 DolarAPI Venezuela Rates](research/RS047_dolarapi_venezuela_rates.md)
+- **Research:** [RS047 DolarAPI Venezuela Rates](../research/RS047_dolarapi_venezuela_rates.md)
 
 **Cache strategy:**
 - Cache DolarAPI rates for 5 minutes (blue rate doesn't change that fast)
@@ -367,7 +367,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 
 ## Implementation Status
 
-- ✅ **Research:** DolarAPI integration ([RS047](research/RS047_dolarapi_venezuela_rates.md))
+- ✅ **Research:** DolarAPI integration ([RS047](../research/RS047_dolarapi_venezuela_rates.md))
 - ✅ **Research:** Exchange rate display strategies
 - ✅ **Concept:** Overcollateralized bounty contracts
 - 🔄 **Development:** Sender app rate display
@@ -380,26 +380,26 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 
 ## Related Decisions
 
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — How covenant timing affects rate exposure
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — How fees are denominated (BCH, not EUR)
-- [Core Regulatory Constraints](concepts/core-regulatory-constraints.md) — Why covenant model instead of escrow purchase
+- [Two-Step Settlement Timing](two-step-settlement-timing.md) — How covenant timing affects rate exposure
+- [Fee Splitting Model](fee-splitting-model.md) — How fees are denominated (BCH, not EUR)
+- [Core Regulatory Constraints](../concepts/core-regulatory-constraints.md) — Why covenant model instead of escrow purchase
 
 ---
 
 ## Related Concepts
 
-- [Pull System](concepts/pull-system.md) — How recipient timing control affects rate risk
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — How overcollateralization protects against volatility
-- [BCH Sellers](concepts/bch-sellers.md) — Who provides BCH and how they manage inventory
+- [Pull System](../concepts/pull-system.md) — How recipient timing control affects rate risk
+- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) — How overcollateralization protects against volatility
+- [BCH Sellers](../concepts/bch-sellers.md) — Who provides BCH and how they manage inventory
 
 ---
 
 ## References
 
 **Research:**
-- [RS047: DolarAPI Venezuela Rates](research/RS047_dolarapi_venezuela_rates.md)
-- [RS041: Cross-Corridor Exchange Rates](research/RS041_cross_corridor_exchange_rates.md)
-- [RS052: Compliance Architecture](research/RS052_compliance_architecture.md) (regulatory constraints)
+- [RS047: DolarAPI Venezuela Rates](../research/RS047_dolarapi_venezuela_rates.md)
+- [RS041: Cross-Corridor Exchange Rates](../research/RS041_cross_corridor_exchange_rates.md)
+- [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) (regulatory constraints)
 
 **Archived:**
 - [ARCHIVE: How Market-Rate Exchanges](../archive/ARCHIVE_how-market-rate-exchanges_11052026.md) (escrow-based model)

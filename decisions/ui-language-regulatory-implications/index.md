@@ -442,7 +442,7 @@ Re-evaluate this decision if:
 ### Related Updates
 
 **Flow documents updated:**
-- [Sender Flow](../android-app/flows/remittance-merchant-cash-out.md) - Screen 1 + Screen 3
+- [Sender Flow](../android-app/flows/archive/remittance-merchant-cash-out.md) - Screen 1 + Screen 3
 - [Recipient Flow](../android-app/flows/recipient-flows.md) - Screen 1.5 (Claim Choice)
 
 **Decision documents updated:**

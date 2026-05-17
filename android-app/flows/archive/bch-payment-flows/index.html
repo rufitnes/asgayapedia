@@ -3663,7 +3663,7 @@
 <strong>Issue:</strong> Uses escrow architecture (lines 23, 213, 436-470). Needs rewrite for covenant architecture or deletion.
 <strong>Decision:</strong> Everything covenant-based (sender flow covers this). Standard BCH payments (no Asgaya) handled separately.
 <strong>Status:</strong> TO BE ARCHIVED OR REWRITTEN</p>
-<p><strong>Part of:</strong> <a href="android-app/flows/README.md">Android App Flows</a>
+<p><strong>Part of:</strong> <a href="../../">Android App Flows</a>
 <strong>Date:</strong> 2026-05-02
 <strong>Status:</strong> <del>Active</del> STALE - Priority 1 (Build FIRST)</p>
 <hr />
@@ -3876,7 +3876,7 @@ Example: VES 5,750
 - Copy buttons for convenience (reduce manual entry errors)
 - Concept field = sender's phone (auto-matches notification to order)
 - Android autocomplete could streamline this</p>
-<p><strong>Related decision:</strong> <a href="decisions/payment-timeout-window.md">Payment Timeout Window</a></p>
+<p><strong>Related decision:</strong> <a href="../../../../decisions/payment-timeout-window/">Payment Timeout Window</a></p>
 <hr />
 <h2 id="screen-5-processing-complete">Screen 5: Processing &amp; Complete<a class="headerlink" href="#screen-5-processing-complete" title="Permanent link">&para;</a></h2>
 <h3 id="state-1-waiting-for-eur">State 1: Waiting for EUR<a class="headerlink" href="#state-1-waiting-for-eur" title="Permanent link">&para;</a></h3>
@@ -4072,7 +4072,7 @@ Example: VES 5,750
 <li>Later: Replenish float by buying BCH on Kraken</li>
 <li>Result: ~30 second settlement (vs 10-30 min on-demand)</li>
 </ul>
-<p><strong>Related concept:</strong> <a href="concepts/pull-system.md">Pull System</a></p>
+<p><strong>Related concept:</strong> <a href="../../../../concepts/pull-system/">Pull System</a></p>
 <h3 id="currency-flexibility">Currency Flexibility<a class="headerlink" href="#currency-flexibility" title="Permanent link">&para;</a></h3>
 <ul>
 <li>User selects target currency (EUR, VES, ARS, HNL, etc.)</li>
@@ -4080,7 +4080,7 @@ Example: VES 5,750
 <li>Escrow calculates EUR equivalent</li>
 <li>Transparent fee (1%) shown separately</li>
 </ul>
-<p><strong>Related decision:</strong> <a href="decisions/how-market-rate-exchanges.md">Market-Rate Exchanges</a></p>
+<p><strong>Related decision:</strong> <a href="../../../../decisions/how-exchange-rates-work/">Market-Rate Exchanges</a></p>
 <h3 id="payment-rail-agnostic">Payment Rail Agnostic<a class="headerlink" href="#payment-rail-agnostic" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Currently: Bizum (Spain)</li>
@@ -4088,17 +4088,17 @@ Example: VES 5,750
 <li>Same flow, different payment instructions screen</li>
 <li>Copy/paste reduces errors (no manual typing)</li>
 </ul>
-<p><strong>Related decision:</strong> <a href="decisions/bizum-concept-field.md">Bizum Concept Field</a></p>
+<p><strong>Related decision:</strong> <a href="../../../../decisions/bizum-concept-field/">Bizum Concept Field</a></p>
 <hr />
 <h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
 <p><strong>Flows:</strong>
-- <a href="android-app/flows/remittance-merchant-cash-out.md">Remittance Merchant Cash-Out</a> — More complex flow with merchant claim
-- <a href="android-app/flows/merchant-flows.md">Merchant Flows</a> — Merchant perspective (receiving BCH)
-- <a href="android-app/flows/lp-flows.md">LP Flows</a> — LP perspective (providing liquidity)</p>
+- <a href="../remittance-merchant-cash-out.md">Remittance Merchant Cash-Out</a> — More complex flow with merchant claim
+- <a href="../../merchant-flows/">Merchant Flows</a> — Merchant perspective (receiving BCH)
+- <a href="../lp-flows.md">LP Flows</a> — LP perspective (providing liquidity)</p>
 <p><strong>Decisions:</strong>
-- <a href="decisions/payment-timeout-window.md">Payment Timeout Window</a> — Why 10 minutes
-- <a href="decisions/how-market-rate-exchanges.md">Market-Rate Exchanges</a> — DolarAPI + Kraken
-- <a href="decisions/two-step-settlement-timing.md">Two-Step Settlement</a> — EUR first, then BCH</p>
+- <a href="../../../../decisions/payment-timeout-window/">Payment Timeout Window</a> — Why 10 minutes
+- <a href="../../../../decisions/how-exchange-rates-work/">Market-Rate Exchanges</a> — DolarAPI + Kraken
+- <a href="../../../../decisions/two-step-settlement-timing/">Two-Step Settlement</a> — EUR first, then BCH</p>
 <p><strong>Implementation:</strong>
 - <code>knowledge/code/smsbridge_loop.py</code> — Working notification listener
 - <a href="android-app/backend-apis/settlement-apis.md">Settlement APIs</a> — API endpoints for this flow</p>
