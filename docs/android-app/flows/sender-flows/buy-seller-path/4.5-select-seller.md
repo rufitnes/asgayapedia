@@ -247,7 +247,7 @@ This screen represents the **bulletin board in action**:
 - [Screen 4B: Confirm Purchase](./4b-confirm-purchase.md) - Previous screen
 - [Screen 5: Payment Instructions](./5-payment-instructions.md) - Next screen
 - [BCH Sellers Concept](../../../../concepts/bch-sellers.md) - Complete seller specification
-- [Decentralized Pull System](../../../../concepts/decentralized-pull-system.md) - Bulletin board architecture
+- [Decentralized Pull System](../../../../concepts/pull-system.md) - Bulletin board architecture
 
 ---
 

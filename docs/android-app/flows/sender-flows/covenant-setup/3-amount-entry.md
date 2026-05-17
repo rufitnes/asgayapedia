@@ -185,7 +185,7 @@ if (hasPendingCovenant) {
 
 - **[Screen 4: Payment Method](4-payment-method.md)** - Next step (choose funding source)
 - **[Error: Pending Covenant](../errors/pending-covenant.md)** - Duplicate prevention
-- **[How Exchange Rates Work](../../../../decisions/how-market-rate-exchanges.md)** - Rate mechanics
+- **[How Exchange Rates Work](../../../../decisions/how-exchange-rates-work.md)** - Rate mechanics
 - **[Fee Splitting Model](../../../../decisions/fee-splitting-model.md)** - Fee breakdown
 
 ---

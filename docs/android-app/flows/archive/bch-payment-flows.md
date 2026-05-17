@@ -5,7 +5,7 @@
 **Decision:** Everything covenant-based (sender flow covers this). Standard BCH payments (no Asgaya) handled separately.
 **Status:** TO BE ARCHIVED OR REWRITTEN
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../README.md)
 **Date:** 2026-05-02
 **Status:** ~~Active~~ STALE - Priority 1 (Build FIRST)
 
@@ -254,7 +254,7 @@ Example: VES 5,750
 - Concept field = sender's phone (auto-matches notification to order)
 - Android autocomplete could streamline this
 
-**Related decision:** [Payment Timeout Window](decisions/payment-timeout-window.md)
+**Related decision:** [Payment Timeout Window](../../../decisions/payment-timeout-window.md)
 
 ---
 
@@ -474,7 +474,7 @@ Example: VES 5,750
 - Later: Replenish float by buying BCH on Kraken
 - Result: ~30 second settlement (vs 10-30 min on-demand)
 
-**Related concept:** [Pull System](concepts/pull-system.md)
+**Related concept:** [Pull System](../../../concepts/pull-system.md)
 
 ### Currency Flexibility
 - User selects target currency (EUR, VES, ARS, HNL, etc.)
@@ -482,7 +482,7 @@ Example: VES 5,750
 - Escrow calculates EUR equivalent
 - Transparent fee (1%) shown separately
 
-**Related decision:** [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)
+**Related decision:** [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work.md)
 
 ### Payment Rail Agnostic
 - Currently: Bizum (Spain)
@@ -490,21 +490,21 @@ Example: VES 5,750
 - Same flow, different payment instructions screen
 - Copy/paste reduces errors (no manual typing)
 
-**Related decision:** [Bizum Concept Field](decisions/bizum-concept-field.md)
+**Related decision:** [Bizum Concept Field](../../../decisions/bizum-concept-field.md)
 
 ---
 
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) — More complex flow with merchant claim
-- [Merchant Flows](android-app/flows/merchant-flows.md) — Merchant perspective (receiving BCH)
-- [LP Flows](android-app/flows/lp-flows.md) — LP perspective (providing liquidity)
+- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — More complex flow with merchant claim
+- [Merchant Flows](../merchant-flows.md) — Merchant perspective (receiving BCH)
+- [LP Flows](../lp-flows.md) — LP perspective (providing liquidity)
 
 **Decisions:**
-- [Payment Timeout Window](decisions/payment-timeout-window.md) — Why 10 minutes
-- [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md) — DolarAPI + Kraken
-- [Two-Step Settlement](decisions/two-step-settlement-timing.md) — EUR first, then BCH
+- [Payment Timeout Window](../../../decisions/payment-timeout-window.md) — Why 10 minutes
+- [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work.md) — DolarAPI + Kraken
+- [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md) — EUR first, then BCH
 
 **Implementation:**
 - `knowledge/code/smsbridge_loop.py` — Working notification listener

@@ -3,7 +3,7 @@
 **Research Type:** Architectural Exploration
 **Status:** ✅ Draft
 **Date:** 2026-05-09
-**Related:** [RS053 MUSD Analysis](research/RS053_MUSD.md), [Decentralized Pull System](../decentralized-pull-system.md), [BCH Sellers](../concepts/bch-sellers.md)
+**Related:** [RS053 MUSD Analysis](RS053_MUSD.md), [Decentralized Pull System](../concepts/pull-system.md), [BCH Sellers](../concepts/bch-sellers.md)
 
 ---
 

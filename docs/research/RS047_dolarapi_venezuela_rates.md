@@ -3,7 +3,7 @@
 **Research Type:** API Discovery
 **Status:** ✅ Confirmed
 **Date:** 2026-04-27
-**Related:** [RS043 DolarAPI Argentina](research/RS043_dolarapi_ars_rates.md), [1_rate_apis.md](RS046_android_app_requirements&flows/RS046-5_backend_apis/1_rate_apis.md)
+**Related:** [RS043 DolarAPI Argentina](RS043_dolarapi_ars_rates.md), [1_rate_apis.md](RS046_android_app_requirements&flows/RS046-5_backend_apis/1_rate_apis.md)
 
 ---
 
@@ -233,7 +233,7 @@ def get_eur_ves_rate() -> float:
 
 ## Related Documents
 
-- **Argentina rates:** [RS043 DolarAPI ARS](research/RS043_dolarapi_ars_rates.md)
+- **Argentina rates:** [RS043 DolarAPI ARS](RS043_dolarapi_ars_rates.md)
 - **Rate APIs:** [1_rate_apis.md](RS046_android_app_requirements&flows/RS046-5_backend_apis/1_rate_apis.md)
 - **Exchange Rate Safeguard:** [2.2](core_arquitecture/2_2_exchange_rate_safeguard.md)
 

@@ -1,10 +1,10 @@
-← [Back to Android App](android-app/README.md)
+← [Back to Android App](../README.md)
 
 # RS046-6: NotificationListener Architecture
 
 **Category:** Core Component (MVP Critical)
 **Priority:** 🔴 Critical (The Heart of the App)
-**Related:** [RS046-5 Backend APIs](../backend-apis/), [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md)
+**Related:** [RS046-5 Backend APIs](../backend-apis/), [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md)
 
 ---
 
@@ -371,8 +371,8 @@ Merchant → PagoMóvil → Settlement
   - [User APIs](android-app/backend-apis/user-apis.md) - OP_RETURN notification system
 
 - **User Flows:**
-  - [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - Sender experience
-  - [RS046-3 Merchant Flows](android-app/flows/merchant-flows.md) - Merchant confirmation
+  - [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md) - Sender experience
+  - [RS046-3 Merchant Flows](../flows/merchant-flows.md) - Merchant confirmation
 
 - **Architecture:**
   - [bch-native-architecture.md](android-app/backend-apis/bch-native-architecture.md) - Overall philosophy

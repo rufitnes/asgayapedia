@@ -1,6 +1,6 @@
 # Merchant Flows - VES Cash Sales for BCH
 
-**Part of:** [Android App Flows](android-app/flows/README.md)
+**Part of:** [Android App Flows](../flows/README.md)
 **Date:** 2026-05-10
 **Status:** Active - Covenant Architecture
 
@@ -847,7 +847,7 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 - Prevents indefinite BCH lock-up (sellers need capital freed)
 - Forces inactive recipients to claim or forfeit
 
-**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
+**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
 
 ---
 
@@ -942,7 +942,7 @@ Otherwise → Show specific error
 - Transparent: All amounts, signatures, timing public
 - Immutable: Once settled, cannot be reversed
 
-**See:** [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
+**See:** [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
 
 ---
 
@@ -984,15 +984,15 @@ Otherwise → Show specific error
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
-- [How Exchange Rates Work](decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
-- [Fee Splitting Model](decisions/fee-splitting-model.md) — Where merchant spread comes from
-- [Two-Step Settlement Timing](decisions/two-step-settlement-timing.md) — When BCH distributed
+- [How Exchange Rates Work](../../decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
+- [Fee Splitting Model](../../decisions/fee-splitting-model.md) — Where merchant spread comes from
+- [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md) — When BCH distributed
 
 **Concepts:**
-- [Pull System](concepts/pull-system.md) — How recipient timing control works
-- [Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
-- [BCH Sellers](concepts/bch-sellers.md) — Who provides BCH and why they profit
-- [Decentralized Pull System](concepts/decentralized-pull-system.md) — How bulletin board works
+- [Pull System](../../concepts/pull-system.md) — How recipient timing control works
+- [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [BCH Sellers](../../concepts/bch-sellers.md) — Who provides BCH and why they profit
+- [Decentralized Pull System](../../concepts/pull-system.md) — How bulletin board works
 
 ---
 

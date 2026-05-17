@@ -1,4 +1,4 @@
-← [Back to Android App](android-app/README.md)
+← [Back to Android App](../README.md)
 
 # Android App Flows
 

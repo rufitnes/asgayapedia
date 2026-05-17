@@ -863,7 +863,7 @@ Settings > Apps > Asgaya > Notification Access
 
 
 - **APIs:** [RS046-5 Backend APIs](android-app/backend-apis/README.md) - Escrow endpoint spec
-- **UX:** [RS046-2 Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - User journey context
+- **UX:** [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md) - User journey context
 - **Security:** [RS046-8 Security](android-app/notification-listener/security.md) - Full security spec (TBD)
 
 ---

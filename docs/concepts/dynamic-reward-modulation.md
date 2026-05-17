@@ -2,7 +2,7 @@
 
 **Concept Type:** Economic Mechanism
 **Category:** Market Stabilization / Incentive Design
-**Related:** [Volatility Protection](core-architecture/why-eliminate-volatility.md), [Bubble Prevention](concepts/bubble-prevention.md)
+**Related:** [Volatility Protection](../core-architecture/why-eliminate-volatility.md), [Bubble Prevention](bubble-prevention.md)
 
 ---
 
@@ -121,7 +121,7 @@ This mechanism works **in concert** with bubble prevention at the escrow level:
 - **What:** 50/50 baseline, shift to 25/75 during bubble risk
 - **Effect:** Dampens supply-side (escrows sell BCH)
 - **Timeline:** Gradual over 6 hours
-- **See:** [bubble-prevention.md](concepts/bubble-prevention.md)
+- **See:** [bubble-prevention.md](bubble-prevention.md)
 
 ### Layer 2: Reward Split Modulation (This Concept)
 - **Who:** BCH Buyers and Merchants see adjusted rewards
@@ -567,25 +567,25 @@ def is_bubble_vs_trend(daily_prices):
 - **This concept:** Adjusts merchant/LP incentives
 - **Bubble prevention:** Adjusts escrow reserves
 - **Together:** Two-sided pressure against bubbles
-- **See:** [bubble-prevention.md](concepts/bubble-prevention.md)
+- **See:** [bubble-prevention.md](bubble-prevention.md)
 
 ### Volatility Protection (Core Architecture)
 - **This concept:** Modulates holding incentives dynamically
 - **Volatility protection:** 24h rate guarantee for senders
 - **Together:** Senders protected from variance, merchants guided on holding
-- **See:** [why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
+- **See:** [why-eliminate-volatility.md](../core-architecture/why-eliminate-volatility.md)
 
 ### BCH Seller Incentives
 - **This concept:** Merchant/BCH Buyer split varies
 - **BCH seller incentives:** BCH seller fee fixed (0.5% or lower)
 - **Together:** BCH seller stability + merchant/BCH Buyer flexibility
-- **See:** [bch-miners-as-escrows.md](concepts/bch-miners-as-escrows.md)
+- **See:** [bch-miners-as-escrows.md](bch-miners-as-escrows.md)
 
 ### Pull System
 - **This concept:** Demand modulation via incentives
 - **Pull system:** Demand modulation via recipient selection
 - **Together:** Multi-layer demand management
-- **See:** [pull-system.md](concepts/pull-system.md)
+- **See:** [pull-system.md](pull-system.md)
 
 ---
 

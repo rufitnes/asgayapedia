@@ -2,7 +2,7 @@
 
 **Concept Type:** Economic Mechanism
 **Category:** Market Stabilization
-**Related:** [BCH Seller Incentives](concepts/bch-miners-as-escrows.md), [../core-architecture/why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md)
+**Related:** [BCH Seller Incentives](bch-miners-as-escrows.md), [../core-architecture/why-eliminate-volatility.md](../core-architecture/why-eliminate-volatility.md)
 
 ---
 
