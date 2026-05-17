@@ -68,6 +68,8 @@ Examples:
 
 - **BCH Usage Incentives** — Near-zero fee BCH payments vs 1% remittance cash-outs. Goal: make Asgaya redundant except for legacy system interaction. Recipients incentivized to keep BCH for future payments. Circular economy enabled (merchants can become senders, BCH buyers can become merchants).
 
+- **[Cold-Start Strategy](cold-start-strategy.md)** — Phase 0: Trusted bootstrap with 1-2 sellers/merchants to prove model. Phase 1: Market-driven growth via network effects. Long-term: Protocol becomes unnecessary as BCH adoption reaches critical mass. Addresses liquidity chicken-and-egg problem.
+
 **Key principle:** Economic incentives over ideology. Make participation profitable for everyone.
 
 ---
