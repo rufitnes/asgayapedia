@@ -1,0 +1,156 @@
+site_name: Asgaya Documentation
+site_description: BCH covenant-based remittance protocol for Spain-Venezuela corridor
+site_url: https://docs.asgaya.org
+repo_url: https://github.com/rufitnes/asgayapedia
+repo_name: rufitnes/asgayapedia
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.instant       # Instant page loads
+    - navigation.tracking      # URL hash updates on scroll
+    - navigation.tabs          # Top-level tabs
+    - navigation.sections      # Collapsible sections in sidebar
+    - navigation.breadcrumbs   # Breadcrumb trail
+    - navigation.top           # Back-to-top button
+    - search.highlight         # Highlight search terms
+    - search.suggest           # Search suggestions
+    - content.code.copy        # Copy button on code blocks
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/bch-colors.css
+
+plugins:
+  - search:
+      lang: [en, es]
+  - llmstxt-md:
+      enable_markdown_urls: true
+      enable_llms_txt: true
+      enable_llms_full: true
+      enable_copy_button: true
+      sections:
+        Documentation:
+          - "*.md"
+          - "**/*.md"
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+# Navigation tree — maps sidebar from _sidebar.md
+nav:
+  - Home: index.md
+  - Android App:
+    - Overview: android-app/README.md
+    - Flows:
+      - Overview: android-app/flows/README.md
+      - Home Screen: android-app/flows/home-screen.md
+      - Sender Flows:
+        - Overview: android-app/flows/sender-flows/README.md
+        - Covenant Setup:
+          - Recipient Selection: android-app/flows/sender-flows/covenant-setup/2-recipient-selection.md
+          - Amount Entry: android-app/flows/sender-flows/covenant-setup/3-amount-entry.md
+          - Payment Method: android-app/flows/sender-flows/covenant-setup/4-payment-method.md
+        - Own Wallet Path:
+          - Confirm Send: android-app/flows/sender-flows/own-wallet-path/4a-confirm-send.md
+          - Tracking: android-app/flows/sender-flows/own-wallet-path/6a-tracking.md
+          - Completion: android-app/flows/sender-flows/own-wallet-path/7a-completion.md
+        - Buy Seller Path:
+          - Confirm Purchase: android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase.md
+          - Select Seller: android-app/flows/sender-flows/buy-seller-path/4.5-select-seller.md
+          - Payment Instructions: android-app/flows/sender-flows/buy-seller-path/5-payment-instructions.md
+          - Tracking: android-app/flows/sender-flows/buy-seller-path/6b-tracking.md
+          - Completion: android-app/flows/sender-flows/buy-seller-path/7b-completion.md
+        - Error Screens:
+          - Pending Covenant: android-app/flows/sender-flows/errors/pending-covenant.md
+          - Seller Non-Delivery: android-app/flows/sender-flows/errors/seller-non-delivery.md
+          - Bizum Timeout: android-app/flows/sender-flows/errors/bizum-timeout.md
+          - Network Errors: android-app/flows/sender-flows/errors/network-errors.md
+      - Recipient Flows: android-app/flows/recipient-flows.md
+      - Direct Payment Flows:
+        - Overview: android-app/flows/direct-payment-flows/README.md
+        - Scan Merchant: android-app/flows/direct-payment-flows/1-scan-merchant.md
+        - Enter Amount: android-app/flows/direct-payment-flows/2-enter-amount.md
+        - Confirm Send: android-app/flows/direct-payment-flows/3-confirm-send.md
+        - Complete: android-app/flows/direct-payment-flows/4-complete.md
+      - Trade BCH Screen: android-app/flows/trade-bch-screen.md
+      - Merchant Flows: android-app/flows/merchant-flows.md
+    - Backend APIs:
+      - Overview: android-app/backend-apis/README.md
+      - BCH Native Architecture: android-app/backend-apis/bch-native-architecture.md
+      - Rate APIs: android-app/backend-apis/rate-apis.md
+      - User APIs: android-app/backend-apis/user-apis.md
+      - Common Patterns: android-app/backend-apis/common-patterns.md
+      - Covenant Creation: android-app/backend-apis/covenant-creation.md
+      - Blockchain Scanner:
+        - NFT Scanner: android-app/backend-apis/blockchain-scanner/nft-scanner.md
+      - Seller Bot:
+        - Overview: android-app/backend-apis/seller-bot/README.md
+      - Development Tools:
+        - Pichan Regtest: android-app/backend-apis/pichan-regtest-setup.md
+        - Multi-Device Test Plan: android-app/backend-apis/multi-device-test-plan.md
+      - Archive:
+        - Engineering Journey: android-app/backend-apis/archive/ENGINEERING_JOURNEY.md
+  - Architecture:
+    - BCH Native Architecture: android-app/backend-apis/bch-native-architecture.md
+    - Why Permissionless: core-architecture/why-permissionless.md
+    - Why Self-Custody: core-architecture/why-self-custody.md
+    - Why No KYC: core-architecture/why-no-kyc.md
+    - Why Market Rates: core-architecture/why-market-rate-exchanges.md
+    - Why Cheaper Than Legacy: core-architecture/why-cheaper-than-legacy.md
+    - Why Promote Adoption: core-architecture/why-promote-adoption.md
+    - Why BCH Usage Incentive: core-architecture/why-bch-usage-incentive.md
+    - Why Minimal Hardware: core-architecture/why-minimal-hardware.md
+  - Concepts:
+    - Overview: concepts/README.md
+    - BCH Sellers: concepts/bch-sellers.md
+    - BCH Buyers: concepts/bch-buyers.md
+    - Overcollateralized Bounty Contracts: concepts/overcollateralized-bounty-contracts.md
+    - RFID Card Recipients: concepts/rfid-card-recipients.md
+    - Dynamic Reward Modulation: concepts/dynamic-reward-modulation.md
+  - Decisions:
+    - Overview: decisions/README.md
+    - Fee Splitting Model: decisions/fee-splitting-model.md
+    - Two-Step Settlement Timing: decisions/two-step-settlement-timing.md
+    - Dispute Resolution: decisions/dispute-resolution.md
+    - Payment Timeout Window: decisions/payment-timeout-window.md
+    - Unclaimed Transaction Expiry: decisions/unclaimed-transaction-expiry.md
+    - Bizum Concept Field: decisions/bizum-concept-field.md
+    - How Exchange Rates Work: decisions/how-exchange-rates-work.md
+    - MUSD Integration Strategy: decisions/musd-integration-strategy.md
+    - Phase 0 Progressive Decentralization: decisions/phase-0-progressive-decentralization.md
+    - Phase 0 Validation Checklist: decisions/phase-0-validation-checklist.md
+  - Research:
+    - RS053 MUSD Analysis: research/RS053_MUSD.md
+    - RS054 CashToken Swaps: research/RS054_cashtoken_swaps.md
+  - Roadmap: ROADMAP.md
+  - Glossary: glossary.md

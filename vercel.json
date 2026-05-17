@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pip install mkdocs mkdocs-material mkdocs-llmstxt-md && mkdocs build",
+  "outputDirectory": "site",
+  "framework": "mkdocs"
+}
