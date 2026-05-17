@@ -3735,13 +3735,13 @@
 <p><strong>Requirement:</strong> Use real market exchange rates with zero markup.</p>
 <p><strong>Why this matters:</strong> Hidden markups are where legacy systems extract the most profit. A 2% "spread" on exchange rates costs more than stated transfer fees. Government-imposed rates can extract up to 65% of remittance value.</p>
 <p><strong>Success metric:</strong> Users can independently verify rates match DolarAPI's published blue dollar rates.</p>
-<p><strong>Deep dive:</strong> <a href="core-architecture/why-market-rate-exchanges.md">Why: Market-Rate Exchanges</a> — Government extraction problem, why BCH bypasses financial repression</p>
+<p><strong>Deep dive:</strong> <a href="../why-market-rate-exchanges/">Why: Market-Rate Exchanges</a> — Government extraction problem, why BCH bypasses financial repression</p>
 <hr />
 <h3 id="2-eliminate-volatility-risk">2. Eliminate Volatility Risk<a class="headerlink" href="#2-eliminate-volatility-risk" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Protect users from cryptocurrency price fluctuations during the transfer.</p>
 <p><strong>Why this matters:</strong> If BCH drops 5% between when the sender commits EUR and when the recipient gets local currency, the entire fee advantage is lost. Volatility risk is why every crypto remittance project has failed.</p>
 <p><strong>Success metric:</strong> &lt;0.5% slippage on 95% of transactions due to volatility.</p>
-<p><strong>Deep dive:</strong> <a href="core-architecture/why-eliminate-volatility.md">Why: Eliminate Volatility</a> — Why surprise losses kill adoption, who should bear volatility risk</p>
+<p><strong>Deep dive:</strong> <a href="../why-eliminate-volatility/">Why: Eliminate Volatility</a> — Why surprise losses kill adoption, who should bear volatility risk</p>
 <hr />
 <h3 id="3-free-peer-to-peer-rails">3. Free Peer-to-Peer Rails<a class="headerlink" href="#3-free-peer-to-peer-rails" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Use payment systems with zero or near-zero transfer costs (Bizum, PagoMóvil, BCH transactions).</p>
@@ -3751,7 +3751,7 @@
 - <strong>PagoMóvil</strong> (Venezuela): Free peer-to-peer transfers
 - <strong>Bitcoin Cash</strong>: ~$0.01 transaction fees</p>
 <p><strong>Success metric:</strong> Total non-exchange costs &lt; 0.3% of transfer amount.</p>
-<p><strong>How we achieve this:</strong> <a href="core-architecture/why-eliminate-volatility.md">Volatility Protection</a> + <a href="decisions/fee-splitting-model.md">Fee Splitting Model</a></p>
+<p><strong>How we achieve this:</strong> <a href="../why-eliminate-volatility/">Volatility Protection</a> + <a href="../../decisions/fee-splitting-model/">Fee Splitting Model</a></p>
 <hr />
 <h3 id="4-transparent-cost-breakdown">4. Transparent Cost Breakdown<a class="headerlink" href="#4-transparent-cost-breakdown" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Show users exactly where their money goes: exchange cost, BCH network fee, participant rewards.</p>
@@ -3789,16 +3789,16 @@
 <hr />
 <h2 id="related-requirements">Related Requirements<a class="headerlink" href="#related-requirements" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="core-architecture/why-promote-adoption.md">Why: Promote Adoption</a> — How we use fee savings to incentivize network growth</li>
-<li><a href="core-architecture/why-permissionless.md">Why: Permissionless</a> — How we keep costs low by eliminating KYC/compliance overhead</li>
+<li><a href="../why-promote-adoption/">Why: Promote Adoption</a> — How we use fee savings to incentivize network growth</li>
+<li><a href="../why-permissionless/">Why: Permissionless</a> — How we keep costs low by eliminating KYC/compliance overhead</li>
 </ul>
 <hr />
 <h2 id="trade-offs-and-decisions">Trade-offs and Decisions<a class="headerlink" href="#trade-offs-and-decisions" title="Permanent link">&para;</a></h2>
 <p>See the <strong>Decisions</strong> section for detailed documentation of the trade-offs made to achieve this requirement:</p>
 <ul>
-<li><strong><a href="decisions/how-exchange-rates-work.md">How Exchange Rates Work</a></strong> — How EUR-denominated covenants with BCH settlement achieve market rates</li>
-<li><strong><a href="decisions/fee-splitting-model.md">Fee Splitting Model</a></strong> — How the ~1% fee is distributed to incentivize all participants</li>
-<li><strong><a href="concepts/overcollateralized-bounty-contracts.md">Overcollateralized Bounty Contracts</a></strong> — How overcollateralization protects against volatility</li>
+<li><strong><a href="../../decisions/how-exchange-rates-work/">How Exchange Rates Work</a></strong> — How EUR-denominated covenants with BCH settlement achieve market rates</li>
+<li><strong><a href="../../decisions/fee-splitting-model/">Fee Splitting Model</a></strong> — How the ~1% fee is distributed to incentivize all participants</li>
+<li><strong><a href="../../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a></strong> — How overcollateralization protects against volatility</li>
 </ul>
 <hr />
 <p><em>Last updated: May 10, 2026</em></p>

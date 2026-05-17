@@ -26,7 +26,7 @@ To achieve <1% fees, Asgaya must satisfy these technical and economic requiremen
 
 **Success metric:** Users can independently verify rates match DolarAPI's published blue dollar rates.
 
-**Deep dive:** [Why: Market-Rate Exchanges](core-architecture/why-market-rate-exchanges.md) — Government extraction problem, why BCH bypasses financial repression
+**Deep dive:** [Why: Market-Rate Exchanges](why-market-rate-exchanges.md) — Government extraction problem, why BCH bypasses financial repression
 
 ---
 
@@ -38,7 +38,7 @@ To achieve <1% fees, Asgaya must satisfy these technical and economic requiremen
 
 **Success metric:** <0.5% slippage on 95% of transactions due to volatility.
 
-**Deep dive:** [Why: Eliminate Volatility](core-architecture/why-eliminate-volatility.md) — Why surprise losses kill adoption, who should bear volatility risk
+**Deep dive:** [Why: Eliminate Volatility](why-eliminate-volatility.md) — Why surprise losses kill adoption, who should bear volatility risk
 
 ---
 
@@ -55,7 +55,7 @@ Asgaya eliminates intermediaries by using:
 
 **Success metric:** Total non-exchange costs < 0.3% of transfer amount.
 
-**How we achieve this:** [Volatility Protection](core-architecture/why-eliminate-volatility.md) + [Fee Splitting Model](decisions/fee-splitting-model.md)
+**How we achieve this:** [Volatility Protection](why-eliminate-volatility.md) + [Fee Splitting Model](../decisions/fee-splitting-model.md)
 
 ---
 
@@ -119,8 +119,8 @@ Cheaper fees are the entry point. Without a clear economic advantage, users won'
 
 ## Related Requirements
 
-- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — How we use fee savings to incentivize network growth
-- [Why: Permissionless](core-architecture/why-permissionless.md) — How we keep costs low by eliminating KYC/compliance overhead
+- [Why: Promote Adoption](why-promote-adoption.md) — How we use fee savings to incentivize network growth
+- [Why: Permissionless](why-permissionless.md) — How we keep costs low by eliminating KYC/compliance overhead
 
 ---
 
@@ -128,9 +128,9 @@ Cheaper fees are the entry point. Without a clear economic advantage, users won'
 
 See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
 
-- **[How Exchange Rates Work](decisions/how-exchange-rates-work.md)** — How EUR-denominated covenants with BCH settlement achieve market rates
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — How the ~1% fee is distributed to incentivize all participants
-- **[Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md)** — How overcollateralization protects against volatility
+- **[How Exchange Rates Work](../decisions/how-exchange-rates-work.md)** — How EUR-denominated covenants with BCH settlement achieve market rates
+- **[Fee Splitting Model](../decisions/fee-splitting-model.md)** — How the ~1% fee is distributed to incentivize all participants
+- **[Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md)** — How overcollateralization protects against volatility
 
 ---
 

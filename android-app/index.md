@@ -8,10 +8,10 @@ Complete specification for the Asgaya Android application.
 
 ### [User Flows](flows/) — 5 documents
 How users interact with the app:
-- [Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - Initiating remittances
-- [BCH Payment Flows](android-app/flows/bch-payment-flows.md) - Direct BCH payments
-- [Recipient Flows](android-app/flows/recipient-flows.md) - Receiving cash
-- [Merchant Flows](android-app/flows/merchant-flows.md) - Providing liquidity
+- [Remittance & Merchant Cash-Out](flows/archive/remittance-merchant-cash-out.md) - Initiating remittances
+- [BCH Payment Flows](flows/archive/bch-payment-flows.md) - Direct BCH payments
+- [Recipient Flows](flows/recipient-flows.md) - Receiving cash
+- [Merchant Flows](flows/merchant-flows.md) - Providing liquidity
 
 ### [Backend APIs](backend-apis/) — 9 documents
 REST endpoints and communication patterns:

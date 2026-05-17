@@ -181,11 +181,16 @@ How to contribute to Asgaya:
 
 This documentation is designed to be navigable by AI agents.
 
-**AI Navigation:** See [llm.txt](llm.txt) for hierarchical navigation guide
+**AI Navigation:**
+- [llms.txt](https://docs.asgaya.org/llms.txt) - Full documentation sitemap (180+ pages)
+- [llms-full.txt](https://docs.asgaya.org/llms-full.txt) - All content concatenated (422 lines, 3.1MB)
+
+**Raw Markdown Access:**  
+Any page at `/path/to/page/` can be read as raw markdown at `/path/to/page/index.md`
 
 **How to help:**
-1. Read [AI Review Guide](meta/ai-review-guide.md)
-2. Choose a section to review
+1. Choose a section to review from the sitemap
+2. Read the raw markdown via the index.md pattern
 3. Provide specific, actionable feedback
 
 ---
@@ -193,9 +198,9 @@ This documentation is designed to be navigable by AI agents.
 ## Links
 
 - **Website:** https://asgaya.org
-- **Root llm.txt:** https://asgaya.org/llm.txt
-- **Docs llm.txt:** https://docs.asgaya.org/llm.txt
-- **GitHub:** https://github.com/asgaya/docs
+- **Documentation:** https://docs.asgaya.org
+- **AI Sitemap:** https://docs.asgaya.org/llms.txt
+- **GitHub:** https://github.com/rufitnes/asgayapedia
 
 ---
 
@@ -651,55 +656,6 @@ This documentation is designed to be navigable by AI agents.
 **Next Step:** Public documentation review → External feedback → Refine roadmap → Build Asgaya Husk (Covenant Edition)
 
 *"Start simple, validate, iterate. Ship the husk, grow the tree."*
-
-
-##  sidebar
-
-<!-- Simplified Sidebar - Less Overwhelming Navigation -->
-
-- [🏠 Home](#/)
-- [📖 Glossary](glossary.md)
-- [🗺️ Roadmap](ROADMAP.md)
-- [⚠️ Risks & Disclaimers](risks-and-disclaimers.md)
-
----
-
-- **📱 Android App**
-  - [Overview](android-app/README.md)
-  - [User Flows](android-app/flows/README.md)
-  - [Backend APIs](android-app/backend-apis/README.md)
-  - [NotificationListener](android-app/notification-listener/README.md)
-
-- **🏗️ Core Architecture**
-  - [Overview](core-architecture/README.md)
-
-- **💡 Concepts**
-  - [Overview](concepts/README.md)
-  - [Overcollateralized Covenants](concepts/overcollateralized-bounty-contracts.md)
-  - [BCH Sellers](concepts/bch-sellers.md)
-  - [BCH Buyers](concepts/bch-buyers.md)
-  - [Pull System](concepts/pull-system.md)
-
-- **🎯 Decisions**
-  - [Overview](decisions/README.md)
-  - [Fee Splitting Model](decisions/fee-splitting-model.md)
-  - [Dispute Resolution](decisions/dispute-resolution.md)
-  - [Phase 0 Validation](decisions/phase-0-validation-checklist.md)
-  - [MUSD Integration](decisions/musd-integration-strategy.md)
-
-- **🗺️ Roadmap (Phase 1+)**
-  - [Phase 1 Stability Layer](roadmap/phase-1-stability-layer.md)
-
-- **🔬 Research**
-  - [RS053: MUSD Analysis](research/RS053_MUSD.md)
-  - [RS054: CashToken Swaps](research/RS054_cashtoken_swaps.md)
-
----
-
-- **🔬 Meta**
-  - [Contributing Guide](meta/contributing.md)
-  - [AI Review Guide](meta/ai-review-guide.md)
-  - [Accountability](meta/accountability.md)
 
 
 ## Glossary
@@ -1182,7 +1138,7 @@ Both merchant and recipient must cryptographically sign covenant to trigger BCH 
 
 **V1 enhancement:** RFID card tap can replace smartphone signature for recipients without phones.
 
-**Related:** [Covenant (Technical)](#covenant-technical), [RFID Card Recipients](../concepts/rfid-card-recipients.md)
+**Related:** [Covenant (Technical)](#covenant-technical), [RFID Card Recipients](concepts/rfid-card-recipients.md)
 
 ---
 
@@ -1811,10 +1767,10 @@ Complete specification for the Asgaya Android application.
 
 ### [User Flows](flows/) — 5 documents
 How users interact with the app:
-- [Remittance & Merchant Cash-Out](android-app/flows/remittance-merchant-cash-out.md) - Initiating remittances
-- [BCH Payment Flows](android-app/flows/bch-payment-flows.md) - Direct BCH payments
-- [Recipient Flows](android-app/flows/recipient-flows.md) - Receiving cash
-- [Merchant Flows](android-app/flows/merchant-flows.md) - Providing liquidity
+- [Remittance & Merchant Cash-Out](flows/archive/remittance-merchant-cash-out.md) - Initiating remittances
+- [BCH Payment Flows](flows/archive/bch-payment-flows.md) - Direct BCH payments
+- [Recipient Flows](flows/recipient-flows.md) - Receiving cash
+- [Merchant Flows](flows/merchant-flows.md) - Providing liquidity
 
 ### [Backend APIs](backend-apis/) — 9 documents
 REST endpoints and communication patterns:
@@ -3364,7 +3320,7 @@ require(checkSig(merchantSig, merchantPubkey));
 - **Phase 0:** [Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md) - B→C→A progression
 - **Setup:** [Pichan Regtest Setup](pichan-regtest-setup.md) - Development environment
 - **Testing:** [Multi-Device Test Plan](multi-device-test-plan.md) - Validation scenarios
-- **Flows:** [Sender Flow](../flows/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
+- **Flows:** [Sender Flow](../flows/archive/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
 
 ---
 
@@ -30184,19 +30140,19 @@ Core Architecture is the index that connects **requirements** (what and why we n
 ## Documents in This Section
 
 ### Economics & Fees
-- [why-cheaper-than-legacy.md](core-architecture/why-cheaper-than-legacy.md) - Economic model breakdown and fee structure
-- [why-market-rate-exchanges.md](core-architecture/why-market-rate-exchanges.md) - Transparent exchange rates with zero markup
-- [why-eliminate-volatility.md](core-architecture/why-eliminate-volatility.md) - Two-step settlement volatility protection
+- [why-cheaper-than-legacy.md](why-cheaper-than-legacy.md) - Economic model breakdown and fee structure
+- [why-market-rate-exchanges.md](why-market-rate-exchanges.md) - Transparent exchange rates with zero markup
+- [why-eliminate-volatility.md](why-eliminate-volatility.md) - Two-step settlement volatility protection
 
 ### Adoption & Incentives
-- [why-promote-adoption.md](core-architecture/why-promote-adoption.md) - Network effects and participant incentives
-- [why-bch-usage-incentive.md](core-architecture/why-bch-usage-incentive.md) - Incentivizing direct BCH payments
+- [why-promote-adoption.md](why-promote-adoption.md) - Network effects and participant incentives
+- [why-bch-usage-incentive.md](why-bch-usage-incentive.md) - Incentivizing direct BCH payments
 
 ### Permissionless Access
-- [why-no-kyc.md](core-architecture/why-no-kyc.md) - Peer-to-peer coordination without gatekeepers
-- [why-permissionless.md](core-architecture/why-permissionless.md) - Open participation principles
-- [why-minimal-hardware.md](core-architecture/why-minimal-hardware.md) - Support for low-tech solutions
-- [why-self-custody.md](core-architecture/why-self-custody.md) - User-controlled cryptography and keys
+- [why-no-kyc.md](why-no-kyc.md) - Peer-to-peer coordination without gatekeepers
+- [why-permissionless.md](why-permissionless.md) - Open participation principles
+- [why-minimal-hardware.md](why-minimal-hardware.md) - Support for low-tech solutions
+- [why-self-custody.md](why-self-custody.md) - User-controlled cryptography and keys
 
 ---
 
@@ -30207,9 +30163,9 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Requirement:** Beat 6.49% average remittance costs through market-rate exchanges and free peer-to-peer rails.
 
 **Architecture solutions:**
-- **[Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)** — Economic model breakdown: how covenant rails + market rates achieve <1%
-- **[Exchange Rate Safeguard](core-architecture/why-market-rate-exchanges.md)** — Real-time market rates (CoinGecko + DolarAPI) with zero markup
-- **[Volatility Protection](core-architecture/why-eliminate-volatility.md)** — Pull system eliminates Bitcoin Cash volatility concerns
+- **[Why Cheaper Than Legacy](why-cheaper-than-legacy.md)** — Economic model breakdown: how covenant rails + market rates achieve <1%
+- **[Exchange Rate Safeguard](why-market-rate-exchanges.md)** — Real-time market rates (CoinGecko + DolarAPI) with zero markup
+- **[Volatility Protection](why-eliminate-volatility.md)** — Pull system eliminates Bitcoin Cash volatility concerns
 
 **Key principle:** Transparent economics with no hidden markups.
 
@@ -30220,14 +30176,14 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Requirement:** Every transaction must create economic incentives for participants to join and grow the network.
 
 **Architecture solutions:**
-- **[Merchant & BCH Seller Incentives](core-architecture/why-promote-adoption.md)** — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
-- **[BCH Usage Incentives](core-architecture/bch-usage-incentives.md)** — Near zero-fee BCH payments vs. 1% remittance cash-outs
+- **[Merchant & BCH Seller Incentives](why-promote-adoption.md)** — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
+- **[BCH Usage Incentives](why-bch-usage-incentive.md)** — Near zero-fee BCH payments vs. 1% remittance cash-outs
 
 **Key principle:** the goal is to make asgaya redundant except to interact with the legacy system
 
 **Related concepts:**
-- [Dynamic Reward Modulation](concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions (V1 feature)
-- [BCH Sellers](concepts/bch-sellers.md) — How BCH miners and holders can provide covenant liquidity
+- [Dynamic Reward Modulation](../concepts/dynamic-reward-modulation.md) — Adjusting incentives based on market conditions (V1 feature)
+- [BCH Sellers](../concepts/bch-sellers.md) — How BCH miners and holders can provide covenant liquidity
 
 ---
 
@@ -30238,18 +30194,18 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Architecture solutions:**
 
 **Access & Usability:**
-- **[No KYC Model](core-architecture/no-kyc.md)** — Peer-to-peer coordination without central gatekeepers
-- **[Permissionless Access](core-architecture/why-permissionless.md)** — Works offline, intermittent connectivity supported
-- **[Minimal Hardware](core-architecture/why-minimal-hardware.md)** — From cardboard QR codes, to RFID stickers, to smartphones
-- **[Minimal Knowledge](core-architecture/why-permissionless.md)** — Simple UI, Basic fucntions, not crypto jargon
+- **[No KYC Model](why-no-kyc.md)** — Peer-to-peer coordination without central gatekeepers
+- **[Permissionless Access](why-permissionless.md)** — Works offline, intermittent connectivity supported
+- **[Minimal Hardware](why-minimal-hardware.md)** — From cardboard QR codes, to RFID stickers, to smartphones
+- **[Minimal Knowledge](why-permissionless.md)** — Simple UI, Basic fucntions, not crypto jargon
 
 **Security & Self-Custody:**
-- **[Self-Custody](core-architecture/why-self-custody.md)** — Users control keys, Asgaya has zero access
-- **[Key Education](core-architecture/why-permissionless.md)** — Mandatory backup verification before first use
-- **[Key Safekeeping](core-architecture/why-permissionless.md)** — Multiple backup methods for different risk profiles
+- **[Self-Custody](why-self-custody.md)** — Users control keys, Asgaya has zero access
+- **[Key Education](why-permissionless.md)** — Mandatory backup verification before first use
+- **[Key Safekeeping](why-permissionless.md)** — Multiple backup methods for different risk profiles
 
 **Error Prevention:**
-- **[Error Mitigation](core-architecture/why-permissionless.md)** — QR codes, guided flows, auto-calculation, auto-complete
+- **[Error Mitigation](why-permissionless.md)** — QR codes, guided flows, auto-calculation, auto-complete
 
 **Key principle:** Maximum freedom, minimum risk — no KYC; secure key management where essential.
 
@@ -30277,14 +30233,14 @@ These principles guide all architectural decisions across the three requirements
 - Links to related concepts and implementation decisions
 
 **Start with the requirement that interests you most:**
-- Want cheaper fees? → Start with [Why Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
-- Curious about incentives? → Start with [Merchant & LP Incentives](core-architecture/why-promote-adoption.md)
-- Care about access? → Start with [No KYC Model](core-architecture/no-kyc.md)
+- Want cheaper fees? → Start with [Why Cheaper Than Legacy](why-cheaper-than-legacy.md)
+- Curious about incentives? → Start with [Merchant & LP Incentives](why-promote-adoption.md)
+- Care about access? → Start with [No KYC Model](why-no-kyc.md)
 
 **For deeper understanding:**
-- See [Concepts](concepts/) for theoretical foundations
-- See [Android App](android-app/) for implementation details
-- See [Contributing](meta/contributing.md) to propose changes
+- See [Concepts](../concepts/) for theoretical foundations
+- See [Android App](../android-app/) for implementation details
+- See [Contributing](../meta/contributing.md) to propose changes
 
 ---
 
@@ -30297,7 +30253,7 @@ These principles guide all architectural decisions across the three requirements
 
 # Why: BCH Usage Incentive (Recipients)
 
-**Sub-requirement of:** [Why: Promote Adoption](core-architecture/why-promote-adoption.md)
+**Sub-requirement of:** [Why: Promote Adoption](why-promote-adoption.md)
 
 **Core Requirement:** Recipients must have a reason to keep received funds in BCH rather than immediately cashing out to fiat.
 
@@ -30488,9 +30444,9 @@ The answer is obvious once merchants exist. Asgaya's job is to create those merc
 
 ## Related Requirements
 
-- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — The full adoption flywheel
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — The fee savings that fund the incentives
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Why self-custody and no KYC matter for this vision
+- [Why: Promote Adoption](why-promote-adoption.md) — The full adoption flywheel
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — The fee savings that fund the incentives
+- [Why: Permissionless](why-permissionless.md) — Why self-custody and no KYC matter for this vision
 
 ---
 
@@ -30498,8 +30454,8 @@ The answer is obvious once merchants exist. Asgaya's job is to create those merc
 
 See the **Decisions** section for how we achieve this:
 
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Why recipients holding BCH changes the fee calculation
-- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How settlement creates the merchant network
+- **[Fee Splitting Model](../decisions/fee-splitting-model.md)** — Why recipients holding BCH changes the fee calculation
+- **[Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)** — How settlement creates the merchant network
 
 ---
 
@@ -30549,7 +30505,7 @@ To achieve <1% fees, Asgaya must satisfy these technical and economic requiremen
 
 **Success metric:** Users can independently verify rates match DolarAPI's published blue dollar rates.
 
-**Deep dive:** [Why: Market-Rate Exchanges](core-architecture/why-market-rate-exchanges.md) — Government extraction problem, why BCH bypasses financial repression
+**Deep dive:** [Why: Market-Rate Exchanges](why-market-rate-exchanges.md) — Government extraction problem, why BCH bypasses financial repression
 
 ---
 
@@ -30561,7 +30517,7 @@ To achieve <1% fees, Asgaya must satisfy these technical and economic requiremen
 
 **Success metric:** <0.5% slippage on 95% of transactions due to volatility.
 
-**Deep dive:** [Why: Eliminate Volatility](core-architecture/why-eliminate-volatility.md) — Why surprise losses kill adoption, who should bear volatility risk
+**Deep dive:** [Why: Eliminate Volatility](why-eliminate-volatility.md) — Why surprise losses kill adoption, who should bear volatility risk
 
 ---
 
@@ -30578,7 +30534,7 @@ Asgaya eliminates intermediaries by using:
 
 **Success metric:** Total non-exchange costs < 0.3% of transfer amount.
 
-**How we achieve this:** [Volatility Protection](core-architecture/why-eliminate-volatility.md) + [Fee Splitting Model](decisions/fee-splitting-model.md)
+**How we achieve this:** [Volatility Protection](why-eliminate-volatility.md) + [Fee Splitting Model](../decisions/fee-splitting-model.md)
 
 ---
 
@@ -30642,8 +30598,8 @@ Cheaper fees are the entry point. Without a clear economic advantage, users won'
 
 ## Related Requirements
 
-- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — How we use fee savings to incentivize network growth
-- [Why: Permissionless](core-architecture/why-permissionless.md) — How we keep costs low by eliminating KYC/compliance overhead
+- [Why: Promote Adoption](why-promote-adoption.md) — How we use fee savings to incentivize network growth
+- [Why: Permissionless](why-permissionless.md) — How we keep costs low by eliminating KYC/compliance overhead
 
 ---
 
@@ -30651,9 +30607,9 @@ Cheaper fees are the entry point. Without a clear economic advantage, users won'
 
 See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
 
-- **[How Exchange Rates Work](decisions/how-exchange-rates-work.md)** — How EUR-denominated covenants with BCH settlement achieve market rates
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — How the ~1% fee is distributed to incentivize all participants
-- **[Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md)** — How overcollateralization protects against volatility
+- **[How Exchange Rates Work](../decisions/how-exchange-rates-work.md)** — How EUR-denominated covenants with BCH settlement achieve market rates
+- **[Fee Splitting Model](../decisions/fee-splitting-model.md)** — How the ~1% fee is distributed to incentivize all participants
+- **[Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md)** — How overcollateralization protects against volatility
 
 ---
 
@@ -30664,7 +30620,7 @@ See the **Decisions** section for detailed documentation of the trade-offs made 
 
 # Why: Eliminate Volatility Risk
 
-**Sub-requirement of:** [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
+**Sub-requirement of:** [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md)
 
 **Core Requirement:** Protect users from cryptocurrency price fluctuations during the transfer.
 
@@ -30796,8 +30752,8 @@ Users need the first. If we offer the second, we fail.
 
 ## Related Requirements
 
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Volatility losses erase the 1% fee advantage
-- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — Surprise losses reverse network growth
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — Volatility losses erase the 1% fee advantage
+- [Why: Promote Adoption](why-promote-adoption.md) — Surprise losses reverse network growth
 
 ---
 
@@ -30805,7 +30761,7 @@ Users need the first. If we offer the second, we fail.
 
 See the **Decisions** section for how we achieve zero volatility:
 
-- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How pull-based BCH purchase eliminates volatility for all parties except LPs
+- **[Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)** — How pull-based BCH purchase eliminates volatility for all parties except LPs
 
 ---
 
@@ -30826,7 +30782,7 @@ If we compromise on volatility protection, we're not building a remittance netwo
 
 # Why: Market-Rate Exchanges Only
 
-**Sub-requirement of:** [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md)
+**Sub-requirement of:** [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md)
 
 **Core Requirement:** Use real market exchange rates with zero markup.
 
@@ -30951,8 +30907,8 @@ If we compromise on exchange rates, we lose the moral authority to claim we're b
 
 ## Related Requirements
 
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Market rates are required to achieve <1% fees
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Bypassing government control requires permissionless settlement layer
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — Market rates are required to achieve <1% fees
+- [Why: Permissionless](why-permissionless.md) — Bypassing government control requires permissionless settlement layer
 
 ---
 
@@ -30960,7 +30916,7 @@ If we compromise on exchange rates, we lose the moral authority to claim we're b
 
 See the **Decisions** section for detailed documentation of how we enforce market rates:
 
-- **[How: Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Exchange integration, local rate discovery, alternatives considered
+- **[How Exchange Rates Work](../decisions/how-exchange-rates-work.md)** — Exchange integration, local rate discovery, alternatives considered
 - Decision: Rate verification in user flows (coming soon)
 
 ---
@@ -30973,7 +30929,7 @@ See the **Decisions** section for detailed documentation of how we enforce marke
 
 # Why: Minimal Hardware Requirements
 
-**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+**Sub-requirement of:** [Why: Permissionless](why-permissionless.md)
 
 **Core Requirement:** Support the widest possible range of devices, minimizing hardware barriers to remittance access.
 
@@ -30984,7 +30940,7 @@ See the **Decisions** section for detailed documentation of how we enforce marke
 - **Phase 1 (Planned):** RFID card alternative (no smartphone needed)
 - **Future Vision:** Cardboard QR codes / feature phones (aspirational)
 
-**This document describes the VISION.** See [RFID Card Recipients](concepts/rfid-card-recipients.md) for Phase 1 implementation plan.
+**This document describes the VISION.** See [RFID Card Recipients](../concepts/rfid-card-recipients.md) for Phase 1 implementation plan.
 
 ---
 
@@ -31226,8 +31182,8 @@ Unlike most crypto projects that say "edge cases don't matter," Asgaya designs f
 
 ## Related Requirements
 
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Minimal hardware is one aspect of truly permissionless access
-- [Why: No KYC](core-architecture/why-no-kyc.md) — Low barriers across all dimensions (ID, hardware, knowledge)
+- [Why: Permissionless](why-permissionless.md) — Minimal hardware is one aspect of truly permissionless access
+- [Why: No KYC](why-no-kyc.md) — Low barriers across all dimensions (ID, hardware, knowledge)
 
 ---
 
@@ -31277,7 +31233,7 @@ See the **Decisions** section for implementation approaches:
 - Recipient taps card on merchant device (NFC) to confirm
 - **No smartphone needed**
 
-**See:** [RFID Card Recipients](concepts/rfid-card-recipients.md) for full specification
+**See:** [RFID Card Recipients](../concepts/rfid-card-recipients.md) for full specification
 
 **Status:** Concept documented, not yet implemented
 
@@ -31323,7 +31279,7 @@ Asgaya assumes nothing. If you can borrow a smartphone from a merchant for 30 se
 
 # Why: No KYC
 
-**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+**Sub-requirement of:** [Why: Permissionless](why-permissionless.md)
 
 **Core Requirement:** No participant needs to provide government ID or personal information to use Asgaya.
 
@@ -31538,7 +31494,7 @@ Financial access is a human right. If you earned money, you should be able to se
 - Can post overcollateralized BCH to covenants
 - Earn fees without additional setup
 - Natural fit: miners hedge BCH position, earn steady income
-- See: [BCH Sellers](concepts/bch-sellers.md#miners-as-natural-sellers)
+- See: [BCH Sellers](../concepts/bch-sellers.md#miners-as-natural-sellers)
 
 **The vision:** As the network grows, more no-KYC paths emerge. The covenant system is designed to support them.
 
@@ -31578,8 +31534,8 @@ Financial access is a human right. If you earned money, you should be able to se
 
 ## Related Requirements
 
-- [Why: Permissionless](core-architecture/why-permissionless.md) — No KYC is one aspect of truly permissionless access
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — No KYC reduces compliance costs
+- [Why: Permissionless](why-permissionless.md) — No KYC is one aspect of truly permissionless access
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — No KYC reduces compliance costs
 
 ---
 
@@ -31587,8 +31543,8 @@ Financial access is a human right. If you earned money, you should be able to se
 
 See the **Decisions** section for how we achieve no KYC while managing risks:
 
-- **[Core Regulatory Constraints](concepts/core-regulatory-constraints.md)** — How covenant architecture avoids custody/intermediation licensing
-- **[BCH Sellers](concepts/bch-sellers.md)** — Who provides BCH collateral and why they don't need special licensing
+- **[Core Regulatory Constraints](../concepts/core-regulatory-constraints.md)** — How covenant architecture avoids custody/intermediation licensing
+- **[BCH Sellers](../concepts/bch-sellers.md)** — Who provides BCH collateral and why they don't need special licensing
 
 ---
 
@@ -31651,7 +31607,7 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 
 **Success metric:** Verified usage by users who cannot access legacy remittances due to lack of ID.
 
-**Deep dive:** [Why: No KYC](core-architecture/why-no-kyc.md) — Who KYC excludes, why financial access is a human right, the 1:1000 leverage ratio
+**Deep dive:** [Why: No KYC](why-no-kyc.md) — Who KYC excludes, why financial access is a human right, the 1:1000 leverage ratio
 
 ---
 
@@ -31688,7 +31644,7 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 
 **Success metric:** Verified usage with cardboard QR codes and RFID stickers in at least one corridor.
 
-**Deep dive:** [Why: Minimal Hardware](core-architecture/why-minimal-hardware.md) — The cardboard QR code philosophy, progressive enhancement, why edge cases matter most
+**Deep dive:** [Why: Minimal Hardware](why-minimal-hardware.md) — The cardboard QR code philosophy, progressive enhancement, why edge cases matter most
 
 ---
 
@@ -31725,7 +31681,7 @@ To be truly permissionless, Asgaya must satisfy these requirements:
 
 **Success metric:** <1% of users losing funds due to lost keys (balanced with security).
 
-**Deep dive:** [Why: Self-Custody](core-architecture/why-self-custody.md) — Why custodial is worse, "not your keys not your coins," harsh reality as feature not bug
+**Deep dive:** [Why: Self-Custody](why-self-custody.md) — Why custodial is worse, "not your keys not your coins," harsh reality as feature not bug
 
 ---
 
@@ -31830,8 +31786,8 @@ The protocol is unnecesary complicated because of the conditions it has to meet 
 
 ## Related Requirements
 
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — Permissionless design reduces compliance costs
-- [Why: Promote Adoption](core-architecture/why-promote-adoption.md) — Low barriers enable rapid network growth
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — Permissionless design reduces compliance costs
+- [Why: Promote Adoption](why-promote-adoption.md) — Low barriers enable rapid network growth
 
 ---
 
@@ -31839,8 +31795,8 @@ The protocol is unnecesary complicated because of the conditions it has to meet 
 
 See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
 
-- **[Bizum Concept Field](decisions/bizum-concept-field.md)** — Why phone numbers instead of semantic IDs (bank constraints)
-- **[Payment Timeout Window](decisions/payment-timeout-window.md)** — Why 10 minutes accommodates SMS delays and encoding issues
+- **[Bizum Concept Field](../decisions/bizum-concept-field.md)** — Why phone numbers instead of semantic IDs (bank constraints)
+- **[Payment Timeout Window](../decisions/payment-timeout-window.md)** — Why 10 minutes accommodates SMS delays and encoding issues
 - Decision: QR codes vs NFC (coming soon)
 - Decision: No universal merchant API (coming soon)
 
@@ -31890,7 +31846,7 @@ To promote adoption, Asgaya must satisfy these requirements:
 
 **Success metric:** Merchants signing up for economic reasons, not activism.
 
-**How we achieve this:** [Merchant & LP Incentives](core-architecture/why-promote-adoption.md)
+**How we achieve this:** [Merchant & LP Incentives](why-promote-adoption.md)
 
 ---
 
@@ -31909,7 +31865,7 @@ To promote adoption, Asgaya must satisfy these requirements:
 
 **Success metric:** Active BCH buyer market in each corridor (optional, not required for MVP).
 
-**How we achieve this:** [BCH Buyer Bulletin](android-app/flows/merchant-flows.md#screen-4a-bch-buyer-bulletin-optional) — Uses same covenant infrastructure
+**How we achieve this:** [BCH Buyer Bulletin](../android-app/flows/merchant-flows.md#screen-4a-bch-buyer-bulletin-optional) — Uses same covenant infrastructure
 
 ---
 
@@ -31928,7 +31884,7 @@ Every merchant using Asgaya accepts BCH. As the merchant network grows, holding 
 
 **Success metric:** 30%+ of recipients holding and spending BCH long-term (>30 days).
 
-**Deep dive:** [Why: BCH Usage Incentive](core-architecture/why-bch-usage-incentive.md) — Breaking the chicken-and-egg problem, why BCH specifically, the endgame vision
+**Deep dive:** [Why: BCH Usage Incentive](why-bch-usage-incentive.md) — Breaking the chicken-and-egg problem, why BCH specifically, the endgame vision
 
 ---
 
@@ -31969,7 +31925,7 @@ Every merchant using Asgaya accepts BCH. As the merchant network grows, holding 
 
 **Success metric:** Multiple BCH sellers competing for business in each corridor.
 
-**How we achieve this:** [BCH Sellers](concepts/bch-sellers.md) — Hedge mechanism explanation
+**How we achieve this:** [BCH Sellers](../concepts/bch-sellers.md) — Hedge mechanism explanation
 
 ---
 
@@ -32004,8 +31960,8 @@ With economic incentives, Asgaya becomes a **network growth engine** that turns 
 
 ## Related Requirements
 
-- [Why: Cheaper Than Legacy](core-architecture/why-cheaper-than-legacy.md) — The fee savings fund the incentives
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Low barriers enable rapid merchant/BCH seller growth
+- [Why: Cheaper Than Legacy](why-cheaper-than-legacy.md) — The fee savings fund the incentives
+- [Why: Permissionless](why-permissionless.md) — Low barriers enable rapid merchant/BCH seller growth
 
 ---
 
@@ -32013,8 +31969,8 @@ With economic incentives, Asgaya becomes a **network growth engine** that turns 
 
 See the **Decisions** section for detailed documentation of the trade-offs made to achieve this requirement:
 
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Why equal three-way split among escrow/merchant/LP
-- **[Two-Step Settlement Timing](decisions/two-step-settlement-timing.md)** — How BCH settlement creates adoption flywheel
+- **[Fee Splitting Model](../decisions/fee-splitting-model.md)** — Why equal three-way split among escrow/merchant/LP
+- **[Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)** — How BCH settlement creates adoption flywheel
 - Decision: Dynamic reward modulation approach (coming soon in V1.1)
 
 ---
@@ -32026,7 +31982,7 @@ See the **Decisions** section for detailed documentation of the trade-offs made 
 
 # Why: Self-Custody
 
-**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+**Sub-requirement of:** [Why: Permissionless](why-permissionless.md)
 
 **Core Requirement:** Users must hold their own BCH keys. Asgaya has zero access to user funds.
 
@@ -32305,8 +32261,8 @@ If Asgaya controlled funds, it would have the power to restrict access—somethi
 
 ## Related Requirements
 
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Self-custody is essential for true permissionless access
-- [Why: No KYC](core-architecture/why-no-kyc.md) — Custody would require licenses, which require KYC
+- [Why: Permissionless](why-permissionless.md) — Self-custody is essential for true permissionless access
+- [Why: No KYC](why-no-kyc.md) — Custody would require licenses, which require KYC
 
 ---
 
@@ -32347,7 +32303,7 @@ If we held user funds, we'd need licenses. If we need licenses, we need KYC. If 
 
 # Design Decisions
 
-This directory documents the **"how"** - the tradeoffs and constraints that shaped Asgaya's implementation. The [Core Architecture](core-architecture/) explains **what** we need and **why** it matters. This directory explains **how** we achieved it through real-world constraints and pragmatic choices.
+This directory documents the **"how"** - the tradeoffs and constraints that shaped Asgaya's implementation. The [Core Architecture](../core-architecture/) explains **what** we need and **why** it matters. This directory explains **how** we achieved it through real-world constraints and pragmatic choices.
 
 **Each decision follows this pattern:**
 1. **The Goal** - What we wanted architecturally
@@ -32367,11 +32323,11 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 **Implementation decisions:**
 
-- **[Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Use DolarAPI for parallel market local currency rates (VES/ARS) + CoinGecko for BCH/EUR rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.
+- **[Market-Rate Exchanges](how-exchange-rates-work.md)** — Use DolarAPI for parallel market local currency rates (VES/ARS) + CoinGecko for BCH/EUR rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.
 
-- **[Two-Step Settlement](decisions/two-step-settlement-timing.md)** — Covenant-based pull system: BCH seller posts overcollateralized BCH to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through overcollateralization buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).
+- **[Two-Step Settlement](two-step-settlement-timing.md)** — Covenant-based pull system: BCH seller posts overcollateralized BCH to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through overcollateralization buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).
 
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Two-way split of 1% fee: BCH Seller 0.5%, Merchant 0.5% (€0.50 each on €100 transfer). No protocol fee = pure bulletin board model. Simple, fair, and MiCA/PSD2 compliant.
+- **[Fee Splitting Model](fee-splitting-model.md)** — Two-way split of 1% fee: BCH Seller 0.5%, Merchant 0.5% (€0.50 each on €100 transfer). No protocol fee = pure bulletin board model. Simple, fair, and MiCA/PSD2 compliant.
 
 **Key principle:** Market rates with zero hidden markups. Transparent economics beats optimization.
 
@@ -32383,7 +32339,7 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 **Implementation decisions:**
 
-- **Fee Distribution** — Two-way split ensures both BCH seller and merchant benefit from each transaction (see Fee Splitting Model above). Merchant earns 0.5% for providing cash + location. BCH seller earns 0.5% for posting capital + taking volatility risk. No protocol fee = regulatory compliance.
+- **Fee Distribution** — Two-way split ensures both BCH seller and merchant benefit from each transaction (see [Fee Splitting Model](fee-splitting-model.md)). Merchant earns 0.5% for providing cash + location. BCH seller earns 0.5% for posting capital + taking volatility risk. No protocol fee = regulatory compliance.
 
 - **Merchant Incentive Structure** — Merchants earn 0.5% spread by selling VES for BCH. Receive BCH from covenant after co-signing with recipient. Can hold BCH (keep full reward) or optionally sell to BCH buyers (instant fiat, lose reward to spread). Market rates enforced by covenant (EUR-denominated promise).
 
@@ -32401,13 +32357,13 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 **Implementation decisions:**
 
-- **[Bizum Concept Field](decisions/bizum-concept-field.md)** — Wanted semantic IDs like `ASG_VEN_001`, bank rejected underscores/hyphens. Use recipient phone numbers instead. Lost semantics, gained reliability. Critical for notification matching without central coordination.
+- **[Bizum Concept Field](bizum-concept-field.md)** — Wanted semantic IDs like `ASG_VEN_001`, bank rejected underscores/hyphens. Use recipient phone numbers instead. Lost semantics, gained reliability. Critical for notification matching without central coordination.
 
-- **[Payment Timeout Window](decisions/payment-timeout-window.md)** — Sender pays BCH seller directly via Bizum within 5-minute window after seller accepts bounty. Seller bot (smsbridge_loop.py) parses Bizum SMS automatically. No payment processor integration needed. Trade-off: Seller exposed to 5-min price volatility (mitigated by 7% overcollateralization).
+- **[Payment Timeout Window](payment-timeout-window.md)** — Sender pays BCH seller directly via Bizum within 5-minute window after seller accepts bounty. Seller bot (smsbridge_loop.py) parses Bizum SMS automatically. No payment processor integration needed. Trade-off: Seller exposed to 5-min price volatility (mitigated by 7% overcollateralization).
 
-- **[Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)** — Recipients have 24 hours to claim remittances before automatic covenant refund. Prevents BCH from locking indefinitely. Split refund: merchant portion → sender, seller fee → seller. Processing fee covers seller's 24h capital lockup. Trade-off: Time pressure vs capital efficiency.
+- **[Unclaimed Transaction Expiry](unclaimed-transaction-expiry.md)** — Recipients have 24 hours to claim remittances before automatic covenant refund. Prevents BCH from locking indefinitely. Split refund: merchant portion → sender, seller fee → seller. Processing fee covers seller's 24h capital lockup. Trade-off: Time pressure vs capital efficiency.
 
-- **[Dispute Resolution Framework](decisions/dispute-resolution.md)** — Phase 0: No formal dispute system. Covenant executes autonomously (both co-sign) or refunds via timeout (24h). Trusted parties only (sender's family/friends). V1: Social media transparency (`#AsgayaDispute` posts, community-driven reputation). Trade-off: Simplified vs. no formal arbitration.
+- **[Dispute Resolution Framework](dispute-resolution.md)** — Phase 0: No formal dispute system. Covenant executes autonomously (both co-sign) or refunds via timeout (24h). Trusted parties only (sender's family/friends). V1: Social media transparency (`#AsgayaDispute` posts, community-driven reputation). Trade-off: Simplified vs. no formal arbitration.
 
 - **No KYC Payment Rails** — Use consumer payment systems (Bizum, PagoMóvil, etc.) that don't require business accounts or KYC. Anyone with BCH can be a seller, anyone with cash can be a merchant. Constraint: Must work within each system's rules (see Bizum Concept Field decision). Covenant smart contracts enable trustless coordination without intermediaries.
 
@@ -32447,14 +32403,14 @@ These principles guide all implementation decisions:
 - Validation (how we verify it works)
 
 **Start with the requirement that interests you most:**
-- Want to understand cost model? → Start with [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)
-- Curious about settlement mechanics? → Start with [Two-Step Settlement](decisions/two-step-settlement-timing.md)
-- Understanding notification matching? → Start with [Bizum Concept Field](decisions/bizum-concept-field.md)
+- Want to understand cost model? → Start with [How Exchange Rates Work](how-exchange-rates-work.md)
+- Curious about settlement mechanics? → Start with [Two-Step Settlement](two-step-settlement-timing.md)
+- Understanding notification matching? → Start with [Bizum Concept Field](bizum-concept-field.md)
 
 **For deeper context:**
-- See [Core Architecture](core-architecture/) for the "what" and "why"
+- See [Core Architecture](../core-architecture/) for the "what" and "why"
 - See [Research](../research/) for testing data and validation
-- See [Concepts](concepts/) for theoretical foundations
+- See [Concepts](../concepts/) for theoretical foundations
 
 ---
 

@@ -3835,7 +3835,7 @@
 <p><strong>Why this matters:</strong> KYC excludes the people who need remittances most—refugees without ID, undocumented workers who fear deportation, the 1.7 billion unbanked people trapped in catch-22s, dissidents under surveillance.</p>
 <p><strong>The leverage model:</strong> 10 escrow operators with KYC → 10,000 recipients without KYC. The burden is concentrated where it's voluntary, while end users have zero barriers.</p>
 <p><strong>Success metric:</strong> Verified usage by users who cannot access legacy remittances due to lack of ID.</p>
-<p><strong>Deep dive:</strong> <a href="core-architecture/why-no-kyc.md">Why: No KYC</a> — Who KYC excludes, why financial access is a human right, the 1:1000 leverage ratio</p>
+<p><strong>Deep dive:</strong> <a href="../why-no-kyc/">Why: No KYC</a> — Who KYC excludes, why financial access is a human right, the 1:1000 leverage ratio</p>
 <hr />
 <h3 id="2-works-offline-low-connectivity">2. Works Offline / Low Connectivity<a class="headerlink" href="#2-works-offline-low-connectivity" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Users in areas with intermittent internet access must be able to send and receive remittances.</p>
@@ -3858,7 +3858,7 @@
 - Smartphone (€100): Full functionality</p>
 <p><strong>The principle:</strong> If it works for someone with nothing, it works for everyone. Design for the edge case, not the average.</p>
 <p><strong>Success metric:</strong> Verified usage with cardboard QR codes and RFID stickers in at least one corridor.</p>
-<p><strong>Deep dive:</strong> <a href="core-architecture/why-minimal-hardware.md">Why: Minimal Hardware</a> — The cardboard QR code philosophy, progressive enhancement, why edge cases matter most</p>
+<p><strong>Deep dive:</strong> <a href="../why-minimal-hardware/">Why: Minimal Hardware</a> — The cardboard QR code philosophy, progressive enhancement, why edge cases matter most</p>
 <hr />
 <h3 id="4-minimal-knowledge-required">4. Minimal Knowledge Required<a class="headerlink" href="#4-minimal-knowledge-required" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Users should not need to understand cryptocurrency, blockchain, or technical concepts to use Asgaya safely.</p>
@@ -3880,7 +3880,7 @@
 <p><strong>The trade-off:</strong> Users gain sovereignty (no one can freeze their accounts) but lose safety net (lost keys = lost funds forever).</p>
 <p><strong>User choice preserved:</strong> Don't want responsibility? Cash out immediately. Want sovereignty? Hold BCH and accept the risk.</p>
 <p><strong>Success metric:</strong> &lt;1% of users losing funds due to lost keys (balanced with security).</p>
-<p><strong>Deep dive:</strong> <a href="core-architecture/why-self-custody.md">Why: Self-Custody</a> — Why custodial is worse, "not your keys not your coins," harsh reality as feature not bug</p>
+<p><strong>Deep dive:</strong> <a href="../why-self-custody/">Why: Self-Custody</a> — Why custodial is worse, "not your keys not your coins," harsh reality as feature not bug</p>
 <hr />
 <h3 id="6-mandatory-key-backup-education">6. Mandatory Key Backup Education<a class="headerlink" href="#6-mandatory-key-backup-education" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Users must prove they've backed up their keys before making their first transaction.</p>
@@ -3953,15 +3953,15 @@ The protocol is unnecesary complicated because of the conditions it has to meet 
 <hr />
 <h2 id="related-requirements">Related Requirements<a class="headerlink" href="#related-requirements" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="core-architecture/why-cheaper-than-legacy.md">Why: Cheaper Than Legacy</a> — Permissionless design reduces compliance costs</li>
-<li><a href="core-architecture/why-promote-adoption.md">Why: Promote Adoption</a> — Low barriers enable rapid network growth</li>
+<li><a href="../why-cheaper-than-legacy/">Why: Cheaper Than Legacy</a> — Permissionless design reduces compliance costs</li>
+<li><a href="../why-promote-adoption/">Why: Promote Adoption</a> — Low barriers enable rapid network growth</li>
 </ul>
 <hr />
 <h2 id="trade-offs-and-decisions">Trade-offs and Decisions<a class="headerlink" href="#trade-offs-and-decisions" title="Permanent link">&para;</a></h2>
 <p>See the <strong>Decisions</strong> section for detailed documentation of the trade-offs made to achieve this requirement:</p>
 <ul>
-<li><strong><a href="decisions/bizum-concept-field.md">Bizum Concept Field</a></strong> — Why phone numbers instead of semantic IDs (bank constraints)</li>
-<li><strong><a href="decisions/payment-timeout-window.md">Payment Timeout Window</a></strong> — Why 10 minutes accommodates SMS delays and encoding issues</li>
+<li><strong><a href="../../decisions/bizum-concept-field/">Bizum Concept Field</a></strong> — Why phone numbers instead of semantic IDs (bank constraints)</li>
+<li><strong><a href="../../decisions/payment-timeout-window/">Payment Timeout Window</a></strong> — Why 10 minutes accommodates SMS delays and encoding issues</li>
 <li>Decision: QR codes vs NFC (coming soon)</li>
 <li>Decision: No universal merchant API (coming soon)</li>
 </ul>

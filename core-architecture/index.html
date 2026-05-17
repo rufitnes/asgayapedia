@@ -3538,56 +3538,56 @@
 <h2 id="documents-in-this-section">Documents in This Section<a class="headerlink" href="#documents-in-this-section" title="Permanent link">&para;</a></h2>
 <h3 id="economics-fees">Economics &amp; Fees<a class="headerlink" href="#economics-fees" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="core-architecture/why-cheaper-than-legacy.md">why-cheaper-than-legacy.md</a> - Economic model breakdown and fee structure</li>
-<li><a href="core-architecture/why-market-rate-exchanges.md">why-market-rate-exchanges.md</a> - Transparent exchange rates with zero markup</li>
-<li><a href="core-architecture/why-eliminate-volatility.md">why-eliminate-volatility.md</a> - Two-step settlement volatility protection</li>
+<li><a href="why-cheaper-than-legacy/">why-cheaper-than-legacy.md</a> - Economic model breakdown and fee structure</li>
+<li><a href="why-market-rate-exchanges/">why-market-rate-exchanges.md</a> - Transparent exchange rates with zero markup</li>
+<li><a href="why-eliminate-volatility/">why-eliminate-volatility.md</a> - Two-step settlement volatility protection</li>
 </ul>
 <h3 id="adoption-incentives">Adoption &amp; Incentives<a class="headerlink" href="#adoption-incentives" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="core-architecture/why-promote-adoption.md">why-promote-adoption.md</a> - Network effects and participant incentives</li>
-<li><a href="core-architecture/why-bch-usage-incentive.md">why-bch-usage-incentive.md</a> - Incentivizing direct BCH payments</li>
+<li><a href="why-promote-adoption/">why-promote-adoption.md</a> - Network effects and participant incentives</li>
+<li><a href="why-bch-usage-incentive/">why-bch-usage-incentive.md</a> - Incentivizing direct BCH payments</li>
 </ul>
 <h3 id="permissionless-access">Permissionless Access<a class="headerlink" href="#permissionless-access" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="core-architecture/why-no-kyc.md">why-no-kyc.md</a> - Peer-to-peer coordination without gatekeepers</li>
-<li><a href="core-architecture/why-permissionless.md">why-permissionless.md</a> - Open participation principles</li>
-<li><a href="core-architecture/why-minimal-hardware.md">why-minimal-hardware.md</a> - Support for low-tech solutions</li>
-<li><a href="core-architecture/why-self-custody.md">why-self-custody.md</a> - User-controlled cryptography and keys</li>
+<li><a href="why-no-kyc/">why-no-kyc.md</a> - Peer-to-peer coordination without gatekeepers</li>
+<li><a href="why-permissionless/">why-permissionless.md</a> - Open participation principles</li>
+<li><a href="why-minimal-hardware/">why-minimal-hardware.md</a> - Support for low-tech solutions</li>
+<li><a href="why-self-custody/">why-self-custody.md</a> - User-controlled cryptography and keys</li>
 </ul>
 <hr />
 <h2 id="how-we-satisfy-the-3-core-requirements">How We Satisfy The 3 Core Requirements<a class="headerlink" href="#how-we-satisfy-the-3-core-requirements" title="Permanent link">&para;</a></h2>
 <h3 id="1-cheaper-than-legacy-1-fees">1️⃣ Cheaper Than Legacy (&lt;1% fees)<a class="headerlink" href="#1-cheaper-than-legacy-1-fees" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Beat 6.49% average remittance costs through market-rate exchanges and free peer-to-peer rails.</p>
 <p><strong>Architecture solutions:</strong>
-- <strong><a href="core-architecture/why-cheaper-than-legacy.md">Why Cheaper Than Legacy</a></strong> — Economic model breakdown: how covenant rails + market rates achieve &lt;1%
-- <strong><a href="core-architecture/why-market-rate-exchanges.md">Exchange Rate Safeguard</a></strong> — Real-time market rates (CoinGecko + DolarAPI) with zero markup
-- <strong><a href="core-architecture/why-eliminate-volatility.md">Volatility Protection</a></strong> — Pull system eliminates Bitcoin Cash volatility concerns</p>
+- <strong><a href="why-cheaper-than-legacy/">Why Cheaper Than Legacy</a></strong> — Economic model breakdown: how covenant rails + market rates achieve &lt;1%
+- <strong><a href="why-market-rate-exchanges/">Exchange Rate Safeguard</a></strong> — Real-time market rates (CoinGecko + DolarAPI) with zero markup
+- <strong><a href="why-eliminate-volatility/">Volatility Protection</a></strong> — Pull system eliminates Bitcoin Cash volatility concerns</p>
 <p><strong>Key principle:</strong> Transparent economics with no hidden markups.</p>
 <hr />
 <h3 id="2-promote-adoption">2️⃣ Promote Adoption<a class="headerlink" href="#2-promote-adoption" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Every transaction must create economic incentives for participants to join and grow the network.</p>
 <p><strong>Architecture solutions:</strong>
-- <strong><a href="core-architecture/why-promote-adoption.md">Merchant &amp; BCH Seller Incentives</a></strong> — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
-- <strong><a href="core-architecture/bch-usage-incentives.md">BCH Usage Incentives</a></strong> — Near zero-fee BCH payments vs. 1% remittance cash-outs</p>
+- <strong><a href="why-promote-adoption/">Merchant &amp; BCH Seller Incentives</a></strong> — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
+- <strong><a href="why-bch-usage-incentive/">BCH Usage Incentives</a></strong> — Near zero-fee BCH payments vs. 1% remittance cash-outs</p>
 <p><strong>Key principle:</strong> the goal is to make asgaya redundant except to interact with the legacy system</p>
 <p><strong>Related concepts:</strong>
-- <a href="concepts/dynamic-reward-modulation.md">Dynamic Reward Modulation</a> — Adjusting incentives based on market conditions (V1 feature)
-- <a href="concepts/bch-sellers.md">BCH Sellers</a> — How BCH miners and holders can provide covenant liquidity</p>
+- <a href="../concepts/dynamic-reward-modulation/">Dynamic Reward Modulation</a> — Adjusting incentives based on market conditions (V1 feature)
+- <a href="../concepts/bch-sellers/">BCH Sellers</a> — How BCH miners and holders can provide covenant liquidity</p>
 <hr />
 <h3 id="3-permissionless">3️⃣ Permissionless<a class="headerlink" href="#3-permissionless" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Anyone can participate without KYC, using minimal hardware and knowledge, Asgaya isn't an entity is an open source protocol anyone can participate build and develope</p>
 <p><strong>Architecture solutions:</strong></p>
 <p><strong>Access &amp; Usability:</strong>
-- <strong><a href="core-architecture/no-kyc.md">No KYC Model</a></strong> — Peer-to-peer coordination without central gatekeepers
-- <strong><a href="core-architecture/why-permissionless.md">Permissionless Access</a></strong> — Works offline, intermittent connectivity supported
-- <strong><a href="core-architecture/why-minimal-hardware.md">Minimal Hardware</a></strong> — From cardboard QR codes, to RFID stickers, to smartphones
-- <strong><a href="core-architecture/why-permissionless.md">Minimal Knowledge</a></strong> — Simple UI, Basic fucntions, not crypto jargon</p>
+- <strong><a href="why-no-kyc/">No KYC Model</a></strong> — Peer-to-peer coordination without central gatekeepers
+- <strong><a href="why-permissionless/">Permissionless Access</a></strong> — Works offline, intermittent connectivity supported
+- <strong><a href="why-minimal-hardware/">Minimal Hardware</a></strong> — From cardboard QR codes, to RFID stickers, to smartphones
+- <strong><a href="why-permissionless/">Minimal Knowledge</a></strong> — Simple UI, Basic fucntions, not crypto jargon</p>
 <p><strong>Security &amp; Self-Custody:</strong>
-- <strong><a href="core-architecture/why-self-custody.md">Self-Custody</a></strong> — Users control keys, Asgaya has zero access
-- <strong><a href="core-architecture/why-permissionless.md">Key Education</a></strong> — Mandatory backup verification before first use
-- <strong><a href="core-architecture/why-permissionless.md">Key Safekeeping</a></strong> — Multiple backup methods for different risk profiles</p>
+- <strong><a href="why-self-custody/">Self-Custody</a></strong> — Users control keys, Asgaya has zero access
+- <strong><a href="why-permissionless/">Key Education</a></strong> — Mandatory backup verification before first use
+- <strong><a href="why-permissionless/">Key Safekeeping</a></strong> — Multiple backup methods for different risk profiles</p>
 <p><strong>Error Prevention:</strong>
-- <strong><a href="core-architecture/why-permissionless.md">Error Mitigation</a></strong> — QR codes, guided flows, auto-calculation, auto-complete</p>
+- <strong><a href="why-permissionless/">Error Mitigation</a></strong> — QR codes, guided flows, auto-calculation, auto-complete</p>
 <p><strong>Key principle:</strong> Maximum freedom, minimum risk — no KYC; secure key management where essential.</p>
 <hr />
 <h2 id="design-principles">Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">&para;</a></h2>
@@ -3608,13 +3608,13 @@
 - Trade-offs and alternatives considered
 - Links to related concepts and implementation decisions</p>
 <p><strong>Start with the requirement that interests you most:</strong>
-- Want cheaper fees? → Start with <a href="core-architecture/why-cheaper-than-legacy.md">Why Cheaper Than Legacy</a>
-- Curious about incentives? → Start with <a href="core-architecture/why-promote-adoption.md">Merchant &amp; LP Incentives</a>
-- Care about access? → Start with <a href="core-architecture/no-kyc.md">No KYC Model</a></p>
+- Want cheaper fees? → Start with <a href="why-cheaper-than-legacy/">Why Cheaper Than Legacy</a>
+- Curious about incentives? → Start with <a href="why-promote-adoption/">Merchant &amp; LP Incentives</a>
+- Care about access? → Start with <a href="why-no-kyc/">No KYC Model</a></p>
 <p><strong>For deeper understanding:</strong>
-- See <a href="concepts/">Concepts</a> for theoretical foundations
-- See <a href="android-app/">Android App</a> for implementation details
-- See <a href="meta/contributing.md">Contributing</a> to propose changes</p>
+- See <a href="../concepts/">Concepts</a> for theoretical foundations
+- See <a href="../android-app/">Android App</a> for implementation details
+- See <a href="../meta/contributing/">Contributing</a> to propose changes</p>
 <hr />
 <p><em>Architecture index created: April 8, 2026</em>
 <em>Maintained by: Asgaya Contributors</em>

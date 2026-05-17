@@ -6,7 +6,6 @@
 
 - [Home](https://docs.asgaya.org/index.md)
 - [Roadmap](https://docs.asgaya.org/ROADMAP/index.md)
-- [ sidebar](https://docs.asgaya.org/_sidebar/index.md)
 - [Glossary](https://docs.asgaya.org/glossary/index.md)
 - [Risks and Disclaimers](https://docs.asgaya.org/risks-and-disclaimers/index.md)
 - [AI-Optimized Documentation Access](https://docs.asgaya.org/ai/index.md)

@@ -3657,7 +3657,7 @@
 
 <p>← <a href="./">Back to Home</a></p>
 <h1 id="design-decisions">Design Decisions<a class="headerlink" href="#design-decisions" title="Permanent link">&para;</a></h1>
-<p>This directory documents the <strong>"how"</strong> - the tradeoffs and constraints that shaped Asgaya's implementation. The <a href="core-architecture/">Core Architecture</a> explains <strong>what</strong> we need and <strong>why</strong> it matters. This directory explains <strong>how</strong> we achieved it through real-world constraints and pragmatic choices.</p>
+<p>This directory documents the <strong>"how"</strong> - the tradeoffs and constraints that shaped Asgaya's implementation. The <a href="../core-architecture/">Core Architecture</a> explains <strong>what</strong> we need and <strong>why</strong> it matters. This directory explains <strong>how</strong> we achieved it through real-world constraints and pragmatic choices.</p>
 <p><strong>Each decision follows this pattern:</strong>
 1. <strong>The Goal</strong> - What we wanted architecturally
 2. <strong>The Constraint</strong> - What reality showed us (with research/testing evidence)
@@ -3672,13 +3672,13 @@
 <p><strong>Implementation decisions:</strong></p>
 <ul>
 <li>
-<p><strong><a href="decisions/how-market-rate-exchanges.md">Market-Rate Exchanges</a></strong> — Use DolarAPI for parallel market local currency rates (VES/ARS) + CoinGecko for BCH/EUR rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.</p>
+<p><strong><a href="how-exchange-rates-work/">Market-Rate Exchanges</a></strong> — Use DolarAPI for parallel market local currency rates (VES/ARS) + CoinGecko for BCH/EUR rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.</p>
 </li>
 <li>
-<p><strong><a href="decisions/two-step-settlement-timing.md">Two-Step Settlement</a></strong> — Covenant-based pull system: BCH seller posts overcollateralized BCH to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through overcollateralization buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).</p>
+<p><strong><a href="two-step-settlement-timing/">Two-Step Settlement</a></strong> — Covenant-based pull system: BCH seller posts overcollateralized BCH to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through overcollateralization buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).</p>
 </li>
 <li>
-<p><strong><a href="decisions/fee-splitting-model.md">Fee Splitting Model</a></strong> — Two-way split of 1% fee: BCH Seller 0.5%, Merchant 0.5% (€0.50 each on €100 transfer). No protocol fee = pure bulletin board model. Simple, fair, and MiCA/PSD2 compliant.</p>
+<p><strong><a href="fee-splitting-model/">Fee Splitting Model</a></strong> — Two-way split of 1% fee: BCH Seller 0.5%, Merchant 0.5% (€0.50 each on €100 transfer). No protocol fee = pure bulletin board model. Simple, fair, and MiCA/PSD2 compliant.</p>
 </li>
 </ul>
 <p><strong>Key principle:</strong> Market rates with zero hidden markups. Transparent economics beats optimization.</p>
@@ -3688,7 +3688,7 @@
 <p><strong>Implementation decisions:</strong></p>
 <ul>
 <li>
-<p><strong>Fee Distribution</strong> — Two-way split ensures both BCH seller and merchant benefit from each transaction (see Fee Splitting Model above). Merchant earns 0.5% for providing cash + location. BCH seller earns 0.5% for posting capital + taking volatility risk. No protocol fee = regulatory compliance.</p>
+<p><strong>Fee Distribution</strong> — Two-way split ensures both BCH seller and merchant benefit from each transaction (see <a href="fee-splitting-model/">Fee Splitting Model</a>). Merchant earns 0.5% for providing cash + location. BCH seller earns 0.5% for posting capital + taking volatility risk. No protocol fee = regulatory compliance.</p>
 </li>
 <li>
 <p><strong>Merchant Incentive Structure</strong> — Merchants earn 0.5% spread by selling VES for BCH. Receive BCH from covenant after co-signing with recipient. Can hold BCH (keep full reward) or optionally sell to BCH buyers (instant fiat, lose reward to spread). Market rates enforced by covenant (EUR-denominated promise).</p>
@@ -3707,16 +3707,16 @@
 <p><strong>Implementation decisions:</strong></p>
 <ul>
 <li>
-<p><strong><a href="decisions/bizum-concept-field.md">Bizum Concept Field</a></strong> — Wanted semantic IDs like <code>ASG_VEN_001</code>, bank rejected underscores/hyphens. Use recipient phone numbers instead. Lost semantics, gained reliability. Critical for notification matching without central coordination.</p>
+<p><strong><a href="bizum-concept-field/">Bizum Concept Field</a></strong> — Wanted semantic IDs like <code>ASG_VEN_001</code>, bank rejected underscores/hyphens. Use recipient phone numbers instead. Lost semantics, gained reliability. Critical for notification matching without central coordination.</p>
 </li>
 <li>
-<p><strong><a href="decisions/payment-timeout-window.md">Payment Timeout Window</a></strong> — Sender pays BCH seller directly via Bizum within 5-minute window after seller accepts bounty. Seller bot (smsbridge_loop.py) parses Bizum SMS automatically. No payment processor integration needed. Trade-off: Seller exposed to 5-min price volatility (mitigated by 7% overcollateralization).</p>
+<p><strong><a href="payment-timeout-window/">Payment Timeout Window</a></strong> — Sender pays BCH seller directly via Bizum within 5-minute window after seller accepts bounty. Seller bot (smsbridge_loop.py) parses Bizum SMS automatically. No payment processor integration needed. Trade-off: Seller exposed to 5-min price volatility (mitigated by 7% overcollateralization).</p>
 </li>
 <li>
-<p><strong><a href="decisions/unclaimed-transaction-expiry.md">Unclaimed Transaction Expiry</a></strong> — Recipients have 24 hours to claim remittances before automatic covenant refund. Prevents BCH from locking indefinitely. Split refund: merchant portion → sender, seller fee → seller. Processing fee covers seller's 24h capital lockup. Trade-off: Time pressure vs capital efficiency.</p>
+<p><strong><a href="unclaimed-transaction-expiry/">Unclaimed Transaction Expiry</a></strong> — Recipients have 24 hours to claim remittances before automatic covenant refund. Prevents BCH from locking indefinitely. Split refund: merchant portion → sender, seller fee → seller. Processing fee covers seller's 24h capital lockup. Trade-off: Time pressure vs capital efficiency.</p>
 </li>
 <li>
-<p><strong><a href="decisions/dispute-resolution.md">Dispute Resolution Framework</a></strong> — Phase 0: No formal dispute system. Covenant executes autonomously (both co-sign) or refunds via timeout (24h). Trusted parties only (sender's family/friends). V1: Social media transparency (<code>#AsgayaDispute</code> posts, community-driven reputation). Trade-off: Simplified vs. no formal arbitration.</p>
+<p><strong><a href="dispute-resolution/">Dispute Resolution Framework</a></strong> — Phase 0: No formal dispute system. Covenant executes autonomously (both co-sign) or refunds via timeout (24h). Trusted parties only (sender's family/friends). V1: Social media transparency (<code>#AsgayaDispute</code> posts, community-driven reputation). Trade-off: Simplified vs. no formal arbitration.</p>
 </li>
 <li>
 <p><strong>No KYC Payment Rails</strong> — Use consumer payment systems (Bizum, PagoMóvil, etc.) that don't require business accounts or KYC. Anyone with BCH can be a seller, anyone with cash can be a merchant. Constraint: Must work within each system's rules (see Bizum Concept Field decision). Covenant smart contracts enable trustless coordination without intermediaries.</p>
@@ -3756,13 +3756,13 @@
 - Trade-offs (what we gained and lost)
 - Validation (how we verify it works)</p>
 <p><strong>Start with the requirement that interests you most:</strong>
-- Want to understand cost model? → Start with <a href="decisions/how-market-rate-exchanges.md">Market-Rate Exchanges</a>
-- Curious about settlement mechanics? → Start with <a href="decisions/two-step-settlement-timing.md">Two-Step Settlement</a>
-- Understanding notification matching? → Start with <a href="decisions/bizum-concept-field.md">Bizum Concept Field</a></p>
+- Want to understand cost model? → Start with <a href="how-exchange-rates-work/">How Exchange Rates Work</a>
+- Curious about settlement mechanics? → Start with <a href="two-step-settlement-timing/">Two-Step Settlement</a>
+- Understanding notification matching? → Start with <a href="bizum-concept-field/">Bizum Concept Field</a></p>
 <p><strong>For deeper context:</strong>
-- See <a href="core-architecture/">Core Architecture</a> for the "what" and "why"
+- See <a href="../core-architecture/">Core Architecture</a> for the "what" and "why"
 - See <a href="../research/">Research</a> for testing data and validation
-- See <a href="concepts/">Concepts</a> for theoretical foundations</p>
+- See <a href="../concepts/">Concepts</a> for theoretical foundations</p>
 <hr />
 <h2 id="decision-status">Decision Status<a class="headerlink" href="#decision-status" title="Permanent link">&para;</a></h2>
 <table>

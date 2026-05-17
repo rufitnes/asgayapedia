@@ -1,6 +1,6 @@
 # Why: Minimal Hardware Requirements
 
-**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+**Sub-requirement of:** [Why: Permissionless](why-permissionless.md)
 
 **Core Requirement:** Support the widest possible range of devices, minimizing hardware barriers to remittance access.
 
@@ -11,7 +11,7 @@
 - **Phase 1 (Planned):** RFID card alternative (no smartphone needed)
 - **Future Vision:** Cardboard QR codes / feature phones (aspirational)
 
-**This document describes the VISION.** See [RFID Card Recipients](concepts/rfid-card-recipients.md) for Phase 1 implementation plan.
+**This document describes the VISION.** See [RFID Card Recipients](../concepts/rfid-card-recipients.md) for Phase 1 implementation plan.
 
 ---
 
@@ -253,8 +253,8 @@ Unlike most crypto projects that say "edge cases don't matter," Asgaya designs f
 
 ## Related Requirements
 
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Minimal hardware is one aspect of truly permissionless access
-- [Why: No KYC](core-architecture/why-no-kyc.md) — Low barriers across all dimensions (ID, hardware, knowledge)
+- [Why: Permissionless](why-permissionless.md) — Minimal hardware is one aspect of truly permissionless access
+- [Why: No KYC](why-no-kyc.md) — Low barriers across all dimensions (ID, hardware, knowledge)
 
 ---
 
@@ -304,7 +304,7 @@ See the **Decisions** section for implementation approaches:
 - Recipient taps card on merchant device (NFC) to confirm
 - **No smartphone needed**
 
-**See:** [RFID Card Recipients](concepts/rfid-card-recipients.md) for full specification
+**See:** [RFID Card Recipients](../concepts/rfid-card-recipients.md) for full specification
 
 **Status:** Concept documented, not yet implemented
 

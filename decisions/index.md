@@ -2,7 +2,7 @@
 
 # Design Decisions
 
-This directory documents the **"how"** - the tradeoffs and constraints that shaped Asgaya's implementation. The [Core Architecture](core-architecture/) explains **what** we need and **why** it matters. This directory explains **how** we achieved it through real-world constraints and pragmatic choices.
+This directory documents the **"how"** - the tradeoffs and constraints that shaped Asgaya's implementation. The [Core Architecture](../core-architecture/) explains **what** we need and **why** it matters. This directory explains **how** we achieved it through real-world constraints and pragmatic choices.
 
 **Each decision follows this pattern:**
 1. **The Goal** - What we wanted architecturally
@@ -22,11 +22,11 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 **Implementation decisions:**
 
-- **[Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)** — Use DolarAPI for parallel market local currency rates (VES/ARS) + CoinGecko for BCH/EUR rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.
+- **[Market-Rate Exchanges](how-exchange-rates-work.md)** — Use DolarAPI for parallel market local currency rates (VES/ARS) + CoinGecko for BCH/EUR rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.
 
-- **[Two-Step Settlement](decisions/two-step-settlement-timing.md)** — Covenant-based pull system: BCH seller posts overcollateralized BCH to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through overcollateralization buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).
+- **[Two-Step Settlement](two-step-settlement-timing.md)** — Covenant-based pull system: BCH seller posts overcollateralized BCH to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through overcollateralization buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).
 
-- **[Fee Splitting Model](decisions/fee-splitting-model.md)** — Two-way split of 1% fee: BCH Seller 0.5%, Merchant 0.5% (€0.50 each on €100 transfer). No protocol fee = pure bulletin board model. Simple, fair, and MiCA/PSD2 compliant.
+- **[Fee Splitting Model](fee-splitting-model.md)** — Two-way split of 1% fee: BCH Seller 0.5%, Merchant 0.5% (€0.50 each on €100 transfer). No protocol fee = pure bulletin board model. Simple, fair, and MiCA/PSD2 compliant.
 
 **Key principle:** Market rates with zero hidden markups. Transparent economics beats optimization.
 
@@ -38,7 +38,7 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 **Implementation decisions:**
 
-- **Fee Distribution** — Two-way split ensures both BCH seller and merchant benefit from each transaction (see Fee Splitting Model above). Merchant earns 0.5% for providing cash + location. BCH seller earns 0.5% for posting capital + taking volatility risk. No protocol fee = regulatory compliance.
+- **Fee Distribution** — Two-way split ensures both BCH seller and merchant benefit from each transaction (see [Fee Splitting Model](fee-splitting-model.md)). Merchant earns 0.5% for providing cash + location. BCH seller earns 0.5% for posting capital + taking volatility risk. No protocol fee = regulatory compliance.
 
 - **Merchant Incentive Structure** — Merchants earn 0.5% spread by selling VES for BCH. Receive BCH from covenant after co-signing with recipient. Can hold BCH (keep full reward) or optionally sell to BCH buyers (instant fiat, lose reward to spread). Market rates enforced by covenant (EUR-denominated promise).
 
@@ -56,13 +56,13 @@ This directory documents the **"how"** - the tradeoffs and constraints that shap
 
 **Implementation decisions:**
 
-- **[Bizum Concept Field](decisions/bizum-concept-field.md)** — Wanted semantic IDs like `ASG_VEN_001`, bank rejected underscores/hyphens. Use recipient phone numbers instead. Lost semantics, gained reliability. Critical for notification matching without central coordination.
+- **[Bizum Concept Field](bizum-concept-field.md)** — Wanted semantic IDs like `ASG_VEN_001`, bank rejected underscores/hyphens. Use recipient phone numbers instead. Lost semantics, gained reliability. Critical for notification matching without central coordination.
 
-- **[Payment Timeout Window](decisions/payment-timeout-window.md)** — Sender pays BCH seller directly via Bizum within 5-minute window after seller accepts bounty. Seller bot (smsbridge_loop.py) parses Bizum SMS automatically. No payment processor integration needed. Trade-off: Seller exposed to 5-min price volatility (mitigated by 7% overcollateralization).
+- **[Payment Timeout Window](payment-timeout-window.md)** — Sender pays BCH seller directly via Bizum within 5-minute window after seller accepts bounty. Seller bot (smsbridge_loop.py) parses Bizum SMS automatically. No payment processor integration needed. Trade-off: Seller exposed to 5-min price volatility (mitigated by 7% overcollateralization).
 
-- **[Unclaimed Transaction Expiry](decisions/unclaimed-transaction-expiry.md)** — Recipients have 24 hours to claim remittances before automatic covenant refund. Prevents BCH from locking indefinitely. Split refund: merchant portion → sender, seller fee → seller. Processing fee covers seller's 24h capital lockup. Trade-off: Time pressure vs capital efficiency.
+- **[Unclaimed Transaction Expiry](unclaimed-transaction-expiry.md)** — Recipients have 24 hours to claim remittances before automatic covenant refund. Prevents BCH from locking indefinitely. Split refund: merchant portion → sender, seller fee → seller. Processing fee covers seller's 24h capital lockup. Trade-off: Time pressure vs capital efficiency.
 
-- **[Dispute Resolution Framework](decisions/dispute-resolution.md)** — Phase 0: No formal dispute system. Covenant executes autonomously (both co-sign) or refunds via timeout (24h). Trusted parties only (sender's family/friends). V1: Social media transparency (`#AsgayaDispute` posts, community-driven reputation). Trade-off: Simplified vs. no formal arbitration.
+- **[Dispute Resolution Framework](dispute-resolution.md)** — Phase 0: No formal dispute system. Covenant executes autonomously (both co-sign) or refunds via timeout (24h). Trusted parties only (sender's family/friends). V1: Social media transparency (`#AsgayaDispute` posts, community-driven reputation). Trade-off: Simplified vs. no formal arbitration.
 
 - **No KYC Payment Rails** — Use consumer payment systems (Bizum, PagoMóvil, etc.) that don't require business accounts or KYC. Anyone with BCH can be a seller, anyone with cash can be a merchant. Constraint: Must work within each system's rules (see Bizum Concept Field decision). Covenant smart contracts enable trustless coordination without intermediaries.
 
@@ -102,14 +102,14 @@ These principles guide all implementation decisions:
 - Validation (how we verify it works)
 
 **Start with the requirement that interests you most:**
-- Want to understand cost model? → Start with [Market-Rate Exchanges](decisions/how-market-rate-exchanges.md)
-- Curious about settlement mechanics? → Start with [Two-Step Settlement](decisions/two-step-settlement-timing.md)
-- Understanding notification matching? → Start with [Bizum Concept Field](decisions/bizum-concept-field.md)
+- Want to understand cost model? → Start with [How Exchange Rates Work](how-exchange-rates-work.md)
+- Curious about settlement mechanics? → Start with [Two-Step Settlement](two-step-settlement-timing.md)
+- Understanding notification matching? → Start with [Bizum Concept Field](bizum-concept-field.md)
 
 **For deeper context:**
-- See [Core Architecture](core-architecture/) for the "what" and "why"
+- See [Core Architecture](../core-architecture/) for the "what" and "why"
 - See [Research](../research/) for testing data and validation
-- See [Concepts](concepts/) for theoretical foundations
+- See [Concepts](../concepts/) for theoretical foundations
 
 ---
 

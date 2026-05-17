@@ -669,7 +669,7 @@ require(checkSig(merchantSig, merchantPubkey));
 - **Phase 0:** [Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md) - B→C→A progression
 - **Setup:** [Pichan Regtest Setup](pichan-regtest-setup.md) - Development environment
 - **Testing:** [Multi-Device Test Plan](multi-device-test-plan.md) - Validation scenarios
-- **Flows:** [Sender Flow](../flows/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
+- **Flows:** [Sender Flow](../flows/archive/remittance-merchant-cash-out.md), [Recipient Flow](../flows/recipient-flows.md)
 
 ---
 

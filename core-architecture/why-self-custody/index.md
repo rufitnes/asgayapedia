@@ -1,6 +1,6 @@
 # Why: Self-Custody
 
-**Sub-requirement of:** [Why: Permissionless](core-architecture/why-permissionless.md)
+**Sub-requirement of:** [Why: Permissionless](why-permissionless.md)
 
 **Core Requirement:** Users must hold their own BCH keys. Asgaya has zero access to user funds.
 
@@ -279,8 +279,8 @@ If Asgaya controlled funds, it would have the power to restrict access—somethi
 
 ## Related Requirements
 
-- [Why: Permissionless](core-architecture/why-permissionless.md) — Self-custody is essential for true permissionless access
-- [Why: No KYC](core-architecture/why-no-kyc.md) — Custody would require licenses, which require KYC
+- [Why: Permissionless](why-permissionless.md) — Self-custody is essential for true permissionless access
+- [Why: No KYC](why-no-kyc.md) — Custody would require licenses, which require KYC
 
 ---
 
