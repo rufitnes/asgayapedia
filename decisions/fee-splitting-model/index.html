@@ -3473,6 +3473,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fiat-chargeback-risk-phase-0-limited-phase-1-addressed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fiat Chargeback Risk (Phase 0 Limited, Phase 1+ Addressed)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-concepts" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4446,6 +4457,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fiat-chargeback-risk-phase-0-limited-phase-1-addressed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fiat Chargeback Risk (Phase 0 Limited, Phase 1+ Addressed)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-concepts" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4491,6 +4513,11 @@
 <p><strong>Decision Date:</strong> April 2026 (Updated May 2026 for covenant architecture)<br />
 <strong>Status:</strong> Implemented (Chipnet testing)<br />
 <strong>Related Requirement:</strong> <a href="../../core-architecture/why-promote-adoption/">Promote Adoption</a></p>
+<hr />
+<blockquote>
+<p>⚠️ <strong>ALL NUMBERS IN THIS DOCUMENT ARE HYPOTHESES FOR PHASE 0 VALIDATION.</strong></p>
+<p>The 0.5% seller fee and 0.5% merchant spread are educated starting points, not fixed parameters. We will adjust them based on real-world data. See <a href="../phase-0-validation-checklist/">Phase 0 Validation Checklist</a>.</p>
+</blockquote>
 <hr />
 <blockquote>
 <p>⚠️ <strong>HYPOTHESIS — NEEDS PHASE 0 VALIDATION</strong></p>
@@ -5110,6 +5137,58 @@ BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
 <li><a href="../dispute-resolution/">Dispute Resolution</a> — How conflicts resolved without central arbiter</li>
 <li><a href="../../core-architecture/why-promote-adoption/">Promote Adoption</a> — Why BCH holding matters more than fiat conversion</li>
 </ul>
+<hr />
+<h2 id="fiat-chargeback-risk-phase-0-limited-phase-1-addressed">Fiat Chargeback Risk (Phase 0 Limited, Phase 1+ Addressed)<a class="headerlink" href="#fiat-chargeback-risk-phase-0-limited-phase-1-addressed" title="Permanent link">&para;</a></h2>
+<p><strong>The legitimate concern:</strong> In traditional P2P crypto markets, sellers face the risk that fiat payments (like Bizum, SEPA, PayPal) can be reversed after the seller has released cryptocurrency. This chargeback risk is typically priced into spreads (1-3% premium).</p>
+<p><strong>Asgaya's exposure:</strong>
+- <strong>Phase 0 (Current):</strong> Minimal risk
+  - All participants are trusted family, friends, and forum members
+  - Reputation-based vetting (bitcoincashresearch.org contributors)
+  - Small transaction sizes (€50-200)
+  - Known identities (not anonymous)</p>
+<p><strong>Why Bizum is relatively safe:</strong>
+- Instant settlement in Spain (not easily reversible like credit cards)
+- Bank-to-bank transfer (not payment processor with buyer protection)
+- Fraud requires bank cooperation (Spanish banks have anti-fraud KYC)</p>
+<p><strong>Phase 1+ Solutions (When Opening to General Public):</strong></p>
+<ol>
+<li><strong>Reputation Scoring Tied to On-Chain Identity</strong></li>
+<li>Senders build reputation through successful transactions</li>
+<li>Low-reputation senders pay slightly higher fees (chargeback insurance premium)</li>
+<li>
+<p>High-reputation senders (50+ transactions) get preferred rates</p>
+</li>
+<li>
+<p><strong>Seller-Funded Chargeback Insurance Pool</strong></p>
+</li>
+<li>Sellers contribute 0.1% of transaction volume to insurance fund</li>
+<li>Fund compensates sellers hit by chargebacks</li>
+<li>Spreads risk across all sellers (insurance model)</li>
+<li>
+<p>Dishonest senders get banned + blacklisted</p>
+</li>
+<li>
+<p><strong>Seller-Configurable Risk Premiums</strong></p>
+</li>
+<li>Sellers can set their own spread (0.5-2%) based on risk tolerance</li>
+<li>New senders → higher spread (1.5-2%)</li>
+<li>Established senders → base spread (0.5%)</li>
+<li>
+<p>Market-driven pricing for risk</p>
+</li>
+<li>
+<p><strong>Integration with Universal Bot Fraud Prevention</strong></p>
+</li>
+<li>Sender's bot creates cryptographic proof of payment</li>
+<li>If chargeback occurs, seller submits proof to dispute</li>
+<li>Sender's stake slashed if fraudulent chargeback proven</li>
+<li>See <a href="../../concepts/universal-bot-fraud-prevention/">Universal Bot Fraud Prevention</a></li>
+</ol>
+<p><strong>Why this doesn't block Phase 0:</strong>
+- Trusted participant model eliminates chargeback risk
+- Real-world validation needed before designing insurance systems
+- Phase 0 data will inform Phase 1 risk pricing</p>
+<p><strong>Mitigation priority:</strong> Post-Phase 0, based on actual chargeback frequency data (target: &lt;0.1% of transactions).</p>
 <hr />
 <h2 id="related-concepts">Related Concepts<a class="headerlink" href="#related-concepts" title="Permanent link">&para;</a></h2>
 <ul>

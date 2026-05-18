@@ -13,7 +13,7 @@ A BCH seller is anyone who:
 2. **Posts overcollateralized BCH** to covenant contracts (typically 107% of requested amount)
 3. **Receives EUR (or other fiat)** from senders via Bizum/bank transfer
 4. **Earns BCH fees** (0.5% of transaction in BCH) + gets back overcollateralization
-5. **Monitors for margin calls** if BCH price drops significantly during the 24-hour window
+5. **Can voluntarily top up** to earn reliability rewards if BCH price drops significantly
 
 **BCH sellers are NOT:**
 - ❌ Custodians (don't hold client funds—post their own BCH as collateral)
@@ -47,6 +47,23 @@ A BCH seller is anyone who:
 - ✅ Automated market makers
 
 **Permissionless:** No approval needed, no registration, no KYC. Just accept a bounty and post collateral.
+
+---
+
+## Reliability Rewards
+
+Sellers who voluntarily top up their covenants when BCH drops >7% earn progressive rewards that increase their earning potential:
+
+**Reward tiers** (based on number of top-ups completed):
+- **🛡️ Reliable** (1 top-up): Higher transaction limits (€220), badge visible to senders
+- **📊 Trusted** (3 top-ups): Even higher limits (€260), highlighted in sender searches
+- **⭐ Priority** (5 top-ups): Premium limits (€300), auto-selected by senders
+- **🎯 Premium** (10 top-ups): Featured placement (€360), priority routing
+- **💎 Elite** (20+ top-ups): Maximum limits (€400), top-tier visibility
+
+**Economic value:** Higher limits enable more volume per transaction, better visibility drives more selections, and auto-select eligibility creates passive income opportunities. Sellers who demonstrate reliability earn significantly more than those who rely only on automatic fair exchange.
+
+**Philosophy:** Top-ups are voluntary, not required. Covenants that mature automatically result in fair exchange at market rate (no penalty). See [Top-Up Opportunity technical details](./overcollateralized-bounty-contracts.md#top-up-opportunity-how-sellers-earn-reliability-rewards) for implementation.
 
 ---
 

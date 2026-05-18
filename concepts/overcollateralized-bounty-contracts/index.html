@@ -2970,13 +2970,63 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#margin-call-mechanism" class="md-nav__link">
+  <a href="#top-up-opportunity-how-sellers-earn-reliability-rewards" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Margin Call Mechanism
+        Top-Up Opportunity (How Sellers Earn Reliability Rewards)
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Top-Up Opportunity (How Sellers Earn Reliability Rewards)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-1-automatic-fair-exchange-no-action-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 1: Automatic Fair Exchange (No Action Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-2-voluntary-top-up-reliability-rewards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 2: Voluntary Top-Up (Reliability Rewards)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reliability-reward-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reliability Reward Tiers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#philosophy-reward-not-punish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophy: Reward, Not Punish
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -4192,13 +4242,63 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#margin-call-mechanism" class="md-nav__link">
+  <a href="#top-up-opportunity-how-sellers-earn-reliability-rewards" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Margin Call Mechanism
+        Top-Up Opportunity (How Sellers Earn Reliability Rewards)
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Top-Up Opportunity (How Sellers Earn Reliability Rewards)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-1-automatic-fair-exchange-no-action-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 1: Automatic Fair Exchange (No Action Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-2-voluntary-top-up-reliability-rewards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 2: Voluntary Top-Up (Reliability Rewards)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reliability-reward-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reliability Reward Tiers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#philosophy-reward-not-punish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophy: Reward, Not Punish
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -4835,47 +4935,131 @@ Outputs:
 </tr>
 </tbody>
 </table>
-<h3 id="margin-call-mechanism">Margin Call Mechanism<a class="headerlink" href="#margin-call-mechanism" title="Permanent link">&para;</a></h3>
-<p><strong>If BCH price drops beyond the overfunding buffer during the 24-hour window:</strong></p>
-<ol>
-<li>
+<h3 id="top-up-opportunity-how-sellers-earn-reliability-rewards">Top-Up Opportunity (How Sellers Earn Reliability Rewards)<a class="headerlink" href="#top-up-opportunity-how-sellers-earn-reliability-rewards" title="Permanent link">&para;</a></h3>
+<p><strong>When BCH price drops beyond the 7% buffer during the 24-hour window, sellers have a voluntary opportunity to earn rewards:</strong></p>
+<hr />
+<h4 id="path-1-automatic-fair-exchange-no-action-required">Path 1: Automatic Fair Exchange (No Action Required)<a class="headerlink" href="#path-1-automatic-fair-exchange-no-action-required" title="Permanent link">&para;</a></h4>
+<p><strong>What happens by default:</strong></p>
+<p>When the covenant's collateral value reaches exactly €100 (the fair exchange point), the covenant matures automatically at the 24-hour timeout:</p>
+<p><strong>Automatic distribution:</strong>
+- Sender receives: €99.50 worth of BCH (merchant portion)
+- Seller receives: €0.50 worth of BCH (processing fee)</p>
+<p><strong>Net outcome for seller:</strong>
+- Received: €100 Bizum (upfront from sender)
+- Returned: €99.50 worth of BCH (at current market rate)
+- Net: <strong>Fair exchange</strong> — sold €100 worth of BCH for €100 fiat at current price</p>
+<p><strong>This is NOT a penalty:</strong>
+- Seller effectively sold BCH at current market rate
+- No loss, no punishment
+- The sender bears the price risk (they opted into BCH exposure)</p>
+<hr />
+<h4 id="path-2-voluntary-top-up-reliability-rewards">Path 2: Voluntary Top-Up (Reliability Rewards)<a class="headerlink" href="#path-2-voluntary-top-up-reliability-rewards" title="Permanent link">&para;</a></h4>
+<p><strong>During a 60-minute grace period</strong> after the collateral hits €100, the seller can <em>choose</em> to add more BCH:</p>
 <p><strong>Alert sent to seller:</strong>
-   <div class="highlight"><pre><span></span><code>⚠️ MARGIN CALL — Bounty #4729
-BCH dropped 8% since you locked funds.
-Add 0.0003 BCH within 60 minutes or contract matures early.
+<div class="highlight"><pre><span></span><code>💡 TOP-UP OPPORTUNITY — Bounty #4729
+BCH dropped 8%. Add 0.0003 BCH to keep covenant alive
+and earn Reliability Rewards.
+
+Current tier: 2 top-ups → Next reward at 3 top-ups
+Time remaining: 57 minutes
 </code></pre></div></p>
-</li>
-<li>
-<p><strong>Seller has three options:</strong></p>
-</li>
-<li><strong>Add more BCH</strong> to the contract (top up collateral manually)</li>
-<li><strong>Let contract mature early</strong> (all BCH goes to sender, seller keeps the €100 fiat already received)</li>
-<li>
-<p><strong>Hope price recovers</strong> within the 60-minute grace period</p>
-</li>
-<li>
-<p><strong>How seller tops up (manual transaction):</strong></p>
-</li>
-<li>Seller already received €100 Bizum from sender (Iris)</li>
-<li>Seller can buy more BCH with that EUR (on exchange or via Asgaya bulletin)</li>
-<li>Seller broadcasts additional BCH to covenant address</li>
-<li>
-<p><strong>Note:</strong> Automated Bizum→BCH purchase likely violates banking TOS, so manual intervention required</p>
-</li>
-<li>
-<p><strong>If seller doesn't respond within 60 minutes:</strong></p>
-</li>
-<li><strong>Contract matures early</strong> (before 24-hour timeout)</li>
-<li><strong>All BCH goes to sender</strong> (Iris receives full covenant balance)</li>
-<li>Seller keeps: €100 Bizum received (covered fiat leg)</li>
-<li>Seller loses: BCH collateral posted (penalty for non-response)</li>
-<li>Bulletin board marks seller with failed margin call (reputation impact)</li>
-</ol>
-<p><strong>Economic model:</strong>
-- Seller has capital to respond (€100 fiat in hand)
-- Early maturity penalty incentivizes fast response
-- Similar to MakerDAO liquidations, but on per-transaction basis
-- 60-minute window balances seller convenience vs sender protection</p>
+<p><strong>How to top up:</strong>
+1. Seller already has €100 Bizum from sender
+2. Buy additional BCH on exchange or via Asgaya bulletin
+3. Broadcast BCH to covenant address
+4. Covenant stays alive, transaction can complete normally</p>
+<p><strong>Why top up?</strong>
+- ✅ Transaction completes → Earn full 0.5% fee
+- ✅ Build reliability reputation → Unlock rewards
+- ✅ Capital recycling continues → Keep earning</p>
+<hr />
+<h4 id="reliability-reward-tiers">Reliability Reward Tiers<a class="headerlink" href="#reliability-reward-tiers" title="Permanent link">&para;</a></h4>
+<p><strong>Sellers who demonstrate reliability by topping up earn escalating benefits:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Top-Ups Completed</th>
+<th>Reward Tier</th>
+<th>Transaction Limit</th>
+<th>Bulletin Priority</th>
+<th>Additional Benefits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 (Default)</strong></td>
+<td>Standard</td>
+<td>€200</td>
+<td>Normal listing</td>
+<td>Base 0.5% fee</td>
+</tr>
+<tr>
+<td><strong>1st top-up</strong></td>
+<td>🛡️ Reliable</td>
+<td>€220 (+10%)</td>
+<td>Normal listing</td>
+<td>"Reliable Seller" badge</td>
+</tr>
+<tr>
+<td><strong>3 top-ups</strong></td>
+<td>📊 Trusted</td>
+<td>€260 (+30%)</td>
+<td>Higher in search</td>
+<td>Highlighted in app</td>
+</tr>
+<tr>
+<td><strong>5 top-ups</strong></td>
+<td>⭐ Priority</td>
+<td>€300 (+50%)</td>
+<td>Top of listings</td>
+<td>Auto-select eligible</td>
+</tr>
+<tr>
+<td><strong>10 top-ups</strong></td>
+<td>🎯 Premium</td>
+<td>€360 (+80%)</td>
+<td>Featured placement</td>
+<td>Premium badge + priority routing</td>
+</tr>
+<tr>
+<td><strong>20+ top-ups</strong></td>
+<td>💎 Elite</td>
+<td>€400 (+100%)</td>
+<td>Always visible</td>
+<td>Maximum visibility + limits</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example progression:</strong>
+<div class="highlight"><pre><span></span><code>Start: €200 limit, normal listing
+→ 1st top-up: €220 limit, &quot;Reliable&quot; badge appears
+→ 3rd top-up: €260 limit, moves to top half of listings
+→ 5th top-up: €300 limit, auto-select enabled (passive income!)
+→ 10th top-up: €360 limit, featured seller
+→ 20th top-up: €400 limit, elite status (maximum rewards)
+</code></pre></div></p>
+<p><strong>Economic value of rewards:</strong>
+- <strong>Higher limits</strong> → Serve larger remittances → More volume per transaction
+- <strong>Better visibility</strong> → More senders choose you → More 0.5% fees earned
+- <strong>Auto-select</strong> → Bot handles everything → Passive income stream
+- <strong>Compounding effect</strong> → More transactions → More top-up opportunities → Faster tier progression</p>
+<p><strong>Opportunity cost of NOT topping up:</strong>
+- Lose chance to advance tiers
+- Competitors with rewards get more visibility
+- Miss out on <a href="./#capital-recycling-strategy-the-sellers-business-model">Capital Recycling Strategy</a> compounding (≈360% APR)</p>
+<hr />
+<h4 id="philosophy-reward-not-punish">Philosophy: Reward, Not Punish<a class="headerlink" href="#philosophy-reward-not-punish" title="Permanent link">&para;</a></h4>
+<p><strong>We don't penalize sellers for market movements.</strong></p>
+<ul>
+<li>Default outcome (no top-up) = Fair exchange at current market rate</li>
+<li>Top-up = Voluntary action that earns visibility and limit rewards</li>
+<li>Creates a race to the top for reliability, not a race to avoid punishment</li>
+</ul>
+<p><strong>Similar models in DeFi:</strong>
+- MakerDAO: Vault owners can add collateral during liquidations (voluntary)
+- Compound: Users can add collateral to avoid liquidation (voluntary)
+- Aave: Borrowers can repay to improve health factor (voluntary)</p>
+<p><strong>Asgaya</strong>: Sellers can top up to earn reliability status (voluntary, rewarded)</p>
 <hr />
 <h2 id="why-this-is-not-custody-mica-compliance">Why This Is Not Custody (MiCA Compliance)<a class="headerlink" href="#why-this-is-not-custody-mica-compliance" title="Permanent link">&para;</a></h2>
 <h3 id="the-legal-distinction">The Legal Distinction<a class="headerlink" href="#the-legal-distinction" title="Permanent link">&para;</a></h3>

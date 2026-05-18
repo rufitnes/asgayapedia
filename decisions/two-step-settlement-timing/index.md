@@ -102,6 +102,15 @@
    - Posts €107 worth of BCH to covenant (overcollateralized)
    - Covenant holds BCH immutably (autonomous code, not entity)
 
+> 💡 **The covenant promises €X worth of BCH, not a fixed BCH amount.**
+> 
+> If BCH rises, fewer BCH are needed → the seller gets more BCH back.  
+> If BCH falls, more BCH are needed → the seller's overcollateralization covers it up to the buffer limit.
+> 
+> This mechanism eliminates the "trapped gains" problem. When BCH moons, the seller's capital isn't frozen—they get the appreciation back immediately.
+> 
+> For a worked example of why sellers win in both price directions, see [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model).
+
 4. **Sender (Iris) pays €100 via Bizum** to BCH seller
 
 5. **BCH seller bot parses Bizum notification**
@@ -669,30 +678,77 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 - Sender's €100 Bizum refunded by seller (minus €0.50 processing fee)
 - BCH seller bears opportunity cost (24h lockup)
 
-**Scenario 4: BCH drops >7% during wait (margin call)**
+**Scenario 4: Top-Up Opportunity (Reliability Rewards)**
 
-**Example:** BCH drops from €1000 to €920 (-8%)
+**Example:** BCH drops from €1000 to €920 (-8% drop during the 24h window)
 
-**Timeline:**
-- Covenant locked: 0.107 BCH (was €107, now worth €98.44)
+**What happens automatically:**
+- Covenant locked: 0.107 BCH (was worth €107, now worth €98.44)
 - Seller already received: €100 Bizum from sender
-- Margin call triggered (price drop >7%)
+- **Automatic maturation triggered** when collateral value reaches €100
 
-**Option A: Seller tops up**
-- Seller adds 0.0007 BCH to restore 107% collateral
-- Covenant continues normally
-- Merchant can still claim when recipient arrives
+**Path 1: Automatic Fair Exchange (No Action Required)**
 
-**Option B: Seller ignores (economically rational for seller)**
-- Covenant matures early after 24h timeout
-- **Refund distribution:**
-  - Merchant portion (€99.50 worth) → **SENDER** (receives 0.1080 BCH worth €99.50)
-  - Seller fee (€0.50 worth) → **SELLER** (receives 0.0005 BCH worth €0.50)
-- **Sender's net:** Paid €100 Bizum, received €99.50 BCH = **€0.50 loss**
-- **Merchant's net:** Never participated, received nothing = **€0 loss** ✅
-- **Seller's net:** Received €100 Bizum, returned €99.50 BCH + €0.50 fee = **€0.50 profit** (plus bought BCH cheaper)
+If the seller takes no action, the covenant matures automatically at the 24-hour mark:
 
-**Who bears the margin call risk:** SENDER, not merchant. Merchant is completely protected.
+**Refund distribution:**
+- Merchant portion (€99.50 worth) → **SENDER** (receives BCH worth €99.50 at current rate)
+- Seller fee (€0.50 worth) → **SELLER** (receives BCH worth €0.50 at current rate)
+
+**Who gets what:**
+- **Sender:** Paid €100 Bizum, receives €99.50 in BCH (€0.50 loss from price movement)
+- **Seller:** Received €100 fiat, returned €99.50 in BCH = Fair exchange at current market rate
+- **Merchant:** Never participated, received nothing (€0 loss) ✅
+
+**This is a fair outcome:** The seller effectively sold €100 worth of BCH for €100 in fiat at the current market rate. No gain, no punishment. The sender bears the price risk (they opted into BCH exposure by creating the covenant).
+
+---
+
+**Path 2: Voluntary Top-Up (Rewarded Action)**
+
+During a **60-minute grace period** after the collateral hits €100, the seller can *choose* to add more BCH:
+
+**Action:** Seller adds 0.0007 BCH to restore 107% collateral (€107 value)
+
+**Benefits of topping up:**
+- ✅ Covenant stays alive → Recipient can still claim
+- ✅ Transaction completes → Seller earns the full 0.5% fee
+- ✅ **Reliability Rewards Unlocked** (see below)
+
+**Why this is voluntary, not required:**
+- Sellers who never top up are NOT punished
+- They simply don't earn the extra reliability rewards
+- The automatic fair exchange is always available
+
+---
+
+### Reliability Rewards for Top-Ups
+
+Sellers who demonstrate reliability by topping up during price drops earn increasing benefits:
+
+| Top-Ups Completed | Reward Tier | Benefits Unlocked |
+|-------------------|-------------|-------------------|
+| **1st top-up** | 🛡️ **Reliable Seller Badge** | Visible badge on bulletin board listing |
+| **3 top-ups** | 📊 **Higher Limits** | Transaction limit +30% (€200 → €260) |
+| **5 top-ups** | ⭐ **Priority Listing** | Appears at top of seller search results |
+| **10 top-ups** | 🎯 **Auto-Select Eligible** | Senders' apps can choose you automatically |
+| **20+ top-ups** | 💎 **Premium Seller** | Maximum limit +100% (€200 → €400) |
+
+**Economic value of rewards:**
+- **Higher visibility** → More transactions selected → More 0.5% fees earned
+- **Higher limits** → Can serve larger remittances → More volume per transaction
+- **Auto-select** → Passive income stream (bot handles everything)
+
+**Opportunity cost of NOT topping up:**
+- Lose access to higher limits and priority placement
+- Miss out on [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) compounding (≈360% APR)
+- Competitors with rewards earn more visibility and fees
+
+**The philosophy:** We don't punish sellers for market movements. We reward sellers who go above and beyond to complete remittances, creating a race to the top for reliability.
+
+---
+
+**Who bears the price drop risk:** SENDER, not merchant. Merchant is completely protected from all volatility.
 
 **Scenario 5: Covenant code bug**
 - Rare (Chipnet testing + community audit should catch)
