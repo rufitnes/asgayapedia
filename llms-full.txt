@@ -37731,6 +37731,24 @@ Action: If >5%, increase to 10% and retest
 
 ---
 
+> 💡 **KEY DESIGN PRINCIPLE: Merchant is Protected from ALL Volatility Risk**
+> 
+> **The merchant NEVER bears volatility risk:**
+> - ✅ If BCH stays stable → Merchant gets exact EUR value in BCH
+> - ✅ If BCH rises → Merchant gets exact EUR value in BCH (less BCH, same value)
+> - ✅ If BCH drops <7% → Overcollateralization covers it, merchant gets exact EUR value
+> - ✅ If BCH drops >7% → **Transaction cancels BEFORE merchant participates**
+> 
+> **In a margin call (>7% drop):**
+> - Covenant matures early
+> - ALL BCH refunds to SENDER (not merchant)
+> - Merchant never receives anything (transaction cancelled)
+> - **SENDER bears the loss** (opts into BCH exposure by creating covenant)
+> 
+> **Why this matters:** Local Venezuelan merchants provide physical cash liquidity. They cannot absorb crypto volatility risk. The 107% overcollateralization + margin call mechanism ensures they NEVER do.
+
+---
+
 ## The Goal (Architectural Ideal)
 
 **Eliminate cryptocurrency volatility risk** from the remittance process.
@@ -37807,6 +37825,30 @@ Action: If >5%, increase to 10% and retest
 - If BCH drops <7%: Overcollateralization absorbs it
 - If BCH drops >7%: Margin call (seller must add BCH or bounty refunds)
 - Recipient has ZERO exposure (not holding any assets yet)
+
+---
+
+> 🚨 **CRITICAL: Who Bears the Risk in a Margin Call?**
+> 
+> **Scenario:** BCH drops >7% during the 24-hour window (e.g., from €1000 to €920)
+> 
+> **What happens:**
+> 1. Covenant locked: 0.107 BCH (was €107, now worth €98.44)
+> 2. Seller already received: €100 Bizum from sender
+> 3. **Covenant matures EARLY** (margin call triggered)
+> 4. **ALL BCH goes to SENDER** (refund split: merchant portion → sender, seller fee → seller)
+> 5. Merchant NEVER receives anything (transaction cancelled)
+> 
+> **Who bears the loss:**
+> - ❌ **NOT the merchant** (merchant never participated, got nothing)
+> - ❌ **NOT the seller** (seller already has €100 fiat, bought back BCH cheaper)
+> - ✅ **YES the sender** (paid €100 Bizum, receives €98.44 worth of BCH)
+> 
+> **Sender's loss:** €1.56 (paid €100, got back €98.44)
+> 
+> **This is BY DESIGN:** Sender opts into BCH exposure by creating the covenant. Merchant is completely protected from volatility risk.
+> 
+> **See:** [Unclaimed Transaction Expiry](unclaimed-transaction-expiry.md#why-seller-fraud-doesn-t-work) for refund split mechanism details.
 
 ---
 
@@ -38334,10 +38376,29 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 - BCH seller bears opportunity cost (24h lockup)
 
 **Scenario 4: BCH drops >7% during wait (margin call)**
-- Seller notified: "Add 0.0005 BCH within 1 hour or bounty refunds"
-- Option A: Seller tops up → Covenant continues
-- Option B: Seller ignores → Timeout after 24h → Refund
-- Recipient not affected (hasn't received anything yet)
+
+**Example:** BCH drops from €1000 to €920 (-8%)
+
+**Timeline:**
+- Covenant locked: 0.107 BCH (was €107, now worth €98.44)
+- Seller already received: €100 Bizum from sender
+- Margin call triggered (price drop >7%)
+
+**Option A: Seller tops up**
+- Seller adds 0.0007 BCH to restore 107% collateral
+- Covenant continues normally
+- Merchant can still claim when recipient arrives
+
+**Option B: Seller ignores (economically rational for seller)**
+- Covenant matures early after 24h timeout
+- **Refund distribution:**
+  - Merchant portion (€99.50 worth) → **SENDER** (receives 0.1080 BCH worth €99.50)
+  - Seller fee (€0.50 worth) → **SELLER** (receives 0.0005 BCH worth €0.50)
+- **Sender's net:** Paid €100 Bizum, received €99.50 BCH = **€0.50 loss**
+- **Merchant's net:** Never participated, received nothing = **€0 loss** ✅
+- **Seller's net:** Received €100 Bizum, returned €99.50 BCH + €0.50 fee = **€0.50 profit** (plus bought BCH cheaper)
+
+**Who bears the margin call risk:** SENDER, not merchant. Merchant is completely protected.
 
 **Scenario 5: Covenant code bug**
 - Rare (Chipnet testing + community audit should catch)
