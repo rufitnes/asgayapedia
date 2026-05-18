@@ -4588,11 +4588,13 @@ Claim it at any merchant within 24 hours&quot;
 <p><strong>Both co-sign covenant:</strong></p>
 </li>
 <li>Merchant signature: "Cash delivered to Elena" ✅</li>
-<li>
-<p>Elena signature: "Cash received" ✅ (via app)</p>
-</li>
-<li>
-<p><strong>Both conditions met → Covenant executes automatically:</strong>
+<li>Elena signature: "Cash received" ✅ (via app)</li>
+</ol>
+<blockquote>
+<p><strong>What prevents the seller from refusing to sign Condition 1?</strong> The seller's bot auto-signs the moment it detects the fiat payment. Manual refusal is detected, triggers a fraud proof, and results in stake slashing and permanent banning. See <a href="../../concepts/universal-bot-fraud-prevention/">Universal Bot Fraud Prevention</a> for the full threat model.</p>
+</blockquote>
+<ol>
+<li><strong>Both conditions met → Covenant executes automatically:</strong>
    <div class="highlight"><pre><span></span><code>Contract Maturity:
 ├─ Condition 1 (BCH seller): Payment received ✅
 ├─ Condition 2 (Merchant): Cash delivered ✅
@@ -4602,8 +4604,7 @@ Result:
 ├─ Merchant receives: €99.5 worth of BCH (at current rate)
 ├─ BCH seller receives: €7.5 (overcollateralization surplus + 0.5% fee)
 └─ Transaction complete (on-chain, immutable)
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 </ol>
 <p><strong>Volatility exposure during Step 2:</strong>
 - <strong>30 seconds</strong> (from Elena walking in to covenant maturity)
@@ -4617,6 +4618,9 @@ Result:
 - ✅ <strong>24-hour window:</strong> Long enough for recipient to reach merchant even with power outages/delays
 - ✅ <strong>Room to adjust:</strong> Can shift to 5%/10%/12% based on margin call data
 - ✅ <strong>Conservative start:</strong> Easier to relax constraints than tighten them after launch</p>
+<blockquote>
+<p><strong>Why sellers accept the 7% collateral:</strong> The seller is not speculating on BCH; they are running a market-making operation. Only 7% of their capital is exposed to volatility—the other 93% is already in fiat. Even a margin call is economically neutral because the seller acquires more BCH at a lower price. See <a href="../../concepts/overcollateralized-bounty-contracts/#capital-recycling-strategy-the-sellers-business-model">Capital Recycling Strategy</a> for a worked example of why sellers win in both price directions.</p>
+</blockquote>
 <p><strong>What we're testing in Phase 0 (5-10 migrant workers, 30+ transactions, 1-2 months):</strong></p>
 <h3 id="success-metrics-for-overcollateralization">Success Metrics for Overcollateralization<a class="headerlink" href="#success-metrics-for-overcollateralization" title="Permanent link">&para;</a></h3>
 <table>

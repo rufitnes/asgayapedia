@@ -4523,6 +4523,7 @@ and adjust based on real participant behavior.</p>
 - Merchant can sell BCH immediately to BCH buyer (separate market)
 - Typical spread: 0.5% (merchant loses entire reward to spread)
 - <strong>Result if selling immediately:</strong> Merchant gets €99.00 fiat (same as no reward!)</p>
+<p><strong>Enforcement:</strong> The seller's bot auto-signs the covenant the moment the Bizum payment is detected. Manual refusal is economically irrational and results in permanent exclusion. See <a href="../../concepts/universal-bot-fraud-prevention/">Universal Bot Fraud Prevention</a> for the full incentive analysis.</p>
 </blockquote>
 <hr />
 <h2 id="the-goal-architectural-ideal">The Goal (Architectural Ideal)<a class="headerlink" href="#the-goal-architectural-ideal" title="Permanent link">&para;</a></h2>
@@ -4564,6 +4565,9 @@ Recipient receives: 99% (transfer amount minus fees)
 - ✅ <strong>Competitive positioning:</strong> 1% total beats 6.49% legacy fees by massive margin
 - ✅ <strong>Symmetric split:</strong> Equal rewards signal fairness and balanced importance
 - ✅ <strong>Room to adjust:</strong> Can shift to 0.6%/0.4% or 0.4%/0.6% based on data</p>
+<blockquote>
+<p><strong>Why 0.5% may already be highly attractive:</strong> With capital recycling, a seller can turn over the same BCH many times per day, yielding an effective annualised return (APR) far above the nominal 0.5% per transaction. See <a href="../../concepts/overcollateralized-bounty-contracts/#capital-recycling-strategy-the-sellers-business-model">Capital Recycling Strategy</a> for the detailed model (≈360% APR vs. ≈171% APR without recycling).</p>
+</blockquote>
 <p><strong>What we're testing in Phase 0 (5-10 migrant workers, 1-2 months):</strong></p>
 <h3 id="success-metrics">Success Metrics<a class="headerlink" href="#success-metrics" title="Permanent link">&para;</a></h3>
 <table>

@@ -25,6 +25,8 @@ A BCH seller is anyone who:
 - ✅ Private individuals or entities (selling their own BCH for fiat)
 - ✅ Participants in a permissionless protocol (no KYC, no licensing required)
 
+> **How sellers actually make money:** The 0.5% fee per transaction is only part of the story. Sellers recycle the same capital many times per day, and the hedge mechanism means they profit in both rising and falling BCH markets. Read the [Capital Recycling Strategy](overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) for a complete walk-through.
+
 ---
 
 ## Who Can Be a BCH Seller?

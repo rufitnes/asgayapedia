@@ -138,6 +138,8 @@ Buy surplus BCH from merchants with cash, enabling merchants to convert back to 
 - Reputation-based vetting (forum history, contributions)
 - Bulletin board listing with contact info
 
+> **Security for early sellers:** Because the seller's bot auto-signs on payment receipt, and the covenant enforces a strict timeout, a seller does not need to trust the sender or the protocol. See [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md) for the economic analysis that makes fraud irrational from the first transaction.
+
 **This expands liquidity without compromising trust (Phase 0 still semi-permissioned).**
 
 ---
@@ -170,6 +172,8 @@ Buy surplus BCH from merchants with cash, enabling merchants to convert back to 
 > As a BCH buyer, you buy merchants' surplus BCH with cash, earning 
 > the spread. The more merchants you onboard, the more buying opportunities 
 > you have."
+
+> **What onboarders unlock:** Once a user has successfully onboarded a merchant, they gain access to the seller role, which can yield a capital-efficient return through constant recycling. See [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) for the detailed business model.
 
 **Recruitment channels:**
 - Targeted posts in r/beermoney, r/Jobs4Bitcoins

@@ -120,6 +120,8 @@
    - Merchant signature: "Cash delivered to Elena" ✅
    - Elena signature: "Cash received" ✅ (via app)
 
+> **What prevents the seller from refusing to sign Condition 1?** The seller's bot auto-signs the moment it detects the fiat payment. Manual refusal is detected, triggers a fraud proof, and results in stake slashing and permanent banning. See [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md) for the full threat model.
+
 5. **Both conditions met → Covenant executes automatically:**
    ```
    Contract Maturity:
@@ -149,6 +151,8 @@ These are our **hypotheses**, not finalized parameters. We chose these values be
 - ✅ **24-hour window:** Long enough for recipient to reach merchant even with power outages/delays
 - ✅ **Room to adjust:** Can shift to 5%/10%/12% based on margin call data
 - ✅ **Conservative start:** Easier to relax constraints than tighten them after launch
+
+> **Why sellers accept the 7% collateral:** The seller is not speculating on BCH; they are running a market-making operation. Only 7% of their capital is exposed to volatility—the other 93% is already in fiat. Even a margin call is economically neutral because the seller acquires more BCH at a lower price. See [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) for a worked example of why sellers win in both price directions.
 
 **What we're testing in Phase 0 (5-10 migrant workers, 30+ transactions, 1-2 months):**
 
