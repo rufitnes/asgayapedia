@@ -6,6 +6,25 @@
 
 ---
 
+> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
+> 
+> **The 7% overcollateralization rate and 24-hour timeout are educated guesses, not empirical data.**
+> 
+> We don't yet know:
+> - Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
+> - Will sellers accept 7% capital inefficiency for 0.5% fee?
+> - Should it vary by market conditions? (5% calm, 12% volatile)
+> - Should it vary by time window? (5% for 12h, 7% for 24h)
+> - Is 24 hours the right claim window, or do recipients need longer/shorter?
+> 
+> **The Bitcoin lesson:** Satoshi chose a 1MB block size limit without empirical 
+> validation. It seemed reasonable at the time, then became a scaling bottleneck 
+> leading to contentious hard forks. We're explicitly tracking these assumptions.
+> 
+> **See:** [Phase 0 Validation Strategy](#phase-0-validation-strategy) below for detailed testing approach.
+
+---
+
 ## The Goal (Architectural Ideal)
 
 **Eliminate cryptocurrency volatility risk** from the remittance process.
@@ -118,6 +137,117 @@
 - **30 seconds** (from Elena walking in to covenant maturity)
 - Overcollateralization absorbs any price movement in this window
 - Merchant receives exactly €99.5 worth of BCH regardless of price changes
+
+---
+
+## Phase 0 Validation Strategy
+
+**Why we're starting at 7% overcollateralization and 24-hour timeout:**
+
+These are our **hypotheses**, not finalized parameters. We chose these values because:
+- ✅ **7% buffer:** Conservative enough to handle typical crypto volatility swings (±5%)
+- ✅ **24-hour window:** Long enough for recipient to reach merchant even with power outages/delays
+- ✅ **Room to adjust:** Can shift to 5%/10%/12% based on margin call data
+- ✅ **Conservative start:** Easier to relax constraints than tighten them after launch
+
+**What we're testing in Phase 0 (5-10 migrant workers, 30+ transactions, 1-2 months):**
+
+### Success Metrics for Overcollateralization
+
+| Metric | Success Signal | Failure Signal |
+|--------|---------------|----------------|
+| **Margin call rate** | <5% of transactions | >10% of transactions |
+| **Underpayment incidents** | 0 (merchant always gets full EUR value) | Any merchant receives less than promised |
+| **BCH volatility during trials** | 95th percentile stays <7% per 24h | Frequent >8% swings |
+| **Seller capital efficiency** | Sellers re-post bounties after completion | Sellers complain about capital lockup |
+
+### Success Metrics for 24-Hour Timeout
+
+| Metric | Success Signal | Failure Signal |
+|--------|---------------|----------------|
+| **Claim rate** | >90% claimed within 24h | <80% claimed within 24h |
+| **Expiry rate** | <5% expire unclaimed | >15% expire unclaimed |
+| **Claim timing distribution** | Most claims within 6 hours | Claims clustered near 24h deadline |
+| **Extension requests** | <5% request longer window | >15% need more time |
+
+### Adjustment Triggers for Overcollateralization
+
+**Trigger 1: Frequent margin calls (>10% of transactions)**
+- **Signal:** BCH volatility consistently exceeds 7% buffer during 24h windows
+- **Root cause:** 7% buffer insufficient for real-world volatility
+- **Action:** Increase to **10% overcollateralization**
+- **Impact:** Seller locks €110 instead of €107 (higher capital cost, but fewer margin calls)
+
+**Trigger 2: Rare margin calls (<1% of transactions)**
+- **Signal:** 7% buffer is overkill, BCH volatility stays <5% in practice
+- **Root cause:** Over-conservative estimate
+- **Action:** Reduce to **5% overcollateralization**
+- **Impact:** Seller locks €105 instead of €107 (better capital efficiency, same protection)
+
+**Trigger 3: Market conditions vary widely**
+- **Signal:** Calm periods have <2% volatility, volatile periods have >10% swings
+- **Root cause:** Static 7% doesn't adapt to market conditions
+- **Action:** Implement **dynamic overcollateralization** (5% calm, 7% normal, 12% volatile)
+- **Mechanism:** Bot monitors BCH volatility over previous 7 days, adjusts buffer automatically
+
+**Trigger 4: Any underpayment occurs**
+- **Signal:** Merchant receives less than promised EUR value (covenant fails to cover)
+- **Root cause:** Overcollateralization insufficient or covenant math error
+- **Action:** **Immediate increase to 12%** + audit covenant code
+- **Critical:** This breaks trust—zero tolerance
+
+### Adjustment Triggers for Timeout Window
+
+**Trigger 1: High expiry rate (>15% unclaimed)**
+- **Signal:** Recipients can't reach merchants within 24 hours consistently
+- **Root causes:** Power outages longer than expected, rural distance, merchant availability
+- **Action:** Increase to **48-hour timeout** for affected corridors
+- **Impact:** Seller capital locked longer, but more transactions complete
+
+**Trigger 2: Low expiry rate + fast claims (<5% expiry, 80% claimed within 6 hours)**
+- **Signal:** Recipients don't need 24 hours, most claim immediately
+- **Root cause:** Over-conservative estimate
+- **Action:** Consider **12-hour timeout option** for urban corridors
+- **Impact:** Seller capital freed faster, less volatility exposure
+
+**Trigger 3: Corridor-specific patterns emerge**
+- **Signal:** Urban Caracas has <2% expiry, rural villages have >20% expiry
+- **Root cause:** Infrastructure quality varies by location
+- **Action:** Implement **corridor-specific timeouts** (24h urban, 48h rural, 72h remote)
+- **Mechanism:** Sender chooses timeout based on recipient location
+
+### Data Collection During Phase 0
+
+We'll track:
+- ✅ **BCH price movement** during each covenant's 24h window (max %, average %)
+- ✅ **Margin call frequency** (% of covenants requiring top-up)
+- ✅ **Underpayment incidents** (merchant receives less than promised EUR value)
+- ✅ **Claim timing distribution** (histogram: 0-6h, 6-12h, 12-18h, 18-24h, expired)
+- ✅ **Expiry reasons** (why didn't recipient claim? power outage, forgot, merchant unavailable, etc.)
+- ✅ **Seller feedback** ("Is 7% capital lockup worth 0.5% fee?")
+- ✅ **Covenant execution success rate** (% of covenants that execute correctly when conditions met)
+
+### How We'll Decide
+
+**After 30+ successful transactions across 5+ senders:**
+1. Analyze BCH volatility data (95th percentile movement during covenant windows)
+2. Review margin call frequency and underpayment incidents
+3. Survey participants about timeout adequacy
+4. Calculate actual capital efficiency for sellers
+5. Make data-driven adjustment if needed
+6. Document decision rationale
+
+**Decision matrix:**
+
+| Scenario | Action |
+|----------|--------|
+| Margin calls <1%, expiry <5% | **Reduce to 5% / Consider 12h timeout** |
+| Margin calls 1-5%, expiry 5-10% | **Keep 7% / Keep 24h (working as designed)** |
+| Margin calls 5-10%, expiry 10-15% | **Monitor closely (edge of acceptable)** |
+| Margin calls >10%, expiry >15% | **Increase to 10% / Increase to 48h** |
+| Any underpayment | **Immediate increase to 12% + audit code** |
+
+**We will NOT guess.** Phase 0 exists to replace assumptions with evidence.
 
 ---
 
@@ -453,34 +583,6 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 ---
 
 ### Overcollateralization Mechanics
-
-> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
-> 
-> **The 7% overcollateralization rate is an educated guess, not empirical data.**
-> 
-> We don't yet know:
-> - Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
-> - Will sellers accept 7% capital inefficiency for 0.5% fee?
-> - Should it vary by market conditions? (5% calm, 12% volatile)
-> - Should it vary by time window? (5% for 12h, 7% for 24h)
-> 
-> **The Bitcoin lesson:** Satoshi chose a 1MB block size limit without empirical 
-> validation. It seemed reasonable at the time, then became a scaling bottleneck 
-> leading to contentious hard forks. We're explicitly tracking this assumption.
-> 
-> **Phase 0 validation plan:**
-> - Track margin call frequency (target: <5% of transactions)
-> - Measure 95th percentile BCH volatility during trials
-> - Test seller willingness to lock capital at this rate
-> 
-> **Adjustment triggers:**
-> - If margin calls >10% → Increase to 10% overcollateralization
-> - If margin calls <1% → Consider reducing to 5% (free up seller capital)
-> - If underpayment occurs → Immediately increase buffer
-> 
-> **See:** [Phase 0 Validation Checklist](phase-0-validation-checklist.md#-overcollateralization-rate)
-
----
 
 **How 7% buffer protects:**
 
