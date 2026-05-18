@@ -45,6 +45,8 @@
 > - Typical spread: 0.5% (merchant loses entire reward to spread)
 > - **Result if selling immediately:** Merchant gets €99.00 fiat (same as no reward!)
 
+> **Enforcement:** The seller's bot auto-signs the covenant the moment the Bizum payment is detected. Manual refusal is economically irrational and results in permanent exclusion. See [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md) for the full incentive analysis.
+
 ---
 
 ## The Goal (Architectural Ideal)
@@ -105,6 +107,8 @@ This is our **hypothesis**, not a finalized parameter. We chose 0.5% for each pa
 - ✅ **Competitive positioning:** 1% total beats 6.49% legacy fees by massive margin
 - ✅ **Symmetric split:** Equal rewards signal fairness and balanced importance
 - ✅ **Room to adjust:** Can shift to 0.6%/0.4% or 0.4%/0.6% based on data
+
+> **Why 0.5% may already be highly attractive:** With capital recycling, a seller can turn over the same BCH many times per day, yielding an effective annualised return (APR) far above the nominal 0.5% per transaction. See [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) for the detailed model (≈360% APR vs. ≈171% APR without recycling).
 
 **What we're testing in Phase 0 (5-10 migrant workers, 1-2 months):**
 

@@ -78,6 +78,8 @@ If covenant times out (recipient never claims), refund is **SPLIT**:
 - Gets back: €0.50 BCH (processing fee only)
 - **Must refund €99.50 Bizum to break even**
 
+> **Beyond the immediate loss:** Ghosting also means permanent exclusion from the seller role. A banned seller loses access to a business model that can generate ≈360% APR on deployed capital (see [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model)). The opportunity cost dwarfs the €6.50 static loss.
+
 **See:** [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md) for complete analysis.
 
 ---
