@@ -3018,6 +3018,67 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#phase-0-validation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 Validation Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0 Validation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adjustment-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adjustment Triggers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collection-during-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Collection During Phase 0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-well-decide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How We'll Decide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fee-distribution-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3930,6 +3991,67 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#phase-0-validation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 Validation Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0 Validation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adjustment-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adjustment Triggers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collection-during-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Collection During Phase 0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-well-decide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How We'll Decide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fee-distribution-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4371,22 +4493,6 @@
 <strong>Related Requirement:</strong> <a href="../../core-architecture/why-promote-adoption/">Promote Adoption</a></p>
 <hr />
 <blockquote>
-<p>💡 <strong>TL;DR: How the 1% fee is split</strong></p>
-<p>The 1% total fee is split between TWO participants in the covenant:
-- <strong>BCH Seller:</strong> 0.5% (provides overcollateralized BCH to covenant)
-- <strong>Merchant:</strong> 0.5% (hands cash to recipient, receives BCH)</p>
-<p><strong>Example (€100 transfer):</strong>
-- Total fee: €1.00
-- BCH seller earns: €0.50 (0.5%)
-- Merchant earns: €0.50 (0.5%)
-- <strong>Recipient receives:</strong> €99.00 worth of VES cash</p>
-<p><strong>Optional instant settlement:</strong>
-- Merchant can sell BCH immediately to BCH buyer (separate market)
-- Typical spread: 0.5% (merchant loses entire reward to spread)
-- <strong>Result if selling immediately:</strong> Merchant gets €99.00 fiat (same as no reward!)</p>
-</blockquote>
-<hr />
-<blockquote>
 <p>⚠️ <strong>HYPOTHESIS — NEEDS PHASE 0 VALIDATION</strong></p>
 <p><strong>The 0.5%/0.5% split is an educated guess, not empirical data.</strong></p>
 <p>We don't yet know if:
@@ -4400,7 +4506,23 @@ and adjust based on real participant behavior.</p>
 - If seller acquisition fails → Consider 0.6% seller / 0.4% merchant
 - If merchant acquisition fails → Consider 0.4% seller / 0.6% merchant
 - If both struggle → Consider 0.7% each (1.4% total, still competitive vs. 6.49% legacy)</p>
-<p><strong>See:</strong> <a href="../phase-0-validation-checklist/#-fee-split-seller--merchant">Phase 0 Validation Checklist</a></p>
+<p><strong>See:</strong> <a href="#phase-0-validation-strategy">Phase 0 Validation Strategy</a> below for detailed testing approach.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p>💡 <strong>TL;DR: How the 1% fee is split</strong></p>
+<p>The 1% total fee is split between TWO participants in the covenant:
+- <strong>BCH Seller:</strong> 0.5% (provides overcollateralized BCH to covenant)
+- <strong>Merchant:</strong> 0.5% (hands cash to recipient, receives BCH)</p>
+<p><strong>Example (€100 transfer):</strong>
+- Total fee: €1.00
+- BCH seller earns: €0.50 (0.5%)
+- Merchant earns: €0.50 (0.5%)
+- <strong>Recipient receives:</strong> €99.00 worth of VES cash</p>
+<p><strong>Optional instant settlement:</strong>
+- Merchant can sell BCH immediately to BCH buyer (separate market)
+- Typical spread: 0.5% (merchant loses entire reward to spread)
+- <strong>Result if selling immediately:</strong> Merchant gets €99.00 fiat (same as no reward!)</p>
 </blockquote>
 <hr />
 <h2 id="the-goal-architectural-ideal">The Goal (Architectural Ideal)<a class="headerlink" href="#the-goal-architectural-ideal" title="Permanent link">&para;</a></h2>
@@ -4434,6 +4556,97 @@ Recipient receives: 99% (transfer amount minus fees)
 - BCH seller posts their own BCH as collateral
 - Overcollateralization surplus is separate from fee (seller keeps if BCH rises)
 - Simple, transparent, no hidden costs</p>
+<hr />
+<h2 id="phase-0-validation-strategy">Phase 0 Validation Strategy<a class="headerlink" href="#phase-0-validation-strategy" title="Permanent link">&para;</a></h2>
+<p><strong>Why we're starting at 0.5%/0.5%:</strong></p>
+<p>This is our <strong>hypothesis</strong>, not a finalized parameter. We chose 0.5% for each participant because:
+- ✅ <strong>Conservative start:</strong> Easy to raise fees if needed (harder to lower them)
+- ✅ <strong>Competitive positioning:</strong> 1% total beats 6.49% legacy fees by massive margin
+- ✅ <strong>Symmetric split:</strong> Equal rewards signal fairness and balanced importance
+- ✅ <strong>Room to adjust:</strong> Can shift to 0.6%/0.4% or 0.4%/0.6% based on data</p>
+<p><strong>What we're testing in Phase 0 (5-10 migrant workers, 1-2 months):</strong></p>
+<h3 id="success-metrics">Success Metrics<a class="headerlink" href="#success-metrics" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Participant</th>
+<th>Success Signal</th>
+<th>Failure Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BCH Sellers</strong></td>
+<td>&gt;80% bounty acceptance rate</td>
+<td>&lt;50% acceptance rate</td>
+</tr>
+<tr>
+<td><strong>BCH Sellers</strong></td>
+<td>&lt;2 hour avg response time</td>
+<td>&gt;6 hour avg response time</td>
+</tr>
+<tr>
+<td><strong>BCH Sellers</strong></td>
+<td>Sellers re-post after completion</td>
+<td>Sellers abandon after 1-2 transactions</td>
+</tr>
+<tr>
+<td><strong>Merchants</strong></td>
+<td>&gt;70% hold BCH (don't immediately sell)</td>
+<td>&lt;30% hold BCH</td>
+</tr>
+<tr>
+<td><strong>Merchants</strong></td>
+<td>Merchants accept repeat remittances</td>
+<td>Merchants stop after first transaction</td>
+</tr>
+<tr>
+<td><strong>Merchants</strong></td>
+<td>Avg 5+ remittances/month per merchant</td>
+<td>&lt;2 remittances/month</td>
+</tr>
+</tbody>
+</table>
+<h3 id="adjustment-triggers">Adjustment Triggers<a class="headerlink" href="#adjustment-triggers" title="Permanent link">&para;</a></h3>
+<p><strong>Trigger 1: BCH seller acquisition fails</strong>
+- <strong>Signal:</strong> &lt;5 sellers willing to participate, &lt;50% bounty acceptance rate
+- <strong>Root cause:</strong> 0.5% fee doesn't compensate for capital cost + volatility risk
+- <strong>Action:</strong> Increase to <strong>0.6% seller / 0.4% merchant</strong> split
+- <strong>Rationale:</strong> Seller bears more risk (24h capital lock + overcollateralization), needs higher reward</p>
+<p><strong>Trigger 2: Merchant acquisition fails</strong>
+- <strong>Signal:</strong> &lt;3 merchants onboarded, merchants quit after first payout
+- <strong>Root cause:</strong> 0.5% doesn't justify physical cash handling + security risk
+- <strong>Action:</strong> Increase to <strong>0.4% seller / 0.6% merchant</strong> split
+- <strong>Rationale:</strong> Merchant bears physical risk (cash handling, security), needs higher reward</p>
+<p><strong>Trigger 3: Both struggle to participate</strong>
+- <strong>Signal:</strong> &lt;5 sellers AND &lt;3 merchants after Phase 0
+- <strong>Root cause:</strong> 1% total fee is too thin to split
+- <strong>Action:</strong> Increase to <strong>0.7% seller / 0.7% merchant</strong> (1.4% total)
+- <strong>Rationale:</strong> Still competitive vs. 6.49% legacy, but adequately compensates risks</p>
+<p><strong>Trigger 4: Instant settlement dominates</strong>
+- <strong>Signal:</strong> &gt;70% merchants immediately sell BCH for fiat
+- <strong>Root cause:</strong> 0.5% reward insufficient to incentivize holding
+- <strong>Action:</strong> Consider <strong>tiered rewards</strong> (0.5% if sold immediately, 0.7% if held &gt;7 days)
+- <strong>Rationale:</strong> Align incentives with BCH adoption mission</p>
+<h3 id="data-collection-during-phase-0">Data Collection During Phase 0<a class="headerlink" href="#data-collection-during-phase-0" title="Permanent link">&para;</a></h3>
+<p>We'll track:
+- ✅ <strong>Bounty acceptance rate</strong> (% of posted bounties accepted by sellers)
+- ✅ <strong>Response time</strong> (how fast sellers accept bounties)
+- ✅ <strong>Merchant holding behavior</strong> (% who hold BCH vs. sell immediately)
+- ✅ <strong>Merchant retention</strong> (do merchants continue after first transaction?)
+- ✅ <strong>Covenant completion rate</strong> (% of covenants that execute successfully)
+- ✅ <strong>Profitability surveys</strong> ("Is 0.5% worth your time/risk?")</p>
+<h3 id="how-well-decide">How We'll Decide<a class="headerlink" href="#how-well-decide" title="Permanent link">&para;</a></h3>
+<p><strong>After 30+ successful remittances across 5+ senders:</strong>
+1. Review metrics against success criteria
+2. Survey participants (BCH sellers + merchants) about perceived fairness
+3. Calculate actual profitability (fees earned vs. costs incurred)
+4. Make data-driven adjustment if needed
+5. Document decision rationale</p>
+<p><strong>If metrics are green (success signals):</strong> Keep 0.5%/0.5%<br />
+<strong>If one side struggles:</strong> Shift split (0.6%/0.4% or 0.4%/0.6%)<br />
+<strong>If both struggle:</strong> Increase total fee (1.4%)  </p>
+<p><strong>We will NOT guess.</strong> Phase 0 exists to replace assumptions with evidence.</p>
 <hr />
 <h2 id="fee-distribution-examples">Fee Distribution Examples<a class="headerlink" href="#fee-distribution-examples" title="Permanent link">&para;</a></h2>
 <h3 id="standard-transaction-100-transfer-merchant-holds-bch">Standard Transaction (€100 transfer, merchant holds BCH)<a class="headerlink" href="#standard-transaction-100-transfer-merchant-holds-bch" title="Permanent link">&para;</a></h3>

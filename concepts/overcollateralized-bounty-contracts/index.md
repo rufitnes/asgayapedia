@@ -574,6 +574,299 @@ Accounting:
 
 ---
 
+## Capital Recycling Strategy: The Seller's Business Model
+
+**Key insight:** Sellers don't just lock capital and wait. They run an automated market-making operation.
+
+### The 5-10 Minute Refill Loop
+
+**Optimal seller strategy with exchange integration:**
+
+```
+1. Accept bounty → Lock 0.107 BCH in covenant
+2. Receive €100 Bizum → Instant notification (SMS parsed by bot)
+3. Bot auto-executes → Buy €100 BCH on exchange at market rate
+4. BCH confirms → 5-10 minutes (exchange withdrawal + blockchain confirmation)
+5. Hot wallet refilled → 0.1 BCH ready for next bounty
+6. Accept next bounty → Repeat loop
+```
+
+**Capital utilization:**
+
+```
+Single €100 capital:
+├─ Without recycling: 1 bounty per 24h = €0.50/day
+└─ With recycling: 12-24 bounties per day = €6-12/day
+
+€1,000 capital:
+├─ 10 concurrent covenants locked (€1,070 total)
+├─ Each completes within 1-6 hours average
+├─ Refill every 5-10 minutes enables continuous flow
+└─ Daily throughput: 20-30 transactions × €0.50 = €10-15/day
+```
+
+**Monthly return calculation:**
+
+```
+Capital: €1,000
+Daily transactions: 20 (conservative estimate with recycling)
+Daily earnings: 20 × €0.50 = €10
+Monthly earnings: €10 × 30 days = €300
+Monthly return: 30% on €1,000 capital
+Annual return: 360% APR
+```
+
+**This transforms 0.5% fee from "mediocre" to "highly attractive" through volume.**
+
+---
+
+### Market-Making Model, Not Speculation
+
+**Seller isn't betting on BCH price direction — they're capturing spread on flow:**
+
+**Traditional holding:**
+```
+Buy: 0.1 BCH at €1,000/BCH = €100
+Hold: 24 hours
+Price moves: ±5-10% typical
+Risk: Full exposure on entire 0.1 BCH
+Return: Pure speculation
+```
+
+**Covenant market-making:**
+```
+Sell: 0.1 BCH at €1,005/BCH (+0.5% markup) = €100.50 Bizum received
+Lock: 0.107 BCH in covenant (includes 0.007 BCH collateral buffer)
+Buy back: €100 BCH on exchange at market rate = 0.1 BCH
+Exposure: Only 0.007 BCH collateral at risk (7% buffer)
+Return: €0.50 fee (0.5%) + recycled capital in 5-10 min
+
+Risk reduction: 93% less exposure (0.007 vs 0.1 BCH)
+```
+
+**The fee is captured upfront:**
+- Seller sells BCH at +0.5% markup to sender
+- Example: Market €1,000/BCH → Seller charges €1,005/BCH
+- Sender pays €100 Bizum for 0.0995 BCH worth of remittance value
+- Seller locks 0.107 BCH (at market rate €1,000) = €107 locked
+- **Fee already in hand** (€0.50 premium in Bizum payment)
+
+**Only the collateral buffer is exposed to volatility:**
+- Total locked: 0.107 BCH
+- Principal going to merchant: 0.1 BCH (€99.50 value)
+- Collateral buffer: 0.007 BCH (€7 value at lock time)
+- **Volatility exposure: 7% of locked amount, not 100%**
+
+---
+
+### Why Sellers Want Many Concurrent Covenants
+
+**Each covenant = 0.5% fee earning over 24 hours**
+
+**Scenario: Seller with €1,000 capital**
+
+```
+Morning (9 AM):
+├─ Accept 10 bounties simultaneously
+├─ Lock: 10 × 0.107 BCH = €1,070 worth
+├─ Receive: 10 × €100 = €1,000 Bizum
+├─ Bot auto-buys: €1,000 BCH on exchange
+└─ Wait: 5-10 minutes for hot wallet refill
+
+Mid-morning (10 AM):
+├─ Hot wallet refilled with ~1 BCH
+├─ First 3 recipients claim (covenants execute)
+├─ Receive back: 3 × 0.0075 BCH surplus
+├─ Accept 3 new bounties immediately
+└─ Keep the wheel spinning
+
+Afternoon (2 PM):
+├─ 7 more covenants execute
+├─ Accept 7 new bounties
+└─ Continuous flow of fees
+
+Evening (8 PM):
+├─ 20 total transactions completed
+├─ Earnings: 20 × €0.50 = €10
+├─ Capital still working: 10 covenants overnight
+└─ Tomorrow: Repeat
+```
+
+**The more covenants locked, the more fees earning simultaneously.**
+
+**Capital efficiency improves with volume:**
+- Low volume (1-2 covenants/day): 7% APR (not worth it)
+- Medium volume (10 concurrent): 68% monthly return
+- High volume (20-30/day with recycling): 360% APR
+
+**This is why 0.5% fee works — it's a high-frequency, low-margin business model.**
+
+---
+
+### Why Miners Are Ideal Sellers
+
+**BCH miners have natural advantages:**
+
+1. **Steady BCH inflow** (mining rewards)
+   - No need to buy BCH on exchanges
+   - No exchange fees eating into profits
+   - Unlimited inventory capacity
+
+2. **Already running infrastructure**
+   - Hot wallets for mining payouts
+   - Automated systems (pool monitoring, payout scripts)
+   - Technical capability to run seller bots
+
+3. **Natural BCH exposure**
+   - Already holding BCH as core business
+   - Covenant locks don't change risk profile
+   - Reduced exposure vs. just holding (7% buffer vs 100% exposure)
+
+4. **Revenue diversification**
+   - Mining rewards: Variable (difficulty, price, luck)
+   - Seller fees: Steady (volume-driven, predictable)
+   - Combined revenue stream more stable
+
+**Example: Small-scale BCH miner**
+
+```
+Daily mining output: 0.5 BCH
+Daily value at €1,000/BCH: €500
+
+Mining revenue only:
+└─ €500/day from block rewards
+
+Mining + Asgaya seller:
+├─ €500/day from block rewards
+├─ Accept 50 bounties/day (using mined BCH)
+├─ Earn: 50 × €0.50 = €25/day additional
+└─ Total: €525/day (+5% revenue boost)
+
+Monthly impact:
+├─ Mining: €15,000/month
+├─ Asgaya fees: €750/month
+└─ Total: €15,750/month (+5% boost)
+```
+
+**No capital cost, pure upside for miners.**
+
+---
+
+### The Hedge Mechanism: Why Sellers Always Win
+
+**Even in worst-case volatility scenarios, sellers are better off than holding:**
+
+**Scenario 1: BCH Price Stable (0% movement)**
+
+```
+Seller locks: 0.107 BCH worth €107
+Receives: €100 Bizum upfront
+Buys back: €100 worth BCH = 0.1 BCH
+
+After covenant executes:
+├─ Merchant takes: 0.0995 BCH (€99.50 worth)
+├─ Seller gets back: 0.0075 BCH (€7.50 worth = €7 buffer + €0.50 fee)
+└─ Total BCH recovered: 0.1 BCH (bought) + 0.0075 BCH (surplus) = 0.1075 BCH
+
+Seller's position:
+├─ Net BCH: 0.1075 - 0.107 = +0.0005 BCH (rounding/appreciation)
+├─ Net EUR: €0 (spent €100 buying BCH, received €100 Bizum)
+└─ Profit: €0.50 fee (captured in markup)
+```
+
+**Scenario 2: BCH Drops 7% (Margin Call Threshold)**
+
+```
+Seller locks: 0.107 BCH worth €107 at €1,000/BCH
+BCH drops to: €930/BCH (-7%)
+Receives: €100 Bizum upfront (before drop)
+Buys back: €100 worth BCH = 0.1075 BCH (at €930 rate, gets more BCH!)
+
+After covenant executes:
+├─ Covenant now worth: 0.107 × €930 = €99.51
+├─ Merchant takes: €99.50 ÷ €930 = 0.107 BCH (almost all of it)
+├─ Seller gets back: ~0 BCH (collateral consumed)
+└─ Total BCH held: 0.1075 BCH (from buy-back)
+
+Seller's position:
+├─ Net BCH: 0.1075 BCH (vs 0.107 originally locked)
+├─ Net EUR: €0
+└─ Result: Seller GAINED 0.0005 BCH despite margin call!
+
+Comparing to holding:
+├─ Held 0.107 BCH: Now worth €99.51 (-€7.49 loss)
+└─ Locked + recycled: Hold €100 worth of BCH = 0.1075 BCH
+    Better off by: €0.49 + 0.0005 BCH extra
+```
+
+**The counterintuitive result: When BCH drops, sellers buy back MORE BCH with the same €100.**
+
+**Scenario 3: BCH Rises 5%**
+
+```
+Seller locks: 0.107 BCH worth €107 at €1,000/BCH
+BCH rises to: €1,050/BCH (+5%)
+Receives: €100 Bizum upfront (before rise)
+Buys back: €100 worth BCH = 0.0952 BCH (at €1,050 rate, gets less BCH)
+
+After covenant executes:
+├─ Covenant now worth: 0.107 × €1,050 = €112.35
+├─ Merchant takes: €99.50 ÷ €1,050 = 0.0948 BCH
+├─ Seller gets back: 0.107 - 0.0948 = 0.0122 BCH (€12.81 worth)
+└─ Total BCH held: 0.0952 (bought) + 0.0122 (surplus) = 0.1074 BCH
+
+Seller's position:
+├─ Net BCH: 0.1074 - 0.107 = +0.0004 BCH
+├─ Net EUR: €0
+└─ Profit: €0.50 fee + €0.42 surplus appreciation
+
+Comparing to holding:
+├─ Held 0.107 BCH: Now worth €112.35 (+€5.35 gain)
+└─ Locked + recycled: Hold €105 worth of BCH = 0.1074 BCH worth €112.77
+    Better off by: €0.42 (still outperformed holding!)
+```
+
+**In ALL scenarios, the hedge protects sellers:**
+- ✅ **Stable:** Earn €0.50 fee, no volatility impact
+- ✅ **Price drops:** Buy back more BCH, lose less than holding
+- ✅ **Price rises:** Still profitable, earn surplus
+- ✅ **Even margin call:** Better outcome than holding equivalent BCH
+
+**The economic alignment is clear: Completing transactions is ALWAYS better than ghosting.**
+
+---
+
+### Why Capital Recycling Changes Everything
+
+**Old analysis (static):**
+```
+Lock €107 for 24 hours → Earn €0.50
+Return: 0.47% per day = 171% APR
+Verdict: "Okay, but not amazing"
+```
+
+**New analysis (with recycling):**
+```
+Lock €107 for 24 hours → But recycle every 5-10 minutes
+Throughput: 20-30 transactions/day on same €1,000 capital
+Earnings: €10-15/day
+Return: 1-1.5% per day = 365-547% APR
+Verdict: "Extremely attractive for market makers"
+```
+
+**Capital recycling is the key to making 0.5% fee economically viable.**
+
+**Sellers are incentivized to:**
+1. ✅ Accept as many bounties as possible (more fees)
+2. ✅ Keep covenants locked (each one earning 0.5%)
+3. ✅ Complete transactions quickly (free up capital for next round)
+4. ✅ Run automated bots (manual operation can't achieve volume)
+5. ✅ Minimize downtime (5-10 min refill vs 24h wait = 144x more transactions possible)
+
+**The business model: High-frequency, low-margin liquidity provision.**
+
+---
+
 ## Phase 0 Implementation Considerations
 
 ### Chipnet Testing Requirements

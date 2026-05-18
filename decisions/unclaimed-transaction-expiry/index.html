@@ -3130,6 +3130,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#why-this-prevents-seller-fraud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Prevents Seller Fraud
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-decision" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3780,6 +3791,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#why-this-prevents-seller-fraud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Prevents Seller Fraud
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-decision" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4101,6 +4123,35 @@
 - Manual refund: ~10 min work
 - Capital lock: €107 BCH tied up for 24h (opportunity cost)
 - <strong>Total cost:</strong> Time + opportunity cost + volatility exposure</p>
+<hr />
+<h2 id="why-this-prevents-seller-fraud">Why This Prevents Seller Fraud<a class="headerlink" href="#why-this-prevents-seller-fraud" title="Permanent link">&para;</a></h2>
+<p><strong>Common attack scenario (doesn't work):</strong></p>
+<p>A malicious BCH seller might think:
+1. Accept bounty, lock 107% BCH (€107 worth)
+2. Receive Bizum from sender (€100)
+3. Wait for timeout (don't help recipient claim)
+4. Get all BCH back + keep Bizum = profit?</p>
+<p><strong>Why this fails:</strong></p>
+<p>The covenant timeout refund is <strong>SPLIT</strong>:
+- <strong>Merchant portion</strong> (€99.50 worth of BCH) → <strong>Sender</strong> (refunded)
+- <strong>Seller processing fee</strong> (€0.50 worth of BCH) → <strong>Seller</strong> (kept)</p>
+<p><strong>Economic result:</strong>
+- Seller locks: €107 BCH (overcollateralized position)
+- Seller receives: €100 Bizum (from sender)
+- Seller gets back: €0.50 worth of BCH (processing fee only)
+- <strong>NET: Seller LOSES €6.50 by ghosting</strong></p>
+<p><strong>Why the seller must refund the Bizum:</strong></p>
+<p>If the seller keeps the €100 Bizum after timeout:
+- They locked €107 BCH
+- They get back €0.50 worth of BCH
+- They have €100 fiat
+- <strong>NET: Still LOSES €6.50</strong></p>
+<p><strong>For the seller to break even</strong>, they must:
+1. Send €99.50 Bizum refund to sender (manual work)
+2. Keep €0.50 processing fee (covers refund work)
+3. Receive €0.50 worth of BCH from covenant timeout
+4. <strong>NET: €0 profit/loss</strong> (except opportunity cost of 24h capital lock)</p>
+<p><strong>Bottom line:</strong> The refund split mechanism makes it economically irrational for sellers to ghost. They either help the transaction complete (earn 0.5% fee) or they do refund work (earn 0.1% processing fee). There is no profitable exit strategy that involves keeping sender's money.</p>
 <hr />
 <h2 id="the-decision">The Decision<a class="headerlink" href="#the-decision" title="Permanent link">&para;</a></h2>
 <p><strong>24-hour claim window with automatic refund and proactive notifications</strong></p>

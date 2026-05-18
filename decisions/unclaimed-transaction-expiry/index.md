@@ -51,6 +51,46 @@ Prevent funds from being locked indefinitely in covenant when recipients never c
 
 ---
 
+## Why This Prevents Seller Fraud
+
+**Common attack scenario (doesn't work):**
+
+A malicious BCH seller might think:
+1. Accept bounty, lock 107% BCH (€107 worth)
+2. Receive Bizum from sender (€100)
+3. Wait for timeout (don't help recipient claim)
+4. Get all BCH back + keep Bizum = profit?
+
+**Why this fails:**
+
+The covenant timeout refund is **SPLIT**:
+- **Merchant portion** (€99.50 worth of BCH) → **Sender** (refunded)
+- **Seller processing fee** (€0.50 worth of BCH) → **Seller** (kept)
+
+**Economic result:**
+- Seller locks: €107 BCH (overcollateralized position)
+- Seller receives: €100 Bizum (from sender)
+- Seller gets back: €0.50 worth of BCH (processing fee only)
+- **NET: Seller LOSES €6.50 by ghosting**
+
+**Why the seller must refund the Bizum:**
+
+If the seller keeps the €100 Bizum after timeout:
+- They locked €107 BCH
+- They get back €0.50 worth of BCH
+- They have €100 fiat
+- **NET: Still LOSES €6.50**
+
+**For the seller to break even**, they must:
+1. Send €99.50 Bizum refund to sender (manual work)
+2. Keep €0.50 processing fee (covers refund work)
+3. Receive €0.50 worth of BCH from covenant timeout
+4. **NET: €0 profit/loss** (except opportunity cost of 24h capital lock)
+
+**Bottom line:** The refund split mechanism makes it economically irrational for sellers to ghost. They either help the transaction complete (earn 0.5% fee) or they do refund work (earn 0.1% processing fee). There is no profitable exit strategy that involves keeping sender's money.
+
+---
+
 ## The Decision
 
 **24-hour claim window with automatic refund and proactive notifications**

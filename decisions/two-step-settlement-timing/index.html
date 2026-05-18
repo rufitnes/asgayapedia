@@ -3074,6 +3074,89 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#phase-0-validation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 Validation Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0 Validation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#success-metrics-for-overcollateralization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics for Overcollateralization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-metrics-for-24-hour-timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics for 24-Hour Timeout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adjustment-triggers-for-overcollateralization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adjustment Triggers for Overcollateralization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adjustment-triggers-for-timeout-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adjustment Triggers for Timeout Window
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collection-during-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Collection During Phase 0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-well-decide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How We'll Decide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-this-decision-meets-engineering-requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3930,6 +4013,89 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#phase-0-validation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 Validation Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0 Validation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#success-metrics-for-overcollateralization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics for Overcollateralization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-metrics-for-24-hour-timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics for 24-Hour Timeout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adjustment-triggers-for-overcollateralization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adjustment Triggers for Overcollateralization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adjustment-triggers-for-timeout-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adjustment Triggers for Timeout Window
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collection-during-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Collection During Phase 0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-well-decide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How We'll Decide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-this-decision-meets-engineering-requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4314,6 +4480,21 @@
 <strong>Status:</strong> Implemented (Chipnet testing)<br />
 <strong>Related Requirement:</strong> <a href="../../core-architecture/why-cheaper-than-legacy/">Cheaper Than Legacy</a> (Volatility Protection)</p>
 <hr />
+<blockquote>
+<p>⚠️ <strong>HYPOTHESIS — NEEDS PHASE 0 VALIDATION</strong></p>
+<p><strong>The 7% overcollateralization rate and 24-hour timeout are educated guesses, not empirical data.</strong></p>
+<p>We don't yet know:
+- Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
+- Will sellers accept 7% capital inefficiency for 0.5% fee?
+- Should it vary by market conditions? (5% calm, 12% volatile)
+- Should it vary by time window? (5% for 12h, 7% for 24h)
+- Is 24 hours the right claim window, or do recipients need longer/shorter?</p>
+<p><strong>The Bitcoin lesson:</strong> Satoshi chose a 1MB block size limit without empirical 
+validation. It seemed reasonable at the time, then became a scaling bottleneck 
+leading to contentious hard forks. We're explicitly tracking these assumptions.</p>
+<p><strong>See:</strong> <a href="#phase-0-validation-strategy">Phase 0 Validation Strategy</a> below for detailed testing approach.</p>
+</blockquote>
+<hr />
 <h2 id="the-goal-architectural-ideal">The Goal (Architectural Ideal)<a class="headerlink" href="#the-goal-architectural-ideal" title="Permanent link">&para;</a></h2>
 <p><strong>Eliminate cryptocurrency volatility risk</strong> from the remittance process.</p>
 <p><strong>Problem to solve:</strong>
@@ -4428,6 +4609,165 @@ Result:
 - <strong>30 seconds</strong> (from Elena walking in to covenant maturity)
 - Overcollateralization absorbs any price movement in this window
 - Merchant receives exactly €99.5 worth of BCH regardless of price changes</p>
+<hr />
+<h2 id="phase-0-validation-strategy">Phase 0 Validation Strategy<a class="headerlink" href="#phase-0-validation-strategy" title="Permanent link">&para;</a></h2>
+<p><strong>Why we're starting at 7% overcollateralization and 24-hour timeout:</strong></p>
+<p>These are our <strong>hypotheses</strong>, not finalized parameters. We chose these values because:
+- ✅ <strong>7% buffer:</strong> Conservative enough to handle typical crypto volatility swings (±5%)
+- ✅ <strong>24-hour window:</strong> Long enough for recipient to reach merchant even with power outages/delays
+- ✅ <strong>Room to adjust:</strong> Can shift to 5%/10%/12% based on margin call data
+- ✅ <strong>Conservative start:</strong> Easier to relax constraints than tighten them after launch</p>
+<p><strong>What we're testing in Phase 0 (5-10 migrant workers, 30+ transactions, 1-2 months):</strong></p>
+<h3 id="success-metrics-for-overcollateralization">Success Metrics for Overcollateralization<a class="headerlink" href="#success-metrics-for-overcollateralization" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Success Signal</th>
+<th>Failure Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Margin call rate</strong></td>
+<td>&lt;5% of transactions</td>
+<td>&gt;10% of transactions</td>
+</tr>
+<tr>
+<td><strong>Underpayment incidents</strong></td>
+<td>0 (merchant always gets full EUR value)</td>
+<td>Any merchant receives less than promised</td>
+</tr>
+<tr>
+<td><strong>BCH volatility during trials</strong></td>
+<td>95th percentile stays &lt;7% per 24h</td>
+<td>Frequent &gt;8% swings</td>
+</tr>
+<tr>
+<td><strong>Seller capital efficiency</strong></td>
+<td>Sellers re-post bounties after completion</td>
+<td>Sellers complain about capital lockup</td>
+</tr>
+</tbody>
+</table>
+<h3 id="success-metrics-for-24-hour-timeout">Success Metrics for 24-Hour Timeout<a class="headerlink" href="#success-metrics-for-24-hour-timeout" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Success Signal</th>
+<th>Failure Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claim rate</strong></td>
+<td>&gt;90% claimed within 24h</td>
+<td>&lt;80% claimed within 24h</td>
+</tr>
+<tr>
+<td><strong>Expiry rate</strong></td>
+<td>&lt;5% expire unclaimed</td>
+<td>&gt;15% expire unclaimed</td>
+</tr>
+<tr>
+<td><strong>Claim timing distribution</strong></td>
+<td>Most claims within 6 hours</td>
+<td>Claims clustered near 24h deadline</td>
+</tr>
+<tr>
+<td><strong>Extension requests</strong></td>
+<td>&lt;5% request longer window</td>
+<td>&gt;15% need more time</td>
+</tr>
+</tbody>
+</table>
+<h3 id="adjustment-triggers-for-overcollateralization">Adjustment Triggers for Overcollateralization<a class="headerlink" href="#adjustment-triggers-for-overcollateralization" title="Permanent link">&para;</a></h3>
+<p><strong>Trigger 1: Frequent margin calls (&gt;10% of transactions)</strong>
+- <strong>Signal:</strong> BCH volatility consistently exceeds 7% buffer during 24h windows
+- <strong>Root cause:</strong> 7% buffer insufficient for real-world volatility
+- <strong>Action:</strong> Increase to <strong>10% overcollateralization</strong>
+- <strong>Impact:</strong> Seller locks €110 instead of €107 (higher capital cost, but fewer margin calls)</p>
+<p><strong>Trigger 2: Rare margin calls (&lt;1% of transactions)</strong>
+- <strong>Signal:</strong> 7% buffer is overkill, BCH volatility stays &lt;5% in practice
+- <strong>Root cause:</strong> Over-conservative estimate
+- <strong>Action:</strong> Reduce to <strong>5% overcollateralization</strong>
+- <strong>Impact:</strong> Seller locks €105 instead of €107 (better capital efficiency, same protection)</p>
+<p><strong>Trigger 3: Market conditions vary widely</strong>
+- <strong>Signal:</strong> Calm periods have &lt;2% volatility, volatile periods have &gt;10% swings
+- <strong>Root cause:</strong> Static 7% doesn't adapt to market conditions
+- <strong>Action:</strong> Implement <strong>dynamic overcollateralization</strong> (5% calm, 7% normal, 12% volatile)
+- <strong>Mechanism:</strong> Bot monitors BCH volatility over previous 7 days, adjusts buffer automatically</p>
+<p><strong>Trigger 4: Any underpayment occurs</strong>
+- <strong>Signal:</strong> Merchant receives less than promised EUR value (covenant fails to cover)
+- <strong>Root cause:</strong> Overcollateralization insufficient or covenant math error
+- <strong>Action:</strong> <strong>Immediate increase to 12%</strong> + audit covenant code
+- <strong>Critical:</strong> This breaks trust—zero tolerance</p>
+<h3 id="adjustment-triggers-for-timeout-window">Adjustment Triggers for Timeout Window<a class="headerlink" href="#adjustment-triggers-for-timeout-window" title="Permanent link">&para;</a></h3>
+<p><strong>Trigger 1: High expiry rate (&gt;15% unclaimed)</strong>
+- <strong>Signal:</strong> Recipients can't reach merchants within 24 hours consistently
+- <strong>Root causes:</strong> Power outages longer than expected, rural distance, merchant availability
+- <strong>Action:</strong> Increase to <strong>48-hour timeout</strong> for affected corridors
+- <strong>Impact:</strong> Seller capital locked longer, but more transactions complete</p>
+<p><strong>Trigger 2: Low expiry rate + fast claims (&lt;5% expiry, 80% claimed within 6 hours)</strong>
+- <strong>Signal:</strong> Recipients don't need 24 hours, most claim immediately
+- <strong>Root cause:</strong> Over-conservative estimate
+- <strong>Action:</strong> Consider <strong>12-hour timeout option</strong> for urban corridors
+- <strong>Impact:</strong> Seller capital freed faster, less volatility exposure</p>
+<p><strong>Trigger 3: Corridor-specific patterns emerge</strong>
+- <strong>Signal:</strong> Urban Caracas has &lt;2% expiry, rural villages have &gt;20% expiry
+- <strong>Root cause:</strong> Infrastructure quality varies by location
+- <strong>Action:</strong> Implement <strong>corridor-specific timeouts</strong> (24h urban, 48h rural, 72h remote)
+- <strong>Mechanism:</strong> Sender chooses timeout based on recipient location</p>
+<h3 id="data-collection-during-phase-0">Data Collection During Phase 0<a class="headerlink" href="#data-collection-during-phase-0" title="Permanent link">&para;</a></h3>
+<p>We'll track:
+- ✅ <strong>BCH price movement</strong> during each covenant's 24h window (max %, average %)
+- ✅ <strong>Margin call frequency</strong> (% of covenants requiring top-up)
+- ✅ <strong>Underpayment incidents</strong> (merchant receives less than promised EUR value)
+- ✅ <strong>Claim timing distribution</strong> (histogram: 0-6h, 6-12h, 12-18h, 18-24h, expired)
+- ✅ <strong>Expiry reasons</strong> (why didn't recipient claim? power outage, forgot, merchant unavailable, etc.)
+- ✅ <strong>Seller feedback</strong> ("Is 7% capital lockup worth 0.5% fee?")
+- ✅ <strong>Covenant execution success rate</strong> (% of covenants that execute correctly when conditions met)</p>
+<h3 id="how-well-decide">How We'll Decide<a class="headerlink" href="#how-well-decide" title="Permanent link">&para;</a></h3>
+<p><strong>After 30+ successful transactions across 5+ senders:</strong>
+1. Analyze BCH volatility data (95th percentile movement during covenant windows)
+2. Review margin call frequency and underpayment incidents
+3. Survey participants about timeout adequacy
+4. Calculate actual capital efficiency for sellers
+5. Make data-driven adjustment if needed
+6. Document decision rationale</p>
+<p><strong>Decision matrix:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Margin calls &lt;1%, expiry &lt;5%</td>
+<td><strong>Reduce to 5% / Consider 12h timeout</strong></td>
+</tr>
+<tr>
+<td>Margin calls 1-5%, expiry 5-10%</td>
+<td><strong>Keep 7% / Keep 24h (working as designed)</strong></td>
+</tr>
+<tr>
+<td>Margin calls 5-10%, expiry 10-15%</td>
+<td><strong>Monitor closely (edge of acceptable)</strong></td>
+</tr>
+<tr>
+<td>Margin calls &gt;10%, expiry &gt;15%</td>
+<td><strong>Increase to 10% / Increase to 48h</strong></td>
+</tr>
+<tr>
+<td>Any underpayment</td>
+<td><strong>Immediate increase to 12% + audit code</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>We will NOT guess.</strong> Phase 0 exists to replace assumptions with evidence.</p>
 <hr />
 <h2 id="how-this-decision-meets-engineering-requirements">How This Decision Meets Engineering Requirements<a class="headerlink" href="#how-this-decision-meets-engineering-requirements" title="Permanent link">&para;</a></h2>
 <p>The covenant-based two-step settlement is not an arbitrary design choice—it's the <strong>only architecture</strong> that satisfies all core engineering requirements for permissionless operation in difficult infrastructure conditions <strong>while remaining MiCA/PSD2 compliant</strong>.</p>
@@ -4736,28 +5076,6 @@ Result:
 - No additional capital requirements</p>
 <hr />
 <h3 id="overcollateralization-mechanics">Overcollateralization Mechanics<a class="headerlink" href="#overcollateralization-mechanics" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>⚠️ <strong>HYPOTHESIS — NEEDS PHASE 0 VALIDATION</strong></p>
-<p><strong>The 7% overcollateralization rate is an educated guess, not empirical data.</strong></p>
-<p>We don't yet know:
-- Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
-- Will sellers accept 7% capital inefficiency for 0.5% fee?
-- Should it vary by market conditions? (5% calm, 12% volatile)
-- Should it vary by time window? (5% for 12h, 7% for 24h)</p>
-<p><strong>The Bitcoin lesson:</strong> Satoshi chose a 1MB block size limit without empirical 
-validation. It seemed reasonable at the time, then became a scaling bottleneck 
-leading to contentious hard forks. We're explicitly tracking this assumption.</p>
-<p><strong>Phase 0 validation plan:</strong>
-- Track margin call frequency (target: &lt;5% of transactions)
-- Measure 95th percentile BCH volatility during trials
-- Test seller willingness to lock capital at this rate</p>
-<p><strong>Adjustment triggers:</strong>
-- If margin calls &gt;10% → Increase to 10% overcollateralization
-- If margin calls &lt;1% → Consider reducing to 5% (free up seller capital)
-- If underpayment occurs → Immediately increase buffer</p>
-<p><strong>See:</strong> <a href="../phase-0-validation-checklist/#-overcollateralization-rate">Phase 0 Validation Checklist</a></p>
-</blockquote>
-<hr />
 <p><strong>How 7% buffer protects:</strong></p>
 <table>
 <thead>

@@ -6,25 +6,6 @@
 
 ---
 
-> 💡 **TL;DR: How the 1% fee is split**
->
-> The 1% total fee is split between TWO participants in the covenant:
-> - **BCH Seller:** 0.5% (provides overcollateralized BCH to covenant)
-> - **Merchant:** 0.5% (hands cash to recipient, receives BCH)
->
-> **Example (€100 transfer):**
-> - Total fee: €1.00
-> - BCH seller earns: €0.50 (0.5%)
-> - Merchant earns: €0.50 (0.5%)
-> - **Recipient receives:** €99.00 worth of VES cash
->
-> **Optional instant settlement:**
-> - Merchant can sell BCH immediately to BCH buyer (separate market)
-> - Typical spread: 0.5% (merchant loses entire reward to spread)
-> - **Result if selling immediately:** Merchant gets €99.00 fiat (same as no reward!)
-
----
-
 > ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
 > 
 > **The 0.5%/0.5% split is an educated guess, not empirical data.**
@@ -43,7 +24,26 @@
 > - If merchant acquisition fails → Consider 0.4% seller / 0.6% merchant
 > - If both struggle → Consider 0.7% each (1.4% total, still competitive vs. 6.49% legacy)
 > 
-> **See:** [Phase 0 Validation Checklist](phase-0-validation-checklist.md#-fee-split-seller--merchant)
+> **See:** [Phase 0 Validation Strategy](#phase-0-validation-strategy) below for detailed testing approach.
+
+---
+
+> 💡 **TL;DR: How the 1% fee is split**
+>
+> The 1% total fee is split between TWO participants in the covenant:
+> - **BCH Seller:** 0.5% (provides overcollateralized BCH to covenant)
+> - **Merchant:** 0.5% (hands cash to recipient, receives BCH)
+>
+> **Example (€100 transfer):**
+> - Total fee: €1.00
+> - BCH seller earns: €0.50 (0.5%)
+> - Merchant earns: €0.50 (0.5%)
+> - **Recipient receives:** €99.00 worth of VES cash
+>
+> **Optional instant settlement:**
+> - Merchant can sell BCH immediately to BCH buyer (separate market)
+> - Typical spread: 0.5% (merchant loses entire reward to spread)
+> - **Result if selling immediately:** Merchant gets €99.00 fiat (same as no reward!)
 
 ---
 
@@ -93,6 +93,82 @@ Recipient receives: 99% (transfer amount minus fees)
 - BCH seller posts their own BCH as collateral
 - Overcollateralization surplus is separate from fee (seller keeps if BCH rises)
 - Simple, transparent, no hidden costs
+
+---
+
+## Phase 0 Validation Strategy
+
+**Why we're starting at 0.5%/0.5%:**
+
+This is our **hypothesis**, not a finalized parameter. We chose 0.5% for each participant because:
+- ✅ **Conservative start:** Easy to raise fees if needed (harder to lower them)
+- ✅ **Competitive positioning:** 1% total beats 6.49% legacy fees by massive margin
+- ✅ **Symmetric split:** Equal rewards signal fairness and balanced importance
+- ✅ **Room to adjust:** Can shift to 0.6%/0.4% or 0.4%/0.6% based on data
+
+**What we're testing in Phase 0 (5-10 migrant workers, 1-2 months):**
+
+### Success Metrics
+
+| Participant | Success Signal | Failure Signal |
+|-------------|---------------|----------------|
+| **BCH Sellers** | >80% bounty acceptance rate | <50% acceptance rate |
+| **BCH Sellers** | <2 hour avg response time | >6 hour avg response time |
+| **BCH Sellers** | Sellers re-post after completion | Sellers abandon after 1-2 transactions |
+| **Merchants** | >70% hold BCH (don't immediately sell) | <30% hold BCH |
+| **Merchants** | Merchants accept repeat remittances | Merchants stop after first transaction |
+| **Merchants** | Avg 5+ remittances/month per merchant | <2 remittances/month |
+
+### Adjustment Triggers
+
+**Trigger 1: BCH seller acquisition fails**
+- **Signal:** <5 sellers willing to participate, <50% bounty acceptance rate
+- **Root cause:** 0.5% fee doesn't compensate for capital cost + volatility risk
+- **Action:** Increase to **0.6% seller / 0.4% merchant** split
+- **Rationale:** Seller bears more risk (24h capital lock + overcollateralization), needs higher reward
+
+**Trigger 2: Merchant acquisition fails**
+- **Signal:** <3 merchants onboarded, merchants quit after first payout
+- **Root cause:** 0.5% doesn't justify physical cash handling + security risk
+- **Action:** Increase to **0.4% seller / 0.6% merchant** split
+- **Rationale:** Merchant bears physical risk (cash handling, security), needs higher reward
+
+**Trigger 3: Both struggle to participate**
+- **Signal:** <5 sellers AND <3 merchants after Phase 0
+- **Root cause:** 1% total fee is too thin to split
+- **Action:** Increase to **0.7% seller / 0.7% merchant** (1.4% total)
+- **Rationale:** Still competitive vs. 6.49% legacy, but adequately compensates risks
+
+**Trigger 4: Instant settlement dominates**
+- **Signal:** >70% merchants immediately sell BCH for fiat
+- **Root cause:** 0.5% reward insufficient to incentivize holding
+- **Action:** Consider **tiered rewards** (0.5% if sold immediately, 0.7% if held >7 days)
+- **Rationale:** Align incentives with BCH adoption mission
+
+### Data Collection During Phase 0
+
+We'll track:
+- ✅ **Bounty acceptance rate** (% of posted bounties accepted by sellers)
+- ✅ **Response time** (how fast sellers accept bounties)
+- ✅ **Merchant holding behavior** (% who hold BCH vs. sell immediately)
+- ✅ **Merchant retention** (do merchants continue after first transaction?)
+- ✅ **Covenant completion rate** (% of covenants that execute successfully)
+- ✅ **Profitability surveys** ("Is 0.5% worth your time/risk?")
+
+### How We'll Decide
+
+**After 30+ successful remittances across 5+ senders:**
+1. Review metrics against success criteria
+2. Survey participants (BCH sellers + merchants) about perceived fairness
+3. Calculate actual profitability (fees earned vs. costs incurred)
+4. Make data-driven adjustment if needed
+5. Document decision rationale
+
+**If metrics are green (success signals):** Keep 0.5%/0.5%  
+**If one side struggles:** Shift split (0.6%/0.4% or 0.4%/0.6%)  
+**If both struggle:** Increase total fee (1.4%)  
+
+**We will NOT guess.** Phase 0 exists to replace assumptions with evidence.
 
 ---
 

@@ -28826,6 +28826,299 @@ Accounting:
 
 ---
 
+## Capital Recycling Strategy: The Seller's Business Model
+
+**Key insight:** Sellers don't just lock capital and wait. They run an automated market-making operation.
+
+### The 5-10 Minute Refill Loop
+
+**Optimal seller strategy with exchange integration:**
+
+```
+1. Accept bounty → Lock 0.107 BCH in covenant
+2. Receive €100 Bizum → Instant notification (SMS parsed by bot)
+3. Bot auto-executes → Buy €100 BCH on exchange at market rate
+4. BCH confirms → 5-10 minutes (exchange withdrawal + blockchain confirmation)
+5. Hot wallet refilled → 0.1 BCH ready for next bounty
+6. Accept next bounty → Repeat loop
+```
+
+**Capital utilization:**
+
+```
+Single €100 capital:
+├─ Without recycling: 1 bounty per 24h = €0.50/day
+└─ With recycling: 12-24 bounties per day = €6-12/day
+
+€1,000 capital:
+├─ 10 concurrent covenants locked (€1,070 total)
+├─ Each completes within 1-6 hours average
+├─ Refill every 5-10 minutes enables continuous flow
+└─ Daily throughput: 20-30 transactions × €0.50 = €10-15/day
+```
+
+**Monthly return calculation:**
+
+```
+Capital: €1,000
+Daily transactions: 20 (conservative estimate with recycling)
+Daily earnings: 20 × €0.50 = €10
+Monthly earnings: €10 × 30 days = €300
+Monthly return: 30% on €1,000 capital
+Annual return: 360% APR
+```
+
+**This transforms 0.5% fee from "mediocre" to "highly attractive" through volume.**
+
+---
+
+### Market-Making Model, Not Speculation
+
+**Seller isn't betting on BCH price direction — they're capturing spread on flow:**
+
+**Traditional holding:**
+```
+Buy: 0.1 BCH at €1,000/BCH = €100
+Hold: 24 hours
+Price moves: ±5-10% typical
+Risk: Full exposure on entire 0.1 BCH
+Return: Pure speculation
+```
+
+**Covenant market-making:**
+```
+Sell: 0.1 BCH at €1,005/BCH (+0.5% markup) = €100.50 Bizum received
+Lock: 0.107 BCH in covenant (includes 0.007 BCH collateral buffer)
+Buy back: €100 BCH on exchange at market rate = 0.1 BCH
+Exposure: Only 0.007 BCH collateral at risk (7% buffer)
+Return: €0.50 fee (0.5%) + recycled capital in 5-10 min
+
+Risk reduction: 93% less exposure (0.007 vs 0.1 BCH)
+```
+
+**The fee is captured upfront:**
+- Seller sells BCH at +0.5% markup to sender
+- Example: Market €1,000/BCH → Seller charges €1,005/BCH
+- Sender pays €100 Bizum for 0.0995 BCH worth of remittance value
+- Seller locks 0.107 BCH (at market rate €1,000) = €107 locked
+- **Fee already in hand** (€0.50 premium in Bizum payment)
+
+**Only the collateral buffer is exposed to volatility:**
+- Total locked: 0.107 BCH
+- Principal going to merchant: 0.1 BCH (€99.50 value)
+- Collateral buffer: 0.007 BCH (€7 value at lock time)
+- **Volatility exposure: 7% of locked amount, not 100%**
+
+---
+
+### Why Sellers Want Many Concurrent Covenants
+
+**Each covenant = 0.5% fee earning over 24 hours**
+
+**Scenario: Seller with €1,000 capital**
+
+```
+Morning (9 AM):
+├─ Accept 10 bounties simultaneously
+├─ Lock: 10 × 0.107 BCH = €1,070 worth
+├─ Receive: 10 × €100 = €1,000 Bizum
+├─ Bot auto-buys: €1,000 BCH on exchange
+└─ Wait: 5-10 minutes for hot wallet refill
+
+Mid-morning (10 AM):
+├─ Hot wallet refilled with ~1 BCH
+├─ First 3 recipients claim (covenants execute)
+├─ Receive back: 3 × 0.0075 BCH surplus
+├─ Accept 3 new bounties immediately
+└─ Keep the wheel spinning
+
+Afternoon (2 PM):
+├─ 7 more covenants execute
+├─ Accept 7 new bounties
+└─ Continuous flow of fees
+
+Evening (8 PM):
+├─ 20 total transactions completed
+├─ Earnings: 20 × €0.50 = €10
+├─ Capital still working: 10 covenants overnight
+└─ Tomorrow: Repeat
+```
+
+**The more covenants locked, the more fees earning simultaneously.**
+
+**Capital efficiency improves with volume:**
+- Low volume (1-2 covenants/day): 7% APR (not worth it)
+- Medium volume (10 concurrent): 68% monthly return
+- High volume (20-30/day with recycling): 360% APR
+
+**This is why 0.5% fee works — it's a high-frequency, low-margin business model.**
+
+---
+
+### Why Miners Are Ideal Sellers
+
+**BCH miners have natural advantages:**
+
+1. **Steady BCH inflow** (mining rewards)
+   - No need to buy BCH on exchanges
+   - No exchange fees eating into profits
+   - Unlimited inventory capacity
+
+2. **Already running infrastructure**
+   - Hot wallets for mining payouts
+   - Automated systems (pool monitoring, payout scripts)
+   - Technical capability to run seller bots
+
+3. **Natural BCH exposure**
+   - Already holding BCH as core business
+   - Covenant locks don't change risk profile
+   - Reduced exposure vs. just holding (7% buffer vs 100% exposure)
+
+4. **Revenue diversification**
+   - Mining rewards: Variable (difficulty, price, luck)
+   - Seller fees: Steady (volume-driven, predictable)
+   - Combined revenue stream more stable
+
+**Example: Small-scale BCH miner**
+
+```
+Daily mining output: 0.5 BCH
+Daily value at €1,000/BCH: €500
+
+Mining revenue only:
+└─ €500/day from block rewards
+
+Mining + Asgaya seller:
+├─ €500/day from block rewards
+├─ Accept 50 bounties/day (using mined BCH)
+├─ Earn: 50 × €0.50 = €25/day additional
+└─ Total: €525/day (+5% revenue boost)
+
+Monthly impact:
+├─ Mining: €15,000/month
+├─ Asgaya fees: €750/month
+└─ Total: €15,750/month (+5% boost)
+```
+
+**No capital cost, pure upside for miners.**
+
+---
+
+### The Hedge Mechanism: Why Sellers Always Win
+
+**Even in worst-case volatility scenarios, sellers are better off than holding:**
+
+**Scenario 1: BCH Price Stable (0% movement)**
+
+```
+Seller locks: 0.107 BCH worth €107
+Receives: €100 Bizum upfront
+Buys back: €100 worth BCH = 0.1 BCH
+
+After covenant executes:
+├─ Merchant takes: 0.0995 BCH (€99.50 worth)
+├─ Seller gets back: 0.0075 BCH (€7.50 worth = €7 buffer + €0.50 fee)
+└─ Total BCH recovered: 0.1 BCH (bought) + 0.0075 BCH (surplus) = 0.1075 BCH
+
+Seller's position:
+├─ Net BCH: 0.1075 - 0.107 = +0.0005 BCH (rounding/appreciation)
+├─ Net EUR: €0 (spent €100 buying BCH, received €100 Bizum)
+└─ Profit: €0.50 fee (captured in markup)
+```
+
+**Scenario 2: BCH Drops 7% (Margin Call Threshold)**
+
+```
+Seller locks: 0.107 BCH worth €107 at €1,000/BCH
+BCH drops to: €930/BCH (-7%)
+Receives: €100 Bizum upfront (before drop)
+Buys back: €100 worth BCH = 0.1075 BCH (at €930 rate, gets more BCH!)
+
+After covenant executes:
+├─ Covenant now worth: 0.107 × €930 = €99.51
+├─ Merchant takes: €99.50 ÷ €930 = 0.107 BCH (almost all of it)
+├─ Seller gets back: ~0 BCH (collateral consumed)
+└─ Total BCH held: 0.1075 BCH (from buy-back)
+
+Seller's position:
+├─ Net BCH: 0.1075 BCH (vs 0.107 originally locked)
+├─ Net EUR: €0
+└─ Result: Seller GAINED 0.0005 BCH despite margin call!
+
+Comparing to holding:
+├─ Held 0.107 BCH: Now worth €99.51 (-€7.49 loss)
+└─ Locked + recycled: Hold €100 worth of BCH = 0.1075 BCH
+    Better off by: €0.49 + 0.0005 BCH extra
+```
+
+**The counterintuitive result: When BCH drops, sellers buy back MORE BCH with the same €100.**
+
+**Scenario 3: BCH Rises 5%**
+
+```
+Seller locks: 0.107 BCH worth €107 at €1,000/BCH
+BCH rises to: €1,050/BCH (+5%)
+Receives: €100 Bizum upfront (before rise)
+Buys back: €100 worth BCH = 0.0952 BCH (at €1,050 rate, gets less BCH)
+
+After covenant executes:
+├─ Covenant now worth: 0.107 × €1,050 = €112.35
+├─ Merchant takes: €99.50 ÷ €1,050 = 0.0948 BCH
+├─ Seller gets back: 0.107 - 0.0948 = 0.0122 BCH (€12.81 worth)
+└─ Total BCH held: 0.0952 (bought) + 0.0122 (surplus) = 0.1074 BCH
+
+Seller's position:
+├─ Net BCH: 0.1074 - 0.107 = +0.0004 BCH
+├─ Net EUR: €0
+└─ Profit: €0.50 fee + €0.42 surplus appreciation
+
+Comparing to holding:
+├─ Held 0.107 BCH: Now worth €112.35 (+€5.35 gain)
+└─ Locked + recycled: Hold €105 worth of BCH = 0.1074 BCH worth €112.77
+    Better off by: €0.42 (still outperformed holding!)
+```
+
+**In ALL scenarios, the hedge protects sellers:**
+- ✅ **Stable:** Earn €0.50 fee, no volatility impact
+- ✅ **Price drops:** Buy back more BCH, lose less than holding
+- ✅ **Price rises:** Still profitable, earn surplus
+- ✅ **Even margin call:** Better outcome than holding equivalent BCH
+
+**The economic alignment is clear: Completing transactions is ALWAYS better than ghosting.**
+
+---
+
+### Why Capital Recycling Changes Everything
+
+**Old analysis (static):**
+```
+Lock €107 for 24 hours → Earn €0.50
+Return: 0.47% per day = 171% APR
+Verdict: "Okay, but not amazing"
+```
+
+**New analysis (with recycling):**
+```
+Lock €107 for 24 hours → But recycle every 5-10 minutes
+Throughput: 20-30 transactions/day on same €1,000 capital
+Earnings: €10-15/day
+Return: 1-1.5% per day = 365-547% APR
+Verdict: "Extremely attractive for market makers"
+```
+
+**Capital recycling is the key to making 0.5% fee economically viable.**
+
+**Sellers are incentivized to:**
+1. ✅ Accept as many bounties as possible (more fees)
+2. ✅ Keep covenants locked (each one earning 0.5%)
+3. ✅ Complete transactions quickly (free up capital for next round)
+4. ✅ Run automated bots (manual operation can't achieve volume)
+5. ✅ Minimize downtime (5-10 min refill vs 24h wait = 144x more transactions possible)
+
+**The business model: High-frequency, low-margin liquidity provision.**
+
+---
+
 ## Phase 0 Implementation Considerations
 
 ### Chipnet Testing Requirements
@@ -33550,25 +33843,6 @@ For recipients without smartphones:
 
 ---
 
-> 💡 **TL;DR: How the 1% fee is split**
->
-> The 1% total fee is split between TWO participants in the covenant:
-> - **BCH Seller:** 0.5% (provides overcollateralized BCH to covenant)
-> - **Merchant:** 0.5% (hands cash to recipient, receives BCH)
->
-> **Example (€100 transfer):**
-> - Total fee: €1.00
-> - BCH seller earns: €0.50 (0.5%)
-> - Merchant earns: €0.50 (0.5%)
-> - **Recipient receives:** €99.00 worth of VES cash
->
-> **Optional instant settlement:**
-> - Merchant can sell BCH immediately to BCH buyer (separate market)
-> - Typical spread: 0.5% (merchant loses entire reward to spread)
-> - **Result if selling immediately:** Merchant gets €99.00 fiat (same as no reward!)
-
----
-
 > ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
 > 
 > **The 0.5%/0.5% split is an educated guess, not empirical data.**
@@ -33587,7 +33861,26 @@ For recipients without smartphones:
 > - If merchant acquisition fails → Consider 0.4% seller / 0.6% merchant
 > - If both struggle → Consider 0.7% each (1.4% total, still competitive vs. 6.49% legacy)
 > 
-> **See:** [Phase 0 Validation Checklist](phase-0-validation-checklist.md#-fee-split-seller--merchant)
+> **See:** [Phase 0 Validation Strategy](#phase-0-validation-strategy) below for detailed testing approach.
+
+---
+
+> 💡 **TL;DR: How the 1% fee is split**
+>
+> The 1% total fee is split between TWO participants in the covenant:
+> - **BCH Seller:** 0.5% (provides overcollateralized BCH to covenant)
+> - **Merchant:** 0.5% (hands cash to recipient, receives BCH)
+>
+> **Example (€100 transfer):**
+> - Total fee: €1.00
+> - BCH seller earns: €0.50 (0.5%)
+> - Merchant earns: €0.50 (0.5%)
+> - **Recipient receives:** €99.00 worth of VES cash
+>
+> **Optional instant settlement:**
+> - Merchant can sell BCH immediately to BCH buyer (separate market)
+> - Typical spread: 0.5% (merchant loses entire reward to spread)
+> - **Result if selling immediately:** Merchant gets €99.00 fiat (same as no reward!)
 
 ---
 
@@ -33637,6 +33930,82 @@ Recipient receives: 99% (transfer amount minus fees)
 - BCH seller posts their own BCH as collateral
 - Overcollateralization surplus is separate from fee (seller keeps if BCH rises)
 - Simple, transparent, no hidden costs
+
+---
+
+## Phase 0 Validation Strategy
+
+**Why we're starting at 0.5%/0.5%:**
+
+This is our **hypothesis**, not a finalized parameter. We chose 0.5% for each participant because:
+- ✅ **Conservative start:** Easy to raise fees if needed (harder to lower them)
+- ✅ **Competitive positioning:** 1% total beats 6.49% legacy fees by massive margin
+- ✅ **Symmetric split:** Equal rewards signal fairness and balanced importance
+- ✅ **Room to adjust:** Can shift to 0.6%/0.4% or 0.4%/0.6% based on data
+
+**What we're testing in Phase 0 (5-10 migrant workers, 1-2 months):**
+
+### Success Metrics
+
+| Participant | Success Signal | Failure Signal |
+|-------------|---------------|----------------|
+| **BCH Sellers** | >80% bounty acceptance rate | <50% acceptance rate |
+| **BCH Sellers** | <2 hour avg response time | >6 hour avg response time |
+| **BCH Sellers** | Sellers re-post after completion | Sellers abandon after 1-2 transactions |
+| **Merchants** | >70% hold BCH (don't immediately sell) | <30% hold BCH |
+| **Merchants** | Merchants accept repeat remittances | Merchants stop after first transaction |
+| **Merchants** | Avg 5+ remittances/month per merchant | <2 remittances/month |
+
+### Adjustment Triggers
+
+**Trigger 1: BCH seller acquisition fails**
+- **Signal:** <5 sellers willing to participate, <50% bounty acceptance rate
+- **Root cause:** 0.5% fee doesn't compensate for capital cost + volatility risk
+- **Action:** Increase to **0.6% seller / 0.4% merchant** split
+- **Rationale:** Seller bears more risk (24h capital lock + overcollateralization), needs higher reward
+
+**Trigger 2: Merchant acquisition fails**
+- **Signal:** <3 merchants onboarded, merchants quit after first payout
+- **Root cause:** 0.5% doesn't justify physical cash handling + security risk
+- **Action:** Increase to **0.4% seller / 0.6% merchant** split
+- **Rationale:** Merchant bears physical risk (cash handling, security), needs higher reward
+
+**Trigger 3: Both struggle to participate**
+- **Signal:** <5 sellers AND <3 merchants after Phase 0
+- **Root cause:** 1% total fee is too thin to split
+- **Action:** Increase to **0.7% seller / 0.7% merchant** (1.4% total)
+- **Rationale:** Still competitive vs. 6.49% legacy, but adequately compensates risks
+
+**Trigger 4: Instant settlement dominates**
+- **Signal:** >70% merchants immediately sell BCH for fiat
+- **Root cause:** 0.5% reward insufficient to incentivize holding
+- **Action:** Consider **tiered rewards** (0.5% if sold immediately, 0.7% if held >7 days)
+- **Rationale:** Align incentives with BCH adoption mission
+
+### Data Collection During Phase 0
+
+We'll track:
+- ✅ **Bounty acceptance rate** (% of posted bounties accepted by sellers)
+- ✅ **Response time** (how fast sellers accept bounties)
+- ✅ **Merchant holding behavior** (% who hold BCH vs. sell immediately)
+- ✅ **Merchant retention** (do merchants continue after first transaction?)
+- ✅ **Covenant completion rate** (% of covenants that execute successfully)
+- ✅ **Profitability surveys** ("Is 0.5% worth your time/risk?")
+
+### How We'll Decide
+
+**After 30+ successful remittances across 5+ senders:**
+1. Review metrics against success criteria
+2. Survey participants (BCH sellers + merchants) about perceived fairness
+3. Calculate actual profitability (fees earned vs. costs incurred)
+4. Make data-driven adjustment if needed
+5. Document decision rationale
+
+**If metrics are green (success signals):** Keep 0.5%/0.5%  
+**If one side struggles:** Shift split (0.6%/0.4% or 0.4%/0.6%)  
+**If both struggle:** Increase total fee (1.4%)  
+
+**We will NOT guess.** Phase 0 exists to replace assumptions with evidence.
 
 ---
 
@@ -36193,6 +36562,25 @@ Action: If >5%, increase to 10% and retest
 
 ---
 
+> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
+> 
+> **The 7% overcollateralization rate and 24-hour timeout are educated guesses, not empirical data.**
+> 
+> We don't yet know:
+> - Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
+> - Will sellers accept 7% capital inefficiency for 0.5% fee?
+> - Should it vary by market conditions? (5% calm, 12% volatile)
+> - Should it vary by time window? (5% for 12h, 7% for 24h)
+> - Is 24 hours the right claim window, or do recipients need longer/shorter?
+> 
+> **The Bitcoin lesson:** Satoshi chose a 1MB block size limit without empirical 
+> validation. It seemed reasonable at the time, then became a scaling bottleneck 
+> leading to contentious hard forks. We're explicitly tracking these assumptions.
+> 
+> **See:** [Phase 0 Validation Strategy](#phase-0-validation-strategy) below for detailed testing approach.
+
+---
+
 ## The Goal (Architectural Ideal)
 
 **Eliminate cryptocurrency volatility risk** from the remittance process.
@@ -36305,6 +36693,117 @@ Action: If >5%, increase to 10% and retest
 - **30 seconds** (from Elena walking in to covenant maturity)
 - Overcollateralization absorbs any price movement in this window
 - Merchant receives exactly €99.5 worth of BCH regardless of price changes
+
+---
+
+## Phase 0 Validation Strategy
+
+**Why we're starting at 7% overcollateralization and 24-hour timeout:**
+
+These are our **hypotheses**, not finalized parameters. We chose these values because:
+- ✅ **7% buffer:** Conservative enough to handle typical crypto volatility swings (±5%)
+- ✅ **24-hour window:** Long enough for recipient to reach merchant even with power outages/delays
+- ✅ **Room to adjust:** Can shift to 5%/10%/12% based on margin call data
+- ✅ **Conservative start:** Easier to relax constraints than tighten them after launch
+
+**What we're testing in Phase 0 (5-10 migrant workers, 30+ transactions, 1-2 months):**
+
+### Success Metrics for Overcollateralization
+
+| Metric | Success Signal | Failure Signal |
+|--------|---------------|----------------|
+| **Margin call rate** | <5% of transactions | >10% of transactions |
+| **Underpayment incidents** | 0 (merchant always gets full EUR value) | Any merchant receives less than promised |
+| **BCH volatility during trials** | 95th percentile stays <7% per 24h | Frequent >8% swings |
+| **Seller capital efficiency** | Sellers re-post bounties after completion | Sellers complain about capital lockup |
+
+### Success Metrics for 24-Hour Timeout
+
+| Metric | Success Signal | Failure Signal |
+|--------|---------------|----------------|
+| **Claim rate** | >90% claimed within 24h | <80% claimed within 24h |
+| **Expiry rate** | <5% expire unclaimed | >15% expire unclaimed |
+| **Claim timing distribution** | Most claims within 6 hours | Claims clustered near 24h deadline |
+| **Extension requests** | <5% request longer window | >15% need more time |
+
+### Adjustment Triggers for Overcollateralization
+
+**Trigger 1: Frequent margin calls (>10% of transactions)**
+- **Signal:** BCH volatility consistently exceeds 7% buffer during 24h windows
+- **Root cause:** 7% buffer insufficient for real-world volatility
+- **Action:** Increase to **10% overcollateralization**
+- **Impact:** Seller locks €110 instead of €107 (higher capital cost, but fewer margin calls)
+
+**Trigger 2: Rare margin calls (<1% of transactions)**
+- **Signal:** 7% buffer is overkill, BCH volatility stays <5% in practice
+- **Root cause:** Over-conservative estimate
+- **Action:** Reduce to **5% overcollateralization**
+- **Impact:** Seller locks €105 instead of €107 (better capital efficiency, same protection)
+
+**Trigger 3: Market conditions vary widely**
+- **Signal:** Calm periods have <2% volatility, volatile periods have >10% swings
+- **Root cause:** Static 7% doesn't adapt to market conditions
+- **Action:** Implement **dynamic overcollateralization** (5% calm, 7% normal, 12% volatile)
+- **Mechanism:** Bot monitors BCH volatility over previous 7 days, adjusts buffer automatically
+
+**Trigger 4: Any underpayment occurs**
+- **Signal:** Merchant receives less than promised EUR value (covenant fails to cover)
+- **Root cause:** Overcollateralization insufficient or covenant math error
+- **Action:** **Immediate increase to 12%** + audit covenant code
+- **Critical:** This breaks trust—zero tolerance
+
+### Adjustment Triggers for Timeout Window
+
+**Trigger 1: High expiry rate (>15% unclaimed)**
+- **Signal:** Recipients can't reach merchants within 24 hours consistently
+- **Root causes:** Power outages longer than expected, rural distance, merchant availability
+- **Action:** Increase to **48-hour timeout** for affected corridors
+- **Impact:** Seller capital locked longer, but more transactions complete
+
+**Trigger 2: Low expiry rate + fast claims (<5% expiry, 80% claimed within 6 hours)**
+- **Signal:** Recipients don't need 24 hours, most claim immediately
+- **Root cause:** Over-conservative estimate
+- **Action:** Consider **12-hour timeout option** for urban corridors
+- **Impact:** Seller capital freed faster, less volatility exposure
+
+**Trigger 3: Corridor-specific patterns emerge**
+- **Signal:** Urban Caracas has <2% expiry, rural villages have >20% expiry
+- **Root cause:** Infrastructure quality varies by location
+- **Action:** Implement **corridor-specific timeouts** (24h urban, 48h rural, 72h remote)
+- **Mechanism:** Sender chooses timeout based on recipient location
+
+### Data Collection During Phase 0
+
+We'll track:
+- ✅ **BCH price movement** during each covenant's 24h window (max %, average %)
+- ✅ **Margin call frequency** (% of covenants requiring top-up)
+- ✅ **Underpayment incidents** (merchant receives less than promised EUR value)
+- ✅ **Claim timing distribution** (histogram: 0-6h, 6-12h, 12-18h, 18-24h, expired)
+- ✅ **Expiry reasons** (why didn't recipient claim? power outage, forgot, merchant unavailable, etc.)
+- ✅ **Seller feedback** ("Is 7% capital lockup worth 0.5% fee?")
+- ✅ **Covenant execution success rate** (% of covenants that execute correctly when conditions met)
+
+### How We'll Decide
+
+**After 30+ successful transactions across 5+ senders:**
+1. Analyze BCH volatility data (95th percentile movement during covenant windows)
+2. Review margin call frequency and underpayment incidents
+3. Survey participants about timeout adequacy
+4. Calculate actual capital efficiency for sellers
+5. Make data-driven adjustment if needed
+6. Document decision rationale
+
+**Decision matrix:**
+
+| Scenario | Action |
+|----------|--------|
+| Margin calls <1%, expiry <5% | **Reduce to 5% / Consider 12h timeout** |
+| Margin calls 1-5%, expiry 5-10% | **Keep 7% / Keep 24h (working as designed)** |
+| Margin calls 5-10%, expiry 10-15% | **Monitor closely (edge of acceptable)** |
+| Margin calls >10%, expiry >15% | **Increase to 10% / Increase to 48h** |
+| Any underpayment | **Immediate increase to 12% + audit code** |
+
+**We will NOT guess.** Phase 0 exists to replace assumptions with evidence.
 
 ---
 
@@ -36640,34 +37139,6 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 ---
 
 ### Overcollateralization Mechanics
-
-> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
-> 
-> **The 7% overcollateralization rate is an educated guess, not empirical data.**
-> 
-> We don't yet know:
-> - Is 7% sufficient for real-world BCH volatility? (BCH can move 8%+ in minutes during crashes)
-> - Will sellers accept 7% capital inefficiency for 0.5% fee?
-> - Should it vary by market conditions? (5% calm, 12% volatile)
-> - Should it vary by time window? (5% for 12h, 7% for 24h)
-> 
-> **The Bitcoin lesson:** Satoshi chose a 1MB block size limit without empirical 
-> validation. It seemed reasonable at the time, then became a scaling bottleneck 
-> leading to contentious hard forks. We're explicitly tracking this assumption.
-> 
-> **Phase 0 validation plan:**
-> - Track margin call frequency (target: <5% of transactions)
-> - Measure 95th percentile BCH volatility during trials
-> - Test seller willingness to lock capital at this rate
-> 
-> **Adjustment triggers:**
-> - If margin calls >10% → Increase to 10% overcollateralization
-> - If margin calls <1% → Consider reducing to 5% (free up seller capital)
-> - If underpayment occurs → Immediately increase buffer
-> 
-> **See:** [Phase 0 Validation Checklist](phase-0-validation-checklist.md#-overcollateralization-rate)
-
----
 
 **How 7% buffer protects:**
 
@@ -37289,6 +37760,46 @@ Prevent funds from being locked indefinitely in covenant when recipients never c
 - Manual refund: ~10 min work
 - Capital lock: €107 BCH tied up for 24h (opportunity cost)
 - **Total cost:** Time + opportunity cost + volatility exposure
+
+---
+
+## Why This Prevents Seller Fraud
+
+**Common attack scenario (doesn't work):**
+
+A malicious BCH seller might think:
+1. Accept bounty, lock 107% BCH (€107 worth)
+2. Receive Bizum from sender (€100)
+3. Wait for timeout (don't help recipient claim)
+4. Get all BCH back + keep Bizum = profit?
+
+**Why this fails:**
+
+The covenant timeout refund is **SPLIT**:
+- **Merchant portion** (€99.50 worth of BCH) → **Sender** (refunded)
+- **Seller processing fee** (€0.50 worth of BCH) → **Seller** (kept)
+
+**Economic result:**
+- Seller locks: €107 BCH (overcollateralized position)
+- Seller receives: €100 Bizum (from sender)
+- Seller gets back: €0.50 worth of BCH (processing fee only)
+- **NET: Seller LOSES €6.50 by ghosting**
+
+**Why the seller must refund the Bizum:**
+
+If the seller keeps the €100 Bizum after timeout:
+- They locked €107 BCH
+- They get back €0.50 worth of BCH
+- They have €100 fiat
+- **NET: Still LOSES €6.50**
+
+**For the seller to break even**, they must:
+1. Send €99.50 Bizum refund to sender (manual work)
+2. Keep €0.50 processing fee (covers refund work)
+3. Receive €0.50 worth of BCH from covenant timeout
+4. **NET: €0 profit/loss** (except opportunity cost of 24h capital lock)
+
+**Bottom line:** The refund split mechanism makes it economically irrational for sellers to ghost. They either help the transaction complete (earn 0.5% fee) or they do refund work (earn 0.1% processing fee). There is no profitable exit strategy that involves keeping sender's money.
 
 ---
 
