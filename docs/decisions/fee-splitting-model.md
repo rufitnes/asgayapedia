@@ -6,6 +6,12 @@
 
 ---
 
+> ⚠️ **ALL NUMBERS IN THIS DOCUMENT ARE HYPOTHESES FOR PHASE 0 VALIDATION.**
+> 
+> The 0.5% seller fee and 0.5% merchant spread are educated starting points, not fixed parameters. We will adjust them based on real-world data. See [Phase 0 Validation Checklist](phase-0-validation-checklist.md).
+
+---
+
 > ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
 > 
 > **The 0.5%/0.5% split is an educated guess, not empirical data.**
@@ -696,6 +702,56 @@ BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
 - [Two-Step Settlement](./two-step-settlement-timing.md) — Why covenant-based pull system works
 - [Dispute Resolution](./dispute-resolution.md) — How conflicts resolved without central arbiter
 - [Promote Adoption](../core-architecture/why-promote-adoption.md) — Why BCH holding matters more than fiat conversion
+
+---
+
+## Fiat Chargeback Risk (Phase 0 Limited, Phase 1+ Addressed)
+
+**The legitimate concern:** In traditional P2P crypto markets, sellers face the risk that fiat payments (like Bizum, SEPA, PayPal) can be reversed after the seller has released cryptocurrency. This chargeback risk is typically priced into spreads (1-3% premium).
+
+**Asgaya's exposure:**
+- **Phase 0 (Current):** Minimal risk
+  - All participants are trusted family, friends, and forum members
+  - Reputation-based vetting (bitcoincashresearch.org contributors)
+  - Small transaction sizes (€50-200)
+  - Known identities (not anonymous)
+
+**Why Bizum is relatively safe:**
+- Instant settlement in Spain (not easily reversible like credit cards)
+- Bank-to-bank transfer (not payment processor with buyer protection)
+- Fraud requires bank cooperation (Spanish banks have anti-fraud KYC)
+
+**Phase 1+ Solutions (When Opening to General Public):**
+
+1. **Reputation Scoring Tied to On-Chain Identity**
+   - Senders build reputation through successful transactions
+   - Low-reputation senders pay slightly higher fees (chargeback insurance premium)
+   - High-reputation senders (50+ transactions) get preferred rates
+
+2. **Seller-Funded Chargeback Insurance Pool**
+   - Sellers contribute 0.1% of transaction volume to insurance fund
+   - Fund compensates sellers hit by chargebacks
+   - Spreads risk across all sellers (insurance model)
+   - Dishonest senders get banned + blacklisted
+
+3. **Seller-Configurable Risk Premiums**
+   - Sellers can set their own spread (0.5-2%) based on risk tolerance
+   - New senders → higher spread (1.5-2%)
+   - Established senders → base spread (0.5%)
+   - Market-driven pricing for risk
+
+4. **Integration with Universal Bot Fraud Prevention**
+   - Sender's bot creates cryptographic proof of payment
+   - If chargeback occurs, seller submits proof to dispute
+   - Sender's stake slashed if fraudulent chargeback proven
+   - See [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md)
+
+**Why this doesn't block Phase 0:**
+- Trusted participant model eliminates chargeback risk
+- Real-world validation needed before designing insurance systems
+- Phase 0 data will inform Phase 1 risk pricing
+
+**Mitigation priority:** Post-Phase 0, based on actual chargeback frequency data (target: <0.1% of transactions).
 
 ---
 

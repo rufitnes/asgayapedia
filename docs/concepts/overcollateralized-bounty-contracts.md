@@ -234,40 +234,111 @@ Outputs:
 | **BCH drops 3%** | 0.01 BCH now worth €97 | Merchant gets 0.0103 BCH (still €100), seller gets 0.0004 BCH surplus |
 | **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller must add BCH or deal cancels |
 
-### Margin Call Mechanism
+### Top-Up Opportunity (How Sellers Earn Reliability Rewards)
 
-**If BCH price drops beyond the overfunding buffer during the 24-hour window:**
+**When BCH price drops beyond the 7% buffer during the 24-hour window, sellers have a voluntary opportunity to earn rewards:**
 
-1. **Alert sent to seller:**
-   ```
-   ⚠️ MARGIN CALL — Bounty #4729
-   BCH dropped 8% since you locked funds.
-   Add 0.0003 BCH within 60 minutes or contract matures early.
-   ```
+---
 
-2. **Seller has three options:**
-   - **Add more BCH** to the contract (top up collateral manually)
-   - **Let contract mature early** (all BCH goes to sender, seller keeps the €100 fiat already received)
-   - **Hope price recovers** within the 60-minute grace period
+#### Path 1: Automatic Fair Exchange (No Action Required)
 
-3. **How seller tops up (manual transaction):**
-   - Seller already received €100 Bizum from sender (Iris)
-   - Seller can buy more BCH with that EUR (on exchange or via Asgaya bulletin)
-   - Seller broadcasts additional BCH to covenant address
-   - **Note:** Automated Bizum→BCH purchase likely violates banking TOS, so manual intervention required
+**What happens by default:**
 
-4. **If seller doesn't respond within 60 minutes:**
-   - **Contract matures early** (before 24-hour timeout)
-   - **All BCH goes to sender** (Iris receives full covenant balance)
-   - Seller keeps: €100 Bizum received (covered fiat leg)
-   - Seller loses: BCH collateral posted (penalty for non-response)
-   - Bulletin board marks seller with failed margin call (reputation impact)
+When the covenant's collateral value reaches exactly €100 (the fair exchange point), the covenant matures automatically at the 24-hour timeout:
 
-**Economic model:**
-- Seller has capital to respond (€100 fiat in hand)
-- Early maturity penalty incentivizes fast response
-- Similar to MakerDAO liquidations, but on per-transaction basis
-- 60-minute window balances seller convenience vs sender protection
+**Automatic distribution:**
+- Sender receives: €99.50 worth of BCH (merchant portion)
+- Seller receives: €0.50 worth of BCH (processing fee)
+
+**Net outcome for seller:**
+- Received: €100 Bizum (upfront from sender)
+- Returned: €99.50 worth of BCH (at current market rate)
+- Net: **Fair exchange** — sold €100 worth of BCH for €100 fiat at current price
+
+**This is NOT a penalty:**
+- Seller effectively sold BCH at current market rate
+- No loss, no punishment
+- The sender bears the price risk (they opted into BCH exposure)
+
+---
+
+#### Path 2: Voluntary Top-Up (Reliability Rewards)
+
+**During a 60-minute grace period** after the collateral hits €100, the seller can *choose* to add more BCH:
+
+**Alert sent to seller:**
+```
+💡 TOP-UP OPPORTUNITY — Bounty #4729
+BCH dropped 8%. Add 0.0003 BCH to keep covenant alive
+and earn Reliability Rewards.
+
+Current tier: 2 top-ups → Next reward at 3 top-ups
+Time remaining: 57 minutes
+```
+
+**How to top up:**
+1. Seller already has €100 Bizum from sender
+2. Buy additional BCH on exchange or via Asgaya bulletin
+3. Broadcast BCH to covenant address
+4. Covenant stays alive, transaction can complete normally
+
+**Why top up?**
+- ✅ Transaction completes → Earn full 0.5% fee
+- ✅ Build reliability reputation → Unlock rewards
+- ✅ Capital recycling continues → Keep earning
+
+---
+
+#### Reliability Reward Tiers
+
+**Sellers who demonstrate reliability by topping up earn escalating benefits:**
+
+| Top-Ups Completed | Reward Tier | Transaction Limit | Bulletin Priority | Additional Benefits |
+|-------------------|-------------|-------------------|-------------------|---------------------|
+| **0 (Default)** | Standard | €200 | Normal listing | Base 0.5% fee |
+| **1st top-up** | 🛡️ Reliable | €220 (+10%) | Normal listing | "Reliable Seller" badge |
+| **3 top-ups** | 📊 Trusted | €260 (+30%) | Higher in search | Highlighted in app |
+| **5 top-ups** | ⭐ Priority | €300 (+50%) | Top of listings | Auto-select eligible |
+| **10 top-ups** | 🎯 Premium | €360 (+80%) | Featured placement | Premium badge + priority routing |
+| **20+ top-ups** | 💎 Elite | €400 (+100%) | Always visible | Maximum visibility + limits |
+
+**Example progression:**
+```
+Start: €200 limit, normal listing
+→ 1st top-up: €220 limit, "Reliable" badge appears
+→ 3rd top-up: €260 limit, moves to top half of listings
+→ 5th top-up: €300 limit, auto-select enabled (passive income!)
+→ 10th top-up: €360 limit, featured seller
+→ 20th top-up: €400 limit, elite status (maximum rewards)
+```
+
+**Economic value of rewards:**
+- **Higher limits** → Serve larger remittances → More volume per transaction
+- **Better visibility** → More senders choose you → More 0.5% fees earned
+- **Auto-select** → Bot handles everything → Passive income stream
+- **Compounding effect** → More transactions → More top-up opportunities → Faster tier progression
+
+**Opportunity cost of NOT topping up:**
+- Lose chance to advance tiers
+- Competitors with rewards get more visibility
+- Miss out on [Capital Recycling Strategy](overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) compounding (≈360% APR)
+
+---
+
+#### Philosophy: Reward, Not Punish
+
+**We don't penalize sellers for market movements.**
+
+- Default outcome (no top-up) = Fair exchange at current market rate
+- Top-up = Voluntary action that earns visibility and limit rewards
+- Creates a race to the top for reliability, not a race to avoid punishment
+
+**Similar models in DeFi:**
+- MakerDAO: Vault owners can add collateral during liquidations (voluntary)
+- Compound: Users can add collateral to avoid liquidation (voluntary)
+- Aave: Borrowers can repay to improve health factor (voluntary)
+
+**Asgaya**: Sellers can top up to earn reliability status (voluntary, rewarded)
 
 ---
 
