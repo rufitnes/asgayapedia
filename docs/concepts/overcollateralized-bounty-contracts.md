@@ -41,6 +41,27 @@ Excess BCH returns to the seller. The recipient gets exactly the promised amount
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION
+
+**If BCH falls below collateral threshold (>7% drop):**
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk**
+* ✅ **Merchant either:**
+  * Receives full EUR-equivalent BCH from a valid covenant
+  * OR does not participate in settlement at all
+* 🔄 **Under-collateralized covenants refund remaining BCH to the SENDER**
+* ⚖️ **Therefore:**
+  * **SENDER** bears tail volatility risk beyond collateral buffer
+  * **MERCHANT** bears execution/liquidity risk only (providing local fiat)
+  * **SELLER** bears opportunity cost + reliability reputation risk
+
+**The merchant is NOT short BCH downside volatility.**
+
+**Why this matters:** Merchants are local Venezuelan individuals providing physical cash. They cannot absorb crypto volatility losses. The covenant architecture ensures they only participate when settlement is guaranteed at the promised EUR value. Invalid covenants are rejected by their software before any cash changes hands.
+
+---
+
 ## How It Works — The Full Flow
 
 ### Covenant Creation & Claim Paths
@@ -223,6 +244,27 @@ Outputs:
 
 ---
 
+## Who Bears Which Risk?
+
+Understanding risk allocation across all participants:
+
+| Risk Type | Sender | Merchant | Seller |
+|-----------|--------|----------|--------|
+| **BCH crash > collateral buffer (>7%)** | ✅ YES | ❌ NO | Partial (opportunity cost) |
+| **BCH upside opportunity cost** | ✅ YES | ✅ YES | ✅ YES |
+| **Local cash liquidity risk** | ❌ NO | ✅ YES | ❌ NO |
+| **Covenant execution failure** | Partial | Partial | Partial |
+| **Capital lockup (24h)** | ❌ NO | ❌ NO | ✅ YES |
+| **Failed claim timing (recipient no-show)** | ✅ YES | ❌ NO | ✅ YES |
+| **Fiat payment chargeback** | ❌ NO | ❌ NO | ✅ YES |
+
+**Key insights:**
+- **Merchant bears zero volatility risk** - only provides local liquidity when covenant is valid
+- **Sender bears tail volatility risk** - gets depreciated BCH back if >7% drop
+- **Seller bears opportunity cost** - capital locked for 24h, bears reliability reputation risk
+
+---
+
 ## Volatility Protection via Overcollateralization
 
 ### Price Movement Scenarios
@@ -232,7 +274,22 @@ Outputs:
 | **BCH stable** | Required: 0.01 BCH, posted 0.0107 BCH | Merchant gets 0.01 BCH, seller gets 0.0007 BCH surplus |
 | **BCH rises 5%** | 0.01 BCH now worth €105 | Merchant gets 0.0095 BCH (still €100), seller gets 0.0112 BCH surplus |
 | **BCH drops 3%** | 0.01 BCH now worth €97 | Merchant gets 0.0103 BCH (still €100), seller gets 0.0004 BCH surplus |
-| **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller must add BCH or deal cancels |
+| **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller can add BCH or covenant matures early |
+
+> ⚠️ **CRITICAL: What DOES NOT Happen to Merchants**
+>
+> **Common misconception:** "If BCH crashes >7%, the covenant drains its remaining balance to the merchant."
+>
+> **This does NOT happen.** If the collateral falls below the EUR target:
+> 
+> 1. ❌ The covenant does **NOT** attempt to pay the merchant with insufficient BCH
+> 2. ❌ The merchant does **NOT** receive partial payment
+> 3. ❌ The merchant does **NOT** advance cash before covenant validation
+> 4. ✅ The covenant matures early and refunds ALL remaining BCH to the **SENDER**
+> 5. ✅ The merchant's software detects invalid covenant and refuses to participate
+> 6. ✅ The transaction is cancelled - merchant never involved, takes zero loss
+>
+> **Merchants are completely isolated from BCH price crashes.** Their participation is conditional on covenant validity at the exact moment of cash exchange.
 
 ### Top-Up Opportunity (How Sellers Earn Reliability Rewards)
 

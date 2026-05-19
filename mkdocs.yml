@@ -149,6 +149,12 @@ nav:
     - MUSD Integration Strategy: decisions/musd-integration-strategy.md
     - Phase 0 Progressive Decentralization: decisions/phase-0-progressive-decentralization.md
     - Phase 0 Validation Checklist: decisions/phase-0-validation-checklist.md
+  - Unknowns:
+    - Overview: unknowns/README.md
+    - Economic:
+      - Overcollateralization Rate: unknowns/economic/overcollateralization-rate.md
+    - Behavioral:
+      - Claim Timing: unknowns/behavioral/claim-timing.md
   - Research:
     - RS053 MUSD Analysis: research/RS053_MUSD.md
     - RS054 CashToken Swaps: research/RS054_cashtoken_swaps.md

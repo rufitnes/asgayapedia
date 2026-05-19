@@ -29,6 +29,34 @@ A BCH seller is anyone who:
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION FOR SELLERS
+
+**What risk do sellers bear?**
+
+* ✅ **Sellers DO bear:**
+  * Opportunity cost (capital locked for up to 24h)
+  * Reliability reputation risk (if they don't top up during volatility)
+  * Brief exposure during Bizum payment window (~5 minutes)
+* ❌ **Sellers DO NOT bear:**
+  * Merchant's volatility risk (merchant completely protected)
+  * Sender's tail risk (refund goes to sender if >7% drop)
+  * Recipient's claim timing risk (seller gets capital back either way)
+
+**If BCH drops >7% and seller doesn't top up:**
+* Covenant matures early
+* Remaining BCH refunds to **SENDER** (not seller)
+* Seller receives their 0.5% fee portion only
+* **This is fair exchange, not a penalty** - seller traded BCH for EUR at market rate
+
+**If BCH rises >7%:**
+* Seller gets LARGER refund (excess BCH returned)
+* Seller participated at favorable rate (sold BCH before rise)
+* **No "trapped gains" problem** - covenant promises EUR-worth, not fixed BCH amount
+
+**See:** [Overcollateralized Bounty Contracts](./overcollateralized-bounty-contracts.md) for complete covenant mechanics.
+
+---
+
 ## Who Can Be a BCH Seller?
 
 **Requirements:**

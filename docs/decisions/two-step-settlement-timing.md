@@ -25,6 +25,27 @@
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION
+
+**If BCH falls below collateral threshold (>7% drop):**
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk**
+* ✅ **Merchant either:**
+  * Receives full EUR-equivalent BCH
+  * OR does not participate in settlement at all
+* 🔄 **Under-collateralized covenants refund remaining BCH to the SENDER**
+* ⚖️ **Therefore:**
+  * **SENDER** bears tail volatility risk beyond collateral buffer
+  * **MERCHANT** bears execution/liquidity risk only
+  * **SELLER** bears opportunity cost + reliability reputation risk
+
+**The merchant is NOT short BCH downside volatility.**
+
+**Key operational flow:** When covenant becomes undercollateralized, it matures early and sends ALL remaining BCH back to the sender. The merchant's software detects this invalid covenant and refuses to participate. The recipient doesn't get their money, but the merchant doesn't lose anything.
+
+---
+
 > 💡 **KEY DESIGN PRINCIPLE: Merchant is Protected from ALL Volatility Risk**
 > 
 > **The merchant NEVER bears volatility risk:**
@@ -40,6 +61,58 @@
 > - **SENDER bears the loss** (opts into BCH exposure by creating covenant)
 > 
 > **Why this matters:** Local Venezuelan merchants provide physical cash liquidity. They cannot absorb crypto volatility risk. The 107% overcollateralization + margin call mechanism ensures they NEVER do.
+
+---
+
+## State-Transition Flow
+
+**Visual representation of risk allocation in action:**
+
+```
+┌─────────────────────┐
+│ Sender creates      │
+│ covenant (€100)     │
+└──────────┬──────────┘
+           │
+           ↓
+┌─────────────────────┐
+│ Seller posts 107%   │
+│ BCH collateral      │
+└──────────┬──────────┘
+           │
+           ↓
+┌─────────────────────┐
+│ Recipient visits    │
+│ merchant with code  │
+└──────────┬──────────┘
+           │
+           ↓
+      ┌────┴────┐
+      │ Is covenant  │
+      │ sufficiently │
+      │collateralized?│
+      └────┬─────┘
+           │
+     ┌─────┴─────┐
+     │           │
+    YES          NO
+     │           │
+     ↓           ↓
+┌─────────┐  ┌──────────────┐
+│Merchant │  │Covenant      │
+│provides │  │matures early │
+│cash     │  │              │
+└────┬────┘  └──────┬───────┘
+     │              │
+     ↓              ↓
+┌─────────┐  ┌──────────────┐
+│Merchant │  │BCH refunded  │
+│receives │  │to SENDER     │
+│€100 BCH │  │(depreciated) │
+└─────────┘  └──────────────┘
+```
+
+**Key decision point:** Merchant's software validates covenant collateral BEFORE handing cash. Invalid covenants are rejected, protecting merchant from volatility risk.
 
 ---
 
@@ -102,10 +175,14 @@
    - Posts €107 worth of BCH to covenant (overcollateralized)
    - Covenant holds BCH immutably (autonomous code, not entity)
 
-> 💡 **The covenant promises €X worth of BCH, not a fixed BCH amount.**
+> 💡 **The covenant holds a CONDITIONAL BOUNTY for €X worth of BCH, not a promise or obligation.**
 > 
-> If BCH rises, fewer BCH are needed → the seller gets more BCH back.  
-> If BCH falls, more BCH are needed → the seller's overcollateralization covers it up to the buffer limit.
+> **Conditional bounty, not promise:** If BCH value drops below the EUR target, the bounty is cancelled and funds revert to the sender. The merchant never receives undercollateralized BCH.
+>
+> **Dynamic BCH amount, fixed EUR value:**
+> - If BCH rises → Fewer BCH needed → Seller gets more BCH back
+> - If BCH falls (within 7%) → More BCH needed → Overcollateralization covers it
+> - If BCH falls (>7%) → **Bounty cancelled** → Funds refund to sender
 > 
 > This mechanism eliminates the "trapped gains" problem. When BCH moons, the seller's capital isn't frozen—they get the appreciation back immediately.
 > 
@@ -658,6 +735,20 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 ---
 
 ### Failure Modes
+
+#### Quick Reference: Price Movement Outcomes
+
+| Scenario | Covenant Action | Merchant Receives | Sender Receives | Who Bears Loss? |
+|----------|-----------------|-------------------|-----------------|-----------------|
+| **Normal (Price stable)** | Executes to Merchant | €100 in BCH | Zero (Transaction complete) | No one ✅ |
+| **BCH Rises (>7%)** | Executes to Merchant | €100 in BCH | Refund of excess collateral | No one ✅ |
+| **BCH Drops (>7%)** | **ABORTS → Refunds Sender** | **ZERO** (Transaction cancelled) | **€99.50 in BCH** (Depreciated value) | **SENDER** ⚠️ |
+
+**Key insight:** The merchant is NEVER exposed to undercollateralized covenants. When BCH drops beyond the buffer, the covenant aborts before the merchant participates, and the sender receives the depreciated BCH back.
+
+---
+
+#### Detailed Failure Scenarios
 
 **Scenario 1: BCH seller doesn't accept bounty**
 - Covenant never funded
