@@ -132,6 +132,7 @@ nav:
     - Why Minimal Hardware: core-architecture/why-minimal-hardware.md
   - Concepts:
     - Overview: concepts/README.md
+    - Risk Allocation Principle: concepts/risk-allocation-principle.md
     - BCH Sellers: concepts/bch-sellers.md
     - BCH Buyers: concepts/bch-buyers.md
     - Overcollateralized Bounty Contracts: concepts/overcollateralized-bounty-contracts.md

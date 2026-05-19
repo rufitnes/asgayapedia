@@ -44,6 +44,8 @@
 
 **Key operational flow:** When covenant becomes undercollateralized, it matures early and sends ALL remaining BCH back to the sender. The merchant's software detects this invalid covenant and refuses to participate. The recipient doesn't get their money, but the merchant doesn't lose anything.
 
+**📖 See:** [Risk Allocation Principle](../concepts/risk-allocation-principle.md) for the complete foundational principle, technical implementation, and comparisons to traditional systems.
+
 ---
 
 > 💡 **KEY DESIGN PRINCIPLE: Merchant is Protected from ALL Volatility Risk**

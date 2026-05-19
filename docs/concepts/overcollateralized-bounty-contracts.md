@@ -60,6 +60,8 @@ Excess BCH returns to the seller. The recipient gets exactly the promised amount
 
 **Why this matters:** Merchants are local Venezuelan individuals providing physical cash. They cannot absorb crypto volatility losses. The covenant architecture ensures they only participate when settlement is guaranteed at the promised EUR value. Invalid covenants are rejected by their software before any cash changes hands.
 
+**📖 See:** [Risk Allocation Principle](risk-allocation-principle.md) for the complete foundational principle, common misconceptions, technical implementation details, and comparison to traditional systems.
+
 ---
 
 ## How It Works — The Full Flow
