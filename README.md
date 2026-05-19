@@ -24,11 +24,25 @@ Then visit http://localhost:3000
 Asgaya bridges traditional payment systems (Bizum, PagoMóvil, Mercado Pago) with Bitcoin Cash to create:
 
 - **<1% total fees** - Cheaper than Western Union (6-12%) or cryptocurrency exchanges (2-5%)
-- **Permissionless access** - No KYC required for end users, works with basic smartphones or even QR codes
-- **Zero volatility** - Two-step settlement eliminates cryptocurrency price risk
-- **Merchant incentives** - Local shops earn passive income by providing cash-out services
+- **Permissionless access** - No KYC required for end users, works with basic smartphones
+- **Merchant protection** - Covenant architecture ensures merchants never bear volatility risk
+- **No custody** - BCH covenants eliminate licensing requirements (MiCA/PSD2 compliant)
 
-**Target:** EUR→VES (Spain→Venezuela) corridor, then expand to other Latin American countries.
+**Initial testing corridor:** EUR→VES (Spain→Venezuela), chosen because it's challenging enough to validate the model. The architecture is corridor-agnostic—if it works here, it works anywhere.
+
+---
+
+## 📖 Documentation IS the Product
+
+**Asgaya follows documentation-first development:**
+
+We're building the protocol through documentation, testing it with AI reviewers and external contributors before writing covenant code. This approach:
+- Catches architectural flaws early (before implementation)
+- Enables permissionless contribution (anyone can review using AI assistants)
+- Validates economic assumptions (unknowns directory structures research)
+- Proves regulatory compliance (covenant architecture eliminates custody)
+
+**The unknowns/ directory is the research entry point** - 14 structured investigation briefs with methods, success criteria, and contributor guidance. No permission needed to help turn unknowns into knowns.
 
 ---
 
@@ -36,26 +50,40 @@ Asgaya bridges traditional payment systems (Bizum, PagoMóvil, Mercado Pago) wit
 
 The `/docs` folder contains:
 
-- **Core Architecture** - WHY each design decision was made
-- **Design Decisions** - HOW we implement each requirement
-- **Android App Flows** - User experience for senders, recipients, merchants, LPs
-- **Backend APIs** - Technical specifications
-- **Concepts** - Deep dives into novel mechanisms (pull system, dynamic rewards, etc.)
-- **Roadmap** - Phased implementation plan from MVP to scale
+- **Core Architecture** - WHY each design decision was made (regulatory compliance, permissionless design)
+- **Concepts** - Covenant mechanics, risk allocation principle, BCH sellers, pull system
+- **Design Decisions** - HOW we implement each requirement (overcollateralization, fee splitting, settlement timing)
+- **Android App Flows** - User experience for senders, recipients, merchants, BCH sellers
+- **Backend APIs** - Technical specifications for covenant creation and settlement
+- **Unknowns** - Structured investigation briefs for unanswered questions (contributor entry point)
+- **Research** - Formal research sessions (RS001–RS061) documenting architecture evolution
+- **Meta** - AI review guide, contributing guidelines, documentation philosophy
+- **Roadmap** - Phased implementation plan from Phase 0 trials to multi-corridor deployment
 
 ---
 
 ## 🔍 Current Status
 
-**Phase:** Public documentation review (May 2026)
+**Phase:** Phase 0 Preparation (Documentation Review + Unknown Investigation)
 
-We're seeking feedback on:
-- Architecture soundness (security, economic incentives, scalability)
-- Missing features or edge cases
-- Corridor recommendations (which countries need this most?)
-- Technical concerns (BCH implementation, payment rail integration)
+**Version:** 2.0 (Covenant Architecture)
 
-**No code yet** - This is documentation-first development. Implementation begins after external review validates the approach.
+**Last Major Update:** May 19, 2026
+
+**What's complete:**
+- ✅ Covenant-based architecture (overcollateralized bounty contracts)
+- ✅ Risk allocation principle (merchants never bear volatility risk)
+- ✅ Android app flows (sender, recipient, merchant, BCH seller)
+- ✅ No custody/no intermediation model (MiCA/PSD2 compliant)
+- ✅ Unknowns directory (14 structured investigation briefs)
+
+**Seeking feedback on:**
+- Risk allocation clarity (do external reviewers understand who bears which risk?)
+- Unknown investigation methods (contributor-friendly research briefs)
+- Phase 0 validation metrics (what should we measure?)
+- Missing edge cases or failure modes
+
+**Documentation IS the product** - We're building the protocol through documentation, testing it with AI reviewers and external contributors before writing a single line of covenant code.
 
 ---
 
@@ -80,12 +108,13 @@ We welcome feedback from:
 See [ROADMAP.md](docs/ROADMAP.md) for the complete phased implementation plan.
 
 **Summary:**
-- **Phase 0:** Asgaya Husk (manual everything, 1-2 merchants, proof of concept)
-- **Phase 1:** Automation Layer 1 (Bizum auto-parsing, Kraken API integration)
-- **Phase 2:** Instant Settlement (LP bounty system)
-- **Phase 3:** Full Automation (PagoMóvil auto-parsing, OP_RETURN notifications)
-- **Phase 4:** Public Beta (external users, feature prioritization)
-- **Phase 5:** Scale & Multi-Corridor
+- **Phase 0:** Asgaya Husk — Manual operations, 1-2 trusted merchants, covenant architecture validation
+- **Phase 1:** Seller Automation — BCH seller bot reliability testing, multi-seller bulletin board
+- **Phase 2:** Merchant Network Expansion — BCH buyer liquidity layer, MUSD integration, merchant onboarding
+- **Phase 3:** Multi-Corridor — Validate corridor-agnostic architecture, expand beyond EUR→VES
+- **Phase 4:** Scale — Fully permissionless participation, dynamic collateralization, global coverage
+
+**Major architecture pivot (May 10, 2026):** Abandoned escrow-based model (custody/intermediation) for covenant-based architecture (no custody, MiCA/PSD2 compliant).
 
 ---
 
@@ -118,7 +147,8 @@ All contributions are welcome!
 **Created by:** Suso (jesgf@yahoo.es)
 
 **With essential contributions from:**
-- Coordination (Claude Sonnet 4.5) - Documentation structure, architecture refinement
+- Coordination (Claude Sonnet 4.5) - Documentation structure, architecture refinement, unknowns directory
+- DeepSeek - Covenant architecture validation, regulatory research (MiCA/PSD2), BCH capability audit (RS057), cross-linking analysis
 - Haiku (Claude Haiku 3.5) - Link audits, systematic reviews
 - Patricia Ferrero (future Doctora) - Fuzzy matching research insights
 
