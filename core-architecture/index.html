@@ -3701,6 +3701,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#critical-architecture-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical Architecture Foundation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#documents-in-this-section" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3842,9 +3853,23 @@
   
 
 
-<p>← <a href="./">Back to Home</a></p>
+<p>← <a href="../">Back to Home</a></p>
 <h1 id="core-architecture">Core Architecture<a class="headerlink" href="#core-architecture" title="Permanent link">&para;</a></h1>
 <p>Core Architecture is the index that connects <strong>requirements</strong> (what and why we need) to <strong>solutions</strong> (how we achieve them). Each section below branches into detailed explanations of the principles, tradeoffs, and implementation approaches.</p>
+<h2 id="critical-architecture-foundation">Critical Architecture Foundation<a class="headerlink" href="#critical-architecture-foundation" title="Permanent link">&para;</a></h2>
+<p>Asgaya's covenant-based architecture eliminates custody and intermediation through three core innovations:</p>
+<ol>
+<li>
+<p><strong><a href="../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a></strong> — BCH covenants (smart contracts) hold collateral and distribute funds programmatically. No custody, no intermediation, no exchange operation.</p>
+</li>
+<li>
+<p><strong><a href="../concepts/risk-allocation-principle/">Risk Allocation Principle</a></strong> — Merchants never bear volatility risk. Sender bears tail risk beyond 7% collateral buffer. Covenant automatically refunds sender if undercollateralized.</p>
+</li>
+<li>
+<p><strong><a href="../concepts/pull-system/">Decentralized Pull System</a></strong> — Bulletin board connects peers without central coordination. Merchant triggers settlement by co-signing covenant.</p>
+</li>
+</ol>
+<p><strong>Regulatory compliance:</strong> This architecture avoids MiCA CASP licensing (no custody) and PSD2 payment institution requirements (no intermediation). See <a href="../concepts/core-regulatory-constraints/">Core Regulatory Constraints</a> for full analysis.</p>
 <hr />
 <h2 id="documents-in-this-section">Documents in This Section<a class="headerlink" href="#documents-in-this-section" title="Permanent link">&para;</a></h2>
 <h3 id="economics-fees">Economics &amp; Fees<a class="headerlink" href="#economics-fees" title="Permanent link">&para;</a></h3>
@@ -3872,13 +3897,13 @@
 <p><strong>Architecture solutions:</strong>
 - <strong><a href="why-cheaper-than-legacy/">Why Cheaper Than Legacy</a></strong> — Economic model breakdown: how covenant rails + market rates achieve &lt;1%
 - <strong><a href="why-market-rate-exchanges/">Exchange Rate Safeguard</a></strong> — Real-time market rates (CoinGecko + DolarAPI) with zero markup
-- <strong><a href="why-eliminate-volatility/">Volatility Protection</a></strong> — Pull system eliminates Bitcoin Cash volatility concerns</p>
+- <strong><a href="why-eliminate-volatility/">Volatility Protection</a></strong> — <a href="../concepts/pull-system/">Pull system</a> eliminates Bitcoin Cash volatility concerns through two-step settlement (see <a href="../decisions/two-step-settlement-timing/">Two-Step Settlement Timing</a>)</p>
 <p><strong>Key principle:</strong> Transparent economics with no hidden markups.</p>
 <hr />
 <h3 id="2-promote-adoption">2️⃣ Promote Adoption<a class="headerlink" href="#2-promote-adoption" title="Permanent link">&para;</a></h3>
 <p><strong>Requirement:</strong> Every transaction must create economic incentives for participants to join and grow the network.</p>
 <p><strong>Architecture solutions:</strong>
-- <strong><a href="why-promote-adoption/">Merchant &amp; BCH Seller Incentives</a></strong> — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
+- <strong><a href="why-promote-adoption/">Merchant &amp; BCH Seller Incentives</a></strong> — Fee-splitting model: BCH Seller earns ~0.5% direct fee, Merchant earns ~0.5% spread from VES/BCH exchange (see <a href="../decisions/fee-splitting-model/">Fee Splitting Model</a>)
 - <strong><a href="why-bch-usage-incentive/">BCH Usage Incentives</a></strong> — Near zero-fee BCH payments vs. 1% remittance cash-outs</p>
 <p><strong>Key principle:</strong> the goal is to make asgaya redundant except to interact with the legacy system</p>
 <p><strong>Related concepts:</strong>
@@ -3892,7 +3917,7 @@
 - <strong><a href="why-no-kyc/">No KYC Model</a></strong> — Peer-to-peer coordination without central gatekeepers
 - <strong><a href="why-permissionless/">Permissionless Access</a></strong> — Works offline, intermittent connectivity supported
 - <strong><a href="why-minimal-hardware/">Minimal Hardware</a></strong> — From cardboard QR codes, to RFID stickers, to smartphones
-- <strong><a href="why-permissionless/">Minimal Knowledge</a></strong> — Simple UI, Basic fucntions, not crypto jargon</p>
+- <strong><a href="why-permissionless/">Minimal Knowledge</a></strong> — Simple UI, Basic functions, not crypto jargon</p>
 <p><strong>Security &amp; Self-Custody:</strong>
 - <strong><a href="why-self-custody/">Self-Custody</a></strong> — Users control keys, Asgaya has zero access
 - <strong><a href="why-permissionless/">Key Education</a></strong> — Mandatory backup verification before first use
@@ -3920,16 +3945,17 @@
 - Links to related concepts and implementation decisions</p>
 <p><strong>Start with the requirement that interests you most:</strong>
 - Want cheaper fees? → Start with <a href="why-cheaper-than-legacy/">Why Cheaper Than Legacy</a>
-- Curious about incentives? → Start with <a href="why-promote-adoption/">Merchant &amp; LP Incentives</a>
+- Curious about incentives? → Start with <a href="why-promote-adoption/">Merchant &amp; BCH Seller Incentives</a>
 - Care about access? → Start with <a href="why-no-kyc/">No KYC Model</a></p>
 <p><strong>For deeper understanding:</strong>
-- See <a href="../concepts/">Concepts</a> for theoretical foundations
-- See <a href="../android-app/">Android App</a> for implementation details
+- See <a href="../concepts/">Concepts</a> for theoretical foundations (covenant mechanics, risk allocation, pull system)
+- See <a href="../decisions/">Design Decisions</a> for implementation tradeoffs (fee splitting, settlement timing, regulatory compliance)
+- See <a href="../android-app/">Android App</a> for user flows and technical implementation
 - See <a href="../meta/contributing/">Contributing</a> to propose changes</p>
 <hr />
 <p><em>Architecture index created: April 8, 2026</em>
 <em>Maintained by: Asgaya Contributors</em>
-<em>Last updated: April 30, 2026</em></p>
+<em>Last updated: May 19, 2026</em></p>
         <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
             <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
         </div>

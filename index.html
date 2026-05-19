@@ -610,17 +610,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#for-ai-reviewers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        For AI Reviewers 🤖
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#documentation-sections" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -677,6 +666,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#unknowns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 Unknowns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 Research Sessions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#contributing-meta" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -704,10 +715,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#for-ai-instances" class="md-nav__link">
+  <a href="#for-ai-reviewers-contributors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        For AI Instances
+        For AI Reviewers &amp; Contributors
       
     </span>
   </a>
@@ -4079,17 +4090,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#for-ai-reviewers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        For AI Reviewers 🤖
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#documentation-sections" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4146,6 +4146,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#unknowns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 Unknowns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 Research Sessions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#contributing-meta" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4173,10 +4195,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#for-ai-instances" class="md-nav__link">
+  <a href="#for-ai-reviewers-contributors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        For AI Instances
+        For AI Reviewers &amp; Contributors
       
     </span>
   </a>
@@ -4232,7 +4254,7 @@
 <p>Welcome to Asgayapedia - the complete documentation for the Asgaya remittance protocol.</p>
 <h2 id="what-is-asgaya">What is Asgaya?<a class="headerlink" href="#what-is-asgaya" title="Permanent link">&para;</a></h2>
 <p><strong>Asgaya is a Bitcoin Cash adoption engine disguised as a remittance protocol.</strong></p>
-<p>On the surface, it's a cheaper way to send money across borders (&lt;1% vs 6.49% average). Under the hood, it's a <strong>decentralized exchange</strong> synthesizing innovations from across the BCH ecosystem into real-world utility.</p>
+<p>On the surface, it's a cheaper way to send money across borders (&lt;1% vs 6.49% average). Under the hood, it's a <strong>permissionless bulletin board</strong> connecting independent peers—BCH sellers, merchants, senders, and recipients—through covenant-based settlement. No custody, no intermediation, no exchange operation.</p>
 <p><strong>The insight:</strong> Every remittance is designed to create a new BCH merchant. Use the $44.5 billion annually lost to fees to build circular economy infrastructure where it's needed most.</p>
 <h3 id="core-design-goals">Core Design Goals<a class="headerlink" href="#core-design-goals" title="Permanent link">&para;</a></h3>
 <p><strong>1. Promote Adoption First</strong>
@@ -4248,14 +4270,15 @@ Anyone can participate without KYC, using minimal hardware and knowledge. No cus
 - <strong>Sender fee:</strong> €0.50 (0.5% - paid to BCH seller)
 - <strong>Merchant spread:</strong> ~€0.50 (0.5% - earned by selling VES for BCH)</p>
 <p><strong>How it works:</strong> 
-- Sender pays BCH seller €100 via Bizum
-- BCH seller posts ~€107 worth of BCH as collateral (7% overcollateralization)
-- Covenant promises €99.50 worth of BCH to merchant (settled at maturity rate)
-- Merchant sells 500,000 VES to recipient, receives ~€100.50 worth of BCH (earns ~€1 spread)
-- BCH seller keeps surplus after merchant paid (~€0.50 fee + hedged position)</p>
+- Sender pays €100 to BCH seller via Bizum/local payment
+- BCH seller keeps €0.50 fee, locks €99.50 worth of BCH in covenant (107% collateral)
+- Covenant promises €99.50 worth of BCH to merchant at settlement
+- Recipient cashes out at merchant, receives €99 cash (€0.50 merchant fee)
+- Merchant co-signs covenant, receives €99.50 worth of BCH
+- Remaining collateral (€7 worth of BCH) goes back to seller</p>
 <p><strong>Comparison:</strong> Traditional remittances average 6.49% (€6.49 on €100). Asgaya's ~1% total fee is <strong>6.5× cheaper</strong>.</p>
 <hr />
-<p><strong>Key Innovation:</strong> EUR-denominated covenants with BCH settlement create a decentralized exchange where every trade builds adoption infrastructure. The merchant receiving the remittance becomes part of the BCH circular economy.</p>
+<p><strong>Key Innovation:</strong> EUR-denominated covenants with BCH settlement connect independent participants peer-to-peer. Every remittance creates a new BCH merchant, building circular economy infrastructure where it's needed most.</p>
 <p><strong>⚠️ Important:</strong> Asgaya is an <strong>early-stage, experimental protocol</strong>. By exploring this documentation or participating in any capacity, you accept full responsibility for understanding and complying with laws in your jurisdiction. <strong><a href="risks-and-disclaimers/">Read full risks and disclaimers →</a></strong></p>
 <hr />
 <h2 id="why-asgaya">Why Asgaya?<a class="headerlink" href="#why-asgaya" title="Permanent link">&para;</a></h2>
@@ -4294,16 +4317,6 @@ Pioneered the cash-for-crypto peer-to-peer exchange model that Asgaya adapts for
 <p>Asgaya's role shrinks to a background utility for interacting with legacy payment systems when absolutely necessary. When a Venezuelan merchant can pay suppliers in BCH, buy inventory in BCH, and accept payments in BCH, they won't need to cash out through Asgaya anymore.</p>
 <p><strong>We're not building a platform. We're building a ladder people climb and then kick away.</strong></p>
 <hr />
-<h2 id="for-ai-reviewers">For AI Reviewers 🤖<a class="headerlink" href="#for-ai-reviewers" title="Permanent link">&para;</a></h2>
-<p><strong>Reviewing this documentation with an AI assistant?</strong> We've created optimized files specifically for you!</p>
-<p><strong>Quick access (direct raw URLs):</strong>
-- <strong>Quick Start:</strong> <a href="https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/quick-start.txt">quick-start.txt</a> (500 lines, 15 min)
-- <strong>Core Architecture:</strong> <a href="https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/core-arch.txt">core-arch.txt</a> (2,100 lines)
-- <strong>Design Decisions:</strong> <a href="https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/decisions.txt">decisions.txt</a> (2,500 lines)
-- <strong>Complete Docs:</strong> <a href="https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/complete.txt">complete.txt</a> (15,250 lines, everything)</p>
-<p><strong>Full guide:</strong> <a href="/ai/">AI Review Access</a> - Explains file structure, reading order, and how to provide feedback</p>
-<p><strong>Why these files?</strong> After observing AI instances struggle with GitHub navigation (20+ page fetches just to gather docs), we created direct-access files that reduce pre-review effort by 90%.</p>
-<hr />
 <h2 id="documentation-sections">Documentation Sections<a class="headerlink" href="#documentation-sections" title="Permanent link">&para;</a></h2>
 <h3 id="core-architecture">📐 <a href="core-architecture/">Core Architecture</a><a class="headerlink" href="#core-architecture" title="Permanent link">&para;</a></h3>
 <p>Fundamental design principles and economic incentives:
@@ -4339,6 +4352,22 @@ Pioneered the cash-for-crypto peer-to-peer exchange model that Asgaya adapts for
 - Why no custody/intermediation (MiCA compliance)</p>
 <p><strong>Start here if:</strong> You want to understand the "why" behind specific architectural choices</p>
 <hr />
+<h3 id="unknowns">🔍 <a href="unknowns/">Unknowns</a><a class="headerlink" href="#unknowns" title="Permanent link">&para;</a></h3>
+<p>Structured investigation briefs for unanswered questions:
+- 14 research questions with methods and success criteria
+- Contributor entry point (no permission needed)
+- Turn unknowns into knowns through systematic investigation
+- Economic assumptions, technical feasibility, regulatory gaps</p>
+<p><strong>Start here if:</strong> You want to contribute research without asking permission first</p>
+<hr />
+<h3 id="research-sessions">📚 <a href="research/">Research Sessions</a><a class="headerlink" href="#research-sessions" title="Permanent link">&para;</a></h3>
+<p>Formal research sessions (RS001–RS061) documenting architecture evolution:
+- Decision rationale and tradeoff analysis
+- Covenant architecture validation
+- Regulatory compliance research (MiCA/PSD2)
+- BCH capability audits</p>
+<p><strong>Start here if:</strong> You want to understand how we arrived at current design decisions</p>
+<hr />
 <h3 id="contributing-meta">🤝 <a href="meta/">Contributing &amp; Meta</a><a class="headerlink" href="#contributing-meta" title="Permanent link">&para;</a></h3>
 <p>How to contribute to Asgaya:
 - AI review guide
@@ -4347,37 +4376,34 @@ Pioneered the cash-for-crypto peer-to-peer exchange model that Asgaya adapts for
 <p><strong>Start here if:</strong> You want to help improve Asgaya</p>
 <hr />
 <h2 id="current-status">Current Status<a class="headerlink" href="#current-status" title="Permanent link">&para;</a></h2>
-<p><strong>Phase:</strong> Public Beta (Seeking External Review)</p>
-<p><strong>Version:</strong> 0.2.0 (Covenant Architecture)</p>
-<p><strong>Last Updated:</strong> 2026-05-10</p>
+<p><strong>Phase:</strong> Phase 0 — Documentation Review (Pre-Implementation)</p>
+<p><strong>Version:</strong> 2.0 (Covenant Architecture)</p>
+<p><strong>Last Updated:</strong> 2026-05-19</p>
 <p><strong>What's complete:</strong>
-- ✅ Core architecture (covenant-based)
-- ✅ Android app flows (sender, recipient, merchant)
+- ✅ Core architecture (covenant-based, no custody/intermediation)
+- ✅ Risk allocation principle (merchants never bear volatility risk)
+- ✅ Android app flows (sender, recipient, merchant, BCH seller)
 - ✅ Overcollateralized bounty contracts specification
-- ✅ No custody/no intermediation model
-- ✅ Decentralized pull system (bulletin board)</p>
+- ✅ Unknowns directory (14 structured investigation briefs)
+- ✅ External AI reviews (ChatGPT, Gemini, Grok, DeepSeek)</p>
 <p><strong>What needs review:</strong>
-- Security considerations (covenant timeout cascade)
-- BCH-native architecture assumptions
-- Testing strategy completeness
-- Missing edge cases
-- Regulatory compliance (MiCA/PSD2)</p>
+- Risk allocation clarity (do reviewers understand who bears which risk?)
+- Unknown investigation methods (contributor-friendly briefs)
+- Phase 0 validation metrics (what should we measure?)
+- Missing edge cases or failure modes</p>
 <p><strong>Recent pivot (May 9, 2026):</strong>
 - Abandoned escrow-based architecture (custody/intermediation service)
 - Adopted covenant-based architecture (no custody, no intermediation)
 - Reason: MiCA compliance (avoid CASP licensing requirement)</p>
 <hr />
-<h2 id="for-ai-instances">For AI Instances<a class="headerlink" href="#for-ai-instances" title="Permanent link">&para;</a></h2>
-<p>This documentation is designed to be navigable by AI agents.</p>
-<p><strong>AI Navigation:</strong>
-- <a href="https://docs.asgaya.org/llms.txt">llms.txt</a> - Full documentation sitemap (180+ pages)
-- <a href="https://docs.asgaya.org/llms-full.txt">llms-full.txt</a> - All content concatenated (422 lines, 3.1MB)</p>
-<p><strong>Raw Markdown Access:</strong><br />
-Any page at <code>/path/to/page/</code> can be read as raw markdown at <code>/path/to/page/index.md</code></p>
-<p><strong>How to help:</strong>
-1. Choose a section to review from the sitemap
-2. Read the raw markdown via the index.md pattern
-3. Provide specific, actionable feedback</p>
+<h2 id="for-ai-reviewers-contributors">For AI Reviewers &amp; Contributors<a class="headerlink" href="#for-ai-reviewers-contributors" title="Permanent link">&para;</a></h2>
+<p><strong>This documentation is optimized for AI-assisted review.</strong></p>
+<p><strong>Auto-generated navigation (always up-to-date):</strong>
+- <strong><a href="https://docs.asgaya.org/llms.txt">llms.txt</a></strong> - Full sitemap with all pages
+- <strong><a href="https://docs.asgaya.org/llms-full.txt">llms-full.txt</a></strong> - Complete documentation in one file</p>
+<p>These files are automatically regenerated on every documentation update via the mkdocs-llmstxt-md plugin.</p>
+<p><strong>AI Review Guide:</strong> <a href="meta/ai-review-guide/">meta/ai-review-guide.md</a> - How to provide effective feedback</p>
+<p><strong>Permissionless contribution:</strong> The <a href="unknowns/">unknowns directory</a> contains 14 structured investigation briefs with methods, success criteria, and contributor guidance. No permission needed to help turn unknowns into knowns.</p>
 <hr />
 <h2 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h2>
 <ul>

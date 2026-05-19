@@ -1,8 +1,20 @@
-← [Back to Home](README.md)
+← [Back to Home](../index.md)
 
 # Core Architecture
 
 Core Architecture is the index that connects **requirements** (what and why we need) to **solutions** (how we achieve them). Each section below branches into detailed explanations of the principles, tradeoffs, and implementation approaches.
+
+## Critical Architecture Foundation
+
+Asgaya's covenant-based architecture eliminates custody and intermediation through three core innovations:
+
+1. **[Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md)** — BCH covenants (smart contracts) hold collateral and distribute funds programmatically. No custody, no intermediation, no exchange operation.
+
+2. **[Risk Allocation Principle](../concepts/risk-allocation-principle.md)** — Merchants never bear volatility risk. Sender bears tail risk beyond 7% collateral buffer. Covenant automatically refunds sender if undercollateralized.
+
+3. **[Decentralized Pull System](../concepts/pull-system.md)** — Bulletin board connects peers without central coordination. Merchant triggers settlement by co-signing covenant.
+
+**Regulatory compliance:** This architecture avoids MiCA CASP licensing (no custody) and PSD2 payment institution requirements (no intermediation). See [Core Regulatory Constraints](../concepts/core-regulatory-constraints.md) for full analysis.
 
 ---
 
@@ -34,7 +46,7 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Architecture solutions:**
 - **[Why Cheaper Than Legacy](why-cheaper-than-legacy.md)** — Economic model breakdown: how covenant rails + market rates achieve <1%
 - **[Exchange Rate Safeguard](why-market-rate-exchanges.md)** — Real-time market rates (CoinGecko + DolarAPI) with zero markup
-- **[Volatility Protection](why-eliminate-volatility.md)** — Pull system eliminates Bitcoin Cash volatility concerns
+- **[Volatility Protection](why-eliminate-volatility.md)** — [Pull system](../concepts/pull-system.md) eliminates Bitcoin Cash volatility concerns through two-step settlement (see [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md))
 
 **Key principle:** Transparent economics with no hidden markups.
 
@@ -45,7 +57,7 @@ Core Architecture is the index that connects **requirements** (what and why we n
 **Requirement:** Every transaction must create economic incentives for participants to join and grow the network.
 
 **Architecture solutions:**
-- **[Merchant & BCH Seller Incentives](why-promote-adoption.md)** — Fee-splitting model (BCH Seller 0.5%, Merchant 0.5% each earn from the 1% fee)
+- **[Merchant & BCH Seller Incentives](why-promote-adoption.md)** — Fee-splitting model: BCH Seller earns ~0.5% direct fee, Merchant earns ~0.5% spread from VES/BCH exchange (see [Fee Splitting Model](../decisions/fee-splitting-model.md))
 - **[BCH Usage Incentives](why-bch-usage-incentive.md)** — Near zero-fee BCH payments vs. 1% remittance cash-outs
 
 **Key principle:** the goal is to make asgaya redundant except to interact with the legacy system
@@ -66,7 +78,7 @@ Core Architecture is the index that connects **requirements** (what and why we n
 - **[No KYC Model](why-no-kyc.md)** — Peer-to-peer coordination without central gatekeepers
 - **[Permissionless Access](why-permissionless.md)** — Works offline, intermittent connectivity supported
 - **[Minimal Hardware](why-minimal-hardware.md)** — From cardboard QR codes, to RFID stickers, to smartphones
-- **[Minimal Knowledge](why-permissionless.md)** — Simple UI, Basic fucntions, not crypto jargon
+- **[Minimal Knowledge](why-permissionless.md)** — Simple UI, Basic functions, not crypto jargon
 
 **Security & Self-Custody:**
 - **[Self-Custody](why-self-custody.md)** — Users control keys, Asgaya has zero access
@@ -103,16 +115,17 @@ These principles guide all architectural decisions across the three requirements
 
 **Start with the requirement that interests you most:**
 - Want cheaper fees? → Start with [Why Cheaper Than Legacy](why-cheaper-than-legacy.md)
-- Curious about incentives? → Start with [Merchant & LP Incentives](why-promote-adoption.md)
+- Curious about incentives? → Start with [Merchant & BCH Seller Incentives](why-promote-adoption.md)
 - Care about access? → Start with [No KYC Model](why-no-kyc.md)
 
 **For deeper understanding:**
-- See [Concepts](../concepts/) for theoretical foundations
-- See [Android App](../android-app/) for implementation details
+- See [Concepts](../concepts/) for theoretical foundations (covenant mechanics, risk allocation, pull system)
+- See [Design Decisions](../decisions/) for implementation tradeoffs (fee splitting, settlement timing, regulatory compliance)
+- See [Android App](../android-app/) for user flows and technical implementation
 - See [Contributing](../meta/contributing.md) to propose changes
 
 ---
 
 *Architecture index created: April 8, 2026*
 *Maintained by: Asgaya Contributors*
-*Last updated: April 30, 2026*
+*Last updated: May 19, 2026*

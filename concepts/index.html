@@ -2827,6 +2827,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#universal-bot-fraud-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Universal Bot Fraud Prevention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fraud-proof-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fraud Proof Mechanism
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2866,6 +2888,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#seller-liveness-signal-phase-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seller Liveness Signal ⚠️ Phase 1+
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2899,6 +2932,17 @@
     <span class="md-ellipsis">
       
         Bubble Prevention ⚠️ Deferred
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bch-miners-as-escrows-obsolete-pre-covenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BCH Miners as Escrows ⚠️ Obsolete (Pre-Covenant)
       
     </span>
   </a>
@@ -4019,6 +4063,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#universal-bot-fraud-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Universal Bot Fraud Prevention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fraud-proof-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fraud Proof Mechanism
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4058,6 +4124,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#seller-liveness-signal-phase-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seller Liveness Signal ⚠️ Phase 1+
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4091,6 +4168,17 @@
     <span class="md-ellipsis">
       
         Bubble Prevention ⚠️ Deferred
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bch-miners-as-escrows-obsolete-pre-covenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BCH Miners as Escrows ⚠️ Obsolete (Pre-Covenant)
       
     </span>
   </a>
@@ -4144,11 +4232,11 @@
   
 
 
-<p>← <a href="./">Back to Home</a></p>
+<p>← <a href="../">Back to Home</a></p>
 <h1 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">&para;</a></h1>
 <p>Key concepts that underpin Asgaya's covenant-based architecture.</p>
 <blockquote>
-<p><strong>Note:</strong> Some concepts are <strong>active</strong> (Phase 0 MVP), while others are <strong>planned enhancements</strong> (Phase 1+). Each concept page indicates its status.</p>
+<p><strong>Note:</strong> Some concepts are <strong>active</strong> (Phase 0), while others are <strong>planned enhancements</strong> (Phase 1+). Each concept page indicates its status.</p>
 </blockquote>
 <hr />
 <h2 id="core-concepts-active-phase-0">Core Concepts (Active - Phase 0)<a class="headerlink" href="#core-concepts-active-phase-0" title="Permanent link">&para;</a></h2>
@@ -4164,18 +4252,26 @@
 <p>The three safe design principles that keep Asgaya outside MiCA/PSD2 licensing: no custody, no intermediation, no protocol fee.</p>
 <h3 id="live-exchange-rates"><a href="live-exchange-rates/">Live Exchange Rates</a><a class="headerlink" href="#live-exchange-rates" title="Permanent link">&para;</a></h3>
 <p>How real-time exchange rates are sourced (CoinGecko, DolarAPI) and used for EUR-denominated promises without markup.</p>
+<h3 id="universal-bot-fraud-prevention"><a href="universal-bot-fraud-prevention/">Universal Bot Fraud Prevention</a><a class="headerlink" href="#universal-bot-fraud-prevention" title="Permanent link">&para;</a></h3>
+<p>Both senders and sellers run the same notification listener bot. Seller cannot predict which senders have working bots, making fraud attempts have negative expected value.</p>
+<h3 id="fraud-proof-mechanism"><a href="fraud-proof-mechanism/">Fraud Proof Mechanism</a><a class="headerlink" href="#fraud-proof-mechanism" title="Permanent link">&para;</a></h3>
+<p>Cryptographic proof system that protects senders when sellers don't sign covenants despite receiving payment. Uses SMS hashes, covenant timeouts, and reputation-based dispute resolution.</p>
 <hr />
 <h2 id="phase-1-concepts-planned">Phase 1+ Concepts (Planned)<a class="headerlink" href="#phase-1-concepts-planned" title="Permanent link">&para;</a></h2>
 <h3 id="bch-buyers-phase-11"><a href="bch-buyers/">BCH Buyers</a> ⚠️ <strong>Phase 1.1+</strong><a class="headerlink" href="#bch-buyers-phase-11" title="Permanent link">&para;</a></h3>
-<p>Global participants who buy BCH from merchants using MUSD (stablecoin), providing instant liquidity without geographic lock-in. Replaces the failed "Liquidity Provider" role.</p>
+<p>Global participants who buy BCH from merchants using MUSD (stablecoin), providing instant liquidity without geographic lock-in. Replaces the escrow-era "Liquidity Provider" concept.</p>
 <h3 id="rfid-card-recipients-phase-1"><a href="rfid-card-recipients/">RFID Card Recipients</a> ⚠️ <strong>Phase 1+</strong><a class="headerlink" href="#rfid-card-recipients-phase-1" title="Permanent link">&para;</a></h3>
 <p>How recipients without smartphones can claim covenants using NFC-enabled cards. Extends hardware accessibility beyond Android phones.</p>
+<h3 id="seller-liveness-signal-phase-1"><a href="seller-liveness-signal/">Seller Liveness Signal</a> ⚠️ <strong>Phase 1+</strong><a class="headerlink" href="#seller-liveness-signal-phase-1" title="Permanent link">&para;</a></h3>
+<p>Passive liveness proof using notification noise patterns. Verifies that BCH Sellers are online and running honest software without explicit pings or central monitoring.</p>
 <hr />
 <h2 id="historical-deferred-concepts">Historical / Deferred Concepts<a class="headerlink" href="#historical-deferred-concepts" title="Permanent link">&para;</a></h2>
 <h3 id="dynamic-reward-modulation-deferred"><a href="dynamic-reward-modulation/">Dynamic Reward Modulation</a> ⚠️ <strong>Deferred</strong><a class="headerlink" href="#dynamic-reward-modulation-deferred" title="Permanent link">&para;</a></h3>
 <p>Proposed mechanism for adjusting fee splits based on market conditions. Phase 0 uses fixed 0.5% each (BCH Seller + Merchant). May revisit post-validation.</p>
 <h3 id="bubble-prevention-deferred"><a href="bubble-prevention/">Bubble Prevention</a> ⚠️ <strong>Deferred</strong><a class="headerlink" href="#bubble-prevention-deferred" title="Permanent link">&para;</a></h3>
 <p>Proposed mechanisms to prevent speculative behavior in reward systems. Not implemented in Phase 0 (trusted parties only).</p>
+<h3 id="bch-miners-as-escrows-obsolete-pre-covenant"><a href="bch-miners-as-escrows/">BCH Miners as Escrows</a> ⚠️ <strong>Obsolete (Pre-Covenant)</strong><a class="headerlink" href="#bch-miners-as-escrows-obsolete-pre-covenant" title="Permanent link">&para;</a></h3>
+<p>Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using overcollateralized covenants (no custody).</p>
 <h3 id="market-making-partners-obsolete-pre-covenant"><a href="market-making-partners/">Market Making Partners</a> ⚠️ <strong>Obsolete (Pre-Covenant)</strong><a class="headerlink" href="#market-making-partners-obsolete-pre-covenant" title="Permanent link">&para;</a></h3>
 <p>Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture.</p>
 <hr />
@@ -4187,7 +4283,7 @@
 - How the system scales (permissionless participation, global BCH buyers)</p>
 <p><strong>Start with:</strong> <a href="overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> - the covenant mechanism that makes everything else possible.</p>
 <hr />
-<p><em>Last updated: May 12, 2026 (Covenant Architecture v2.0)</em></p>
+<p><em>Last updated: May 19, 2026 (Covenant Architecture v2.0)</em></p>
         <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
             <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
         </div>

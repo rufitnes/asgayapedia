@@ -1,10 +1,10 @@
-← [Back to Home](README.md)
+← [Back to Home](../index.md)
 
 # Concepts
 
 Key concepts that underpin Asgaya's covenant-based architecture.
 
-> **Note:** Some concepts are **active** (Phase 0 MVP), while others are **planned enhancements** (Phase 1+). Each concept page indicates its status.
+> **Note:** Some concepts are **active** (Phase 0), while others are **planned enhancements** (Phase 1+). Each concept page indicates its status.
 
 ---
 
@@ -28,15 +28,24 @@ The three safe design principles that keep Asgaya outside MiCA/PSD2 licensing: n
 ### [Live Exchange Rates](live-exchange-rates.md)
 How real-time exchange rates are sourced (CoinGecko, DolarAPI) and used for EUR-denominated promises without markup.
 
+### [Universal Bot Fraud Prevention](universal-bot-fraud-prevention.md)
+Both senders and sellers run the same notification listener bot. Seller cannot predict which senders have working bots, making fraud attempts have negative expected value.
+
+### [Fraud Proof Mechanism](fraud-proof-mechanism.md)
+Cryptographic proof system that protects senders when sellers don't sign covenants despite receiving payment. Uses SMS hashes, covenant timeouts, and reputation-based dispute resolution.
+
 ---
 
 ## Phase 1+ Concepts (Planned)
 
 ### [BCH Buyers](bch-buyers.md) ⚠️ **Phase 1.1+**
-Global participants who buy BCH from merchants using MUSD (stablecoin), providing instant liquidity without geographic lock-in. Replaces the failed "Liquidity Provider" role.
+Global participants who buy BCH from merchants using MUSD (stablecoin), providing instant liquidity without geographic lock-in. Replaces the escrow-era "Liquidity Provider" concept.
 
 ### [RFID Card Recipients](rfid-card-recipients.md) ⚠️ **Phase 1+**
 How recipients without smartphones can claim covenants using NFC-enabled cards. Extends hardware accessibility beyond Android phones.
+
+### [Seller Liveness Signal](seller-liveness-signal.md) ⚠️ **Phase 1+**
+Passive liveness proof using notification noise patterns. Verifies that BCH Sellers are online and running honest software without explicit pings or central monitoring.
 
 ---
 
@@ -47,6 +56,9 @@ Proposed mechanism for adjusting fee splits based on market conditions. Phase 0 
 
 ### [Bubble Prevention](bubble-prevention.md) ⚠️ **Deferred**
 Proposed mechanisms to prevent speculative behavior in reward systems. Not implemented in Phase 0 (trusted parties only).
+
+### [BCH Miners as Escrows](bch-miners-as-escrows.md) ⚠️ **Obsolete (Pre-Covenant)**
+Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using overcollateralized covenants (no custody).
 
 ### [Market Making Partners](market-making-partners.md) ⚠️ **Obsolete (Pre-Covenant)**
 Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture.
@@ -65,4 +77,4 @@ These concepts are referenced throughout the documentation. Understanding them h
 
 ---
 
-*Last updated: May 12, 2026 (Covenant Architecture v2.0)*
+*Last updated: May 19, 2026 (Covenant Architecture v2.0)*

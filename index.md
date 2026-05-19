@@ -8,7 +8,7 @@ Welcome to Asgayapedia - the complete documentation for the Asgaya remittance pr
 
 **Asgaya is a Bitcoin Cash adoption engine disguised as a remittance protocol.**
 
-On the surface, it's a cheaper way to send money across borders (<1% vs 6.49% average). Under the hood, it's a **decentralized exchange** synthesizing innovations from across the BCH ecosystem into real-world utility.
+On the surface, it's a cheaper way to send money across borders (<1% vs 6.49% average). Under the hood, it's a **permissionless bulletin board** connecting independent peers—BCH sellers, merchants, senders, and recipients—through covenant-based settlement. No custody, no intermediation, no exchange operation.
 
 **The insight:** Every remittance is designed to create a new BCH merchant. Use the $44.5 billion annually lost to fees to build circular economy infrastructure where it's needed most.
 
@@ -34,17 +34,18 @@ On a **€100 transfer**, the ~1% (€1.00) is distributed as:
 - **Merchant spread:** ~€0.50 (0.5% - earned by selling VES for BCH)
 
 **How it works:** 
-- Sender pays BCH seller €100 via Bizum
-- BCH seller posts ~€107 worth of BCH as collateral (7% overcollateralization)
-- Covenant promises €99.50 worth of BCH to merchant (settled at maturity rate)
-- Merchant sells 500,000 VES to recipient, receives ~€100.50 worth of BCH (earns ~€1 spread)
-- BCH seller keeps surplus after merchant paid (~€0.50 fee + hedged position)
+- Sender pays €100 to BCH seller via Bizum/local payment
+- BCH seller keeps €0.50 fee, locks €99.50 worth of BCH in covenant (107% collateral)
+- Covenant promises €99.50 worth of BCH to merchant at settlement
+- Recipient cashes out at merchant, receives €99 cash (€0.50 merchant fee)
+- Merchant co-signs covenant, receives €99.50 worth of BCH
+- Remaining collateral (€7 worth of BCH) goes back to seller
 
 **Comparison:** Traditional remittances average 6.49% (€6.49 on €100). Asgaya's ~1% total fee is **6.5× cheaper**.
 
 ---
 
-**Key Innovation:** EUR-denominated covenants with BCH settlement create a decentralized exchange where every trade builds adoption infrastructure. The merchant receiving the remittance becomes part of the BCH circular economy.
+**Key Innovation:** EUR-denominated covenants with BCH settlement connect independent participants peer-to-peer. Every remittance creates a new BCH merchant, building circular economy infrastructure where it's needed most.
 
 **⚠️ Important:** Asgaya is an **early-stage, experimental protocol**. By exploring this documentation or participating in any capacity, you accept full responsibility for understanding and complying with laws in your jurisdiction. **[Read full risks and disclaimers →](risks-and-disclaimers.md)**
 
@@ -113,22 +114,6 @@ Asgaya's role shrinks to a background utility for interacting with legacy paymen
 
 ---
 
-## For AI Reviewers 🤖
-
-**Reviewing this documentation with an AI assistant?** We've created optimized files specifically for you!
-
-**Quick access (direct raw URLs):**
-- **Quick Start:** [quick-start.txt](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/quick-start.txt) (500 lines, 15 min)
-- **Core Architecture:** [core-arch.txt](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/core-arch.txt) (2,100 lines)
-- **Design Decisions:** [decisions.txt](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/decisions.txt) (2,500 lines)
-- **Complete Docs:** [complete.txt](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/ai/complete.txt) (15,250 lines, everything)
-
-**Full guide:** [AI Review Access](/ai/) - Explains file structure, reading order, and how to provide feedback
-
-**Why these files?** After observing AI instances struggle with GitHub navigation (20+ page fetches just to gather docs), we created direct-access files that reduce pre-review effort by 90%.
-
----
-
 ## Documentation Sections
 
 ### 📐 [Core Architecture](core-architecture/)
@@ -182,6 +167,30 @@ Real-world tradeoffs and implementation choices:
 
 ---
 
+### 🔍 [Unknowns](unknowns/)
+
+Structured investigation briefs for unanswered questions:
+- 14 research questions with methods and success criteria
+- Contributor entry point (no permission needed)
+- Turn unknowns into knowns through systematic investigation
+- Economic assumptions, technical feasibility, regulatory gaps
+
+**Start here if:** You want to contribute research without asking permission first
+
+---
+
+### 📚 [Research Sessions](research/)
+
+Formal research sessions (RS001–RS061) documenting architecture evolution:
+- Decision rationale and tradeoff analysis
+- Covenant architecture validation
+- Regulatory compliance research (MiCA/PSD2)
+- BCH capability audits
+
+**Start here if:** You want to understand how we arrived at current design decisions
+
+---
+
 ### 🤝 [Contributing & Meta](meta/)
 
 How to contribute to Asgaya:
@@ -195,25 +204,25 @@ How to contribute to Asgaya:
 
 ## Current Status
 
-**Phase:** Public Beta (Seeking External Review)
+**Phase:** Phase 0 — Documentation Review (Pre-Implementation)
 
-**Version:** 0.2.0 (Covenant Architecture)
+**Version:** 2.0 (Covenant Architecture)
 
-**Last Updated:** 2026-05-10
+**Last Updated:** 2026-05-19
 
 **What's complete:**
-- ✅ Core architecture (covenant-based)
-- ✅ Android app flows (sender, recipient, merchant)
+- ✅ Core architecture (covenant-based, no custody/intermediation)
+- ✅ Risk allocation principle (merchants never bear volatility risk)
+- ✅ Android app flows (sender, recipient, merchant, BCH seller)
 - ✅ Overcollateralized bounty contracts specification
-- ✅ No custody/no intermediation model
-- ✅ Decentralized pull system (bulletin board)
+- ✅ Unknowns directory (14 structured investigation briefs)
+- ✅ External AI reviews (ChatGPT, Gemini, Grok, DeepSeek)
 
 **What needs review:**
-- Security considerations (covenant timeout cascade)
-- BCH-native architecture assumptions
-- Testing strategy completeness
-- Missing edge cases
-- Regulatory compliance (MiCA/PSD2)
+- Risk allocation clarity (do reviewers understand who bears which risk?)
+- Unknown investigation methods (contributor-friendly briefs)
+- Phase 0 validation metrics (what should we measure?)
+- Missing edge cases or failure modes
 
 **Recent pivot (May 9, 2026):**
 - Abandoned escrow-based architecture (custody/intermediation service)
@@ -222,21 +231,19 @@ How to contribute to Asgaya:
 
 ---
 
-## For AI Instances
+## For AI Reviewers & Contributors
 
-This documentation is designed to be navigable by AI agents.
+**This documentation is optimized for AI-assisted review.**
 
-**AI Navigation:**
-- [llms.txt](https://docs.asgaya.org/llms.txt) - Full documentation sitemap (180+ pages)
-- [llms-full.txt](https://docs.asgaya.org/llms-full.txt) - All content concatenated (422 lines, 3.1MB)
+**Auto-generated navigation (always up-to-date):**
+- **[llms.txt](https://docs.asgaya.org/llms.txt)** - Full sitemap with all pages
+- **[llms-full.txt](https://docs.asgaya.org/llms-full.txt)** - Complete documentation in one file
 
-**Raw Markdown Access:**  
-Any page at `/path/to/page/` can be read as raw markdown at `/path/to/page/index.md`
+These files are automatically regenerated on every documentation update via the mkdocs-llmstxt-md plugin.
 
-**How to help:**
-1. Choose a section to review from the sitemap
-2. Read the raw markdown via the index.md pattern
-3. Provide specific, actionable feedback
+**AI Review Guide:** [meta/ai-review-guide.md](meta/ai-review-guide.md) - How to provide effective feedback
+
+**Permissionless contribution:** The [unknowns directory](unknowns/) contains 14 structured investigation briefs with methods, success criteria, and contributor guidance. No permission needed to help turn unknowns into knowns.
 
 ---
 

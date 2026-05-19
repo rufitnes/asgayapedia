@@ -3060,6 +3060,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#4-regulatory-strategic-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4️⃣ Regulatory &amp; Strategic Decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3919,6 +3930,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#4-regulatory-strategic-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4️⃣ Regulatory &amp; Strategic Decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3988,7 +4010,7 @@
   
 
 
-<p>← <a href="./">Back to Home</a></p>
+<p>← <a href="../">Back to Home</a></p>
 <h1 id="design-decisions">Design Decisions<a class="headerlink" href="#design-decisions" title="Permanent link">&para;</a></h1>
 <p>This directory documents the <strong>"how"</strong> - the tradeoffs and constraints that shaped Asgaya's implementation. The <a href="../core-architecture/">Core Architecture</a> explains <strong>what</strong> we need and <strong>why</strong> it matters. This directory explains <strong>how</strong> we achieved it through real-world constraints and pragmatic choices.</p>
 <p><strong>Each decision follows this pattern:</strong>
@@ -4087,6 +4109,21 @@
 </ul>
 <p><strong>Key principle:</strong> Maximum freedom, minimum risk. No gatekeepers, but secure key management where essential.</p>
 <hr />
+<h3 id="4-regulatory-strategic-decisions">4️⃣ Regulatory &amp; Strategic Decisions<a class="headerlink" href="#4-regulatory-strategic-decisions" title="Permanent link">&para;</a></h3>
+<p><strong>Cross-cutting decisions that shape the entire protocol:</strong></p>
+<ul>
+<li>
+<p><strong><a href="ui-language-regulatory-implications/">UI Language &amp; Regulatory Implications</a></strong> — Avoid "custody", "intermediation", "exchange" terminology to prevent MiCA CASP/PSD2 licensing triggers. Use "bulletin board", "peer-to-peer coordination", "covenant-based settlement". Critical for regulatory compliance.</p>
+</li>
+<li>
+<p><strong><a href="phase-0-progressive-decentralization/">Phase 0 Progressive Decentralization</a></strong> — Trusted bootstrap approach with 1-2 known merchants/sellers before opening to permissionless participation. Validates covenant architecture, economic incentives, and user flows with real participants before scaling.</p>
+</li>
+<li>
+<p><strong><a href="musd-integration-strategy/">MUSD Integration Strategy</a></strong> — Phase 1.1+ enhancement: Merchants can sell BCH to global BCH buyers using MUSD stablecoin. Eliminates geographic lock-in (no local fiat needed), provides instant liquidity, preserves merchant fees. Natural progression toward pure BCH circular economy.</p>
+</li>
+</ul>
+<p><strong>Key principle:</strong> Regulatory compliance enables permissionless scaling. Start trusted, prove model, decentralize progressively.</p>
+<hr />
 <h2 id="design-principles">Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">&para;</a></h2>
 <p>These principles guide all implementation decisions:</p>
 <ol>
@@ -4131,6 +4168,16 @@
 <td>Yes, if better rate sources emerge or DEX liquidity improves</td>
 </tr>
 <tr>
+<td>Two-Step Settlement</td>
+<td><strong>Active</strong></td>
+<td>Only if BCH volatility becomes negligible (&lt;1% daily for months)</td>
+</tr>
+<tr>
+<td>Fee Splitting</td>
+<td><strong>Active</strong></td>
+<td>Yes, in V1.1 with dynamic rewards based on real usage data</td>
+</tr>
+<tr>
 <td>Bizum Concept Field</td>
 <td><strong>Active</strong></td>
 <td>Yes, if bank rules change or better matching available</td>
@@ -4151,14 +4198,19 @@
 <td>Yes, strike thresholds and evidence requirements based on trial data</td>
 </tr>
 <tr>
-<td>Fee Splitting</td>
+<td>UI Language (No Custody)</td>
 <td><strong>Active</strong></td>
-<td>Yes, in V1.1 with dynamic rewards based on real usage data</td>
+<td>No, fundamental for regulatory compliance (MiCA/PSD2)</td>
 </tr>
 <tr>
-<td>Two-Step Settlement</td>
+<td>Phase 0 Trusted Bootstrap</td>
 <td><strong>Active</strong></td>
-<td>Only if BCH volatility becomes negligible (&lt;1% daily for months)</td>
+<td>No, necessary to validate model before permissionless scaling</td>
+</tr>
+<tr>
+<td>MUSD Integration</td>
+<td><strong>Phase 1.1+</strong></td>
+<td>Yes, pending MUSD stability validation and market adoption</td>
 </tr>
 </tbody>
 </table>
@@ -4175,7 +4227,7 @@
 <hr />
 <p><em>Decisions index created: April 2026</em>
 <em>Maintained by: Asgaya Contributors</em>
-<em>Last updated: May 1, 2026</em>
+<em>Last updated: May 19, 2026</em>
 <em>Philosophy: Pragmatism over perfection</em></p>
         <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
             <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>

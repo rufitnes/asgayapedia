@@ -1,4 +1,4 @@
-← [Back to Home](README.md)
+← [Back to Home](../index.md)
 
 # Design Decisions
 
@@ -102,6 +102,20 @@ Examples:
 
 ---
 
+### 4️⃣ Regulatory & Strategic Decisions
+
+**Cross-cutting decisions that shape the entire protocol:**
+
+- **[UI Language & Regulatory Implications](ui-language-regulatory-implications.md)** — Avoid "custody", "intermediation", "exchange" terminology to prevent MiCA CASP/PSD2 licensing triggers. Use "bulletin board", "peer-to-peer coordination", "covenant-based settlement". Critical for regulatory compliance.
+
+- **[Phase 0 Progressive Decentralization](phase-0-progressive-decentralization.md)** — Trusted bootstrap approach with 1-2 known merchants/sellers before opening to permissionless participation. Validates covenant architecture, economic incentives, and user flows with real participants before scaling.
+
+- **[MUSD Integration Strategy](musd-integration-strategy.md)** — Phase 1.1+ enhancement: Merchants can sell BCH to global BCH buyers using MUSD stablecoin. Eliminates geographic lock-in (no local fiat needed), provides instant liquidity, preserves merchant fees. Natural progression toward pure BCH circular economy.
+
+**Key principle:** Regulatory compliance enables permissionless scaling. Start trusted, prove model, decentralize progressively.
+
+---
+
 ## Design Principles
 
 These principles guide all implementation decisions:
@@ -142,12 +156,15 @@ These principles guide all implementation decisions:
 | Decision | Status | Can Revisit? |
 |----------|--------|--------------|
 | Market-Rate Exchanges | **Active** | Yes, if better rate sources emerge or DEX liquidity improves |
+| Two-Step Settlement | **Active** | Only if BCH volatility becomes negligible (<1% daily for months) |
+| Fee Splitting | **Active** | Yes, in V1.1 with dynamic rewards based on real usage data |
 | Bizum Concept Field | **Active** | Yes, if bank rules change or better matching available |
 | Payment Timeout | **Active** | Yes, if SMS delays improve or alternative notification method found |
 | Unclaimed Transaction Expiry | **Active** | Yes, if real data shows 24h is too short/long for specific corridors |
 | Dispute Resolution | **Active** | Yes, strike thresholds and evidence requirements based on trial data |
-| Fee Splitting | **Active** | Yes, in V1.1 with dynamic rewards based on real usage data |
-| Two-Step Settlement | **Active** | Only if BCH volatility becomes negligible (<1% daily for months) |
+| UI Language (No Custody) | **Active** | No, fundamental for regulatory compliance (MiCA/PSD2) |
+| Phase 0 Trusted Bootstrap | **Active** | No, necessary to validate model before permissionless scaling |
+| MUSD Integration | **Phase 1.1+** | Yes, pending MUSD stability validation and market adoption |
 
 ---
 
@@ -166,5 +183,5 @@ When proposing changes to existing decisions:
 
 *Decisions index created: April 2026*
 *Maintained by: Asgaya Contributors*
-*Last updated: May 1, 2026*
+*Last updated: May 19, 2026*
 *Philosophy: Pragmatism over perfection*
