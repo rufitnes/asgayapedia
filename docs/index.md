@@ -34,12 +34,12 @@ On a **€100 transfer**, the ~1% (€1.00) is distributed as:
 - **Merchant spread:** ~€0.50 (0.5% - earned by selling VES for BCH)
 
 **How it works:** 
-- Sender creates a fiat-denominated covenant (€100 worth of BCH)
-- Sender selects a BCH seller that matches payment method and amount
-- BCH seller locks 107% of the fiat amount in covenant and sends payment info (earns by selling BCH at 0.5% markup)
-- Recipient cashes out at merchant
-- Merchant gets fiat amount worth of BCH at the moment recipient cashes out (€100 in BCH)
-- Remaining BCH goes back to seller
+- Sender pays €100 to BCH seller via Bizum/local payment
+- BCH seller keeps €0.50 fee, locks €99.50 worth of BCH in covenant (107% collateral)
+- Covenant promises €99.50 worth of BCH to merchant at settlement
+- Recipient cashes out at merchant, receives €99 cash (€0.50 merchant fee)
+- Merchant co-signs covenant, receives €99.50 worth of BCH
+- Remaining collateral (€7 worth of BCH) goes back to seller
 
 **Comparison:** Traditional remittances average 6.49% (€6.49 on €100). Asgaya's ~1% total fee is **6.5× cheaper**.
 
