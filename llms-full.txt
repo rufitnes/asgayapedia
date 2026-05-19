@@ -24665,6 +24665,9 @@ Key concepts that underpin Asgaya's covenant-based architecture.
 
 ## Core Concepts (Active - Phase 0)
 
+### [Risk Allocation Principle](risk-allocation-principle.md) ⭐
+The foundational design principle: merchants never bear volatility risk. Explains WHO bears WHICH risk in Asgaya's covenant architecture and why sender risk allocation is correct.
+
 ### [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md)
 The heart of Asgaya: covenant smart contracts that hold BCH with 7% overcollateralization, enabling volatility protection and split refunds without custody.
 
@@ -25241,6 +25244,34 @@ A BCH seller is anyone who:
 - ✅ Participants in a permissionless protocol (no KYC, no licensing required)
 
 > **How sellers actually make money:** The 0.5% fee per transaction is only part of the story. Sellers recycle the same capital many times per day, and the hedge mechanism means they profit in both rising and falling BCH markets. Read the [Capital Recycling Strategy](overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) for a complete walk-through.
+
+---
+
+## 🎯 CRITICAL RISK ALLOCATION FOR SELLERS
+
+**What risk do sellers bear?**
+
+* ✅ **Sellers DO bear:**
+  * Opportunity cost (capital locked for up to 24h)
+  * Reliability reputation risk (if they don't top up during volatility)
+  * Brief exposure during Bizum payment window (~5 minutes)
+* ❌ **Sellers DO NOT bear:**
+  * Merchant's volatility risk (merchant completely protected)
+  * Sender's tail risk (refund goes to sender if >7% drop)
+  * Recipient's claim timing risk (seller gets capital back either way)
+
+**If BCH drops >7% and seller doesn't top up:**
+* Covenant matures early
+* Remaining BCH refunds to **SENDER** (not seller)
+* Seller receives their 0.5% fee portion only
+* **This is fair exchange, not a penalty** - seller traded BCH for EUR at market rate
+
+**If BCH rises >7%:**
+* Seller gets LARGER refund (excess BCH returned)
+* Seller participated at favorable rate (sold BCH before rise)
+* **No "trapped gains" problem** - covenant promises EUR-worth, not fixed BCH amount
+
+**See:** [Overcollateralized Bounty Contracts](./overcollateralized-bounty-contracts.md) for complete covenant mechanics.
 
 ---
 
@@ -28820,6 +28851,29 @@ Excess BCH returns to the seller. The recipient gets exactly the promised amount
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION
+
+**If BCH falls below collateral threshold (>7% drop):**
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk**
+* ✅ **Merchant either:**
+  * Receives full EUR-equivalent BCH from a valid covenant
+  * OR does not participate in settlement at all
+* 🔄 **Under-collateralized covenants refund remaining BCH to the SENDER**
+* ⚖️ **Therefore:**
+  * **SENDER** bears tail volatility risk beyond collateral buffer
+  * **MERCHANT** bears execution/liquidity risk only (providing local fiat)
+  * **SELLER** bears opportunity cost + reliability reputation risk
+
+**The merchant is NOT short BCH downside volatility.**
+
+**Why this matters:** Merchants are local Venezuelan individuals providing physical cash. They cannot absorb crypto volatility losses. The covenant architecture ensures they only participate when settlement is guaranteed at the promised EUR value. Invalid covenants are rejected by their software before any cash changes hands.
+
+**📖 See:** [Risk Allocation Principle](risk-allocation-principle.md) for the complete foundational principle, common misconceptions, technical implementation details, and comparison to traditional systems.
+
+---
+
 ## How It Works — The Full Flow
 
 ### Covenant Creation & Claim Paths
@@ -29002,6 +29056,27 @@ Outputs:
 
 ---
 
+## Who Bears Which Risk?
+
+Understanding risk allocation across all participants:
+
+| Risk Type | Sender | Merchant | Seller |
+|-----------|--------|----------|--------|
+| **BCH crash > collateral buffer (>7%)** | ✅ YES | ❌ NO | Partial (opportunity cost) |
+| **BCH upside opportunity cost** | ✅ YES | ✅ YES | ✅ YES |
+| **Local cash liquidity risk** | ❌ NO | ✅ YES | ❌ NO |
+| **Covenant execution failure** | Partial | Partial | Partial |
+| **Capital lockup (24h)** | ❌ NO | ❌ NO | ✅ YES |
+| **Failed claim timing (recipient no-show)** | ✅ YES | ❌ NO | ✅ YES |
+| **Fiat payment chargeback** | ❌ NO | ❌ NO | ✅ YES |
+
+**Key insights:**
+- **Merchant bears zero volatility risk** - only provides local liquidity when covenant is valid
+- **Sender bears tail volatility risk** - gets depreciated BCH back if >7% drop
+- **Seller bears opportunity cost** - capital locked for 24h, bears reliability reputation risk
+
+---
+
 ## Volatility Protection via Overcollateralization
 
 ### Price Movement Scenarios
@@ -29011,7 +29086,22 @@ Outputs:
 | **BCH stable** | Required: 0.01 BCH, posted 0.0107 BCH | Merchant gets 0.01 BCH, seller gets 0.0007 BCH surplus |
 | **BCH rises 5%** | 0.01 BCH now worth €105 | Merchant gets 0.0095 BCH (still €100), seller gets 0.0112 BCH surplus |
 | **BCH drops 3%** | 0.01 BCH now worth €97 | Merchant gets 0.0103 BCH (still €100), seller gets 0.0004 BCH surplus |
-| **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller must add BCH or deal cancels |
+| **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller can add BCH or covenant matures early |
+
+> ⚠️ **CRITICAL: What DOES NOT Happen to Merchants**
+>
+> **Common misconception:** "If BCH crashes >7%, the covenant drains its remaining balance to the merchant."
+>
+> **This does NOT happen.** If the collateral falls below the EUR target:
+> 
+> 1. ❌ The covenant does **NOT** attempt to pay the merchant with insufficient BCH
+> 2. ❌ The merchant does **NOT** receive partial payment
+> 3. ❌ The merchant does **NOT** advance cash before covenant validation
+> 4. ✅ The covenant matures early and refunds ALL remaining BCH to the **SENDER**
+> 5. ✅ The merchant's software detects invalid covenant and refuses to participate
+> 6. ✅ The transaction is cancelled - merchant never involved, takes zero loss
+>
+> **Merchants are completely isolated from BCH price crashes.** Their participation is conditional on covenant validity at the exact moment of cash exchange.
 
 ### Top-Up Opportunity (How Sellers Earn Reliability Rewards)
 
@@ -29947,6 +30037,31 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION IN PULL SYSTEM
+
+**Common misconception:** "If the covenant holds BCH and the merchant receives from it, the merchant bears volatility risk."
+
+**Reality:** Merchants only participate when covenants are VALID and fully collateralized.
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk**
+* ✅ **Merchant's software validates covenant BEFORE handing cash:**
+  * Is covenant sufficiently collateralized? (≥100% of EUR promise)
+  * Are both conditions signable? (seller paid, recipient present)
+  * Is covenant still within 24h window?
+* 🔄 **If covenant becomes invalid (BCH drops >7%):**
+  * Covenant matures early
+  * ALL remaining BCH refunds to **SENDER**
+  * Merchant's software detects invalid covenant
+  * Merchant does NOT hand cash to recipient
+  * Transaction cancelled - no one loses money except sender (bears tail risk)
+
+**The "pull" system doesn't just mean recipient controls timing** - it also means **merchant validates claim validity at the exact moment of execution**. This is why merchants are completely protected from volatility.
+
+**See:** [Overcollateralized Bounty Contracts](./overcollateralized-bounty-contracts.md) for technical details on covenant validation.
+
+---
+
 ## How It Works
 
 ### Three-Phase Flow
@@ -30762,6 +30877,308 @@ MERCHANT DEVICE:
 *Concept proposed: May 2026*  
 *Status: Future Enhancement (Phase 1+)*  
 *Blocker: None (cards available globally, Android NFC common)*
+
+
+## Risk Allocation Principle
+
+# Asgaya Risk Allocation Principle
+
+**Status:** Core Design Principle (Phase 0 Active)  
+**Category:** Protocol Architecture  
+**Related:** [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md), [Pull System](pull-system.md), [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)
+
+---
+
+## The Principle
+
+**Asgaya's covenant architecture allocates risk explicitly to protect local merchants from cryptocurrency volatility.**
+
+### Five Core Rules
+
+1. **Merchants never accept undercollateralized claims**
+   - Merchant software validates covenant sufficiency BEFORE handing cash
+   - Invalid covenants are rejected automatically
+   - No trust required, no possibility of loss
+
+2. **Merchants never receive partial BCH settlement**
+   - Covenant either pays full EUR-equivalent value OR doesn't execute
+   - No "best effort" partial fills
+   - Binary outcome: full payment or transaction cancellation
+
+3. **Sellers provide collateral reliability**
+   - Sellers post 107% overcollateralization to covenant
+   - Sellers can voluntarily top up to earn reliability rewards
+   - Seller reputation tied to covenant completion rate
+
+4. **Senders bear extreme volatility risk beyond collateral thresholds**
+   - If BCH drops >7%, covenant matures early
+   - Remaining BCH refunds to SENDER (not merchant, not seller)
+   - Sender opted into BCH exposure by creating covenant
+
+5. **Under severe volatility, transfers fail safely via sender refund**
+   - No one loses money except the sender (who bears tail risk)
+   - Merchant never participates in failed transactions
+   - System degrades gracefully (refunds, not losses)
+
+---
+
+## Why This Matters
+
+### The Problem We're Solving
+
+**Traditional crypto remittance failure mode:**
+```
+BCH crashes during transit → Someone loses money → Who?
+├─ Escrow holds the loss? (Requires insurance, licensing)
+├─ Merchant eats the loss? (Kills merchant adoption)
+├─ Sender eats the loss? (Bad UX, kills sender adoption)
+└─ Recipient eats the loss? (Worst outcome, kills trust)
+```
+
+**Asgaya's solution:**
+```
+BCH crashes >7% → Covenant matures early → Sender receives refund
+├─ Merchant: Never participated (zero loss) ✅
+├─ Seller: Received fair exchange at market rate (zero loss) ✅
+├─ Recipient: Doesn't get money (no worse off than before) ✅
+└─ Sender: Gets depreciated BCH back (bears tail risk) ⚠️
+```
+
+### Why Sender Risk Allocation Is Correct
+
+**Senders are the only participant who:**
+- Can afford to bear volatility risk (sending €100, not life savings)
+- Opted into BCH exposure voluntarily (chose Asgaya, not Western Union)
+- Have alternative options if uncomfortable with risk (use traditional remittance)
+- Benefit from lower fees (1% vs 6.49%) as compensation for risk
+
+**Senders are NOT:**
+- Venezuelan recipients (who need reliable, predictable transfers)
+- Local merchants (who provide physical cash liquidity and can't absorb losses)
+- BCH sellers (who provide collateral infrastructure, not risk warehousing)
+
+**Result:** The participant MOST able to bear risk (sender) bears it. The participants LEAST able (merchant, recipient) are fully protected.
+
+---
+
+## Common Misconceptions
+
+### ❌ Misconception 1: "Merchants bear volatility risk"
+
+**Reality:** Merchants only participate when covenants are valid and fully collateralized.
+
+**Why people think this:**
+- In traditional finance, "liquidity providers" bear settlement risk
+- In DeFi, "counterparties" bear undercollateralization risk
+- Terminology like "collateral," "settlement," "promise" triggers these mental models
+
+**Why it's wrong:**
+- Merchant software validates covenant BEFORE handing cash
+- Invalid covenants never execute
+- Merchant never receives underpaid BCH
+
+### ❌ Misconception 2: "Sellers bear tail risk"
+
+**Reality:** Sellers receive fair exchange at market rate, even in crashes.
+
+**Why people think this:**
+- "Margin call" sounds like penalty/liquidation
+- "Top-up opportunity" sounds mandatory to avoid loss
+- Standard collateral systems penalize non-response
+
+**Why it's wrong:**
+- Default outcome is fair exchange (not penalty)
+- Top-ups are voluntary (rewarded, not mandatory)
+- Refund goes to SENDER, not seller
+
+### ❌ Misconception 3: "Covenant promises EUR to merchant"
+
+**Reality:** Covenant holds conditional bounty, cancellable if BCH crashes.
+
+**Why people think this:**
+- "Promise" implies obligation regardless of circumstances
+- "Settlement" implies guaranteed execution
+- Legal language of contracts and obligations
+
+**Why it's wrong:**
+- Bounty is conditional on collateral sufficiency
+- Covenant can abort (refund to sender)
+- No obligation to pay merchant from insufficient collateral
+
+---
+
+## Technical Implementation
+
+### Covenant Validation (Merchant Side)
+
+**Before handing cash, merchant software checks:**
+
+```javascript
+function isCovenantValid(covenant) {
+  const currentBchPrice = getCurrentBchPrice();
+  const covenantValue = covenant.lockedBch * currentBchPrice;
+  const requiredValue = covenant.eurPromise;
+  
+  // Covenant must have ≥100% of promised EUR value
+  if (covenantValue < requiredValue) {
+    return false; // REJECT - undercollateralized
+  }
+  
+  // Covenant must be within 24h window
+  if (Date.now() > covenant.expiryTime) {
+    return false; // REJECT - expired
+  }
+  
+  // Both conditions must be signable
+  if (!covenant.sellerSignedCondition1) {
+    return false; // REJECT - seller hasn't confirmed payment
+  }
+  
+  return true; // ACCEPT - valid covenant
+}
+```
+
+**Result:** Invalid covenants are rejected BEFORE cash changes hands. Merchant bears zero risk.
+
+### Early Maturity (Sender Refund)
+
+**When BCH drops >7%, covenant automatically:**
+
+```javascript
+function handleEarlyMaturity(covenant) {
+  const currentBchPrice = getCurrentBchPrice();
+  const covenantValue = covenant.lockedBch * currentBchPrice;
+  const collateralRatio = covenantValue / covenant.eurPromise;
+  
+  // If collateral < 100%, mature early
+  if (collateralRatio < 1.0) {
+    // Calculate refund split
+    const merchantPortion = covenant.eurPromise * 0.995; // €99.50
+    const sellerFee = covenant.eurPromise * 0.005; // €0.50
+    
+    // Refund distribution
+    refundToSender(merchantPortion); // Sender gets €99.50 in BCH
+    refundToSeller(sellerFee);       // Seller gets €0.50 in BCH
+    
+    // Mark covenant as expired
+    covenant.status = "MATURED_EARLY";
+    
+    // Merchant never involved
+    return;
+  }
+}
+```
+
+**Result:** Sender receives depreciated BCH. Merchant never participates. System fails safely.
+
+---
+
+## Risk Allocation Matrix
+
+| Risk Type | Sender | Merchant | Seller | Recipient |
+|-----------|--------|----------|--------|-----------|
+| **BCH crash > 7%** | ✅ YES | ❌ NO | Partial | ❌ NO |
+| **BCH upside opportunity cost** | ✅ YES | ✅ YES | ✅ YES | ✅ YES |
+| **Local cash liquidity** | ❌ NO | ✅ YES | ❌ NO | ❌ NO |
+| **Covenant execution failure** | Partial | Partial | Partial | Partial |
+| **Capital lockup (24h)** | ❌ NO | ❌ NO | ✅ YES | ❌ NO |
+| **Failed claim timing** | ✅ YES | ❌ NO | ✅ YES | Partial |
+| **Fiat chargeback** | ❌ NO | ❌ NO | ✅ YES | ❌ NO |
+
+**Key insight:** Volatility risk is concentrated on sender, who is most able to bear it. Merchant is completely isolated.
+
+---
+
+## Comparison to Traditional Systems
+
+### Western Union (Custodial)
+
+| Scenario | Western Union | Asgaya |
+|----------|---------------|--------|
+| **BCH crashes** | WU eats loss (has insurance) | Sender eats loss (refunded depreciated BCH) |
+| **Merchant location** | WU locations fixed | Any participating merchant |
+| **Regulatory status** | Licensed money transmitter | No license required (no custody) |
+| **Fee** | 6.49% average | 1% total |
+| **Who bears risk** | Central entity | Sender (distributed) |
+
+### Coinbase Remittance (Centralized)
+
+| Scenario | Coinbase | Asgaya |
+|----------|----------|--------|
+| **BCH crashes** | Coinbase guarantees rate (eats loss) | Sender bears loss |
+| **Custody** | Yes (Coinbase holds funds) | No (covenant holds, no entity custody) |
+| **Regulatory status** | Requires VASP licensing | No licensing required |
+| **Fee** | 2-3% | 1% |
+| **Who bears risk** | Central entity | Sender (distributed) |
+
+### LocalBitcoins P2P
+
+| Scenario | LocalBitcoins | Asgaya |
+|----------|---------------|--------|
+| **BCH crashes** | Buyer/seller negotiate (disputes) | Sender bears loss (clear rules) |
+| **Custody** | LocalBitcoins escrow | Covenant (no entity custody) |
+| **Merchant role** | No merchant layer | Merchants provide local liquidity |
+| **Fee** | Variable (1-5%) | 1% fixed |
+| **Who bears risk** | Unclear (leads to disputes) | Clear (sender bears tail risk) |
+
+**Asgaya advantage:** Crystal-clear risk allocation with no disputes, no custody, no licensing.
+
+---
+
+## Phase 0 Validation
+
+### What We're Testing
+
+1. **Do senders understand they bear tail risk?**
+   - Metric: % of senders who are surprised by refunds after >7% drop
+   - Target: <10% surprise rate (documentation works)
+
+2. **Do merchants trust the protection mechanism?**
+   - Metric: Merchant retention after first volatility event
+   - Target: >90% retention (protection works)
+
+3. **What's the actual refund frequency?**
+   - Metric: % of covenants that mature early (>7% drop)
+   - Hypothesis: <5% if using 2h settlement windows
+   - See: [Overcollateralization Rate Unknown](../unknowns/economic/overcollateralization-rate.md)
+
+4. **Does sender risk tolerance match usage patterns?**
+   - Metric: Do senders choose longer or shorter settlement windows?
+   - Hypothesis: >60% choose 2h windows (minimize risk)
+   - See: [Time-Based Settlement Incentives](../../collaborative_workspace/time_based_settlement_incentives.md)
+
+---
+
+## Related Documents
+
+- [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md) - Technical implementation
+- [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md) - Detailed scenarios
+- [Pull System](pull-system.md) - Why recipient control matters
+- [Fee Splitting Model](../decisions/fee-splitting-model.md) - Economic incentives
+- [Phase 0 Validation Checklist](../decisions/phase-0-validation-checklist.md) - Testing plan
+
+---
+
+## Summary: The Core Principle
+
+**Asgaya protects merchants by making sender refunds the default failure mode.**
+
+When BCH crashes >7%:
+- ❌ Traditional system: Someone must eat the loss (escrow, merchant, or sender)
+- ✅ Asgaya: Sender receives depreciated BCH refund (opted into risk, can afford it)
+
+When BCH stays stable:
+- ✅ Traditional system: Works fine (but expensive, 6.49% fees)
+- ✅ Asgaya: Works fine (cheaper, 1% fees)
+
+**Result:** Lower fees in normal conditions, clear risk allocation in edge cases, no custody/licensing required.
+
+**The merchant is NEVER exposed to cryptocurrency volatility risk. This is the foundation of Asgaya's economic model.**
+
+---
+
+**Last updated:** May 19, 2026  
+**Status:** Core principle, actively implemented in Phase 0 covenant architecture
 
 
 ## Seller Liveness Signal
@@ -35128,6 +35545,27 @@ For recipients without smartphones:
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION
+
+**Understanding who bears risk in the fee model:**
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk beyond their 0.5% fee**
+* ✅ **Merchant either:**
+  * Receives full EUR-equivalent BCH (including their 0.5% fee)
+  * OR does not participate in settlement at all
+* 🔄 **Under-collateralized covenants refund remaining BCH to the SENDER**
+* ⚖️ **Therefore:**
+  * **SENDER** bears tail volatility risk beyond 7% collateral buffer
+  * **MERCHANT** earns 0.5% fee for providing local fiat (zero volatility exposure)
+  * **SELLER** earns 0.5% fee for posting collateral (bears opportunity cost)
+
+**The 0.5% merchant fee is NOT compensation for taking volatility risk** - it's compensation for providing local fiat liquidity and physically handing cash to recipients. Merchants are completely isolated from BCH price movements.
+
+**See:** [Two-Step Settlement Timing](two-step-settlement-timing.md) for complete risk allocation details.
+
+---
+
 ## The Goal (Architectural Ideal)
 
 Create **economic incentives** for all participants to join and grow the Asgaya network **while promoting BCH adoption**.
@@ -37258,6 +37696,10 @@ This decision emerged from a three-way debate:
 
 **This is engineering, not guessing.** Every parameter below is a **hypothesis to validate**, not a final decision.
 
+> **📚 For detailed investigation plans, see the [Unknowns Directory](../unknowns/).**  
+> Each unknown has a dedicated brief with investigation methods, success criteria, and contributor guidance.  
+> This checklist tracks *what* needs validation—the unknowns directory explains *how* to investigate.
+
 ---
 
 ## 📊 Parameter Categories
@@ -37877,6 +38319,29 @@ Action: If >5%, increase to 10% and retest
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION
+
+**If BCH falls below collateral threshold (>7% drop):**
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk**
+* ✅ **Merchant either:**
+  * Receives full EUR-equivalent BCH
+  * OR does not participate in settlement at all
+* 🔄 **Under-collateralized covenants refund remaining BCH to the SENDER**
+* ⚖️ **Therefore:**
+  * **SENDER** bears tail volatility risk beyond collateral buffer
+  * **MERCHANT** bears execution/liquidity risk only
+  * **SELLER** bears opportunity cost + reliability reputation risk
+
+**The merchant is NOT short BCH downside volatility.**
+
+**Key operational flow:** When covenant becomes undercollateralized, it matures early and sends ALL remaining BCH back to the sender. The merchant's software detects this invalid covenant and refuses to participate. The recipient doesn't get their money, but the merchant doesn't lose anything.
+
+**📖 See:** [Risk Allocation Principle](../concepts/risk-allocation-principle.md) for the complete foundational principle, technical implementation, and comparisons to traditional systems.
+
+---
+
 > 💡 **KEY DESIGN PRINCIPLE: Merchant is Protected from ALL Volatility Risk**
 > 
 > **The merchant NEVER bears volatility risk:**
@@ -37892,6 +38357,58 @@ Action: If >5%, increase to 10% and retest
 > - **SENDER bears the loss** (opts into BCH exposure by creating covenant)
 > 
 > **Why this matters:** Local Venezuelan merchants provide physical cash liquidity. They cannot absorb crypto volatility risk. The 107% overcollateralization + margin call mechanism ensures they NEVER do.
+
+---
+
+## State-Transition Flow
+
+**Visual representation of risk allocation in action:**
+
+```
+┌─────────────────────┐
+│ Sender creates      │
+│ covenant (€100)     │
+└──────────┬──────────┘
+           │
+           ↓
+┌─────────────────────┐
+│ Seller posts 107%   │
+│ BCH collateral      │
+└──────────┬──────────┘
+           │
+           ↓
+┌─────────────────────┐
+│ Recipient visits    │
+│ merchant with code  │
+└──────────┬──────────┘
+           │
+           ↓
+      ┌────┴────┐
+      │ Is covenant  │
+      │ sufficiently │
+      │collateralized?│
+      └────┬─────┘
+           │
+     ┌─────┴─────┐
+     │           │
+    YES          NO
+     │           │
+     ↓           ↓
+┌─────────┐  ┌──────────────┐
+│Merchant │  │Covenant      │
+│provides │  │matures early │
+│cash     │  │              │
+└────┬────┘  └──────┬───────┘
+     │              │
+     ↓              ↓
+┌─────────┐  ┌──────────────┐
+│Merchant │  │BCH refunded  │
+│receives │  │to SENDER     │
+│€100 BCH │  │(depreciated) │
+└─────────┘  └──────────────┘
+```
+
+**Key decision point:** Merchant's software validates covenant collateral BEFORE handing cash. Invalid covenants are rejected, protecting merchant from volatility risk.
 
 ---
 
@@ -37954,10 +38471,14 @@ Action: If >5%, increase to 10% and retest
    - Posts €107 worth of BCH to covenant (overcollateralized)
    - Covenant holds BCH immutably (autonomous code, not entity)
 
-> 💡 **The covenant promises €X worth of BCH, not a fixed BCH amount.**
+> 💡 **The covenant holds a CONDITIONAL BOUNTY for €X worth of BCH, not a promise or obligation.**
 > 
-> If BCH rises, fewer BCH are needed → the seller gets more BCH back.  
-> If BCH falls, more BCH are needed → the seller's overcollateralization covers it up to the buffer limit.
+> **Conditional bounty, not promise:** If BCH value drops below the EUR target, the bounty is cancelled and funds revert to the sender. The merchant never receives undercollateralized BCH.
+>
+> **Dynamic BCH amount, fixed EUR value:**
+> - If BCH rises → Fewer BCH needed → Seller gets more BCH back
+> - If BCH falls (within 7%) → More BCH needed → Overcollateralization covers it
+> - If BCH falls (>7%) → **Bounty cancelled** → Funds refund to sender
 > 
 > This mechanism eliminates the "trapped gains" problem. When BCH moons, the seller's capital isn't frozen—they get the appreciation back immediately.
 > 
@@ -38510,6 +39031,20 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 ---
 
 ### Failure Modes
+
+#### Quick Reference: Price Movement Outcomes
+
+| Scenario | Covenant Action | Merchant Receives | Sender Receives | Who Bears Loss? |
+|----------|-----------------|-------------------|-----------------|-----------------|
+| **Normal (Price stable)** | Executes to Merchant | €100 in BCH | Zero (Transaction complete) | No one ✅ |
+| **BCH Rises (>7%)** | Executes to Merchant | €100 in BCH | Refund of excess collateral | No one ✅ |
+| **BCH Drops (>7%)** | **ABORTS → Refunds Sender** | **ZERO** (Transaction cancelled) | **€99.50 in BCH** (Depreciated value) | **SENDER** ⚠️ |
+
+**Key insight:** The merchant is NEVER exposed to undercollateralized covenants. When BCH drops beyond the buffer, the covenant aborts before the merchant participates, and the sender receives the depreciated BCH back.
+
+---
+
+#### Detailed Failure Scenarios
 
 **Scenario 1: BCH seller doesn't accept bounty**
 - Covenant never funded
@@ -45972,3 +46507,926 @@ If BCH becomes stable enough that MUSD is unnecessary, Phase 1 isn't deployed. I
 *Last updated: May 12, 2026*  
 *Status: Planned (Post-Phase 0)*  
 *Research by: Suso + DeepSeek*
+
+
+## Overview
+
+# Unknowns Directory — Structured Ignorance, Permissionless Investigation
+
+**What this is:** A collection of things we don't yet know about Asgaya's economic, behavioral, technical, and market viability—each with a clear investigation plan, success criteria, and contributor guidance.
+
+**Why it exists:** The [Phase 0 Validation Checklist](../decisions/phase-0-validation-checklist.md) tracks *what* needs validation. This directory explains *how* to investigate each unknown and invites anyone to contribute.
+
+**How to contribute:** Pick an unknown, follow the investigation method, document your findings, submit via GitHub issue/PR or email to jesgf@yahoo.es. No permission needed—this is permissionless contribution in action.
+
+---
+
+## Philosophy: We've Structured Our Ignorance
+
+**Most projects hide their unknowns.** They bury assumptions in decision documents, present hypotheses as facts, or wait until launch to discover what's wrong.
+
+**Asgaya documents its ignorance explicitly.** Each unknown in this directory:
+- States clearly what we don't know
+- Explains why it matters
+- Provides a method to investigate it
+- Defines what "answered" looks like
+- Invites contributors to help
+
+**This is not a weakness—it's a strength.** Projects that pretend to have all the answers don't get better. Projects that document their gaps invite improvement.
+
+---
+
+## Directory Structure
+
+### 📊 Economic Unknowns
+Parameters that determine protocol viability:
+- [Overcollateralization Rate](economic/overcollateralization-rate.md) — Is 7% sufficient?
+- [Seller Fee Sufficiency](economic/seller-fee-sufficiency.md) — Is 0.5% enough?
+- [Merchant Spread Sufficiency](economic/merchant-spread-sufficiency.md) — Is 0.5% enough?
+- [Fiat Chargeback Risk](economic/fiat-chargeback-risk.md) — How often do Bizum payments reverse?
+
+### 🧠 Behavioral Unknowns
+Human behavior that affects protocol operation:
+- [Claim Timing](behavioral/claim-timing.md) — How fast do recipients claim remittances?
+- [Merchant BCH Preference](behavioral/merchant-bch-preference.md) — Hold or convert?
+- [Cash Float Management](behavioral/cash-float-management.md) — How do merchants manage cash inventory?
+
+### ⚙️ Technical Unknowns
+Infrastructure assumptions that need validation:
+- [Universal Bot Reliability](technical/universal-bot-reliability.md) — Bot performance on real devices
+- [SMS Delivery (Venezuela)](technical/sms-delivery-venezuela.md) — Latency and reliability
+- [BCH Confirmation Reliability](technical/bch-confirmation-reliability.md) — 0-conf success rate
+- [DolarAPI Accuracy](technical/dolarapi-accuracy.md) — Rate feed accuracy and uptime
+
+### 🌍 Market Unknowns
+Demand and adoption signals:
+- [Seller Capital Recycling](market/seller-capital-recycling.md) — Real vs. modeled throughput
+- [Recipient Smartphone Access](market/recipient-smartphone-access.md) — What devices do recipients have?
+- [Corridor Demand Signals](market/corridor-demand-signals.md) — Which corridors show strongest demand?
+
+---
+
+## How to Use This Directory
+
+### If You're a Contributor
+
+**Pick an unknown that matches your skills:**
+- Data analysis → Economic unknowns
+- Surveying/interviewing → Behavioral unknowns
+- Technical testing → Technical unknowns
+- Market research → Market unknowns
+
+**Follow the investigation method in the brief, document your findings, and submit:**
+- GitHub issue: Link to unknown, share findings, suggest next steps
+- GitHub PR: Update the unknown brief with your data
+- Email: jesgf@yahoo.es with subject "Unknown: [brief name]"
+
+**No approval needed.** If your investigation is sound and your findings are documented, it's a contribution.
+
+### If You're an AI Reviewer
+
+**These unknowns are answerable questions:**
+- Each has a clear scope
+- Each has a defined method
+- Each has success criteria
+
+**If you can help investigate one:**
+- Read the brief
+- Follow the method (web research, data analysis, simulation)
+- Document findings in your review
+- Reference the specific unknown you're addressing
+
+**This is permissionless contribution for AI assistants too.**
+
+### If You're a Researcher
+
+**This is a structured research program:**
+- 14 distinct unknowns across 4 categories
+- Each with hypothesis, method, success criteria
+- All answerable within Phase 0 timeline (3-6 months)
+
+**Academic contributions welcome:**
+- Survey design for behavioral unknowns
+- Statistical modeling for economic unknowns
+- Infrastructure testing for technical unknowns
+- Market analysis for demand unknowns
+
+**Publication-friendly.** If your research on Asgaya unknowns leads to insights worth publishing, we encourage it (CC-BY-4.0, attribution required).
+
+---
+
+## Investigation Brief Template
+
+Every unknown follows this format:
+
+```markdown
+# [Unknown Title]
+
+**Status:** [Not Started | In Progress | Phase 0 Trial | Answered]
+**Priority:** [Critical | High | Medium | Low]
+**Last Updated:** YYYY-MM-DD
+**Contributors Welcome:** Yes
+
+## What We Don't Know
+[Clear statement of the gap]
+
+## Why It Matters
+[What breaks if this is wrong]
+
+## Current Hypothesis
+[What we assume and why]
+
+## Investigation Method
+[Specific, actionable steps]
+
+## Success Criterion
+[How we'll know this is answered]
+
+## Phase 0 Trial Integration
+[How to measure during trials]
+
+## Contributor Guidance
+**Skills needed:** [e.g., data analysis, surveying]
+**Estimated effort:** [e.g., 2-4 hours]
+**How to start:** [First step]
+
+## Related Documents
+- [Links to relevant docs]
+```
+
+**Consistency makes contribution easier.** Every brief has the same structure, so once you've read one, you can navigate them all.
+
+---
+
+## Priority Ranking (Phase 0)
+
+### Critical (Must Answer Before Phase 0 Launch)
+1. [Claim Timing](behavioral/claim-timing.md) — Drives time-based settlement design
+2. [Overcollateralization Rate](economic/overcollateralization-rate.md) — Core risk parameter
+
+### High (Should Answer During Phase 0)
+3. [Seller Fee Sufficiency](economic/seller-fee-sufficiency.md) — Seller retention
+4. [Merchant Spread Sufficiency](economic/merchant-spread-sufficiency.md) — Merchant retention
+5. [Universal Bot Reliability](technical/universal-bot-reliability.md) — Technical foundation
+
+### Medium (Nice to Answer During Phase 0)
+6. [Merchant BCH Preference](behavioral/merchant-bch-preference.md) — Liquidity design
+7. [DolarAPI Accuracy](technical/dolarapi-accuracy.md) — Rate feed quality
+8. [Seller Capital Recycling](market/seller-capital-recycling.md) — Seller economics
+
+### Low (Can Answer in Phase 1)
+9. [Fiat Chargeback Risk](economic/fiat-chargeback-risk.md) — Rare edge case
+10. [SMS Delivery (Venezuela)](technical/sms-delivery-venezuela.md) — Infrastructure
+11. [BCH Confirmation Reliability](technical/bch-confirmation-reliability.md) — Infrastructure
+12. [Recipient Smartphone Access](market/recipient-smartphone-access.md) — Market data
+13. [Cash Float Management](behavioral/cash-float-management.md) — Merchant operations
+14. [Corridor Demand Signals](market/corridor-demand-signals.md) — Market expansion
+
+**Priority drives effort allocation.** Phase 0 focuses on Critical and High unknowns first.
+
+---
+
+## Current Status (May 2026)
+
+| Category | Total Unknowns | Not Started | In Progress | Answered |
+|----------|---------------|-------------|-------------|----------|
+| Economic | 4 | 4 | 0 | 0 |
+| Behavioral | 3 | 3 | 0 | 0 |
+| Technical | 4 | 4 | 0 | 0 |
+| Market | 3 | 3 | 0 | 0 |
+| **Total** | **14** | **14** | **0** | **0** |
+
+**We're at the beginning.** This is honest status reporting. As investigations complete, this table updates.
+
+---
+
+## How This Fits Into Asgaya's Development
+
+**Phase -1 (Now):** Documentation-first, structured ignorance
+- Identify unknowns
+- Write investigation briefs
+- Invite contributors
+
+**Phase 0 (Trial Period):** Active investigation
+- Critical unknowns answered before launch
+- High unknowns measured during trials
+- Medium unknowns tracked for iteration
+
+**Phase 1 (Public Launch):** Informed decisions
+- Parameters set based on data (not guesses)
+- Known risks documented
+- Remaining unknowns deprioritized or deferred
+
+**The unknowns directory is a forcing function for intellectual honesty.**
+
+---
+
+## Related Concepts
+
+- [Phase 0 Validation Checklist](../decisions/phase-0-validation-checklist.md) — What needs validation (points here for how)
+- [Contributing Guide](../contributing.md) — How to contribute to Asgaya docs
+- [Permissionless Contribution Model](../concepts/permissionless-contribution.md) — Philosophy behind this approach
+- [AI Review Guide](../meta/ai-review-guide.md) — How AI assistants can help investigate unknowns
+
+---
+
+## Meta-Note: Why This Works
+
+**Traditional approach:**
+1. Make assumptions
+2. Build product
+3. Launch
+4. Discover what's wrong
+5. Scramble to fix
+
+**Asgaya's approach:**
+1. Document assumptions as "unknowns"
+2. Invite investigation (permissionless)
+3. Answer critical unknowns before building
+4. Build with data-informed parameters
+5. Launch with known risks documented
+
+**Documentation-first development means unknown-first validation.**
+
+**We're not hiding our ignorance—we're weaponizing it as a contribution opportunity.**
+
+---
+
+**Ready to contribute?** Pick an unknown from the directory above and start investigating. No permission needed.
+
+**Questions?** Email jesgf@yahoo.es or open a GitHub issue.
+
+**Let's turn unknowns into knowns—together.**
+
+
+## Claim Timing
+
+# Claim Timing — How Fast Do Recipients Claim Remittances?
+
+**Status:** Not Started  
+**Priority:** Critical  
+**Last Updated:** 2026-05-20  
+**Contributors Welcome:** Yes — see below
+
+---
+
+## What We Don't Know
+
+**How quickly do remittance recipients claim their funds after being notified?**
+
+We have no empirical data on:
+- Median time from notification to merchant visit
+- Distribution of claim times (percentiles: 10th, 50th, 90th, 99th)
+- Factors that influence speed (urgency, distance, merchant hours, notification method)
+- Difference between first-time vs. repeat users
+- Geographic/cultural variations (Spain→Venezuela vs. other corridors)
+
+**Current design assumes:** Recipients will claim within 24 hours (covenant expiry window).
+
+**Reality unknown:** Do recipients claim in 30 minutes? 3 hours? 18 hours? Is the distribution bimodal (urgent vs. casual)?
+
+---
+
+## Why It Matters
+
+### 1. **Time-Based Settlement Incentive Design**
+
+The [time-based settlement incentives proposal](../../collaborative_workspace/time_based_settlement_incentives.md) depends entirely on realistic claim timing:
+
+- If recipients typically claim within 2 hours → 2h/6h/12h/24h windows make sense
+- If recipients typically claim within 12-18 hours → Need different brackets
+- If claim times are bimodal (30min or 20h, nothing in between) → Need different incentive structure
+
+**Without data, we're designing blind.**
+
+### 2. **Volatility Exposure Window**
+
+Sender volatility risk scales with claim time:
+- 2h median claim time → Low volatility exposure (BCH rarely moves >3% in 2h)
+- 18h median claim time → High volatility exposure (BCH often moves >7% in 18h)
+
+**If recipients naturally claim fast, volatility is less of a problem than we think.**  
+**If they claim slow, we need stronger incentives or shorter expiry windows.**
+
+### 3. **Capital Efficiency (Seller Economics)**
+
+Seller effective APR depends on capital turnover:
+- 2h average lockup → ~2,336% APR (0.4% per 2h)
+- 18h average lockup → ~365% APR (0.75% per 18h)
+
+**Slow claims kill seller economics. Fast claims make the model viable.**
+
+### 4. **Covenant Parameter Validation**
+
+The 24h expiry window is arbitrary:
+- If 99th percentile claim time is 6h → 24h window is wasteful (capital locked unnecessarily)
+- If 90th percentile claim time is 20h → 24h window is too short (too many timeouts)
+
+**Data tells us whether current parameters are reasonable or need adjustment.**
+
+---
+
+## Current Hypothesis
+
+**Educated guess (no data):**
+- **Median claim time:** 3-6 hours
+- **90th percentile:** 12-18 hours
+- **99th percentile:** 22-24 hours
+
+**Reasoning:**
+- Remittances are often urgent (family needs money for food, medicine, bills)
+- Recipients are notified via SMS/WhatsApp (high engagement)
+- Merchants are local (low travel friction)
+- BUT: Recipients have jobs, school, obligations (can't always drop everything)
+
+**This is pure speculation. We need data.**
+
+---
+
+## Investigation Method
+
+### Option 1: Survey (Low Cost, Moderate Reliability)
+
+**Who to survey:**
+- Venezuelan diaspora communities in Spain (r/vzla, Telegram groups)
+- Venezuelan recipient communities (WhatsApp groups, local community centers)
+- Remittance users on other platforms (ask about past behavior)
+
+**Questions:**
+1. "When you send money to family in Venezuela, how quickly do they usually pick it up?"
+   - Within 1 hour
+   - 1-3 hours
+   - 3-6 hours
+   - 6-12 hours
+   - 12-24 hours
+   - More than 24 hours
+
+2. "What factors affect how quickly they claim it?"
+   - Distance to pickup location
+   - Merchant operating hours
+   - Urgency of need
+   - Work/school schedule
+   - Trust in the system
+
+3. "If they could get a small bonus (€0.30) for claiming within 2 hours, would that change their behavior?"
+   - Yes, would prioritize fast claim
+   - Maybe, depends on situation
+   - No, other factors more important
+
+**Sample size needed:** 50-100 responses for directional signal
+
+**Tools:**
+- Google Forms (free)
+- Posted in relevant communities with context (Asgaya Phase 0 research)
+- Incentive: Small BCH tip for completing survey (0.001 BCH = ~€0.30)
+
+**Estimated effort:** 4-8 hours (survey design, posting, analysis)
+
+**Reliability:** Moderate (self-reported behavior ≠ actual behavior, but better than nothing)
+
+---
+
+### Option 2: Existing Remittance Data (High Reliability, Hard to Obtain)
+
+**Potential data sources:**
+- Western Union / MoneyGram (unlikely to share)
+- LocalBitcoins / Paxful (crypto P2P, might have public data)
+- Smaller remittance platforms (might be willing to share anonymized data)
+- Academic studies on remittance behavior
+
+**What to look for:**
+- Time from notification to pickup (if tracked)
+- Distribution of claim times
+- Factors correlated with speed
+
+**Estimated effort:** 10-20 hours (research, outreach, negotiation)
+
+**Reliability:** High (actual behavior, not self-reported)
+
+---
+
+### Option 3: Phase 0 Trial Measurement (Highest Reliability, Delayed)
+
+**During Phase 0 trials, track:**
+- Covenant creation timestamp
+- Recipient claim timestamp
+- Difference = actual claim time
+
+**Measure:**
+- Median, 90th, 99th percentile claim times
+- Distribution shape (unimodal? bimodal? uniform?)
+- Correlation with transaction amount, time of day, day of week
+
+**Advantages:**
+- Real-world data from actual Asgaya usage
+- No survey bias
+
+**Disadvantages:**
+- Can't inform pre-Phase-0 design decisions
+- Small sample size initially (10-30 transactions)
+
+**Estimated effort:** Built into Phase 0 infrastructure (logging)
+
+**Reliability:** Highest (actual protocol usage)
+
+---
+
+## Success Criterion
+
+**This unknown is "answered" when we have:**
+
+1. **Median claim time** (50th percentile) with 80% confidence interval
+2. **90th percentile claim time** (defines timeout threshold)
+3. **Distribution shape** (unimodal? bimodal? skewed?)
+4. **Sensitivity to incentives** (will time bonuses work?)
+
+**Minimum viable answer (for Phase 0 launch):**
+- Survey data from 50+ respondents showing directional signal
+- OR existing remittance data from comparable platform
+- OR qualitative interviews with 10+ Venezuelan recipients
+
+**Gold standard answer (for Phase 1 refinement):**
+- Actual Phase 0 trial data from 30+ transactions
+- Validated against survey predictions
+
+---
+
+## Phase 0 Trial Integration
+
+### Logging Requirements
+
+**Covenant metadata to track:**
+```json
+{
+  "covenant_id": "...",
+  "created_at": "2026-06-15T14:30:00Z",
+  "claimed_at": "2026-06-15T16:45:00Z",
+  "claim_duration_minutes": 135,
+  "settlement_window": "6h",
+  "time_bonus_earned": 0.002
+}
+```
+
+### Metrics Dashboard
+
+**Real-time Phase 0 metrics:**
+- Average claim time (rolling 7-day window)
+- Claim time distribution histogram
+- % claimed within each time bracket (2h/6h/12h/24h)
+- Time bonus redemption rate
+
+**Iteration triggers:**
+- If median claim time < 2h consistently → Consider 1h express option
+- If 90th percentile > 20h → Consider longer expiry or stronger incentives
+- If time bonuses not redeemed → Increase bonus amounts
+
+---
+
+## Contributor Guidance
+
+### Skills Needed
+- **Survey design** (basic questionnaire skills)
+- **Spanish fluency** (for Venezuelan community outreach)
+- **Data analysis** (basic statistics, percentiles, distributions)
+- **Community access** (Venezuelan diaspora networks helpful but not required)
+
+### Estimated Effort
+- **Survey approach:** 4-8 hours (design, post, analyze)
+- **Data research approach:** 10-20 hours (research, outreach)
+- **Literature review approach:** 5-10 hours (search academic studies)
+
+### How to Start
+
+**Step 1:** Choose investigation method (survey recommended for speed)
+
+**Step 2:** If surveying:
+1. Draft survey questions (use template above)
+2. Post in relevant communities:
+   - r/vzla (Venezuelan subreddit)
+   - Spanish expat Telegram groups
+   - Venezuelan community Facebook groups
+3. Offer small BCH incentive for completion (0.001 BCH)
+4. Collect responses for 1-2 weeks
+
+**Step 3:** Analyze results:
+- Calculate median, 90th, 99th percentile claim times
+- Plot distribution histogram
+- Identify factors affecting speed
+- Note sensitivity to time bonuses
+
+**Step 4:** Document findings:
+- Update this file with "Status: Answered"
+- Add "Findings" section with data
+- Submit findings via GitHub PR or email to jesgf@yahoo.es
+
+---
+
+## Related Documents
+
+- [Time-Based Settlement Incentives Proposal](../../collaborative_workspace/time_based_settlement_incentives.md)
+- [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
+- [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
+- [Capital Recycling Strategy](../../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model)
+
+---
+
+## Open Questions
+
+1. **Does urgency correlate with amount?**
+   - Are €50 remittances claimed faster than €200 remittances?
+   - Or opposite (larger amounts = more urgent need)?
+
+2. **Does time of day matter?**
+   - Morning remittances claimed faster (recipient has full day)?
+   - Evening remittances delayed (merchant hours, recipient obligations)?
+
+3. **First-time vs. repeat behavior:**
+   - Do first-time users claim slower (unfamiliar process)?
+   - Do repeat users claim faster (trust established)?
+
+4. **Cultural/geographic factors:**
+   - Does Spain→Venezuela differ from other corridors?
+   - Urban vs. rural recipient differences?
+
+---
+
+## Status Updates
+
+**2026-05-20:** Investigation brief created, no data yet.
+
+---
+
+**Want to investigate this unknown?** Follow the contributor guidance above and share your findings. No approval needed—permissionless contribution in action.
+
+
+## Overcollateralization Rate
+
+# Overcollateralization Rate — Is 107% Sufficient?
+
+**Status:** Not Started  
+**Priority:** Critical  
+**Last Updated:** 2026-05-20  
+**Contributors Welcome:** Yes — see below
+
+---
+
+## What We Don't Know
+
+**What overcollateralization ratio protects merchants from volatility while remaining attractive to sellers?**
+
+We have no empirical validation of:
+- Whether 7% buffer (107% collateral) covers typical BCH volatility in chosen settlement windows
+- Tail event frequency (how often does BCH move >7% in 2h/6h/12h/24h?)
+- Whether dynamic collateralization (103%-110% based on window) matches actual risk
+- Seller willingness to post different collateral levels
+- Trade-off between protection and capital efficiency
+
+**Current design assumes:** 107% collateral for 24h window, scaled dynamically to 103% for 2h window.
+
+**Reality unknown:** Is this too conservative (scares away sellers)? Too aggressive (merchants/senders exposed to tail risk)?
+
+---
+
+## Why It Matters
+
+### 1. **Merchant/Sender Protection**
+
+If collateral is insufficient:
+- Covenant matures early when BCH drops >7%
+- Sender receives refund (bears loss beyond buffer)
+- **Bad UX:** Sender loses money unpredictably
+- **Trust erosion:** Repeated losses → Senders stop using system
+
+**External reviewers (ChatGPT, Gemini, Grok) all flagged this as a major concern.**
+
+### 2. **Seller Capital Efficiency**
+
+If collateral is too high:
+- Sellers lock more capital than necessary
+- Effective APR decreases (more capital, same fee)
+- **Bad economics:** Sellers find better opportunities elsewhere
+- **Liquidity death:** No sellers → No remittances
+
+**Example:**
+- 103% collateral → ~2,336% APR (2h window, 0.4% fee)
+- 110% collateral → ~1,760% APR (same window/fee, more capital locked)
+
+**Every percentage point of collateral costs sellers ~100-200% APR.**
+
+### 3. **Volatility Regime Sensitivity**
+
+BCH volatility varies over time:
+- Bull markets: High volatility (>10% daily moves common)
+- Bear markets: Moderate volatility (5-8% daily moves)
+- Sideways markets: Low volatility (<3% daily moves)
+
+**Static collateral doesn't adapt to volatility regimes.**
+
+If we launch during low volatility and hit high volatility later:
+- 7% buffer breaks frequently
+- Senders lose money repeatedly
+- System trust collapses
+
+**We need to know: What volatility regime are we optimizing for?**
+
+---
+
+## Current Hypothesis
+
+**Educated guess (no historical analysis):**
+
+| Settlement Window | Collateral Ratio | Rationale |
+|------------------|------------------|-----------|
+| 2-hour express | 103% | BCH rarely moves >3% in 2h (covers 95th percentile) |
+| 6-hour standard | 105% | BCH occasionally moves 5% in 6h (covers 90th percentile) |
+| 12-hour flexible | 107% | BCH sometimes moves 7% in 12h (covers 85th percentile) |
+| 24-hour extended | 110% | BCH can move 10% in 24h (covers 80th percentile) |
+
+**Assumptions:**
+1. BCH behaves like other mid-cap cryptocurrencies (moderate volatility)
+2. Short windows have exponentially lower tail risk than long windows
+3. Sellers will tolerate up to 10% overcollateralization for 24h windows
+4. Covering 80-95th percentile is acceptable (tail events expected occasionally)
+
+**This is speculation. We need historical volatility data.**
+
+---
+
+## Investigation Method
+
+### Option 1: Historical Volatility Analysis (Highest Priority)
+
+**Data source:** Bitcoin Cash price history (CoinGecko, CoinMarketCap, exchange APIs)
+
+**Analysis steps:**
+
+1. **Pull 2-3 years of BCH price data** (1-minute or 5-minute resolution)
+   - Sufficient to capture multiple volatility regimes
+   - Includes bull, bear, and sideways periods
+
+2. **Calculate rolling volatility for each time window:**
+   - 2-hour windows: % price change from T to T+2h
+   - 6-hour windows: % price change from T to T+6h
+   - 12-hour windows: % price change from T to T+12h
+   - 24-hour windows: % price change from T to T+24h
+
+3. **Generate distribution statistics:**
+   - Median, 75th, 90th, 95th, 99th percentile moves
+   - Maximum observed move in each window
+   - Frequency of moves exceeding 3%, 5%, 7%, 10%
+
+4. **Identify volatility regimes:**
+   - Bull market periods (e.g., 2021 run-up)
+   - Bear market periods (e.g., 2022 crash)
+   - Sideways periods (2023-2024)
+   - Compare distributions across regimes
+
+5. **Determine adequate collateral ratios:**
+   - For each window, identify collateral needed to cover 90th, 95th, 99th percentile
+   - Trade-off: Higher percentile coverage = more capital locked
+
+**Tools:**
+- Python + pandas (for data analysis)
+- CoinGecko API (free tier sufficient)
+- Jupyter notebook for visualization
+
+**Deliverables:**
+- Distribution histograms for each window
+- Table of percentile moves by window
+- Recommended collateral ratios by window
+- Volatility regime sensitivity analysis
+
+**Estimated effort:** 8-12 hours (data pull, analysis, documentation)
+
+**Reliability:** High (actual historical data, backtestable)
+
+---
+
+### Option 2: Monte Carlo Simulation (Complementary)
+
+**If historical data suggests collateral needs adjustment, validate via simulation:**
+
+1. **Fit BCH returns to realistic distribution** (e.g., fat-tailed, not Gaussian)
+2. **Simulate 10,000 remittances** with random covenant creation times
+3. **Measure:**
+   - How often does covenant mature early (collateral breached)?
+   - How often does sender lose >1%, >2%, >5%?
+   - How does changing collateral ratio affect breach frequency?
+
+4. **Optimize:**
+   - Find collateral ratio that keeps breach rate <5% for each window
+   - Balance between protection and capital efficiency
+
+**Tools:**
+- Python + numpy/scipy
+- Monte Carlo libraries
+
+**Estimated effort:** 6-10 hours (after historical analysis provides distribution parameters)
+
+**Reliability:** High (stress-testing against realistic scenarios)
+
+---
+
+### Option 3: DeFi Comparisons (Context, Not Validation)
+
+**Research how other protocols handle volatile collateral:**
+
+**Protocols to study:**
+- **MakerDAO:** Collateralization ratios for ETH, WBTC (volatile assets)
+- **Aave:** Loan-to-value ratios, liquidation thresholds
+- **Compound:** Collateral factors for different assets
+- **AnyHedge (BCH):** How they handle BCH volatility for hedges
+
+**Questions:**
+- What collateral ratios do they use for volatile assets?
+- How do they adjust for different time horizons?
+- What liquidation/breach frequencies are acceptable?
+
+**Estimated effort:** 4-6 hours (research, document findings)
+
+**Reliability:** Moderate (useful context, but different risk profiles than Asgaya)
+
+---
+
+## Success Criterion
+
+**This unknown is "answered" when we have:**
+
+1. **Historical volatility distributions** for 2h/6h/12h/24h BCH windows
+2. **Recommended collateral ratios** based on:
+   - Desired percentile coverage (e.g., 95th percentile)
+   - Acceptable breach frequency (e.g., <5% of covenants)
+   - Trade-off with capital efficiency
+
+3. **Sensitivity analysis** showing how collateral requirements change across volatility regimes (bull/bear/sideways)
+
+4. **Stress test results** validating that recommended ratios survive historical worst-case periods
+
+**Minimum viable answer (for Phase 0 launch):**
+- Historical analysis of 2021-2024 BCH volatility
+- Percentile tables for each window
+- Recommended collateral ratios with justification
+
+**Gold standard answer (for Phase 1 refinement):**
+- Monte Carlo validation of recommended ratios
+- Dynamic collateral adjustment algorithm (adapts to current volatility regime)
+- Phase 0 trial data confirming predictions
+
+---
+
+## Phase 0 Trial Integration
+
+### Metrics to Track
+
+**During Phase 0 trials:**
+1. **Early maturity rate:** % of covenants that mature early (collateral breached)
+2. **Sender loss distribution:** When early maturity occurs, how much does sender lose?
+3. **Seller capital efficiency:** Is collateral locked unnecessarily (BCH never gets close to threshold)?
+4. **Volatility regime during trial:** Bull/bear/sideways? (Affects interpretation of results)
+
+**Iteration triggers:**
+- If early maturity rate >10% → Increase collateral ratios
+- If early maturity rate <1% AND seller feedback = "too much capital locked" → Decrease ratios
+- If volatility regime shifts mid-trial → Re-evaluate ratios dynamically
+
+### Logging Requirements
+
+```json
+{
+  "covenant_id": "...",
+  "settlement_window": "6h",
+  "collateral_ratio": 1.05,
+  "bch_price_at_creation": 320.50,
+  "bch_price_at_maturity": 315.30,
+  "percent_change": -1.62,
+  "early_maturity": false,
+  "sender_loss": 0.00
+}
+```
+
+---
+
+## Contributor Guidance
+
+### Skills Needed
+- **Data analysis** (Python, pandas, basic statistics)
+- **API usage** (CoinGecko, CoinMarketCap)
+- **Statistical modeling** (percentiles, distributions, Monte Carlo)
+- **Visualization** (matplotlib, seaborn for charts/histograms)
+
+### Estimated Effort
+- **Historical analysis:** 8-12 hours (data pull, analysis, documentation)
+- **Monte Carlo simulation:** 6-10 hours (model, validate, document)
+- **DeFi comparison research:** 4-6 hours (research, summarize)
+
+### How to Start
+
+**Step 1:** Historical volatility analysis (highest priority)
+
+1. **Pull BCH price data:**
+   ```python
+   import requests
+   import pandas as pd
+   
+   # CoinGecko API (free)
+   url = "https://api.coingecko.com/api/v3/coins/bitcoin-cash/market_chart"
+   params = {"vs_currency": "eur", "days": "730", "interval": "hourly"}
+   response = requests.get(url, params=params)
+   data = response.json()
+   
+   df = pd.DataFrame(data['prices'], columns=['timestamp', 'price'])
+   df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+   ```
+
+2. **Calculate rolling volatility:**
+   ```python
+   # 2-hour rolling percent change
+   df['pct_change_2h'] = df['price'].pct_change(periods=2) * 100
+   
+   # Repeat for 6h, 12h, 24h
+   df['pct_change_6h'] = df['price'].pct_change(periods=6) * 100
+   df['pct_change_12h'] = df['price'].pct_change(periods=12) * 100
+   df['pct_change_24h'] = df['price'].pct_change(periods=24) * 100
+   ```
+
+3. **Generate percentile tables:**
+   ```python
+   for window in ['2h', '6h', '12h', '24h']:
+       col = f'pct_change_{window}'
+       print(f"\n{window.upper()} Window Volatility:")
+       print(f"  50th percentile: {df[col].abs().quantile(0.50):.2f}%")
+       print(f"  90th percentile: {df[col].abs().quantile(0.90):.2f}%")
+       print(f"  95th percentile: {df[col].abs().quantile(0.95):.2f}%")
+       print(f"  99th percentile: {df[col].abs().quantile(0.99):.2f}%")
+       print(f"  Max observed: {df[col].abs().max():.2f}%")
+   ```
+
+4. **Visualize distributions:**
+   ```python
+   import matplotlib.pyplot as plt
+   
+   fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+   for ax, window in zip(axes.flatten(), ['2h', '6h', '12h', '24h']):
+       df[f'pct_change_{window}'].hist(ax=ax, bins=100)
+       ax.set_title(f'{window.upper()} Window % Change Distribution')
+       ax.set_xlabel('% Price Change')
+       ax.set_ylabel('Frequency')
+   plt.tight_layout()
+   plt.savefig('bch_volatility_distributions.png')
+   ```
+
+5. **Document findings:**
+   - Update this file with "Status: In Progress" → "Status: Answered"
+   - Add "Findings" section with tables, charts, recommendations
+   - Submit via GitHub PR or email to jesgf@yahoo.es
+
+**Step 2:** If findings suggest adjustments, run Monte Carlo validation (optional)
+
+**Step 3:** Research DeFi comparisons for context (optional)
+
+---
+
+## Related Documents
+
+- [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
+- [Time-Based Settlement Incentives Proposal](../../collaborative_workspace/time_based_settlement_incentives.md)
+- [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
+- [Grok's Review](../../collaborative_workspace/permissionless_contributions/Grok_reply_to_gemini_prompt.md) (Line 19-26: "7% insufficient")
+- [ChatGPT's Review](../../collaborative_workspace/permissionless_contributions/ChatGPT_reply_to_gemini_prompt.md) (Line 62-106: Overcollateralization concerns)
+
+---
+
+## Open Questions
+
+1. **Volatility clustering:**
+   - Does BCH have "calm periods" (low volatility) followed by "storm periods" (high volatility)?
+   - Should collateral adjust dynamically based on recent volatility (e.g., last 7 days)?
+
+2. **Asymmetric moves:**
+   - Are downward moves (BCH crash) more violent than upward moves?
+   - Should collateral protect against downward moves specifically?
+
+3. **Correlation with BTC:**
+   - Does BCH volatility track BTC volatility?
+   - Can we use BTC volatility as a leading indicator?
+
+4. **Acceptable breach frequency:**
+   - Is 5% breach rate acceptable? (1 in 20 covenants mature early)
+   - Or should we target 2%? 1%?
+   - Trade-off: Lower breach rate = more capital locked
+
+5. **Dynamic adjustment algorithm:**
+   - If volatility regime shifts, how quickly should collateral adjust?
+   - Real-time (per-covenant based on recent volatility)?
+   - Weekly updates (protocol-wide adjustment)?
+   - Manual (Phase 0 team decision based on monitoring)?
+
+---
+
+## Status Updates
+
+**2026-05-20:** Investigation brief created, no analysis yet.
+
+---
+
+**Want to investigate this unknown?** Follow the contributor guidance above and share your findings. Python + data analysis skills helpful but not required—even pointing to relevant historical volatility studies would help.

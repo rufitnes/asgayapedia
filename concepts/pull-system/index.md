@@ -56,6 +56,31 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION IN PULL SYSTEM
+
+**Common misconception:** "If the covenant holds BCH and the merchant receives from it, the merchant bears volatility risk."
+
+**Reality:** Merchants only participate when covenants are VALID and fully collateralized.
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk**
+* ✅ **Merchant's software validates covenant BEFORE handing cash:**
+  * Is covenant sufficiently collateralized? (≥100% of EUR promise)
+  * Are both conditions signable? (seller paid, recipient present)
+  * Is covenant still within 24h window?
+* 🔄 **If covenant becomes invalid (BCH drops >7%):**
+  * Covenant matures early
+  * ALL remaining BCH refunds to **SENDER**
+  * Merchant's software detects invalid covenant
+  * Merchant does NOT hand cash to recipient
+  * Transaction cancelled - no one loses money except sender (bears tail risk)
+
+**The "pull" system doesn't just mean recipient controls timing** - it also means **merchant validates claim validity at the exact moment of execution**. This is why merchants are completely protected from volatility.
+
+**See:** [Overcollateralized Bounty Contracts](./overcollateralized-bounty-contracts.md) for technical details on covenant validation.
+
+---
+
 ## How It Works
 
 ### Three-Phase Flow

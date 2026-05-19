@@ -10,6 +10,9 @@ Key concepts that underpin Asgaya's covenant-based architecture.
 
 ## Core Concepts (Active - Phase 0)
 
+### [Risk Allocation Principle](risk-allocation-principle.md) ⭐
+The foundational design principle: merchants never bear volatility risk. Explains WHO bears WHICH risk in Asgaya's covenant architecture and why sender risk allocation is correct.
+
 ### [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md)
 The heart of Asgaya: covenant smart contracts that hold BCH with 7% overcollateralization, enabling volatility protection and split refunds without custody.
 

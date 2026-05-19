@@ -22,6 +22,10 @@
 
 **This is engineering, not guessing.** Every parameter below is a **hypothesis to validate**, not a final decision.
 
+> **📚 For detailed investigation plans, see the [Unknowns Directory](../unknowns/).**  
+> Each unknown has a dedicated brief with investigation methods, success criteria, and contributor guidance.  
+> This checklist tracks *what* needs validation—the unknowns directory explains *how* to investigate.
+
 ---
 
 ## 📊 Parameter Categories

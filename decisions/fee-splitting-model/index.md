@@ -55,6 +55,27 @@
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION
+
+**Understanding who bears risk in the fee model:**
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk beyond their 0.5% fee**
+* ✅ **Merchant either:**
+  * Receives full EUR-equivalent BCH (including their 0.5% fee)
+  * OR does not participate in settlement at all
+* 🔄 **Under-collateralized covenants refund remaining BCH to the SENDER**
+* ⚖️ **Therefore:**
+  * **SENDER** bears tail volatility risk beyond 7% collateral buffer
+  * **MERCHANT** earns 0.5% fee for providing local fiat (zero volatility exposure)
+  * **SELLER** earns 0.5% fee for posting collateral (bears opportunity cost)
+
+**The 0.5% merchant fee is NOT compensation for taking volatility risk** - it's compensation for providing local fiat liquidity and physically handing cash to recipients. Merchants are completely isolated from BCH price movements.
+
+**See:** [Two-Step Settlement Timing](two-step-settlement-timing.md) for complete risk allocation details.
+
+---
+
 ## The Goal (Architectural Ideal)
 
 Create **economic incentives** for all participants to join and grow the Asgaya network **while promoting BCH adoption**.
