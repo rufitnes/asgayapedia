@@ -2797,7 +2797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4470,7 +4470,7 @@
 <li>Matches phone number</li>
 <li>Validates amount (€101)</li>
 <li>If match found → Confirms funds received</li>
-<li><strong>Locks BCH in covenant</strong> (overcollateralized position)</li>
+<li><strong>Locks BCH in covenant</strong> (with volatility buffer position)</li>
 <li>Notifies recipient: "Funds ready for cash-out"</li>
 </ol>
 <hr />
@@ -4489,7 +4489,7 @@
 1. Both merchant and recipient co-sign covenant
 2. Covenant automatically distributes BCH:
    - Merchant receives: €99.5 worth of BCH (€100 - 0.5% fee)
-   - BCH seller receives: €7.5 (overcollateralization surplus + 0.5% fee)
+   - BCH seller receives: €7.5 (volatility buffer surplus + 0.5% fee)
 3. Transaction complete, recorded on-chain</p>
 <p><strong>Volatility window:</strong> ~30 seconds (from recipient entering merchant to covenant maturity)</p>
 <p><strong>If BCH buyer provides instant settlement (3 participants - optional):</strong>
@@ -4497,7 +4497,7 @@
 2. Both merchant and recipient co-sign covenant
 3. Covenant automatically distributes BCH:
    - BCH buyer receives: €99.5 worth of BCH
-   - BCH seller receives: €7.5 (overcollateralization surplus + 0.5% shared fee)
+   - BCH seller receives: €7.5 (volatility buffer surplus + 0.5% shared fee)
 4. Merchant already has fiat from BCH buyer</p>
 <p><strong>Volatility window:</strong> ~30 seconds (covenant execution time)</p>
 <hr />
@@ -4517,7 +4517,7 @@
 <h3 id="volatility-risk-near-zero">Volatility Risk: Near Zero<a class="headerlink" href="#volatility-risk-near-zero" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>10-minute timeout is NOT a volatility window</strong></li>
-<li>BCH locked in overcollateralized covenant during wait (volatility protected)</li>
+<li>BCH locked in covenant + volatility buffer during wait (volatility protected)</li>
 <li>Covenant only executes when recipient ready to cash out</li>
 <li><strong>Total volatility exposure: ~30 seconds</strong> (covenant execution time)</li>
 </ul>

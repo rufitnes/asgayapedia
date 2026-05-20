@@ -8,7 +8,7 @@ Core Architecture is the index that connects **requirements** (what and why we n
 
 Asgaya's covenant-based architecture eliminates custody and intermediation through three core innovations:
 
-1. **[Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md)** — BCH covenants (smart contracts) hold collateral and distribute funds programmatically. No custody, no intermediation, no exchange operation.
+1. **[Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md)** — BCH covenants (smart contracts) hold collateral and distribute funds programmatically. No custody, no intermediation, no exchange operation.
 
 2. **[Risk Allocation Principle](../concepts/risk-allocation-principle.md)** — Merchants never bear volatility risk. Sender bears tail risk beyond 7% collateral buffer. Covenant automatically refunds sender if undercollateralized.
 
@@ -97,9 +97,9 @@ Asgaya's covenant-based architecture eliminates custody and intermediation throu
 These principles guide all architectural decisions across the three requirements:
 
 1. **Accessibility Over Perfection** — Serve users with 3% fees rather than refuse unserved markets
-2. **Economic Incentives Over Ideology** — Ideology alone has failed to spread the use of BCH lets try rewards inestead.
+2. **Economic Incentives Over Ideology** — Ideology alone has failed to spread the use of BCH lets try rewards instead.
 3. **Simplicity at Scale** — Do a few things excellently rather than many things poorly
-4. **Maximum Freedom, Minimum Risk** — No KYC; secure key management education, desigend to avoid errors
+4. **Maximum Freedom, Minimum Risk** — No KYC; secure key management education, designed to avoid errors
 5. **Transparent Economics** — Market rates only, zero hidden markups, clear breakdown of cost after each transaction
 6. **Low-Tech Compatibility** — Low tech edge cases are given serious consideration
 

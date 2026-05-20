@@ -663,7 +663,7 @@ Gamification - show top LPs by settlements completed.
   - LP starts with 500,000 VES
   - Accepts 50,000 VES bounty
   - Now has 450,000 VES available
-  - Eventually runs out, must manually top up
+  - Eventually runs out, must manually time extension
 - **Locked during settlement:** LP ineligible for new bounties while settlement pending
   - Prevents LP from accepting more than they can handle
   - Makes LPs careful about accepting

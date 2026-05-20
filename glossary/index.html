@@ -2795,7 +2795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4029,10 +4029,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#overcollateralization" class="md-nav__link">
+  <a href="#volatility-buffer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overcollateralization
+        Volatility buffer
       
     </span>
   </a>
@@ -4545,10 +4545,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#overcollateralization" class="md-nav__link">
+  <a href="#volatility-buffer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overcollateralization
+        Volatility buffer
       
     </span>
   </a>
@@ -4868,16 +4868,16 @@
 <hr />
 <h3 id="bch-seller">BCH Seller<a class="headerlink" href="#bch-seller" title="Permanent link">&para;</a></h3>
 <p><strong>Type:</strong> User Role / Economic Actor</p>
-<p>Person who posts overcollateralized BCH to covenants, enabling remittances. Already owns BCH (miners, holders, traders) and uses covenants as a hedge mechanism while earning fees.</p>
+<p>Person who posts BCH + volatility buffer to covenants, enabling remittances. Already owns BCH (miners, holders, traders) and uses covenants as a hedge mechanism while earning fees.</p>
 <p><strong>Responsibilities:</strong>
-- Post ~7% overcollateralized BCH to covenant (e.g., ~€107 worth of BCH for €100 remittance)
+- Post ~7% BCH + volatility buffer to covenant (e.g., ~€107 worth of BCH for €100 remittance)
 - Monitor for sender Bizum payments (smsbridge_loop.py parsing or manual)
 - Receive EUR from sender via Bizum (within 5 minutes)
 - Wait for covenant maturity (24h max, typically &lt;2 hours)
 - Receive surplus BCH after merchant paid (~0.5% fee + hedge benefit)</p>
 <p><strong>Covenant structure (€100 example):</strong>
-- BCH seller posts: ~€107 worth of BCH (7% overcollateralization buffer)
-- Covenant promises merchant: ~€99.50 worth of BCH (settled at maturity rate)
+- BCH seller posts: ~€107 worth of BCH (7% volatility buffer buffer)
+- Covenant holds cash buy order for merchant: ~€99.50 worth of BCH (settled at settlement rate)
 - Sender pays seller: €100.00 via Bizum (within 5 minutes)
 - Seller net profit: ~€0.50 fee + hedge benefit (94-97% exposure reduction once Bizum received)</p>
 <p><strong>Incentive structure:</strong> Earn 0.5% fee per transaction. On €100 transfer, BCH seller earns ~€0.50. A seller handling 100 covenants/day earns ~€50/day = €1,500/month.</p>
@@ -4891,7 +4891,7 @@
 <p><strong>Type:</strong> Economic Mechanism / Merchant Incentive</p>
 <p>Covenant claim opportunity visible on public bulletin board. Merchants can claim covenants by selling VES/ARS cash to recipients, earning BCH spread.</p>
 <p><strong>How it works:</strong>
-1. BCH seller posts overcollateralized covenant (e.g., "€100 remittance, promises ~€99.50 BCH to merchant")
+1. BCH seller posts covenant + volatility buffer (e.g., "€100 remittance, promises ~€99.50 BCH to merchant")
 2. Recipient receives notification (via WhatsApp, OP_RETURN, or push notification)
 3. Covenant appears on public bulletin board visible to all merchants
 4. Recipient selects merchant (or merchant enters bounty code)
@@ -4945,26 +4945,26 @@
 <hr />
 <h3 id="eur-denominated-covenant-settlement">EUR-Denominated Covenant Settlement<a class="headerlink" href="#eur-denominated-covenant-settlement" title="Permanent link">&para;</a></h3>
 <p><strong>Type:</strong> Protocol Design / Volatility Solution</p>
-<p>Architectural innovation where covenants promise EUR value but settle in BCH at maturity rate. This eliminates volatility risk for all participants.</p>
+<p>Architectural innovation where covenants promise EUR value but settle in BCH at settlement rate. This eliminates volatility risk for all participants.</p>
 <p><strong>How it works:</strong>
 1. Sender sends €100 via Bizum to BCH seller
-2. BCH seller posts ~€107 worth of BCH to covenant (7% overcollateralization)
-3. Covenant promises merchant: ~€99.50 worth of BCH (settled at maturity rate, not creation rate)
+2. BCH seller posts ~€107 worth of BCH to covenant (7% volatility buffer)
+3. Covenant holds cash buy order for merchant: ~€99.50 worth of BCH (settled at settlement rate, not creation rate)
 4. Merchant sells 500,000 VES to recipient for cash
 5. Both co-sign covenant (cryptographic signatures)
-6. Covenant matures → Merchant receives BCH worth ~€99.50 (at maturity rate)
+6. Covenant matures → Merchant receives BCH worth ~€99.50 (at settlement rate)
 7. BCH seller keeps surplus after merchant paid (~€0.50 fee)</p>
 <p><strong>Key benefit:</strong> Zero volatility for sender, recipient, and merchant. BCH seller's risk reduced 94-97% once Bizum received (hedge mechanism).</p>
 <p><strong>Result:</strong> Eliminates the classic crypto remittance problem where participants lose money to volatility while funds are in transit.</p>
-<p><strong>Implementation:</strong> Built on overcollateralized covenant contracts that settle at maturity rate (not creation rate).</p>
+<p><strong>Implementation:</strong> Built on covenant + volatility buffer contracts that settle at settlement rate (not creation rate).</p>
 <p><strong>Related:</strong> <a href="#volatility-protection">Volatility Protection</a>, <a href="#bch-seller">BCH Seller</a>, <a href="#covenant">Covenant</a></p>
 <hr />
 <h3 id="settlement">Settlement<a class="headerlink" href="#settlement" title="Permanent link">&para;</a></h3>
 <p><strong>Type:</strong> Economic Concept</p>
 <p>Process of finalizing a covenant and distributing BCH. Context matters—"settlement" means different things depending on phase:</p>
-<p><strong>Covenant creation:</strong> BCH seller posts overcollateralized BCH, sender pays Bizum</p>
+<p><strong>Covenant creation:</strong> BCH seller posts BCH + volatility buffer, sender pays Bizum</p>
 <p><strong>Covenant claiming:</strong> Merchant and recipient co-sign covenant (cryptographic signatures)</p>
-<p><strong>Covenant maturity:</strong> Covenant settles, distributing BCH to merchant (at maturity rate) and surplus to seller</p>
+<p><strong>Covenant maturity:</strong> Covenant settles, distributing BCH to merchant (at settlement rate) and surplus to seller</p>
 <p><strong>Technical settlement:</strong> BCH blockchain confirmation (10 minutes typical, 0-conf acceptable for covenant creation).</p>
 <p><strong>Always clarify context:</strong> "merchant settlement" = merchant receives BCH from covenant, "covenant settlement" = covenant matures and distributes funds, "final settlement" = both participants confirmed.</p>
 <p><strong>Related:</strong> <a href="#eur-denominated-covenant-settlement">EUR-Denominated Covenant Settlement</a>, <a href="#volatility-protection">Volatility Protection</a></p>
@@ -4972,7 +4972,7 @@
 <h3 id="covenant-as-concept">Covenant (as concept)<a class="headerlink" href="#covenant-as-concept" title="Permanent link">&para;</a></h3>
 <p><strong>Type:</strong> Economic Mechanism</p>
 <p><strong>OBSOLETE:</strong> Old model used third-party escrow holding funds. New covenant architecture (May 2026 pivot) eliminates custody and intermediation.</p>
-<p><strong>Covenant architecture:</strong> Smart contract on BCH blockchain that holds overcollateralized BCH until conditions are met (merchant and recipient co-sign). No third party holds funds—covenant enforces rules automatically.</p>
+<p><strong>Covenant architecture:</strong> Smart contract on BCH blockchain that holds BCH + volatility buffer until conditions are met (merchant and recipient co-sign). No third party holds funds—covenant enforces rules automatically.</p>
 <p><strong>Key property:</strong> No custody, no intermediation, no licensing requirements. BCH seller posts collateral, covenant enforces settlement.</p>
 <p><strong>Fee distribution (€100 transaction):</strong>
 <div class="highlight"><pre><span></span><code>Sender pays: €100.00 (to BCH seller via Bizum)
@@ -4983,7 +4983,7 @@ Distribution:
 - BCH seller: ~€0.50 (0.5% fee + hedge profit)
 - Merchant: ~€0.50 (0.5% spread earned selling VES for BCH)
 </code></pre></div></p>
-<p><strong>Critical note:</strong> No exchange fees (no Kraken purchase). BCH seller already owns BCH. Overcollateralization protects against volatility.</p>
+<p><strong>Critical note:</strong> No exchange fees (no Kraken purchase). BCH seller already owns BCH. Volatility buffer protects against volatility.</p>
 <p><strong>Related:</strong> <a href="#bch-seller">BCH Seller</a>, <a href="#eur-denominated-covenant-settlement">EUR-Denominated Covenant Settlement</a></p>
 <hr />
 <h2 id="technical-concepts">Technical Concepts<a class="headerlink" href="#technical-concepts" title="Permanent link">&para;</a></h2>
@@ -5002,20 +5002,20 @@ Distribution:
 <hr />
 <h3 id="covenant-technical">Covenant (Technical)<a class="headerlink" href="#covenant-technical" title="Permanent link">&para;</a></h3>
 <p><strong>Type:</strong> Technical Concept / Smart Contract</p>
-<p>Bitcoin Cash smart contract that enforces overcollateralized bounty conditions. BCH seller posts ~7% extra BCH collateral, covenant promises EUR-denominated value to merchant (settled in BCH at maturity rate).</p>
+<p>Bitcoin Cash smart contract that enforces bounty + volatility buffer conditions. BCH seller posts ~7% extra BCH collateral, covenant holds cash buy order for EUR-denominated value to merchant (settled in BCH at settlement rate).</p>
 <p><strong>In Asgaya, covenants enforce:</strong>
-1. EUR-denominated promise (e.g., "pay merchant €99.50 worth of BCH at maturity rate")
+1. EUR-denominated cash buy order (e.g., "pay merchant €99.50 worth of BCH at settlement rate")
 2. Co-signing requirement (both merchant and recipient must sign)
 3. Timeout cascade (5-minute Bizum timeout, 24-hour claim timeout)
 4. Split refund (merchant portion → sender, seller fee → seller if unclaimed)</p>
 <p><strong>Example condition:</strong> "Unlock BCH for merchant IF: (merchant_signature AND recipient_signature) OR (24h timeout → split refund)"</p>
 <p><strong>Advantage:</strong> Trustless settlement—blockchain enforces terms, no custody, no intermediation. MiCA compliant (no licensing needed).</p>
 <p><strong>Implementation:</strong> BCH introspection opcodes enable EUR-denominated settlement with BCH as underlying asset.</p>
-<p><strong>Related:</strong> <a href="#eur-denominated-covenant-settlement">EUR-Denominated Covenant Settlement</a>, <a href="#bch-seller">BCH Seller</a>, <a href="#overcollateralization">Overcollateralization</a></p>
+<p><strong>Related:</strong> <a href="#eur-denominated-covenant-settlement">EUR-Denominated Covenant Settlement</a>, <a href="#bch-seller">BCH Seller</a>, <a href="#volatility buffer">Volatility buffer</a></p>
 <hr />
-<h3 id="overcollateralization">Overcollateralization<a class="headerlink" href="#overcollateralization" title="Permanent link">&para;</a></h3>
+<h3 id="volatility-buffer">Volatility buffer<a class="headerlink" href="#volatility-buffer" title="Permanent link">&para;</a></h3>
 <p><strong>Type:</strong> Technical Concept / Risk Management</p>
-<p>BCH seller posts more BCH than required (typically 107% of transaction amount) to covenant as buffer against price volatility. Protects merchant from receiving less than promised EUR value if BCH price drops during 24-hour claim window.</p>
+<p>BCH seller posts more BCH than required (typically 107% of transaction amount) to covenant as buffer against price volatility. Protects merchant from receiving less than specified EUR value if BCH price drops during 24-hour claim window.</p>
 <p><strong>Example:</strong> €100 remittance requires 0.1 BCH at current rate. BCH seller posts 0.107 BCH (7% extra).</p>
 <p><strong>How it protects:</strong>
 - If BCH drops 5%: Merchant still gets €99.50 worth of BCH (seller's surplus absorbs loss)
@@ -5123,7 +5123,7 @@ Distribution:
 <p>For detailed explanations of concepts in use, see:</p>
 <ul>
 <li><strong>Volatility Protection:</strong> <a href="../core-architecture/why-eliminate-volatility/">core-architecture/why-eliminate-volatility.md</a></li>
-<li><strong>Covenant Architecture:</strong> <a href="../concepts/overcollateralized-bounty-contracts/">concepts/overcollateralized-bounty-contracts.md</a></li>
+<li><strong>Covenant Architecture:</strong> <a href="../concepts/bounty-contracts-with-volatility-buffer/">concepts/bounty-contracts-with-volatility-buffer.md</a></li>
 <li><strong>BCH Sellers:</strong> <a href="../concepts/bch-sellers/">concepts/bch-sellers.md</a></li>
 <li><strong>Exchange Rates:</strong> <a href="../decisions/how-exchange-rates-work/">decisions/how-exchange-rates-work.md</a></li>
 <li><strong>Notification Listener:</strong> <a href="android-app/notification-listener/">android-app/notification-listener/</a></li>
@@ -5132,7 +5132,7 @@ Distribution:
 <h2 id="terminology-standards">Terminology Standards<a class="headerlink" href="#terminology-standards" title="Permanent link">&para;</a></h2>
 <h3 id="always-use">Always Use<a class="headerlink" href="#always-use" title="Permanent link">&para;</a></h3>
 <p>✅ <strong>recipient</strong> (not "receiver")
-✅ <strong>BCH seller</strong> (person posting overcollateralized BCH to covenants)
+✅ <strong>BCH seller</strong> (person posting BCH + volatility buffer to covenants)
 ✅ <strong>BCH buyer</strong> (optional participant buying BCH from merchants)
 ✅ <strong>covenant</strong> (not "escrow"—covenant is trustless smart contract)
 ✅ <strong>settlement</strong> (clarify context: covenant settlement vs. merchant settlement vs. final settlement)

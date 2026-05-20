@@ -2773,10 +2773,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#overcollateralized-bounty-contracts" class="md-nav__link">
+  <a href="#with-volatility-buffer-bounty-contracts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overcollateralized Bounty Contracts
+        With volatility buffer Bounty Contracts
       
     </span>
   </a>
@@ -2893,6 +2893,17 @@
     <span class="md-ellipsis">
       
         Seller Liveness Signal ⚠️ Phase 1+
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-extension-marketplace-phase-1-proposed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Extension Marketplace ⚠️ Phase 1+ (Proposed)
       
     </span>
   </a>
@@ -3076,7 +3087,7 @@
   
   
     <li class="md-nav__item">
-      <a href="overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4009,10 +4020,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#overcollateralized-bounty-contracts" class="md-nav__link">
+  <a href="#with-volatility-buffer-bounty-contracts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overcollateralized Bounty Contracts
+        With volatility buffer Bounty Contracts
       
     </span>
   </a>
@@ -4135,6 +4146,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#time-extension-marketplace-phase-1-proposed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Extension Marketplace ⚠️ Phase 1+ (Proposed)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4242,16 +4264,16 @@
 <h2 id="core-concepts-active-phase-0">Core Concepts (Active - Phase 0)<a class="headerlink" href="#core-concepts-active-phase-0" title="Permanent link">&para;</a></h2>
 <h3 id="risk-allocation-principle"><a href="risk-allocation-principle/">Risk Allocation Principle</a> ⭐<a class="headerlink" href="#risk-allocation-principle" title="Permanent link">&para;</a></h3>
 <p>The foundational design principle: merchants never bear volatility risk. Explains WHO bears WHICH risk in Asgaya's covenant architecture and why sender risk allocation is correct.</p>
-<h3 id="overcollateralized-bounty-contracts"><a href="overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a><a class="headerlink" href="#overcollateralized-bounty-contracts" title="Permanent link">&para;</a></h3>
-<p>The heart of Asgaya: covenant smart contracts that hold BCH with 7% overcollateralization, enabling volatility protection and split refunds without custody.</p>
+<h3 id="with-volatility-buffer-bounty-contracts"><a href="bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a><a class="headerlink" href="#with-volatility-buffer-bounty-contracts" title="Permanent link">&para;</a></h3>
+<p>The heart of Asgaya: covenant smart contracts that hold BCH with 7% volatility buffer, enabling volatility protection and split refunds without custody.</p>
 <h3 id="bch-sellers"><a href="bch-sellers/">BCH Sellers</a><a class="headerlink" href="#bch-sellers" title="Permanent link">&para;</a></h3>
-<p>Participants who post overcollateralized BCH to covenants, earning 0.5% fees plus hedge benefits. Replaces the old "Escrow Operator" role with a permissionless, automated model.</p>
+<p>Participants who post BCH + volatility buffer to covenants, earning 0.5% fees plus hedge benefits. Replaces the old "Escrow Operator" role with a permissionless, automated model.</p>
 <h3 id="pull-system"><a href="pull-system/">Pull System</a><a class="headerlink" href="#pull-system" title="Permanent link">&para;</a></h3>
 <p>How recipient timing controls settlement (not sender timing), compressing volatility exposure from hours to 30 seconds and enabling regulatory compliance.</p>
 <h3 id="core-regulatory-constraints"><a href="core-regulatory-constraints/">Core Regulatory Constraints</a><a class="headerlink" href="#core-regulatory-constraints" title="Permanent link">&para;</a></h3>
 <p>The three safe design principles that keep Asgaya outside MiCA/PSD2 licensing: no custody, no intermediation, no protocol fee.</p>
 <h3 id="live-exchange-rates"><a href="live-exchange-rates/">Live Exchange Rates</a><a class="headerlink" href="#live-exchange-rates" title="Permanent link">&para;</a></h3>
-<p>How real-time exchange rates are sourced (CoinGecko, DolarAPI) and used for EUR-denominated promises without markup.</p>
+<p>How real-time exchange rates are sourced (CoinGecko, DolarAPI) and used for EUR-denominated cash buy orders without markup.</p>
 <h3 id="universal-bot-fraud-prevention"><a href="universal-bot-fraud-prevention/">Universal Bot Fraud Prevention</a><a class="headerlink" href="#universal-bot-fraud-prevention" title="Permanent link">&para;</a></h3>
 <p>Both senders and sellers run the same notification listener bot. Seller cannot predict which senders have working bots, making fraud attempts have negative expected value.</p>
 <h3 id="fraud-proof-mechanism"><a href="fraud-proof-mechanism/">Fraud Proof Mechanism</a><a class="headerlink" href="#fraud-proof-mechanism" title="Permanent link">&para;</a></h3>
@@ -4264,6 +4286,8 @@
 <p>How recipients without smartphones can claim covenants using NFC-enabled cards. Extends hardware accessibility beyond Android phones.</p>
 <h3 id="seller-liveness-signal-phase-1"><a href="seller-liveness-signal/">Seller Liveness Signal</a> ⚠️ <strong>Phase 1+</strong><a class="headerlink" href="#seller-liveness-signal-phase-1" title="Permanent link">&para;</a></h3>
 <p>Passive liveness proof using notification noise patterns. Verifies that BCH Sellers are online and running honest software without explicit pings or central monitoring.</p>
+<h3 id="time-extension-marketplace-phase-1-proposed"><a href="time-extension-marketplace/">Time Extension Marketplace</a> ⚠️ <strong>Phase 1+ (Proposed)</strong><a class="headerlink" href="#time-extension-marketplace-phase-1-proposed" title="Permanent link">&para;</a></h3>
+<p>Market-driven covenant rescue mechanism. When BCH drops near expiry threshold, participants can add collateral to extend claim windows in exchange for rewards. Creates arbitrage opportunities and prevents remittance failures during volatility.</p>
 <hr />
 <h2 id="historical-deferred-concepts">Historical / Deferred Concepts<a class="headerlink" href="#historical-deferred-concepts" title="Permanent link">&para;</a></h2>
 <h3 id="dynamic-reward-modulation-deferred"><a href="dynamic-reward-modulation/">Dynamic Reward Modulation</a> ⚠️ <strong>Deferred</strong><a class="headerlink" href="#dynamic-reward-modulation-deferred" title="Permanent link">&para;</a></h3>
@@ -4271,7 +4295,7 @@
 <h3 id="bubble-prevention-deferred"><a href="bubble-prevention/">Bubble Prevention</a> ⚠️ <strong>Deferred</strong><a class="headerlink" href="#bubble-prevention-deferred" title="Permanent link">&para;</a></h3>
 <p>Proposed mechanisms to prevent speculative behavior in reward systems. Not implemented in Phase 0 (trusted parties only).</p>
 <h3 id="bch-miners-as-escrows-obsolete-pre-covenant"><a href="bch-miners-as-escrows/">BCH Miners as Escrows</a> ⚠️ <strong>Obsolete (Pre-Covenant)</strong><a class="headerlink" href="#bch-miners-as-escrows-obsolete-pre-covenant" title="Permanent link">&para;</a></h3>
-<p>Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using overcollateralized covenants (no custody).</p>
+<p>Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using covenant + volatility buffers (no custody).</p>
 <h3 id="market-making-partners-obsolete-pre-covenant"><a href="market-making-partners/">Market Making Partners</a> ⚠️ <strong>Obsolete (Pre-Covenant)</strong><a class="headerlink" href="#market-making-partners-obsolete-pre-covenant" title="Permanent link">&para;</a></h3>
 <p>Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture.</p>
 <hr />
@@ -4279,9 +4303,9 @@
 <p>These concepts are referenced throughout the documentation. Understanding them helps you understand:
 - Why covenants replace escrow (regulatory compliance + no custody)
 - How economic incentives align (BCH Seller hedge + Merchant fees)
-- How volatility protection works (pull system + overcollateralization)
+- How volatility protection works (pull system + volatility buffer)
 - How the system scales (permissionless participation, global BCH buyers)</p>
-<p><strong>Start with:</strong> <a href="overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> - the covenant mechanism that makes everything else possible.</p>
+<p><strong>Start with:</strong> <a href="bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a> - the covenant mechanism that makes everything else possible.</p>
 <hr />
 <p><em>Last updated: May 19, 2026 (Covenant Architecture v2.0)</em></p>
         <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">

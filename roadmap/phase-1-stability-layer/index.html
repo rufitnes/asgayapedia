@@ -2791,7 +2791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4138,7 +4138,7 @@
 <p>Merchants who want BCH exposure can keep it. Merchants who want stability can swap it.</p>
 <hr />
 <h2 id="what-is-musd">What is MUSD?<a class="headerlink" href="#what-is-musd" title="Permanent link">&para;</a></h2>
-<p><strong>MUSD</strong> is a BCH-native, overcollateralized stablecoin built on CashTokens by Riften Labs (Moria Protocol).</p>
+<p><strong>MUSD</strong> is a BCH-native, with volatility buffer stablecoin built on CashTokens by Riften Labs (Moria Protocol).</p>
 <table>
 <thead>
 <tr>
@@ -4153,7 +4153,7 @@
 </tr>
 <tr>
 <td><strong>Collateral</strong></td>
-<td>Overcollateralized by BCH (150% initial ratio)</td>
+<td>With volatility buffer by BCH (150% initial ratio)</td>
 </tr>
 <tr>
 <td><strong>Backing</strong></td>
@@ -4282,7 +4282,7 @@
 <h2 id="why-defer-to-phase-1">Why Defer to Phase 1?<a class="headerlink" href="#why-defer-to-phase-1" title="Permanent link">&para;</a></h2>
 <p><strong>The sequencing matters:</strong></p>
 <p>Phase 0 must prove:
-1. ✅ Covenant model works (overcollateralization, margin calls, refunds)
+1. ✅ Covenant model works (volatility buffer, margin calls, refunds)
 2. ✅ Merchants adopt (critical mass of recipients)
 3. ✅ BCH sellers sustain (inventory, hedge, fee viability)</p>
 <p><strong>Only then</strong> can Phase 1 work, because:
@@ -4297,7 +4297,7 @@
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────┐
 │ MUSD (Issued by Moria Protocol)        │
 │ - Community token                       │
-│ - Overcollateralized by BCH             │
+│ - With volatility buffer by BCH             │
 │ - Asgaya never mints, holds, or controls│
 └─────────────────────────────────────────┘
                     ↓
@@ -4321,7 +4321,7 @@
 - Riften Labs handles compliance (not Asgaya)
 - Asgaya just displays rates (like CoinGecko displays Bitcoin prices)
 - If MUSD becomes regulated, Asgaya can pivot to other stable tokens</p>
-<p><strong>Regulatory risk:</strong> Low. MUSD is community-governed, overcollateralized, no fiat backing. Similar to DAI, which operates globally without triggering security/payment regulation in most jurisdictions.</p>
+<p><strong>Regulatory risk:</strong> Low. MUSD is community-governed, with volatility buffer, no fiat backing. Similar to DAI, which operates globally without triggering security/payment regulation in most jurisdictions.</p>
 <hr />
 <h2 id="open-questions-to-validate-in-phase-1">Open Questions (To Validate in Phase 1)<a class="headerlink" href="#open-questions-to-validate-in-phase-1" title="Permanent link">&para;</a></h2>
 <h3 id="1-will-bch-buyers-emerge">1. Will BCH Buyers Emerge?<a class="headerlink" href="#1-will-bch-buyers-emerge" title="Permanent link">&para;</a></h3>
@@ -4378,7 +4378,7 @@
 <p><strong>Current Phase 0 design (hardcoded):</strong>
 - 24-hour covenant timeout (recipient claim window)
 - 5-minute Bizum confirmation window (sender must pay)
-- 60-minute margin call grace period (seller must top up)</p>
+- 60-minute margin call grace period (seller must time extension)</p>
 <p><strong>Phase 1+ enhancement:</strong></p>
 <p>Allow BCH Sellers to configure timeout parameters based on their risk tolerance:</p>
 <table>

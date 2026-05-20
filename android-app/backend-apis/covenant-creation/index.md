@@ -264,7 +264,7 @@ const bchPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=
 const eurAmount = 99.00;
 const bchAmount = eurAmount / bchPrice;
 
-// Add 7% overcollateralization (covenant requirement)
+// Add 7% volatility buffer (covenant requirement)
 const bchRequired = bchAmount * 1.07;
 
 console.log(`Locking ${bchRequired} BCH for €${eurAmount}`);
@@ -590,7 +590,7 @@ node nft-manager.js &            # Update seller NFT
 
 ## Security Considerations
 
-### 1. Overcollateralization
+### 1. Volatility buffer
 
 **Why 7%:**
 - BCH volatility protection (~30 seconds claim window)
@@ -651,7 +651,7 @@ require(checkSig(merchantSig, merchantPubkey));
 - [ ] NFT discovery works (sellers, merchants)
 - [ ] OP_RETURN notifications received
 - [ ] Electrum queries work (regtest, chipnet, mainnet)
-- [ ] Overcollateralization enforced (7% minimum)
+- [ ] Volatility buffer enforced (7% minimum)
 - [ ] Co-signing required for cash claims
 - [ ] Margin call detection works
 

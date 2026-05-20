@@ -1,4 +1,4 @@
-# Overcollateralized Bounty Contracts
+# With volatility buffer Bounty Contracts
 
 **Status:** Proposed Architecture (Discovered May 10, 2026)  
 **Priority:** Core Innovation — Enables compliant pull system  
@@ -30,12 +30,12 @@ On May 9, 2026, we abandoned the pull system to comply with [Core Regulatory Con
 
 > **What if the seller is the liquidity provider, and the smart contract is the escrow?**
 
-Instead of a **central entity** holding funds, a **CashScript covenant** (BCH smart contract) holds **overcollateralized BCH posted by the seller**. The contract only releases funds when both conditions are met:
+Instead of a **central entity** holding funds, a **CashScript covenant** (BCH smart contract) holds **BCH + volatility buffer posted by the seller**. The contract only releases funds when both conditions are met:
 
 1. **Merchant confirmed:** "I gave cash to recipient" (on-chain proof)
 2. **Seller confirmed:** "I received Bizum from sender" (automated bot signature)
 
-**If BCH price moves while waiting, the overcollateralization absorbs the volatility.**
+**If BCH price moves while waiting, the volatility buffer absorbs the volatility.**
 
 Excess BCH returns to the seller. The recipient gets exactly the promised amount of local currency.
 
@@ -58,7 +58,7 @@ Excess BCH returns to the seller. The recipient gets exactly the promised amount
 
 **The merchant is NOT short BCH downside volatility.**
 
-**Why this matters:** Merchants are local Venezuelan individuals providing physical cash. They cannot absorb crypto volatility losses. The covenant architecture ensures they only participate when settlement is guaranteed at the promised EUR value. Invalid covenants are rejected by their software before any cash changes hands.
+**Why this matters:** Merchants are local Venezuelan individuals providing physical cash. They cannot absorb crypto volatility losses. The covenant architecture ensures they only participate when settlement is guaranteed at the specified EUR value. Invalid covenants are rejected by their software before any cash changes hands.
 
 **📖 See:** [Risk Allocation Principle](risk-allocation-principle.md) for the complete foundational principle, common misconceptions, technical implementation details, and comparison to traditional systems.
 
@@ -72,7 +72,7 @@ Excess BCH returns to the seller. The recipient gets exactly the promised amount
 
 **Covenant Creation:**
 - Sender creates EUR-denominated covenant with recipient's address
-- BCH Seller posts overcollateralized BCH (107%)
+- BCH Seller posts BCH + volatility buffer (107%)
 - Covenant published to bulletin board
 - 24-hour claim window starts
 
@@ -116,7 +116,7 @@ Maturity conditions: Recipient AND Merchant signatures
 They agree on terms:
 - **Amount:** 500,000 VES cash
 - **Equivalent:** ~€100 at current BCH/VES rate
-- **Overcollateralization:** 7% (seller will post 107% of required BCH)
+- **Volatility buffer:** 7% (seller will post 107% of required BCH)
 
 **Elena and merchant create a CashScript covenant on-chain:**
 
@@ -138,7 +138,7 @@ Covenant Parameters:
 ╔═══════════════════════════════════════════════════════╗
 ║  BOUNTY #4729                                         ║
 ║  500,000 VES (€100 equivalent)                        ║
-║  Requires: 0.0107 BCH (overcollateralized 7%)         ║
+║  Requires: 0.0107 BCH (with volatility buffer 7%)         ║
 ║  Timeout: 24h from seller acceptance                  ║
 ║  Status: OPEN — awaiting seller                       ║
 ╚═══════════════════════════════════════════════════════╝
@@ -164,7 +164,7 @@ Inputs:  Seller's wallet (0.0107 BCH)
 Outputs: Bounty Contract #4729 (0.0107 BCH)
 ```
 
-**The contract now holds the overcollateralized BCH.** No central escrow, no custody service—just code enforcing conditions.
+**The contract now holds the BCH + volatility buffer.** No central escrow, no custody service—just code enforcing conditions.
 
 **Bounty status updates:**
 
@@ -267,7 +267,7 @@ Understanding risk allocation across all participants:
 
 ---
 
-## Volatility Protection via Overcollateralization
+## Volatility Protection via Volatility buffer
 
 ### Price Movement Scenarios
 
@@ -276,7 +276,7 @@ Understanding risk allocation across all participants:
 | **BCH stable** | Required: 0.01 BCH, posted 0.0107 BCH | Merchant gets 0.01 BCH, seller gets 0.0007 BCH surplus |
 | **BCH rises 5%** | 0.01 BCH now worth €105 | Merchant gets 0.0095 BCH (still €100), seller gets 0.0112 BCH surplus |
 | **BCH drops 3%** | 0.01 BCH now worth €97 | Merchant gets 0.0103 BCH (still €100), seller gets 0.0004 BCH surplus |
-| **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller can add BCH or covenant matures early |
+| **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller can add BCH or covenant expires early |
 
 > ⚠️ **CRITICAL: What DOES NOT Happen to Merchants**
 >
@@ -287,7 +287,7 @@ Understanding risk allocation across all participants:
 > 1. ❌ The covenant does **NOT** attempt to pay the merchant with insufficient BCH
 > 2. ❌ The merchant does **NOT** receive partial payment
 > 3. ❌ The merchant does **NOT** advance cash before covenant validation
-> 4. ✅ The covenant matures early and refunds ALL remaining BCH to the **SENDER**
+> 4. ✅ The covenant expires early and refunds ALL remaining BCH to the **SENDER**
 > 5. ✅ The merchant's software detects invalid covenant and refuses to participate
 > 6. ✅ The transaction is cancelled - merchant never involved, takes zero loss
 >
@@ -331,17 +331,17 @@ When the covenant's collateral value reaches exactly €100 (the fair exchange p
 BCH dropped 8%. Add 0.0003 BCH to keep covenant alive
 and earn Reliability Rewards.
 
-Current tier: 2 top-ups → Next reward at 3 top-ups
+Current tier: 2 time extensions → Next reward at 3 time extensions
 Time remaining: 57 minutes
 ```
 
-**How to top up:**
+**How to time extension:**
 1. Seller already has €100 Bizum from sender
 2. Buy additional BCH on exchange or via Asgaya bulletin
 3. Broadcast BCH to covenant address
 4. Covenant stays alive, transaction can complete normally
 
-**Why top up?**
+**Why time extension?**
 - ✅ Transaction completes → Earn full 0.5% fee
 - ✅ Build reliability reputation → Unlock rewards
 - ✅ Capital recycling continues → Keep earning
@@ -355,32 +355,32 @@ Time remaining: 57 minutes
 | Top-Ups Completed | Reward Tier | Transaction Limit | Bulletin Priority | Additional Benefits |
 |-------------------|-------------|-------------------|-------------------|---------------------|
 | **0 (Default)** | Standard | €200 | Normal listing | Base 0.5% fee |
-| **1st top-up** | 🛡️ Reliable | €220 (+10%) | Normal listing | "Reliable Seller" badge |
-| **3 top-ups** | 📊 Trusted | €260 (+30%) | Higher in search | Highlighted in app |
-| **5 top-ups** | ⭐ Priority | €300 (+50%) | Top of listings | Auto-select eligible |
-| **10 top-ups** | 🎯 Premium | €360 (+80%) | Featured placement | Premium badge + priority routing |
-| **20+ top-ups** | 💎 Elite | €400 (+100%) | Always visible | Maximum visibility + limits |
+| **1st time extension** | 🛡️ Reliable | €220 (+10%) | Normal listing | "Reliable Seller" badge |
+| **3 time extensions** | 📊 Trusted | €260 (+30%) | Higher in search | Highlighted in app |
+| **5 time extensions** | ⭐ Priority | €300 (+50%) | Top of listings | Auto-select eligible |
+| **10 time extensions** | 🎯 Premium | €360 (+80%) | Featured placement | Premium badge + priority routing |
+| **20+ time extensions** | 💎 Elite | €400 (+100%) | Always visible | Maximum visibility + limits |
 
 **Example progression:**
 ```
 Start: €200 limit, normal listing
-→ 1st top-up: €220 limit, "Reliable" badge appears
-→ 3rd top-up: €260 limit, moves to top half of listings
-→ 5th top-up: €300 limit, auto-select enabled (passive income!)
-→ 10th top-up: €360 limit, featured seller
-→ 20th top-up: €400 limit, elite status (maximum rewards)
+→ 1st time extension: €220 limit, "Reliable" badge appears
+→ 3rd time extension: €260 limit, moves to top half of listings
+→ 5th time extension: €300 limit, auto-select enabled (passive income!)
+→ 10th time extension: €360 limit, featured seller
+→ 20th time extension: €400 limit, elite status (maximum rewards)
 ```
 
 **Economic value of rewards:**
 - **Higher limits** → Serve larger remittances → More volume per transaction
 - **Better visibility** → More senders choose you → More 0.5% fees earned
 - **Auto-select** → Bot handles everything → Passive income stream
-- **Compounding effect** → More transactions → More top-up opportunities → Faster tier progression
+- **Compounding effect** → More transactions → More time extension opportunities → Faster tier progression
 
 **Opportunity cost of NOT topping up:**
 - Lose chance to advance tiers
 - Competitors with rewards get more visibility
-- Miss out on [Capital Recycling Strategy](overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) compounding (≈360% APR)
+- Miss out on [Capital Recycling Strategy](bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model) compounding (≈360% APR)
 
 ---
 
@@ -388,8 +388,8 @@ Start: €200 limit, normal listing
 
 **We don't penalize sellers for market movements.**
 
-- Default outcome (no top-up) = Fair exchange at current market rate
-- Top-up = Voluntary action that earns visibility and limit rewards
+- Default outcome (no time extension) = Fair exchange at current market rate
+- Time extension = Voluntary action that earns visibility and limit rewards
 - Creates a race to the top for reliability, not a race to avoid punishment
 
 **Similar models in DeFi:**
@@ -397,7 +397,7 @@ Start: €200 limit, normal listing
 - Compound: Users can add collateral to avoid liquidation (voluntary)
 - Aave: Borrowers can repay to improve health factor (voluntary)
 
-**Asgaya**: Sellers can top up to earn reliability status (voluntary, rewarded)
+**Asgaya**: Sellers can time extension to earn reliability status (voluntary, rewarded)
 
 ---
 
@@ -516,7 +516,7 @@ Timeline:
 
 Distribution:
 ├─ Merchant receives: 0.0995 BCH (merchant portion)
-└─ Seller receives: 0.0075 BCH (fee + overcollateralization)
+└─ Seller receives: 0.0075 BCH (fee + volatility buffer)
 
 Everyone happy! ✅
 ```
@@ -616,7 +616,7 @@ Accounting:
 4. **Monitor bank SMS** for Bizum receipts
 5. **Sign covenant** when Bizum detected
 6. **Monitor BCH price** for margin call risk
-7. **Top up collateral** if price drops >5%
+7. **Time extension collateral** if price drops >5%
 8. **Claim refund** if timeout expires
 
 **Automation is critical** — manual sellers would struggle with timing requirements.
@@ -694,7 +694,7 @@ Accounting:
 | Metric | Central Escrow | Bounty Contract Seller |
 |--------|----------------|------------------------|
 | **Capital source** | Escrow's EUR (buy BCH on demand) | Seller's own BCH inventory |
-| **Capital efficiency** | High (buy exact amount needed) | Lower (7% overcollateralization) |
+| **Capital efficiency** | High (buy exact amount needed) | Lower (7% volatility buffer) |
 | **Volatility risk** | Zero (escrow buys at moment needed) | Medium (seller absorbs ±7% swings) |
 | **Profit model** | 1% fee split | 1% fee split + surplus if BCH rises |
 | **Regulatory status** | MiCA CASP required | No license (own capital) |
@@ -1090,7 +1090,7 @@ Verdict: "Extremely attractive for market makers"
 - Too many margin call failures = deals cancel = bad UX
 
 **Mitigation:**
-- Automated top-up (seller pre-authorizes bot to add collateral)
+- Automated time extension (seller pre-authorizes bot to add collateral)
 - Higher initial overfunding (10% instead of 7%) = fewer calls
 - Seller reputation system penalizes frequent failures
 
@@ -1141,7 +1141,7 @@ MiCA/PSD2 licensing requirements. Zero protocol fee = information society servic
 
 | Feature | Escrow Pull (Lost May 9) | Bulletin Board (May 9) | Bounty Contract (May 10) |
 |---------|--------------------------|------------------------|--------------------------|
-| **Volatility protection** | ✅ EUR in escrow (0% volatility) | ❌ Immediate BCH purchase | ✅ Overcollateralization |
+| **Volatility protection** | ✅ EUR in escrow (0% volatility) | ❌ Immediate BCH purchase | ✅ Volatility buffer |
 | **Recipient controls timing** | ✅ Escrow waits for signal | ❌ Sender timing determines | ✅ Covenant waits for both conditions |
 | **Send-and-forget UX** | ✅ Sender pays once | ❌ Sender must coordinate | ✅ Sender pays once, covenant handles rest |
 | **No CASP licensing** | ❌ Custody = regulated | ✅ No custody | ✅ Seller's own capital |

@@ -373,7 +373,7 @@ const refundTx = {
 - [Screen 6A: Tracking (Own Wallet)](../own-wallet-path/6a-tracking.md) - Shows expiry warning
 - [Screen 6B: Tracking (Buy from Seller)](../buy-seller-path/6b-tracking.md) - Shows expiry warning
 - [Pending Covenant Error](./pending-covenant.md) - Duplicate prevention
-- [Overcollateralized Bounty Contracts - Timeout Cascade](../../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade) - Complete specification
+- [With volatility buffer Bounty Contracts - Timeout Cascade](../../../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade) - Complete specification
 - [BCH Sellers Concept](../../../../concepts/bch-sellers.md) - Seller fee rationale
 
 ---

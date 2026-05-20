@@ -2791,7 +2791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -3788,7 +3788,7 @@
 <p><strong>What changed:</strong>
 - <strong>Architecture:</strong> Escrow model → Covenant smart contracts
 - <strong>Role name:</strong> "Escrow Operator" → "BCH Seller"
-- <strong>Mechanism:</strong> Centralized custody → Overcollateralized covenants (no custody)
+- <strong>Mechanism:</strong> Centralized custody → Covenant + volatility buffers (no custody)
 - <strong>Incentives:</strong> Fee-only → Fee + hedge mechanism</p>
 <hr />
 <h2 id="why-the-rename">Why the Rename?<a class="headerlink" href="#why-the-rename" title="Permanent link">&para;</a></h2>
@@ -3803,7 +3803,7 @@
 <p><strong>See:</strong> <a href="../bch-sellers/">BCH Sellers</a> - The current covenant-based design</p>
 <p><strong>Key differences:</strong>
 - No custody (covenant holds BCH autonomously)
-- Overcollateralization (7% buffer for volatility)
+- Volatility buffer (7% buffer for volatility)
 - Hedge mechanism (sellers win in both price directions)
 - Permissionless (anyone can be a BCH seller, not just miners)
 - Automated (bot-driven, not manual)</p>
@@ -3824,7 +3824,7 @@
 <h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
 <p><strong>Current:</strong>
 - <a href="../bch-sellers/">BCH Sellers</a> - Covenant-era replacement
-- <a href="../overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> - Covenant mechanism
+- <a href="../bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a> - Covenant mechanism
 - <a href="../core-regulatory-constraints/">Core Regulatory Constraints</a> - Why no custody</p>
 <p><strong>Historical:</strong>
 - <a href="../market-making-partners/">Market Making Partners</a> - Old LP concept (also obsolete)

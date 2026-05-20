@@ -2797,7 +2797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4843,7 +4843,7 @@
 - <strong>Why first:</strong> Proven reliable, eliminates manual checking</p>
 <p><strong>Priority 2: Automatic Covenant Creation</strong>
 - Script to post BCH collateral to covenant
-- Auto-calculate overcollateralization (7% buffer)
+- Auto-calculate volatility buffer (7% buffer)
 - Auto-generate bounty code (covenant ID)
 - <strong>Why second:</strong> Eliminates manual BCH posting</p>
 <p><strong>Priority 3: Co-Signing Verification</strong>
@@ -5006,7 +5006,7 @@
 - <strong>Mitigation:</strong> Manual fallback (admin endpoint)
 - <strong>Monitoring:</strong> Alert if no auto-confirmation in 5 min</p>
 <p><strong>Risk 2: BCH price drops &gt;7% during covenant wait</strong>
-- <strong>Mitigation:</strong> Overcollateralization buffer (seller absorbs)
+- <strong>Mitigation:</strong> Volatility buffer buffer (seller absorbs)
 - <strong>Monitoring:</strong> Track volatility, adjust buffer if needed
 - <strong>Seller hedge:</strong> Seller receives €100 fiat before price moves (94-97% exposure reduction)</p>
 <p><strong>Risk 3: Merchant doesn't co-sign (Elena's theft risk)</strong>
@@ -5078,7 +5078,7 @@
 <p><strong>We'd love feedback on:</strong></p>
 <ol>
 <li>
-<p><strong>Covenant security:</strong> Is 7% overcollateralization enough? Or should we increase buffer?</p>
+<p><strong>Covenant security:</strong> Is 7% volatility buffer enough? Or should we increase buffer?</p>
 </li>
 <li>
 <p><strong>BCH seller trust:</strong> Is permissionless posting safe? Or should we whitelist sellers initially?</p>
@@ -5159,7 +5159,7 @@
 <h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong><a href="../android-app/flows/">Android App Flows</a></strong> - Screen-by-screen user flows</li>
-<li><strong><a href="../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a></strong> - Covenant specification</li>
+<li><strong><a href="../concepts/bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a></strong> - Covenant specification</li>
 <li><strong><a href="../concepts/bch-sellers/">BCH Sellers</a></strong> - Seller role and hedge mechanism</li>
 <li><strong><a href="../android-app/flows/merchant-flows/">Merchant Flows</a></strong> - Merchant experience</li>
 <li><strong><a href="../decisions/how-exchange-rates-work/">How Exchange Rates Work</a></strong> - EUR-denominated covenants</li>

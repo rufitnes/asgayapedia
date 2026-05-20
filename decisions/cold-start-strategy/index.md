@@ -138,7 +138,7 @@ Buy surplus BCH from merchants with cash, enabling merchants to convert back to 
 - Reputation-based vetting (forum history, contributions)
 - Bulletin board listing with contact info
 
-**Reliability rewards:** Sellers who demonstrate reliability through voluntary top-ups (when BCH drops >7%) earn higher transaction limits, priority placement in sender searches, and auto-select eligibility—significantly increasing their earning potential. See [Top-Up Opportunity](../concepts/overcollateralized-bounty-contracts.md#top-up-opportunity-how-sellers-earn-reliability-rewards) for reward tiers.
+**Uptime incentives:** Sellers who demonstrate reliability through voluntary time extensions (when BCH drops >7%) earn higher transaction limits, priority placement in sender searches, and auto-select eligibility—significantly increasing their earning potential. See [Top-Up Opportunity](../concepts/bounty-contracts-with-volatility-buffer.md#time extension-opportunity-how-sellers-earn-reliability-rewards) for reward tiers.
 
 > **Security for early sellers:** Because the seller's bot auto-signs on payment receipt, and the covenant enforces a strict timeout, a seller does not need to trust the sender or the protocol. See [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md) for the economic analysis that makes fraud irrational from the first transaction.
 
@@ -175,7 +175,7 @@ Buy surplus BCH from merchants with cash, enabling merchants to convert back to 
 > the spread. The more merchants you onboard, the more buying opportunities 
 > you have."
 
-> **What onboarders unlock:** Once a user has successfully onboarded a merchant, they gain access to the seller role, which can yield a capital-efficient return through constant recycling. See [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) for the detailed business model.
+> **What onboarders unlock:** Once a user has successfully onboarded a merchant, they gain access to the seller role, which can yield a capital-efficient return through constant recycling. See [Capital Recycling Strategy](../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model) for the detailed business model.
 
 **Recruitment channels:**
 - Targeted posts in r/beermoney, r/Jobs4Bitcoins
@@ -326,12 +326,12 @@ More merchants earn fees (loop)
 
 **Root causes:**
 - 0.5% fee too low (capital cost + risk not worth it)
-- Overcollateralization (107%) too capital-inefficient
+- Volatility buffer (107%) too capital-inefficient
 - Volatility fear (7% buffer insufficient)
 
 **Response:**
 - Increase seller fee to 0.6-0.7%
-- Reduce overcollateralization to 5% (if volatility data supports)
+- Reduce volatility buffer to 5% (if volatility data supports)
 - Recruit directly from BCH mining community (steady BCH inflows)
 
 **Pivot trigger:** If adjustments don't improve acceptance to >80%, reassess seller economics

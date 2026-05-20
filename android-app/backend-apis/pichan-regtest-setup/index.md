@@ -559,7 +559,7 @@ After pichan setup:
 **Related Documents:**
 - [Phase 0 Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md)
 - [Multi-Device Test Plan](./multi-device-test-plan.md)
-- [CashScript Covenant Contracts](../../concepts/overcollateralized-bounty-contracts.md)
+- [CashScript Covenant Contracts](../../concepts/bounty-contracts-with-volatility-buffer.md)
 
 ---
 

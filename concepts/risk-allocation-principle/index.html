@@ -2879,10 +2879,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#misconception-3-covenant-promises-eur-to-merchant" class="md-nav__link">
+  <a href="#misconception-3-covenant-holds-cash-buy-order-for-eur-to-merchant" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ❌ Misconception 3: "Covenant promises EUR to merchant"
+        ❌ Misconception 3: "Covenant holds cash buy order for EUR to merchant"
       
     </span>
   </a>
@@ -3116,7 +3116,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4127,10 +4127,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#misconception-3-covenant-promises-eur-to-merchant" class="md-nav__link">
+  <a href="#misconception-3-covenant-holds-cash-buy-order-for-eur-to-merchant" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ❌ Misconception 3: "Covenant promises EUR to merchant"
+        ❌ Misconception 3: "Covenant holds cash buy order for EUR to merchant"
       
     </span>
   </a>
@@ -4315,7 +4315,7 @@
 <h1 id="asgaya-risk-allocation-principle">Asgaya Risk Allocation Principle<a class="headerlink" href="#asgaya-risk-allocation-principle" title="Permanent link">&para;</a></h1>
 <p><strong>Status:</strong> Core Design Principle (Phase 0 Active)<br />
 <strong>Category:</strong> Protocol Architecture<br />
-<strong>Related:</strong> <a href="../overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a>, <a href="../pull-system/">Pull System</a>, <a href="../../decisions/two-step-settlement-timing/">Two-Step Settlement Timing</a></p>
+<strong>Related:</strong> <a href="../bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a>, <a href="../pull-system/">Pull System</a>, <a href="../../decisions/two-step-settlement-timing/">Two-Step Settlement Timing</a></p>
 <hr />
 <h2 id="the-principle">The Principle<a class="headerlink" href="#the-principle" title="Permanent link">&para;</a></h2>
 <p><strong>Asgaya's covenant architecture allocates risk explicitly to protect local merchants from cryptocurrency volatility.</strong></p>
@@ -4338,15 +4338,15 @@
 <li>
 <p><strong>Sellers provide collateral reliability</strong></p>
 </li>
-<li>Sellers post 107% overcollateralization to covenant</li>
-<li>Sellers can voluntarily top up to earn reliability rewards</li>
+<li>Sellers post 107% volatility buffer to covenant</li>
+<li>Sellers can voluntarily time extension to earn uptime incentives</li>
 <li>
 <p>Seller reputation tied to covenant completion rate</p>
 </li>
 <li>
 <p><strong>Senders bear extreme volatility risk beyond collateral thresholds</strong></p>
 </li>
-<li>If BCH drops &gt;7%, covenant matures early</li>
+<li>If BCH drops &gt;7%, covenant expires early</li>
 <li>Remaining BCH refunds to SENDER (not merchant, not seller)</li>
 <li>
 <p>Sender opted into BCH exposure by creating covenant</p>
@@ -4369,7 +4369,7 @@
 └─ Recipient eats the loss? (Worst outcome, kills trust)
 </code></pre></div></p>
 <p><strong>Asgaya's solution:</strong>
-<div class="highlight"><pre><span></span><code>BCH crashes &gt;7% → Covenant matures early → Sender receives refund
+<div class="highlight"><pre><span></span><code>BCH crashes &gt;7% → Covenant expires early → Sender receives refund
 ├─ Merchant: Never participated (zero loss) ✅
 ├─ Seller: Received fair exchange at market rate (zero loss) ✅
 ├─ Recipient: Doesn&#39;t get money (no worse off than before) ✅
@@ -4402,13 +4402,13 @@
 <p><strong>Reality:</strong> Sellers receive fair exchange at market rate, even in crashes.</p>
 <p><strong>Why people think this:</strong>
 - "Margin call" sounds like penalty/liquidation
-- "Top-up opportunity" sounds mandatory to avoid loss
+- "Time extension opportunity" sounds mandatory to avoid loss
 - Standard collateral systems penalize non-response</p>
 <p><strong>Why it's wrong:</strong>
 - Default outcome is fair exchange (not penalty)
-- Top-ups are voluntary (rewarded, not mandatory)
+- Time extensions are voluntary (rewarded, not mandatory)
 - Refund goes to SENDER, not seller</p>
-<h3 id="misconception-3-covenant-promises-eur-to-merchant">❌ Misconception 3: "Covenant promises EUR to merchant"<a class="headerlink" href="#misconception-3-covenant-promises-eur-to-merchant" title="Permanent link">&para;</a></h3>
+<h3 id="misconception-3-covenant-holds-cash-buy-order-for-eur-to-merchant">❌ Misconception 3: "Covenant holds cash buy order for EUR to merchant"<a class="headerlink" href="#misconception-3-covenant-holds-cash-buy-order-for-eur-to-merchant" title="Permanent link">&para;</a></h3>
 <p><strong>Reality:</strong> Covenant holds conditional bounty, cancellable if BCH crashes.</p>
 <p><strong>Why people think this:</strong>
 - "Promise" implies obligation regardless of circumstances
@@ -4427,7 +4427,7 @@
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">covenantValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">covenant</span><span class="p">.</span><span class="nx">lockedBch</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">currentBchPrice</span><span class="p">;</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">requiredValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">covenant</span><span class="p">.</span><span class="nx">eurPromise</span><span class="p">;</span>
 
-<span class="w">  </span><span class="c1">// Covenant must have ≥100% of promised EUR value</span>
+<span class="w">  </span><span class="c1">// Covenant must have ≥100% of specified EUR value</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">covenantValue</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">requiredValue</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// REJECT - undercollateralized</span>
 <span class="w">  </span><span class="p">}</span>
@@ -4671,21 +4671,21 @@
 <p><strong>What's the actual refund frequency?</strong></p>
 </li>
 <li>Metric: % of covenants that mature early (&gt;7% drop)</li>
-<li>Hypothesis: &lt;5% if using 2h settlement windows</li>
+<li>Hypothesis: &lt;5% if using 2h claim windows</li>
 <li>
-<p>See: <a href="../../unknowns/economic/overcollateralization-rate/">Overcollateralization Rate Unknown</a></p>
+<p>See: <a href="../unknowns/economic/volatility buffer-rate.md">Volatility buffer Rate Unknown</a></p>
 </li>
 <li>
 <p><strong>Does sender risk tolerance match usage patterns?</strong></p>
 </li>
-<li>Metric: Do senders choose longer or shorter settlement windows?</li>
+<li>Metric: Do senders choose longer or shorter claim windows?</li>
 <li>Hypothesis: &gt;60% choose 2h windows (minimize risk)</li>
 <li>See: <a href="../../collaborative_workspace/time_based_settlement_incentives.md">Time-Based Settlement Incentives</a></li>
 </ol>
 <hr />
 <h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> - Technical implementation</li>
+<li><a href="../bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a> - Technical implementation</li>
 <li><a href="../../decisions/two-step-settlement-timing/">Two-Step Settlement Timing</a> - Detailed scenarios</li>
 <li><a href="../pull-system/">Pull System</a> - Why recipient control matters</li>
 <li><a href="../../decisions/fee-splitting-model/">Fee Splitting Model</a> - Economic incentives</li>

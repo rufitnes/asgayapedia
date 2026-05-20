@@ -550,7 +550,7 @@ def merchant_confirm_ars():
 | Failure Point | Detection | Recovery |
 |---------------|-----------|----------|
 | Buy order fails | Check `error` array | Retry with backoff, alert if Kraken down |
-| Insufficient EUR balance | Query Balance before buy | Top up Kraken, or use LP fallback |
+| Insufficient EUR balance | Query Balance before buy | Time extension Kraken, or use LP fallback |
 | Withdrawal fails | Check `error` array | May need manual intervention (security hold) |
 | Withdrawal stuck | Poll status timeout | Check Kraken UI, may be security review |
 | Network failure | Timeout exception | Retry with exponential backoff |

@@ -2791,7 +2791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -3885,10 +3885,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#overcollateralization-rate" class="md-nav__link">
+  <a href="#volatility-buffer-rate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🛡️ Overcollateralization Rate
+        🛡️ Volatility buffer Rate
       
     </span>
   </a>
@@ -3896,10 +3896,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#parameter-interdependency-overcollateralization-timeout-duration" class="md-nav__link">
+  <a href="#parameter-interdependency-volatility-buffer-timeout-duration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔗 PARAMETER INTERDEPENDENCY: Overcollateralization % × Timeout Duration
+        🔗 PARAMETER INTERDEPENDENCY: Volatility buffer % × Timeout Duration
       
     </span>
   </a>
@@ -4052,10 +4052,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameter-name-eg-overcollateralization-rate" class="md-nav__link">
+  <a href="#parameter-name-eg-volatility-buffer-rate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parameter Name: [e.g., Overcollateralization Rate]
+        Parameter Name: [e.g., Volatility buffer Rate]
       
     </span>
   </a>
@@ -4160,7 +4160,7 @@
 <h3 id="2-time-windows">2. <a href="#time-windows">Time Windows</a><a class="headerlink" href="#2-time-windows" title="Permanent link">&para;</a></h3>
 <p>Timeouts, grace periods, deadlines</p>
 <h3 id="3-risk-buffers">3. <a href="#risk-buffers">Risk Buffers</a><a class="headerlink" href="#3-risk-buffers" title="Permanent link">&para;</a></h3>
-<p>Overcollateralization, margin calls, safety margins</p>
+<p>Volatility buffer, margin calls, safety margins</p>
 <h3 id="4-operational-limits">4. <a href="#operational-limits">Operational Limits</a><a class="headerlink" href="#4-operational-limits" title="Permanent link">&para;</a></h3>
 <p>Transaction sizes, volume caps, processing windows</p>
 <h3 id="5-user-experience">5. <a href="#user-experience">User Experience</a><a class="headerlink" href="#5-user-experience" title="Permanent link">&para;</a></h3>
@@ -4238,7 +4238,7 @@
 <p><strong>Risk if wrong:</strong>
 - Too short → Legitimate recipients lose money (can't reach merchant in time)
 - Too long → Seller capital inefficiently locked, reduced network throughput</p>
-<p><strong>Source:</strong> <a href="../../concepts/overcollateralized-bounty-contracts/">overcollateralized-bounty-contracts.md</a> L556</p>
+<p><strong>Source:</strong> <a href="../../concepts/bounty-contracts-with-volatility-buffer/">bounty-contracts-with-volatility-buffer.md</a> L556</p>
 <hr />
 <h3 id="bizum-payment-window">⏱️ Bizum Payment Window<a class="headerlink" href="#bizum-payment-window" title="Permanent link">&para;</a></h3>
 <p><strong>Current value:</strong> 5 minutes (from seller accepts bounty to sender pays)</p>
@@ -4263,7 +4263,7 @@
 <p><strong>Risk if wrong:</strong>
 - Too short → Senders can't complete payment (poor UX, failed transactions)
 - Too long → Seller exposed to higher price swings (&gt;1% typical in 10-15 min)</p>
-<p><strong>Source:</strong> <a href="../../concepts/overcollateralized-bounty-contracts/">overcollateralized-bounty-contracts.md</a> L363</p>
+<p><strong>Source:</strong> <a href="../../concepts/bounty-contracts-with-volatility-buffer/">bounty-contracts-with-volatility-buffer.md</a> L363</p>
 <hr />
 <h3 id="margin-call-response-window">🔄 Margin Call Response Window<a class="headerlink" href="#margin-call-response-window" title="Permanent link">&para;</a></h3>
 <p><strong>Current value:</strong> 60 minutes (from margin call alert to seller adds BCH or cancels)</p>
@@ -4273,7 +4273,7 @@
 - Balance between seller convenience and risk management</p>
 <p><strong>What we don't know:</strong>
 - Can sellers realistically respond in 60 minutes?
-- Is automated top-up feasible? (bot adds BCH from reserve automatically)
+- Is automated time extension feasible? (bot adds BCH from reserve automatically)
 - Should window vary by time of day? (3am alert = longer grace period?)</p>
 <p><strong>Phase 0 metrics to track:</strong>
 - <strong>Margin call frequency:</strong> How often does BCH move &gt;7% during 24h window?
@@ -4281,21 +4281,21 @@
 - <strong>Response rate:</strong> What % of sellers successfully add BCH vs. let timeout?
 - <strong>Time-of-day patterns:</strong> Do nighttime margin calls fail more often?</p>
 <p><strong>Adjustment criteria:</strong>
-- <strong>If margin calls frequent (&gt;20%):</strong> Increase overcollateralization to 10%
+- <strong>If margin calls frequent (&gt;20%):</strong> Increase volatility buffer to 10%
 - <strong>If sellers can't respond in time:</strong> Increase to 90-120 minutes
-- <strong>If automated top-up common:</strong> Reduce to 30 minutes (bots respond fast)
+- <strong>If automated time extension common:</strong> Reduce to 30 minutes (bots respond fast)
 - <strong>If nighttime failures:</strong> Add time-of-day multiplier (night = 2x window)</p>
 <p><strong>Risk if wrong:</strong>
 - Too short → Sellers can't respond → Legitimate transactions refund unnecessarily
-- Too long → Price drops another 5% → Merchant underpaid despite overcollateralization</p>
-<p><strong>Source:</strong> <a href="../../concepts/overcollateralized-bounty-contracts/">overcollateralized-bounty-contracts.md</a> (inferred)</p>
+- Too long → Price drops another 5% → Merchant underpaid despite volatility buffer</p>
+<p><strong>Source:</strong> <a href="../../concepts/bounty-contracts-with-volatility-buffer/">bounty-contracts-with-volatility-buffer.md</a> (inferred)</p>
 <hr />
 <h2 id="risk-buffers">Risk Buffers<a class="headerlink" href="#risk-buffers" title="Permanent link">&para;</a></h2>
-<h3 id="overcollateralization-rate">🛡️ Overcollateralization Rate<a class="headerlink" href="#overcollateralization-rate" title="Permanent link">&para;</a></h3>
+<h3 id="volatility-buffer-rate">🛡️ Volatility buffer Rate<a class="headerlink" href="#volatility-buffer-rate" title="Permanent link">&para;</a></h3>
 <p><strong>Current value:</strong> 7% (seller posts 107% of required BCH)</p>
 <p><strong>Hypothesis:</strong>
 - Covers typical 24-hour BCH volatility (historical: ±5-8% moves are common)
-- Protects merchant from receiving less than promised EUR value
+- Protects merchant from receiving less than specified EUR value
 - Seller's surplus absorbs price swings
 - Margin call triggers if price drops &gt;7% (seller adds more or refunds)</p>
 <p><strong>What we don't know:</strong>
@@ -4310,22 +4310,22 @@
 <p><strong>Phase 0 metrics to track:</strong>
 - <strong>Margin call frequency:</strong> What % of transactions trigger margin call?
 - <strong>Margin call success rate:</strong> What % of sellers add BCH vs. let refund?
-- <strong>Underpayment incidents:</strong> Did any merchant receive &lt;€99.50 despite overcollateralization?
+- <strong>Underpayment incidents:</strong> Did any merchant receive &lt;€99.50 despite volatility buffer?
 - <strong>Market conditions correlation:</strong> Does volatility increase during news events?</p>
 <p><strong>Adjustment criteria:</strong>
-- <strong>If margin calls &gt;10%:</strong> Increase to 10% overcollateralization
+- <strong>If margin calls &gt;10%:</strong> Increase to 10% volatility buffer
 - <strong>If margin calls &gt;20%:</strong> Increase to 12-15% or pause during high volatility
 - <strong>If margin calls &lt;1%:</strong> Consider reducing to 5% (free up seller capital)
 - <strong>If underpayment occurs:</strong> Immediately increase buffer until root cause fixed</p>
 <p><strong>Risk if wrong:</strong>
 - Too low → Merchant underpaid → Disputes, loss of trust, regulatory exposure
 - Too high → Sellers can't afford to participate → Network can't scale</p>
-<p><strong>Source:</strong> <a href="../../concepts/overcollateralized-bounty-contracts/">overcollateralized-bounty-contracts.md</a> L53, L251-252</p>
+<p><strong>Source:</strong> <a href="../../concepts/bounty-contracts-with-volatility-buffer/">bounty-contracts-with-volatility-buffer.md</a> L53, L251-252</p>
 <p><strong>Critical note:</strong> DeepSeek flagged this as "BCH can move 8% in minutes during volatility spikes." 7% may be insufficient during black swan events. Plan for this.</p>
 <hr />
-<h3 id="parameter-interdependency-overcollateralization-timeout-duration">🔗 <strong>PARAMETER INTERDEPENDENCY: Overcollateralization % × Timeout Duration</strong><a class="headerlink" href="#parameter-interdependency-overcollateralization-timeout-duration" title="Permanent link">&para;</a></h3>
+<h3 id="parameter-interdependency-volatility-buffer-timeout-duration">🔗 <strong>PARAMETER INTERDEPENDENCY: Volatility buffer % × Timeout Duration</strong><a class="headerlink" href="#parameter-interdependency-volatility-buffer-timeout-duration" title="Permanent link">&para;</a></h3>
 <p><strong>Recognition date:</strong> May 12, 2026 (Suso's insight during AI file review)</p>
-<p><strong>The insight:</strong> Overcollateralization isn't a single parameter—it's the product of TWO levers:
+<p><strong>The insight:</strong> Volatility buffer isn't a single parameter—it's the product of TWO levers:
 1. <strong>Buffer percentage</strong> (7%)
 2. <strong>Time exposure window</strong> (24h timeout)</p>
 <p><strong>Why it matters:</strong>
@@ -4460,7 +4460,7 @@
 <li><strong>Iterate:</strong> Continuous improvement based on data</li>
 </ol>
 <p><strong>Documentation:</strong>
-- This interdependency affects: Sections 2.3 (Timeout) and 3.1 (Overcollateralization)
+- This interdependency affects: Sections 2.3 (Timeout) and 3.1 (Volatility buffer)
 - Cross-reference when adjusting either parameter
 - Always consider both together, never in isolation</p>
 <p><strong>Key principle:</strong> Don't optimize for hypothetical worst case. Measure actual behavior, engineer for the mode, have circuit breakers for black swans.</p>
@@ -4475,14 +4475,14 @@
 <p><strong>What we don't know:</strong>
 - What's the typical remittance amount for Spain→Venezuela?
 - Should there be minimum/maximum during Phase 0?
-- Do large transactions (&gt;€500) need different overcollateralization?</p>
+- Do large transactions (&gt;€500) need different volatility buffer?</p>
 <p><strong>Phase 0 metrics to track:</strong>
 - <strong>Amount distribution:</strong> What's the median, mean, min, max transaction size?
 - <strong>Failure correlation:</strong> Do larger transactions fail more often?
 - <strong>Seller willingness:</strong> Do sellers avoid large transactions (capital requirements)?</p>
 <p><strong>Adjustment criteria:</strong>
 - <strong>If most transactions &lt;€50:</strong> Consider reducing minimum viable amount
-- <strong>If transactions &gt;€500:</strong> Increase overcollateralization for large amounts
+- <strong>If transactions &gt;€500:</strong> Increase volatility buffer for large amounts
 - <strong>If seller complaints:</strong> Set per-transaction caps during Phase 0</p>
 <p><strong>Risk if wrong:</strong>
 - No limits → Large transaction fails → Major loss of trust
@@ -4493,7 +4493,7 @@
 <p><strong>Current assumption:</strong> One-size-fits-all parameters across all corridors</p>
 <p><strong>Hypothesis:</strong>
 - 24h timeout works for Spain→Venezuela (5-6h timezone difference)
-- 7% overcollateralization works regardless of destination currency volatility
+- 7% volatility buffer works regardless of destination currency volatility
 - Fee rates don't need corridor-specific adjustment</p>
 <p><strong>What we don't know:</strong>
 - Do different corridors have different claim timing patterns?
@@ -4578,7 +4578,7 @@
 2. <strong>Metric:</strong> What we will measure
 3. <strong>Threshold:</strong> What value indicates success vs. failure
 4. <strong>Action:</strong> What we'll do if threshold crossed</p>
-<p><strong>Example (Overcollateralization Rate):</strong>
+<p><strong>Example (Volatility buffer Rate):</strong>
 <div class="highlight"><pre><span></span><code>Hypothesis: 7% covers 24h BCH volatility
 Metric: Margin call frequency
 Threshold: &lt;5% of transactions trigger margin call
@@ -4595,7 +4595,7 @@ Action: If &gt;5%, increase to 10% and retest
 <hr />
 <h2 id="reporting-template">📈 Reporting Template<a class="headerlink" href="#reporting-template" title="Permanent link">&para;</a></h2>
 <p><strong>After Phase 0 trials, for each parameter:</strong></p>
-<h3 id="parameter-name-eg-overcollateralization-rate">Parameter Name: [e.g., Overcollateralization Rate]<a class="headerlink" href="#parameter-name-eg-overcollateralization-rate" title="Permanent link">&para;</a></h3>
+<h3 id="parameter-name-eg-volatility-buffer-rate">Parameter Name: [e.g., Volatility buffer Rate]<a class="headerlink" href="#parameter-name-eg-volatility-buffer-rate" title="Permanent link">&para;</a></h3>
 <p><strong>Tested value:</strong> 7%</p>
 <p><strong>Results:</strong>
 - Margin call frequency: 3.2% (12 out of 374 transactions)
@@ -4614,7 +4614,7 @@ Action: If &gt;5%, increase to 10% and retest
 <ol>
 <li><strong>&gt;10% failure rate</strong> in any category (timeouts, margin calls, disputes)</li>
 <li><strong>User complaints</strong> about specific parameter (too tight, too loose, confusing)</li>
-<li><strong>Black swan event</strong> (BCH drops 15% in 6h, overcollateralization fails)</li>
+<li><strong>Black swan event</strong> (BCH drops 15% in 6h, volatility buffer fails)</li>
 <li><strong>Gaming behavior</strong> (users exploiting parameter weakness)</li>
 <li><strong>Regulatory concern</strong> (parameter creates compliance risk)</li>
 </ol>
@@ -4623,7 +4623,7 @@ Action: If &gt;5%, increase to 10% and retest
 <h2 id="related-documents">📚 Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../decisions/fee-splitting-model/">Fee Splitting Model</a> - Authoritative fee structure</li>
-<li><a href="../../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> - Covenant mechanics</li>
+<li><a href="../../concepts/bounty-contracts-with-volatility-buffer/">Bounty Contracts with Volatility Buffer</a> - Covenant mechanics</li>
 <li><a href="../../decisions/two-step-settlement-timing/">Two-Step Settlement Timing</a> - Why pull system</li>
 <li><a href="../../decisions/unclaimed-transaction-expiry/">Unclaimed Transaction Expiry</a> - Timeout behavior</li>
 <li><a href="../../decisions/dispute-resolution/">Dispute Resolution</a> - Phase 0 approach</li>

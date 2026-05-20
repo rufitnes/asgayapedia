@@ -37,7 +37,7 @@ Fee rates, thresholds, reward structures
 Timeouts, grace periods, deadlines
 
 ### 3. [Risk Buffers](#risk-buffers)
-Overcollateralization, margin calls, safety margins
+Volatility buffer, margin calls, safety margins
 
 ### 4. [Operational Limits](#operational-limits)
 Transaction sizes, volume caps, processing windows
@@ -146,7 +146,7 @@ Code lengths, notification timings, flow complexity
 - Too short → Legitimate recipients lose money (can't reach merchant in time)
 - Too long → Seller capital inefficiently locked, reduced network throughput
 
-**Source:** [overcollateralized-bounty-contracts.md](../concepts/overcollateralized-bounty-contracts.md) L556
+**Source:** [bounty-contracts-with-volatility-buffer.md](../concepts/bounty-contracts-with-volatility-buffer.md) L556
 
 ---
 
@@ -180,7 +180,7 @@ Code lengths, notification timings, flow complexity
 - Too short → Senders can't complete payment (poor UX, failed transactions)
 - Too long → Seller exposed to higher price swings (>1% typical in 10-15 min)
 
-**Source:** [overcollateralized-bounty-contracts.md](../concepts/overcollateralized-bounty-contracts.md) L363
+**Source:** [bounty-contracts-with-volatility-buffer.md](../concepts/bounty-contracts-with-volatility-buffer.md) L363
 
 ---
 
@@ -195,7 +195,7 @@ Code lengths, notification timings, flow complexity
 
 **What we don't know:**
 - Can sellers realistically respond in 60 minutes?
-- Is automated top-up feasible? (bot adds BCH from reserve automatically)
+- Is automated time extension feasible? (bot adds BCH from reserve automatically)
 - Should window vary by time of day? (3am alert = longer grace period?)
 
 **Phase 0 metrics to track:**
@@ -205,28 +205,28 @@ Code lengths, notification timings, flow complexity
 - **Time-of-day patterns:** Do nighttime margin calls fail more often?
 
 **Adjustment criteria:**
-- **If margin calls frequent (>20%):** Increase overcollateralization to 10%
+- **If margin calls frequent (>20%):** Increase volatility buffer to 10%
 - **If sellers can't respond in time:** Increase to 90-120 minutes
-- **If automated top-up common:** Reduce to 30 minutes (bots respond fast)
+- **If automated time extension common:** Reduce to 30 minutes (bots respond fast)
 - **If nighttime failures:** Add time-of-day multiplier (night = 2x window)
 
 **Risk if wrong:**
 - Too short → Sellers can't respond → Legitimate transactions refund unnecessarily
-- Too long → Price drops another 5% → Merchant underpaid despite overcollateralization
+- Too long → Price drops another 5% → Merchant underpaid despite volatility buffer
 
-**Source:** [overcollateralized-bounty-contracts.md](../concepts/overcollateralized-bounty-contracts.md) (inferred)
+**Source:** [bounty-contracts-with-volatility-buffer.md](../concepts/bounty-contracts-with-volatility-buffer.md) (inferred)
 
 ---
 
 ## Risk Buffers
 
-### 🛡️ Overcollateralization Rate
+### 🛡️ Volatility buffer Rate
 
 **Current value:** 7% (seller posts 107% of required BCH)
 
 **Hypothesis:**
 - Covers typical 24-hour BCH volatility (historical: ±5-8% moves are common)
-- Protects merchant from receiving less than promised EUR value
+- Protects merchant from receiving less than specified EUR value
 - Seller's surplus absorbs price swings
 - Margin call triggers if price drops >7% (seller adds more or refunds)
 
@@ -244,11 +244,11 @@ Code lengths, notification timings, flow complexity
 **Phase 0 metrics to track:**
 - **Margin call frequency:** What % of transactions trigger margin call?
 - **Margin call success rate:** What % of sellers add BCH vs. let refund?
-- **Underpayment incidents:** Did any merchant receive <€99.50 despite overcollateralization?
+- **Underpayment incidents:** Did any merchant receive <€99.50 despite volatility buffer?
 - **Market conditions correlation:** Does volatility increase during news events?
 
 **Adjustment criteria:**
-- **If margin calls >10%:** Increase to 10% overcollateralization
+- **If margin calls >10%:** Increase to 10% volatility buffer
 - **If margin calls >20%:** Increase to 12-15% or pause during high volatility
 - **If margin calls <1%:** Consider reducing to 5% (free up seller capital)
 - **If underpayment occurs:** Immediately increase buffer until root cause fixed
@@ -257,17 +257,17 @@ Code lengths, notification timings, flow complexity
 - Too low → Merchant underpaid → Disputes, loss of trust, regulatory exposure
 - Too high → Sellers can't afford to participate → Network can't scale
 
-**Source:** [overcollateralized-bounty-contracts.md](../concepts/overcollateralized-bounty-contracts.md) L53, L251-252
+**Source:** [bounty-contracts-with-volatility-buffer.md](../concepts/bounty-contracts-with-volatility-buffer.md) L53, L251-252
 
 **Critical note:** DeepSeek flagged this as "BCH can move 8% in minutes during volatility spikes." 7% may be insufficient during black swan events. Plan for this.
 
 ---
 
-### 🔗 **PARAMETER INTERDEPENDENCY: Overcollateralization % × Timeout Duration**
+### 🔗 **PARAMETER INTERDEPENDENCY: Volatility buffer % × Timeout Duration**
 
 **Recognition date:** May 12, 2026 (Suso's insight during AI file review)
 
-**The insight:** Overcollateralization isn't a single parameter—it's the product of TWO levers:
+**The insight:** Volatility buffer isn't a single parameter—it's the product of TWO levers:
 1. **Buffer percentage** (7%)
 2. **Time exposure window** (24h timeout)
 
@@ -356,7 +356,7 @@ Better approach: Optimize for MOST COMMON case (mode), handle edges separately.
 7. **Iterate:** Continuous improvement based on data
 
 **Documentation:**
-- This interdependency affects: Sections 2.3 (Timeout) and 3.1 (Overcollateralization)
+- This interdependency affects: Sections 2.3 (Timeout) and 3.1 (Volatility buffer)
 - Cross-reference when adjusting either parameter
 - Always consider both together, never in isolation
 
@@ -378,7 +378,7 @@ Better approach: Optimize for MOST COMMON case (mode), handle edges separately.
 **What we don't know:**
 - What's the typical remittance amount for Spain→Venezuela?
 - Should there be minimum/maximum during Phase 0?
-- Do large transactions (>€500) need different overcollateralization?
+- Do large transactions (>€500) need different volatility buffer?
 
 **Phase 0 metrics to track:**
 - **Amount distribution:** What's the median, mean, min, max transaction size?
@@ -387,7 +387,7 @@ Better approach: Optimize for MOST COMMON case (mode), handle edges separately.
 
 **Adjustment criteria:**
 - **If most transactions <€50:** Consider reducing minimum viable amount
-- **If transactions >€500:** Increase overcollateralization for large amounts
+- **If transactions >€500:** Increase volatility buffer for large amounts
 - **If seller complaints:** Set per-transaction caps during Phase 0
 
 **Risk if wrong:**
@@ -404,7 +404,7 @@ Better approach: Optimize for MOST COMMON case (mode), handle edges separately.
 
 **Hypothesis:**
 - 24h timeout works for Spain→Venezuela (5-6h timezone difference)
-- 7% overcollateralization works regardless of destination currency volatility
+- 7% volatility buffer works regardless of destination currency volatility
 - Fee rates don't need corridor-specific adjustment
 
 **What we don't know:**
@@ -523,7 +523,7 @@ Better approach: Optimize for MOST COMMON case (mode), handle edges separately.
 3. **Threshold:** What value indicates success vs. failure
 4. **Action:** What we'll do if threshold crossed
 
-**Example (Overcollateralization Rate):**
+**Example (Volatility buffer Rate):**
 ```
 Hypothesis: 7% covers 24h BCH volatility
 Metric: Margin call frequency
@@ -548,7 +548,7 @@ Action: If >5%, increase to 10% and retest
 
 **After Phase 0 trials, for each parameter:**
 
-### Parameter Name: [e.g., Overcollateralization Rate]
+### Parameter Name: [e.g., Volatility buffer Rate]
 
 **Tested value:** 7%
 
@@ -576,7 +576,7 @@ Action: If >5%, increase to 10% and retest
 
 1. **>10% failure rate** in any category (timeouts, margin calls, disputes)
 2. **User complaints** about specific parameter (too tight, too loose, confusing)
-3. **Black swan event** (BCH drops 15% in 6h, overcollateralization fails)
+3. **Black swan event** (BCH drops 15% in 6h, volatility buffer fails)
 4. **Gaming behavior** (users exploiting parameter weakness)
 5. **Regulatory concern** (parameter creates compliance risk)
 
@@ -587,7 +587,7 @@ Action: If >5%, increase to 10% and retest
 ## 📚 Related Documents
 
 - [Fee Splitting Model](../decisions/fee-splitting-model.md) - Authoritative fee structure
-- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) - Covenant mechanics
+- [Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant mechanics
 - [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md) - Why pull system
 - [Unclaimed Transaction Expiry](../decisions/unclaimed-transaction-expiry.md) - Timeout behavior
 - [Dispute Resolution](../decisions/dispute-resolution.md) - Phase 0 approach

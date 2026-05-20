@@ -102,7 +102,7 @@
 
 **Priority 2: Automatic Covenant Creation**
 - Script to post BCH collateral to covenant
-- Auto-calculate overcollateralization (7% buffer)
+- Auto-calculate volatility buffer (7% buffer)
 - Auto-generate bounty code (covenant ID)
 - **Why second:** Eliminates manual BCH posting
 
@@ -305,7 +305,7 @@
 - **Monitoring:** Alert if no auto-confirmation in 5 min
 
 **Risk 2: BCH price drops >7% during covenant wait**
-- **Mitigation:** Overcollateralization buffer (seller absorbs)
+- **Mitigation:** Volatility buffer buffer (seller absorbs)
 - **Monitoring:** Track volatility, adjust buffer if needed
 - **Seller hedge:** Seller receives €100 fiat before price moves (94-97% exposure reduction)
 
@@ -379,7 +379,7 @@
 
 **We'd love feedback on:**
 
-1. **Covenant security:** Is 7% overcollateralization enough? Or should we increase buffer?
+1. **Covenant security:** Is 7% volatility buffer enough? Or should we increase buffer?
 
 2. **BCH seller trust:** Is permissionless posting safe? Or should we whitelist sellers initially?
 
@@ -428,7 +428,7 @@
 ## Related Documents
 
 - **[Android App Flows](android-app/flows/README.md)** - Screen-by-screen user flows
-- **[Overcollateralized Bounty Contracts](concepts/overcollateralized-bounty-contracts.md)** - Covenant specification
+- **[With volatility buffer Bounty Contracts](concepts/bounty-contracts-with-volatility-buffer.md)** - Covenant specification
 - **[BCH Sellers](concepts/bch-sellers.md)** - Seller role and hedge mechanism
 - **[Merchant Flows](android-app/flows/merchant-flows.md)** - Merchant experience
 - **[How Exchange Rates Work](decisions/how-exchange-rates-work.md)** - EUR-denominated covenants

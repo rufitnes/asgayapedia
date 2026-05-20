@@ -30,8 +30,8 @@ Documents created before May 9, 2026 may reference concepts from the **old escro
 ### Post-Pivot Documents (RS047+)
 Documents from May 2026 onward reflect the **current covenant architecture**:
 - BCH Sellers (not LPs)
-- Overcollateralized covenants (107%)
-- EUR-denominated promises, BCH settlement
+- Covenant + volatility buffers (107%)
+- EUR-denominated cash buy orders, BCH settlement
 - 24-hour timeout cascade
 - 2-way fee split
 

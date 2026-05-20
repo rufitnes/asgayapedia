@@ -139,7 +139,7 @@ Financial access is a human right. If you earned money, you should be able to se
 **How it works:**
 - 10-50 BCH sellers globally
 - Each already owns BCH (miners, early adopters, traders)
-- Each posts overcollateralized BCH to covenants
+- Each posts BCH + volatility buffer to covenants
 - **Recipients get permissionless access**
 
 **The key insight:** KYC burden doesn't scale with recipients.
@@ -186,7 +186,7 @@ Financial access is a human right. If you earned money, you should be able to se
 **BCH Sellers: MAY have KYC (optional, depends on BCH source)**
 - Small number (10-50 globally)
 - Already own BCH (miners, holders, traders)
-- Post overcollateralized BCH to covenants
+- Post BCH + volatility buffer to covenants
 - May have exchange accounts (personal choice)
 - Enable thousands of KYC-free users
 - **Leverage for freedom**
@@ -212,7 +212,7 @@ Financial access is a human right. If you earned money, you should be able to se
 
 **Miners as BCH sellers:**
 - BCH miners already own BCH (from mining revenue)
-- Can post overcollateralized BCH to covenants
+- Can post BCH + volatility buffer to covenants
 - Earn fees without additional setup
 - Natural fit: miners hedge BCH position, earn steady income
 - See: [BCH Sellers](../concepts/bch-sellers.md#miners-as-natural-sellers)

@@ -130,7 +130,7 @@ Your total cost: €0.50 (0.5% seller fee)
 
 **Seller Fee (€0.50):**
 - Covers seller's services:
-  - Posting BCH collateral (0.107 BCH overcollateralized)
+  - Posting BCH collateral (0.107 BCH with volatility buffer)
   - Taking volatility risk (5-min Bizum window)
   - Providing liquidity (instant BCH availability)
 - Fair compensation: Seller bears risk, earns reward
@@ -149,7 +149,7 @@ Your total cost: €0.50 (0.5% seller fee)
 - Seller provides liquidity instantly
 
 **Seller Role:**
-- Posts overcollateralized BCH to covenant (107%)
+- Posts BCH + volatility buffer to covenant (107%)
 - Receives EUR from sender via Bizum
 - Earns 0.5% fee for service + volatility risk
 - Natural role for BCH miners with existing inventory

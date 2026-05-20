@@ -2797,7 +2797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4426,10 +4426,10 @@ to have wasted effort on production-grade rate aggregation.</p>
 - <strong>Purpose:</strong> Help sender understand value recipient will receive
 - <strong>Not protocol:</strong> Just display UX, covenant doesn't know about EUR or VES</p>
 <p><strong>Layer 2: Protocol Reality (EUR-denominated, settled in BCH)</strong>
-- Covenant specifies EUR values, settled in BCH at maturity rate
-- Transaction: €100 worth of BCH (calculated at maturity)
-- Seller posts: €107 worth of BCH (overcollateralization at creation)
-- Merchant receives: €99.50 worth of BCH (calculated at maturity spot price)
+- Covenant specifies EUR values, settled in BCH at settlement rate
+- Transaction: €100 worth of BCH (calculated at settlement)
+- Seller posts: €107 worth of BCH (volatility buffer at creation)
+- Merchant receives: €99.50 worth of BCH (calculated at settlement spot price)
 - <strong>This is a futures contract: EUR promise, BCH settlement</strong></p>
 <p><strong>Layer 3: Recipient UX (BCH → VES equivalency)</strong>
 - Show recipient: "Claim 500,000 VES at merchant"
@@ -4469,34 +4469,34 @@ to have wasted effort on production-grade rate aggregation.</p>
 - Refresh on user action (sender creates covenant)</p>
 <hr />
 <h3 id="2-covenant-contract-eur-denominated-futures">2. Covenant Contract (EUR-Denominated Futures)<a class="headerlink" href="#2-covenant-contract-eur-denominated-futures" title="Permanent link">&para;</a></h3>
-<p><strong>Goal:</strong> Promise EUR value, settle in BCH at maturity rate</p>
+<p><strong>Goal:</strong> Promise EUR value, settle in BCH at settlement rate</p>
 <p><strong>Implementation:</strong>
 <div class="highlight"><pre><span></span><code>Sender creates covenant (assuming 1 BCH = €1,000 for illustration):
 
 1. Sender wants to send €100 worth of BCH
-2. Covenant specifies: €100 EUR value (to be settled in BCH at maturity)
-3. Current BCH spot price: €1,000 per BCH (for estimating overcollateralization)
+2. Covenant specifies: €100 EUR value (to be settled in BCH at settlement)
+3. Current BCH spot price: €1,000 per BCH (for estimating volatility buffer)
 
 4. BCH seller accepts, posts ~0.107 BCH (€107 worth at creation, 7% buffer)
 
 5. Price changes before maturity (example: drops to €950/BCH)
 
 6. Covenant matures when both sign:
-   - Merchant receives: €99.50 / €950 = 0.1047 BCH (€99.50 worth at maturity)
+   - Merchant receives: €99.50 / €950 = 0.1047 BCH (€99.50 worth at settlement)
    - Seller receives: 0.107 - 0.1047 = 0.0027 BCH (surplus after merchant paid)
 
-7. EUR values honored, BCH amounts adjust to market rate at maturity
+7. EUR values honored, BCH amounts adjust to market rate at settlement
 </code></pre></div></p>
 <p><strong>This is a futures contract:</strong>
 - <strong>Denominated in:</strong> EUR (€99.50 promise to merchant)
-- <strong>Settled in:</strong> BCH (at maturity spot rate)
-- <strong>Price at maturity determines BCH amounts distributed</strong></p>
+- <strong>Settled in:</strong> BCH (at settlement spot rate)
+- <strong>Price at settlement determines BCH amounts distributed</strong></p>
 <p><strong>Spot price sources:</strong>
-- <strong>Creation time:</strong> Estimate overcollateralization needed (seller's risk calculation)
+- <strong>Creation time:</strong> Estimate volatility buffer needed (seller's risk calculation)
 - <strong>Maturity time:</strong> Determines actual BCH amounts distributed (merchant gets €99.50 worth)
 - <strong>Public APIs:</strong> Kraken, Coinbase, or any verifiable BCH/EUR ticker</p>
-<p><strong>Why overcollateralization protects merchant:</strong>
-- Covenant promises: €99.50 worth of BCH to merchant
+<p><strong>Why volatility buffer protects merchant:</strong>
+- Covenant holds cash buy order for: €99.50 worth of BCH to merchant
 - If BCH drops 5%: Merchant needs MORE BCH to equal €99.50
 - Seller posted 7% extra: Enough buffer to cover the drop
 - Merchant always gets full €99.50 value, seller's surplus absorbs volatility</p>
@@ -4511,7 +4511,7 @@ to have wasted effort on production-grade rate aggregation.</p>
 <p><strong>Implementation (merchant perspective):</strong>
 <div class="highlight"><pre><span></span><code>Merchant receives €99.50 worth of BCH from covenant (amount depends on spot rate):
 
-Example (assuming 1 BCH = €1,000 at maturity):
+Example (assuming 1 BCH = €1,000 at settlement):
 - Merchant receives: €99.50 / €1,000 = 0.0995 BCH
 
 Option A: Hold BCH (earn full reward)
@@ -4592,7 +4592,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 <p><strong>Rate locking:</strong>
 - EUR/VES rate shown to sender might differ slightly from actual VES received
 - BCH price might move between covenant creation and maturity
-- <strong>Mitigation:</strong> Overcollateralization absorbs short-term BCH volatility</p>
+- <strong>Mitigation:</strong> Volatility buffer absorbs short-term BCH volatility</p>
 <p><strong>Optimization:</strong>
 - Could theoretically get better rates by algorithmic exchange routing
 - <strong>Trade-off:</strong> Simplicity over optimization</p>
@@ -4624,7 +4624,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
    │ [Create Covenant] [Cancel]       │
    └─────────────────────────────────┘
 
-4. Sender confirms → Covenant created (€100 EUR value, to be settled in BCH at maturity rate)
+4. Sender confirms → Covenant created (€100 EUR value, to be settled in BCH at settlement rate)
 </code></pre></div>
 <h3 id="recipient-app-flow">Recipient App Flow<a class="headerlink" href="#recipient-app-flow" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>1. Recipient receives notification:
@@ -4651,18 +4651,18 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 - Should match within 0.5% (account for caching)
 - <strong>Status:</strong> Verifiable in real-time</p>
 <p><strong>Test 2: EUR Value Correctness</strong>
-- Covenant promises €99.50 EUR value to merchant
+- Covenant holds cash buy order for €99.50 EUR value to merchant
 - Calculate expected BCH from maturity spot price (€99.50 / spot rate)
-- Verify merchant receives BCH equal to €99.50 at maturity rate
+- Verify merchant receives BCH equal to €99.50 at settlement rate
 - <strong>Status:</strong> On-chain verification</p>
 <p><strong>Test 3: Merchant Rate Competitiveness</strong>
 - Compare merchant VES quote with local P2P markets
 - Should be within 1-2% of market
 - <strong>Status:</strong> Requires field testing</p>
-<p><strong>Test 4: Overcollateralization Protection</strong>
+<p><strong>Test 4: Volatility buffer Protection</strong>
 - Simulate BCH price drops of 1-7% during covenant wait
-- Verify merchant still receives full promised EUR value (€99.50 worth of BCH)
-- Verify seller's overcollateralization buffer absorbed the volatility
+- Verify merchant still receives full specified EUR value (€99.50 worth of BCH)
+- Verify seller's volatility buffer buffer absorbed the volatility
 - <strong>Status:</strong> Testable on Chipnet</p>
 <hr />
 <h2 id="comparison-to-old-escrow-model">Comparison to Old Escrow Model<a class="headerlink" href="#comparison-to-old-escrow-model" title="Permanent link">&para;</a></h2>
@@ -4683,7 +4683,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 <tr>
 <td><strong>Rate source</strong></td>
 <td>Kraken purchase price</td>
-<td>BCH spot price at maturity</td>
+<td>BCH spot price at settlement</td>
 </tr>
 <tr>
 <td><strong>Who has BCH</strong></td>
@@ -4698,7 +4698,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 <tr>
 <td><strong>Price risk</strong></td>
 <td>Escrow bears (during purchase)</td>
-<td>Seller bears (via overcollateralization)</td>
+<td>Seller bears (via volatility buffer)</td>
 </tr>
 <tr>
 <td><strong>Regulatory</strong></td>
@@ -4732,7 +4732,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 <ul>
 <li>✅ <strong>Research:</strong> DolarAPI integration (<a href="../../research/RS047_dolarapi_venezuela_rates/">RS047</a>)</li>
 <li>✅ <strong>Research:</strong> Exchange rate display strategies</li>
-<li>✅ <strong>Concept:</strong> Overcollateralized bounty contracts</li>
+<li>✅ <strong>Concept:</strong> Bounty + volatility buffer contracts</li>
 <li>🔄 <strong>Development:</strong> Sender app rate display</li>
 <li>🔄 <strong>Development:</strong> Covenant BCH amount calculation</li>
 <li>🔄 <strong>Development:</strong> Recipient app local rate verification</li>
@@ -4750,7 +4750,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 <h2 id="related-concepts">Related Concepts<a class="headerlink" href="#related-concepts" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../concepts/pull-system/">Pull System</a> — How recipient timing control affects rate risk</li>
-<li><a href="../../concepts/overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> — How overcollateralization protects against volatility</li>
+<li><a href="../../concepts/bounty-contracts-with-volatility-buffer/">Bounty Contracts with Volatility Buffer</a> — How volatility buffer protects against volatility</li>
 <li><a href="../../concepts/bch-sellers/">BCH Sellers</a> — Who provides BCH and how they manage inventory</li>
 </ul>
 <hr />

@@ -98,7 +98,7 @@ Every merchant using Asgaya accepts BCH. As the merchant network grows, holding 
 
 ### 5. BCH Seller Economic Incentive
 
-**Requirement:** BCH sellers must profit from posting overcollateralized BCH to covenants.
+**Requirement:** BCH sellers must profit from posting BCH + volatility buffer to covenants.
 
 **Why this matters:** BCH sellers provide the foundation of the system: they post ~7% extra BCH as collateral, enabling recipients to claim cash at merchants. This requires capital lock-up (24h max) and volatility risk exposure (5-minute Bizum window).
 

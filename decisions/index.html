@@ -2797,7 +2797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4024,7 +4024,7 @@
 <h2 id="validation-strategy">⚠️ Validation Strategy<a class="headerlink" href="#validation-strategy" title="Permanent link">&para;</a></h2>
 <p><strong>Many parameters in these decisions are hypotheses, not validated data.</strong></p>
 <p>Examples:
-- <strong>7% overcollateralization</strong> - Educated guess for BCH volatility buffer
+- <strong>7% volatility buffer</strong> - Educated guess for BCH volatility buffer
 - <strong>0.5%/0.5% fee split</strong> - Starting assumption for participant incentives
 - <strong>24-hour timeout</strong> - Arbitrary choice pending real usage data
 - <strong>DolarAPI rates</strong> - Phase 0 solution, not production-grade</p>
@@ -4045,7 +4045,7 @@
 <p><strong><a href="how-exchange-rates-work/">Market-Rate Exchanges</a></strong> — Use DolarAPI for parallel market local currency rates (VES/ARS) + CoinGecko for BCH/EUR rates to bypass government extraction and private company spreads. BCH serves as bridge currency. Zero markup, publicly verifiable rates. Research shows 9% more accurate than hardcoded rates in real testing.</p>
 </li>
 <li>
-<p><strong><a href="two-step-settlement-timing/">Two-Step Settlement</a></strong> — Covenant-based pull system: BCH seller posts overcollateralized BCH to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through overcollateralization buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).</p>
+<p><strong><a href="two-step-settlement-timing/">Two-Step Settlement</a></strong> — Covenant-based pull system: BCH seller posts BCH + volatility buffer to covenant, sender pays seller via Bizum, recipient triggers settlement when ready at merchant. Eliminates volatility risk through volatility buffer buffer (7%). Trade-off: Covenant complexity, but regulatory compliant (no custody/intermediation).</p>
 </li>
 <li>
 <p><strong><a href="fee-splitting-model/">Fee Splitting Model</a></strong> — Two-way split of 1% fee: BCH Seller 0.5%, Merchant 0.5% (€0.50 each on €100 transfer). No protocol fee = pure bulletin board model. Simple, fair, and MiCA/PSD2 compliant.</p>
@@ -4061,10 +4061,10 @@
 <p><strong>Fee Distribution</strong> — Two-way split ensures both BCH seller and merchant benefit from each transaction (see <a href="fee-splitting-model/">Fee Splitting Model</a>). Merchant earns 0.5% for providing cash + location. BCH seller earns 0.5% for posting capital + taking volatility risk. No protocol fee = regulatory compliance.</p>
 </li>
 <li>
-<p><strong>Merchant Incentive Structure</strong> — Merchants earn 0.5% spread by selling VES for BCH. Receive BCH from covenant after co-signing with recipient. Can hold BCH (keep full reward) or optionally sell to BCH buyers (instant fiat, lose reward to spread). Market rates enforced by covenant (EUR-denominated promise).</p>
+<p><strong>Merchant Incentive Structure</strong> — Merchants earn 0.5% spread by selling VES for BCH. Receive BCH from covenant after co-signing with recipient. Can hold BCH (keep full reward) or optionally sell to BCH buyers (instant fiat, lose reward to spread). Market rates enforced by covenant (EUR-denominated cash buy order).</p>
 </li>
 <li>
-<p><strong>BCH Seller Hedge Mechanism</strong> — Sellers post overcollateralized BCH (107%), receive EUR from sender within 5 minutes, reducing BCH exposure by 94-97%. Earn 0.5% fee + potential price appreciation on surplus. Natural role for BCH miners with existing inventory.</p>
+<p><strong>BCH Seller Hedge Mechanism</strong> — Sellers post BCH + volatility buffer (107%), receive EUR from sender within 5 minutes, reducing BCH exposure by 94-97%. Earn 0.5% fee + potential price appreciation on surplus. Natural role for BCH miners with existing inventory.</p>
 </li>
 <li>
 <p><strong>BCH Usage Incentives</strong> — Near-zero fee BCH payments vs 1% remittance cash-outs. Goal: make Asgaya redundant except for legacy system interaction. Recipients incentivized to keep BCH for future payments. Circular economy enabled (merchants can become senders, BCH buyers can become merchants).</p>
@@ -4083,7 +4083,7 @@
 <p><strong><a href="bizum-concept-field/">Bizum Concept Field</a></strong> — Wanted semantic IDs like <code>ASG_VEN_001</code>, bank rejected underscores/hyphens. Use recipient phone numbers instead. Lost semantics, gained reliability. Critical for notification matching without central coordination.</p>
 </li>
 <li>
-<p><strong><a href="payment-timeout-window/">Payment Timeout Window</a></strong> — Sender pays BCH seller directly via Bizum within 5-minute window after seller accepts bounty. Seller bot (smsbridge_loop.py) parses Bizum SMS automatically. No payment processor integration needed. Trade-off: Seller exposed to 5-min price volatility (mitigated by 7% overcollateralization).</p>
+<p><strong><a href="payment-timeout-window/">Payment Timeout Window</a></strong> — Sender pays BCH seller directly via Bizum within 5-minute window after seller accepts bounty. Seller bot (smsbridge_loop.py) parses Bizum SMS automatically. No payment processor integration needed. Trade-off: Seller exposed to 5-min price volatility (mitigated by 7% volatility buffer).</p>
 </li>
 <li>
 <p><strong><a href="unclaimed-transaction-expiry/">Unclaimed Transaction Expiry</a></strong> — Recipients have 24 hours to claim remittances before automatic covenant refund. Prevents BCH from locking indefinitely. Split refund: merchant portion → sender, seller fee → seller. Processing fee covers seller's 24h capital lockup. Trade-off: Time pressure vs capital efficiency.</p>

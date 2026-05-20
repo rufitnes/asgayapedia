@@ -36,7 +36,7 @@ On a **€100 transfer**, the ~1% (€1.00) is distributed as:
 **How it works:** 
 - Sender pays €100 to BCH seller via Bizum/local payment
 - BCH seller keeps €0.50 fee, locks €99.50 worth of BCH in covenant (107% collateral)
-- Covenant promises €99.50 worth of BCH to merchant at settlement
+- Covenant holds cash buy order for €99.50 worth of BCH to merchant at settlement
 - Recipient cashes out at merchant, receives €99 cash (€0.50 merchant fee)
 - Merchant co-signs covenant, receives €99.50 worth of BCH
 - Remaining collateral (€7 worth of BCH) goes back to seller
@@ -73,7 +73,7 @@ Asgaya doesn't reinvent the wheel—it synthesizes proven innovations from the B
 Human-readable addresses (`Elena#142`) replace cryptographic hashes. Makes crypto accessible to non-technical users.
 
 **[AnyHedge](https://anyhedge.com/)**  
-Inspiration for overcollateralized contracts and hedge mechanisms. BCH sellers use similar principles to eliminate volatility exposure while earning fees.
+Inspiration for with volatility buffer contracts and hedge mechanisms. BCH sellers use similar principles to eliminate volatility exposure while earning fees.
 
 **[CashTokens](https://cashtokens.org/)**  
 Native token standard enabling EUR commitments and merchant/seller availability signals. Immutable proof of collateral without trusted oracles.
@@ -82,7 +82,7 @@ Native token standard enabling EUR commitments and merchant/seller availability 
 Covenant (smart contract) language powering trustless settlement. No custody, no intermediation—just code executing autonomously on-chain.
 
 **[MUSD](https://www.moria.money/)**  
-Overcollateralization mechanism inspiration—collateral-backed stability without custody. Also: stablecoin integration pathway for future versions to potentially eliminate fiat payment rails entirely.
+Volatility buffer mechanism inspiration—collateral-backed stability without custody. Also: stablecoin integration pathway for future versions to potentially eliminate fiat payment rails entirely.
 
 **OP_RETURN**  
 BCH's data storage opcode bridges fiat payment systems (Bizum, PagoMóvil) with blockchain settlement. Immutable notification logs without bloating UTXO set.
@@ -120,7 +120,7 @@ Asgaya's role shrinks to a background utility for interacting with legacy paymen
 
 Fundamental design principles and economic incentives:
 - Competitive pricing (<1% fees)
-- Volatility protection (overcollateralized covenants)
+- Volatility protection (covenant + volatility buffers)
 - Permissionless access (no KYC, no custody)
 - Self-custody (users control BCH)
 - No intermediation (covenant-based distribution)
@@ -146,7 +146,7 @@ Complete specification for mobile app implementation:
 ### 💡 [Concepts](concepts/)
 
 Theoretical foundations and key ideas:
-- Overcollateralized bounty contracts (covenant mechanics)
+- Bounty + volatility buffer contracts (covenant mechanics)
 - Decentralized pull system (bulletin board architecture)
 - BCH sellers and hedge mechanism
 - No custody, no intermediation
@@ -214,7 +214,7 @@ How to contribute to Asgaya:
 - ✅ Core architecture (covenant-based, no custody/intermediation)
 - ✅ Risk allocation principle (merchants never bear volatility risk)
 - ✅ Android app flows (sender, recipient, merchant, BCH seller)
-- ✅ Overcollateralized bounty contracts specification
+- ✅ Bounty + volatility buffer contracts specification
 - ✅ Unknowns directory (14 structured investigation briefs)
 - ✅ External AI reviews (ChatGPT, Gemini, Grok, DeepSeek)
 

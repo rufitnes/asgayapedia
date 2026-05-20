@@ -2,7 +2,7 @@
 
 **Status:** Core Design Principle (Phase 0 Active)  
 **Category:** Protocol Architecture  
-**Related:** [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md), [Pull System](pull-system.md), [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)
+**Related:** [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md), [Pull System](pull-system.md), [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)
 
 ---
 
@@ -23,12 +23,12 @@
    - Binary outcome: full payment or transaction cancellation
 
 3. **Sellers provide collateral reliability**
-   - Sellers post 107% overcollateralization to covenant
-   - Sellers can voluntarily top up to earn reliability rewards
+   - Sellers post 107% volatility buffer to covenant
+   - Sellers can voluntarily time extension to earn uptime incentives
    - Seller reputation tied to covenant completion rate
 
 4. **Senders bear extreme volatility risk beyond collateral thresholds**
-   - If BCH drops >7%, covenant matures early
+   - If BCH drops >7%, covenant expires early
    - Remaining BCH refunds to SENDER (not merchant, not seller)
    - Sender opted into BCH exposure by creating covenant
 
@@ -54,7 +54,7 @@ BCH crashes during transit → Someone loses money → Who?
 
 **Asgaya's solution:**
 ```
-BCH crashes >7% → Covenant matures early → Sender receives refund
+BCH crashes >7% → Covenant expires early → Sender receives refund
 ├─ Merchant: Never participated (zero loss) ✅
 ├─ Seller: Received fair exchange at market rate (zero loss) ✅
 ├─ Recipient: Doesn't get money (no worse off than before) ✅
@@ -100,15 +100,15 @@ BCH crashes >7% → Covenant matures early → Sender receives refund
 
 **Why people think this:**
 - "Margin call" sounds like penalty/liquidation
-- "Top-up opportunity" sounds mandatory to avoid loss
+- "Time extension opportunity" sounds mandatory to avoid loss
 - Standard collateral systems penalize non-response
 
 **Why it's wrong:**
 - Default outcome is fair exchange (not penalty)
-- Top-ups are voluntary (rewarded, not mandatory)
+- Time extensions are voluntary (rewarded, not mandatory)
 - Refund goes to SENDER, not seller
 
-### ❌ Misconception 3: "Covenant promises EUR to merchant"
+### ❌ Misconception 3: "Covenant holds cash buy order for EUR to merchant"
 
 **Reality:** Covenant holds conditional bounty, cancellable if BCH crashes.
 
@@ -136,7 +136,7 @@ function isCovenantValid(covenant) {
   const covenantValue = covenant.lockedBch * currentBchPrice;
   const requiredValue = covenant.eurPromise;
   
-  // Covenant must have ≥100% of promised EUR value
+  // Covenant must have ≥100% of specified EUR value
   if (covenantValue < requiredValue) {
     return false; // REJECT - undercollateralized
   }
@@ -256,11 +256,11 @@ function handleEarlyMaturity(covenant) {
 
 3. **What's the actual refund frequency?**
    - Metric: % of covenants that mature early (>7% drop)
-   - Hypothesis: <5% if using 2h settlement windows
-   - See: [Overcollateralization Rate Unknown](../unknowns/economic/overcollateralization-rate.md)
+   - Hypothesis: <5% if using 2h claim windows
+   - See: [Volatility buffer Rate Unknown](../unknowns/economic/volatility buffer-rate.md)
 
 4. **Does sender risk tolerance match usage patterns?**
-   - Metric: Do senders choose longer or shorter settlement windows?
+   - Metric: Do senders choose longer or shorter claim windows?
    - Hypothesis: >60% choose 2h windows (minimize risk)
    - See: [Time-Based Settlement Incentives](../../collaborative_workspace/time_based_settlement_incentives.md)
 
@@ -268,7 +268,7 @@ function handleEarlyMaturity(covenant) {
 
 ## Related Documents
 
-- [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md) - Technical implementation
+- [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md) - Technical implementation
 - [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md) - Detailed scenarios
 - [Pull System](pull-system.md) - Why recipient control matters
 - [Fee Splitting Model](../decisions/fee-splitting-model.md) - Economic incentives

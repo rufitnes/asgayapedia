@@ -3347,7 +3347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4775,16 +4775,16 @@
 
 
 <h1 id="bch-sellers-bch-inventory-providers-in-asgaya">BCH Sellers — BCH Inventory Providers in Asgaya<a class="headerlink" href="#bch-sellers-bch-inventory-providers-in-asgaya" title="Permanent link">&para;</a></h1>
-<p><strong>Core Concept:</strong> BCH sellers provide BCH inventory to the Asgaya network by posting overcollateralized BCH to covenant contracts, earning fees while benefiting from a built-in hedge against BCH price volatility.</p>
-<p><strong>Related:</strong> <a href="../pull-system/">Pull System</a>, <a href="../overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a>, <a href="../../decisions/fee-splitting-model/">Fee Splitting Model</a></p>
+<p><strong>Core Concept:</strong> BCH sellers provide BCH inventory to the Asgaya network by posting BCH + volatility buffer to covenant contracts, earning fees while benefiting from a built-in hedge against BCH price volatility.</p>
+<p><strong>Related:</strong> <a href="../pull-system/">Pull System</a>, <a href="../bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a>, <a href="../../decisions/fee-splitting-model/">Fee Splitting Model</a></p>
 <hr />
 <h2 id="what-is-a-bch-seller">What Is a BCH Seller?<a class="headerlink" href="#what-is-a-bch-seller" title="Permanent link">&para;</a></h2>
 <p>A BCH seller is anyone who:
 1. <strong>Accepts bounties</strong> posted on the Asgaya bulletin board
-2. <strong>Posts overcollateralized BCH</strong> to covenant contracts (typically 107% of requested amount)
+2. <strong>Posts BCH + volatility buffer</strong> to covenant contracts (typically 107% of requested amount)
 3. <strong>Receives EUR (or other fiat)</strong> from senders via Bizum/bank transfer
-4. <strong>Earns BCH fees</strong> (0.5% of transaction in BCH) + gets back overcollateralization
-5. <strong>Can voluntarily top up</strong> to earn reliability rewards if BCH price drops significantly</p>
+4. <strong>Earns BCH fees</strong> (0.5% of transaction in BCH) + gets back volatility buffer
+5. <strong>Can voluntarily time extension</strong> to earn uptime incentives if BCH price drops significantly</p>
 <p><strong>BCH sellers are NOT:</strong>
 - ❌ Custodians (don't hold client funds—post their own BCH as collateral)
 - ❌ Escrows (don't intermediate—covenant contract executes automatically)
@@ -4794,7 +4794,7 @@
 - ✅ Private individuals or entities (selling their own BCH for fiat)
 - ✅ Participants in a permissionless protocol (no KYC, no licensing required)</p>
 <blockquote>
-<p><strong>How sellers actually make money:</strong> The 0.5% fee per transaction is only part of the story. Sellers recycle the same capital many times per day, and the hedge mechanism means they profit in both rising and falling BCH markets. Read the <a href="../overcollateralized-bounty-contracts/#capital-recycling-strategy-the-sellers-business-model">Capital Recycling Strategy</a> for a complete walk-through.</p>
+<p><strong>How sellers actually make money:</strong> The 0.5% fee per transaction is only part of the story. Sellers recycle the same capital many times per day, and the hedge mechanism means they profit in both rising and falling BCH markets. Read the <a href="../bounty-contracts-with-volatility-buffer/#capital-recycling-strategy-the-sellers-business-model">Capital Recycling Strategy</a> for a complete walk-through.</p>
 </blockquote>
 <hr />
 <h2 id="critical-risk-allocation-for-sellers">🎯 CRITICAL RISK ALLOCATION FOR SELLERS<a class="headerlink" href="#critical-risk-allocation-for-sellers" title="Permanent link">&para;</a></h2>
@@ -4802,29 +4802,29 @@
 <ul>
 <li>✅ <strong>Sellers DO bear:</strong></li>
 <li>Opportunity cost (capital locked for up to 24h)</li>
-<li>Reliability reputation risk (if they don't top up during volatility)</li>
+<li>Reliability reputation risk (if they don't time extension during volatility)</li>
 <li>Brief exposure during Bizum payment window (~5 minutes)</li>
 <li>❌ <strong>Sellers DO NOT bear:</strong></li>
 <li>Merchant's volatility risk (merchant completely protected)</li>
 <li>Sender's tail risk (refund goes to sender if &gt;7% drop)</li>
 <li>Recipient's claim timing risk (seller gets capital back either way)</li>
 </ul>
-<p><strong>If BCH drops &gt;7% and seller doesn't top up:</strong>
-* Covenant matures early
+<p><strong>If BCH drops &gt;7% and seller doesn't time extension:</strong>
+* Covenant expires early
 * Remaining BCH refunds to <strong>SENDER</strong> (not seller)
 * Seller receives their 0.5% fee portion only
 * <strong>This is fair exchange, not a penalty</strong> - seller traded BCH for EUR at market rate</p>
 <p><strong>If BCH rises &gt;7%:</strong>
 * Seller gets LARGER refund (excess BCH returned)
 * Seller participated at favorable rate (sold BCH before rise)
-* <strong>No "trapped gains" problem</strong> - covenant promises EUR-worth, not fixed BCH amount</p>
-<p><strong>See:</strong> <a href="../overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> for complete covenant mechanics.</p>
+* <strong>No "trapped gains" problem</strong> - covenant holds cash buy order for EUR-worth, not fixed BCH amount</p>
+<p><strong>See:</strong> <a href="../bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a> for complete covenant mechanics.</p>
 <hr />
 <h2 id="who-can-be-a-bch-seller">Who Can Be a BCH Seller?<a class="headerlink" href="#who-can-be-a-bch-seller" title="Permanent link">&para;</a></h2>
 <p><strong>Requirements:</strong>
 1. <strong>BCH inventory</strong> — Must own BCH to post as collateral (minimum ~€100-1000 depending on corridor volume)
 2. <strong>Automation capability</strong> — Bot to monitor bulletin board and parse payment notifications (smsbridge_loop.py or similar)
-3. <strong>Capital tolerance</strong> — Can lock BCH for up to 24 hours (overcollateralization requirement)
+3. <strong>Capital tolerance</strong> — Can lock BCH for up to 24 hours (volatility buffer requirement)
 4. <strong>Risk tolerance</strong> — Accept margin call risk if BCH drops &gt;7% during wait period
 5. <strong>Payment rail access</strong> — Can receive Bizum, SEPA, or other fiat payment methods</p>
 <p><strong>Anyone meeting these requirements can be a BCH seller:</strong>
@@ -4837,15 +4837,15 @@
 <p><strong>Permissionless:</strong> No approval needed, no registration, no KYC. Just accept a bounty and post collateral.</p>
 <hr />
 <h2 id="reliability-rewards">Reliability Rewards<a class="headerlink" href="#reliability-rewards" title="Permanent link">&para;</a></h2>
-<p>Sellers who voluntarily top up their covenants when BCH drops &gt;7% earn progressive rewards that increase their earning potential:</p>
-<p><strong>Reward tiers</strong> (based on number of top-ups completed):
-- <strong>🛡️ Reliable</strong> (1 top-up): Higher transaction limits (€220), badge visible to senders
-- <strong>📊 Trusted</strong> (3 top-ups): Even higher limits (€260), highlighted in sender searches
-- <strong>⭐ Priority</strong> (5 top-ups): Premium limits (€300), auto-selected by senders
-- <strong>🎯 Premium</strong> (10 top-ups): Featured placement (€360), priority routing
-- <strong>💎 Elite</strong> (20+ top-ups): Maximum limits (€400), top-tier visibility</p>
+<p>Sellers who voluntarily time extension their covenants when BCH drops &gt;7% earn progressive rewards that increase their earning potential:</p>
+<p><strong>Reward tiers</strong> (based on number of time extensions completed):
+- <strong>🛡️ Reliable</strong> (1 time extension): Higher transaction limits (€220), badge visible to senders
+- <strong>📊 Trusted</strong> (3 time extensions): Even higher limits (€260), highlighted in sender searches
+- <strong>⭐ Priority</strong> (5 time extensions): Premium limits (€300), auto-selected by senders
+- <strong>🎯 Premium</strong> (10 time extensions): Featured placement (€360), priority routing
+- <strong>💎 Elite</strong> (20+ time extensions): Maximum limits (€400), top-tier visibility</p>
 <p><strong>Economic value:</strong> Higher limits enable more volume per transaction, better visibility drives more selections, and auto-select eligibility creates passive income opportunities. Sellers who demonstrate reliability earn significantly more than those who rely only on automatic fair exchange.</p>
-<p><strong>Philosophy:</strong> Top-ups are voluntary, not required. Covenants that mature automatically result in fair exchange at market rate (no penalty). See <a href="../overcollateralized-bounty-contracts/#top-up-opportunity-how-sellers-earn-reliability-rewards">Top-Up Opportunity technical details</a> for implementation.</p>
+<p><strong>Philosophy:</strong> Time extensions are voluntary, not required. Covenants that mature automatically result in fair exchange at market rate (no penalty). See <a href="../bounty-contracts-with-volatility-buffer/#time extension-opportunity-how-sellers-earn-reliability-rewards">Top-Up Opportunity technical details</a> for implementation.</p>
 <hr />
 <h2 id="why-miners-are-especially-ideal">Why Miners Are Especially Ideal ⭐<a class="headerlink" href="#why-miners-are-especially-ideal" title="Permanent link">&para;</a></h2>
 <p>While anyone can be a BCH seller, <strong>Bitcoin Cash miners have unique advantages</strong> that make them the most natural participants.</p>
@@ -4857,7 +4857,7 @@
 <p><strong>For other seller types:</strong>
 - Must buy BCH on exchanges to participate
 - Pay exchange fees (0.26-0.50%) to acquire inventory
-- Capital efficiency lower (buy BCH, then lock for overcollateralization)</p>
+- Capital efficiency lower (buy BCH, then lock for volatility buffer)</p>
 <p><strong>Result:</strong> Miners can participate with <strong>zero acquisition cost</strong>.</p>
 <hr />
 <h3 id="2-already-converting-bch-fiat">2. Already Converting BCH → Fiat<a class="headerlink" href="#2-already-converting-bch-fiat" title="Permanent link">&para;</a></h3>
@@ -4873,7 +4873,7 @@
 1. Mine BCH (block rewards + transaction fees)
 2. <strong>Post BCH to Asgaya covenants</strong> instead of selling to exchange
 3. <strong>Receive EUR directly from senders</strong> via Bizum
-4. <strong>Earn 0.5% fee</strong> + overcollateralization surplus (if BCH rises)
+4. <strong>Earn 0.5% fee</strong> + volatility buffer surplus (if BCH rises)
 5. Use EUR for operational expenses (same as before)</p>
 <p><strong>Result:</strong> Miners earn MORE while avoiding exchange fees.</p>
 <hr />
@@ -4886,7 +4886,7 @@
 - 0.5% fee per bounty accepted
 - Example: 0.0005 BCH per 0.1 BCH transaction (€100 at 1 BCH = €1,000)
 - Plus: Avoid exchange fees (0.26% savings vs. traditional selling)
-- Plus: Returned overcollateralization (0.007 BCH) maintains BCH exposure</p>
+- Plus: Returned volatility buffer (0.007 BCH) maintains BCH exposure</p>
 <p><strong>Example scenario (assuming 1 BCH = €1,000):</strong>
 - Miner accepts 100 bounties/day (each 0.1 BCH transaction)
 - BCH fees earned: 100 × 0.0005 BCH = 0.05 BCH/day
@@ -5030,8 +5030,8 @@ More trust → More Asgaya usage
 <hr />
 <h2 id="capital-requirements">Capital Requirements<a class="headerlink" href="#capital-requirements" title="Permanent link">&para;</a></h2>
 <p><strong>Per bounty (€100 example):</strong>
-- Covenant requires: €100 worth of BCH (at maturity rate)
-- Overcollateralization: 7% → <strong>€107 worth of BCH locked</strong>
+- Covenant requires: €100 worth of BCH (at settlement rate)
+- Volatility buffer: 7% → <strong>€107 worth of BCH locked</strong>
 - Lock duration: Up to 24 hours (until recipient claims or timeout)</p>
 <p><strong>Volume scenarios:</strong></p>
 <p><strong>Low volume (10 concurrent bounties):</strong>
@@ -5069,13 +5069,13 @@ Seller receives: €100 in bank account
 </code></pre></div></p>
 <p><strong>BCH covenant (everything else in BCH):</strong>
 <div class="highlight"><pre><span></span><code>Transaction amount: 0.1 BCH (€100 worth at current rate)
-Seller posts: 0.107 BCH (0.1 + 7% overcollateralization)
+Seller posts: 0.107 BCH (0.1 + 7% volatility buffer)
 
-At maturity, covenant distributes:
-├─ Merchant receives: 0.0995 BCH (€99.50 worth at maturity)
-└─ Seller receives: 0.0075 BCH (includes fee + overcollateralization)
+At settlement, covenant distributes:
+├─ Merchant receives: 0.0995 BCH (€99.50 worth at settlement)
+└─ Seller receives: 0.0075 BCH (includes fee + volatility buffer)
 </code></pre></div></p>
-<p><strong>Seller's position at maturity:</strong>
+<p><strong>Seller's position at settlement:</strong>
 <div class="highlight"><pre><span></span><code>€100 fiat (in bank account)
 + 0.0075 BCH (returned from covenant)
 </code></pre></div></p>
@@ -5083,7 +5083,7 @@ At maturity, covenant distributes:
 - Total fee: 0.001 BCH (1% of 0.1 BCH transaction)
   - Seller's reward: <strong>0.0005 BCH</strong> (0.5%)
   - Merchant's reward: 0.0005 BCH (0.5%, included in their 0.0995 BCH)
-- Overcollateralization returned: 0.007 BCH (7% buffer)
+- Volatility buffer returned: 0.007 BCH (7% buffer)
 - <strong>Total to seller: 0.0075 BCH</strong></p>
 <hr />
 <h3 id="scenario-1-bch-price-unchanged-1-bch-1000">Scenario 1: BCH price unchanged (1 BCH = €1,000)<a class="headerlink" href="#scenario-1-bch-price-unchanged-1-bch-1000" title="Permanent link">&para;</a></h3>
@@ -5095,7 +5095,7 @@ At maturity, covenant distributes:
 - <strong>Profit: €0.50</strong> (the 0.5% fee in EUR terms)</p>
 <p><strong>In BCH terms:</strong>
 - Sold 0.0995 BCH for €100 fiat (merchant's portion)
-- Kept 0.0075 BCH (fee + overcollateralization)
+- Kept 0.0075 BCH (fee + volatility buffer)
 - <strong>Fee earned: 0.0005 BCH</strong></p>
 <hr />
 <h3 id="scenario-2-bch-rises-5-1-bch-1050">Scenario 2: BCH rises 5% (1 BCH = €1,050)<a class="headerlink" href="#scenario-2-bch-rises-5-1-bch-1050" title="Permanent link">&para;</a></h3>
@@ -5129,7 +5129,7 @@ At maturity, covenant distributes:
 - Kept 0.00226 BCH (less BCH returned)
 - <strong>Fee earned: 0.0005 BCH</strong> (same as always)
 - <strong>Note:</strong> The -€4.85 "loss" is just the returned BCH depreciating in value</p>
-<p><strong>Overcollateralization still protects merchant</strong> (they got full €99.50), but seller bears price risk.</p>
+<p><strong>Volatility buffer still protects merchant</strong> (they got full €99.50), but seller bears price risk.</p>
 <hr />
 <h3 id="the-hedge-mechanism-why-sellers-always-win"><strong>The Hedge Mechanism: Why Sellers Always Win</strong> 🎯<a class="headerlink" href="#the-hedge-mechanism-why-sellers-always-win" title="Permanent link">&para;</a></h3>
 <p><strong>The covenant structure creates a powerful partial hedge for sellers.</strong> Here's the key insight:</p>
@@ -5269,8 +5269,8 @@ At maturity, covenant distributes:
 - €107 × 0.92 = €98.44 worth (not enough to cover €99.50 needed)
 - <strong>Margin call triggered</strong></p>
 <p><strong>Mitigation:</strong>
-- <strong>Higher overcollateralization</strong> (10% instead of 7%) → Covers larger drops
-- <strong>Automated top-up</strong> (bot adds more BCH when price drops &gt;5%)
+- <strong>Higher volatility buffer</strong> (10% instead of 7%) → Covers larger drops
+- <strong>Automated time extension</strong> (bot adds more BCH when price drops &gt;5%)
 - <strong>Diversification</strong> (accept bounties in multiple corridors to spread risk)
 - <strong>Hedging</strong> (use derivatives to hedge BCH price exposure during lock period)</p>
 <hr />
@@ -5373,7 +5373,7 @@ At maturity, covenant distributes:
 <h2 id="related-concepts">Related Concepts<a class="headerlink" href="#related-concepts" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../pull-system/">Pull System</a> — How recipient-triggered execution works</li>
-<li><a href="../overcollateralized-bounty-contracts/">Overcollateralized Bounty Contracts</a> — Technical covenant implementation</li>
+<li><a href="../bounty-contracts-with-volatility-buffer/">With volatility buffer Bounty Contracts</a> — Technical covenant implementation</li>
 <li><a href="../../decisions/fee-splitting-model/">Fee Splitting Model</a> — How fees are distributed (0.5% to seller)</li>
 <li><a href="../core-regulatory-constraints/">Core Regulatory Constraints</a> — Why this model is MiCA/PSD2 compliant</li>
 </ul>

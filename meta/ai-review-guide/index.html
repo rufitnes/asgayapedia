@@ -2791,7 +2791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4067,13 +4067,13 @@
 <p>Thank you for reviewing Asgaya documentation. This guide explains how you can provide the most valuable feedback.</p>
 <p><strong>What is Asgaya?</strong>
 A permissionless Bitcoin Cash remittance protocol with &lt;1% fees, no KYC, and self-custody. We're in the documentation phase, seeking external review before implementation.</p>
-<p><strong>Current architecture:</strong> Covenant-based (overcollateralized BCH with EUR-denominated promises)<br />
+<p><strong>Current architecture:</strong> Covenant-based (BCH + volatility buffer with EUR-denominated cash buy orders)<br />
 <strong>Key innovation:</strong> BCH sellers post 107% collateral to smart contracts, merchants co-sign to claim after providing cash</p>
 <p><strong>Why your review matters:</strong>
 - You bring fresh perspective (we may have blind spots)
 - You can spot inconsistencies across documents
 - You can identify security vulnerabilities in covenant mechanics
-- You can identify economic exploits in the overcollateralization/timeout system
+- You can identify economic exploits in the volatility buffer/timeout system
 - You can suggest better approaches we haven't considered</p>
 <hr />
 <h2 id="how-to-navigate-this-documentation">How to Navigate This Documentation<a class="headerlink" href="#how-to-navigate-this-documentation" title="Permanent link">&para;</a></h2>
@@ -4091,7 +4091,7 @@ A permissionless Bitcoin Cash remittance protocol with &lt;1% fees, no KYC, and 
 <h2 id="key-architectural-concepts-read-this-first">Key Architectural Concepts (Read This First!)<a class="headerlink" href="#key-architectural-concepts-read-this-first" title="Permanent link">&para;</a></h2>
 <p>Before reviewing, understand these fundamental concepts:</p>
 <h3 id="covenant-based-settlement">Covenant-Based Settlement<a class="headerlink" href="#covenant-based-settlement" title="Permanent link">&para;</a></h3>
-<p><strong>What:</strong> BCH sellers post overcollateralized BCH (107%) to smart contracts (covenants) that promise EUR-denominated amounts to merchants. Contracts execute autonomously—no custody, no intermediation.</p>
+<p><strong>What:</strong> BCH sellers post BCH + volatility buffer (107%) to smart contracts (covenants) that promise EUR-denominated amounts to merchants. Contracts execute autonomously—no custody, no intermediation.</p>
 <p><strong>Why:</strong> Eliminates regulatory classification as CASP (Crypto Asset Service Provider) under MiCA. No one controls user funds.</p>
 <h3 id="three-party-flow">Three-Party Flow<a class="headerlink" href="#three-party-flow" title="Permanent link">&para;</a></h3>
 <ol>
@@ -4108,7 +4108,7 @@ A permissionless Bitcoin Cash remittance protocol with &lt;1% fees, no KYC, and 
 </ul>
 <h3 id="eur-denominated-promises-bch-settlement">EUR-Denominated Promises, BCH Settlement<a class="headerlink" href="#eur-denominated-promises-bch-settlement" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Covenant promises "€99.50 worth of BCH at maturity rate"</li>
+<li>Covenant holds cash buy order for "€99.50 worth of BCH at settlement rate"</li>
 <li>Eliminates volatility exposure for sender/recipient</li>
 <li>BCH seller hedged by receiving EUR from sender within 5 minutes (reduces BCH exposure 94-97%)</li>
 <li>Merchant can hold BCH or sell to BCH buyers (trade reward for instant fiat)</li>
@@ -4152,16 +4152,16 @@ A permissionless Bitcoin Cash remittance protocol with &lt;1% fees, no KYC, and 
 <p><strong>a) Incentive Alignment</strong>
 - <strong>Documents:</strong> <code>/core-architecture/why-promote-adoption.md</code>, <code>/decisions/fee-splitting-model.md</code>
 - <strong>Questions:</strong>
-  - Do BCH sellers have sufficient incentive to post overcollateralized BCH (107%)?
+  - Do BCH sellers have sufficient incentive to post BCH + volatility buffer (107%)?
   - Can merchants game the covenant co-signing mechanism?
   - What happens during extreme BCH volatility (&gt;7% drop in 24 hours)?
   - Is the 2-way fee split fair (BCH seller 0.5%, Merchant 0.5%)?
   - Can the 24-hour timeout cascade be exploited?</p>
 <p><strong>b) Volatility Protection</strong>
 - <strong>Document:</strong> <code>/core-architecture/why-eliminate-volatility.md</code>, <code>/decisions/two-step-settlement-timing.md</code>
-- <strong>Design:</strong> Overcollateralized covenants (107% BCH) with EUR-denominated promises
+- <strong>Design:</strong> Covenant + volatility buffers (107% BCH) with EUR-denominated cash buy orders
 - <strong>Questions:</strong>
-  - Is 7% overcollateralization sufficient for rapid price movements?
+  - Is 7% volatility buffer sufficient for rapid price movements?
   - What's the worst-case scenario if BCH drops &gt;7% during the 24-hour window?
   - Should we add dynamic collateral requirements based on volatility?
   - How does the hedge mechanism protect BCH sellers?</p>
@@ -4345,7 +4345,7 @@ Severity: Medium
 <strong>Architecture:</strong> Covenant-based (pivoted May 9, 2026 from escrow to covenants for MiCA compliance)</p>
 <p><strong>Most needed:</strong>
 1. Security review of covenant timeout cascade and co-signing mechanism
-2. Economic review of overcollateralization incentives and volatility protection
+2. Economic review of volatility buffer incentives and volatility protection
 3. Review of NotificationListener SMS security</p>
 <hr />
 <p><em>Thank you for helping make Asgaya more secure, robust, and well-designed!</em> 🙏</p>

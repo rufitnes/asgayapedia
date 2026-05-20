@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#overcollateralization-rate-is-107-sufficient" class="md-skip">
+        <a href="#volatility-buffer-rate-is-107-sufficient" class="md-skip">
           Skip to content
         </a>
       
@@ -2797,7 +2797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+      <a href="../../../concepts/overcollateralized-bounty-contracts.md" class="md-nav__link">
         
   
   
@@ -4296,16 +4296,16 @@
   
 
 
-<h1 id="overcollateralization-rate-is-107-sufficient">Overcollateralization Rate — Is 107% Sufficient?<a class="headerlink" href="#overcollateralization-rate-is-107-sufficient" title="Permanent link">&para;</a></h1>
+<h1 id="volatility-buffer-rate-is-107-sufficient">Volatility buffer Rate — Is 107% Sufficient?<a class="headerlink" href="#volatility-buffer-rate-is-107-sufficient" title="Permanent link">&para;</a></h1>
 <p><strong>Status:</strong> Not Started<br />
 <strong>Priority:</strong> Critical<br />
 <strong>Last Updated:</strong> 2026-05-20<br />
 <strong>Contributors Welcome:</strong> Yes — see below</p>
 <hr />
 <h2 id="what-we-dont-know">What We Don't Know<a class="headerlink" href="#what-we-dont-know" title="Permanent link">&para;</a></h2>
-<p><strong>What overcollateralization ratio protects merchants from volatility while remaining attractive to sellers?</strong></p>
+<p><strong>What volatility buffer ratio protects merchants from volatility while remaining attractive to sellers?</strong></p>
 <p>We have no empirical validation of:
-- Whether 7% buffer (107% collateral) covers typical BCH volatility in chosen settlement windows
+- Whether 7% buffer (107% collateral) covers typical BCH volatility in chosen claim windows
 - Tail event frequency (how often does BCH move &gt;7% in 2h/6h/12h/24h?)
 - Whether dynamic collateralization (103%-110% based on window) matches actual risk
 - Seller willingness to post different collateral levels
@@ -4316,7 +4316,7 @@
 <h2 id="why-it-matters">Why It Matters<a class="headerlink" href="#why-it-matters" title="Permanent link">&para;</a></h2>
 <h3 id="1-merchantsender-protection">1. <strong>Merchant/Sender Protection</strong><a class="headerlink" href="#1-merchantsender-protection" title="Permanent link">&para;</a></h3>
 <p>If collateral is insufficient:
-- Covenant matures early when BCH drops &gt;7%
+- Covenant expires early when BCH drops &gt;7%
 - Sender receives refund (bears loss beyond buffer)
 - <strong>Bad UX:</strong> Sender loses money unpredictably
 - <strong>Trust erosion:</strong> Repeated losses → Senders stop using system</p>
@@ -4379,7 +4379,7 @@
 <p><strong>Assumptions:</strong>
 1. BCH behaves like other mid-cap cryptocurrencies (moderate volatility)
 2. Short windows have exponentially lower tail risk than long windows
-3. Sellers will tolerate up to 10% overcollateralization for 24h windows
+3. Sellers will tolerate up to 10% volatility buffer for 24h windows
 4. Covering 80-95th percentile is acceptable (tail events expected occasionally)</p>
 <p><strong>This is speculation. We need historical volatility data.</strong></p>
 <hr />
@@ -4503,13 +4503,13 @@
 <h2 id="phase-0-trial-integration">Phase 0 Trial Integration<a class="headerlink" href="#phase-0-trial-integration" title="Permanent link">&para;</a></h2>
 <h3 id="metrics-to-track">Metrics to Track<a class="headerlink" href="#metrics-to-track" title="Permanent link">&para;</a></h3>
 <p><strong>During Phase 0 trials:</strong>
-1. <strong>Early maturity rate:</strong> % of covenants that mature early (collateral breached)
-2. <strong>Sender loss distribution:</strong> When early maturity occurs, how much does sender lose?
+1. <strong>Early expiry rate:</strong> % of covenants that mature early (collateral breached)
+2. <strong>Sender loss distribution:</strong> When early expiry occurs, how much does sender lose?
 3. <strong>Seller capital efficiency:</strong> Is collateral locked unnecessarily (BCH never gets close to threshold)?
 4. <strong>Volatility regime during trial:</strong> Bull/bear/sideways? (Affects interpretation of results)</p>
 <p><strong>Iteration triggers:</strong>
-- If early maturity rate &gt;10% → Increase collateral ratios
-- If early maturity rate &lt;1% AND seller feedback = "too much capital locked" → Decrease ratios
+- If early expiry rate &gt;10% → Increase collateral ratios
+- If early expiry rate &lt;1% AND seller feedback = "too much capital locked" → Decrease ratios
 - If volatility regime shifts mid-trial → Re-evaluate ratios dynamically</p>
 <h3 id="logging-requirements">Logging Requirements<a class="headerlink" href="#logging-requirements" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -4609,7 +4609,7 @@
 <li><a href="../../collaborative_workspace/time_based_settlement_incentives.md">Time-Based Settlement Incentives Proposal</a></li>
 <li><a href="../../../decisions/phase-0-validation-checklist/">Phase 0 Validation Checklist</a></li>
 <li><a href="../../collaborative_workspace/permissionless_contributions/Grok_reply_to_gemini_prompt.md">Grok's Review</a> (Line 19-26: "7% insufficient")</li>
-<li><a href="../../collaborative_workspace/permissionless_contributions/ChatGPT_reply_to_gemini_prompt.md">ChatGPT's Review</a> (Line 62-106: Overcollateralization concerns)</li>
+<li><a href="../../collaborative_workspace/permissionless_contributions/ChatGPT_reply_to_gemini_prompt.md">ChatGPT's Review</a> (Line 62-106: Volatility buffer concerns)</li>
 </ul>
 <hr />
 <h2 id="open-questions">Open Questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>

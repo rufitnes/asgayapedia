@@ -5,7 +5,7 @@
 **Related:** [Bubble Prevention](bubble-prevention.md), [BCH Sellers as Capital Providers](bch-miners-as-escrows.md)
 
 **⚠️ NOTE:** This document describes historical concepts for market stability coordination. In the current covenant-based architecture:
-- **BCH sellers** post overcollateralized capital (not "escrow operators")
+- **BCH sellers** post with volatility buffer capital (not "escrow operators")
 - **BCH buyers** provide optional instant settlement (replacing "LP" role)
 - Market coordination happens through smart contract mechanics rather than centralized coordination
 
