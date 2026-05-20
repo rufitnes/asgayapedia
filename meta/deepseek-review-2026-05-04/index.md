@@ -85,7 +85,7 @@ The `Settlement APIs` specify that an LP's available liquidity is deducted when 
 
 #### 💡 Merchant Cash Liquidity
 
-The documentation focuses on LP fiat liquidity but does not address a more immediate operational issue: what happens if the merchant runs out of physical cash. A pulpería in Venezuela can only hold so many bolívares. A notification to the recipient that the merchant is "cash unavailable" before they travel would significantly improve the user experience.
+The documentation focuses on LP fiat liquidity but does not address a more immediate operational issue: what happens if the merchant runs out of physical cash. A neighborhood store in Venezuela can only hold so many bolívares. A notification to the recipient that the merchant is "cash unavailable" before they travel would significantly improve the user experience.
 
 #### ⚠️ BCH Float Depletion
 

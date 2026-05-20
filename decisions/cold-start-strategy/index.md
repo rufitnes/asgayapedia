@@ -92,7 +92,7 @@ Buy surplus BCH from merchants with cash, enabling merchants to convert back to 
 - Competitors watch customers walk past their door
 
 **Why this drives self-onboarding:**
-When a migrant worker onboards the first merchant in their neighborhood, word spreads. Other pulpería owners see their competitor earning extra income. Within weeks, they ask "how do I join?"
+When a migrant worker onboards the first merchant in their neighborhood, word spreads. Other neighborhood store owners see their competitor earning extra income. Within weeks, they ask "how do I join?"
 
 **Phase 0 target:** Merchants with family connections in Spain (can participate as sellers for triple-dip).
 

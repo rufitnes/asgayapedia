@@ -3,13 +3,13 @@
 **Part of:** [Android App Flows](README.md)  
 **Previous:** [Home Screen](home-screen.md)  
 **Date:** 2026-05-16  
-**Status:** Active - Liquidity Provider Hub
+**Status:** Active - BCH Seller & Buyer Hub
 
 ---
 
 ## Overview
 
-The **Trade BCH screen** is the hub for all liquidity provider roles in Asgaya. Users can:
+The **Trade BCH screen** is the hub for all BCH seller and buyer roles in Asgaya. Users can:
 1. **Sell BCH** - Post offers to sell BCH for fiat
 2. **Buy BCH** - Enable merchant mode (cash) or buy online (restricted Phase 0)
 3. **View Bulletin** - Browse all active offers

@@ -129,7 +129,7 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
 
 **Phase 3: Contract Maturity (Recipient controls timing - 30 seconds)**
 
-1. **Elena walks to merchant pulpería** (whenever she's ready - could be immediately, could be tomorrow)
+1. **Elena walks to merchant neighborhood store** (whenever she's ready - could be immediately, could be tomorrow)
 
 2. **Elena shares code with merchant:**
    - Code displays:

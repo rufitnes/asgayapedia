@@ -20,7 +20,7 @@ The heart of Asgaya: covenant smart contracts that hold BCH with 7% volatility b
 Participants who post BCH + volatility buffer to covenants, earning 0.5% fees plus hedge benefits. Replaces the old "Escrow Operator" role with a permissionless, automated model.
 
 ### [Merchant Business Case](merchant-business-case.md) ⭐
-Why pulperías will self-onboard: the triple-dip economics (0.5% merchant fee + 15-30% product margin + 0.5% seller fee = €22-44 per €180 remittance). This is the pitch for BCH adoption through self-interest, not ideology.
+Why neighborhood stores will self-onboard: the triple-dip economics (0.5% merchant fee + 15-30% product margin + 0.5% seller fee = €22-44 per €180 remittance). This is the pitch for BCH adoption through self-interest, not ideology.
 
 ### [Pull System](pull-system.md)
 How recipient timing controls settlement (not sender timing), compressing volatility exposure from hours to 30 seconds and enabling regulatory compliance.
@@ -63,11 +63,11 @@ Proposed mechanism for adjusting fee splits based on market conditions. Phase 0 
 ### [Bubble Prevention](bubble-prevention.md) ⚠️ **Deferred**
 Proposed mechanisms to prevent speculative behavior in reward systems. Not implemented in Phase 0 (trusted parties only).
 
-### [BCH Miners as Escrows](bch-miners-as-escrows.md) ⚠️ **Obsolete (Pre-Covenant)**
-Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using covenant + volatility buffers (no custody).
+### ❌ [BCH Miners as Escrows](bch-miners-as-escrows.md) **OBSOLETE (Pre-Covenant Architecture)**
+Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using covenant + volatility buffers (no custody). **Not part of current design.**
 
-### [Market Making Partners](market-making-partners.md) ⚠️ **Obsolete (Pre-Covenant)**
-Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture.
+### ❌ [Market Making Partners](market-making-partners.md) **OBSOLETE (Pre-Covenant Architecture)**
+Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture. **Not part of current design.**
 
 ---
 

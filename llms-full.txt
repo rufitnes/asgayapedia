@@ -1278,12 +1278,12 @@ Secondary corridor. EUR senders in Spain, ARS recipients in Argentina.
 
 ---
 
-### Pulpería
+### Neighborhood store
 **Type:** Merchant / Geography
 
 Small neighborhood store common in Honduras, Nicaragua, and other Central American countries. Sells basic goods (groceries, household items, phone credit) and often acts as informal financial services hub for the community.
 
-**Asgaya context:** Ideal merchant type for remittance cash-out. Pulperías are:
+**Asgaya context:** Ideal merchant type for remittance cash-out. Neighborhood stores are:
 - Located in every neighborhood (high accessibility)
 - Already handle cash transactions (operational readiness)
 - Trusted community hubs (social capital)
@@ -1291,7 +1291,7 @@ Small neighborhood store common in Honduras, Nicaragua, and other Central Americ
 
 **Post-MVP potential:** Honduras (HNL corridor) could benefit significantly from Asgaya once MVP is proven successful in EUR→VES corridor.
 
-**Usage:** "Recipient walks to local pulpería to claim remittance"
+**Usage:** "Recipient walks to local neighborhood store to claim remittance"
 
 **Research:** See [RS010_Honduras.md](research/RS010_Honduras.md) for corridor analysis
 
@@ -10309,13 +10309,13 @@ pending → claimed → accepted → partially_signed → completed
 **Part of:** [Android App Flows](README.md)  
 **Previous:** [Home Screen](home-screen.md)  
 **Date:** 2026-05-16  
-**Status:** Active - Liquidity Provider Hub
+**Status:** Active - BCH Seller & Buyer Hub
 
 ---
 
 ## Overview
 
-The **Trade BCH screen** is the hub for all liquidity provider roles in Asgaya. Users can:
+The **Trade BCH screen** is the hub for all BCH seller and buyer roles in Asgaya. Users can:
 1. **Sell BCH** - Post offers to sell BCH for fiat
 2. **Buy BCH** - Enable merchant mode (cash) or buy online (restricted Phase 0)
 3. **View Bulletin** - Browse all active offers
@@ -24683,7 +24683,7 @@ The heart of Asgaya: covenant smart contracts that hold BCH with 7% volatility b
 Participants who post BCH + volatility buffer to covenants, earning 0.5% fees plus hedge benefits. Replaces the old "Escrow Operator" role with a permissionless, automated model.
 
 ### [Merchant Business Case](merchant-business-case.md) ⭐
-Why pulperías will self-onboard: the triple-dip economics (0.5% merchant fee + 15-30% product margin + 0.5% seller fee = €22-44 per €180 remittance). This is the pitch for BCH adoption through self-interest, not ideology.
+Why neighborhood stores will self-onboard: the triple-dip economics (0.5% merchant fee + 15-30% product margin + 0.5% seller fee = €22-44 per €180 remittance). This is the pitch for BCH adoption through self-interest, not ideology.
 
 ### [Pull System](pull-system.md)
 How recipient timing controls settlement (not sender timing), compressing volatility exposure from hours to 30 seconds and enabling regulatory compliance.
@@ -24726,11 +24726,11 @@ Proposed mechanism for adjusting fee splits based on market conditions. Phase 0 
 ### [Bubble Prevention](bubble-prevention.md) ⚠️ **Deferred**
 Proposed mechanisms to prevent speculative behavior in reward systems. Not implemented in Phase 0 (trusted parties only).
 
-### [BCH Miners as Escrows](bch-miners-as-escrows.md) ⚠️ **Obsolete (Pre-Covenant)**
-Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using covenant + volatility buffers (no custody).
+### ❌ [BCH Miners as Escrows](bch-miners-as-escrows.md) **OBSOLETE (Pre-Covenant Architecture)**
+Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using covenant + volatility buffers (no custody). **Not part of current design.**
 
-### [Market Making Partners](market-making-partners.md) ⚠️ **Obsolete (Pre-Covenant)**
-Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture.
+### ❌ [Market Making Partners](market-making-partners.md) **OBSOLETE (Pre-Covenant Architecture)**
+Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture. **Not part of current design.**
 
 ---
 
@@ -29601,7 +29601,7 @@ Pulperos (merchant liquidity providers) aren't just infrastructure - they're **a
 **Weekend remittance spike (€240k):**
 ```
 1. BCH seller → Pre-positions reserves (removes buy pressure)
-2. Users → Cash out at pulperías
+2. Users → Cash out at neighborhood stores
 3. Pulperos → Accumulate BCH
 4. Pulperos → HOLD BCH (no sell pressure)
 5. Result → Price stays elevated, BCH seller replenishes at high price
@@ -29614,7 +29614,7 @@ Pulperos (merchant liquidity providers) aren't just infrastructure - they're **a
 **Same weekend spike:**
 ```
 1. BCH seller → Pre-positions reserves (removes buy pressure)
-2. Users → Cash out at pulperías
+2. Users → Cash out at neighborhood stores
 3. Pulperos → Accumulate BCH
 4. System → Warns about spike risk
 5. Pulperos → SELL immediately (adds sell pressure)
@@ -29998,14 +29998,14 @@ else:
 
 *Concept discovered: April 20, 2026*
 *Emerged from: Capital constraint analysis + Sunday operations question*
-*Insight: The question "are pulperías open Sunday?" led to entire coordination strategy*
+*Insight: The question "are neighborhood stores open Sunday?" led to entire coordination strategy*
 *Philosophy: Coordination > Capital, Education > Control, Network > Individual*
 *Status: Strategic framework validated, ready for implementation*
 
 
-## The Merchant Business Case: Why Pulperías Will Self-Onboard
+## The Merchant Business Case: Why Neighborhood Stores Will Self-Onboard
 
-# The Merchant Business Case: Why Pulperías Will Self-Onboard
+# The Merchant Business Case: Why Neighborhood Stores Will Self-Onboard
 
 **Type:** Concept Document  
 **Status:** ✅ Active — Core Pitch  
@@ -30016,13 +30016,16 @@ else:
 
 ## TL;DR
 
-A Venezuelan pulpería that accepts Asgaya cash-outs earns **three times** on a single remittance:
+A Venezuelan neighborhood store that accepts Asgaya cash-outs earns **three times** on a single remittance:
 
-1. **0.5% merchant fee** — for handing over cash  
-2. **15–30% product margin** — on the groceries the recipient buys during the visit  
-3. **0.5% seller fee** — when the merchant later sells the same BCH back to a new sender  
+1. **0.5% merchant fee** (€0.90) — for handing over cash  
+2. **15–30% product margin** (€21-42) — on the groceries the recipient buys during the visit  
+3. **0.5% seller fee** (€0.90) — when the merchant later sells the same BCH back to a new sender *(requires family in Spain)*
 
-**On a €180 remittance where the recipient spends €140 on groceries**, the merchant earns **€22.80–43.80**.  
+**On a €180 remittance where the recipient spends €140 on groceries** (realistic assumption), the merchant earns:
+- **Triple-dip** (with family in Spain): **€22.80–43.80**
+- **Double-dip** (no family abroad): **€21.90–42.90** (merchant fee + product margin only)
+
 A competitor who doesn't accept Asgaya earns **€0**.  
 Self-onboarding is economically inevitable.
 
@@ -30043,13 +30046,13 @@ A €180 remittance covers roughly **28% of a family's monthly food budget**. It
 
 ### First Dip — The Merchant Fee (0.5%)
 
-Elena walks into the pulpería, presents her claim code, receives cash. The merchant co-signs the covenant. The covenant releases BCH to the merchant, including **€0.90** (0.5% of €180) as the merchant fee.
+Elena walks into the neighborhood store, presents her claim code, receives cash. The merchant co-signs the covenant. The covenant releases BCH to the merchant, including **€0.90** (0.5% of €180) as the merchant fee.
 
 ### Second Dip — Product Sales (15–30% margin)
 
-Elena does not walk out with €180 in cash. She buys groceries, hygiene items, phone credit. Pulperías in Venezuela typically operate on **15–30% margins** for basic goods. Even if Elena spends only **30% of the remittance** in the store — a conservative floor — the merchant earns an additional **€8.10–16.20** in product margin on a €180 remittance.
+Elena does not walk out with €180 in cash. She buys groceries, hygiene items, phone credit. Neighborhood stores in Venezuela typically operate on **15–30% margins** for basic goods. Even if Elena spends only **30% of the remittance** in the store — a conservative floor — the merchant earns an additional **€8.10–16.20** in product margin on a €180 remittance.
 
-In reality, many recipients spend nearly the entire remittance on essentials. A pulpería that stocks the right goods can capture a much higher share.
+In reality, many recipients spend nearly the entire remittance on essentials. A neighborhood store that stocks the right goods can capture a much higher share.
 
 ### Third Dip — The Seller Fee (0.5%)
 
@@ -30059,7 +30062,7 @@ The BCH the merchant received from the covenant can be sold to a **new sender**.
 
 ---
 
-## 3. Concrete Example: Pulpería "La Esperanza"
+## 3. Concrete Example: Neighborhood store "La Esperanza"
 
 | Line | Amount |
 |------|--------|
@@ -30078,7 +30081,9 @@ The BCH the merchant received from the covenant can be sold to a **new sender**.
 - Seller fee: €0.90
 - **Total: €21.80 per remittance**
 
-The average Venezuelan pulpería earns **$200–500/month** in total revenue.  
+**Note on ranges:** The TL;DR assumes €140 spend (realistic based on household spending data) with 15-30% margin, yielding €22.80-43.80. The table above shows the full spectrum from conservative (€54 spend) to aggressive (€140 spend) scenarios. Most Phase 0 merchants will land in the €20-25 range.
+
+The average Venezuelan neighborhood store earns **$200–500/month** in total revenue.  
 **A single remittance per day adds €21.80/day → €654/month.**  
 The merchant can **double or triple their income**.
 
@@ -30086,7 +30091,7 @@ The merchant can **double or triple their income**.
 
 ## 4. The Competitive Moat: Why Merchants Can't Afford to Opt Out
 
-Asgaya recipients are **walking, paying customers**. When Elena goes to a pulpería that accepts Asgaya, she spends money there. The pulpería next door — which doesn't accept Asgaya — watches her walk past.
+Asgaya recipients are **walking, paying customers**. When Elena goes to a neighborhood store that accepts Asgaya, she spends money there. The neighborhood store next door — which doesn't accept Asgaya — watches her walk past.
 
 **First-mover advantage:**
 - The first merchant in a neighborhood to accept Asgaya captures all remittance foot traffic.  
@@ -30096,12 +30101,15 @@ Asgaya recipients are **walking, paying customers**. When Elena goes to a pulper
 **Margin flexibility:**
 Because the merchant earns extra income from the fee and the seller spread, they can **cut product margins slightly** to attract even more recipients, making the competing store even less competitive. This is not predatory — it's standard retail strategy when foot traffic brings compound revenue.
 
+**Permissionless: Why no one can gatekeep.**  
+Asgaya has no approval process, no territory restrictions, no franchise fee. The first merchant doesn't need permission. Their competitors don't need permission either. The market stays competitive by design: if a merchant overcharges or provides poor service, a new merchant posts a listing and captures the foot traffic. **Permissionless access is the accelerant** — the network spreads because it can't be stopped.
+
 ---
 
 ## 5. The BCH Adoption Flywheel
 
 ```
-Remittance arrives → Recipient visits pulpería → Merchant earns fees + margin
+Remittance arrives → Recipient visits neighborhood store → Merchant earns fees + margin
 → Merchant holds/recycles BCH → BCH circulates locally
 → More merchants see the economics → More merchants join
 → Network density increases → Recipients have more choices
@@ -30116,13 +30124,17 @@ Every remittance does **three things at once**:
 
 As the network grows, BCH circulates without ever touching a fiat exchange. The circular economy becomes self-sustaining.
 
+> **💡 BCH Price Volatility Is Nearly Irrelevant to Merchants**
+>
+> The merchant receives BCH and typically recycles it within hours or days (either selling to a new sender or spending with suppliers). The income streams (€0.90 merchant fee + €20-42 product margin + €0.90 seller fee) are denominated in EUR and realized immediately. Even if BCH drops 10% between receiving and selling, the merchant's total earnings (€22-44 per remittance) remain almost unchanged. The triple-dip economics work regardless of BCH price direction.
+
 ---
 
 ## 6. This Is Not Ideology — It's Business
 
 The merchant doesn't need to "believe in" Bitcoin Cash. They need to see that their competitor is earning more than they are. The math speaks for itself.
 
-**Asgaya's pitch to a pulpería owner:**
+**Asgaya's pitch to a neighborhood store owner:**
 > "A family in Spain sends money through us. The recipient comes to YOUR store, picks up cash, and buys groceries. You earn a fee on the cash, margin on the groceries, and another fee when you sell the BCH back. The store down the street gets none of this. How many customers are you willing to lose?"
 
 ---
@@ -30131,7 +30143,7 @@ The merchant doesn't need to "believe in" Bitcoin Cash. They need to see that th
 
 | Requirement | Already Have? |
 |-------------|---------------|
-| A smartphone with the Asgaya app | Most pulpería owners have one |
+| A smartphone with the Asgaya app | Most neighborhood store owners have one |
 | A BCH wallet (Cash Account recommended) | Free, setup < 5 minutes |
 | Physical cash float | Already maintained for daily operations |
 | A family member in Spain with a bank account | Optional (only needed for the seller triple-dip) |
@@ -30206,7 +30218,7 @@ Every merchant that joins Asgaya becomes a BCH stakeholder who wants the network
 ## 12. Open Questions (For Phase 0 Validation)
 
 1. **What % of remittances are actually spent in-store?** Conservative: 30%, Likely: 60-80%
-2. **Average product margins in Venezuelan pulperías?** Using 15-30% range, needs validation
+2. **Average product margins in Venezuelan neighborhood stores?** Using 15-30% range, needs validation
 3. **How many merchants have family in Spain?** Critical for triple-dip potential
 4. **Competitor response time?** How quickly do other stores adopt after first mover?
 5. **BCH holding behavior?** Do merchants recycle immediately or hold for price appreciation?
@@ -30353,7 +30365,7 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
 
 **Phase 3: Contract Maturity (Recipient controls timing - 30 seconds)**
 
-1. **Elena walks to merchant pulpería** (whenever she's ready - could be immediately, could be tomorrow)
+1. **Elena walks to merchant neighborhood store** (whenever she's ready - could be immediately, could be tomorrow)
 
 2. **Elena shares code with merchant:**
    - Code displays:
@@ -32950,7 +32962,7 @@ If 100% of recipients instantly convert BCH to fiat, Asgaya is just another paym
 
 > **💰 The Merchant Economics in One Number:**
 >
-> A pulpería that processes one €180 remittance per day where the recipient spends €140 on goods earns **€654–1,290 per month** in combined fees and product margin. The average Venezuelan pulpería earns $200–500/month.
+> A neighborhood store that processes one €180 remittance per day where the recipient spends €140 on goods earns **€654–1,290 per month** in combined fees and product margin. The average Venezuelan neighborhood store earns $200–500/month.
 >
 > **Accepting Asgaya can double or triple merchant income.**
 >
@@ -35423,7 +35435,7 @@ Buy surplus BCH from merchants with cash, enabling merchants to convert back to 
 - Competitors watch customers walk past their door
 
 **Why this drives self-onboarding:**
-When a migrant worker onboards the first merchant in their neighborhood, word spreads. Other pulpería owners see their competitor earning extra income. Within weeks, they ask "how do I join?"
+When a migrant worker onboards the first merchant in their neighborhood, word spreads. Other neighborhood store owners see their competitor earning extra income. Within weeks, they ask "how do I join?"
 
 **Phase 0 target:** Merchants with family connections in Spain (can participate as sellers for triple-dip).
 
@@ -39247,7 +39259,7 @@ Action: If >5%, increase to 10% and retest
 
 **When recipient is ready (controls timing):**
 
-1. **Elena walks to merchant pulpería** (whenever convenient - could be immediately, could be tomorrow)
+1. **Elena walks to merchant neighborhood store** (whenever convenient - could be immediately, could be tomorrow)
 
 2. **Elena shows code to merchant:**
    - Merchant sees: "500,000 VES to hand out, earn 2,500 VES fee (0.5%)"
@@ -41224,7 +41236,7 @@ Before reviewing, understand these fundamental concepts:
 - **Core claim:** Merchants earn €22-44 per €180 remittance (0.5% fee + 15-30% product margin + 0.5% seller fee)
 - **Questions:**
   - Is the triple-dip argument compelling to BCH-ambivalent merchants?
-  - Are product margin assumptions (15-30%) realistic for Venezuelan pulperías?
+  - Are product margin assumptions (15-30%) realistic for Venezuelan neighborhood stores?
   - What % of remittances are actually spent in-store? (Conservative: 30%, docs assume 60-80%)
   - Does the competitive moat logic hold? (First merchant captures foot traffic)
   - How many merchants have family in Spain? (Required for seller triple-dip)
@@ -41937,7 +41949,7 @@ The `Settlement APIs` specify that an LP's available liquidity is deducted when 
 
 #### 💡 Merchant Cash Liquidity
 
-The documentation focuses on LP fiat liquidity but does not address a more immediate operational issue: what happens if the merchant runs out of physical cash. A pulpería in Venezuela can only hold so many bolívares. A notification to the recipient that the merchant is "cash unavailable" before they travel would significantly improve the user experience.
+The documentation focuses on LP fiat liquidity but does not address a more immediate operational issue: what happens if the merchant runs out of physical cash. A neighborhood store in Venezuela can only hold so many bolívares. A notification to the recipient that the merchant is "cash unavailable" before they travel would significantly improve the user experience.
 
 #### ⚠️ BCH Float Depletion
 

@@ -555,12 +555,12 @@ Secondary corridor. EUR senders in Spain, ARS recipients in Argentina.
 
 ---
 
-### Pulpería
+### Neighborhood store
 **Type:** Merchant / Geography
 
 Small neighborhood store common in Honduras, Nicaragua, and other Central American countries. Sells basic goods (groceries, household items, phone credit) and often acts as informal financial services hub for the community.
 
-**Asgaya context:** Ideal merchant type for remittance cash-out. Pulperías are:
+**Asgaya context:** Ideal merchant type for remittance cash-out. Neighborhood stores are:
 - Located in every neighborhood (high accessibility)
 - Already handle cash transactions (operational readiness)
 - Trusted community hubs (social capital)
@@ -568,7 +568,7 @@ Small neighborhood store common in Honduras, Nicaragua, and other Central Americ
 
 **Post-MVP potential:** Honduras (HNL corridor) could benefit significantly from Asgaya once MVP is proven successful in EUR→VES corridor.
 
-**Usage:** "Recipient walks to local pulpería to claim remittance"
+**Usage:** "Recipient walks to local neighborhood store to claim remittance"
 
 **Research:** See [RS010_Honduras.md](research/RS010_Honduras.md) for corridor analysis
 
