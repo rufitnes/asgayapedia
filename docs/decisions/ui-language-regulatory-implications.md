@@ -260,7 +260,7 @@ If "Send Money" language proves too risky:
 
 - [Core Regulatory Constraints](../concepts/core-regulatory-constraints.md) - No custody, no KYC rationale
 - [Why No KYC](../core-architecture/why-no-kyc.md) - Permissionless access philosophy
-- [Covenant Architecture](../concepts/overcollateralized-bounty-contracts.md) - Technical implementation
+- [Covenant Architecture](../concepts/bounty-contracts-with-volatility-buffer.md) - Technical implementation
 - [Phase 0 Validation Checklist](./phase-0-validation-checklist.md) - Testing criteria
 
 ---
@@ -449,4 +449,4 @@ Re-evaluate this decision if:
 - [Fee Splitting Model](./fee-splitting-model.md) - Recipient choice fee table
 
 **Concept documents:**
-- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) - Both claim paths supported
+- [Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) - Both claim paths supported

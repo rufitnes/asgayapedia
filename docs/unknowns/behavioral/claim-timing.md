@@ -263,7 +263,7 @@ The 24h expiry window is arbitrary:
 - [Time-Based Settlement Incentives Proposal](../../collaborative_workspace/time_based_settlement_incentives.md)
 - [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
 - [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
-- [Capital Recycling Strategy](../../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model)
+- [Capital Recycling Strategy](../../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model)
 
 ---
 

@@ -1,4 +1,4 @@
-# Overcollateralized Bounty Contracts
+# With volatility buffer Bounty Contracts
 
 **Status:** Proposed Architecture (Discovered May 10, 2026)  
 **Priority:** Core Innovation — Enables compliant pull system  
@@ -30,12 +30,12 @@ On May 9, 2026, we abandoned the pull system to comply with [Core Regulatory Con
 
 > **What if the seller is the liquidity provider, and the smart contract is the escrow?**
 
-Instead of a **central entity** holding funds, a **CashScript covenant** (BCH smart contract) holds **overcollateralized BCH posted by the seller**. The contract only releases funds when both conditions are met:
+Instead of a **central entity** holding funds, a **CashScript covenant** (BCH smart contract) holds **BCH + volatility buffer posted by the seller**. The contract only releases funds when both conditions are met:
 
 1. **Merchant confirmed:** "I gave cash to recipient" (on-chain proof)
 2. **Seller confirmed:** "I received Bizum from sender" (automated bot signature)
 
-**If BCH price moves while waiting, the overcollateralization absorbs the volatility.**
+**If BCH price moves while waiting, the volatility buffer absorbs the volatility.**
 
 Excess BCH returns to the seller. The recipient gets exactly the promised amount of local currency.
 
@@ -72,7 +72,7 @@ Excess BCH returns to the seller. The recipient gets exactly the promised amount
 
 **Covenant Creation:**
 - Sender creates EUR-denominated covenant with recipient's address
-- BCH Seller posts overcollateralized BCH (107%)
+- BCH Seller posts BCH + volatility buffer (107%)
 - Covenant published to bulletin board
 - 24-hour claim window starts
 
@@ -116,7 +116,7 @@ Maturity conditions: Recipient AND Merchant signatures
 They agree on terms:
 - **Amount:** 500,000 VES cash
 - **Equivalent:** ~€100 at current BCH/VES rate
-- **Overcollateralization:** 7% (seller will post 107% of required BCH)
+- **Volatility buffer:** 7% (seller will post 107% of required BCH)
 
 **Elena and merchant create a CashScript covenant on-chain:**
 
@@ -138,7 +138,7 @@ Covenant Parameters:
 ╔═══════════════════════════════════════════════════════╗
 ║  BOUNTY #4729                                         ║
 ║  500,000 VES (€100 equivalent)                        ║
-║  Requires: 0.0107 BCH (overcollateralized 7%)         ║
+║  Requires: 0.0107 BCH (with volatility buffer 7%)         ║
 ║  Timeout: 24h from seller acceptance                  ║
 ║  Status: OPEN — awaiting seller                       ║
 ╚═══════════════════════════════════════════════════════╝
@@ -164,7 +164,7 @@ Inputs:  Seller's wallet (0.0107 BCH)
 Outputs: Bounty Contract #4729 (0.0107 BCH)
 ```
 
-**The contract now holds the overcollateralized BCH.** No central escrow, no custody service—just code enforcing conditions.
+**The contract now holds the BCH + volatility buffer.** No central escrow, no custody service—just code enforcing conditions.
 
 **Bounty status updates:**
 
@@ -267,7 +267,7 @@ Understanding risk allocation across all participants:
 
 ---
 
-## Volatility Protection via Overcollateralization
+## Volatility Protection via Volatility buffer
 
 ### Price Movement Scenarios
 
@@ -380,7 +380,7 @@ Start: €200 limit, normal listing
 **Opportunity cost of NOT topping up:**
 - Lose chance to advance tiers
 - Competitors with rewards get more visibility
-- Miss out on [Capital Recycling Strategy](overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) compounding (≈360% APR)
+- Miss out on [Capital Recycling Strategy](bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model) compounding (≈360% APR)
 
 ---
 
@@ -516,7 +516,7 @@ Timeline:
 
 Distribution:
 ├─ Merchant receives: 0.0995 BCH (merchant portion)
-└─ Seller receives: 0.0075 BCH (fee + overcollateralization)
+└─ Seller receives: 0.0075 BCH (fee + volatility buffer)
 
 Everyone happy! ✅
 ```
@@ -694,7 +694,7 @@ Accounting:
 | Metric | Central Escrow | Bounty Contract Seller |
 |--------|----------------|------------------------|
 | **Capital source** | Escrow's EUR (buy BCH on demand) | Seller's own BCH inventory |
-| **Capital efficiency** | High (buy exact amount needed) | Lower (7% overcollateralization) |
+| **Capital efficiency** | High (buy exact amount needed) | Lower (7% volatility buffer) |
 | **Volatility risk** | Zero (escrow buys at moment needed) | Medium (seller absorbs ±7% swings) |
 | **Profit model** | 1% fee split | 1% fee split + surplus if BCH rises |
 | **Regulatory status** | MiCA CASP required | No license (own capital) |
@@ -1141,7 +1141,7 @@ MiCA/PSD2 licensing requirements. Zero protocol fee = information society servic
 
 | Feature | Escrow Pull (Lost May 9) | Bulletin Board (May 9) | Bounty Contract (May 10) |
 |---------|--------------------------|------------------------|--------------------------|
-| **Volatility protection** | ✅ EUR in escrow (0% volatility) | ❌ Immediate BCH purchase | ✅ Overcollateralization |
+| **Volatility protection** | ✅ EUR in escrow (0% volatility) | ❌ Immediate BCH purchase | ✅ Volatility buffer |
 | **Recipient controls timing** | ✅ Escrow waits for signal | ❌ Sender timing determines | ✅ Covenant waits for both conditions |
 | **Send-and-forget UX** | ✅ Sender pays once | ❌ Sender must coordinate | ✅ Sender pays once, covenant handles rest |
 | **No CASP licensing** | ❌ Custody = regulated | ✅ No custody | ✅ Seller's own capital |

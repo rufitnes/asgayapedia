@@ -110,7 +110,7 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 **Notes:**
 - **Full refund (no seller fee)** - sender used own BCH, no seller involved
 - All 0.1 BCH returns to sender's wallet if unclaimed
-- Related policy: [Overcollateralized Bounty Contracts - Timeout Cascade](../../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+- Related policy: [With volatility buffer Bounty Contracts - Timeout Cascade](../../../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade)
 
 ---
 
@@ -228,7 +228,7 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 - [Screen 7A: Completion](./7a-completion.md) - Next screen
 - [Screen 6B: Tracking (Buy from Seller)](../buy-seller-path/6b-tracking.md) - Alternative tracking screen
 - [Covenant Expiry Error](../errors/covenant-expiry.md) - If recipient doesn't claim
-- [Overcollateralized Bounty Contracts](../../../../concepts/overcollateralized-bounty-contracts.md) - Covenant specification
+- [With volatility buffer Bounty Contracts](../../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant specification
 
 ---
 

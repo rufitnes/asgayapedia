@@ -4,7 +4,7 @@
 
 **Status:** Phase 0 (Simplified)  
 **Category:** Trust & Safety  
-**Related:** [Covenant Architecture](../concepts/overcollateralized-bounty-contracts.md), [Merchant Flows](../android-app/flows/merchant-flows.md)
+**Related:** [Covenant Architecture](../concepts/bounty-contracts-with-volatility-buffer.md), [Merchant Flows](../android-app/flows/merchant-flows.md)
 
 ---
 
@@ -308,7 +308,7 @@ For recipients without smartphones:
 
 ## Related Research
 
-- **Covenant timeout mechanism:** See [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md)
+- **Covenant timeout mechanism:** See [Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md)
 - **Safe confirmation UX:** Prevents most disputes through proper sequencing
 - **Trust networks:** Social reputation in local communities (V1+)
 - **Social media transparency:** V1 enhancement for scaling beyond trusted network

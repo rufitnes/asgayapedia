@@ -414,7 +414,7 @@ fun testFullSenderFlow_OwnBCH() {
 - [Pichan Regtest Setup](./pichan-regtest-setup.md) - Server configuration
 - [Phase 0 Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md) - Overall strategy
 - [User Flows](../flows/) - UI mockups and flow documentation
-- [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) - Covenant logic
+- [With volatility buffer Bounty Contracts](../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant logic
 
 ---
 

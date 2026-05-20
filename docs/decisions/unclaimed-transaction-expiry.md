@@ -20,7 +20,7 @@ Prevent funds from being locked indefinitely in covenant when recipients never c
 
 **Without expiry policy:**
 - BCH remains locked in covenant indefinitely
-- BCH seller's capital is tied up (overcollateralized position)
+- BCH seller's capital is tied up (with volatility buffer position)
 - No clear resolution process
 - Sender's money is in limbo
 - BCH seller bears ongoing operational costs
@@ -33,7 +33,7 @@ Prevent funds from being locked indefinitely in covenant when recipients never c
 
 **BCH Seller operational reality (Covenant System):**
 1. BCH seller receives €100 via Bizum (instant)
-2. BCH seller **locks BCH in covenant** (overcollateralized: €107 worth)
+2. BCH seller **locks BCH in covenant** (with volatility buffer: €107 worth)
 3. Claim code generated and sent to recipient
 4. **If recipient claims:** Covenant executes, BCH distributed automatically
 5. **If recipient never claims:**
@@ -43,7 +43,7 @@ Prevent funds from being locked indefinitely in covenant when recipients never c
    - BCH seller must manually send Bizum refund to sender (administrative work)
 
 **BCH Seller costs for unclaimed transaction:**
-- BCH locked: €107 (overcollateralized capital)
+- BCH locked: €107 (with volatility buffer capital)
 - Covenant gas fee: minimal
 - Manual refund: ~10 min work
 - Capital lock: €107 BCH tied up for 24h (opportunity cost)
@@ -78,7 +78,7 @@ If covenant times out (recipient never claims), refund is **SPLIT**:
 - Gets back: €0.50 BCH (processing fee only)
 - **Must refund €99.50 Bizum to break even**
 
-> **Beyond the immediate loss:** Ghosting also means permanent exclusion from the seller role. A banned seller loses access to a business model that can generate ≈360% APR on deployed capital (see [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model)). The opportunity cost dwarfs the €6.50 static loss.
+> **Beyond the immediate loss:** Ghosting also means permanent exclusion from the seller role. A banned seller loses access to a business model that can generate ≈360% APR on deployed capital (see [Capital Recycling Strategy](../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model)). The opportunity cost dwarfs the €6.50 static loss.
 
 **See:** [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md) for complete analysis.
 
@@ -113,7 +113,7 @@ Refund to sender:    €99.90
 
 **What it does NOT cover:**
 - ❌ Covenant gas fees (minimal)
-- ❌ Overcollateralization surplus (already locked)
+- ❌ Volatility buffer surplus (already locked)
 
 **Why 0.1%?**
 - Start low, encourage legitimate use

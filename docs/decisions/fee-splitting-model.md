@@ -37,7 +37,7 @@
 > 💡 **TL;DR: How the 1% fee is split**
 >
 > The 1% total fee is split between TWO participants in the covenant:
-> - **BCH Seller:** 0.5% (provides overcollateralized BCH to covenant)
+> - **BCH Seller:** 0.5% (provides BCH + volatility buffer to covenant)
 > - **Merchant:** 0.5% (hands cash to recipient, receives BCH)
 >
 > **Example (€100 transfer):**
@@ -81,7 +81,7 @@
 Create **economic incentives** for all participants to join and grow the Asgaya network **while promoting BCH adoption**.
 
 **Primary participants to incentivize:**
-1. **BCH Sellers:** Post overcollateralized BCH to covenants, enable pull system
+1. **BCH Sellers:** Post BCH + volatility buffer to covenants, enable pull system
 2. **Merchants:** Accept BCH payments, provide VES liquidity to recipients
 
 **Secondary market (optional):**
@@ -99,7 +99,7 @@ Create **economic incentives** for all participants to join and grow the Asgaya 
 
 **Challenge:** Split 1% fee to:
 1. Fairly compensate both participants
-2. Incentivize BCH sellers to provide liquidity (post overcollateralized BCH)
+2. Incentivize BCH sellers to provide liquidity (post BCH + volatility buffer)
 3. Incentivize merchants to hold BCH (not immediately sell)
 4. Make instant settlement available but economically discouraged
 5. Align with Asgaya's mission: BCH adoption, not just fiat conversion
@@ -120,7 +120,7 @@ Recipient receives: 99% (transfer amount minus fees)
 
 **No variable sourcing costs** (unlike old escrow model):
 - BCH seller posts their own BCH as collateral
-- Overcollateralization surplus is separate from fee (seller keeps if BCH rises)
+- Volatility buffer surplus is separate from fee (seller keeps if BCH rises)
 - Simple, transparent, no hidden costs
 
 ---
@@ -135,7 +135,7 @@ This is our **hypothesis**, not a finalized parameter. We chose 0.5% for each pa
 - ✅ **Symmetric split:** Equal rewards signal fairness and balanced importance
 - ✅ **Room to adjust:** Can shift to 0.6%/0.4% or 0.4%/0.6% based on data
 
-> **Why 0.5% may already be highly attractive:** With capital recycling, a seller can turn over the same BCH many times per day, yielding an effective annualised return (APR) far above the nominal 0.5% per transaction. See [Capital Recycling Strategy](../concepts/overcollateralized-bounty-contracts.md#capital-recycling-strategy-the-sellers-business-model) for the detailed model (≈360% APR vs. ≈171% APR without recycling).
+> **Why 0.5% may already be highly attractive:** With capital recycling, a seller can turn over the same BCH many times per day, yielding an effective annualised return (APR) far above the nominal 0.5% per transaction. See [Capital Recycling Strategy](../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model) for the detailed model (≈360% APR vs. ≈171% APR without recycling).
 
 **What we're testing in Phase 0 (5-10 migrant workers, 1-2 months):**
 
@@ -156,7 +156,7 @@ This is our **hypothesis**, not a finalized parameter. We chose 0.5% for each pa
 - **Signal:** <5 sellers willing to participate, <50% bounty acceptance rate
 - **Root cause:** 0.5% fee doesn't compensate for capital cost + volatility risk
 - **Action:** Increase to **0.6% seller / 0.4% merchant** split
-- **Rationale:** Seller bears more risk (24h capital lock + overcollateralization), needs higher reward
+- **Rationale:** Seller bears more risk (24h capital lock + volatility buffer), needs higher reward
 
 **Trigger 2: Merchant acquisition fails**
 - **Signal:** <3 merchants onboarded, merchants quit after first payout
@@ -211,9 +211,9 @@ We'll track:
 
 **Covenant distribution when mature:**
 ```
-Total BCH in covenant: €107 (overcollateralized by seller)
+Total BCH in covenant: €107 (with volatility buffer by seller)
 ├─ Merchant receives: €99.50 worth of BCH (€99 principal + €0.50 fee)
-└─ BCH seller receives: €7.50 (€7 overcollateralization surplus + €0.50 fee)
+└─ BCH seller receives: €7.50 (€7 volatility buffer surplus + €0.50 fee)
 
 Merchant hands to recipient: €99.00 worth of VES cash
 Merchant keeps: €0.50 (0.5% reward in BCH)
@@ -223,7 +223,7 @@ Merchant keeps: €0.50 (0.5% reward in BCH)
 - Sender paid: €100.00
 - Recipient got: €99.00 worth of VES
 - Merchant earned: €0.50 in BCH (holds for future use)
-- BCH seller earned: €0.50 + overcollateralization surplus
+- BCH seller earned: €0.50 + volatility buffer surplus
 
 ---
 
@@ -272,7 +272,7 @@ Merchant accepts: Sends BCH, receives €99.00 fiat
 
 **Covenant distribution when mature:**
 ```
-BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus
+BCH Seller receives: €0.50 (0.5% fee) + volatility buffer surplus
 Recipient receives: €9.90 worth of BCH (0.0198 BCH)
 Merchant receives: €0 (no merchant involved)
 ```
@@ -292,7 +292,7 @@ Merchant receives: €0 (no merchant involved)
 
 **Covenant distribution when mature:**
 ```
-BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus  
+BCH Seller receives: €0.50 (0.5% fee) + volatility buffer surplus  
 Merchant receives: €9.90 worth of BCH
 Merchant hands: €9.85 cash to recipient
 Merchant keeps: €0.05 in BCH (0.5% of €9.90)
@@ -368,12 +368,12 @@ Why bother? Same as having no reward at all!
 **Best case for BCH sellers:**
 - Already own BCH (miners from mining rewards, HODLers from past purchases)
 - **Zero acquisition cost**
-- Post overcollateralized BCH to covenant (e.g., €107 for €100 bounty)
-- Earn 0.5% fee (€0.50) + overcollateralization surplus if BCH rises
+- Post BCH + volatility buffer to covenant (e.g., €107 for €100 bounty)
+- Earn 0.5% fee (€0.50) + volatility buffer surplus if BCH rises
 
 **Example: BCH miner processes 100 bounties/month:**
 - Fees: 100 × €0.50 = €50/month
-- Overcollateralization surplus: Variable (depends on BCH price movement)
+- Volatility buffer surplus: Variable (depends on BCH price movement)
 - **No exchange fees** (using mined BCH)
 - **Total revenue:** Mining rewards + seller fees + surplus
 
@@ -385,8 +385,8 @@ Why bother? Same as having no reward at all!
 
 **For traders or those without BCH inventory:**
 - Buy BCH on exchange (Kraken 0.26%, Binance 0.10%, etc.)
-- Post to covenant as overcollateralized bounty
-- Earn 0.5% fee (€0.50) + overcollateralization surplus
+- Post to covenant as bounty + volatility buffer
+- Earn 0.5% fee (€0.50) + volatility buffer surplus
 
 **Net profit calculation:**
 ```
@@ -407,13 +407,13 @@ Net: €0.24 + surplus
 ### Option C: Hybrid Approach
 
 **Use own BCH when available, buy when depleted:**
-- Post overcollateralized BCH from holdings first (0% cost)
+- Post BCH + volatility buffer from holdings first (0% cost)
 - Buy from exchange when holdings run low (0.10-0.26% cost)
 - Mix strategies based on volume and capital availability
 
 ---
 
-## Overcollateralization Economics (Separate from Fee)
+## Volatility buffer Economics (Separate from Fee)
 
 **BCH seller's additional revenue source:**
 
@@ -443,7 +443,7 @@ Seller must add more BCH or bounty refunds
 Opportunity cost + reputation penalty
 ```
 
-**Overcollateralization is:**
+**Volatility buffer is:**
 - ✅ Separate from fee (volatility buffer, not compensation)
 - ✅ Profit opportunity (if BCH rises)
 - ⚠️ Risk exposure (if BCH drops >7%)
@@ -518,7 +518,7 @@ Input: €107 worth of BCH (posted by seller)
 
 Outputs:
 ├─ Merchant address: €99.50 worth of BCH (€99 principal + €0.50 fee)
-└─ Seller address: €7.50 worth of BCH (€7 overcollateralization + €0.50 fee)
+└─ Seller address: €7.50 worth of BCH (€7 volatility buffer + €0.50 fee)
 
 On-chain, immutable, deterministic
 ```
@@ -537,7 +537,7 @@ On-chain, immutable, deterministic
   Merchant fee:     €0.50 (0.5%)
   Recipient gets:   €99.00 worth of VES
   Total cost:       €1.00 (1%)
-  Overcollateralization: €7.00 (7%)
+  Volatility buffer: €7.00 (7%)
   ```
 - Participants can verify on blockchain (immutable)
 - Public covenant code (open-source, auditable)
@@ -666,7 +666,7 @@ BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
 **How we verify this decision:**
 - ⏳ **Pending:** Chipnet testing (May 2026)
   - Deploy covenant with 0.5% fee split
-  - Test overcollateralization surplus calculation
+  - Test volatility buffer surplus calculation
   - Verify merchant receives correct BCH amount
 - ⏳ **Pending:** Phase 0 mainnet (June 2026)
   - Real transfers with 1-2 trusted merchants
@@ -779,7 +779,7 @@ BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
 ## Related Concepts
 
 - [BCH Sellers](../concepts/bch-sellers.md) — Who provides liquidity and why (miners especially)
-- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) — Technical covenant implementation
+- [Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) — Technical covenant implementation
 - [Pull System](../concepts/pull-system.md) — Why recipient-triggered execution is critical
 - [Dynamic Reward Modulation](../concepts/dynamic-reward-modulation.md) — Future fee optimization
 

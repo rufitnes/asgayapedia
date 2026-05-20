@@ -68,7 +68,7 @@ Use real market exchange rates with zero markup, avoiding both private company s
 **Layer 2: Protocol Reality (EUR-denominated, settled in BCH)**
 - Covenant specifies EUR values, settled in BCH at maturity rate
 - Transaction: €100 worth of BCH (calculated at maturity)
-- Seller posts: €107 worth of BCH (overcollateralization at creation)
+- Seller posts: €107 worth of BCH (volatility buffer at creation)
 - Merchant receives: €99.50 worth of BCH (calculated at maturity spot price)
 - **This is a futures contract: EUR promise, BCH settlement**
 
@@ -129,7 +129,7 @@ Sender creates covenant (assuming 1 BCH = €1,000 for illustration):
 
 1. Sender wants to send €100 worth of BCH
 2. Covenant specifies: €100 EUR value (to be settled in BCH at maturity)
-3. Current BCH spot price: €1,000 per BCH (for estimating overcollateralization)
+3. Current BCH spot price: €1,000 per BCH (for estimating volatility buffer)
 
 4. BCH seller accepts, posts ~0.107 BCH (€107 worth at creation, 7% buffer)
 
@@ -148,11 +148,11 @@ Sender creates covenant (assuming 1 BCH = €1,000 for illustration):
 - **Price at maturity determines BCH amounts distributed**
 
 **Spot price sources:**
-- **Creation time:** Estimate overcollateralization needed (seller's risk calculation)
+- **Creation time:** Estimate volatility buffer needed (seller's risk calculation)
 - **Maturity time:** Determines actual BCH amounts distributed (merchant gets €99.50 worth)
 - **Public APIs:** Kraken, Coinbase, or any verifiable BCH/EUR ticker
 
-**Why overcollateralization protects merchant:**
+**Why volatility buffer protects merchant:**
 - Covenant promises: €99.50 worth of BCH to merchant
 - If BCH drops 5%: Merchant needs MORE BCH to equal €99.50
 - Seller posted 7% extra: Enough buffer to cover the drop
@@ -278,7 +278,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 **Rate locking:**
 - EUR/VES rate shown to sender might differ slightly from actual VES received
 - BCH price might move between covenant creation and maturity
-- **Mitigation:** Overcollateralization absorbs short-term BCH volatility
+- **Mitigation:** Volatility buffer absorbs short-term BCH volatility
 
 **Optimization:**
 - Could theoretically get better rates by algorithmic exchange routing
@@ -362,10 +362,10 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 - Should be within 1-2% of market
 - **Status:** Requires field testing
 
-**Test 4: Overcollateralization Protection**
+**Test 4: Volatility buffer Protection**
 - Simulate BCH price drops of 1-7% during covenant wait
 - Verify merchant still receives full promised EUR value (€99.50 worth of BCH)
-- Verify seller's overcollateralization buffer absorbed the volatility
+- Verify seller's volatility buffer buffer absorbed the volatility
 - **Status:** Testable on Chipnet
 
 ---
@@ -378,7 +378,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 | **Rate source** | Kraken purchase price | BCH spot price at maturity |
 | **Who has BCH** | Escrow buys after settlement | Seller already owns it |
 | **Exchange integration** | Required (Kraken API) | Optional (sellers manage own inventory) |
-| **Price risk** | Escrow bears (during purchase) | Seller bears (via overcollateralization) |
+| **Price risk** | Escrow bears (during purchase) | Seller bears (via volatility buffer) |
 | **Regulatory** | CASP custody service | No custody (seller's own BCH) |
 | **Transparency** | Kraken fee visible | All fees explicit (0.5% + 0.5%) |
 | **Decentralization** | Centralized (Kraken dependency) | Decentralized (multiple sellers) |
@@ -396,7 +396,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 
 - ✅ **Research:** DolarAPI integration ([RS047](../research/RS047_dolarapi_venezuela_rates.md))
 - ✅ **Research:** Exchange rate display strategies
-- ✅ **Concept:** Overcollateralized bounty contracts
+- ✅ **Concept:** Bounty + volatility buffer contracts
 - 🔄 **Development:** Sender app rate display
 - 🔄 **Development:** Covenant BCH amount calculation
 - 🔄 **Development:** Recipient app local rate verification
@@ -416,7 +416,7 @@ Access market rate via Bizum P2P    Access market rate via P2P cash market
 ## Related Concepts
 
 - [Pull System](../concepts/pull-system.md) — How recipient timing control affects rate risk
-- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) — How overcollateralization protects against volatility
+- [Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) — How volatility buffer protects against volatility
 - [BCH Sellers](../concepts/bch-sellers.md) — Who provides BCH and how they manage inventory
 
 ---

@@ -608,7 +608,7 @@ def submit_fraud_proof(covenant_id, proof, signature):
 
 - [Fraud Proof Mechanism](fraud-proof-mechanism.md) - Technical implementation
 - [Seller Heartbeat Mechanism](seller-heartbeat-mechanism.md) - Liveness proof system
-- [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md) - Capital recycling strategy
+- [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md) - Capital recycling strategy
 - [Unclaimed Transaction Expiry](../decisions/unclaimed-transaction-expiry.md) - Timeout handling
 - [Fee Splitting Model](../decisions/fee-splitting-model.md) - Economic incentives
 

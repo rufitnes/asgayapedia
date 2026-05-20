@@ -55,12 +55,12 @@ Merchants who want BCH exposure can keep it. Merchants who want stability can sw
 
 ## What is MUSD?
 
-**MUSD** is a BCH-native, overcollateralized stablecoin built on CashTokens by Riften Labs (Moria Protocol).
+**MUSD** is a BCH-native, with volatility buffer stablecoin built on CashTokens by Riften Labs (Moria Protocol).
 
 | Property | Detail |
 |----------|--------|
 | **Peg** | 1 MUSD = $1 USD |
-| **Collateral** | Overcollateralized by BCH (150% initial ratio) |
+| **Collateral** | With volatility buffer by BCH (150% initial ratio) |
 | **Backing** | No fiat reserves (pure crypto CDP model, like MakerDAO) |
 | **Audit** | Hashlock security audit completed |
 | **Liquidity** | Active MUSD/BCH pool on Cauldron DEX |
@@ -176,7 +176,7 @@ No custody, no escrow, no intermediary. Pure peer-to-peer exchange.
 **The sequencing matters:**
 
 Phase 0 must prove:
-1. ✅ Covenant model works (overcollateralization, margin calls, refunds)
+1. ✅ Covenant model works (volatility buffer, margin calls, refunds)
 2. ✅ Merchants adopt (critical mass of recipients)
 3. ✅ BCH sellers sustain (inventory, hedge, fee viability)
 
@@ -199,7 +199,7 @@ Phase 0 focuses on the hard problem: fiat → BCH with volatility protection. Ph
 ┌─────────────────────────────────────────┐
 │ MUSD (Issued by Moria Protocol)        │
 │ - Community token                       │
-│ - Overcollateralized by BCH             │
+│ - With volatility buffer by BCH             │
 │ - Asgaya never mints, holds, or controls│
 └─────────────────────────────────────────┘
                     ↓
@@ -227,7 +227,7 @@ MUSD is issued by Moria Protocol (Riften Labs). If MUSD triggers regulation:
 - Asgaya just displays rates (like CoinGecko displays Bitcoin prices)
 - If MUSD becomes regulated, Asgaya can pivot to other stable tokens
 
-**Regulatory risk:** Low. MUSD is community-governed, overcollateralized, no fiat backing. Similar to DAI, which operates globally without triggering security/payment regulation in most jurisdictions.
+**Regulatory risk:** Low. MUSD is community-governed, with volatility buffer, no fiat backing. Similar to DAI, which operates globally without triggering security/payment regulation in most jurisdictions.
 
 ---
 

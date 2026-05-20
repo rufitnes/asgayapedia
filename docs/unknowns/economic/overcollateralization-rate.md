@@ -1,4 +1,4 @@
-# Overcollateralization Rate — Is 107% Sufficient?
+# Volatility buffer Rate — Is 107% Sufficient?
 
 **Status:** Not Started  
 **Priority:** Critical  
@@ -9,10 +9,10 @@
 
 ## What We Don't Know
 
-**What overcollateralization ratio protects merchants from volatility while remaining attractive to sellers?**
+**What volatility buffer ratio protects merchants from volatility while remaining attractive to sellers?**
 
 We have no empirical validation of:
-- Whether 7% buffer (107% collateral) covers typical BCH volatility in chosen settlement windows
+- Whether 7% buffer (107% collateral) covers typical BCH volatility in chosen claim windows
 - Tail event frequency (how often does BCH move >7% in 2h/6h/12h/24h?)
 - Whether dynamic collateralization (103%-110% based on window) matches actual risk
 - Seller willingness to post different collateral levels
@@ -82,7 +82,7 @@ If we launch during low volatility and hit high volatility later:
 **Assumptions:**
 1. BCH behaves like other mid-cap cryptocurrencies (moderate volatility)
 2. Short windows have exponentially lower tail risk than long windows
-3. Sellers will tolerate up to 10% overcollateralization for 24h windows
+3. Sellers will tolerate up to 10% volatility buffer for 24h windows
 4. Covering 80-95th percentile is acceptable (tail events expected occasionally)
 
 **This is speculation. We need historical volatility data.**
@@ -329,7 +329,7 @@ If we launch during low volatility and hit high volatility later:
 - [Time-Based Settlement Incentives Proposal](../../collaborative_workspace/time_based_settlement_incentives.md)
 - [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
 - [Grok's Review](../../collaborative_workspace/permissionless_contributions/Grok_reply_to_gemini_prompt.md) (Line 19-26: "7% insufficient")
-- [ChatGPT's Review](../../collaborative_workspace/permissionless_contributions/ChatGPT_reply_to_gemini_prompt.md) (Line 62-106: Overcollateralization concerns)
+- [ChatGPT's Review](../../collaborative_workspace/permissionless_contributions/ChatGPT_reply_to_gemini_prompt.md) (Line 62-106: Volatility buffer concerns)
 
 ---
 

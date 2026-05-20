@@ -18,7 +18,7 @@ This concept has been **renamed and updated** to reflect the covenant-based arch
 **What changed:**
 - **Architecture:** Escrow model → Covenant smart contracts
 - **Role name:** "Escrow Operator" → "BCH Seller"
-- **Mechanism:** Centralized custody → Overcollateralized covenants (no custody)
+- **Mechanism:** Centralized custody → Covenant + volatility buffers (no custody)
 - **Incentives:** Fee-only → Fee + hedge mechanism
 
 ---
@@ -41,7 +41,7 @@ In the covenant redesign (May 10, 2026), we discovered that:
 
 **Key differences:**
 - No custody (covenant holds BCH autonomously)
-- Overcollateralization (7% buffer for volatility)
+- Volatility buffer (7% buffer for volatility)
 - Hedge mechanism (sellers win in both price directions)
 - Permissionless (anyone can be a BCH seller, not just miners)
 - Automated (bot-driven, not manual)
@@ -70,7 +70,7 @@ The "BCH Miners as Escrows" concept was part of the April 2026 escrow-based arch
 
 **Current:**
 - [BCH Sellers](bch-sellers.md) - Covenant-era replacement
-- [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md) - Covenant mechanism
+- [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md) - Covenant mechanism
 - [Core Regulatory Constraints](core-regulatory-constraints.md) - Why no custody
 
 **Historical:**

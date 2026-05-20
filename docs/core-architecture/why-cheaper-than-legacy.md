@@ -100,12 +100,12 @@ Asgaya eliminates intermediaries by using:
 
 **How it works:**
 - Sender sends €100 to BCH seller via Bizum
-- BCH seller posts ~€107 worth of BCH collateral (7% overcollateralization)
+- BCH seller posts ~€107 worth of BCH collateral (7% volatility buffer)
 - Covenant promises €99.50 worth of BCH to merchant (settled at maturity rate)
 - Merchant sells 500,000 VES to recipient, receives ~€100.50 worth of BCH (earns ~€1 spread)
 - BCH seller keeps surplus after merchant paid (~€0.50 fee + hedge profit)
 
-**Key insight:** No exchange purchase needed. BCH seller already owns BCH, posts collateral, earns fee. Merchant earns spread by selling VES. Overcollateralization protects against volatility. Total cost still beats legacy systems by 85% (~€1 vs €6.49 on €100).
+**Key insight:** No exchange purchase needed. BCH seller already owns BCH, posts collateral, earns fee. Merchant earns spread by selling VES. Volatility buffer protects against volatility. Total cost still beats legacy systems by 85% (~€1 vs €6.49 on €100).
 
 ---
 
@@ -130,7 +130,7 @@ See the **Decisions** section for detailed documentation of the trade-offs made 
 
 - **[How Exchange Rates Work](../decisions/how-exchange-rates-work.md)** — How EUR-denominated covenants with BCH settlement achieve market rates
 - **[Fee Splitting Model](../decisions/fee-splitting-model.md)** — How the ~1% fee is distributed to incentivize all participants
-- **[Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md)** — How overcollateralization protects against volatility
+- **[Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md)** — How volatility buffer protects against volatility
 
 ---
 

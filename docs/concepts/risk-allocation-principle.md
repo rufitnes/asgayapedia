@@ -2,7 +2,7 @@
 
 **Status:** Core Design Principle (Phase 0 Active)  
 **Category:** Protocol Architecture  
-**Related:** [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md), [Pull System](pull-system.md), [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)
+**Related:** [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md), [Pull System](pull-system.md), [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md)
 
 ---
 
@@ -23,8 +23,8 @@
    - Binary outcome: full payment or transaction cancellation
 
 3. **Sellers provide collateral reliability**
-   - Sellers post 107% overcollateralization to covenant
-   - Sellers can voluntarily top up to earn reliability rewards
+   - Sellers post 107% volatility buffer to covenant
+   - Sellers can voluntarily top up to earn uptime incentives
    - Seller reputation tied to covenant completion rate
 
 4. **Senders bear extreme volatility risk beyond collateral thresholds**
@@ -256,11 +256,11 @@ function handleEarlyMaturity(covenant) {
 
 3. **What's the actual refund frequency?**
    - Metric: % of covenants that mature early (>7% drop)
-   - Hypothesis: <5% if using 2h settlement windows
-   - See: [Overcollateralization Rate Unknown](../unknowns/economic/overcollateralization-rate.md)
+   - Hypothesis: <5% if using 2h claim windows
+   - See: [Volatility buffer Rate Unknown](../unknowns/economic/volatility buffer-rate.md)
 
 4. **Does sender risk tolerance match usage patterns?**
-   - Metric: Do senders choose longer or shorter settlement windows?
+   - Metric: Do senders choose longer or shorter claim windows?
    - Hypothesis: >60% choose 2h windows (minimize risk)
    - See: [Time-Based Settlement Incentives](../../collaborative_workspace/time_based_settlement_incentives.md)
 
@@ -268,7 +268,7 @@ function handleEarlyMaturity(covenant) {
 
 ## Related Documents
 
-- [Overcollateralized Bounty Contracts](overcollateralized-bounty-contracts.md) - Technical implementation
+- [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md) - Technical implementation
 - [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md) - Detailed scenarios
 - [Pull System](pull-system.md) - Why recipient control matters
 - [Fee Splitting Model](../decisions/fee-splitting-model.md) - Economic incentives

@@ -82,7 +82,7 @@ By participating in Asgaya (as a user, merchant, or BCH seller), **you are solel
 
 - **Total loss is possible:** Technical failures, smart contract bugs, counterparty default, lost keys, or user error can result in complete and permanent loss of all funds. This is not theoretical—it will happen to some users.
 
-- **Bitcoin Cash volatility:** BCH price can fluctuate 10-20% or more in a single day. The EUR amount a recipient receives in local currency may be significantly different from what the sender intended, even with overcollateralization buffers.
+- **Bitcoin Cash volatility:** BCH price can fluctuate 10-20% or more in a single day. The EUR amount a recipient receives in local currency may be significantly different from what the sender intended, even with volatility buffer buffers.
 
 - **No insurance:** Funds are not insured by any government deposit insurance scheme, private insurance company, or protocol guarantee fund. When funds are lost, they are gone forever.
 
@@ -110,7 +110,7 @@ By participating in Asgaya (as a user, merchant, or BCH seller), **you are solel
 
 ### Counterparty Risk
 - **Merchant default:** Merchants may fail to provide cash after co-signing covenant
-- **BCH seller default:** Sellers may fail to honor accepted bounties (mitigated by overcollateralization)
+- **BCH seller default:** Sellers may fail to honor accepted bounties (mitigated by volatility buffer)
 - **Timeout cascade:** 24-hour claim window creates time pressure; unclaimed funds trigger refund split
 - **Covenant bugs:** Smart contract code may contain errors despite audit efforts
 - **Reputation systems:** Trust mechanisms are experimental and may fail

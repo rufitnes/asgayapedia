@@ -195,7 +195,7 @@ scripts/
 | **No custody** (core-regulatory-constraints.md) | ✅ Even mock server holds no funds, signs no transactions |
 | **Permissionless** (why-no-kyc.md) | ✅ Mock simulates permissionless bulletin board (anyone can be seller) |
 | **Bitcoin wallet positioning** (ui-language-regulatory-implications.md) | ✅ Mobile app is a BCH wallet from day one (Electrum client) |
-| **Pull system** (overcollateralized-bounty-contracts.md) | ✅ Covenant states in mock match production covenant logic |
+| **Pull system** (bounty-contracts-with-volatility-buffer.md) | ✅ Covenant states in mock match production covenant logic |
 
 ---
 
@@ -237,7 +237,7 @@ Re-evaluate this decision if:
 ## Related Documents
 
 - [Backend-APIs Architecture Overhaul](../android-app/backend-apis/README.md) - Updated for NFT-based bulletin board
-- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) - Covenant architecture
+- [Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant architecture
 - [UI Language Regulatory Implications](./ui-language-regulatory-implications.md) - Bitcoin wallet positioning
 - [Phase 0 Validation Checklist](./phase-0-validation-checklist.md) - Testing criteria
 

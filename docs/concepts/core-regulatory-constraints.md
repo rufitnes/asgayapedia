@@ -221,7 +221,7 @@ MiCA Article 2(4) excludes from CASP requirements:
 
 ### DeFi Precedents
 
-Overcollateralized smart contracts (MakerDAO, Aave) are NOT regulated as banks despite:
+With volatility buffer smart contracts (MakerDAO, Aave) are NOT regulated as banks despite:
 - Holding significant collateral value
 - Executing conditional transfers
 - Providing financial services
@@ -277,7 +277,7 @@ For any proposed architectural change, ask:
 
 - [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) — Full regulatory analysis
 - [RS051: Escrow Legal Framework](../research/RS051_escrow_legal_framework.md) — Why escrow model failed
-- [Overcollateralized Bounty Contracts](./overcollateralized-bounty-contracts.md) — Compliant pull-system alternative
+- [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md) — Compliant pull-system alternative
 - [Core Architecture: Why No Custody](../core-architecture/why-no-custody-no-intermediation.md) — Detailed reasoning (to be created)
 
 ---

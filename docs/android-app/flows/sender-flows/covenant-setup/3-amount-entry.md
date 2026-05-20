@@ -147,7 +147,7 @@ if (hasPendingCovenant) {
 - **Rate shown = Estimation only**
 - **Actual rate = When Elena claims** (recipient controls timing)
 - Elena gets rate at claim moment (fair, transparent)
-- Overcollateralization protects against volatility
+- Volatility buffer protects against volatility
 
 ### Educational Moments
 - Explains recipient choice (BCH free, cash 0.5% extra)
@@ -176,7 +176,7 @@ if (hasPendingCovenant) {
 **Pull System:**
 - Covenant promises EUR value, settles in BCH at maturity rate
 - Recipient controls timing (claims when ready)
-- Overcollateralization (7%) protects merchant
+- Volatility buffer (7%) protects merchant
 - Seller hedges volatility (receives EUR before price moves)
 
 ---

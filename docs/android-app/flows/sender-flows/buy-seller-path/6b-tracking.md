@@ -153,7 +153,7 @@ Track covenant progress when sender buys BCH from a seller. Includes "Waiting fo
 - **Split refund rationale:**
   - Merchant portion (€99.50) → Refunded to you (Iris)
   - Seller fee (€0.50) → Kept by seller (earned for 24h service)
-- Related policy: [Overcollateralized Bounty Contracts - Timeout Cascade](../../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+- Related policy: [With volatility buffer Bounty Contracts - Timeout Cascade](../../../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade)
 
 ---
 
@@ -270,7 +270,7 @@ Track covenant progress when sender buys BCH from a seller. Includes "Waiting fo
 - [Screen 6A: Tracking (Own Wallet)](../own-wallet-path/6a-tracking.md) - Alternative tracking screen
 - [Bizum Timeout Error](../errors/bizum-timeout.md) - If payment not sent in time
 - [Covenant Expiry Error](../errors/covenant-expiry.md) - If recipient doesn't claim
-- [Overcollateralized Bounty Contracts](../../../../concepts/overcollateralized-bounty-contracts.md) - Covenant specification
+- [With volatility buffer Bounty Contracts](../../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant specification
 
 ---
 
