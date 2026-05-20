@@ -97,9 +97,9 @@ Asgaya's covenant-based architecture eliminates custody and intermediation throu
 These principles guide all architectural decisions across the three requirements:
 
 1. **Accessibility Over Perfection** — Serve users with 3% fees rather than refuse unserved markets
-2. **Economic Incentives Over Ideology** — Ideology alone has failed to spread the use of BCH lets try rewards inestead.
+2. **Economic Incentives Over Ideology** — Ideology alone has failed to spread the use of BCH lets try rewards instead.
 3. **Simplicity at Scale** — Do a few things excellently rather than many things poorly
-4. **Maximum Freedom, Minimum Risk** — No KYC; secure key management education, desigend to avoid errors
+4. **Maximum Freedom, Minimum Risk** — No KYC; secure key management education, designed to avoid errors
 5. **Transparent Economics** — Market rates only, zero hidden markups, clear breakdown of cost after each transaction
 6. **Low-Tech Compatibility** — Low tech edge cases are given serious consideration
 
