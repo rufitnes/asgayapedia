@@ -47,6 +47,9 @@ How recipients without smartphones can claim covenants using NFC-enabled cards. 
 ### [Seller Liveness Signal](seller-liveness-signal.md) ⚠️ **Phase 1+**
 Passive liveness proof using notification noise patterns. Verifies that BCH Sellers are online and running honest software without explicit pings or central monitoring.
 
+### [Time Extension Marketplace](time-extension-marketplace.md) ⚠️ **Phase 1+ (Proposed)**
+Market-driven covenant rescue mechanism. When BCH drops near expiry threshold, participants can add collateral to extend claim windows in exchange for rewards. Creates arbitrage opportunities and prevents remittance failures during volatility.
+
 ---
 
 ## Historical / Deferred Concepts
