@@ -3762,6 +3762,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#alternative-own-funds-flow-05-fee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative: Own Funds Flow (0.5% Fee)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3834,6 +3845,17 @@
     <span class="md-ellipsis">
       
         How Spanish Gestor Sees It
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pro-seller-invoice-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pro Seller Invoice Format
       
     </span>
   </a>
@@ -4172,7 +4194,10 @@
 - <strong>Higher amounts</strong> — €500-2,000 typical vs €100-200 for family remittances
 - <strong>Business documentation</strong> — Proper invoices, tax IDs, accounting-ready paperwork</p>
 <p><strong>The flow, fees, and covenant mechanics are identical.</strong> A Venezuelan freelancer receiving payment through Asgaya follows the same process as a family remittance recipient.</p>
-<p><strong>Total fee:</strong> 0.5-1.0% (vs 5-15% through PayPal/Deel/Bitwage/P2P spreads)</p>
+<p><strong>Total fee:</strong> 
+- <strong>Cash path:</strong> 1.0% (0.5% Pro Seller + 0.5% merchant)
+- <strong>BCH path:</strong> 0.5% (0.5% Pro Seller only, no merchant)
+- <strong>(vs 5-15% through PayPal/Deel/Bitwage/P2P spreads)</strong></p>
 <hr />
 <h2 id="1-the-problem-remote-workers-lose-5-15-of-every-payment">1. The Problem: Remote Workers Lose 5-15% of Every Payment<a class="headerlink" href="#1-the-problem-remote-workers-lose-5-15-of-every-payment" title="Permanent link">&para;</a></h2>
 <p>Venezuela has one of the highest freelance workforce participation rates in the world:
@@ -4244,6 +4269,26 @@
 - BCH path: €1,005 (0.5% seller only)</p>
 <p><strong>vs PayPal/Deel:</strong> €75-150 saved</p>
 <hr />
+<h3 id="alternative-own-funds-flow-05-fee">Alternative: Own Funds Flow (0.5% Fee)<a class="headerlink" href="#alternative-own-funds-flow-05-fee" title="Permanent link">&para;</a></h3>
+<p><strong>For businesses that already hold or prefer to buy BCH directly:</strong></p>
+<p><strong>Step 1: Client buys BCH</strong>
+- Purchase on Kraken, Coinbase, or any exchange (€1,005 worth of BCH)
+- Bank statement: "Purchased cryptocurrency €1,005"</p>
+<p><strong>Step 2: Client posts covenant from their own BCH wallet</strong>
+- Send BCH through Asgaya app to María's CashAccount
+- Covenant posted from client's address (no Pro Seller needed)</p>
+<p><strong>Step 3: María claims payment</strong>
+- Same as above (cash or BCH)
+- <strong>Total fee: 0.5%</strong> (merchant only, no seller fee)</p>
+<p><strong>Who should use this:</strong>
+- Crypto-savvy businesses already buying BCH
+- Recurring payments (buy once, pay multiple times)
+- Want lowest possible fees</p>
+<p><strong>Who should use Pro Seller instead:</strong>
+- Don't want to handle crypto directly
+- Need professional invoicing for accounting
+- Occasional payments (not worth setting up exchange account)</p>
+<hr />
 <h2 id="3-what-is-a-pro-seller">3. What Is a "Pro Seller"?<a class="headerlink" href="#3-what-is-a-pro-seller" title="Permanent link">&para;</a></h2>
 <p><strong>Pro Seller = Regular BCH Seller + Professional Invoicing</strong></p>
 <h3 id="regular-bch-seller-for-family-remittances">Regular BCH Seller (for family remittances)<a class="headerlink" href="#regular-bch-seller-for-family-remittances" title="Permanent link">&para;</a></h3>
@@ -4286,6 +4331,23 @@ Cr. Cash             €1,005
 - Invoice from contractor shows services rendered<br />
 - Payment processor receipt links the two</p>
 <p>The only difference: Instead of paying PayPal, they're paying a crypto dealer. The accounting structure is identical.</p>
+<h3 id="pro-seller-invoice-format">Pro Seller Invoice Format<a class="headerlink" href="#pro-seller-invoice-format" title="Permanent link">&para;</a></h3>
+<p>The Pro Seller provides a professional invoice for the crypto asset purchase:</p>
+<div class="highlight"><pre><span></span><code>INVOICE #12345
+From: [Pro Seller Business Name]
+Tax ID: [Spanish CIF/NIF]
+
+To: [Client Company Name]  
+Tax ID: [Client Tax ID]
+
+Service: Cryptocurrency Purchase for Payment Covenant
+Amount: €1,005
+Date: [Date]
+
+Description: Purchased BCH for payment to vnzlancer2001
+Purpose: Facilitate international contractor payment
+</code></pre></div>
+<p>This accounting-ready documentation bridges the bank statement (payment to Pro Seller) with the freelancer's service invoice.</p>
 <hr />
 <h2 id="5-the-merchant-side-already-professional">5. The Merchant Side: Already Professional<a class="headerlink" href="#5-the-merchant-side-already-professional" title="Permanent link">&para;</a></h2>
 <p>When María claims cash at her local neighborhood store, <strong>that merchant is already operating as a business:</strong></p>
@@ -4334,6 +4396,7 @@ Cr. Cash             €1,005
 <p><strong>This is standard practice</strong> for Spanish residents earning side income. Many Venezuelan migrants in Spain already operate as autónomos (consultants, delivery drivers, freelancers).</p>
 <hr />
 <h2 id="7-comparison-asgaya-vs-traditional-methods">7. Comparison: Asgaya vs Traditional Methods<a class="headerlink" href="#7-comparison-asgaya-vs-traditional-methods" title="Permanent link">&para;</a></h2>
+<p><strong>Note:</strong> Section 2 used a €1,000 payment for illustration. This section uses €1,500 to reflect typical monthly freelancer earnings. The percentage fees remain consistent across different amounts.</p>
 <h3 id="on-1500month-typical-freelancer-salary">On €1,500/month (typical freelancer salary)<a class="headerlink" href="#on-1500month-typical-freelancer-salary" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4458,22 +4521,7 @@ Cr. Cash             €1,005
 - Records of amounts received (cash vs BCH)</p>
 <p><strong>Asgaya provides payment infrastructure, not tax advice.</strong> Your tax obligations depend on your specific situation.</p>
 <h3 id="what-if-my-client-needs-a-receipt-from-the-pro-seller">What if my client needs a receipt from the Pro Seller?<a class="headerlink" href="#what-if-my-client-needs-a-receipt-from-the-pro-seller" title="Permanent link">&para;</a></h3>
-<p>The Pro Seller provides a professional invoice:</p>
-<div class="highlight"><pre><span></span><code>INVOICE #12345
-From: [Pro Seller Business Name]
-Tax ID: [Spanish CIF/NIF]
-
-To: [Client Company Name]  
-Tax ID: [Client Tax ID]
-
-Service: Cryptocurrency Purchase for Payment Covenant
-Amount: €1,005
-Date: [Date]
-
-Description: Purchased BCH for payment to vnzlancer2001
-Purpose: Facilitate international contractor payment
-</code></pre></div>
-<p>This is accounting-ready documentation that Spanish gestors understand. It bridges the bank statement (payment to Pro Seller) to the freelancer's service invoice.</p>
+<p>The Pro Seller provides a professional invoice for the crypto asset purchase. See <strong>Section 4 (The Accounting)</strong> for the exact invoice format and how Spanish gestors interpret this documentation.</p>
 <hr />
 <h2 id="11-the-bottom-line">11. The Bottom Line<a class="headerlink" href="#11-the-bottom-line" title="Permanent link">&para;</a></h2>
 <p><strong>For freelancers earning €1,500/month:</strong>
