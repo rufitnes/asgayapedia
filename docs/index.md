@@ -57,6 +57,8 @@ Today's remittance system is a labyrinth of bureaucracy, platforms, regulations,
 
 Asgaya offers an alternative by connecting local mobile payment apps (like Bizum, Mercado Pago, PagoMóvil) through **Bitcoin Cash covenants** as the settlement layer. A sender in Spain triggers a Bizum payment to a BCH seller, who posts collateral to a covenant. The recipient in Venezuela claims cash from a local merchant by co-signing the covenant, which distributes BCH to the merchant—all peer-to-peer, with <1% fees.
 
+**The same flow serves freelancers receiving payments from abroad**—structurally identical to remittances, with 0.5-1% total fees vs 5-15% through PayPal/Deel/Bitwage. See [Freelance Payments](concepts/freelance-payments.md).
+
 The goal: mobilize those lost fees to drive adoption, making every transfer create a new merchant on the network.
 
 **The foundation that connects both sides.**
