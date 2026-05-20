@@ -73,6 +73,7 @@
 - [Fraud Proof Mechanism](https://docs.asgaya.org/concepts/fraud-proof-mechanism/index.md)
 - [Live Exchange Rates - DolarAPI Integration](https://docs.asgaya.org/concepts/live-exchange-rates/index.md)
 - [Market-Making Partners — Distributed Coordination for Stability](https://docs.asgaya.org/concepts/market-making-partners/index.md)
+- [The Merchant Business Case: Why Pulperías Will Self-Onboard](https://docs.asgaya.org/concepts/merchant-business-case/index.md)
 - [Pull System — Recipient-Triggered Execution](https://docs.asgaya.org/concepts/pull-system/index.md)
 - [RFID Card Recipients](https://docs.asgaya.org/concepts/rfid-card-recipients/index.md)
 - [Risk Allocation Principle](https://docs.asgaya.org/concepts/risk-allocation-principle/index.md)

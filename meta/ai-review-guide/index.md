@@ -130,6 +130,17 @@ Before reviewing, understand these fundamental concepts:
   - Should we add dynamic collateral requirements based on volatility?
   - How does the hedge mechanism protect BCH sellers?
 
+**c) Merchant Economics (Triple-Dip)**
+- **Document:** `/concepts/merchant-business-case.md`, `/core-architecture/why-bch-usage-incentive.md`
+- **Core claim:** Merchants earn €22-44 per €180 remittance (0.5% fee + 15-30% product margin + 0.5% seller fee)
+- **Questions:**
+  - Is the triple-dip argument compelling to BCH-ambivalent merchants?
+  - Are product margin assumptions (15-30%) realistic for Venezuelan pulperías?
+  - What % of remittances are actually spent in-store? (Conservative: 30%, docs assume 60-80%)
+  - Does the competitive moat logic hold? (First merchant captures foot traffic)
+  - How many merchants have family in Spain? (Required for seller triple-dip)
+  - Would a merchant find this more attractive than existing income sources?
+
 ---
 
 ### 3. API Design Review (Priority: 🟢 Medium)

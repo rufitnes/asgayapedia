@@ -146,6 +146,7 @@ Complete specification for mobile app implementation:
 ### 💡 [Concepts](concepts/)
 
 Theoretical foundations and key ideas:
+- Merchant business case (triple-dip economics: €22-44 per €180 remittance)
 - Bounty + volatility buffer contracts (covenant mechanics)
 - Decentralized pull system (bulletin board architecture)
 - BCH sellers and hedge mechanism
