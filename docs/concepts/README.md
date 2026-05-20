@@ -63,11 +63,11 @@ Proposed mechanism for adjusting fee splits based on market conditions. Phase 0 
 ### [Bubble Prevention](bubble-prevention.md) ⚠️ **Deferred**
 Proposed mechanisms to prevent speculative behavior in reward systems. Not implemented in Phase 0 (trusted parties only).
 
-### [BCH Miners as Escrows](bch-miners-as-escrows.md) ⚠️ **Obsolete (Pre-Covenant)**
-Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using covenant + volatility buffers (no custody).
+### ❌ [BCH Miners as Escrows](bch-miners-as-escrows.md) **OBSOLETE (Pre-Covenant Architecture)**
+Old escrow-era concept where miners acted as custody-based intermediaries. Replaced by BCH Sellers using covenant + volatility buffers (no custody). **Not part of current design.**
 
-### [Market Making Partners](market-making-partners.md) ⚠️ **Obsolete (Pre-Covenant)**
-Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture.
+### ❌ [Market Making Partners](market-making-partners.md) **OBSOLETE (Pre-Covenant Architecture)**
+Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (Phase 1+) in covenant architecture. **Not part of current design.**
 
 ---
 

@@ -11,11 +11,14 @@
 
 A Venezuelan pulpería that accepts Asgaya cash-outs earns **three times** on a single remittance:
 
-1. **0.5% merchant fee** — for handing over cash  
-2. **15–30% product margin** — on the groceries the recipient buys during the visit  
-3. **0.5% seller fee** — when the merchant later sells the same BCH back to a new sender  
+1. **0.5% merchant fee** (€0.90) — for handing over cash  
+2. **15–30% product margin** (€21-42) — on the groceries the recipient buys during the visit  
+3. **0.5% seller fee** (€0.90) — when the merchant later sells the same BCH back to a new sender *(requires family in Spain)*
 
-**On a €180 remittance where the recipient spends €140 on groceries**, the merchant earns **€22.80–43.80**.  
+**On a €180 remittance where the recipient spends €140 on groceries** (realistic assumption), the merchant earns:
+- **Triple-dip** (with family in Spain): **€22.80–43.80**
+- **Double-dip** (no family abroad): **€21.90–42.90** (merchant fee + product margin only)
+
 A competitor who doesn't accept Asgaya earns **€0**.  
 Self-onboarding is economically inevitable.
 
@@ -71,6 +74,8 @@ The BCH the merchant received from the covenant can be sold to a **new sender**.
 - Seller fee: €0.90
 - **Total: €21.80 per remittance**
 
+**Note on ranges:** The TL;DR assumes €140 spend (realistic based on household spending data) with 15-30% margin, yielding €22.80-43.80. The table above shows the full spectrum from conservative (€54 spend) to aggressive (€140 spend) scenarios. Most Phase 0 merchants will land in the €20-25 range.
+
 The average Venezuelan pulpería earns **$200–500/month** in total revenue.  
 **A single remittance per day adds €21.80/day → €654/month.**  
 The merchant can **double or triple their income**.
@@ -88,6 +93,9 @@ Asgaya recipients are **walking, paying customers**. When Elena goes to a pulper
 
 **Margin flexibility:**
 Because the merchant earns extra income from the fee and the seller spread, they can **cut product margins slightly** to attract even more recipients, making the competing store even less competitive. This is not predatory — it's standard retail strategy when foot traffic brings compound revenue.
+
+**Permissionless: Why no one can gatekeep.**  
+Asgaya has no approval process, no territory restrictions, no franchise fee. The first merchant doesn't need permission. Their competitors don't need permission either. The market stays competitive by design: if a merchant overcharges or provides poor service, a new merchant posts a listing and captures the foot traffic. **Permissionless access is the accelerant** — the network spreads because it can't be stopped.
 
 ---
 
@@ -108,6 +116,10 @@ Every remittance does **three things at once**:
 3. Creates a fresh BCH liquidity event that feeds the next remittance.
 
 As the network grows, BCH circulates without ever touching a fiat exchange. The circular economy becomes self-sustaining.
+
+> **💡 BCH Price Volatility Is Nearly Irrelevant to Merchants**
+>
+> The merchant receives BCH and typically recycles it within hours or days (either selling to a new sender or spending with suppliers). The income streams (€0.90 merchant fee + €20-42 product margin + €0.90 seller fee) are denominated in EUR and realized immediately. Even if BCH drops 10% between receiving and selling, the merchant's total earnings (€22-44 per remittance) remain almost unchanged. The triple-dip economics work regardless of BCH price direction.
 
 ---
 
