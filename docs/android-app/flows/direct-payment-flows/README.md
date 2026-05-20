@@ -149,7 +149,7 @@ if (userBalance >= paymentAmount + networkFee) {
 }
 ```
 
-**Key principle:** Users plan ahead and top up wallet for daily expenses (like cash).
+**Key principle:** Users plan ahead and time extension wallet for daily expenses (like cash).
 
 ---
 
@@ -160,7 +160,7 @@ if (userBalance >= paymentAmount + networkFee) {
 3. ✅ **Instant settlement** - No waiting, no claim process
 4. ✅ **Minimal screens** - 4 screens total (vs 7-9 for covenant)
 5. ✅ **Flexible input** - Enter in any currency with live conversion OR auto-fill from PoS
-6. ✅ **Plan ahead** - Users top up wallet before going out
+6. ✅ **Plan ahead** - Users time extension wallet before going out
 7. ✅ **Low-tech friendly** - Works with simple cardboard QR codes (no PoS needed)
 
 ---

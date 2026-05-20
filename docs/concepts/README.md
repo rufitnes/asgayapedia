@@ -26,7 +26,7 @@ How recipient timing controls settlement (not sender timing), compressing volati
 The three safe design principles that keep Asgaya outside MiCA/PSD2 licensing: no custody, no intermediation, no protocol fee.
 
 ### [Live Exchange Rates](live-exchange-rates.md)
-How real-time exchange rates are sourced (CoinGecko, DolarAPI) and used for EUR-denominated promises without markup.
+How real-time exchange rates are sourced (CoinGecko, DolarAPI) and used for EUR-denominated cash buy orders without markup.
 
 ### [Universal Bot Fraud Prevention](universal-bot-fraud-prevention.md)
 Both senders and sellers run the same notification listener bot. Seller cannot predict which senders have working bots, making fraud attempts have negative expected value.

@@ -223,7 +223,7 @@ Person who posts BCH + volatility buffer to covenants, enabling remittances. Alr
 
 **Covenant structure (€100 example):**
 - BCH seller posts: ~€107 worth of BCH (7% volatility buffer buffer)
-- Covenant promises merchant: ~€99.50 worth of BCH (settled at maturity rate)
+- Covenant holds cash buy order for merchant: ~€99.50 worth of BCH (settled at settlement rate)
 - Sender pays seller: €100.00 via Bizum (within 5 minutes)
 - Seller net profit: ~€0.50 fee + hedge benefit (94-97% exposure reduction once Bizum received)
 
@@ -325,22 +325,22 @@ The unofficial, parallel market exchange rate in countries with government-impos
 ### EUR-Denominated Covenant Settlement
 **Type:** Protocol Design / Volatility Solution
 
-Architectural innovation where covenants promise EUR value but settle in BCH at maturity rate. This eliminates volatility risk for all participants.
+Architectural innovation where covenants promise EUR value but settle in BCH at settlement rate. This eliminates volatility risk for all participants.
 
 **How it works:**
 1. Sender sends €100 via Bizum to BCH seller
 2. BCH seller posts ~€107 worth of BCH to covenant (7% volatility buffer)
-3. Covenant promises merchant: ~€99.50 worth of BCH (settled at maturity rate, not creation rate)
+3. Covenant holds cash buy order for merchant: ~€99.50 worth of BCH (settled at settlement rate, not creation rate)
 4. Merchant sells 500,000 VES to recipient for cash
 5. Both co-sign covenant (cryptographic signatures)
-6. Covenant matures → Merchant receives BCH worth ~€99.50 (at maturity rate)
+6. Covenant matures → Merchant receives BCH worth ~€99.50 (at settlement rate)
 7. BCH seller keeps surplus after merchant paid (~€0.50 fee)
 
 **Key benefit:** Zero volatility for sender, recipient, and merchant. BCH seller's risk reduced 94-97% once Bizum received (hedge mechanism).
 
 **Result:** Eliminates the classic crypto remittance problem where participants lose money to volatility while funds are in transit.
 
-**Implementation:** Built on covenant + volatility buffer contracts that settle at maturity rate (not creation rate).
+**Implementation:** Built on covenant + volatility buffer contracts that settle at settlement rate (not creation rate).
 
 **Related:** [Volatility Protection](#volatility-protection), [BCH Seller](#bch-seller), [Covenant](#covenant)
 
@@ -355,7 +355,7 @@ Process of finalizing a covenant and distributing BCH. Context matters—"settle
 
 **Covenant claiming:** Merchant and recipient co-sign covenant (cryptographic signatures)
 
-**Covenant maturity:** Covenant settles, distributing BCH to merchant (at maturity rate) and surplus to seller
+**Covenant maturity:** Covenant settles, distributing BCH to merchant (at settlement rate) and surplus to seller
 
 **Technical settlement:** BCH blockchain confirmation (10 minutes typical, 0-conf acceptable for covenant creation).
 
@@ -416,10 +416,10 @@ Python script that monitors SMS notifications for payment confirmations. Runs on
 ### Covenant (Technical)
 **Type:** Technical Concept / Smart Contract
 
-Bitcoin Cash smart contract that enforces bounty + volatility buffer conditions. BCH seller posts ~7% extra BCH collateral, covenant promises EUR-denominated value to merchant (settled in BCH at maturity rate).
+Bitcoin Cash smart contract that enforces bounty + volatility buffer conditions. BCH seller posts ~7% extra BCH collateral, covenant holds cash buy order for EUR-denominated value to merchant (settled in BCH at settlement rate).
 
 **In Asgaya, covenants enforce:**
-1. EUR-denominated promise (e.g., "pay merchant €99.50 worth of BCH at maturity rate")
+1. EUR-denominated cash buy order (e.g., "pay merchant €99.50 worth of BCH at settlement rate")
 2. Co-signing requirement (both merchant and recipient must sign)
 3. Timeout cascade (5-minute Bizum timeout, 24-hour claim timeout)
 4. Split refund (merchant portion → sender, seller fee → seller if unclaimed)
@@ -437,7 +437,7 @@ Bitcoin Cash smart contract that enforces bounty + volatility buffer conditions.
 ### Volatility buffer
 **Type:** Technical Concept / Risk Management
 
-BCH seller posts more BCH than required (typically 107% of transaction amount) to covenant as buffer against price volatility. Protects merchant from receiving less than promised EUR value if BCH price drops during 24-hour claim window.
+BCH seller posts more BCH than required (typically 107% of transaction amount) to covenant as buffer against price volatility. Protects merchant from receiving less than specified EUR value if BCH price drops during 24-hour claim window.
 
 **Example:** €100 remittance requires 0.1 BCH at current rate. BCH seller posts 0.107 BCH (7% extra).
 

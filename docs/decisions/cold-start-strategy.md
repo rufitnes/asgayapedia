@@ -138,7 +138,7 @@ Buy surplus BCH from merchants with cash, enabling merchants to convert back to 
 - Reputation-based vetting (forum history, contributions)
 - Bulletin board listing with contact info
 
-**Uptime incentives:** Sellers who demonstrate reliability through voluntary top-ups (when BCH drops >7%) earn higher transaction limits, priority placement in sender searches, and auto-select eligibility—significantly increasing their earning potential. See [Top-Up Opportunity](../concepts/bounty-contracts-with-volatility-buffer.md#top-up-opportunity-how-sellers-earn-reliability-rewards) for reward tiers.
+**Uptime incentives:** Sellers who demonstrate reliability through voluntary time extensions (when BCH drops >7%) earn higher transaction limits, priority placement in sender searches, and auto-select eligibility—significantly increasing their earning potential. See [Top-Up Opportunity](../concepts/bounty-contracts-with-volatility-buffer.md#time extension-opportunity-how-sellers-earn-reliability-rewards) for reward tiers.
 
 > **Security for early sellers:** Because the seller's bot auto-signs on payment receipt, and the covenant enforces a strict timeout, a seller does not need to trust the sender or the protocol. See [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md) for the economic analysis that makes fraud irrational from the first transaction.
 

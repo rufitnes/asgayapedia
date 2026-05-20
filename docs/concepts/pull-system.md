@@ -69,7 +69,7 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
   * Are both conditions signable? (seller paid, recipient present)
   * Is covenant still within 24h window?
 * 🔄 **If covenant becomes invalid (BCH drops >7%):**
-  * Covenant matures early
+  * Covenant expires early
   * ALL remaining BCH refunds to **SENDER**
   * Merchant's software detects invalid covenant
   * Merchant does NOT hand cash to recipient
@@ -240,7 +240,7 @@ At claim time: 0.01 BCH now = €95 (not €100!)
 - 3% drop → Fully covered, seller gets smaller surplus
 - 5% drop → Fully covered, seller gets tiny surplus
 - 7% drop → Break-even, seller gets no surplus (but no loss)
-- >7% drop → **Margin call** (seller must top up or deal refunds)
+- >7% drop → **Margin call** (seller must time extension or deal refunds)
 
 **Statistical reality:**
 - BCH moves ±3% in 24h: **Common** (daily volatility)
@@ -367,7 +367,7 @@ At claim time: 0.01 BCH now = €95 (not €100!)
 - **Margin call** triggered automatically
 - BCH seller notified: "Add 0.0005 BCH within 1 hour or bounty refunds"
 - BCH seller can:
-  - Top up collateral (keep deal alive)
+  - Time extension collateral (keep deal alive)
   - Ignore (covenant refunds, sender's Bizum refunded)
   - Hope price recovers within grace period
 - Prevents merchant from receiving less than promised

@@ -42,7 +42,7 @@
 
 **The merchant is NOT short BCH downside volatility.**
 
-**Key operational flow:** When covenant becomes undercollateralized, it matures early and sends ALL remaining BCH back to the sender. The merchant's software detects this invalid covenant and refuses to participate. The recipient doesn't get their money, but the merchant doesn't lose anything.
+**Key operational flow:** When covenant becomes undercollateralized, it expires early and sends ALL remaining BCH back to the sender. The merchant's software detects this invalid covenant and refuses to participate. The recipient doesn't get their money, but the merchant doesn't lose anything.
 
 **📖 See:** [Risk Allocation Principle](../concepts/risk-allocation-principle.md) for the complete foundational principle, technical implementation, and comparisons to traditional systems.
 
@@ -57,7 +57,7 @@
 > - ✅ If BCH drops >7% → **Transaction cancels BEFORE merchant participates**
 > 
 > **In a margin call (>7% drop):**
-> - Covenant matures early
+> - Covenant expires early
 > - ALL BCH refunds to SENDER (not merchant)
 > - Merchant never receives anything (transaction cancelled)
 > - **SENDER bears the loss** (opts into BCH exposure by creating covenant)
@@ -102,7 +102,7 @@
      ↓           ↓
 ┌─────────┐  ┌──────────────┐
 │Merchant │  │Covenant      │
-│provides │  │matures early │
+│provides │  │expires early │
 │cash     │  │              │
 └────┬────┘  └──────┬───────┘
      │              │
@@ -325,7 +325,7 @@ These are our **hypotheses**, not finalized parameters. We chose these values be
 - **Mechanism:** Bot monitors BCH volatility over previous 7 days, adjusts buffer automatically
 
 **Trigger 4: Any underpayment occurs**
-- **Signal:** Merchant receives less than promised EUR value (covenant fails to cover)
+- **Signal:** Merchant receives less than specified EUR value (covenant fails to cover)
 - **Root cause:** Volatility buffer insufficient or covenant math error
 - **Action:** **Immediate increase to 12%** + audit covenant code
 - **Critical:** This breaks trust—zero tolerance
@@ -354,8 +354,8 @@ These are our **hypotheses**, not finalized parameters. We chose these values be
 
 We'll track:
 - ✅ **BCH price movement** during each covenant's 24h window (max %, average %)
-- ✅ **Margin call frequency** (% of covenants requiring top-up)
-- ✅ **Underpayment incidents** (merchant receives less than promised EUR value)
+- ✅ **Margin call frequency** (% of covenants requiring time extension)
+- ✅ **Underpayment incidents** (merchant receives less than specified EUR value)
 - ✅ **Claim timing distribution** (histogram: 0-6h, 6-12h, 12-18h, 18-24h, expired)
 - ✅ **Expiry reasons** (why didn't recipient claim? power outage, forgot, merchant unavailable, etc.)
 - ✅ **Seller feedback** ("Is 7% capital lockup worth 0.5% fee?")
@@ -730,7 +730,7 @@ The covenant-based two-step settlement is not an arbitrary design choice—it's 
 
 **Margin call process:**
 1. BCH price drops >5% during 24h window → Alert sent to seller
-2. Seller has 1 hour grace period to top up covenant
+2. Seller has 1 hour grace period to time extension covenant
 3. If seller adds BCH → Covenant continues normally
 4. If seller ignores → Covenant timeout triggers after 24h → Refunds to seller, sender's Bizum refunded
 
@@ -809,7 +809,7 @@ During a **60-minute grace period** after the collateral hits €100, the seller
 - ✅ **Reliability Rewards Unlocked** (see below)
 
 **Why this is voluntary, not required:**
-- Sellers who never top up are NOT punished
+- Sellers who never time extension are NOT punished
 - They simply don't earn the extra uptime incentives
 - The automatic fair exchange is always available
 
@@ -821,11 +821,11 @@ Sellers who demonstrate reliability by topping up during price drops earn increa
 
 | Top-Ups Completed | Reward Tier | Benefits Unlocked |
 |-------------------|-------------|-------------------|
-| **1st top-up** | 🛡️ **Reliable Seller Badge** | Visible badge on bulletin board listing |
-| **3 top-ups** | 📊 **Higher Limits** | Transaction limit +30% (€200 → €260) |
-| **5 top-ups** | ⭐ **Priority Listing** | Appears at top of seller search results |
-| **10 top-ups** | 🎯 **Auto-Select Eligible** | Senders' apps can choose you automatically |
-| **20+ top-ups** | 💎 **Premium Seller** | Maximum limit +100% (€200 → €400) |
+| **1st time extension** | 🛡️ **Reliable Seller Badge** | Visible badge on bulletin board listing |
+| **3 time extensions** | 📊 **Higher Limits** | Transaction limit +30% (€200 → €260) |
+| **5 time extensions** | ⭐ **Priority Listing** | Appears at top of seller search results |
+| **10 time extensions** | 🎯 **Auto-Select Eligible** | Senders' apps can choose you automatically |
+| **20+ time extensions** | 💎 **Premium Seller** | Maximum limit +100% (€200 → €400) |
 
 **Economic value of rewards:**
 - **Higher visibility** → More transactions selected → More 0.5% fees earned

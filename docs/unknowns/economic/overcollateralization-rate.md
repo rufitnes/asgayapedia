@@ -29,7 +29,7 @@ We have no empirical validation of:
 ### 1. **Merchant/Sender Protection**
 
 If collateral is insufficient:
-- Covenant matures early when BCH drops >7%
+- Covenant expires early when BCH drops >7%
 - Sender receives refund (bears loss beyond buffer)
 - **Bad UX:** Sender loses money unpredictably
 - **Trust erosion:** Repeated losses → Senders stop using system
@@ -216,14 +216,14 @@ If we launch during low volatility and hit high volatility later:
 ### Metrics to Track
 
 **During Phase 0 trials:**
-1. **Early maturity rate:** % of covenants that mature early (collateral breached)
-2. **Sender loss distribution:** When early maturity occurs, how much does sender lose?
+1. **Early expiry rate:** % of covenants that mature early (collateral breached)
+2. **Sender loss distribution:** When early expiry occurs, how much does sender lose?
 3. **Seller capital efficiency:** Is collateral locked unnecessarily (BCH never gets close to threshold)?
 4. **Volatility regime during trial:** Bull/bear/sideways? (Affects interpretation of results)
 
 **Iteration triggers:**
-- If early maturity rate >10% → Increase collateral ratios
-- If early maturity rate <1% AND seller feedback = "too much capital locked" → Decrease ratios
+- If early expiry rate >10% → Increase collateral ratios
+- If early expiry rate <1% AND seller feedback = "too much capital locked" → Decrease ratios
 - If volatility regime shifts mid-trial → Re-evaluate ratios dynamically
 
 ### Logging Requirements

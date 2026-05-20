@@ -317,7 +317,7 @@ If MUSD depegs permanently or Moria Protocol shuts down:
 **Current Phase 0 design (hardcoded):**
 - 24-hour covenant timeout (recipient claim window)
 - 5-minute Bizum confirmation window (sender must pay)
-- 60-minute margin call grace period (seller must top up)
+- 60-minute margin call grace period (seller must time extension)
 
 **Phase 1+ enhancement:**
 

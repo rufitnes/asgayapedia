@@ -1171,7 +1171,7 @@ sign_and_fund_covenant(covenant)
 
 **Fee breakdown explanation:**
 - **Sender pays:** €0.50 (0.5% of €100)
-- **Elena gets:** €99.50 worth of BCH (calculated at maturity spot rate)
+- **Elena gets:** €99.50 worth of BCH (calculated at settlement spot rate)
 - **Merchant spread:** ~€0.25 (sells 50,000 VES for 0.0995 BCH worth ~€99.75)
 - **BCH seller fee:** ~€0.25 (earned for posting collateral and service)
 
@@ -1465,10 +1465,10 @@ Secondary (outline):
 **Step 4:** BCH distributed (merchant gets 0.0995 BCH, seller gets surplus)
 
 **Why EUR-denominated covenant?**
-- Merchant always gets promised EUR value (€99.50 worth of BCH)
+- Merchant always gets specified EUR value (€99.50 worth of BCH)
 - Volatility buffer absorbs short-term volatility
 - Seller hedges by receiving €100 fiat before price moves
-- No rate locking needed (covenant calculates BCH at maturity rate)
+- No rate locking needed (covenant calculates BCH at settlement rate)
 
 **Related decision:** [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
 
@@ -1479,7 +1479,7 @@ Secondary (outline):
 **Variance:** Usually <1% (blue dollar relatively stable short-term)
 
 **Why lock at claim time, not payment time?**
-- Covenant promises EUR value, settles in BCH at maturity rate
+- Covenant holds cash buy order for EUR value, settles in BCH at settlement rate
 - Recipient gets latest market rate (fairness)
 - Seller hedges volatility (Bizum received before price moves)
 - Volatility buffer protects merchant (always gets €99.50 worth)

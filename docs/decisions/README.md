@@ -62,7 +62,7 @@ Examples:
 
 - **Fee Distribution** — Two-way split ensures both BCH seller and merchant benefit from each transaction (see [Fee Splitting Model](fee-splitting-model.md)). Merchant earns 0.5% for providing cash + location. BCH seller earns 0.5% for posting capital + taking volatility risk. No protocol fee = regulatory compliance.
 
-- **Merchant Incentive Structure** — Merchants earn 0.5% spread by selling VES for BCH. Receive BCH from covenant after co-signing with recipient. Can hold BCH (keep full reward) or optionally sell to BCH buyers (instant fiat, lose reward to spread). Market rates enforced by covenant (EUR-denominated promise).
+- **Merchant Incentive Structure** — Merchants earn 0.5% spread by selling VES for BCH. Receive BCH from covenant after co-signing with recipient. Can hold BCH (keep full reward) or optionally sell to BCH buyers (instant fiat, lose reward to spread). Market rates enforced by covenant (EUR-denominated cash buy order).
 
 - **BCH Seller Hedge Mechanism** — Sellers post BCH + volatility buffer (107%), receive EUR from sender within 5 minutes, reducing BCH exposure by 94-97%. Earn 0.5% fee + potential price appreciation on surplus. Natural role for BCH miners with existing inventory.
 

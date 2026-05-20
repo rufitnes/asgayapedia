@@ -174,7 +174,7 @@ if (hasPendingCovenant) {
 - Total: 0.5-1% (vs 6.49% average legacy remittance)
 
 **Pull System:**
-- Covenant promises EUR value, settles in BCH at maturity rate
+- Covenant holds cash buy order for EUR value, settles in BCH at settlement rate
 - Recipient controls timing (claims when ready)
 - Volatility buffer (7%) protects merchant
 - Seller hedges volatility (receives EUR before price moves)

@@ -92,7 +92,7 @@ Asgaya eliminates intermediaries by using:
 **Example: €100 transfer**
 - **Sender pays:** €100.00 (to BCH seller via Bizum)
 - **Sender fee:** €0.50 (0.5% - paid to BCH seller)
-- **Recipient gets:** ~€99.50 worth of BCH (settled at maturity rate)
+- **Recipient gets:** ~€99.50 worth of BCH (settled at settlement rate)
 
 **The ~€1.00 total cost is distributed as:**
 - **BCH seller:** ~€0.50 (0.5% - seller fee + hedge profit)
@@ -101,7 +101,7 @@ Asgaya eliminates intermediaries by using:
 **How it works:**
 - Sender sends €100 to BCH seller via Bizum
 - BCH seller posts ~€107 worth of BCH collateral (7% volatility buffer)
-- Covenant promises €99.50 worth of BCH to merchant (settled at maturity rate)
+- Covenant holds cash buy order for €99.50 worth of BCH to merchant (settled at settlement rate)
 - Merchant sells 500,000 VES to recipient, receives ~€100.50 worth of BCH (earns ~€1 spread)
 - BCH seller keeps surplus after merchant paid (~€0.50 fee + hedge profit)
 

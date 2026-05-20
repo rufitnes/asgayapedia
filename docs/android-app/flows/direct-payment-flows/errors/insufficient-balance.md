@@ -123,7 +123,7 @@ Large shortage (> 0.01 BCH):
 
 ### Actionable Solution
 - Primary CTA: "Buy BCH from Seller" (go to bulletin board)
-- User can top up wallet immediately
+- User can time extension wallet immediately
 - Return to payment after balance update
 
 ### Balance Transparency
@@ -208,7 +208,7 @@ navigateToBulletinBoard({
 **Educate users to plan ahead:**
 ```
 Home screen tips:
-"💡 Top up your wallet before going out to pay merchants"
+"💡 Time extension your wallet before going out to pay merchants"
 "💡 Keep some BCH ready for daily expenses"
 
 Wallet screen:
@@ -245,7 +245,7 @@ if (bchAmount + fee > userBalance) {
 - Creates volatility risk (rate changes while waiting)
 - Creates trust issue (merchant expects instant payment)
 - Adds complexity (need to track purchase, then return to payment)
-- Better UX: Users top up wallet in advance (like cash)
+- Better UX: Users time extension wallet in advance (like cash)
 
 **Why show shortage amount?**
 - Helps user understand exactly what's needed

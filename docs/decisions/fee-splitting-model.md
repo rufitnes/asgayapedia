@@ -422,7 +422,7 @@ Net: €0.24 + surplus
 Seller posted: €107 worth of BCH (at lock time)
 24 hours later: BCH rises 5%
 Covenant holds: €107 × 1.05 = €112.35 worth
-Merchant takes: €99.50 worth (at maturity)
+Merchant takes: €99.50 worth (at settlement)
 Seller gets back: €112.35 - €99.50 = €12.85
 Seller's total: €0.50 fee + €12.85 surplus = €13.35 on €100 bounty!
 ```

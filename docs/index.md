@@ -36,7 +36,7 @@ On a **€100 transfer**, the ~1% (€1.00) is distributed as:
 **How it works:** 
 - Sender pays €100 to BCH seller via Bizum/local payment
 - BCH seller keeps €0.50 fee, locks €99.50 worth of BCH in covenant (107% collateral)
-- Covenant promises €99.50 worth of BCH to merchant at settlement
+- Covenant holds cash buy order for €99.50 worth of BCH to merchant at settlement
 - Recipient cashes out at merchant, receives €99 cash (€0.50 merchant fee)
 - Merchant co-signs covenant, receives €99.50 worth of BCH
 - Remaining collateral (€7 worth of BCH) goes back to seller

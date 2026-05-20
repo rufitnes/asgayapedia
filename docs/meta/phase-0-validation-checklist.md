@@ -191,7 +191,7 @@ Code lengths, notification timings, flow complexity
 
 **What we don't know:**
 - Can sellers realistically respond in 60 minutes?
-- Is automated top-up feasible? (bot adds BCH from reserve automatically)
+- Is automated time extension feasible? (bot adds BCH from reserve automatically)
 - Should window vary by time of day? (3am alert = longer grace period?)
 
 **Phase 0 metrics to track:**
@@ -203,7 +203,7 @@ Code lengths, notification timings, flow complexity
 **Adjustment criteria:**
 - **If margin calls frequent (>20%):** Increase volatility buffer to 10%
 - **If sellers can't respond in time:** Increase to 90-120 minutes
-- **If automated top-up common:** Reduce to 30 minutes (bots respond fast)
+- **If automated time extension common:** Reduce to 30 minutes (bots respond fast)
 - **If nighttime failures:** Add time-of-day multiplier (night = 2x window)
 
 **Risk if wrong:**
@@ -222,7 +222,7 @@ Code lengths, notification timings, flow complexity
 
 **Hypothesis:**
 - Covers typical 24-hour BCH volatility (historical: ±5-8% moves are common)
-- Protects merchant from receiving less than promised EUR value
+- Protects merchant from receiving less than specified EUR value
 - Seller's surplus absorbs price swings
 - Margin call triggers if price drops >7% (seller adds more or refunds)
 

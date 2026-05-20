@@ -13,7 +13,7 @@ A BCH seller is anyone who:
 2. **Posts BCH + volatility buffer** to covenant contracts (typically 107% of requested amount)
 3. **Receives EUR (or other fiat)** from senders via Bizum/bank transfer
 4. **Earns BCH fees** (0.5% of transaction in BCH) + gets back volatility buffer
-5. **Can voluntarily top up** to earn uptime incentives if BCH price drops significantly
+5. **Can voluntarily time extension** to earn uptime incentives if BCH price drops significantly
 
 **BCH sellers are NOT:**
 - ❌ Custodians (don't hold client funds—post their own BCH as collateral)
@@ -35,15 +35,15 @@ A BCH seller is anyone who:
 
 * ✅ **Sellers DO bear:**
   * Opportunity cost (capital locked for up to 24h)
-  * Reliability reputation risk (if they don't top up during volatility)
+  * Reliability reputation risk (if they don't time extension during volatility)
   * Brief exposure during Bizum payment window (~5 minutes)
 * ❌ **Sellers DO NOT bear:**
   * Merchant's volatility risk (merchant completely protected)
   * Sender's tail risk (refund goes to sender if >7% drop)
   * Recipient's claim timing risk (seller gets capital back either way)
 
-**If BCH drops >7% and seller doesn't top up:**
-* Covenant matures early
+**If BCH drops >7% and seller doesn't time extension:**
+* Covenant expires early
 * Remaining BCH refunds to **SENDER** (not seller)
 * Seller receives their 0.5% fee portion only
 * **This is fair exchange, not a penalty** - seller traded BCH for EUR at market rate
@@ -51,7 +51,7 @@ A BCH seller is anyone who:
 **If BCH rises >7%:**
 * Seller gets LARGER refund (excess BCH returned)
 * Seller participated at favorable rate (sold BCH before rise)
-* **No "trapped gains" problem** - covenant promises EUR-worth, not fixed BCH amount
+* **No "trapped gains" problem** - covenant holds cash buy order for EUR-worth, not fixed BCH amount
 
 **See:** [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md) for complete covenant mechanics.
 
@@ -80,18 +80,18 @@ A BCH seller is anyone who:
 
 ## Reliability Rewards
 
-Sellers who voluntarily top up their covenants when BCH drops >7% earn progressive rewards that increase their earning potential:
+Sellers who voluntarily time extension their covenants when BCH drops >7% earn progressive rewards that increase their earning potential:
 
-**Reward tiers** (based on number of top-ups completed):
-- **🛡️ Reliable** (1 top-up): Higher transaction limits (€220), badge visible to senders
-- **📊 Trusted** (3 top-ups): Even higher limits (€260), highlighted in sender searches
-- **⭐ Priority** (5 top-ups): Premium limits (€300), auto-selected by senders
-- **🎯 Premium** (10 top-ups): Featured placement (€360), priority routing
-- **💎 Elite** (20+ top-ups): Maximum limits (€400), top-tier visibility
+**Reward tiers** (based on number of time extensions completed):
+- **🛡️ Reliable** (1 time extension): Higher transaction limits (€220), badge visible to senders
+- **📊 Trusted** (3 time extensions): Even higher limits (€260), highlighted in sender searches
+- **⭐ Priority** (5 time extensions): Premium limits (€300), auto-selected by senders
+- **🎯 Premium** (10 time extensions): Featured placement (€360), priority routing
+- **💎 Elite** (20+ time extensions): Maximum limits (€400), top-tier visibility
 
 **Economic value:** Higher limits enable more volume per transaction, better visibility drives more selections, and auto-select eligibility creates passive income opportunities. Sellers who demonstrate reliability earn significantly more than those who rely only on automatic fair exchange.
 
-**Philosophy:** Top-ups are voluntary, not required. Covenants that mature automatically result in fair exchange at market rate (no penalty). See [Top-Up Opportunity technical details](./bounty-contracts-with-volatility-buffer.md#top-up-opportunity-how-sellers-earn-reliability-rewards) for implementation.
+**Philosophy:** Time extensions are voluntary, not required. Covenants that mature automatically result in fair exchange at market rate (no penalty). See [Top-Up Opportunity technical details](./bounty-contracts-with-volatility-buffer.md#time extension-opportunity-how-sellers-earn-reliability-rewards) for implementation.
 
 ---
 
@@ -351,7 +351,7 @@ While miners are ideal, other participants can also succeed as BCH sellers:
 ## Capital Requirements
 
 **Per bounty (€100 example):**
-- Covenant requires: €100 worth of BCH (at maturity rate)
+- Covenant requires: €100 worth of BCH (at settlement rate)
 - Volatility buffer: 7% → **€107 worth of BCH locked**
 - Lock duration: Up to 24 hours (until recipient claims or timeout)
 
@@ -406,12 +406,12 @@ Seller receives: €100 in bank account
 Transaction amount: 0.1 BCH (€100 worth at current rate)
 Seller posts: 0.107 BCH (0.1 + 7% volatility buffer)
 
-At maturity, covenant distributes:
-├─ Merchant receives: 0.0995 BCH (€99.50 worth at maturity)
+At settlement, covenant distributes:
+├─ Merchant receives: 0.0995 BCH (€99.50 worth at settlement)
 └─ Seller receives: 0.0075 BCH (includes fee + volatility buffer)
 ```
 
-**Seller's position at maturity:**
+**Seller's position at settlement:**
 ```
 €100 fiat (in bank account)
 + 0.0075 BCH (returned from covenant)
@@ -610,7 +610,7 @@ Mine BCH → Post to covenant → Receive Bizum (no fee) → Get EUR
 
 **Mitigation:**
 - **Higher volatility buffer** (10% instead of 7%) → Covers larger drops
-- **Automated top-up** (bot adds more BCH when price drops >5%)
+- **Automated time extension** (bot adds more BCH when price drops >5%)
 - **Diversification** (accept bounties in multiple corridors to spread risk)
 - **Hedging** (use derivatives to hedge BCH price exposure during lock period)
 

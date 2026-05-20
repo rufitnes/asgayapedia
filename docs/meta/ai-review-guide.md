@@ -11,7 +11,7 @@ Thank you for reviewing Asgaya documentation. This guide explains how you can pr
 **What is Asgaya?**
 A permissionless Bitcoin Cash remittance protocol with <1% fees, no KYC, and self-custody. We're in the documentation phase, seeking external review before implementation.
 
-**Current architecture:** Covenant-based (BCH + volatility buffer with EUR-denominated promises)  
+**Current architecture:** Covenant-based (BCH + volatility buffer with EUR-denominated cash buy orders)  
 **Key innovation:** BCH sellers post 107% collateral to smart contracts, merchants co-sign to claim after providing cash
 
 **Why your review matters:**
@@ -62,7 +62,7 @@ Before reviewing, understand these fundamental concepts:
 - **Refund split:** Merchant portion → sender, seller fee → seller (covers 24h capital lockup)
 
 ### EUR-Denominated Promises, BCH Settlement
-- Covenant promises "€99.50 worth of BCH at maturity rate"
+- Covenant holds cash buy order for "€99.50 worth of BCH at settlement rate"
 - Eliminates volatility exposure for sender/recipient
 - BCH seller hedged by receiving EUR from sender within 5 minutes (reduces BCH exposure 94-97%)
 - Merchant can hold BCH or sell to BCH buyers (trade reward for instant fiat)
@@ -123,7 +123,7 @@ Before reviewing, understand these fundamental concepts:
 
 **b) Volatility Protection**
 - **Document:** `/core-architecture/why-eliminate-volatility.md`, `/decisions/two-step-settlement-timing.md`
-- **Design:** Covenant + volatility buffers (107% BCH) with EUR-denominated promises
+- **Design:** Covenant + volatility buffers (107% BCH) with EUR-denominated cash buy orders
 - **Questions:**
   - Is 7% volatility buffer sufficient for rapid price movements?
   - What's the worst-case scenario if BCH drops >7% during the 24-hour window?

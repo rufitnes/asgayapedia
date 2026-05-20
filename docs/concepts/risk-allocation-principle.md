@@ -24,11 +24,11 @@
 
 3. **Sellers provide collateral reliability**
    - Sellers post 107% volatility buffer to covenant
-   - Sellers can voluntarily top up to earn uptime incentives
+   - Sellers can voluntarily time extension to earn uptime incentives
    - Seller reputation tied to covenant completion rate
 
 4. **Senders bear extreme volatility risk beyond collateral thresholds**
-   - If BCH drops >7%, covenant matures early
+   - If BCH drops >7%, covenant expires early
    - Remaining BCH refunds to SENDER (not merchant, not seller)
    - Sender opted into BCH exposure by creating covenant
 
@@ -54,7 +54,7 @@ BCH crashes during transit → Someone loses money → Who?
 
 **Asgaya's solution:**
 ```
-BCH crashes >7% → Covenant matures early → Sender receives refund
+BCH crashes >7% → Covenant expires early → Sender receives refund
 ├─ Merchant: Never participated (zero loss) ✅
 ├─ Seller: Received fair exchange at market rate (zero loss) ✅
 ├─ Recipient: Doesn't get money (no worse off than before) ✅
@@ -100,15 +100,15 @@ BCH crashes >7% → Covenant matures early → Sender receives refund
 
 **Why people think this:**
 - "Margin call" sounds like penalty/liquidation
-- "Top-up opportunity" sounds mandatory to avoid loss
+- "Time extension opportunity" sounds mandatory to avoid loss
 - Standard collateral systems penalize non-response
 
 **Why it's wrong:**
 - Default outcome is fair exchange (not penalty)
-- Top-ups are voluntary (rewarded, not mandatory)
+- Time extensions are voluntary (rewarded, not mandatory)
 - Refund goes to SENDER, not seller
 
-### ❌ Misconception 3: "Covenant promises EUR to merchant"
+### ❌ Misconception 3: "Covenant holds cash buy order for EUR to merchant"
 
 **Reality:** Covenant holds conditional bounty, cancellable if BCH crashes.
 
@@ -136,7 +136,7 @@ function isCovenantValid(covenant) {
   const covenantValue = covenant.lockedBch * currentBchPrice;
   const requiredValue = covenant.eurPromise;
   
-  // Covenant must have ≥100% of promised EUR value
+  // Covenant must have ≥100% of specified EUR value
   if (covenantValue < requiredValue) {
     return false; // REJECT - undercollateralized
   }
