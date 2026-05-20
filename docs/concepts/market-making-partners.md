@@ -30,7 +30,7 @@ Pulperos (merchant liquidity providers) aren't just infrastructure - they're **a
 **Weekend remittance spike (€240k):**
 ```
 1. BCH seller → Pre-positions reserves (removes buy pressure)
-2. Users → Cash out at pulperías
+2. Users → Cash out at neighborhood stores
 3. Pulperos → Accumulate BCH
 4. Pulperos → HOLD BCH (no sell pressure)
 5. Result → Price stays elevated, BCH seller replenishes at high price
@@ -43,7 +43,7 @@ Pulperos (merchant liquidity providers) aren't just infrastructure - they're **a
 **Same weekend spike:**
 ```
 1. BCH seller → Pre-positions reserves (removes buy pressure)
-2. Users → Cash out at pulperías
+2. Users → Cash out at neighborhood stores
 3. Pulperos → Accumulate BCH
 4. System → Warns about spike risk
 5. Pulperos → SELL immediately (adds sell pressure)
@@ -427,6 +427,6 @@ else:
 
 *Concept discovered: April 20, 2026*
 *Emerged from: Capital constraint analysis + Sunday operations question*
-*Insight: The question "are pulperías open Sunday?" led to entire coordination strategy*
+*Insight: The question "are neighborhood stores open Sunday?" led to entire coordination strategy*
 *Philosophy: Coordination > Capital, Education > Control, Network > Individual*
 *Status: Strategic framework validated, ready for implementation*

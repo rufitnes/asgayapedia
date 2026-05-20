@@ -26,7 +26,7 @@ If 100% of recipients instantly convert BCH to fiat, Asgaya is just another paym
 
 > **💰 The Merchant Economics in One Number:**
 >
-> A pulpería that processes one €180 remittance per day where the recipient spends €140 on goods earns **€654–1,290 per month** in combined fees and product margin. The average Venezuelan pulpería earns $200–500/month.
+> A neighborhood store that processes one €180 remittance per day where the recipient spends €140 on goods earns **€654–1,290 per month** in combined fees and product margin. The average Venezuelan neighborhood store earns $200–500/month.
 >
 > **Accepting Asgaya can double or triple merchant income.**
 >

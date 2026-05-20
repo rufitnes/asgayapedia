@@ -238,7 +238,7 @@
 
 **When recipient is ready (controls timing):**
 
-1. **Elena walks to merchant pulpería** (whenever convenient - could be immediately, could be tomorrow)
+1. **Elena walks to merchant neighborhood store** (whenever convenient - could be immediately, could be tomorrow)
 
 2. **Elena shows code to merchant:**
    - Merchant sees: "500,000 VES to hand out, earn 2,500 VES fee (0.5%)"
