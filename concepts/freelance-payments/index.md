@@ -1,379 +1,410 @@
-# Freelance Payments: Same Protocol, Different Sender
+# Freelance Payments: Same Protocol, Pro Seller for Invoicing
 
 **Type:** Concept Document  
 **Status:** ✅ Active — Phase 0  
 **Date:** 2026-05-20  
-**Related:** [Merchant Business Case](merchant-business-case.md), [Cold-Start Strategy](../decisions/cold-start-strategy.md), [BCH Sellers](bch-sellers.md), [Own Funds Path](../android-app/flows/sender-flows/own-funds-path/README.md)
+**Related:** [Merchant Business Case](merchant-business-case.md), [Cold-Start Strategy](../decisions/cold-start-strategy.md), [BCH Sellers](bch-sellers.md)
 
 ---
 
 ## TL;DR
 
-The Asgaya covenant architecture that moves family remittances is structurally identical to a freelance payment. The only difference is the relationship between sender and recipient: a family member becomes an employer or client.
+**Freelance payments use the exact same Asgaya protocol as family remittances.**
 
-**Two payment flows:**
+The only differences:
+- **Sender uses "Pro Seller"** — BCH sellers who can issue professional business invoices (for accountants)
+- **Higher amounts** — €500-2,000 typical vs €100-200 for family remittances
+- **Business documentation** — Proper invoices, tax IDs, accounting-ready paperwork
 
-1. **Own Funds (Recommended for businesses):** Client buys BCH first, sends through Asgaya. **0.5% total fee.** Cleaner accounting (standard crypto asset purchase + payment).
+**The flow, fees, and covenant mechanics are identical.** A Venezuelan freelancer receiving payment through Asgaya follows the same process as a family remittance recipient.
 
-2. **Via BCH Seller:** Client pays BCH seller via Bizum/SEPA, seller posts covenant. **1.0% total fee.** No crypto purchase required, but more complex accounting.
-
-A Venezuelan freelancer who currently loses 5-15% to PayPal, Deel, Bitwage, and P2P spreads can receive nearly full value through Asgaya. This is not a new feature—it's already supported by the existing protocol.
-
----
-
-## 1. The Problem: Remote Workers Are Stranded from Their Own Money
-
-Venezuela has one of the highest freelance workforce participation rates in the world. Nearly **52% of the workforce** depends on freelance work. An estimated **60-65% of working professionals** hold at least a college degree, and tens of thousands of engineers, developers, and technical professionals graduate annually—a highly educated workforce driven to international freelance platforms by economic necessity.
-
-All of these workers face the same brutal problem: **getting paid**.
-
-### What Venezuelan freelancers say
-
-> "¿De qué manera podría recibir pagos yo de manera 'legal'? ¿Qué plataforma recomiendan para recibir pagos? Yo tengo Facebank (puedo recibir wires y ACH), Paypal, Payoneer. Agradezco consejos."
-
-> "Por qué coño tiene que ser un mardito peo recibir pagos en dólares. Mi jefe jamás ha tenido experiencia pagándole a alguien fuera de USA (mucho menos de Venezuela), y hemos estado tratando de averiguar cómo hacerlo de una manera eficaz, rápidamente, sin límites y que pueda recibir el dinero sin tener que sacrificar mucho o ningún %."
-
-*(Sources: Reddit r/vzla, Venezuelan freelancer communities)*
-
-A 2025 academic study of 38 Venezuelan data workers describes a "gauntlet of international and domestic financial intermediaries—work platforms, digital crypto banks, and local brokers—each charging fees" that erode earnings at every step. Workers "typically receive much less than they earn" after passing through multiple intermediary layers.
-
-### Why existing solutions fail
-
-| Solution | The Problem |
-|----------|-------------|
-| **PayPal** | 3-5% conversion fees, transfer limits, holds, unfavorable rates |
-| **Wise** | Not available in Venezuela |
-| **Payoneer** | Restrictions, high minimums, complex verification |
-| **Western Union** | BCV-rate conversion above $100 destroys 25-50% of value |
-| **Deel / Bitwage** | 5-10% platform fees + P2P off-ramp costs |
-| **Binance P2P** | Client must buy crypto first; freelancer still needs off-ramp with 2-5% spread |
-
-**Crypto is already the default fallback.** 31% of Venezuelan freelancers receive payment in cryptocurrency—the highest rate in the world. But the problem remains: the client still needs to get fiat into crypto, and the freelancer still needs to get crypto back into spendable cash.
+**Total fee:** 0.5-1.0% (vs 5-15% through PayPal/Deel/Bitwage/P2P spreads)
 
 ---
 
-## 2. Two Ways to Pay Through Asgaya
+## 1. The Problem: Remote Workers Lose 5-15% of Every Payment
 
-### Flow A: Own Funds (Recommended for Businesses) — 0.5% Total Fee
+Venezuela has one of the highest freelance workforce participation rates in the world:
+- **52% of the workforce** depends on freelance work
+- **60-65% of professionals** hold college degrees
+- **31% already receive payment in cryptocurrency** (highest rate globally)
 
-**Best for:** Recurring payments, tech-savvy businesses, crypto-aware employers
+All face the same problem: **getting paid costs too much.**
 
-If your business is comfortable purchasing cryptocurrency (or already holds BCH), this is the cleanest accounting path:
+### What Venezuelan freelancers lose
 
-#### How it works
+| Payment Method | Cost on €1,500 | What Freelancer Receives |
+|----------------|----------------|--------------------------|
+| **PayPal** | €75-150 (5-10%) | €1,350-1,425 |
+| **Deel/Bitwage** | €120-225 (8-15%) | €1,275-1,380 |
+| **Binance P2P** | €45-75 (3-5%) | €1,425-1,455 |
+| **Asgaya** | €7.50-15 (0.5-1%) | **€1,485-1,492.50** |
 
-1. **Client purchases BCH** on Kraken, Coinbase, Binance, or any exchange
-   - Bank statement: "Purchased cryptocurrency €1,500"
-   - Accounting entry: Asset acquisition (Dr. Crypto Asset €1,500 / Cr. Cash €1,500)
-
-2. **Client opens Asgaya app**, enters recipient CashAccount (e.g., `Maria#2841`)
-   - Specifies amount: €1,500
-   - App shows covenant details and merchant fee (0.5%)
-
-3. **Client sends BCH from their wallet** to the covenant address
-   - On-chain transaction: Client wallet → Covenant
-   - Asgaya receipt generated: "Paid Maria#2841 €1,500 for services"
-
-4. **Freelancer receives notification**
-   - Walks to local neighborhood store
-   - Presents claim code, receives €1,492.50 cash (€1,500 - 0.5% merchant fee)
-   - OR claims BCH directly to own wallet (if prefers to hold crypto)
-
-5. **Merchant co-signs covenant** (if cash path)
-   - Receives €1,500 worth of BCH
-   - Merchant earns €7.50 (0.5% fee)
-
-#### Accounting reconciliation
-
-**For client (Spain):**
-- **Purchase:** Bank statement shows "Kraken €1,500" → Crypto asset acquired
-- **Payment:** On-chain transaction shows BCH sent to covenant address
-- **Documentation:** Freelancer invoice (€1,500) + Asgaya transaction receipt + blockchain proof
-- **Books:** 
-  ```
-  Dr. Freelance Expense €1,500
-  Cr. Crypto Asset €1,500
-  ```
-
-**Why this is cleaner:** Standard crypto asset accounting. Spanish gestors understand "we bought crypto and paid our contractor." No mysterious intermediaries. Direct on-chain payment from client to covenant.
+A freelancer earning €1,500/month saves **€900-1,350 per year** by switching to Asgaya.
 
 ---
 
-### Flow B: Via BCH Seller (Alternative) — 1.0% Total Fee
+## 2. How It Works (Exact Same as Remittances)
 
-**Best for:** One-off payments, crypto-averse clients, clients without exchange accounts
+### Simple Example: María, Graphic Designer in Caracas
 
-If your business doesn't want to handle cryptocurrency directly, Asgaya can connect you with a BCH seller who posts the covenant on your behalf:
+**María invoices €1,000 to her Madrid client for design work.**
 
-#### How it works
+**Step 1: Client opens Asgaya app**
+- Enter: `Maria#2841` (María's CashAccount)
+- Amount: €1,000
+- Payment method: Select "Pro Seller"
 
-1. **Client opens Asgaya app**, enters recipient CashAccount
-   - App matches client with available BCH seller
-   - Shows payment instructions: "Pay €1,500 via Bizum to BCH Seller [phone/IBAN]"
-   - Concept field: `Maria#2841` (links payment to recipient)
+**Step 2: App shows payment instructions**
+- Pay **€1,005** to Pro Seller [IBAN/phone]
+- (€1,000 payment + €5 Pro Seller fee)
 
-2. **Client pays BCH seller** via Bizum, SEPA, or bank transfer
-   - Bank statement: "Bizum to [BCH Seller]"
-   - BCH seller receives notification, buys BCH on exchange
+**Step 3: Client pays via Bizum/SEPA**
+- Bank transfer to Pro Seller: €1,005
+- **Pro Seller sends invoice:** "Crypto Asset Purchase for Payment Covenant - €1,005"
 
-3. **BCH seller posts covenant**
-   - Locks €1,605 worth of BCH (€1,500 + 7% volatility buffer)
-   - Covenant holds EUR-denominated cash buy order for freelancer
+**Step 4: Pro Seller posts covenant**
+- Buys BCH, posts covenant to María's CashAccount
+- María receives notification
 
-4. **Freelancer receives notification**, same cash-out flow as Flow A
+**Step 5: María claims payment**
 
-5. **Total fees:**
-   - BCH seller: 0.5% (€7.50 on €1,500)
-   - Merchant: 0.5% (€7.50 on €1,500)
-   - **Freelancer receives:** €1,485 cash
+**Option A: Cash at merchant**
+- Walks to local neighborhood store
+- Shows claim code, receives €995 cash (€1,000 - 0.5% merchant fee)
+- Merchant earns €5 fee + potential product sales if María buys groceries
 
-#### Accounting reconciliation
+**Option B: Claim as BCH**
+- Taps "Claim to my wallet"
+- Receives €1,000 worth of BCH directly
+- No merchant needed, can hold or sell later
 
-**For client (Spain):**
-- **Payment:** Bank statement shows "Bizum/SEPA to BCH Seller €1,500"
-- **Documentation:** Freelancer invoice (€1,500) + Asgaya transaction receipt (links invoice to covenant) + bank statement
-- **Books:**
-  ```
-  Dr. Freelance Expense €1,500
-  Cr. Cash €1,500
-  ```
+**Total cost:** 
+- Cash path: €1,005 (0.5% seller + 0.5% merchant = 1.0%)
+- BCH path: €1,005 (0.5% seller only)
 
-**Note:** This requires 3-document reconciliation (invoice + bank record + Asgaya receipt). Similar to PayPal or Wise: bank shows payment to processor, not to contractor. Most Spanish gestors are familiar with this pattern, but it's slightly more complex than Flow A.
-
----
-
-## 3. Concrete Examples
-
-### Example 1: María, Graphic Designer in Caracas (Flow A - Own Funds)
-
-**Situation:** María works for a Madrid marketing agency. She invoices €1,500/month. Client is tech-savvy, already holds some BCH.
-
-**Current method:** Client pays via Deel (8% platform fee + María loses 3% on P2P off-ramp = 11% total loss). María receives ~€1,335.
-
-**With Asgaya (Own Funds):**
-1. Client sends €1,500 worth of BCH from their wallet through Asgaya covenant
-2. María walks to her local neighborhood store, receives €1,492.50 cash
-3. **Total cost:** 0.5% (€7.50)
-4. **María receives:** €1,492.50 (vs €1,335 before = **€157.50 more per month**)
-
-**Annual savings for María:** €1,890
+**vs PayPal/Deel:** €75-150 saved
 
 ---
 
-### Example 2: Carlos, Software Developer in Valencia, Venezuela (Flow B - BCH Seller)
+## 3. What Is a "Pro Seller"?
 
-**Situation:** Carlos works for a Barcelona startup. He invoices €2,000/month. Client is crypto-averse, doesn't want to buy BCH.
+**Pro Seller = Regular BCH Seller + Professional Invoicing**
 
-**Current method:** PayPal (4% fees + 2% conversion spread = 6% total loss). Carlos receives ~€1,880.
+### Regular BCH Seller (for family remittances)
+- Handles €50-200 transactions
+- SMS/app notifications
+- No formal invoices
+- Serves individuals
 
-**With Asgaya (Via BCH Seller):**
-1. Client pays €2,000 via SEPA to BCH seller
-2. BCH seller posts covenant for Carlos
-3. Carlos receives €1,980 cash at local merchant
-4. **Total cost:** 1.0% (€20)
-5. **Carlos receives:** €1,980 (vs €1,880 before = **€100 more per month**)
+### Pro Seller (for freelance payments)
+- Handles €500-5,000+ transactions
+- **Issues professional business invoices** with tax IDs
+- Accounting-ready documentation
+- Serves businesses
+- Often registered as **autónomos** (self-employed) in Spain
 
-**Annual savings for Carlos:** €1,200
-
----
-
-## 4. Flow Comparison
-
-| | Own Funds (Flow A) | Via BCH Seller (Flow B) |
-|---|---|---|
-| **Best for** | Recurring payments, tech-savvy employers | One-off payments, crypto-averse clients |
-| **Total fee** | 0.5% (merchant only) | 1.0% (0.5% seller + 0.5% merchant) |
-| **On €1,500** | €7.50 | €15 |
-| **Freelancer receives** | €1,492.50 | €1,485 |
-| **Client requires** | Ability to buy BCH on exchange | Just bank account (Bizum/SEPA) |
-| **Accounting complexity** | Low (standard crypto asset accounting) | Medium (3-document reconciliation) |
-| **Spanish gestor compatibility** | High (they understand crypto asset purchase + disposal) | Medium (requires explanation of intermediary) |
-| **Payment speed** | Depends on client's BCH purchase speed | 15 min (instant Bizum → seller buys BCH → posts covenant) |
-| **Recommended for** | Monthly salary, tech companies, recurring contractors | One-off projects, traditional businesses |
+**The protocol mechanics are identical.** The only difference is documentation.
 
 ---
 
-## 5. Compliance Path
+## 4. The Accounting (Simple)
 
-### For the Freelancer (Venezuela)
+### Employer's Perspective
 
-The freelancer issues a standard invoice to the client with:
-- Full name and tax ID (RIF if registered)
-- Client company name and tax ID
-- Description of services rendered
-- Date, invoice number
-- Agreed amount in EUR
+**Documents received:**
+1. **Invoice from freelancer:** "Design services - €1,000"
+2. **Invoice from Pro Seller:** "Crypto asset purchase for payment covenant - €1,005"
 
-Since the freelancer is outside the EU, **no VAT applies** and **no IRPF withholding is required** from the Spanish client. The invoice is the primary accounting document—it proves the business relationship and the amount owed.
+**Bank statement:**
+- Paid Pro Seller €1,005 via Bizum/SEPA
 
-**Venezuelan tax obligations:** Freelancers should consult a Venezuelan tax advisor regarding income declaration requirements under SENIAT. Asgaya provides payment infrastructure, not tax advice.
+**Accounting entry:**
+```
+Dr. Freelance Expense          €1,000
+Dr. Payment Processing Fee        €5
+Cr. Cash                      €1,005
+```
 
-### For the Employer/Client (Spain)
+**Or simplified:**
+```
+Dr. Freelance Expense  €1,005
+Cr. Cash             €1,005
+```
 
-**Flow A (Own Funds):**
-- Step 1: Crypto purchase (bank statement shows EUR → exchange)
-- Step 2: Payment to freelancer (on-chain transaction + Asgaya receipt)
-- Documentation: Invoice + exchange receipt + Asgaya transaction receipt + blockchain proof
-- Treatment: Crypto asset acquisition → business expense + asset disposal
+### How Spanish Gestor Sees It
 
-**Flow B (BCH Seller):**
-- Bank statement shows Bizum/SEPA to BCH seller (€1,500)
-- Asgaya transaction receipt links payment to freelancer invoice
-- Documentation: Invoice + bank statement + Asgaya receipt
-- Treatment: Business expense (similar to PayPal/Wise payment)
+"Company purchased cryptocurrency from a dealer (Pro Seller) to pay a foreign contractor. Net expense: €1,005 for €1,000 service. Payment processing fee: 0.5%."
 
-### Form 347 (Spain)
+**This is standard cross-border freelance accounting.** Similar to how companies use PayPal, Wise, or Deel:
+- Bank shows payment to payment processor
+- Invoice from contractor shows services rendered  
+- Payment processor receipt links the two
 
-If the employer processes more than **€3,005.06** in payments through the same BCH seller in a calendar year, they must file Form 347 with the AEAT (Spanish tax authority). This is a routine annual informative declaration, not a tax. Applies to Flow B only (Flow A has no intermediary to report).
-
-### Important Disclaimers
-
-⚠️ **This is not legal or accounting advice.** Asgaya provides payment infrastructure, not tax or compliance guidance. Both freelancers and clients must ensure compliance with tax laws in their respective jurisdictions.
-
-**We strongly recommend:**
-- **Spanish clients:** Consult a gestor or tax advisor familiar with international freelance payments and crypto-adjacent transactions
-- **Venezuelan freelancers:** Consult a Venezuelan tax advisor familiar with SENIAT requirements for foreign income
-- **Both parties:** Verify that your specific business structure and payment arrangement complies with local regulations
-
-**Validation needed:** The invoice + transaction receipt model described above mirrors how businesses handle PayPal or Wise payments. However, Spanish tax treatment of crypto-mediated payments may vary. Verify with your gestor that this documentation meets Spanish tax requirements for your specific business structure.
+The only difference: Instead of paying PayPal, they're paying a crypto dealer. The accounting structure is identical.
 
 ---
 
-## 6. Why This Matters for Cold Start
+## 5. The Merchant Side: Already Professional
 
-The sender is the bottleneck in Phase 0. We need people in Europe who will pay euros through Asgaya. Family remitters are the primary source, but **Venezuelan freelancers can actively recruit their own clients as senders.**
+When María claims cash at her local neighborhood store, **that merchant is already operating as a business:**
 
-### The freelancer's incentive is direct and personal
+- Registered business entity (or informal but established)
+- Handles cash transactions daily
+- Already does bookkeeping (even if informal)
+- **Accepts Asgaya cash-outs as part of their business operations**
 
-A freelancer who earns €1,500/month and currently loses €75-225 to payment platforms has a powerful financial reason to convince their client to switch. **On a €1,500 monthly invoice, switching from PayPal (6% loss) to Asgaya (0.5-1% loss) saves €75-82.50 every month.** That's €900-990 per year.
+The merchant earns:
+1. **0.5% fee** (€5 on €1,000)
+2. **Product margin** (15-30%) if María buys groceries
+3. **Potential seller fee** if merchant recycles BCH (triple-dip)
 
-The freelancer can even offer the client a discount: "Pay me through Asgaya and I'll reduce my rate by 2%." The client saves money, the freelancer keeps more, and Asgaya gains a recurring sender.
+See [Merchant Business Case](merchant-business-case.md) for full economics.
 
-### Target segments for Phase 0
+---
 
-**Segment 1: Venezuelan freelancers with Spanish/EU clients**
-- Reddit r/vzla, Venezuelan dev Telegram groups
-- Upwork/Fiverr Venezuelan seller communities
-- Venezuelan university alumni groups in Spain
-- Pitch: "Keep €900/year instead of giving it to PayPal"
+## 6. Triple-Dip: When Merchants Become Sellers
 
-**Segment 2: Spanish tech companies with Venezuelan contractors**
+**If a Venezuelan merchant has family in Spain**, they can close the loop:
+
+### The Setup
+
+**In Venezuela:** Merchant accepts Asgaya cash-outs (earns merchant fees)  
+**In Spain:** Family member registers as **autónomo** (self-employed business), becomes a Pro Seller
+
+### The Triple Revenue Stream
+
+1. **Merchant fee (0.5%)** — Venezuelan merchant earns €5 per €1,000 cash-out
+2. **Product margin (15-30%)** — Earns €50-150 if freelancer spends €500 on groceries
+3. **Seller fee (0.5%)** — Spanish family member (as Pro Seller) earns €5 per €1,000 payment
+
+**On a €1,000 freelance payment where recipient spends €500 on groceries:**
+- Venezuelan merchant: €5 merchant fee + €75-150 product margin = **€80-155**
+- Spanish family member: €5 seller fee
+- **Total family earnings: €85-160 per transaction**
+
+**For merchants processing 10 freelance payments per month:**
+- Venezuelan side: €800-1,550/month
+- Spanish side: €50/month
+- **Total: €850-1,600/month**
+
+This makes the Venezuelan merchant aggressively motivated to recruit local freelancers to use Asgaya.
+
+### Registering as Autónomo in Spain
+
+**Requirements:**
+- Spanish residence (legal or family member with papers)
+- Register with Agencia Tributaria (tax authority)
+- Pay monthly social security (~€300-400/month base)
+- Issue professional invoices with tax ID
+
+**When it makes sense:**
+- Processing €2,000+/month in freelance payments (seller fees cover autónomo costs)
+- Family member already living in Spain (no additional visa needed)
+- Want to build legitimate business income in Spain
+
+**This is standard practice** for Spanish residents earning side income. Many Venezuelan migrants in Spain already operate as autónomos (consultants, delivery drivers, freelancers).
+
+---
+
+## 7. Comparison: Asgaya vs Traditional Methods
+
+### On €1,500/month (typical freelancer salary)
+
+| Method | Monthly Cost | Annual Cost | Freelancer Receives |
+|--------|-------------|-------------|---------------------|
+| **PayPal** | €75-150 | €900-1,800 | €1,350-1,425/month |
+| **Wise** | Not available | — | — |
+| **Deel/Bitwage** | €120-225 | €1,440-2,700 | €1,275-1,380/month |
+| **Binance P2P** | €45-75 | €540-900 | €1,425-1,455/month |
+| **Western Union** | €97+ (6.49%) | €1,164+ | €1,403/month |
+| **Asgaya (Pro Seller)** | **€7.50-15** | **€90-180** | **€1,485-1,492.50/month** |
+
+**Annual savings for €1,500/month freelancer:**
+- vs PayPal: €810-1,620 saved
+- vs Deel: €1,350-2,520 saved
+- vs Binance P2P: €450-720 saved
+
+---
+
+## 8. Why This Matters for Cold Start
+
+### Freelancers Recruit Their Own Clients
+
+**The sender bottleneck:** Phase 0 needs 150 senders. Spanish Venezuelan families provide 50-100. **Freelancers provide the other 50-100.**
+
+**Why freelancers are powerful:**
+- **Direct financial incentive:** Save €900-1,350/year → will aggressively pitch client
+- **Self-recruiting:** Freelancer convinces their own client (we don't pitch strangers)
+- **Higher transaction value:** €500-2,000 vs €100-200 family remittances
+- **Guaranteed recurring:** Monthly salary vs sporadic remittances
+- **Tech-savvy:** Already use crypto, understand the value proposition
+
+### Spanish Tech Companies: Priority Target
+
+One Spanish startup with 5 Venezuelan contractors = 5 recurring monthly senders.
+
+**Their motivation:**
+- Save €600-1,200/month vs Deel/Bitwage (on 5 × €1,500 payments)
+- Clean accounting (crypto asset purchase vs payment platform)
+- Support their contractors (who keep more money)
+
+**Outreach channels:**
 - Barcelona/Madrid startup communities
-- Remote-first companies, digital agencies
-- Already crypto-aware (tech industry)
-- Hate paying 5-10% to Deel/Bitwage
-- **One Spanish agency with 5 Venezuelan contractors = 5 recurring monthly senders**
-- Pitch: "Pay your contractors 0.5% instead of 8%"
+- Remote-first company networks
+- "Hire Venezuelan Talent" positioning
+- Tech agency associations
 
-**Segment 3: European businesses hiring Venezuelan talent**
-- Businesses in Italy, Portugal, Germany, France
-- Looking for cost-effective remote workers
-- Often use Deel/Bitwage and resent the fees
-- Pitch: "Hire Venezuelan talent, pay them fairly, save on fees"
+### Venezuelan Freelancer Communities
 
-### Corridor scope (Phase 0)
+**Target segments:**
+- Reddit r/vzla (Venezuelan freelancers seeking payment solutions)
+- Venezuelan developer Telegram groups (massive community)
+- Upwork/Fiverr Venezuelan seller forums
+- Venezuelan university alumni groups in Spain
 
-**Currently supported:** Spain→Venezuela, Europe→Venezuela (via SEPA)
-
-**Not yet supported:** US→Venezuela
-
-**For freelancers with US clients:** Asgaya does not currently serve the US→Venezuela corridor due to US money transmitter licensing complexity. We are researching the regulatory path for Phase 1+.
-
-**Workaround:** If your US client has EU presence (European subsidiary, EU freelance platform account, payment agent in Europe), they can pay you through the Europe→Venezuela corridor today. Direct US→Venezuela support requires regulatory work beyond Phase 0 scope.
+**The pitch:** "Keep €900/year instead of giving it to PayPal. Takes 5 minutes to set up."
 
 ---
 
-## 7. FAQ for Freelancers
+## 9. Corridor Scope & Limitations
+
+### Currently Supported (Phase 0)
+
+✅ **Spain → Venezuela**  
+✅ **Europe → Venezuela** (via SEPA)
+
+Freelancers with clients in Spain or other EU countries can use Asgaya today.
+
+### Not Yet Supported
+
+❌ **US → Venezuela** 
+
+**Why:** US money transmitter licensing requirements are extremely complex. Serving US senders could trigger FinCEN registration + 50 state licenses (each with bonding requirements, background checks, and compliance costs).
+
+**Workaround:** If your US client has EU presence (European subsidiary, EU payment agent, EU freelance platform account), they can pay you through the Europe→Venezuela corridor.
+
+**Timeline:** We are researching the regulatory path for US→Venezuela in Phase 1+. For Phase 0, the focus is proving the model works in Spain/Europe first.
+
+---
+
+## 10. FAQ for Freelancers
 
 ### Can I receive in BCH directly instead of cash?
 
-**Yes.** When claiming the covenant, you can specify your own BCH wallet address instead of coordinating with a merchant. You receive the full BCH amount (no merchant co-signature needed). You can then:
+**Yes.** When claiming, tap "Claim to my wallet" instead of visiting a merchant. You receive the full payment amount in BCH (no merchant fee). You can then:
 - Hold BCH as savings
-- Swap for MUSD stablecoin (BCH-native, maintains USD value)
-- Sell for cash later when you need it
-- Spend at BCH-accepting merchants
+- Swap for MUSD stablecoin (maintains USD value)
+- Sell for cash later when needed
+- Spend at BCH-accepting businesses
 
 ### What if my client pays in USD, not EUR?
 
-They need to convert to EUR first (most European businesses can send EUR via SEPA), or wait for USD→VES corridor (Phase 1+). Current Phase 0 focus is EUR-denominated payments through the Europe→Venezuela corridor.
-
-### Does this work for one-time project payments or just monthly salary?
-
-**Both.** The protocol works identically for recurring monthly salary and one-off project payments. The client follows the same flow whether paying you once or every month.
+They need to convert to EUR first (most European businesses can send EUR via SEPA). USD→VES corridor is planned for Phase 1+ but requires separate infrastructure.
 
 ### Do I need KYC?
 
-**No KYC required on Asgaya.** You don't need to verify identity, provide documents, or complete know-your-customer checks. The protocol is permissionless.
+**No.** Asgaya is permissionless. You don't verify identity, provide documents, or complete know-your-customer checks.
 
-**However:** Your client might need to comply with their bank's requirements for international payments, which is standard for any cross-border freelance arrangement (same as PayPal, Wise, etc.).
+**However:** Your client might need to comply with their bank's requirements for international payments (standard for any cross-border freelance arrangement).
 
-### What if my client wants a formal payment processor invoice?
-
-You issue the invoice to your client as usual (your standard freelance invoice with service description, amount, date, etc.). The Asgaya transaction receipt serves as proof of payment delivery—similar to a PayPal receipt. Your client's accountant reconciles your invoice with their bank statement + Asgaya receipt.
-
-### Can my client pay multiple freelancers with one BCH purchase?
-
-**Yes (Flow A only).** If your client buys €10,000 worth of BCH, they can send:
-- €2,000 to Freelancer A
-- €3,000 to Freelancer B  
-- €1,500 to Freelancer C
-- Keep €3,500 for future payments
-
-This amortizes the exchange fees across multiple payments and simplifies their accounting (one crypto purchase, multiple contractor payments).
-
-### What if there's no merchant near me?
+### What if I don't have a merchant nearby?
 
 **Option 1:** Claim BCH directly to your wallet (no merchant needed)
 
-**Option 2:** Phase 0 includes "PagoMóvil merchants"—trusted users who send you a PagoMóvil bank transfer instead of cash. The fee is slightly higher (0.8% instead of 0.5%) to cover PagoMóvil costs, but works anywhere in Venezuela with mobile banking.
+**Option 2:** Use "PagoMóvil merchant" (Phase 0 feature) — trusted users in Venezuela who send you a bank transfer instead of cash. Fee is slightly higher (0.8%) to cover PagoMóvil costs.
 
-**Option 3:** Onboard a local merchant yourself. If you receive regular payments (€1,500/month), you can convince your local neighborhood store to join Asgaya. They earn 0.5% fee per transaction + potential product sales if you buy groceries. See [Merchant Business Case](merchant-business-case.md) for the pitch.
+**Option 3:** Onboard your local neighborhood store as an Asgaya merchant. They earn 0.5% fee per transaction + potential product sales. See [Merchant Business Case](merchant-business-case.md).
+
+### Can my client pay multiple freelancers?
+
+**Yes.** One Pro Seller can handle payments to multiple recipients:
+- Client pays €5,000 to Pro Seller
+- Pro Seller posts 3 separate covenants:
+  - €2,000 to Freelancer A
+  - €1,500 to Freelancer B  
+  - €1,500 to Freelancer C
+
+This is how Spanish tech companies with multiple Venezuelan contractors use Asgaya.
 
 ### What documentation do I need for taxes?
 
-Consult a Venezuelan tax advisor familiar with SENIAT requirements for foreign income. At minimum, maintain:
-- Invoices issued to clients (with date, amount, description)
+**Consult a Venezuelan tax advisor** familiar with SENIAT requirements for foreign income. At minimum, maintain:
+- Invoices issued to clients
 - Asgaya transaction receipts (proof of payment received)
-- Records of how much you withdrew as cash vs held as BCH
+- Records of amounts received (cash vs BCH)
 
-Asgaya provides payment infrastructure, not tax advice. Your tax obligations depend on your specific situation.
+**Asgaya provides payment infrastructure, not tax advice.** Your tax obligations depend on your specific situation.
+
+### What if my client needs a receipt from the Pro Seller?
+
+The Pro Seller provides a professional invoice:
+
+```
+INVOICE #12345
+From: [Pro Seller Business Name]
+Tax ID: [Spanish CIF/NIF]
+
+To: [Client Company Name]  
+Tax ID: [Client Tax ID]
+
+Service: Cryptocurrency Purchase for Payment Covenant
+Amount: €1,005
+Date: [Date]
+
+Description: Purchased BCH for payment to vnzlancer2001
+Purpose: Facilitate international contractor payment
+```
+
+This is accounting-ready documentation that Spanish gestors understand. It bridges the bank statement (payment to Pro Seller) to the freelancer's service invoice.
 
 ---
 
-## 8. Related Documents
+## 11. The Bottom Line
 
-- [Merchant Business Case](merchant-business-case.md) — Why neighborhood stores self-onboard (freelancers = additional foot traffic)
-- [Cold-Start Strategy](../decisions/cold-start-strategy.md) — How we recruit senders (freelancers recruit their own clients)
-- [BCH Sellers](bch-sellers.md) — The seller role that enables Flow B (fiat → BCH on-ramp)
-- [Own Funds Path](../android-app/flows/sender-flows/own-funds-path/README.md) — Technical flow for Flow A (sender already has BCH)
-- [Buy from Seller Path](../android-app/flows/sender-flows/buy-seller-path/README.md) — Technical flow for Flow B (sender uses BCH seller)
-- [Core Regulatory Constraints](core-regulatory-constraints.md) — Why Asgaya stays outside MiCA/PSD2 (no custody, no intermediation)
+**For freelancers earning €1,500/month:**
+- Current methods: Lose €75-225/month to fees
+- Asgaya: Lose €7.50-15/month
+- **Savings: €900-1,350/year**
+
+That's real money. Enough to pay for groceries, rent, internet, phone. Enough to matter.
+
+**For Spanish businesses with Venezuelan contractors:**
+- Current methods: Pay €600-1,800/month in Deel/PayPal fees (for 5 contractors)
+- Asgaya: Pay €37.50-75/month
+- **Savings: €562.50-1,762.50/month = €6,750-21,150/year**
+
+That's a significant P&L improvement for a tech startup or digital agency.
+
+**For Asgaya Phase 0:**
+- Every freelancer who converts their client adds one recurring sender
+- Freelancers self-recruit (direct financial benefit)
+- Spanish tech companies with 5 contractors = 5 monthly senders
+- **This solves the sender bottleneck**
+
+The protocol doesn't change. The covenant mechanics are identical. The only difference is that businesses need professional invoicing—which is what Pro Sellers provide.
 
 ---
 
-## 9. The Bottom Line
+## 12. Related Documents
 
-**For freelancers:** You're already losing 5-15% to payment platforms. Asgaya lets you keep 99-99.5% of your earnings. If you earn €1,500/month, that's €900-1,350 saved per year. That's real money.
-
-**For clients:** You're paying 5-10% to Deel/Bitwage/PayPal for the "privilege" of paying your own contractors. Asgaya costs 0.5-1% with cleaner accounting. If you pay 5 contractors €1,500/month each, you save €3,375-6,750 per year.
-
-**For Asgaya Phase 0:** Every freelancer who converts their client adds one recurring sender to the network. Freelancers have direct financial incentive to recruit. This accelerates cold start without requiring us to convince strangers—freelancers convince their own clients because they keep more money.
-
-The architecture doesn't change. The covenant mechanism is identical to family remittances. This is documentation of an already-supported use case that happens to solve the sender bottleneck.
+- [Merchant Business Case](merchant-business-case.md) — Why neighborhood stores accept Asgaya (triple-dip economics)
+- [Cold-Start Strategy](../decisions/cold-start-strategy.md) — How we recruit freelancers + tech companies as senders
+- [BCH Sellers](bch-sellers.md) — The seller role (Pro Sellers are just registered business versions)
+- [Core Regulatory Constraints](core-regulatory-constraints.md) — Why Asgaya stays outside MiCA/PSD2
+- [Fee-Splitting Model](../decisions/fee-splitting-model.md) — How 0.5% seller + 0.5% merchant fees work
 
 ---
 
 *Last updated: 2026-05-20*  
 *Status: Active — Phase 0 (Spain→Venezuela, Europe→Venezuela)*  
-*Next: Document tech company recruitment strategy in cold-start-strategy.md*
+*Architecture: Identical to family remittances, just with Pro Seller for professional invoicing*
 
 ---
 
 **Sources:**
-- Jobbers Global Freelance Payment Methods Report 2026 (31% Venezuelan freelancers receive crypto payments)
-- Posada 2025 study of Venezuelan data workers ("gauntlet of intermediaries")
+- Jobbers Global Freelance Payment Methods Report 2026 (31% Venezuelan freelancers receive crypto)
+- Posada 2025 study of Venezuelan data workers
 - Reddit r/vzla freelancer payment threads
-- RevoluGROUP Venezuela remittance data
-- Banca y Negocios (remittance corridor analysis)
-- Spanish tax requirements for cross-border freelance payments
-- Venezuelan SENIAT income declaration requirements
+- Spanish autónomo registration requirements
+- Cross-border freelance payment accounting standards

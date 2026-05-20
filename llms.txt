@@ -71,7 +71,7 @@
 - [Core Regulatory Constraints](https://docs.asgaya.org/concepts/core-regulatory-constraints/index.md)
 - [Dynamic Reward Modulation](https://docs.asgaya.org/concepts/dynamic-reward-modulation/index.md)
 - [Fraud Proof Mechanism](https://docs.asgaya.org/concepts/fraud-proof-mechanism/index.md)
-- [Freelance Payments: Same Protocol, Different Sender](https://docs.asgaya.org/concepts/freelance-payments/index.md)
+- [Freelance Payments: Same Protocol, Pro Seller for Invoicing](https://docs.asgaya.org/concepts/freelance-payments/index.md)
 - [Live Exchange Rates - DolarAPI Integration](https://docs.asgaya.org/concepts/live-exchange-rates/index.md)
 - [Market-Making Partners — Distributed Coordination for Stability](https://docs.asgaya.org/concepts/market-making-partners/index.md)
 - [The Merchant Business Case: Why Neighborhood Stores Will Self-Onboard](https://docs.asgaya.org/concepts/merchant-business-case/index.md)
