@@ -18,7 +18,10 @@ The only differences:
 
 **The flow, fees, and covenant mechanics are identical.** A Venezuelan freelancer receiving payment through Asgaya follows the same process as a family remittance recipient.
 
-**Total fee:** 0.5-1.0% (vs 5-15% through PayPal/Deel/Bitwage/P2P spreads)
+**Total fee:** 
+- **Cash path:** 1.0% (0.5% Pro Seller + 0.5% merchant)
+- **BCH path:** 0.5% (0.5% Pro Seller only, no merchant)
+- **(vs 5-15% through PayPal/Deel/Bitwage/P2P spreads)**
 
 ---
 
@@ -87,6 +90,34 @@ A freelancer earning €1,500/month saves **€900-1,350 per year** by switching
 
 ---
 
+### Alternative: Own Funds Flow (0.5% Fee)
+
+**For businesses that already hold or prefer to buy BCH directly:**
+
+**Step 1: Client buys BCH**
+- Purchase on Kraken, Coinbase, or any exchange (€1,005 worth of BCH)
+- Bank statement: "Purchased cryptocurrency €1,005"
+
+**Step 2: Client posts covenant from their own BCH wallet**
+- Send BCH through Asgaya app to María's CashAccount
+- Covenant posted from client's address (no Pro Seller needed)
+
+**Step 3: María claims payment**
+- Same as above (cash or BCH)
+- **Total fee: 0.5%** (merchant only, no seller fee)
+
+**Who should use this:**
+- Crypto-savvy businesses already buying BCH
+- Recurring payments (buy once, pay multiple times)
+- Want lowest possible fees
+
+**Who should use Pro Seller instead:**
+- Don't want to handle crypto directly
+- Need professional invoicing for accounting
+- Occasional payments (not worth setting up exchange account)
+
+---
+
 ## 3. What Is a "Pro Seller"?
 
 **Pro Seller = Regular BCH Seller + Professional Invoicing**
@@ -142,6 +173,28 @@ Cr. Cash             €1,005
 - Payment processor receipt links the two
 
 The only difference: Instead of paying PayPal, they're paying a crypto dealer. The accounting structure is identical.
+
+### Pro Seller Invoice Format
+
+The Pro Seller provides a professional invoice for the crypto asset purchase:
+
+```
+INVOICE #12345
+From: [Pro Seller Business Name]
+Tax ID: [Spanish CIF/NIF]
+
+To: [Client Company Name]  
+Tax ID: [Client Tax ID]
+
+Service: Cryptocurrency Purchase for Payment Covenant
+Amount: €1,005
+Date: [Date]
+
+Description: Purchased BCH for payment to vnzlancer2001
+Purpose: Facilitate international contractor payment
+```
+
+This accounting-ready documentation bridges the bank statement (payment to Pro Seller) with the freelancer's service invoice.
 
 ---
 
@@ -208,6 +261,8 @@ This makes the Venezuelan merchant aggressively motivated to recruit local freel
 ---
 
 ## 7. Comparison: Asgaya vs Traditional Methods
+
+**Note:** Section 2 used a €1,000 payment for illustration. This section uses €1,500 to reflect typical monthly freelancer earnings. The percentage fees remain consistent across different amounts.
 
 ### On €1,500/month (typical freelancer salary)
 
@@ -338,25 +393,7 @@ This is how Spanish tech companies with multiple Venezuelan contractors use Asga
 
 ### What if my client needs a receipt from the Pro Seller?
 
-The Pro Seller provides a professional invoice:
-
-```
-INVOICE #12345
-From: [Pro Seller Business Name]
-Tax ID: [Spanish CIF/NIF]
-
-To: [Client Company Name]  
-Tax ID: [Client Tax ID]
-
-Service: Cryptocurrency Purchase for Payment Covenant
-Amount: €1,005
-Date: [Date]
-
-Description: Purchased BCH for payment to vnzlancer2001
-Purpose: Facilitate international contractor payment
-```
-
-This is accounting-ready documentation that Spanish gestors understand. It bridges the bank statement (payment to Pro Seller) to the freelancer's service invoice.
+The Pro Seller provides a professional invoice for the crypto asset purchase. See **Section 4 (The Accounting)** for the exact invoice format and how Spanish gestors interpret this documentation.
 
 ---
 
