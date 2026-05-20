@@ -1,0 +1,4867 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BCH covenant-based remittance protocol for Spain-Venezuela corridor">
+      
+      
+      
+        <link rel="canonical" href="https://docs.asgaya.org/research/RS044_kraken_trading_withdrawal/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>RS044: Kraken Trading & Withdrawal API - Complete Reference - Asgaya Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/bch-colors.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rs044-kraken-trading-withdrawal-api-complete-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Asgaya Documentation" class="md-header__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Asgaya Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              RS044: Kraken Trading &amp; Withdrawal API - Complete Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/" class="md-tabs__link">
+          
+  
+  
+  Android App
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../decisions/" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../RS053_MUSD/" class="md-tabs__link">
+          
+  
+  
+  Research
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Asgaya Documentation" class="md-nav__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Asgaya Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android App
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android App
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/home-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sender Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sender Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_2" id="__nav_2_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Covenant Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/2-recipient-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/3-amount-entry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amount Entry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/4-payment-method/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_3" id="__nav_2_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Own Wallet Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Own Wallet Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/4a-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/6a-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/7a-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_4" id="__nav_2_2_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buy Seller Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Buy Seller Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Purchase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4.5-select-seller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Select Seller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/5-payment-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Instructions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/6b-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/7b-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_5" id="__nav_2_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Screens
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Error Screens
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/pending-covenant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Covenant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/seller-non-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Non-Delivery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/bizum-timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Timeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/network-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/recipient-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Direct Payment Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/1-scan-merchant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Merchant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/2-enter-amount/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enter Amount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/3-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/4-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/trade-bch-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trade BCH Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/merchant-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backend APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/rate-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/user-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/common-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/covenant-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_7" id="__nav_2_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blockchain Scanner
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blockchain Scanner
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/blockchain-scanner/nft-scanner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NFT Scanner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_8" id="__nav_2_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Bot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Seller Bot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/seller-bot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_9" id="__nav_2_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/pichan-regtest-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pichan Regtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/multi-device-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Device Test Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_10" id="__nav_2_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/archive/ENGINEERING_JOURNEY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Journey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-permissionless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Permissionless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-self-custody/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Self-Custody
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-no-kyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why No KYC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-market-rate-exchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Market Rates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-cheaper-than-legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Cheaper Than Legacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-promote-adoption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Promote Adoption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-bch-usage-incentive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why BCH Usage Incentive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-minimal-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Minimal Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-sellers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-buyers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/overcollateralized-bounty-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overcollateralized Bounty Contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/rfid-card-recipients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RFID Card Recipients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/dynamic-reward-modulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic Reward Modulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/fee-splitting-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/two-step-settlement-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-Step Settlement Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/dispute-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dispute Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/payment-timeout-window/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Timeout Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/unclaimed-transaction-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unclaimed Transaction Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/bizum-concept-field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Concept Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/how-exchange-rates-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Exchange Rates Work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/musd-integration-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MUSD Integration Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/phase-0-progressive-decentralization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Progressive Decentralization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/phase-0-validation-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Validation Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RS053_MUSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS053 MUSD Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RS054_cashtoken_swaps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS054 CashToken Swaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-trading-api-addorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Trading API (AddOrder)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Trading API (AddOrder)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-endpoint-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Endpoint Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-essential-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Essential Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-eur-to-bch-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 EUR to BCH Conversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-request-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Request Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-success-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Success Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-error-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Error Responses
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-validation-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Validation Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-withdrawal-api-withdraw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Withdrawal API (Withdraw)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Withdrawal API (Withdraw)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-endpoint-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Endpoint Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-address-whitelisting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Address Whitelisting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-get-withdrawal-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Get Withdrawal Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-execute-withdrawal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Execute Withdrawal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-check-withdrawal-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Check Withdrawal Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-complete-settlement-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Complete Settlement Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Complete Settlement Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-end-to-end-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 End-to-End Sequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-integration-with-escrow_apipy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Integration with escrow_api.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-security-error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: Security &amp; Error Handling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 4: Security &amp; Error Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-api-key-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 API Key Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-error-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Error Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Idempotency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-testing-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: Testing Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 5: Testing Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-pre-mvp-test-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Pre-MVP Test (Validation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-mvp-test-real-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 MVP Test (Real €5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-production-readiness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Production Readiness
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-open-questions-for-live-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: Open Questions for Live Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-live-test-results-april-24-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: Live Test Results (April 24, 2026)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 7: Live Test Results (April 24, 2026)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-first-real-bch-purchase-4-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 First Real BCH Purchase - €4 Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-critical-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Critical Findings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-required-code-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Required Code Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-validation-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Validation Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-open-questions-answered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Open Questions Answered
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#76-maker-vs-taker-fee-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Maker vs Taker Fee Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#77-limit-order-test-results-5-above-ask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Limit Order Test Results - €5 Above Ask
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="rs044-kraken-trading-withdrawal-api-complete-reference">RS044: Kraken Trading &amp; Withdrawal API - Complete Reference<a class="headerlink" href="#rs044-kraken-trading-withdrawal-api-complete-reference" title="Permanent link">&para;</a></h1>
+<p><strong>Date:</strong> April 24, 2026
+<strong>Participants:</strong> Suso (Founder), Coordination (Research Assistant)
+<strong>Context:</strong> With trading permissions now enabled on our Kraken API key, we need comprehensive documentation of the AddOrder and Withdraw endpoints. This completes our Kraken knowledge base (RS017-RS019, RS036 covered query/ticker).</p>
+<p><strong>Status:</strong> Live testing required - this is theoretical research based on Kraken API docs</p>
+<hr />
+<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
+<p>Document the exact API calls needed for:
+1. <strong>Trading</strong>: Place market order to buy BCH with EUR
+2. <strong>Withdrawal</strong>: Send BCH from Kraken to escrow hot wallet
+3. <strong>Verification</strong>: Confirm order execution and withdrawal status</p>
+<p>This enables the settlement_engine.py to complete the two-step settlement MVP.</p>
+<hr />
+<h2 id="part-1-trading-api-addorder">Part 1: Trading API (AddOrder)<a class="headerlink" href="#part-1-trading-api-addorder" title="Permanent link">&para;</a></h2>
+<h3 id="11-endpoint-details">1.1 Endpoint Details<a class="headerlink" href="#11-endpoint-details" title="Permanent link">&para;</a></h3>
+<p><strong>URL:</strong> <code>https://api.kraken.com/0/private/AddOrder</code>
+<strong>Method:</strong> POST
+<strong>Authentication:</strong> Required (API-Key + API-Sign headers)
+<strong>Permission:</strong> "Create &amp; modify orders" (✅ enabled on our API key)</p>
+<h3 id="12-essential-parameters">1.2 Essential Parameters<a class="headerlink" href="#12-essential-parameters" title="Permanent link">&para;</a></h3>
+<p>For our use case (buy BCH with EUR using market order):</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nonce</code></td>
+<td><code>int(time.time() * 1000)</code></td>
+<td>✅ Yes</td>
+<td>Unique increasing integer</td>
+</tr>
+<tr>
+<td><code>ordertype</code></td>
+<td><code>"market"</code></td>
+<td>✅ Yes</td>
+<td>Market order (instant execution)</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>"buy"</code></td>
+<td>✅ Yes</td>
+<td>Buy BCH (not sell)</td>
+</tr>
+<tr>
+<td><code>volume</code></td>
+<td><code>"0.01"</code></td>
+<td>✅ Yes</td>
+<td>Amount of BCH to buy (string!)</td>
+</tr>
+<tr>
+<td><code>pair</code></td>
+<td><code>"BCHEUR"</code></td>
+<td>✅ Yes</td>
+<td>Trading pair</td>
+</tr>
+<tr>
+<td><code>oflags</code></td>
+<td><code>"fciq"</code></td>
+<td>Optional</td>
+<td>"fciq" = fee in quote currency (EUR)</td>
+</tr>
+<tr>
+<td><code>validate</code></td>
+<td><code>true</code></td>
+<td>Testing</td>
+<td>Validate only, don't execute</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Critical:</strong> Volume is in <strong>base currency (BCH)</strong>, not quote currency (EUR)!</p>
+<h3 id="13-eur-to-bch-conversion">1.3 EUR to BCH Conversion<a class="headerlink" href="#13-eur-to-bch-conversion" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> We know EUR amount (€5), need BCH volume for order.</p>
+<p><strong>Solution:</strong> Use Ticker API first (RS036):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Get current price</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://api.kraken.com/0/public/Ticker?pair=BCHEUR&quot;</span><span class="p">)</span>
+<span class="n">ask_price</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;result&quot;</span><span class="p">][</span><span class="s2">&quot;BCHEUR&quot;</span><span class="p">][</span><span class="s2">&quot;a&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Step 2: Calculate BCH volume</span>
+<span class="n">eur_amount</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">bch_volume</span> <span class="o">=</span> <span class="n">eur_amount</span> <span class="o">/</span> <span class="n">ask_price</span>
+
+<span class="c1"># Step 3: Round to 8 decimals (BCH precision)</span>
+<span class="n">bch_volume</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">bch_volume</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Example: €5 / €373.81 = 0.01337543 BCH</span>
+</code></pre></div>
+<h3 id="14-request-example">1.4 Request Example<a class="headerlink" href="#14-request-example" title="Permanent link">&para;</a></h3>
+<p><strong>Python implementation with authentication:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hmac</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.parse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">KRAKEN_API_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KRAKEN_API_KEY&#39;</span><span class="p">]</span>
+<span class="n">KRAKEN_API_SECRET</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KRAKEN_API_SECRET&#39;</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_kraken_signature</span><span class="p">(</span><span class="n">urlpath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Kraken API signature for authentication.&quot;&quot;&quot;</span>
+    <span class="n">postdata</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">encoded</span> <span class="o">=</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;nonce&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">postdata</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">urlpath</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">secret</span><span class="p">),</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">)</span>
+    <span class="n">sigdigest</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">signature</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">sigdigest</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">buy_bch_market</span><span class="p">(</span><span class="n">eur_amount</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Buy BCH with EUR using market order on Kraken.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        eur_amount: Amount in EUR to spend (float)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Response with order details or error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get current BCH price</span>
+    <span class="n">ticker_resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://api.kraken.com/0/public/Ticker?pair=BCHEUR&quot;</span><span class="p">)</span>
+    <span class="n">ask_price</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ticker_resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;result&quot;</span><span class="p">][</span><span class="s2">&quot;BCHEUR&quot;</span><span class="p">][</span><span class="s2">&quot;a&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Calculate BCH volume</span>
+    <span class="n">bch_volume</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">eur_amount</span> <span class="o">/</span> <span class="n">ask_price</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+    <span class="c1"># Prepare order data</span>
+    <span class="n">urlpath</span> <span class="o">=</span> <span class="s2">&quot;/0/private/AddOrder&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;nonce&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)),</span>
+        <span class="s2">&quot;ordertype&quot;</span><span class="p">:</span> <span class="s2">&quot;market&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;buy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;volume&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">bch_volume</span><span class="p">),</span>
+        <span class="s2">&quot;pair&quot;</span><span class="p">:</span> <span class="s2">&quot;BCHEUR&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;oflags&quot;</span><span class="p">:</span> <span class="s2">&quot;fciq&quot;</span>  <span class="c1"># Fee in quote currency (EUR)</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Sign request</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;API-Key&quot;</span><span class="p">:</span> <span class="n">KRAKEN_API_KEY</span><span class="p">,</span>
+        <span class="s2">&quot;API-Sign&quot;</span><span class="p">:</span> <span class="n">get_kraken_signature</span><span class="p">(</span><span class="n">urlpath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">KRAKEN_API_SECRET</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Execute order</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;https://api.kraken.com</span><span class="si">{</span><span class="n">urlpath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="15-success-response">1.5 Success Response<a class="headerlink" href="#15-success-response" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;descr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;buy 0.01337543 BCHEUR @ market&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;txid&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;OUF4EM-CAUJB-TPQ6JY&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Key fields:</strong>
+- <code>error</code>: Empty array = success
+- <code>result.txid</code>: Transaction ID array (usually single order)
+- <code>result.descr.order</code>: Human-readable description</p>
+<h3 id="16-error-responses">1.6 Error Responses<a class="headerlink" href="#16-error-responses" title="Permanent link">&para;</a></h3>
+<p>Common errors with our permissions:</p>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EGeneral:Invalid arguments</code></td>
+<td>Missing required parameter</td>
+<td>Check nonce, pair, volume</td>
+</tr>
+<tr>
+<td><code>EOrder:Insufficient funds</code></td>
+<td>Not enough EUR balance</td>
+<td>Query Balance first</td>
+</tr>
+<tr>
+<td><code>EGeneral:Permission denied</code></td>
+<td>Missing trading permission</td>
+<td>✅ Fixed - we enabled it</td>
+</tr>
+<tr>
+<td><code>EOrder:Rate limit exceeded</code></td>
+<td>Too many orders</td>
+<td>Implement rate limiting</td>
+</tr>
+<tr>
+<td><code>EService:Unavailable</code></td>
+<td>Kraken downtime</td>
+<td>Retry with backoff</td>
+</tr>
+</tbody>
+</table>
+<h3 id="17-validation-testing">1.7 Validation Testing<a class="headerlink" href="#17-validation-testing" title="Permanent link">&para;</a></h3>
+<p><strong>Before risking real money</strong>, use <code>validate=true</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;nonce&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)),</span>
+    <span class="s2">&quot;ordertype&quot;</span><span class="p">:</span> <span class="s2">&quot;market&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;buy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;volume&quot;</span><span class="p">:</span> <span class="s2">&quot;0.01337543&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pair&quot;</span><span class="p">:</span> <span class="s2">&quot;BCHEUR&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;validate&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span>  <span class="c1"># ADD THIS FOR DRY RUN</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Validation response:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;descr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;buy 0.01337543 BCHEUR @ market&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Note: No <code>txid</code> in validation response (order not placed).</p>
+<hr />
+<h2 id="part-2-withdrawal-api-withdraw">Part 2: Withdrawal API (Withdraw)<a class="headerlink" href="#part-2-withdrawal-api-withdraw" title="Permanent link">&para;</a></h2>
+<h3 id="21-endpoint-details">2.1 Endpoint Details<a class="headerlink" href="#21-endpoint-details" title="Permanent link">&para;</a></h3>
+<p><strong>URL:</strong> <code>https://api.kraken.com/0/private/Withdraw</code>
+<strong>Method:</strong> POST
+<strong>Authentication:</strong> Required (API-Key + API-Sign headers)
+<strong>Permission:</strong> "Withdraw" (✅ enabled on our API key)</p>
+<p><strong>⚠️ CRITICAL:</strong> Address must be whitelisted in Kraken account settings first!</p>
+<h3 id="22-address-whitelisting">2.2 Address Whitelisting<a class="headerlink" href="#22-address-whitelisting" title="Permanent link">&para;</a></h3>
+<p>Before using the API, manually whitelist the escrow hot wallet:</p>
+<ol>
+<li>Login to Kraken.com</li>
+<li>Settings → Funding → Withdraw</li>
+<li>Select "Bitcoin Cash (BCH)"</li>
+<li>Click "Add address"</li>
+<li>Enter:</li>
+<li><strong>Address:</strong> <code>bitcoincash:qzx...</code> (escrow hot wallet)</li>
+<li><strong>Description:</strong> "Asgaya Escrow Hot Wallet"</li>
+<li><strong>Network:</strong> Bitcoin Cash</li>
+<li>Complete 2FA challenge</li>
+<li>Confirm via email</li>
+</ol>
+<p><strong>Whitelisting delay:</strong> Usually instant, can take up to 24h for new accounts.</p>
+<h3 id="23-get-withdrawal-key">2.3 Get Withdrawal Key<a class="headerlink" href="#23-get-withdrawal-key" title="Permanent link">&para;</a></h3>
+<p>After whitelisting, get the "key" identifier for the address:</p>
+<p><strong>Endpoint:</strong> <code>https://api.kraken.com/0/private/WithdrawInfo</code>
+<strong>Parameters:</strong>
+- <code>asset</code>: "BCH"
+- <code>key</code>: Use the description name from whitelisting
+- <code>amount</code>: Test amount (e.g., "0.01")</p>
+<p><strong>Request:</strong>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_withdrawal_info</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Query withdrawal info for whitelisted BCH address.&quot;&quot;&quot;</span>
+    <span class="n">urlpath</span> <span class="o">=</span> <span class="s2">&quot;/0/private/WithdrawInfo&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;nonce&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)),</span>
+        <span class="s2">&quot;asset&quot;</span><span class="p">:</span> <span class="s2">&quot;BCH&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;Asgaya Escrow Hot Wallet&quot;</span><span class="p">,</span>  <span class="c1"># Description from whitelisting</span>
+        <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="s2">&quot;0.01&quot;</span>
+    <span class="p">}</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;API-Key&quot;</span><span class="p">:</span> <span class="n">KRAKEN_API_KEY</span><span class="p">,</span>
+        <span class="s2">&quot;API-Sign&quot;</span><span class="p">:</span> <span class="n">get_kraken_signature</span><span class="p">(</span><span class="n">urlpath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">KRAKEN_API_SECRET</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;https://api.kraken.com</span><span class="si">{</span><span class="n">urlpath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>Response:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bitcoin Cash&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5001.00000000&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.01000000&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;fee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.00010000&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Key insights:</strong>
+- <code>fee</code>: Network fee charged by Kraken (0.0001 BCH = ~€0.037)
+- <code>limit</code>: Daily withdrawal limit remaining
+- <code>amount</code>: What will be sent (before fee)</p>
+<h3 id="24-execute-withdrawal">2.4 Execute Withdrawal<a class="headerlink" href="#24-execute-withdrawal" title="Permanent link">&para;</a></h3>
+<p><strong>Request:</strong>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">withdraw_bch_to_hot_wallet</span><span class="p">(</span><span class="n">bch_amount</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Withdraw BCH from Kraken to whitelisted escrow hot wallet.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bch_amount: Amount of BCH to withdraw (float)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Response with withdrawal reference ID</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">urlpath</span> <span class="o">=</span> <span class="s2">&quot;/0/private/Withdraw&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;nonce&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)),</span>
+        <span class="s2">&quot;asset&quot;</span><span class="p">:</span> <span class="s2">&quot;BCH&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;Asgaya Escrow Hot Wallet&quot;</span><span class="p">,</span>  <span class="c1"># Must match whitelisted name</span>
+        <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">bch_amount</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;API-Key&quot;</span><span class="p">:</span> <span class="n">KRAKEN_API_KEY</span><span class="p">,</span>
+        <span class="s2">&quot;API-Sign&quot;</span><span class="p">:</span> <span class="n">get_kraken_signature</span><span class="p">(</span><span class="n">urlpath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">KRAKEN_API_SECRET</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;https://api.kraken.com</span><span class="si">{</span><span class="n">urlpath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>Success Response:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;refid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FTQ4P7-GJHFM-QPO2K3&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Key field:</strong>
+- <code>refid</code>: Kraken's internal withdrawal reference ID (track status with this)</p>
+<h3 id="25-check-withdrawal-status">2.5 Check Withdrawal Status<a class="headerlink" href="#25-check-withdrawal-status" title="Permanent link">&para;</a></h3>
+<p><strong>Endpoint:</strong> <code>https://api.kraken.com/0/private/WithdrawStatus</code>
+<strong>Parameters:</strong>
+- <code>asset</code>: "BCH"
+- <code>method</code>: "Bitcoin Cash"</p>
+<p><strong>Request:</strong>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_withdrawal_status</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check status of recent BCH withdrawals.&quot;&quot;&quot;</span>
+    <span class="n">urlpath</span> <span class="o">=</span> <span class="s2">&quot;/0/private/WithdrawStatus&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;nonce&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)),</span>
+        <span class="s2">&quot;asset&quot;</span><span class="p">:</span> <span class="s2">&quot;BCH&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;Bitcoin Cash&quot;</span>
+    <span class="p">}</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;API-Key&quot;</span><span class="p">:</span> <span class="n">KRAKEN_API_KEY</span><span class="p">,</span>
+        <span class="s2">&quot;API-Sign&quot;</span><span class="p">:</span> <span class="n">get_kraken_signature</span><span class="p">(</span><span class="n">urlpath</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">KRAKEN_API_SECRET</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;https://api.kraken.com</span><span class="si">{</span><span class="n">urlpath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>Response:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bitcoin Cash&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;aclass&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;currency&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;asset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BCH&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;refid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FTQ4P7-GJHFM-QPO2K3&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;txid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;8cc4d6d0a4e5e6ed3e9c9f0e5a6e7d8c9b0a1f2e3d4c5b6a7d8e9f0a1b2c3d4e&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;info&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bitcoincash:qzx...&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.01000000&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;fee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.00010000&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1713974400</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Success&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Status values:</strong>
+- <code>"Initial"</code>: Withdrawal initiated, pending internal processing
+- <code>"Pending"</code>: Approved, waiting to be sent to network
+- <code>"Success"</code>: Broadcasted to BCH network (check blockchain with txid)
+- <code>"Failure"</code>: Failed (check <code>info</code> field for reason)</p>
+<p><strong>Timeline:</strong>
+- Initial → Pending: 5-20 minutes (Kraken internal security)
+- Pending → Success: Usually instant (broadcast to network)
+- Success → Hot wallet sees 0-conf: Seconds
+- Success → 1 confirmation: ~10 minutes</p>
+<hr />
+<h2 id="part-3-complete-settlement-flow">Part 3: Complete Settlement Flow<a class="headerlink" href="#part-3-complete-settlement-flow" title="Permanent link">&para;</a></h2>
+<h3 id="31-end-to-end-sequence">3.1 End-to-End Sequence<a class="headerlink" href="#31-end-to-end-sequence" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">complete_settlement</span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="n">eur_amount</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Execute complete two-step settlement:</span>
+<span class="sd">    1. Buy BCH on Kraken with EUR</span>
+<span class="sd">    2. Withdraw BCH to hot wallet</span>
+<span class="sd">    3. (Hot wallet forwards to merchant - separate script)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        order_id: Asgaya order identifier</span>
+<span class="sd">        eur_amount: EUR amount to convert to BCH</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Settlement result with txids</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Step 1: Calculate capital efficiency reserves</span>
+    <span class="n">TOTAL_FEE_PCT</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">KRAKEN_FEE_ESTIMATE</span> <span class="o">=</span> <span class="mf">0.26</span>
+    <span class="n">NUM_INTERMEDIARIES</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="n">r_pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">TOTAL_FEE_PCT</span> <span class="o">-</span> <span class="n">KRAKEN_FEE_ESTIMATE</span><span class="p">)</span> <span class="o">/</span> <span class="n">NUM_INTERMEDIARIES</span>
+    <span class="n">merchant_reward</span> <span class="o">=</span> <span class="n">eur_amount</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_pct</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">lp_reward</span> <span class="o">=</span> <span class="n">eur_amount</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_pct</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">bch_purchase_eur</span> <span class="o">=</span> <span class="n">eur_amount</span> <span class="o">-</span> <span class="n">merchant_reward</span> <span class="o">-</span> <span class="n">lp_reward</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💶 EUR breakdown:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Total: €</span><span class="si">{</span><span class="n">eur_amount</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  BCH purchase: €</span><span class="si">{</span><span class="n">bch_purchase_eur</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Merchant reserve: €</span><span class="si">{</span><span class="n">merchant_reward</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  LP reserve: €</span><span class="si">{</span><span class="n">lp_reward</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Step 2: Buy BCH</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔄 Buying BCH on Kraken...&quot;</span><span class="p">)</span>
+    <span class="n">buy_result</span> <span class="o">=</span> <span class="n">buy_bch_market</span><span class="p">(</span><span class="n">bch_purchase_eur</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">buy_result</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Buy failed: </span><span class="si">{</span><span class="n">buy_result</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">trade_txid</span> <span class="o">=</span> <span class="n">buy_result</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">][</span><span class="s2">&quot;txid&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Trade executed: </span><span class="si">{</span><span class="n">trade_txid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Step 3: Wait for trade to settle (usually instant for market orders)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># Step 4: Query actual BCH received (check balance)</span>
+    <span class="n">balance_result</span> <span class="o">=</span> <span class="n">query_balance</span><span class="p">()</span>
+    <span class="n">bch_balance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">balance_result</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">][</span><span class="s2">&quot;BCH&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💰 Current BCH balance: </span><span class="si">{</span><span class="n">bch_balance</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2"> BCH&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Step 5: Withdraw BCH to hot wallet (minus Kraken fee)</span>
+    <span class="c1"># Leave small amount in Kraken for next trade</span>
+    <span class="n">withdraw_amount</span> <span class="o">=</span> <span class="n">bch_balance</span> <span class="o">-</span> <span class="mf">0.0001</span>  <span class="c1"># Keep dust in Kraken</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📤 Withdrawing </span><span class="si">{</span><span class="n">withdraw_amount</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2"> BCH to hot wallet...&quot;</span><span class="p">)</span>
+    <span class="n">withdraw_result</span> <span class="o">=</span> <span class="n">withdraw_bch_to_hot_wallet</span><span class="p">(</span><span class="n">withdraw_amount</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">withdraw_result</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Withdrawal failed: </span><span class="si">{</span><span class="n">withdraw_result</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">refid</span> <span class="o">=</span> <span class="n">withdraw_result</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">][</span><span class="s2">&quot;refid&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Withdrawal initiated: </span><span class="si">{</span><span class="n">refid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Step 6: Poll withdrawal status until Success</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⏳ Waiting for broadcast to BCH network...&quot;</span><span class="p">)</span>
+    <span class="n">max_attempts</span> <span class="o">=</span> <span class="mi">60</span>  <span class="c1"># 10 minutes max</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_attempts</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Check every 10 seconds</span>
+
+        <span class="n">status_result</span> <span class="o">=</span> <span class="n">check_withdrawal_status</span><span class="p">()</span>
+
+        <span class="c1"># Find our withdrawal by refid</span>
+        <span class="k">for</span> <span class="n">withdrawal</span> <span class="ow">in</span> <span class="n">status_result</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">withdrawal</span><span class="p">[</span><span class="s2">&quot;refid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">refid</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="n">withdrawal</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Status: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;Success&quot;</span><span class="p">:</span>
+                    <span class="n">bch_txid</span> <span class="o">=</span> <span class="n">withdrawal</span><span class="p">[</span><span class="s2">&quot;txid&quot;</span><span class="p">]</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎉 Settlement complete!&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  BCH transaction: </span><span class="si">{</span><span class="n">bch_txid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  View: https://blockchair.com/bitcoin-cash/transaction/</span><span class="si">{</span><span class="n">bch_txid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="k">return</span> <span class="p">{</span>
+                        <span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="n">order_id</span><span class="p">,</span>
+                        <span class="s2">&quot;trade_txid&quot;</span><span class="p">:</span> <span class="n">trade_txid</span><span class="p">,</span>
+                        <span class="s2">&quot;withdrawal_refid&quot;</span><span class="p">:</span> <span class="n">refid</span><span class="p">,</span>
+                        <span class="s2">&quot;bch_txid&quot;</span><span class="p">:</span> <span class="n">bch_txid</span><span class="p">,</span>
+                        <span class="s2">&quot;bch_amount&quot;</span><span class="p">:</span> <span class="n">withdraw_amount</span><span class="p">,</span>
+                        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;complete&quot;</span>
+                    <span class="p">}</span>
+
+                <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;Failure&quot;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Withdrawal failed: </span><span class="si">{</span><span class="n">withdrawal</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Withdrawal timeout - check status manually&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="32-integration-with-escrow_apipy">3.2 Integration with escrow_api.py<a class="headerlink" href="#32-integration-with-escrow_apipy" title="Permanent link">&para;</a></h3>
+<p><strong>When merchant confirms ARS receipt:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/merchant/confirm_ars&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">merchant_confirm_ars</span><span class="p">():</span>
+    <span class="c1"># ... existing validation code ...</span>
+
+    <span class="c1"># Trigger settlement</span>
+    <span class="n">eur_amount</span> <span class="o">=</span> <span class="n">order</span><span class="p">[</span><span class="s1">&#39;eur_amount&#39;</span><span class="p">]</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">settlement_result</span> <span class="o">=</span> <span class="n">complete_settlement</span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="n">eur_amount</span><span class="p">)</span>
+
+        <span class="n">order</span><span class="p">[</span><span class="s1">&#39;settlement&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">settlement_result</span>
+        <span class="n">order</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bch_sent_to_hot_wallet&#39;</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;BCH purchased and sent to hot wallet&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bch_txid&quot;</span><span class="p">:</span> <span class="n">settlement_result</span><span class="p">[</span><span class="s1">&#39;bch_txid&#39;</span><span class="p">]</span>
+        <span class="p">})</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Settlement failed: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">}),</span> <span class="mi">500</span>
+</code></pre></div>
+<hr />
+<h2 id="part-4-security-error-handling">Part 4: Security &amp; Error Handling<a class="headerlink" href="#part-4-security-error-handling" title="Permanent link">&para;</a></h2>
+<h3 id="41-api-key-security">4.1 API Key Security<a class="headerlink" href="#41-api-key-security" title="Permanent link">&para;</a></h3>
+<p><strong>✅ Current setup (from RS018):</strong>
+- API keys stored in <code>secrets.env.age</code> (encrypted with age)
+- Loaded via environment variables at runtime
+- Never committed to version control</p>
+<p><strong>Additional security:</strong>
+- IP whitelist enabled for Kraken API key (Pichan's IP)
+- 2FA required for API key generation and withdrawals
+- Monitor Kraken email notifications for suspicious activity</p>
+<h3 id="42-error-recovery">4.2 Error Recovery<a class="headerlink" href="#42-error-recovery" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Failure Point</th>
+<th>Detection</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buy order fails</td>
+<td>Check <code>error</code> array</td>
+<td>Retry with backoff, alert if Kraken down</td>
+</tr>
+<tr>
+<td>Insufficient EUR balance</td>
+<td>Query Balance before buy</td>
+<td>Top up Kraken, or use LP fallback</td>
+</tr>
+<tr>
+<td>Withdrawal fails</td>
+<td>Check <code>error</code> array</td>
+<td>May need manual intervention (security hold)</td>
+</tr>
+<tr>
+<td>Withdrawal stuck</td>
+<td>Poll status timeout</td>
+<td>Check Kraken UI, may be security review</td>
+</tr>
+<tr>
+<td>Network failure</td>
+<td>Timeout exception</td>
+<td>Retry with exponential backoff</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-idempotency">4.3 Idempotency<a class="headerlink" href="#43-idempotency" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Network timeout - did order execute or not?</p>
+<p><strong>Solution:</strong> Query recent trades/withdrawals before retry:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">buy_with_idempotency_check</span><span class="p">(</span><span class="n">eur_amount</span><span class="p">,</span> <span class="n">max_age_seconds</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if we already bought in last 5 minutes before placing new order.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Query closed orders from last 5 minutes</span>
+    <span class="n">recent_trades</span> <span class="o">=</span> <span class="n">query_closed_orders</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">max_age_seconds</span><span class="p">))</span>
+
+    <span class="c1"># Check if any match our criteria</span>
+    <span class="k">for</span> <span class="n">trade</span> <span class="ow">in</span> <span class="n">recent_trades</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">][</span><span class="s2">&quot;closed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">trade</span><span class="p">[</span><span class="s2">&quot;descr&quot;</span><span class="p">][</span><span class="s2">&quot;pair&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;BCHEUR&quot;</span> <span class="ow">and</span>
+            <span class="n">trade</span><span class="p">[</span><span class="s2">&quot;descr&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;buy&quot;</span> <span class="ow">and</span>
+            <span class="nb">abs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">trade</span><span class="p">[</span><span class="s2">&quot;cost&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="n">eur_amount</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">):</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️  Found recent matching trade: </span><span class="si">{</span><span class="n">trade</span><span class="p">[</span><span class="s1">&#39;txid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;txid&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">trade</span><span class="p">[</span><span class="s2">&quot;txid&quot;</span><span class="p">]]}}</span>
+
+    <span class="c1"># No recent match, safe to place new order</span>
+    <span class="k">return</span> <span class="n">buy_bch_market</span><span class="p">(</span><span class="n">eur_amount</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="44-rate-limiting">4.4 Rate Limiting<a class="headerlink" href="#44-rate-limiting" title="Permanent link">&para;</a></h3>
+<p><strong>Kraken rate limits:</strong>
+- Private API: ~15-20 calls per second
+- Withdrawal: 1 per 3 seconds recommended
+- Trading: No explicit limit, but throttled if excessive</p>
+<p><strong>Our usage pattern (per transaction):</strong>
+1. Ticker (public) - unlimited
+2. Balance (private) - 1 call
+3. AddOrder (private) - 1 call
+4. WithdrawInfo (private) - 1 call (optional)
+5. Withdraw (private) - 1 call
+6. WithdrawStatus (private) - polling every 10s</p>
+<p><strong>Total:</strong> &lt;10 API calls per transaction over 10-20 minutes = well within limits</p>
+<hr />
+<h2 id="part-5-testing-checklist">Part 5: Testing Checklist<a class="headerlink" href="#part-5-testing-checklist" title="Permanent link">&para;</a></h2>
+<h3 id="51-pre-mvp-test-validation">5.1 Pre-MVP Test (Validation)<a class="headerlink" href="#51-pre-mvp-test-validation" title="Permanent link">&para;</a></h3>
+<p>Before risking real money:</p>
+<ul>
+<li>[ ] Test buy order with <code>validate=true</code></li>
+<li>[ ] Verify EUR balance sufficient</li>
+<li>[ ] Test withdrawal info query</li>
+<li>[ ] Confirm hot wallet address whitelisted</li>
+<li>[ ] Check withdrawal limits</li>
+<li>[ ] Verify API key has all permissions</li>
+</ul>
+<h3 id="52-mvp-test-real-5">5.2 MVP Test (Real €5)<a class="headerlink" href="#52-mvp-test-real-5" title="Permanent link">&para;</a></h3>
+<p>First real money test:</p>
+<ul>
+<li>[ ] Buy €4.98 BCH with market order</li>
+<li>[ ] Verify trade execution via ClosedOrders</li>
+<li>[ ] Check actual fee vs. estimate</li>
+<li>[ ] Withdraw BCH to hot wallet</li>
+<li>[ ] Monitor withdrawal status until Success</li>
+<li>[ ] Verify BCH txid on blockchain explorer</li>
+<li>[ ] Check hot wallet receives funds (0-conf)</li>
+</ul>
+<h3 id="53-production-readiness">5.3 Production Readiness<a class="headerlink" href="#53-production-readiness" title="Permanent link">&para;</a></h3>
+<p>Before going live:</p>
+<ul>
+<li>[ ] Implement idempotency checks</li>
+<li>[ ] Add retry logic with exponential backoff</li>
+<li>[ ] Set up Kraken balance monitoring</li>
+<li>[ ] Configure alerts for failures</li>
+<li>[ ] Document manual recovery procedures</li>
+<li>[ ] Test with Kraken downtime simulation</li>
+</ul>
+<hr />
+<h2 id="part-6-open-questions-for-live-testing">Part 6: Open Questions for Live Testing<a class="headerlink" href="#part-6-open-questions-for-live-testing" title="Permanent link">&para;</a></h2>
+<p>Questions we'll answer when we test:</p>
+<ol>
+<li><strong>Actual execution fee:</strong> Is 0.26% accurate, or does it vary?</li>
+<li><strong>Market order slippage:</strong> For €5, do we get expected BCH amount?</li>
+<li><strong>Withdrawal timing:</strong> How long Initial → Pending → Success?</li>
+<li><strong>Kraken dust:</strong> Do they allow withdrawing nearly all BCH, or need minimum balance?</li>
+<li><strong>Error messages:</strong> What do real errors look like (for better handling)?</li>
+<li><strong>Rate limiting:</strong> Do we hit any limits with our call pattern?</li>
+</ol>
+<hr />
+<h2 id="part-7-live-test-results-april-24-2026">Part 7: Live Test Results (April 24, 2026)<a class="headerlink" href="#part-7-live-test-results-april-24-2026" title="Permanent link">&para;</a></h2>
+<h3 id="71-first-real-bch-purchase-4-test">7.1 First Real BCH Purchase - €4 Test<a class="headerlink" href="#71-first-real-bch-purchase-4-test" title="Permanent link">&para;</a></h3>
+<p><strong>Test Script:</strong> <code>test_kraken_trade.py</code>
+<strong>Execution Time:</strong> 2026-04-24 15:33:52 CET
+<strong>Result:</strong> ✅ <strong>SUCCESSFUL</strong></p>
+<p><strong>Pre-Trade State:</strong>
+- EUR Balance: €9.96
+- BCH Balance: 0.00000000
+- Ask Price: €390.91/BCH
+- Spread: €0.12 (0.031%)</p>
+<p><strong>Order Execution:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="s1">&#39;ordertype&#39;</span><span class="p">:</span> <span class="s1">&#39;market&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;buy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pair&#39;</span><span class="p">:</span> <span class="s1">&#39;BCHEUR&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;volume&#39;</span><span class="p">:</span> <span class="s1">&#39;4.0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;oflags&#39;</span><span class="p">:</span> <span class="s1">&#39;viqc&#39;</span>  <span class="c1"># Volume in quote currency</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Response:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;txid&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;OXLPUF-G2FN2-LS6S3L&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;descr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;buy 4.00 BCHEUR @ market&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Trade Details (from TradesHistory):</strong>
+- Trade ID: <code>TSLMT4-MS46Z-44BEUW</code>
+- BCH Received: <strong>0.01022025 BCH</strong>
+- Cost: €4.00
+- Fee: <strong>€0.0160 (0.40%)</strong>
+- Execution Price: €391.38/BCH
+- Slippage: €0.47 (0.12% above ask - negligible)</p>
+<p><strong>Post-Trade State:</strong>
+- EUR Balance: €5.94 (-€4.02)
+- BCH Balance: 0.01022025 (+0.01022025)
+- Trade History Update: <strong>Immediate (&lt; 3 seconds)</strong></p>
+<h3 id="72-critical-findings">7.2 Critical Findings<a class="headerlink" href="#72-critical-findings" title="Permanent link">&para;</a></h3>
+<p><strong>1. Actual Kraken Fee: 0.40% (NOT 0.26%)</strong></p>
+<p>Our initial estimate of 0.26% was incorrect. Actual maker/taker fee for our account tier is <strong>0.40%</strong>.</p>
+<p><strong>Impact on capital efficiency formula:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># OLD (incorrect):</span>
+<span class="n">KRAKEN_FEE_ESTIMATE</span> <span class="o">=</span> <span class="mf">0.26</span>
+
+<span class="c1"># NEW (correct):</span>
+<span class="n">KRAKEN_FEE_ESTIMATE</span> <span class="o">=</span> <span class="mf">0.40</span>
+
+<span class="c1"># Updated r calculation:</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">%</span> <span class="o">-</span> <span class="mf">0.40</span><span class="o">%</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">=</span> <span class="mf">0.20</span><span class="o">%</span> <span class="n">per</span> <span class="n">intermediary</span>
+</code></pre></div></p>
+<p><strong>Effect on €100 transaction:</strong>
+- Old: Merchant reserve €0.25, LP reserve €0.25, BCH €99.50
+- New: Merchant reserve €0.20, LP reserve €0.20, BCH €99.60
+- <strong>BCH purchase increases by €0.10</strong> (more capital efficient!)</p>
+<p><strong>2. 'viqc' Flag Works Perfectly</strong></p>
+<p>Volume in quote currency (<code>'oflags': 'viqc'</code>) allows us to specify EUR amount directly:
+- No manual BCH volume calculation needed
+- Exact EUR amount spent (€4.00 requested = €4.00 cost)
+- Simplifies settlement_engine.py logic</p>
+<p><strong>3. Trade History Instant</strong></p>
+<p>Trade appeared in <code>/0/private/TradesHistory</code> within 3 seconds:
+- No retry delays needed for normal operation
+- 5 retry × 3s timeout is more than sufficient
+- Can reduce to 3 retries for production</p>
+<p><strong>4. Minimal Slippage</strong></p>
+<p>Market order executed at €391.38 vs €390.91 ask:
+- Slippage: €0.47 (0.12%)
+- For €4-100 transactions: negligible impact
+- Confirms BCHEUR pair has good liquidity (RS036 findings)</p>
+<h3 id="73-required-code-updates">7.3 Required Code Updates<a class="headerlink" href="#73-required-code-updates" title="Permanent link">&para;</a></h3>
+<p><strong>Update settlement_engine.py:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Line 41 - Change:</span>
+<span class="n">KRAKEN_FEE_ESTIMATE</span> <span class="o">=</span> <span class="mf">0.26</span>  <span class="c1"># Old incorrect estimate</span>
+
+<span class="c1"># To:</span>
+<span class="n">KRAKEN_FEE_ESTIMATE</span> <span class="o">=</span> <span class="mf">0.40</span>  <span class="c1"># Actual fee from live test (April 24, 2026)</span>
+</code></pre></div></p>
+<p><strong>Update capital efficiency comments:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># r = [1% - 0.40%] / 3 = 0.20% per intermediary</span>
+<span class="c1"># For €100 transaction:</span>
+<span class="c1">#   - Merchant reward: €0.20</span>
+<span class="c1">#   - LP reward: €0.20</span>
+<span class="c1">#   - BCH purchase: €99.60</span>
+</code></pre></div></p>
+<h3 id="74-validation-checklist">7.4 Validation Checklist<a class="headerlink" href="#74-validation-checklist" title="Permanent link">&para;</a></h3>
+<p>From live test, we can now confirm:</p>
+<ul>
+<li>[x] API key trading permission works</li>
+<li>[x] AddOrder endpoint functional</li>
+<li>[x] 'viqc' flag behaves as expected</li>
+<li>[x] Market orders execute immediately</li>
+<li>[x] Trade history updates instantly</li>
+<li>[x] Balance reflects changes immediately</li>
+<li>[x] Fee structure documented (0.40%)</li>
+<li>[x] Slippage negligible for small orders</li>
+<li>[ ] Withdrawal to hot wallet (Part 2 - pending)</li>
+</ul>
+<h3 id="75-open-questions-answered">7.5 Open Questions Answered<a class="headerlink" href="#75-open-questions-answered" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Actual execution fee?</td>
+<td><strong>0.40%</strong> (not 0.26% estimated)</td>
+</tr>
+<tr>
+<td>Market order slippage?</td>
+<td><strong>0.12%</strong> for €4 (negligible)</td>
+</tr>
+<tr>
+<td>'viqc' flag works?</td>
+<td>✅ Yes, perfectly</td>
+</tr>
+<tr>
+<td>Trade history delay?</td>
+<td><strong>&lt; 3 seconds</strong> (instant)</td>
+</tr>
+<tr>
+<td>Balance update timing?</td>
+<td><strong>Immediate</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p><strong>Complete Kraken integration status:</strong></p>
+<p>✅ Query (RS019) - Balance checking
+✅ Ticker (RS036) - Price feed
+✅ <strong>AddOrder (RS044 Part 1) - TESTED &amp; VERIFIED</strong>
+🎯 Withdraw (RS044 Part 2) - <strong>Next to test</strong></p>
+<p><strong>Critical update needed:</strong>
+- Change <code>KRAKEN_FEE_ESTIMATE</code> from 0.26% to <strong>0.40%</strong> in settlement_engine.py</p>
+<p><strong>Next steps:</strong>
+1. Update settlement_engine.py with correct fee
+2. Whitelist escrow hot wallet address in Kraken UI
+3. Test BCH withdrawal to hot wallet
+4. Complete end-to-end settlement flow
+5. Create toolkit skills from test scripts</p>
+<hr />
+<h3 id="76-maker-vs-taker-fee-optimization">7.6 Maker vs Taker Fee Optimization<a class="headerlink" href="#76-maker-vs-taker-fee-optimization" title="Permanent link">&para;</a></h3>
+<p><strong>Discovery:</strong> Our 0.40% fee is <strong>taker fee</strong> (market orders take liquidity).</p>
+<p><strong>Kraken Fee Structure (Tier 1: &lt; $10k/month):</strong>
+- Maker fee: <strong>0.25%</strong> (limit orders that add liquidity)
+- Taker fee: <strong>0.40%</strong> (market orders that take liquidity)
+- <strong>Potential savings: 0.15% per trade = 37.5% fee reduction!</strong></p>
+<p><strong>Strategy: Aggressive Maker Orders</strong></p>
+<p>Place limit order <strong>slightly above current ask</strong> for near-instant fill:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get current ask price</span>
+<span class="n">ask_price</span> <span class="o">=</span> <span class="mf">390.91</span>
+
+<span class="c1"># Place limit order slightly above (aggressive maker)</span>
+<span class="n">limit_price</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">ask_price</span> <span class="o">+</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># €391.01</span>
+
+<span class="n">order_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ordertype&#39;</span><span class="p">:</span> <span class="s1">&#39;limit&#39;</span><span class="p">,</span>  <span class="c1"># Changed from &#39;market&#39;</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;buy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pair&#39;</span><span class="p">:</span> <span class="s1">&#39;BCHEUR&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">limit_price</span><span class="p">),</span>  <span class="c1"># Specify price</span>
+    <span class="s1">&#39;volume&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">eur_amount</span><span class="p">),</span>
+    <span class="s1">&#39;oflags&#39;</span><span class="p">:</span> <span class="s1">&#39;viqc&#39;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Benefits:</strong>
+- Still pays <strong>maker fee (0.25%)</strong> not taker
+- Fills within ~10-60 seconds (very likely)
+- Saves €0.15 on every €100 spent
+- Only pays €0.10 "premium" over current ask</p>
+<p><strong>Implementation:</strong>
+1. Query current ask price (Ticker API)
+2. Place limit at ask + €0.10
+3. Wait up to 60 seconds for fill
+4. If timeout, cancel and fallback to market order</p>
+<p><strong>Fee impact on capital efficiency:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># With maker fees (0.25%):</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">%</span> <span class="o">-</span> <span class="mf">0.25</span><span class="o">%</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">=</span> <span class="mf">0.25</span><span class="o">%</span> <span class="n">per</span> <span class="n">intermediary</span>
+
+<span class="c1"># For €100 transaction:</span>
+<span class="c1"># - Merchant reserve: €0.25 (vs €0.20 with taker)</span>
+<span class="c1"># - LP reserve: €0.25</span>
+<span class="c1"># - BCH purchase: €99.50</span>
+
+<span class="c1"># 25% increase in intermediary rewards!</span>
+</code></pre></div></p>
+<p><strong>Test script:</strong> <code>/knowledge/research_code/test_kraken_limit_order.py</code></p>
+<hr />
+<h3 id="77-limit-order-test-results-5-above-ask">7.7 Limit Order Test Results - €5 Above Ask<a class="headerlink" href="#77-limit-order-test-results-5-above-ask" title="Permanent link">&para;</a></h3>
+<p><strong>Test:</strong> Limit order at ask + €0.10
+<strong>Execution Time:</strong> 2026-04-24 16:45 CET
+<strong>Result:</strong> ✅ Filled instantly, but charged <strong>taker fee</strong></p>
+<p><strong>Order Details:</strong>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="s1">&#39;ordertype&#39;</span><span class="p">:</span> <span class="s1">&#39;limit&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;buy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pair&#39;</span><span class="p">:</span> <span class="s1">&#39;BCHEUR&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="s1">&#39;391.98&#39;</span><span class="p">,</span>  <span class="c1"># Ask was €391.88 → placed +€0.10 above</span>
+    <span class="s1">&#39;volume&#39;</span><span class="p">:</span> <span class="s1">&#39;0.01275575&#39;</span>  <span class="c1"># €5.00 / 391.98</span>
+    <span class="c1"># NOTE: NO &#39;viqc&#39; flag - doesn&#39;t work with limit orders!</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Result:</strong>
+- Fill time: <strong>0 seconds</strong> (instant)
+- Fee: <strong>€0.0200 (0.40%)</strong> ← Still taker fee!
+- BCH received: 0.01275575
+- Execution price: €391.84</p>
+<p><strong>Critical Discovery:</strong></p>
+<p><strong>Limit order ABOVE ask = instant taker</strong> (crosses the spread)</p>
+<p>Our limit @ €391.98 was higher than best ask (€391.88), so it matched immediately against existing sell orders = <strong>took liquidity</strong> = taker fee.</p>
+<p><strong>To get maker fee (0.25%), must:</strong>
+1. Place limit <strong>AT</strong> current ask (becomes maker when price moves)
+2. Place limit <strong>BELOW</strong> ask (passive maker, waits in order book)
+3. <strong>Never cross the spread</strong> (never place above ask for buy orders)</p>
+<p><strong>Revised Strategy for 0.25% Maker Fee:</strong></p>
+<p><strong>Option A: AT ask (aggressive maker)</strong>
+<div class="highlight"><pre><span></span><code><span class="n">limit_price</span> <span class="o">=</span> <span class="n">ask_price</span>  <span class="c1"># Exactly at current ask</span>
+<span class="c1"># Expected: Fills quickly when price moves or sellers arrive</span>
+<span class="c1"># Fee: 0.25% (maker)</span>
+</code></pre></div></p>
+<p><strong>Option B: Below ask (passive maker - RECOMMENDED)</strong>
+<div class="highlight"><pre><span></span><code><span class="n">limit_price</span> <span class="o">=</span> <span class="n">ask_price</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.0001</span><span class="p">)</span>  <span class="c1"># 0.01% below ask</span>
+<span class="c1"># Example: €391.88 → €391.84 (€0.04 below)</span>
+<span class="c1"># Expected: Fills when price dips slightly</span>
+<span class="c1"># Fee: 0.25% (maker)</span>
+<span class="c1"># Extra cost: 0.01% price difference</span>
+<span class="c1"># Net savings: 0.15% - 0.01% = 0.14% vs market order</span>
+</code></pre></div></p>
+<p><strong>Implementation Plan:</strong>
+1. Place limit at ask - 0.01%
+2. Wait 60 seconds for fill
+3. If no fill (price moved up), cancel and retry with new ask price
+4. If timeout after 3 retries, fallback to market order</p>
+<p><strong>Expected outcome:</strong>
+- Target fee: <strong>0.26%</strong> (0.25% maker + 0.01% price offset)
+- vs current: 0.40% (taker)
+- <strong>Savings: 0.14% = 35% fee reduction</strong></p>
+<p><strong>Next tests:</strong>
+1. Test limit AT current ask (wait for maker fill)
+2. Test limit 0.01% below ask (passive maker)
+3. Measure actual fill times and fee confirmation</p>
+<hr />
+<p><strong>Prepared by:</strong> Coordination (Research) + Suso (Testing)
+<strong>Date:</strong> April 24, 2026
+<strong>Status:</strong> Part 1 (Trading) ✅ Complete | Maker strategy refined, ready for final tests
+<strong>Live Tests:</strong>
+- €4 market order: 0.40% taker fee ✅
+- €5 limit above ask: 0.40% taker fee (instant fill) ✅
+- Next: Limit at/below ask for maker fee</p>
+<p><em>Discovered: Must not cross spread to get maker fees. Testing refined strategy next.</em> 🎯</p>
+        <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
+            <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
+        </div>
+        <script>
+        async function copyMarkdownToClipboard() {
+            try {
+                const currentPath = window.location.pathname;
+                const mdPath = currentPath.endsWith('/') ? currentPath + 'index.md' : currentPath.replace(/\.html$/, '.md');
+
+                const response = await fetch(mdPath);
+                if (response.ok) {
+                    const markdown = await response.text();
+                    await navigator.clipboard.writeText(markdown);
+                    // Show feedback
+                    const button = document.querySelector('#llms-copy-button button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007acc';
+                    }, 2000);
+                } else {
+                    throw new Error('Markdown file not found');
+                }
+            } catch (err) {
+                console.error('Failed to copy markdown:', err);
+                alert('Failed to copy markdown content');
+            }
+        }
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.breadcrumbs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -73,6 +73,33 @@ Buy surplus BCH from merchants with cash, enabling merchants to convert back to 
 > more than the cash you gave them. You earn €0.50 per €100, and my family 
 > gets their money without me losing 6% to Western Union."
 
+### The Merchant Value Proposition
+
+**We are not asking merchants to accept BCH out of ideology.** We are giving them a business proposition that their competitors can't match.
+
+**The triple-dip economics:**
+
+1. **Merchant fee (0.5%)** — Earn €0.90 per €180 remittance for handing over cash
+2. **Product margin (15-30%)** — Recipient spends money on groceries during the visit (€8-42 on €180 remittance)
+3. **Seller fee (0.5%)** — Recycle the BCH back to a new sender, earn another €0.90
+
+**On a single €180 remittance, the merchant earns €22-44.**
+
+**The competitive moat:**
+- Asgaya recipients are guaranteed foot traffic
+- They arrive with money to spend on essentials (food, medicine, phone credit)
+- The first merchant in a neighborhood captures all this traffic
+- Competitors watch customers walk past their door
+
+**Why this drives self-onboarding:**
+When a migrant worker onboards the first merchant in their neighborhood, word spreads. Other pulpería owners see their competitor earning extra income. Within weeks, they ask "how do I join?"
+
+**Phase 0 target:** Merchants with family connections in Spain (can participate as sellers for triple-dip).
+
+See **[Merchant Business Case](../concepts/merchant-business-case.md)** for complete economics breakdown.
+
+---
+
 ### BCH Sellers (Phase 0)
 
 **Who:** Core team + bitcoincashresearch forum contributors

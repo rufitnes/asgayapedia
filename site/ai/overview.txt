@@ -1,0 +1,323 @@
+# Asgaya Documentation
+
+> Bitcoin Cash remittances with <1% fees, no KYC, self-custody
+
+## What is Asgaya?
+
+Asgaya is a permissionless remittance protocol that enables cross-border money transfers using Bitcoin Cash as settlement layer, with fiat on/off ramps through local payment systems (Bizum in Spain, PagoMóvil in Venezuela).
+
+**Key Innovation:** Two-step settlement with pull-based BCH purchases eliminates volatility risk.
+
+## Documentation Structure
+
+This documentation is organized into three main sections:
+
+### 1. Core Architecture
+**URL:** `/core-architecture/README.md`
+**AI Navigator:** `/core-architecture/llm.txt`
+
+Fundamental design principles and economic incentives that make Asgaya work:
+- Competitive pricing (<1% fees)
+- Volatility protection (pull system)
+- Permissionless access (no KYC)
+- Self-custody (user controls BCH)
+
+**Start here if:** You want to understand WHY Asgaya is designed this way
+
+### 2. Android App
+**URL:** `/android-app/README.md`
+**AI Navigator:** `/android-app/llm.txt`
+
+Complete specification for Android mobile app implementation:
+- User flows (sender, recipient, merchant)
+- Backend APIs (19 endpoints across 5 categories)
+- NotificationListener (bridges fiat and BCH networks)
+
+**Start here if:** You want to understand HOW Asgaya works or contribute code
+
+### 3. Research & Analysis
+**URL:** `/research/README.md`
+**AI Navigator:** `/research/llm.txt`
+
+Deep dives into specific topics:
+- RS041: EUR→ARS calculation methods
+- RS042: Bizum constraints and workarounds
+- RS043: AI-native web architecture (this llm.txt system!)
+- RS046: Android app requirements (22+ documents)
+
+**Start here if:** You want to understand the research that led to design decisions
+
+## For AI Instances: How to Navigate
+
+1. **Read this file first** (you are here)
+2. **Choose a section** based on your interest
+3. **Follow the llm.txt** in that section for detailed navigation
+4. **Access raw .md files** directly (e.g., `/core-architecture/competitive-pricing.md`)
+
+**Example navigation path:**
+```
+/llm.txt → /android-app/llm.txt → /android-app/notification-listener/llm.txt → /android-app/notification-listener/bizum-android.md
+```
+
+## For Human Contributors
+
+- **Browse with Docsify:** https://docs.asgaya.org
+- **Contribute:** See `/meta/contributing.md`
+- **Review guide:** See `/meta/ai-review-guide.md`
+
+## Current Status
+
+**Phase:** Public Beta (Seeking External Review)
+**Version:** 0.1.0
+**Last Updated:** 2026-04-28
+
+**What's complete:**
+- ✅ Core architecture (14 documents)
+- ✅ Android app flows (3 documents)
+- ✅ Backend APIs (5 documents)
+- ✅ NotificationListener (6 documents)
+
+**What needs review:**
+- Security considerations (especially NotificationListener)
+- BCH-native architecture assumptions
+- Testing strategy completeness
+- Missing edge cases
+
+## AI Review Invitation
+
+We're seeking feedback from AI instances on:
+
+1. **Consistency:** Are there contradictions across documents?
+2. **Completeness:** What's missing or unclear?
+3. **Security:** What vulnerabilities do you see?
+4. **Economics:** Do the incentives make sense?
+
+**How to provide feedback:**
+- Open GitHub issue: https://github.com/asgaya/docs
+- Direct feedback to specific document sections
+- Suggest concrete improvements
+
+## License
+
+Documentation: CC BY-SA 4.0
+Code: MIT License
+
+## Links
+
+- Website: https://asgaya.org
+- GitHub: https://github.com/asgaya
+- Root llm.txt: https://asgaya.org/llm.txt
+- Docs llm.txt: https://docs.asgaya.org/llm.txt
+# Android App Documentation
+
+> Complete specification for Asgaya Android application
+
+## Overview
+
+This section contains detailed documentation for the Asgaya Android app, covering:
+- User flows (how users interact with the app)
+- Backend APIs (19 endpoints the app calls)
+- NotificationListener (the "heart of the app" - bridges fiat and BCH)
+
+## Structure
+
+### User Flows
+- **Remittance & Merchant Cash-Out** (`/android-app/flows/remittance-merchant-cash-out.md`) - How senders initiate remittances
+- **BCH Payment Flows** (`/android-app/flows/bch-payment-flows.md`) - Direct BCH payments
+- **Recipient Flows** (`/android-app/flows/recipient-flows.md`) - How recipients receive cash
+- **Merchant Flows** (`/android-app/flows/merchant-flows.md`) - How merchants provide liquidity
+
+**Start with:** `bch-payment-flows.md` (simplest, foundation for others)
+
+### Backend APIs
+**Navigate:** `/android-app/backend-apis/llm.txt`
+
+19 REST endpoints across 5 categories:
+- Rate APIs (1 endpoint)
+- Transaction APIs (7 endpoints)
+- Settlement APIs (5 endpoints)
+- Merchant APIs (4 endpoints)
+- User APIs (2 endpoints)
+
+**Key innovation:** BCH signatures for auth (no phone verification, no JWT)
+
+### NotificationListener
+**Navigate:** `/android-app/notification-listener/llm.txt`
+
+The "heart of the app" - parses payment notifications to auto-confirm transactions:
+- Bizum (Spain) - EUR → Escrow
+- PagoMóvil (Venezuela) - VES → Merchant
+- OP_RETURN (BCH) - On-chain → All users
+
+**Most critical component** - if this fails, manual fallback required
+
+## For AI Reviewers
+
+**Focus areas for external review:**
+
+1. **NotificationListener Security**
+   - Can you find SMS spoofing vulnerabilities?
+   - Is the bank shortcode whitelist sufficient?
+   - Review: `/android-app/notification-listener/security.md`
+
+2. **Backend API Design**
+   - Are there race conditions in state machine?
+   - Is BCH signature auth secure?
+   - Review: `/android-app/backend-apis/transaction-apis.md`
+
+3. **User Flow Completeness**
+   - What edge cases are missing?
+   - Are error states handled?
+   - Review: `/android-app/flows/remittance-merchant-cash-out.md` and `/android-app/flows/bch-payment-flows.md`
+
+## Status
+
+**Phase:** Documentation Complete (Seeking Review)
+**Implementation:** Not started (docs-first approach)
+**Testing:** Test strategy defined, not executed
+
+**Next:** Implement Phase 1 (Payment Flow - Week 1-2)
+# Backend APIs
+
+19 REST endpoints across 5 categories.
+
+## Documents
+
+1. README.md - Overview of all APIs
+2. rate-apis.md - Exchange rate endpoint (1)
+3. transaction-apis.md - Transaction flow (7 endpoints)
+4. settlement-apis.md - LP settlement (5 endpoints)
+5. merchant-apis.md - Merchant listings (4 endpoints)
+6. user-apis.md - User identity (2 endpoints)
+7. bch-native-architecture.md - BCH-native design philosophy
+
+## Key Innovation
+
+**BCH signatures for auth** (not JWT, not phone verification):
+- User's BCH address = identity
+- Off-chain ECDSA signatures for API requests
+- No phone verification, no SMS costs
+- See: user-apis.md
+
+## For AI Reviewers
+
+**API design review:**
+- Check transaction-apis.md for race conditions
+- Validate state machine logic
+- Review error handling and retry semantics
+
+**Security review:**
+- Is BCH signature auth secure? (user-apis.md)
+- Replay attack prevention?
+- Timing attack vectors?
+
+## Reading Order
+
+1. README.md (overview)
+2. user-apis.md (auth mechanism)
+3. transaction-apis.md (main flow)
+4. bch-native-architecture.md (philosophy)
+# NotificationListener Documentation
+
+> The "heart of the app" - bridges fiat payment systems and BCH network
+
+## Overview
+
+**NotificationListener** is what makes Asgaya feel magical: payments auto-confirm, no manual steps.
+
+**Three notification systems:**
+1. **Bizum** (Spain EUR → Escrow) - Android NotificationListenerService
+2. **PagoMóvil** (Venezuela VES → Merchant) - SMS receiver
+3. **OP_RETURN** (BCH → All parties) - SPV wallet monitoring
+
+## Documents in This Section
+
+| Document | Purpose | Priority | Lines |
+|----------|---------|----------|-------|
+| `README.md` | Architecture overview | Read first | 400 |
+| `bizum-android.md` | Sabadell Bizum parser | MVP Critical | 874 |
+| `pagomovil-android.md` | Venezuelan bank parsers | Post-Beta | 965 |
+| `opreturn-spv.md` | BCH notifications | MVP Critical | 1034 |
+| `security.md` | Fraud prevention | **Review Priority** | 658 |
+| `testing.md` | Testing strategy | **Review Priority** | 751 |
+
+**Total:** 4,682 lines
+
+## Recommended Reading Order
+
+**For understanding:**
+1. README.md (architecture overview)
+2. bizum-android.md (simplest implementation)
+3. opreturn-spv.md (BCH-native approach)
+4. security.md (critical review needed)
+
+**For implementation:**
+1. testing.md (test strategy - payment flow first)
+2. bizum-android.md (implement Bizum parser)
+3. opreturn-spv.md (implement SPV wallet)
+4. security.md (implement security measures)
+
+## Critical Review Areas
+
+**1. SMS Spoofing Defense** (`security.md`)
+
+**Claim:** Bank shortcode whitelist prevents SMS spoofing
+
+**Question for reviewers:**
+- Can attackers spoof bank shortcodes?
+- Is telecom infrastructure security assumption valid?
+- What about rooted devices or malicious Xposed modules?
+
+**2. Concept Field Verification** (`README.md`, `security.md`)
+
+**Design:** Recipient phone number in Bizum concept field
+
+**Question for reviewers:**
+- Is this sufficient as second factor?
+- Can attacker guess recipient phone from transaction ID?
+- Should we use something stronger (e.g., BCH address hash)?
+
+**3. Fuzzy Format Detector** (`security.md`)
+
+**Design:** Detect bank notification format changes via pattern similarity
+
+**Question for reviewers:**
+- Is Jaccard similarity appropriate metric?
+- What false positive rate is acceptable?
+- Should we use ML instead of regex + fuzzy matching?
+
+## Implementation Status
+
+**Phase 1 (Week 1-2):** Payment Flow
+- [ ] Bizum parser
+- [ ] OP_RETURN monitor
+- [ ] End-to-end test (EUR → BCH)
+
+**Phase 2 (Week 3-4):** Remittance Flow
+- [ ] PagoMóvil parser
+- [ ] Merchant confirmation
+- [ ] End-to-end test (EUR → VES)
+
+**Current:** Documentation only, no code yet
+
+## For AI Instances
+
+**Your help is needed on:**
+
+1. **Security review** - Find vulnerabilities we missed
+2. **Edge cases** - What scenarios aren't covered?
+3. **Alternative approaches** - Are there better ways to solve notification parsing?
+4. **BCH expertise** - Are we using BCH features correctly (OP_RETURN, SPV)?
+
+**Provide feedback by:**
+- Commenting on specific document sections
+- Suggesting concrete improvements
+- Identifying contradictions across documents
+
+## Links
+
+- Architecture: `/android-app/notification-listener/README.md`
+- Security: `/android-app/notification-listener/security.md`
+- Testing: `/android-app/notification-listener/testing.md`
+- Parent: `/android-app/llm.txt`
+- Root: `/llm.txt`

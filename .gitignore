@@ -1,4 +1,7 @@
-# Node modules (if installing docsify locally)
+# Audio files (regenerate with generate-audio-docs.sh)
+asgaya-audio/
+
+# Node modules
 node_modules/
 
 # OS files
@@ -6,22 +9,6 @@ node_modules/
 Thumbs.db
 
 # Editor files
-.vscode/
-.idea/
 *.swp
 *.swo
 *~
-
-# Temporary files
-*.tmp
-*.log
-.cache/
-
-# Build artifacts
-dist/
-build/
-site/
-
-# MkDocs
-.venv/
-__pycache__/
