@@ -100,6 +100,56 @@ See **[Merchant Business Case](../concepts/merchant-business-case.md)** for comp
 
 ---
 
+### Parallel Track: Venezuelan Freelancers with European Clients (Month 1-2)
+
+**Goal:** Recruit additional senders by targeting freelancers who can convert their existing clients
+
+In parallel with migrant worker recruitment, we target Venezuelan freelancers who already have European clients:
+
+**Who:** Freelance developers, designers, translators, data workers, and technical professionals with existing clients in Spain or Europe
+
+**Their incentive:**
+- Currently lose 5-15% to PayPal/Deel/Bitwage/P2P spreads
+- With Asgaya: 0.5-1% total fees (depending on flow)
+- **On €1,500/month, that's €900-1,350 saved per year**
+- Direct personal benefit → strong motivation to recruit their own client as sender
+
+**Their role:**
+1. Convince existing client to pay through Asgaya (two flows available)
+2. Client sends payment via own funds (if crypto-savvy) or BCH seller (if not)
+3. Freelancer receives cash at local merchant or BCH to wallet
+4. Provides feedback on freelance payment UX vs family remittances
+
+**Recruitment channels:**
+- Reddit r/vzla (Venezuelan freelancer communities)
+- Venezuelan developer Telegram groups
+- Upwork/Fiverr Venezuelan seller forums
+- Venezuelan university alumni groups in Spain
+- Barcelona/Madrid tech startup communities (recruit from employer side)
+
+**Why freelancers are powerful:**
+- **Higher transaction value** — €500-2,000 per payment vs €100-180 remittances
+- **Guaranteed recurring** — Monthly salary is predictable, not sporadic
+- **Self-recruiting** — Freelancer convinces their own client (we don't need to pitch strangers)
+- **Tech-savvy** — Already use crypto (31% receive crypto payments), understand BCH
+- **Dual role potential** — Can become merchants themselves (have capital + tech skills)
+
+**Spanish Tech Companies: Priority Target**
+
+Spanish startups and digital agencies hiring Venezuelan contractors are ideal early adopters:
+- Already crypto-aware (tech industry)
+- Hate paying 5-10% to Deel/Bitwage/PayPal
+- Own funds flow (0.5%) + clean crypto accounting = easy sell
+- **One agency with 5 Venezuelan contractors = 5 recurring monthly senders**
+
+**Outreach:** Barcelona/Madrid startup meetups, remote-first company networks, digital agency associations, "Hire Venezuelan Talent" positioning
+
+**Phase 0 target:** 10-15 freelancers (mix of individual contractors + agency-employed), contributing 20-30% of total remittance volume
+
+See **[Freelance Payments](../concepts/freelance-payments.md)** for complete flow documentation and accounting guidance.
+
+---
+
 ### BCH Sellers (Phase 0)
 
 **Who:** Core team + bitcoincashresearch forum contributors

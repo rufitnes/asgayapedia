@@ -33,6 +33,8 @@ Self-onboarding is economically inevitable.
 
 A €180 remittance covers roughly **28% of a family's monthly food budget**. It is survival money, not discretionary income.
 
+**The same dynamic applies to freelance payments.** A Venezuelan remote worker receiving a €1,500 monthly payment through Asgaya visits the same neighborhood store to collect cash and buy groceries. Freelancers are an additional source of foot traffic beyond remittance recipients—and they tend to earn more per transaction than the average remittance. See [Freelance Payments](freelance-payments.md).
+
 ---
 
 ## 2. The Triple-Dip: How One Remittance Pays the Merchant Three Times

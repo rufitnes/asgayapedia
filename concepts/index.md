@@ -22,6 +22,9 @@ Participants who post BCH + volatility buffer to covenants, earning 0.5% fees pl
 ### [Merchant Business Case](merchant-business-case.md) ⭐
 Why neighborhood stores will self-onboard: the triple-dip economics (0.5% merchant fee + 15-30% product margin + 0.5% seller fee = €22-44 per €180 remittance). This is the pitch for BCH adoption through self-interest, not ideology.
 
+### [Freelance Payments](freelance-payments.md) ⭐
+The same Asgaya flow that moves family remittances also serves freelancers receiving payments from abroad. Two flows: own funds (0.5% fee, cleaner accounting) or via BCH seller (1.0% fee, no crypto purchase needed). Freelancers can actively recruit their own clients as senders—a powerful cold-start accelerant.
+
 ### [Pull System](pull-system.md)
 How recipient timing controls settlement (not sender timing), compressing volatility exposure from hours to 30 seconds and enabling regulatory compliance.
 
