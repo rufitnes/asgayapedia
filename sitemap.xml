@@ -2,506 +2,506 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.asgaya.org/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/ROADMAP/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/glossary/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/risks-and-disclaimers/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/ai/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/bch-native-architecture/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/common-patterns/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/covenant-creation/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/multi-device-test-plan/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/pichan-regtest-setup/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/rate-apis/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/user-apis/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/archive/ENGINEERING_JOURNEY/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/blockchain-scanner/nft-scanner/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/seller-bot/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/REVIEW_NOTES/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/home-screen/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/merchant-flows/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/recipient-flows/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/trade-bch-screen/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/archive/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/archive/bch-payment-flows/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/archive/lp-flows/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/archive/remittance-merchant-cash-out/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/1-scan-merchant/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/2-enter-amount/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/3-confirm-send/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/4-complete/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/errors/insufficient-balance/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/errors/network-errors/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/4.5-select-seller/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/5-payment-instructions/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/6b-tracking/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/7b-completion/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/covenant-setup/2-recipient-selection/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/covenant-setup/3-amount-entry/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/covenant-setup/4-payment-method/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/bizum-timeout/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/covenant-expiry/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/network-errors/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/pending-covenant/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/seller-non-delivery/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/own-wallet-path/4a-confirm-send/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/own-wallet-path/6a-tracking/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/own-wallet-path/7a-completion/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/bizum-android/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/opreturn-spv/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/pagomovil-android/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/security/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/testing/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/archive/ARCHIVE_settlement-apis_11052026/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bch-buyers/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bch-miners-as-escrows/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bch-sellers/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bounty-contracts-with-volatility-buffer/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bubble-prevention/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/core-regulatory-constraints/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/dynamic-reward-modulation/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/fraud-proof-mechanism/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/freelance-payments/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/live-exchange-rates/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/market-making-partners/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/merchant-business-case/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/pull-system/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/rfid-card-recipients/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/risk-allocation-principle/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/seller-liveness-signal/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/time-extension-marketplace/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/universal-bot-fraud-prevention/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-bch-usage-incentive/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-cheaper-than-legacy/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-eliminate-volatility/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-market-rate-exchanges/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-minimal-hardware/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-no-kyc/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-permissionless/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-promote-adoption/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-self-custody/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/bizum-concept-field/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/cold-start-strategy/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/dispute-resolution/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/fee-splitting-model/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/how-exchange-rates-work/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/musd-integration-strategy/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/payment-timeout-window/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/phase-0-progressive-decentralization/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/phase-0-validation-checklist/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/two-step-settlement-timing/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/ui-language-regulatory-implications/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/unclaimed-transaction-expiry/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/accountability/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/ai-review-guide/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/ai-reviewer-invitation-template/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/contributing/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/deepseek-review-2026-05-04/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/phase-0-validation-checklist/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/review-action-plan/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS010_Honduras/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS016_EUR_BCH_exchanges/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS017_kraken/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS018_kraken_setup/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS019_kraken_query/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS036_kraken_ticker_api/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS041_cross_corridor_exchange_rates/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS042_bizum_concept_field_constraints/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS044_kraken_trading_withdrawal/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS045_kraken_complete_fee_analysis/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS047_dolarapi_venezuela_rates/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS053_MUSD/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS054_cashtoken_swaps/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/roadmap/phase-1-stability-layer/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/behavioral/claim-timing/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/economic/overcollateralization-rate/</loc>
-         <lastmod>2026-05-20</lastmod>
+         <lastmod>2026-05-22</lastmod>
     </url>
 </urlset>

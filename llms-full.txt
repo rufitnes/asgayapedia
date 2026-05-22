@@ -26628,6 +26628,40 @@ Accounting:
 
 ---
 
+### Early Warning System: 3% Volatility Alert
+
+**Problem:** If BCH drops >7% during the claim window, the covenant aborts and refunds to the sender. The sender paid €100 and receives back BCH now worth ~€96-100 (depending on how far it dropped). This is the tail volatility risk the sender bears in exchange for the low 1% fee.
+
+**Solution:** Asgaya includes an early warning notification system to minimize abort risk through coordination:
+
+**3% Threshold Alert:**
+- When BCH price drops more than 3% during an active covenant's claim window
+- Both sender AND recipient receive push notifications
+- Message: "⚠️ Price is moving. Claim soon or the covenant may abort."
+- This gives the recipient time to act before the 7% abort threshold is reached
+
+**Why 3% specifically:**
+- Historical BCH volatility data shows 3% moves are common (5-10% of 4-hour windows)
+- 7% moves are rare (<1% of 4-hour windows based on RS062 analysis)
+- 3-7% gap provides ~30-120 minutes of warning time in typical market conditions
+- Allows recipient to coordinate with merchant and claim before abort
+
+**Incentive alignment:**
+- **Sender:** Already paid €100, wants transaction to complete (not get back depreciated BCH)
+- **Seller:** Wants fast claim to free up locked buffer capital for next transaction
+- **Recipient:** Wants guaranteed value (claim before risk of abort)
+- All parties benefit from faster coordination
+
+**Implementation:**
+- Monitoring service watches active covenants vs. current BCH/EUR rate
+- Triggers at -3%, -5%, and -6.5% thresholds with increasing urgency
+- Notifications sent via SMS, email, and push (recipient app)
+- Includes time remaining in claim window and nearest merchant location
+
+**This is the "told you so" moment:** Senders and recipients learn through real experience that shorter claim windows (2-4 hours with coordination) reduce volatility risk far more effectively than long passive windows (24 hours).
+
+---
+
 ### 2. Seller Bot Automation
 
 **The seller bot (`smsbridge_loop.py`) must:**

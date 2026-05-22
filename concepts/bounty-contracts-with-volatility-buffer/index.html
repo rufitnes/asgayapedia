@@ -4057,6 +4057,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#early-warning-system-3-volatility-alert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Early Warning System: 3% Volatility Alert
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#2-seller-bot-automation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5010,6 +5021,31 @@ Accounting:
 - Typical volatility: 0.5-1% (well within 7% buffer)
 - Acceptable risk for anyone who normally holds BCH through full market swings
 - Once Bizum received, hedge activates (94-97% exposure reduction)</p>
+<hr />
+<h3 id="early-warning-system-3-volatility-alert">Early Warning System: 3% Volatility Alert<a class="headerlink" href="#early-warning-system-3-volatility-alert" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> If BCH drops &gt;7% during the claim window, the covenant aborts and refunds to the sender. The sender paid €100 and receives back BCH now worth ~€96-100 (depending on how far it dropped). This is the tail volatility risk the sender bears in exchange for the low 1% fee.</p>
+<p><strong>Solution:</strong> Asgaya includes an early warning notification system to minimize abort risk through coordination:</p>
+<p><strong>3% Threshold Alert:</strong>
+- When BCH price drops more than 3% during an active covenant's claim window
+- Both sender AND recipient receive push notifications
+- Message: "⚠️ Price is moving. Claim soon or the covenant may abort."
+- This gives the recipient time to act before the 7% abort threshold is reached</p>
+<p><strong>Why 3% specifically:</strong>
+- Historical BCH volatility data shows 3% moves are common (5-10% of 4-hour windows)
+- 7% moves are rare (&lt;1% of 4-hour windows based on RS062 analysis)
+- 3-7% gap provides ~30-120 minutes of warning time in typical market conditions
+- Allows recipient to coordinate with merchant and claim before abort</p>
+<p><strong>Incentive alignment:</strong>
+- <strong>Sender:</strong> Already paid €100, wants transaction to complete (not get back depreciated BCH)
+- <strong>Seller:</strong> Wants fast claim to free up locked buffer capital for next transaction
+- <strong>Recipient:</strong> Wants guaranteed value (claim before risk of abort)
+- All parties benefit from faster coordination</p>
+<p><strong>Implementation:</strong>
+- Monitoring service watches active covenants vs. current BCH/EUR rate
+- Triggers at -3%, -5%, and -6.5% thresholds with increasing urgency
+- Notifications sent via SMS, email, and push (recipient app)
+- Includes time remaining in claim window and nearest merchant location</p>
+<p><strong>This is the "told you so" moment:</strong> Senders and recipients learn through real experience that shorter claim windows (2-4 hours with coordination) reduce volatility risk far more effectively than long passive windows (24 hours).</p>
 <hr />
 <h3 id="2-seller-bot-automation">2. Seller Bot Automation<a class="headerlink" href="#2-seller-bot-automation" title="Permanent link">&para;</a></h3>
 <p><strong>The seller bot (<code>smsbridge_loop.py</code>) must:</strong></p>
