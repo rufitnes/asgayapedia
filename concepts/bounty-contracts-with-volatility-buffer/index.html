@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://docs.asgaya.org/concepts/bounty-contracts-with-volatility-buffer/">
       
       
+        <link rel="prev" href="../bch-buyers/">
+      
+      
+        <link rel="next" href="../rfid-card-recipients/">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>With volatility buffer Bounty Contracts - Asgaya Documentation</title>
+        <title>Bounty Contracts with Volatility Buffer - Asgaya Documentation</title>
       
     
     
@@ -110,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              With volatility buffer Bounty Contracts
+              Bounty Contracts with Volatility Buffer
             
           </span>
         </div>
@@ -280,10 +284,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../" class="md-tabs__link">
           
   
@@ -2624,26 +2630,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -2661,7 +2672,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2788,17 +2799,44 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../overcollateralized-bounty-contracts.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bounty Contracts with Volatility Buffer
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    Overcollateralized Bounty Contracts
+    Bounty Contracts with Volatility Buffer
   
 
     
@@ -2807,6 +2845,697 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-we-solved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem We Solved
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-breakthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Breakthrough
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#critical-risk-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 CRITICAL RISK ALLOCATION
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works-the-full-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works — The Full Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How It Works — The Full Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#covenant-creation-claim-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Covenant Creation &amp; Claim Paths
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Covenant Creation &amp; Claim Paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-a-direct-bch-claim-recipient-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path A: Direct BCH Claim (Recipient Only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-b-merchant-cash-out-recipient-merchant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path B: Merchant Cash-Out (Recipient + Merchant)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-bounty-contract-creation-sender-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Bounty Contract Creation (Sender Side)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-seller-accepts-the-bounty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Seller Accepts the Bounty
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-iris-sender-funds-the-deal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Iris (Sender) Funds the Deal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-elena-cashes-out-at-merchant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Elena Cashes Out at Merchant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-contract-matures-and-executes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Contract Matures and Executes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-bears-which-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who Bears Which Risk?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volatility-protection-via-volatility-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volatility Protection via Volatility buffer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Volatility Protection via Volatility buffer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#price-movement-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Price Movement Scenarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-up-opportunity-how-sellers-earn-reliability-rewards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-Up Opportunity (How Sellers Earn Reliability Rewards)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Top-Up Opportunity (How Sellers Earn Reliability Rewards)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-1-automatic-fair-exchange-no-action-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 1: Automatic Fair Exchange (No Action Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-2-voluntary-top-up-reliability-rewards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 2: Voluntary Top-Up (Reliability Rewards)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reliability-reward-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reliability Reward Tiers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#philosophy-reward-not-punish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophy: Reward, Not Punish
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-is-not-custody-mica-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Is Not Custody (MiCA Compliance)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why This Is Not Custody (MiCA Compliance)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-legal-distinction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Legal Distinction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cashscript-covenant-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. CashScript Covenant Specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeout-refund-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timeout &amp; Refund Mechanisms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Timeout &amp; Refund Mechanisms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-1-normal-execution-within-24h" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 1: Normal Execution (Within 24h) ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-2-no-bizum-received-0-5-min-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 2: No Bizum Received (0-5 min window) 🔄
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-3-bizum-received-but-elena-never-cashes-out-5-min-24h" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path 3: Bizum Received, But Elena Never Cashes Out (5 min - 24h) 💰
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timing-windows-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing Windows Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#early-warning-system-3-volatility-alert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Early Warning System: 3% Volatility Alert
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-seller-bot-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Seller Bot Automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-merchant-app-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Merchant App Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-bulletin-board-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Bulletin Board Display
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#economic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Economic Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Economic Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#seller-capital-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seller Capital Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison-to-old-escrow-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison to Old Escrow Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capital-recycling-strategy-the-sellers-business-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capital Recycling Strategy: The Seller's Business Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capital Recycling Strategy: The Seller&#39;s Business Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-5-10-minute-refill-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 5-10 Minute Refill Loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market-making-model-not-speculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Market-Making Model, Not Speculation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-sellers-want-many-concurrent-covenants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Sellers Want Many Concurrent Covenants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-miners-are-ideal-sellers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Miners Are Ideal Sellers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hedge-mechanism-why-sellers-always-win" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hedge Mechanism: Why Sellers Always Win
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-capital-recycling-changes-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Capital Recycling Changes Everything
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-implementation-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 Implementation Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 0 Implementation Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chipnet-testing-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chipnet Testing Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overfunding-ratio-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overfunding Ratio Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeout-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timeout Window
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-for-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open Questions for Review
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Open Questions for Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-covenant-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Covenant Complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-seller-liquidity-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Seller Liquidity Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-margin-call-ux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Margin Call UX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-fee-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Fee Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-regulatory-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Regulatory Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-we-regained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Regained
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 

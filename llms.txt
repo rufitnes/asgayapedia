@@ -66,7 +66,7 @@
 - [BCH Buyers](https://docs.asgaya.org/concepts/bch-buyers/index.md)
 - [Bch miners as escrows](https://docs.asgaya.org/concepts/bch-miners-as-escrows/index.md)
 - [BCH Sellers](https://docs.asgaya.org/concepts/bch-sellers/index.md)
-- [With volatility buffer Bounty Contracts](https://docs.asgaya.org/concepts/bounty-contracts-with-volatility-buffer/index.md)
+- [Bounty Contracts with Volatility Buffer](https://docs.asgaya.org/concepts/bounty-contracts-with-volatility-buffer/index.md)
 - [Bubble Prevention — Market Stability Through Reserve Management](https://docs.asgaya.org/concepts/bubble-prevention/index.md)
 - [Core Regulatory Constraints](https://docs.asgaya.org/concepts/core-regulatory-constraints/index.md)
 - [Dynamic Reward Modulation](https://docs.asgaya.org/concepts/dynamic-reward-modulation/index.md)

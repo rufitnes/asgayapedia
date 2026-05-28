@@ -26021,7 +26021,7 @@ By making BCH mining more sustainableâ€”especially in the post-block-reward eraâ
 **Next:** Recruit pioneer BCH sellers for Phase 0 validation
 
 
-## With volatility buffer Bounty Contracts
+## Bounty Contracts with Volatility Buffer
 
 # With volatility buffer Bounty Contracts
 
