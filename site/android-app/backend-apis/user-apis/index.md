@@ -614,7 +614,7 @@ if now - timestamp > timedelta(minutes=5):
 5. 🔄 **AnyHedge** - BCH-native hedging contracts
    - Protect merchant/seller from BCH volatility
    - Non-custodial hedging (no exchange needed)
-   - Could complement overcollateralization
+   - Could complement volatility buffer
 
 6. 🔄 **MUSD (MistSwap USD)** - BCH sidechain stablecoin
    - Phase 1 integration planned

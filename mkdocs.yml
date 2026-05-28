@@ -135,7 +135,7 @@ nav:
     - Risk Allocation Principle: concepts/risk-allocation-principle.md
     - BCH Sellers: concepts/bch-sellers.md
     - BCH Buyers: concepts/bch-buyers.md
-    - Overcollateralized Bounty Contracts: concepts/overcollateralized-bounty-contracts.md
+    - Bounty Contracts with Volatility Buffer: concepts/bounty-contracts-with-volatility-buffer.md
     - RFID Card Recipients: concepts/rfid-card-recipients.md
     - Dynamic Reward Modulation: concepts/dynamic-reward-modulation.md
   - Decisions:

@@ -358,6 +358,21 @@ Merchant hands VES cash, both parties co-sign covenant to trigger settlement.
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
+│  ❓ What if customer doesn't show   │
+│     up to claim?                    │
+│                                     │
+│  No problem! After 24 hours, the    │
+│  covenant automatically refunds:    │
+│  - Your portion → Back to sender    │
+│  - You never gave cash → No loss    │
+│                                     │
+│  Your BCH is safe in the covenant.  │
+│  Timeout protects you from no-shows.│
+│                                     │
+│  See: Timeout Cascade explained     │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
 │  ⏸️  When you've handed cash:       │
 │                                     │
 │  ┌─────────────────────────────┐   │
@@ -847,7 +862,7 @@ If merchant chooses to sell BCH, show P2P buyers offering fiat for BCH.
 - Prevents indefinite BCH lock-up (sellers need capital freed)
 - Forces inactive recipients to claim or forfeit
 
-**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
+**See:** [With volatility buffer Bounty Contracts - Timeout Cascade](../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade) for complete timeout logic
 
 ---
 
@@ -942,7 +957,7 @@ Otherwise → Show specific error
 - Transparent: All amounts, signatures, timing public
 - Immutable: Once settled, cannot be reversed
 
-**See:** [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
+**See:** [With volatility buffer Bounty Contracts](../../concepts/bounty-contracts-with-volatility-buffer.md) for complete covenant specification
 
 ---
 
@@ -990,7 +1005,7 @@ Otherwise → Show specific error
 
 **Concepts:**
 - [Pull System](../../concepts/pull-system.md) — How recipient timing control works
-- [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [With volatility buffer Bounty Contracts](../../concepts/bounty-contracts-with-volatility-buffer.md) — Complete covenant specification
 - [BCH Sellers](../../concepts/bch-sellers.md) — Who provides BCH and why they profit
 - [Decentralized Pull System](../../concepts/pull-system.md) — How bulletin board works
 

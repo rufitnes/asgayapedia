@@ -154,7 +154,7 @@
    - Matches phone number
    - Validates amount (€101)
 5. If match found → Confirms funds received
-6. **Locks BCH in covenant** (overcollateralized position)
+6. **Locks BCH in covenant** (with volatility buffer position)
 7. Notifies recipient: "Funds ready for cash-out"
 
 ---
@@ -176,7 +176,7 @@
 1. Both merchant and recipient co-sign covenant
 2. Covenant automatically distributes BCH:
    - Merchant receives: €99.5 worth of BCH (€100 - 0.5% fee)
-   - BCH seller receives: €7.5 (overcollateralization surplus + 0.5% fee)
+   - BCH seller receives: €7.5 (volatility buffer surplus + 0.5% fee)
 3. Transaction complete, recorded on-chain
 
 **Volatility window:** ~30 seconds (from recipient entering merchant to covenant maturity)
@@ -186,7 +186,7 @@
 2. Both merchant and recipient co-sign covenant
 3. Covenant automatically distributes BCH:
    - BCH buyer receives: €99.5 worth of BCH
-   - BCH seller receives: €7.5 (overcollateralization surplus + 0.5% shared fee)
+   - BCH seller receives: €7.5 (volatility buffer surplus + 0.5% shared fee)
 4. Merchant already has fiat from BCH buyer
 
 **Volatility window:** ~30 seconds (covenant execution time)
@@ -207,7 +207,7 @@
 
 ### Volatility Risk: Near Zero
 - **10-minute timeout is NOT a volatility window**
-- BCH locked in overcollateralized covenant during wait (volatility protected)
+- BCH locked in covenant + volatility buffer during wait (volatility protected)
 - Covenant only executes when recipient ready to cash out
 - **Total volatility exposure: ~30 seconds** (covenant execution time)
 

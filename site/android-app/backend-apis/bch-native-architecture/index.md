@@ -517,7 +517,7 @@ Future enhancements to investigate:
 
 5. **AnyHedge** - BCH-native hedging contracts
    - Protect against BCH volatility
-   - Complements covenant overcollateralization
+   - Complements covenant volatility buffer
 
 6. **SmartBCH** - EVM-compatible sidechain
    - Smart contracts for covenant logic

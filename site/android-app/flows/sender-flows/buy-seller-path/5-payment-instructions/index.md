@@ -178,7 +178,7 @@ If concept doesn't match any pending covenant:
 - [Screen 6B: Tracking](./6b-tracking.md) - Next screen (waiting for Bizum confirmation)
 - [Bizum Timeout Error](../errors/bizum-timeout.md) - If payment not sent in time
 - [BCH Sellers Concept](../../../../concepts/bch-sellers.md) - Seller role details
-- [Overcollateralized Bounty Contracts](../../../../concepts/overcollateralized-bounty-contracts.md) - Covenant specification
+- [With volatility buffer Bounty Contracts](../../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant specification
 
 ---
 

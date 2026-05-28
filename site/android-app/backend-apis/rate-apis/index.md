@@ -76,7 +76,7 @@ Iris pays Bizum to BCH seller (€99.50)
   ↓
 BCH seller verifies payment
   ↓
-BCH seller posts covenant with 0.198 BCH (7% overcollateralized)
+BCH seller posts covenant with 0.198 BCH (7% with volatility buffer)
 ```
 
 **At this point:**

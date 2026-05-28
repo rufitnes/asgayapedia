@@ -19,7 +19,7 @@ This document details the **core Asgaya remittance use case**: Send money to rec
 - ✅ More actors (sender, BCH seller, recipient, merchant)
 - ✅ Two-sided co-signing needed (merchant + recipient)
 - ✅ 24-hour claim window management
-- ✅ Covenant architecture (overcollateralization, timeout cascade)
+- ✅ Covenant architecture (volatility buffer, timeout cascade)
 
 **Value proposition:**
 - 🎯 **Core innovation:** Kickstarts merchant network (merchants earn spread)
@@ -969,7 +969,7 @@ sign_and_fund_covenant(covenant)
 - **Split refund rationale:**
   - Merchant portion (€99.50) → Refunded to you (Iris)
   - Seller fee (€0.50) → Kept by seller (earned for 24h service)
-- Related policy: [Overcollateralized Bounty Contracts - Timeout Cascade](../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+- Related policy: [With volatility buffer Bounty Contracts - Timeout Cascade](../../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade)
 
 #### State 3: Merchant Co-Signing
 
@@ -1171,7 +1171,7 @@ sign_and_fund_covenant(covenant)
 
 **Fee breakdown explanation:**
 - **Sender pays:** €0.50 (0.5% of €100)
-- **Elena gets:** €99.50 worth of BCH (calculated at maturity spot rate)
+- **Elena gets:** €99.50 worth of BCH (calculated at settlement spot rate)
 - **Merchant spread:** ~€0.25 (sells 50,000 VES for 0.0995 BCH worth ~€99.75)
 - **BCH seller fee:** ~€0.25 (earned for posting collateral and service)
 
@@ -1298,7 +1298,7 @@ sign_and_fund_covenant(covenant)
 - **Refund timing:** Immediate (on-chain BCH transaction)
 - Encourage sender to contact recipient (might try again with coordination)
 
-**Related concept:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+**Related concept:** [With volatility buffer Bounty Contracts - Timeout Cascade](../../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade)
 
 ### Corridor Unavailable
 
@@ -1357,11 +1357,11 @@ sign_and_fund_covenant(covenant)
 ### ✅ Covenant Architecture
 
 **Payment flow:** Direct BCH transfer (simple)  
-**Remittance flow:** Overcollateralized covenant (complex)
+**Remittance flow:** Covenant + volatility buffer (complex)
 
 Requires understanding of:
 - EUR-denominated futures contracts (settle in BCH)
-- Overcollateralization mechanics (7% buffer)
+- Volatility buffer mechanics (7% buffer)
 - Timeout cascade (5-min Bizum, 24h claim, split refund)
 - Co-signing mechanism (cryptographic, not numeric codes)
 
@@ -1465,10 +1465,10 @@ Secondary (outline):
 **Step 4:** BCH distributed (merchant gets 0.0995 BCH, seller gets surplus)
 
 **Why EUR-denominated covenant?**
-- Merchant always gets promised EUR value (€99.50 worth of BCH)
-- Overcollateralization absorbs short-term volatility
+- Merchant always gets specified EUR value (€99.50 worth of BCH)
+- Volatility buffer absorbs short-term volatility
 - Seller hedges by receiving €100 fiat before price moves
-- No rate locking needed (covenant calculates BCH at maturity rate)
+- No rate locking needed (covenant calculates BCH at settlement rate)
 
 **Related decision:** [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
 
@@ -1479,10 +1479,10 @@ Secondary (outline):
 **Variance:** Usually <1% (blue dollar relatively stable short-term)
 
 **Why lock at claim time, not payment time?**
-- Covenant promises EUR value, settles in BCH at maturity rate
+- Covenant holds cash buy order for EUR value, settles in BCH at settlement rate
 - Recipient gets latest market rate (fairness)
 - Seller hedges volatility (Bizum received before price moves)
-- Overcollateralization protects merchant (always gets €99.50 worth)
+- Volatility buffer protects merchant (always gets €99.50 worth)
 
 **Related decision:** [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md)
 
@@ -1503,7 +1503,7 @@ Secondary (outline):
 
 **Concepts:**
 - [Pull System](../../../concepts/pull-system.md) — Recipient-driven settlement
-- [Overcollateralized Bounty Contracts](../../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [With volatility buffer Bounty Contracts](../../../concepts/bounty-contracts-with-volatility-buffer.md) — Complete covenant specification
 - [BCH Sellers](../../../concepts/bch-sellers.md) — Seller role and hedge mechanism
 - [Decentralized Pull System](../../../concepts/pull-system.md) — Bulletin board architecture
 

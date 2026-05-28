@@ -35,7 +35,7 @@ Merchants receive volatile BCH from covenant settlements. In dollarized economie
 - **Live on BCH mainnet:** MUSDv1 deployed May 2025
 - **Audited:** Hashlock security audit passed
 - **Liquid:** ~$596K TVL, active Cauldron DEX pool
-- **Non-custodial:** Overcollateralized CDP model (like MakerDAO)
+- **Non-custodial:** With volatility buffer CDP model (like MakerDAO)
 - **Asgaya-independent:** Issued by Moria Protocol, not Asgaya
 
 ---
@@ -136,7 +136,7 @@ CashToken atomic swap:
 │ MUSD Token                               │
 │ - Issued by: Moria Protocol (Riften Labs)│
 │ - Type: CashToken (BCH-native)           │
-│ - Collateral: BCH (overcollateralized)   │
+│ - Collateral: BCH (with volatility buffer)   │
 │ - Regulation: Moria's responsibility     │
 └──────────────────────────────────────────┘
                     ↓
@@ -160,7 +160,7 @@ CashToken atomic swap:
 **Legal posture:**
 - **E-Commerce Directive (EU):** Information society service (exempt from PSD2/MiCA)
 - **Token regulation:** Moria Protocol's problem, not Asgaya's
-- **Securities law:** MUSD is overcollateralized CDP (not security under most frameworks)
+- **Securities law:** MUSD is with volatility buffer CDP (not security under most frameworks)
 - **Payment licensing:** No custody, no intermediation = No PSD2 trigger
 
 **Risk mitigation:**

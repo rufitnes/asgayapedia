@@ -1,4 +1,4 @@
-# Overcollateralized Bounty Contracts
+# With volatility buffer Bounty Contracts
 
 **Status:** Proposed Architecture (Discovered May 10, 2026)  
 **Priority:** Core Innovation — Enables compliant pull system  
@@ -30,14 +30,37 @@ On May 9, 2026, we abandoned the pull system to comply with [Core Regulatory Con
 
 > **What if the seller is the liquidity provider, and the smart contract is the escrow?**
 
-Instead of a **central entity** holding funds, a **CashScript covenant** (BCH smart contract) holds **overcollateralized BCH posted by the seller**. The contract only releases funds when both conditions are met:
+Instead of a **central entity** holding funds, a **CashScript covenant** (BCH smart contract) holds **BCH + volatility buffer posted by the seller**. The contract only releases funds when both conditions are met:
 
 1. **Merchant confirmed:** "I gave cash to recipient" (on-chain proof)
 2. **Seller confirmed:** "I received Bizum from sender" (automated bot signature)
 
-**If BCH price moves while waiting, the overcollateralization absorbs the volatility.**
+**If BCH price moves while waiting, the volatility buffer absorbs the volatility.**
 
 Excess BCH returns to the seller. The recipient gets exactly the promised amount of local currency.
+
+---
+
+## 🎯 CRITICAL RISK ALLOCATION
+
+**If BCH falls below collateral threshold (>7% drop):**
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk**
+* ✅ **Merchant either:**
+  * Receives full EUR-equivalent BCH from a valid covenant
+  * OR does not participate in settlement at all
+* 🔄 **Under-collateralized covenants refund remaining BCH to the SENDER**
+* ⚖️ **Therefore:**
+  * **SENDER** bears tail volatility risk beyond collateral buffer
+  * **MERCHANT** bears execution/liquidity risk only (providing local fiat)
+  * **SELLER** bears opportunity cost + reliability reputation risk
+
+**The merchant is NOT short BCH downside volatility.**
+
+**Why this matters:** Merchants are local Venezuelan individuals providing physical cash. They cannot absorb crypto volatility losses. The covenant architecture ensures they only participate when settlement is guaranteed at the specified EUR value. Invalid covenants are rejected by their software before any cash changes hands.
+
+**📖 See:** [Risk Allocation Principle](risk-allocation-principle.md) for the complete foundational principle, common misconceptions, technical implementation details, and comparison to traditional systems.
 
 ---
 
@@ -49,7 +72,7 @@ Excess BCH returns to the seller. The recipient gets exactly the promised amount
 
 **Covenant Creation:**
 - Sender creates EUR-denominated covenant with recipient's address
-- BCH Seller posts overcollateralized BCH (107%)
+- BCH Seller posts BCH + volatility buffer (107%)
 - Covenant published to bulletin board
 - 24-hour claim window starts
 
@@ -93,7 +116,7 @@ Maturity conditions: Recipient AND Merchant signatures
 They agree on terms:
 - **Amount:** 500,000 VES cash
 - **Equivalent:** ~€100 at current BCH/VES rate
-- **Overcollateralization:** 7% (seller will post 107% of required BCH)
+- **Volatility buffer:** 7% (seller will post 107% of required BCH)
 
 **Elena and merchant create a CashScript covenant on-chain:**
 
@@ -115,7 +138,7 @@ Covenant Parameters:
 ╔═══════════════════════════════════════════════════════╗
 ║  BOUNTY #4729                                         ║
 ║  500,000 VES (€100 equivalent)                        ║
-║  Requires: 0.0107 BCH (overcollateralized 7%)         ║
+║  Requires: 0.0107 BCH (with volatility buffer 7%)         ║
 ║  Timeout: 24h from seller acceptance                  ║
 ║  Status: OPEN — awaiting seller                       ║
 ╚═══════════════════════════════════════════════════════╝
@@ -141,7 +164,7 @@ Inputs:  Seller's wallet (0.0107 BCH)
 Outputs: Bounty Contract #4729 (0.0107 BCH)
 ```
 
-**The contract now holds the overcollateralized BCH.** No central escrow, no custody service—just code enforcing conditions.
+**The contract now holds the BCH + volatility buffer.** No central escrow, no custody service—just code enforcing conditions.
 
 **Bounty status updates:**
 
@@ -223,7 +246,28 @@ Outputs:
 
 ---
 
-## Volatility Protection via Overcollateralization
+## Who Bears Which Risk?
+
+Understanding risk allocation across all participants:
+
+| Risk Type | Sender | Merchant | Seller |
+|-----------|--------|----------|--------|
+| **BCH crash > collateral buffer (>7%)** | ✅ YES | ❌ NO | Partial (opportunity cost) |
+| **BCH upside opportunity cost** | ✅ YES | ✅ YES | ✅ YES |
+| **Local cash liquidity risk** | ❌ NO | ✅ YES | ❌ NO |
+| **Covenant execution failure** | Partial | Partial | Partial |
+| **Capital lockup (24h)** | ❌ NO | ❌ NO | ✅ YES |
+| **Failed claim timing (recipient no-show)** | ✅ YES | ❌ NO | ✅ YES |
+| **Fiat payment chargeback** | ❌ NO | ❌ NO | ✅ YES |
+
+**Key insights:**
+- **Merchant bears zero volatility risk** - only provides local liquidity when covenant is valid
+- **Sender bears tail volatility risk** - gets depreciated BCH back if >7% drop
+- **Seller bears opportunity cost** - capital locked for 24h, bears reliability reputation risk
+
+---
+
+## Volatility Protection via Volatility buffer
 
 ### Price Movement Scenarios
 
@@ -232,42 +276,128 @@ Outputs:
 | **BCH stable** | Required: 0.01 BCH, posted 0.0107 BCH | Merchant gets 0.01 BCH, seller gets 0.0007 BCH surplus |
 | **BCH rises 5%** | 0.01 BCH now worth €105 | Merchant gets 0.0095 BCH (still €100), seller gets 0.0112 BCH surplus |
 | **BCH drops 3%** | 0.01 BCH now worth €97 | Merchant gets 0.0103 BCH (still €100), seller gets 0.0004 BCH surplus |
-| **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller must add BCH or deal cancels |
+| **BCH drops 8%** | 0.01 BCH now worth €92 | **MARGIN CALL** — seller can add BCH or covenant expires early |
 
-### Margin Call Mechanism
+> ⚠️ **CRITICAL: What DOES NOT Happen to Merchants**
+>
+> **Common misconception:** "If BCH crashes >7%, the covenant drains its remaining balance to the merchant."
+>
+> **This does NOT happen.** If the collateral falls below the EUR target:
+> 
+> 1. ❌ The covenant does **NOT** attempt to pay the merchant with insufficient BCH
+> 2. ❌ The merchant does **NOT** receive partial payment
+> 3. ❌ The merchant does **NOT** advance cash before covenant validation
+> 4. ✅ The covenant expires early and refunds ALL remaining BCH to the **SENDER**
+> 5. ✅ The merchant's software detects invalid covenant and refuses to participate
+> 6. ✅ The transaction is cancelled - merchant never involved, takes zero loss
+>
+> **Merchants are completely isolated from BCH price crashes.** Their participation is conditional on covenant validity at the exact moment of cash exchange.
 
-**If BCH price drops beyond the overfunding buffer during the 24-hour window:**
+### Top-Up Opportunity (How Sellers Earn Reliability Rewards)
 
-1. **Alert sent to seller:**
-   ```
-   ⚠️ MARGIN CALL — Bounty #4729
-   BCH dropped 8% since you locked funds.
-   Add 0.0003 BCH within 60 minutes or contract matures early.
-   ```
+**When BCH price drops beyond the 7% buffer during the 24-hour window, sellers have a voluntary opportunity to earn rewards:**
 
-2. **Seller has three options:**
-   - **Add more BCH** to the contract (top up collateral manually)
-   - **Let contract mature early** (all BCH goes to sender, seller keeps the €100 fiat already received)
-   - **Hope price recovers** within the 60-minute grace period
+---
 
-3. **How seller tops up (manual transaction):**
-   - Seller already received €100 Bizum from sender (Iris)
-   - Seller can buy more BCH with that EUR (on exchange or via Asgaya bulletin)
-   - Seller broadcasts additional BCH to covenant address
-   - **Note:** Automated Bizum→BCH purchase likely violates banking TOS, so manual intervention required
+#### Path 1: Automatic Fair Exchange (No Action Required)
 
-4. **If seller doesn't respond within 60 minutes:**
-   - **Contract matures early** (before 24-hour timeout)
-   - **All BCH goes to sender** (Iris receives full covenant balance)
-   - Seller keeps: €100 Bizum received (covered fiat leg)
-   - Seller loses: BCH collateral posted (penalty for non-response)
-   - Bulletin board marks seller with failed margin call (reputation impact)
+**What happens by default:**
 
-**Economic model:**
-- Seller has capital to respond (€100 fiat in hand)
-- Early maturity penalty incentivizes fast response
-- Similar to MakerDAO liquidations, but on per-transaction basis
-- 60-minute window balances seller convenience vs sender protection
+When the covenant's collateral value reaches exactly €100 (the fair exchange point), the covenant matures automatically at the 24-hour timeout:
+
+**Automatic distribution:**
+- Sender receives: €99.50 worth of BCH (merchant portion)
+- Seller receives: €0.50 worth of BCH (processing fee)
+
+**Net outcome for seller:**
+- Received: €100 Bizum (upfront from sender)
+- Returned: €99.50 worth of BCH (at current market rate)
+- Net: **Fair exchange** — sold €100 worth of BCH for €100 fiat at current price
+
+**This is NOT a penalty:**
+- Seller effectively sold BCH at current market rate
+- No loss, no punishment
+- The sender bears the price risk (they opted into BCH exposure)
+
+---
+
+#### Path 2: Voluntary Top-Up (Reliability Rewards)
+
+**During a 60-minute grace period** after the collateral hits €100, the seller can *choose* to add more BCH:
+
+**Alert sent to seller:**
+```
+💡 TOP-UP OPPORTUNITY — Bounty #4729
+BCH dropped 8%. Add 0.0003 BCH to keep covenant alive
+and earn Reliability Rewards.
+
+Current tier: 2 time extensions → Next reward at 3 time extensions
+Time remaining: 57 minutes
+```
+
+**How to time extension:**
+1. Seller already has €100 Bizum from sender
+2. Buy additional BCH on exchange or via Asgaya bulletin
+3. Broadcast BCH to covenant address
+4. Covenant stays alive, transaction can complete normally
+
+**Why time extension?**
+- ✅ Transaction completes → Earn full 0.5% fee
+- ✅ Build reliability reputation → Unlock rewards
+- ✅ Capital recycling continues → Keep earning
+
+---
+
+#### Reliability Reward Tiers
+
+**Sellers who demonstrate reliability by topping up earn escalating benefits:**
+
+| Top-Ups Completed | Reward Tier | Transaction Limit | Bulletin Priority | Additional Benefits |
+|-------------------|-------------|-------------------|-------------------|---------------------|
+| **0 (Default)** | Standard | €200 | Normal listing | Base 0.5% fee |
+| **1st time extension** | 🛡️ Reliable | €220 (+10%) | Normal listing | "Reliable Seller" badge |
+| **3 time extensions** | 📊 Trusted | €260 (+30%) | Higher in search | Highlighted in app |
+| **5 time extensions** | ⭐ Priority | €300 (+50%) | Top of listings | Auto-select eligible |
+| **10 time extensions** | 🎯 Premium | €360 (+80%) | Featured placement | Premium badge + priority routing |
+| **20+ time extensions** | 💎 Elite | €400 (+100%) | Always visible | Maximum visibility + limits |
+
+**Example progression:**
+```
+Start: €200 limit, normal listing
+→ 1st time extension: €220 limit, "Reliable" badge appears
+→ 3rd time extension: €260 limit, moves to top half of listings
+→ 5th time extension: €300 limit, auto-select enabled (passive income!)
+→ 10th time extension: €360 limit, featured seller
+→ 20th time extension: €400 limit, elite status (maximum rewards)
+```
+
+**Economic value of rewards:**
+- **Higher limits** → Serve larger remittances → More volume per transaction
+- **Better visibility** → More senders choose you → More 0.5% fees earned
+- **Auto-select** → Bot handles everything → Passive income stream
+- **Compounding effect** → More transactions → More time extension opportunities → Faster tier progression
+
+**Opportunity cost of NOT topping up:**
+- Lose chance to advance tiers
+- Competitors with rewards get more visibility
+- Miss out on [Capital Recycling Strategy](bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model) compounding (≈360% APR)
+
+---
+
+#### Philosophy: Reward, Not Punish
+
+**We don't penalize sellers for market movements.**
+
+- Default outcome (no time extension) = Fair exchange at current market rate
+- Time extension = Voluntary action that earns visibility and limit rewards
+- Creates a race to the top for reliability, not a race to avoid punishment
+
+**Similar models in DeFi:**
+- MakerDAO: Vault owners can add collateral during liquidations (voluntary)
+- Compound: Users can add collateral to avoid liquidation (voluntary)
+- Aave: Borrowers can repay to improve health factor (voluntary)
+
+**Asgaya**: Sellers can time extension to earn reliability status (voluntary, rewarded)
 
 ---
 
@@ -386,7 +516,7 @@ Timeline:
 
 Distribution:
 ├─ Merchant receives: 0.0995 BCH (merchant portion)
-└─ Seller receives: 0.0075 BCH (fee + overcollateralization)
+└─ Seller receives: 0.0075 BCH (fee + volatility buffer)
 
 Everyone happy! ✅
 ```
@@ -473,6 +603,40 @@ Accounting:
 
 ---
 
+### Early Warning System: 3% Volatility Alert
+
+**Problem:** If BCH drops >7% during the claim window, the covenant aborts and refunds to the sender. The sender paid €100 and receives back BCH now worth ~€96-100 (depending on how far it dropped). This is the tail volatility risk the sender bears in exchange for the low 1% fee.
+
+**Solution:** Asgaya includes an early warning notification system to minimize abort risk through coordination:
+
+**3% Threshold Alert:**
+- When BCH price drops more than 3% during an active covenant's claim window
+- Both sender AND recipient receive push notifications
+- Message: "⚠️ Price is moving. Claim soon or the covenant may abort."
+- This gives the recipient time to act before the 7% abort threshold is reached
+
+**Why 3% specifically:**
+- Historical BCH volatility data shows 3% moves are common (5-10% of 4-hour windows)
+- 7% moves are rare (<1% of 4-hour windows based on RS062 analysis)
+- 3-7% gap provides ~30-120 minutes of warning time in typical market conditions
+- Allows recipient to coordinate with merchant and claim before abort
+
+**Incentive alignment:**
+- **Sender:** Already paid €100, wants transaction to complete (not get back depreciated BCH)
+- **Seller:** Wants fast claim to free up locked buffer capital for next transaction
+- **Recipient:** Wants guaranteed value (claim before risk of abort)
+- All parties benefit from faster coordination
+
+**Implementation:**
+- Monitoring service watches active covenants vs. current BCH/EUR rate
+- Triggers at -3%, -5%, and -6.5% thresholds with increasing urgency
+- Notifications sent via SMS, email, and push (recipient app)
+- Includes time remaining in claim window and nearest merchant location
+
+**This is the "told you so" moment:** Senders and recipients learn through real experience that shorter claim windows (2-4 hours with coordination) reduce volatility risk far more effectively than long passive windows (24 hours).
+
+---
+
 ### 2. Seller Bot Automation
 
 **The seller bot (`smsbridge_loop.py`) must:**
@@ -486,7 +650,7 @@ Accounting:
 4. **Monitor bank SMS** for Bizum receipts
 5. **Sign covenant** when Bizum detected
 6. **Monitor BCH price** for margin call risk
-7. **Top up collateral** if price drops >5%
+7. **Time extension collateral** if price drops >5%
 8. **Claim refund** if timeout expires
 
 **Automation is critical** — manual sellers would struggle with timing requirements.
@@ -564,13 +728,306 @@ Accounting:
 | Metric | Central Escrow | Bounty Contract Seller |
 |--------|----------------|------------------------|
 | **Capital source** | Escrow's EUR (buy BCH on demand) | Seller's own BCH inventory |
-| **Capital efficiency** | High (buy exact amount needed) | Lower (7% overcollateralization) |
+| **Capital efficiency** | High (buy exact amount needed) | Lower (7% volatility buffer) |
 | **Volatility risk** | Zero (escrow buys at moment needed) | Medium (seller absorbs ±7% swings) |
 | **Profit model** | 1% fee split | 1% fee split + surplus if BCH rises |
 | **Regulatory status** | MiCA CASP required | No license (own capital) |
 | **Scalability** | Bottleneck (single escrow) | Distributed (many sellers) |
 
 **Trade-off:** Lower capital efficiency, but legally viable.
+
+---
+
+## Capital Recycling Strategy: The Seller's Business Model
+
+**Key insight:** Sellers don't just lock capital and wait. They run an automated market-making operation.
+
+### The 5-10 Minute Refill Loop
+
+**Optimal seller strategy with exchange integration:**
+
+```
+1. Accept bounty → Lock 0.107 BCH in covenant
+2. Receive €100 Bizum → Instant notification (SMS parsed by bot)
+3. Bot auto-executes → Buy €100 BCH on exchange at market rate
+4. BCH confirms → 5-10 minutes (exchange withdrawal + blockchain confirmation)
+5. Hot wallet refilled → 0.1 BCH ready for next bounty
+6. Accept next bounty → Repeat loop
+```
+
+**Capital utilization:**
+
+```
+Single €100 capital:
+├─ Without recycling: 1 bounty per 24h = €0.50/day
+└─ With recycling: 12-24 bounties per day = €6-12/day
+
+€1,000 capital:
+├─ 10 concurrent covenants locked (€1,070 total)
+├─ Each completes within 1-6 hours average
+├─ Refill every 5-10 minutes enables continuous flow
+└─ Daily throughput: 20-30 transactions × €0.50 = €10-15/day
+```
+
+**Monthly return calculation:**
+
+```
+Capital: €1,000
+Daily transactions: 20 (conservative estimate with recycling)
+Daily earnings: 20 × €0.50 = €10
+Monthly earnings: €10 × 30 days = €300
+Monthly return: 30% on €1,000 capital
+Annual return: 360% APR
+```
+
+**This transforms 0.5% fee from "mediocre" to "highly attractive" through volume.**
+
+---
+
+### Market-Making Model, Not Speculation
+
+**Seller isn't betting on BCH price direction — they're capturing spread on flow:**
+
+**Traditional holding:**
+```
+Buy: 0.1 BCH at €1,000/BCH = €100
+Hold: 24 hours
+Price moves: ±5-10% typical
+Risk: Full exposure on entire 0.1 BCH
+Return: Pure speculation
+```
+
+**Covenant market-making:**
+```
+Sell: 0.1 BCH at €1,005/BCH (+0.5% markup) = €100.50 Bizum received
+Lock: 0.107 BCH in covenant (includes 0.007 BCH collateral buffer)
+Buy back: €100 BCH on exchange at market rate = 0.1 BCH
+Exposure: Only 0.007 BCH collateral at risk (7% buffer)
+Return: €0.50 fee (0.5%) + recycled capital in 5-10 min
+
+Risk reduction: 93% less exposure (0.007 vs 0.1 BCH)
+```
+
+**The fee is captured upfront:**
+- Seller sells BCH at +0.5% markup to sender
+- Example: Market €1,000/BCH → Seller charges €1,005/BCH
+- Sender pays €100 Bizum for 0.0995 BCH worth of remittance value
+- Seller locks 0.107 BCH (at market rate €1,000) = €107 locked
+- **Fee already in hand** (€0.50 premium in Bizum payment)
+
+**Only the collateral buffer is exposed to volatility:**
+- Total locked: 0.107 BCH
+- Principal going to merchant: 0.1 BCH (€99.50 value)
+- Collateral buffer: 0.007 BCH (€7 value at lock time)
+- **Volatility exposure: 7% of locked amount, not 100%**
+
+---
+
+### Why Sellers Want Many Concurrent Covenants
+
+**Each covenant = 0.5% fee earning over 24 hours**
+
+**Scenario: Seller with €1,000 capital**
+
+```
+Morning (9 AM):
+├─ Accept 10 bounties simultaneously
+├─ Lock: 10 × 0.107 BCH = €1,070 worth
+├─ Receive: 10 × €100 = €1,000 Bizum
+├─ Bot auto-buys: €1,000 BCH on exchange
+└─ Wait: 5-10 minutes for hot wallet refill
+
+Mid-morning (10 AM):
+├─ Hot wallet refilled with ~1 BCH
+├─ First 3 recipients claim (covenants execute)
+├─ Receive back: 3 × 0.0075 BCH surplus
+├─ Accept 3 new bounties immediately
+└─ Keep the wheel spinning
+
+Afternoon (2 PM):
+├─ 7 more covenants execute
+├─ Accept 7 new bounties
+└─ Continuous flow of fees
+
+Evening (8 PM):
+├─ 20 total transactions completed
+├─ Earnings: 20 × €0.50 = €10
+├─ Capital still working: 10 covenants overnight
+└─ Tomorrow: Repeat
+```
+
+**The more covenants locked, the more fees earning simultaneously.**
+
+**Capital efficiency improves with volume:**
+- Low volume (1-2 covenants/day): 7% APR (not worth it)
+- Medium volume (10 concurrent): 68% monthly return
+- High volume (20-30/day with recycling): 360% APR
+
+**This is why 0.5% fee works — it's a high-frequency, low-margin business model.**
+
+---
+
+### Why Miners Are Ideal Sellers
+
+**BCH miners have natural advantages:**
+
+1. **Steady BCH inflow** (mining rewards)
+   - No need to buy BCH on exchanges
+   - No exchange fees eating into profits
+   - Unlimited inventory capacity
+
+2. **Already running infrastructure**
+   - Hot wallets for mining payouts
+   - Automated systems (pool monitoring, payout scripts)
+   - Technical capability to run seller bots
+
+3. **Natural BCH exposure**
+   - Already holding BCH as core business
+   - Covenant locks don't change risk profile
+   - Reduced exposure vs. just holding (7% buffer vs 100% exposure)
+
+4. **Revenue diversification**
+   - Mining rewards: Variable (difficulty, price, luck)
+   - Seller fees: Steady (volume-driven, predictable)
+   - Combined revenue stream more stable
+
+**Example: Small-scale BCH miner**
+
+```
+Daily mining output: 0.5 BCH
+Daily value at €1,000/BCH: €500
+
+Mining revenue only:
+└─ €500/day from block rewards
+
+Mining + Asgaya seller:
+├─ €500/day from block rewards
+├─ Accept 50 bounties/day (using mined BCH)
+├─ Earn: 50 × €0.50 = €25/day additional
+└─ Total: €525/day (+5% revenue boost)
+
+Monthly impact:
+├─ Mining: €15,000/month
+├─ Asgaya fees: €750/month
+└─ Total: €15,750/month (+5% boost)
+```
+
+**No capital cost, pure upside for miners.**
+
+---
+
+### The Hedge Mechanism: Why Sellers Always Win
+
+**Even in worst-case volatility scenarios, sellers are better off than holding:**
+
+**Scenario 1: BCH Price Stable (0% movement)**
+
+```
+Seller locks: 0.107 BCH worth €107
+Receives: €100 Bizum upfront
+Buys back: €100 worth BCH = 0.1 BCH
+
+After covenant executes:
+├─ Merchant takes: 0.0995 BCH (€99.50 worth)
+├─ Seller gets back: 0.0075 BCH (€7.50 worth = €7 buffer + €0.50 fee)
+└─ Total BCH recovered: 0.1 BCH (bought) + 0.0075 BCH (surplus) = 0.1075 BCH
+
+Seller's position:
+├─ Net BCH: 0.1075 - 0.107 = +0.0005 BCH (rounding/appreciation)
+├─ Net EUR: €0 (spent €100 buying BCH, received €100 Bizum)
+└─ Profit: €0.50 fee (captured in markup)
+```
+
+**Scenario 2: BCH Drops 7% (Margin Call Threshold)**
+
+```
+Seller locks: 0.107 BCH worth €107 at €1,000/BCH
+BCH drops to: €930/BCH (-7%)
+Receives: €100 Bizum upfront (before drop)
+Buys back: €100 worth BCH = 0.1075 BCH (at €930 rate, gets more BCH!)
+
+After covenant executes:
+├─ Covenant now worth: 0.107 × €930 = €99.51
+├─ Merchant takes: €99.50 ÷ €930 = 0.107 BCH (almost all of it)
+├─ Seller gets back: ~0 BCH (collateral consumed)
+└─ Total BCH held: 0.1075 BCH (from buy-back)
+
+Seller's position:
+├─ Net BCH: 0.1075 BCH (vs 0.107 originally locked)
+├─ Net EUR: €0
+└─ Result: Seller GAINED 0.0005 BCH despite margin call!
+
+Comparing to holding:
+├─ Held 0.107 BCH: Now worth €99.51 (-€7.49 loss)
+└─ Locked + recycled: Hold €100 worth of BCH = 0.1075 BCH
+    Better off by: €0.49 + 0.0005 BCH extra
+```
+
+**The counterintuitive result: When BCH drops, sellers buy back MORE BCH with the same €100.**
+
+**Scenario 3: BCH Rises 5%**
+
+```
+Seller locks: 0.107 BCH worth €107 at €1,000/BCH
+BCH rises to: €1,050/BCH (+5%)
+Receives: €100 Bizum upfront (before rise)
+Buys back: €100 worth BCH = 0.0952 BCH (at €1,050 rate, gets less BCH)
+
+After covenant executes:
+├─ Covenant now worth: 0.107 × €1,050 = €112.35
+├─ Merchant takes: €99.50 ÷ €1,050 = 0.0948 BCH
+├─ Seller gets back: 0.107 - 0.0948 = 0.0122 BCH (€12.81 worth)
+└─ Total BCH held: 0.0952 (bought) + 0.0122 (surplus) = 0.1074 BCH
+
+Seller's position:
+├─ Net BCH: 0.1074 - 0.107 = +0.0004 BCH
+├─ Net EUR: €0
+└─ Profit: €0.50 fee + €0.42 surplus appreciation
+
+Comparing to holding:
+├─ Held 0.107 BCH: Now worth €112.35 (+€5.35 gain)
+└─ Locked + recycled: Hold €105 worth of BCH = 0.1074 BCH worth €112.77
+    Better off by: €0.42 (still outperformed holding!)
+```
+
+**In ALL scenarios, the hedge protects sellers:**
+- ✅ **Stable:** Earn €0.50 fee, no volatility impact
+- ✅ **Price drops:** Buy back more BCH, lose less than holding
+- ✅ **Price rises:** Still profitable, earn surplus
+- ✅ **Even margin call:** Better outcome than holding equivalent BCH
+
+**The economic alignment is clear: Completing transactions is ALWAYS better than ghosting.**
+
+---
+
+### Why Capital Recycling Changes Everything
+
+**Old analysis (static):**
+```
+Lock €107 for 24 hours → Earn €0.50
+Return: 0.47% per day = 171% APR
+Verdict: "Okay, but not amazing"
+```
+
+**New analysis (with recycling):**
+```
+Lock €107 for 24 hours → But recycle every 5-10 minutes
+Throughput: 20-30 transactions/day on same €1,000 capital
+Earnings: €10-15/day
+Return: 1-1.5% per day = 365-547% APR
+Verdict: "Extremely attractive for market makers"
+```
+
+**Capital recycling is the key to making 0.5% fee economically viable.**
+
+**Sellers are incentivized to:**
+1. ✅ Accept as many bounties as possible (more fees)
+2. ✅ Keep covenants locked (each one earning 0.5%)
+3. ✅ Complete transactions quickly (free up capital for next round)
+4. ✅ Run automated bots (manual operation can't achieve volume)
+5. ✅ Minimize downtime (5-10 min refill vs 24h wait = 144x more transactions possible)
+
+**The business model: High-frequency, low-margin liquidity provision.**
 
 ---
 
@@ -667,7 +1124,7 @@ Accounting:
 - Too many margin call failures = deals cancel = bad UX
 
 **Mitigation:**
-- Automated top-up (seller pre-authorizes bot to add collateral)
+- Automated time extension (seller pre-authorizes bot to add collateral)
 - Higher initial overfunding (10% instead of 7%) = fewer calls
 - Seller reputation system penalizes frequent failures
 
@@ -718,7 +1175,7 @@ MiCA/PSD2 licensing requirements. Zero protocol fee = information society servic
 
 | Feature | Escrow Pull (Lost May 9) | Bulletin Board (May 9) | Bounty Contract (May 10) |
 |---------|--------------------------|------------------------|--------------------------|
-| **Volatility protection** | ✅ EUR in escrow (0% volatility) | ❌ Immediate BCH purchase | ✅ Overcollateralization |
+| **Volatility protection** | ✅ EUR in escrow (0% volatility) | ❌ Immediate BCH purchase | ✅ Volatility buffer |
 | **Recipient controls timing** | ✅ Escrow waits for signal | ❌ Sender timing determines | ✅ Covenant waits for both conditions |
 | **Send-and-forget UX** | ✅ Sender pays once | ❌ Sender must coordinate | ✅ Sender pays once, covenant handles rest |
 | **No CASP licensing** | ❌ Custody = regulated | ✅ No custody | ✅ Seller's own capital |

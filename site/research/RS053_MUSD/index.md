@@ -1,4 +1,4 @@
-# RS053: MUSD (Moria Protocol) — BCH-Native Overcollateralized Stablecoin
+# RS053: MUSD (Moria Protocol) — BCH-Native With volatility buffer Stablecoin
 
 **Research Type:** Protocol Analysis
 **Status:** ✅ Draft
@@ -9,7 +9,7 @@
 
 ## TL;DR
 
-**MUSD is a BCH-native, overcollateralized stablecoin built on CashTokens by Riften Labs (Moria Protocol). Users lock BCH into vaults to mint MUSD at a 1:1 USD peg. It is not fiat-backed (no USDT style reserves) — it's a decentralized CDP (Collateralized Debt Position) model similar to MakerDAO, but on BCH.**
+**MUSD is a BCH-native, with volatility buffer stablecoin built on CashTokens by Riften Labs (Moria Protocol). Users lock BCH into vaults to mint MUSD at a 1:1 USD peg. It is not fiat-backed (no USDT style reserves) — it's a decentralized CDP (Collateralized Debt Position) model similar to MakerDAO, but on BCH.**
 
 - Already live, audited by Hashlock, TVL fluctuating between $25K-$600K
 - Can be swapped on Cauldron DEX (MUSD/BCH pool)

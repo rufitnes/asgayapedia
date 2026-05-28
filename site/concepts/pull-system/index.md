@@ -2,7 +2,7 @@
 
 **Concept Type:** Protocol Design Pattern  
 **Category:** Volatility Protection  
-**Related:** [Why Eliminate Volatility](../core-architecture/why-eliminate-volatility.md), [Overcollateralized Bounty Contracts](./overcollateralized-bounty-contracts.md)
+**Related:** [Why Eliminate Volatility](../core-architecture/why-eliminate-volatility.md), [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md)
 
 ---
 
@@ -22,7 +22,7 @@ Sender pays → Immediately convert to BCH → Send to recipient
 ```
 Sender creates covenant → BCH seller funds it → Recipient claims whenever ready
 ├─ Time window: 30 seconds (covenant execution time)
-├─ Volatility risk: 0.1% typical (overcollateralization absorbs swings)
+├─ Volatility risk: 0.1% typical (volatility buffer absorbs swings)
 └─ No timezone coordination: Recipient controls timing completely
 ```
 
@@ -56,6 +56,31 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
 
 ---
 
+## 🎯 CRITICAL RISK ALLOCATION IN PULL SYSTEM
+
+**Common misconception:** "If the covenant holds BCH and the merchant receives from it, the merchant bears volatility risk."
+
+**Reality:** Merchants only participate when covenants are VALID and fully collateralized.
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk**
+* ✅ **Merchant's software validates covenant BEFORE handing cash:**
+  * Is covenant sufficiently collateralized? (≥100% of EUR promise)
+  * Are both conditions signable? (seller paid, recipient present)
+  * Is covenant still within 24h window?
+* 🔄 **If covenant becomes invalid (BCH drops >7%):**
+  * Covenant expires early
+  * ALL remaining BCH refunds to **SENDER**
+  * Merchant's software detects invalid covenant
+  * Merchant does NOT hand cash to recipient
+  * Transaction cancelled - no one loses money except sender (bears tail risk)
+
+**The "pull" system doesn't just mean recipient controls timing** - it also means **merchant validates claim validity at the exact moment of execution**. This is why merchants are completely protected from volatility.
+
+**See:** [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md) for technical details on covenant validation.
+
+---
+
 ## How It Works
 
 ### Three-Phase Flow
@@ -84,7 +109,7 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
 
 1. **BCH seller bot sees bounty** on bulletin board
 2. **Seller accepts challenge:**
-   - Locks €107 worth of BCH into covenant (107% overcollateralized)
+   - Locks €107 worth of BCH into covenant (107% with volatility buffer)
    - Provides cushion against price volatility
 3. **Sender (Iris) receives notification:**
    ```
@@ -104,7 +129,7 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
 
 **Phase 3: Contract Maturity (Recipient controls timing - 30 seconds)**
 
-1. **Elena walks to merchant pulpería** (whenever she's ready - could be immediately, could be tomorrow)
+1. **Elena walks to merchant neighborhood store** (whenever she's ready - could be immediately, could be tomorrow)
 
 2. **Elena shares code with merchant:**
    - Code displays:
@@ -132,7 +157,7 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
    
    Result:
    ├─ Merchant receives: €99.5 worth of BCH (at current rate)
-   ├─ BCH seller receives: €7.5 (overcollateralization surplus + 0.5% fee)
+   ├─ BCH seller receives: €7.5 (volatility buffer surplus + 0.5% fee)
    └─ Transaction complete (on-chain, immutable)
    ```
 
@@ -186,7 +211,7 @@ Sender creates covenant → BCH seller funds it → Recipient claims whenever re
 
 ---
 
-## How Overcollateralization Protects
+## How Volatility buffer Protects
 
 **The problem:** What if BCH price drops while covenant is waiting?
 
@@ -200,12 +225,12 @@ Day 2, 9:00am:  Elena claims at merchant
 At claim time: 0.01 BCH now = €95 (not €100!)
 ```
 
-**Without overcollateralization:**
+**Without volatility buffer:**
 - Merchant expects €100 worth
 - Covenant only has €95 worth
 - **Deal fails** ❌
 
-**With 7% overcollateralization:**
+**With 7% volatility buffer:**
 - BCH seller locked €107 worth
 - Even after 5% drop: €107 × 0.95 = €101.65
 - Merchant still gets €99.5 worth ✅
@@ -215,14 +240,14 @@ At claim time: 0.01 BCH now = €95 (not €100!)
 - 3% drop → Fully covered, seller gets smaller surplus
 - 5% drop → Fully covered, seller gets tiny surplus
 - 7% drop → Break-even, seller gets no surplus (but no loss)
-- >7% drop → **Margin call** (seller must top up or deal refunds)
+- >7% drop → **Margin call** (seller must time extension or deal refunds)
 
 **Statistical reality:**
 - BCH moves ±3% in 24h: **Common** (daily volatility)
 - BCH moves ±7% in 24h: **Uncommon** (happens ~5% of days)
 - BCH moves >10% in 24h: **Rare** (black swan events)
 
-**Result:** 7% overcollateralization covers 95%+ of normal volatility.
+**Result:** 7% volatility buffer covers 95%+ of normal volatility.
 
 ---
 
@@ -231,7 +256,7 @@ At claim time: 0.01 BCH now = €95 (not €100!)
 **Adds complexity (vs. simple push model):**
 - Four-party coordination (sender, BCH seller, merchant, recipient)
 - Covenant contract deployment (CashScript technical knowledge)
-- Overcollateralization capital requirements (BCH sellers need inventory)
+- Volatility buffer capital requirements (BCH sellers need inventory)
 - Margin call monitoring (if BCH drops >7%)
 - More moving parts than "sender pays, immediately convert, send"
 
@@ -242,7 +267,7 @@ At claim time: 0.01 BCH now = €95 (not €100!)
 - ✅ No recipient rushing because sender wants to pay NOW
 
 **And provides benefits:**
-- ✅ 99.9%+ accuracy in EUR → VES conversion (overcollateralization absorbs volatility)
+- ✅ 99.9%+ accuracy in EUR → VES conversion (volatility buffer absorbs volatility)
 - ✅ Recipient sees exact VES amount before claiming
 - ✅ Send-and-forget UX restored (sender doesn't wait for execution)
 - ✅ Recipient-controlled timing (claim when convenient, not when sender decides)
@@ -275,14 +300,14 @@ At claim time: 0.01 BCH now = €95 (not €100!)
 **BCH Seller side:**
 - Automated bot monitoring bulletin board (smsbridge_loop.py)
 - BCH inventory (capital requirements)
-- Accepts bounties, locks overcollateralized BCH
+- Accepts bounties, locks BCH + volatility buffer
 - Monitors Bizum SMS notifications
 - Monitors BCH price for margin calls
 - Signs covenant when payment received
 
 **Covenant Contract:**
 - CashScript covenant deployed on BCH blockchain
-- Holds overcollateralized BCH
+- Holds BCH + volatility buffer
 - Enforces two conditions: [1] Seller paid, [2] Merchant confirmed
 - Executes automatically when both conditions met
 - Refunds BCH seller if timeout expires (24h)
@@ -312,7 +337,7 @@ At claim time: 0.01 BCH now = €95 (not €100!)
 **The covenant contract is the digital gift card:**
 - Sender funds it (covenant creation + BCH seller payment)
 - Recipient redeems it (walks to merchant, co-signs maturity)
-- Value locked until recipient ready (overcollateralized protection)
+- Value locked until recipient ready (with volatility buffer protection)
 - No one can force recipient to claim before they're ready
 
 ---
@@ -342,7 +367,7 @@ At claim time: 0.01 BCH now = €95 (not €100!)
 - **Margin call** triggered automatically
 - BCH seller notified: "Add 0.0005 BCH within 1 hour or bounty refunds"
 - BCH seller can:
-  - Top up collateral (keep deal alive)
+  - Time extension collateral (keep deal alive)
   - Ignore (covenant refunds, sender's Bizum refunded)
   - Hope price recovers within grace period
 - Prevents merchant from receiving less than promised
@@ -364,7 +389,7 @@ The pull system concept, originally designed years ago with a central escrow, ha
 
 **Timeline:**
 - **May 2026 (Phase 0):** Chipnet testing of covenant contracts
-  - Validate overcollateralization mechanics
+  - Validate volatility buffer mechanics
   - Test margin call triggers
   - Measure real volatility protection
   - Simulate timeout/refund scenarios
@@ -381,7 +406,7 @@ The pull system concept, originally designed years ago with a central escrow, ha
 
 ## Related Concepts
 
-- [Overcollateralized Bounty Contracts](./overcollateralized-bounty-contracts.md) — Technical implementation
+- [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md) — Technical implementation
 - [Why Eliminate Volatility](../core-architecture/why-eliminate-volatility.md) — The problem we're solving
 - [Core Regulatory Constraints](./core-regulatory-constraints.md) — Why covenant-based design is required
 - [Two-Step Settlement Timing](../decisions/two-step-settlement-timing.md) — Detailed flow mechanics

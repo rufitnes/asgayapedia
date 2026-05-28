@@ -24,6 +24,14 @@ If 100% of recipients instantly convert BCH to fiat, Asgaya is just another paym
 
 ## Why Recipients Holding BCH Matters
 
+> **💰 The Merchant Economics in One Number:**
+>
+> A neighborhood store that processes one €180 remittance per day where the recipient spends €140 on goods earns **€654–1,290 per month** in combined fees and product margin. The average Venezuelan neighborhood store earns $200–500/month.
+>
+> **Accepting Asgaya can double or triple merchant income.**
+>
+> This isn't adoption through ideology—it's adoption through self-interest. See **[Merchant Business Case](../concepts/merchant-business-case.md)** for the full triple-dip breakdown.
+
 ### 1. Breaking the Chicken-and-Egg Problem
 
 **The cycle that kills crypto adoption:**

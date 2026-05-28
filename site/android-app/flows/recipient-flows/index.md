@@ -40,7 +40,7 @@ Notification → View details → Find merchant → Navigate → Co-sign covenan
 - ⏱️ **24 hours** to claim after covenant created (timer starts when sender funds covenant)
 - **Reminders sent at:** 12h (general), 18h (sender notified), 23h (urgent)
 - **After 24h:** Covenant expires → Split refund (merchant portion to Iris, seller fee to seller)
-- Full policy: [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+- Full policy: [With volatility buffer Bounty Contracts - Timeout Cascade](../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade)
 
 ---
 
@@ -477,6 +477,22 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 │                                     │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
 │                                     │
+│  ❓ What if merchant doesn't give   │
+│     me cash?                        │
+│                                     │
+│  DON'T co-sign. After 24 hours,     │
+│  the covenant automatically refunds:│
+│  - Your portion → Back to sender    │
+│  - Seller fee → BCH seller          │
+│                                     │
+│  No one can steal funds by refusing │
+│  to co-sign. The timeout protects   │
+│  everyone.                          │
+│                                     │
+│  See: Timeout Cascade explained     │
+│                                     │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     │
+│                                     │
 │  ⏸️  When you've received cash:     │
 │                                     │
 │  ┌─────────────────────────────┐   │
@@ -697,7 +713,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - **Iris's loss:** Iris paid sender fee (€0.50), lost to timeout
 - **Merchant unaffected:** Never committed (didn't see bounty until recipient arrived)
 
-**See:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade) for complete timeout logic
+**See:** [With volatility buffer Bounty Contracts - Timeout Cascade](../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade) for complete timeout logic
 
 ---
 
@@ -910,7 +926,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - Not so long that funds are locked unnecessarily
 - Balances recipient convenience vs sender risk
 
-**Related decision:** [Overcollateralized Bounty Contracts - Timeout Cascade](../../concepts/overcollateralized-bounty-contracts.md#timeout-cascade)
+**Related decision:** [With volatility buffer Bounty Contracts - Timeout Cascade](../../concepts/bounty-contracts-with-volatility-buffer.md#timeout-cascade)
 
 ---
 
@@ -983,7 +999,7 @@ Recipient co-signs covenant to confirm cash receipt and trigger settlement.
 - Transparent: All amounts, signatures, timing public
 - Immutable: Once settled, cannot be reversed
 
-**See:** [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) for complete covenant specification
+**See:** [With volatility buffer Bounty Contracts](../../concepts/bounty-contracts-with-volatility-buffer.md) for complete covenant specification
 
 ---
 
@@ -1021,7 +1037,7 @@ pending → claimed → accepted → partially_signed → completed
 
 **Concepts:**
 - [Pull System](../../concepts/pull-system.md) — How recipient timing control works
-- [Overcollateralized Bounty Contracts](../../concepts/overcollateralized-bounty-contracts.md) — Complete covenant specification
+- [With volatility buffer Bounty Contracts](../../concepts/bounty-contracts-with-volatility-buffer.md) — Complete covenant specification
 - [Decentralized Pull System](../../concepts/pull-system.md) — How bulletin board works
 
 ---

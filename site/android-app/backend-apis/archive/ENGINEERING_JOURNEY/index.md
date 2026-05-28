@@ -301,7 +301,7 @@ Forum posts, GitHub issues, or commit messages before **May 2026** may reference
 - [Current Backend-APIs README](../README.md) - What exists now
 - [Phase 0 Progressive Decentralization](../../../decisions/phase-0-progressive-decentralization.md) - Full strategy
 - [BCH Native Architecture](../bch-native-architecture.md) - Why BCH chosen
-- [Overcollateralized Bounty Contracts](../../../concepts/overcollateralized-bounty-contracts.md) - Covenant design
+- [With volatility buffer Bounty Contracts](../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant design
 
 ---
 

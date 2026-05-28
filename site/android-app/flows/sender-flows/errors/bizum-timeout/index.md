@@ -261,7 +261,7 @@ async def wait_for_bizum(covenant_id, timeout=300):
 - [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md) - Shows countdown
 - [Pending Covenant Error](./pending-covenant.md) - Duplicate covenant prevention
 - [BCH Sellers Concept](../../../../concepts/bch-sellers.md) - Seller volatility exposure
-- [Overcollateralized Bounty Contracts](../../../../concepts/overcollateralized-bounty-contracts.md) - Covenant lifecycle
+- [With volatility buffer Bounty Contracts](../../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant lifecycle
 
 ---
 

@@ -225,7 +225,7 @@ const pendingCovenant = {
 - [Screen 6A: Tracking (Own Wallet)](../own-wallet-path/6a-tracking.md) - Track existing covenant
 - [Screen 6B: Tracking (Buy from Seller)](../buy-seller-path/6b-tracking.md) - Track existing covenant
 - [Covenant Expiry Error](./covenant-expiry.md) - What happens after 24h
-- [Overcollateralized Bounty Contracts](../../../../concepts/overcollateralized-bounty-contracts.md) - Covenant specification
+- [With volatility buffer Bounty Contracts](../../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant specification
 
 ---
 

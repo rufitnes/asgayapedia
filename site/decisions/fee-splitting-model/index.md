@@ -6,10 +6,38 @@
 
 ---
 
+> ⚠️ **ALL NUMBERS IN THIS DOCUMENT ARE HYPOTHESES FOR PHASE 0 VALIDATION.**
+> 
+> The 0.5% seller fee and 0.5% merchant spread are educated starting points, not fixed parameters. We will adjust them based on real-world data. See [Phase 0 Validation Checklist](phase-0-validation-checklist.md).
+
+---
+
+> ⚠️ **HYPOTHESIS — NEEDS PHASE 0 VALIDATION**
+> 
+> **The 0.5%/0.5% split is an educated guess, not empirical data.**
+> 
+> We don't yet know if:
+> - 0.5% attracts enough BCH sellers (considering capital cost + volatility risk)
+> - 0.5% motivates merchants to provide cash liquidity (vs. just holding fiat)
+> - This balance optimally promotes BCH adoption
+> 
+> **The Bitcoin lesson:** Arbitrary parameters (1MB blocks, 10-minute confirmation) 
+> become contentious if not validated early. We will test this during Phase 0 trials 
+> and adjust based on real participant behavior.
+> 
+> **Adjustment triggers:**
+> - If seller acquisition fails → Consider 0.6% seller / 0.4% merchant
+> - If merchant acquisition fails → Consider 0.4% seller / 0.6% merchant
+> - If both struggle → Consider 0.7% each (1.4% total, still competitive vs. 6.49% legacy)
+> 
+> **See:** [Phase 0 Validation Strategy](#phase-0-validation-strategy) below for detailed testing approach.
+
+---
+
 > 💡 **TL;DR: How the 1% fee is split**
 >
 > The 1% total fee is split between TWO participants in the covenant:
-> - **BCH Seller:** 0.5% (provides overcollateralized BCH to covenant)
+> - **BCH Seller:** 0.5% (provides BCH + volatility buffer to covenant)
 > - **Merchant:** 0.5% (hands cash to recipient, receives BCH)
 >
 > **Example (€100 transfer):**
@@ -23,6 +51,29 @@
 > - Typical spread: 0.5% (merchant loses entire reward to spread)
 > - **Result if selling immediately:** Merchant gets €99.00 fiat (same as no reward!)
 
+> **Enforcement:** The seller's bot auto-signs the covenant the moment the Bizum payment is detected. Manual refusal is economically irrational and results in permanent exclusion. See [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md) for the full incentive analysis.
+
+---
+
+## 🎯 CRITICAL RISK ALLOCATION
+
+**Understanding who bears risk in the fee model:**
+
+* ❌ **Merchant NEVER receives undercollateralized BCH**
+* ❌ **Merchant NEVER bears BCH volatility risk beyond their 0.5% fee**
+* ✅ **Merchant either:**
+  * Receives full EUR-equivalent BCH (including their 0.5% fee)
+  * OR does not participate in settlement at all
+* 🔄 **Under-collateralized covenants refund remaining BCH to the SENDER**
+* ⚖️ **Therefore:**
+  * **SENDER** bears tail volatility risk beyond 7% collateral buffer
+  * **MERCHANT** earns 0.5% fee for providing local fiat (zero volatility exposure)
+  * **SELLER** earns 0.5% fee for posting collateral (bears opportunity cost)
+
+**The 0.5% merchant fee is NOT compensation for taking volatility risk** - it's compensation for providing local fiat liquidity and physically handing cash to recipients. Merchants are completely isolated from BCH price movements.
+
+**See:** [Two-Step Settlement Timing](two-step-settlement-timing.md) for complete risk allocation details.
+
 ---
 
 ## The Goal (Architectural Ideal)
@@ -30,7 +81,7 @@
 Create **economic incentives** for all participants to join and grow the Asgaya network **while promoting BCH adoption**.
 
 **Primary participants to incentivize:**
-1. **BCH Sellers:** Post overcollateralized BCH to covenants, enable pull system
+1. **BCH Sellers:** Post BCH + volatility buffer to covenants, enable pull system
 2. **Merchants:** Accept BCH payments, provide VES liquidity to recipients
 
 **Secondary market (optional):**
@@ -48,7 +99,7 @@ Create **economic incentives** for all participants to join and grow the Asgaya 
 
 **Challenge:** Split 1% fee to:
 1. Fairly compensate both participants
-2. Incentivize BCH sellers to provide liquidity (post overcollateralized BCH)
+2. Incentivize BCH sellers to provide liquidity (post BCH + volatility buffer)
 3. Incentivize merchants to hold BCH (not immediately sell)
 4. Make instant settlement available but economically discouraged
 5. Align with Asgaya's mission: BCH adoption, not just fiat conversion
@@ -69,8 +120,86 @@ Recipient receives: 99% (transfer amount minus fees)
 
 **No variable sourcing costs** (unlike old escrow model):
 - BCH seller posts their own BCH as collateral
-- Overcollateralization surplus is separate from fee (seller keeps if BCH rises)
+- Volatility buffer surplus is separate from fee (seller keeps if BCH rises)
 - Simple, transparent, no hidden costs
+
+---
+
+## Phase 0 Validation Strategy
+
+**Why we're starting at 0.5%/0.5%:**
+
+This is our **hypothesis**, not a finalized parameter. We chose 0.5% for each participant because:
+- ✅ **Conservative start:** Easy to raise fees if needed (harder to lower them)
+- ✅ **Competitive positioning:** 1% total beats 6.49% legacy fees by massive margin
+- ✅ **Symmetric split:** Equal rewards signal fairness and balanced importance
+- ✅ **Room to adjust:** Can shift to 0.6%/0.4% or 0.4%/0.6% based on data
+
+> **Why 0.5% may already be highly attractive:** With capital recycling, a seller can turn over the same BCH many times per day, yielding an effective annualised return (APR) far above the nominal 0.5% per transaction. See [Capital Recycling Strategy](../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model) for the detailed model (≈360% APR vs. ≈171% APR without recycling).
+
+**What we're testing in Phase 0 (5-10 migrant workers, 1-2 months):**
+
+### Success Metrics
+
+| Participant | Success Signal | Failure Signal |
+|-------------|---------------|----------------|
+| **BCH Sellers** | >80% bounty acceptance rate | <50% acceptance rate |
+| **BCH Sellers** | <2 hour avg response time | >6 hour avg response time |
+| **BCH Sellers** | Sellers re-post after completion | Sellers abandon after 1-2 transactions |
+| **Merchants** | >70% hold BCH (don't immediately sell) | <30% hold BCH |
+| **Merchants** | Merchants accept repeat remittances | Merchants stop after first transaction |
+| **Merchants** | Avg 5+ remittances/month per merchant | <2 remittances/month |
+
+### Adjustment Triggers
+
+**Trigger 1: BCH seller acquisition fails**
+- **Signal:** <5 sellers willing to participate, <50% bounty acceptance rate
+- **Root cause:** 0.5% fee doesn't compensate for capital cost + volatility risk
+- **Action:** Increase to **0.6% seller / 0.4% merchant** split
+- **Rationale:** Seller bears more risk (24h capital lock + volatility buffer), needs higher reward
+
+**Trigger 2: Merchant acquisition fails**
+- **Signal:** <3 merchants onboarded, merchants quit after first payout
+- **Root cause:** 0.5% doesn't justify physical cash handling + security risk
+- **Action:** Increase to **0.4% seller / 0.6% merchant** split
+- **Rationale:** Merchant bears physical risk (cash handling, security), needs higher reward
+
+**Trigger 3: Both struggle to participate**
+- **Signal:** <5 sellers AND <3 merchants after Phase 0
+- **Root cause:** 1% total fee is too thin to split
+- **Action:** Increase to **0.7% seller / 0.7% merchant** (1.4% total)
+- **Rationale:** Still competitive vs. 6.49% legacy, but adequately compensates risks
+
+**Trigger 4: Instant settlement dominates**
+- **Signal:** >70% merchants immediately sell BCH for fiat
+- **Root cause:** 0.5% reward insufficient to incentivize holding
+- **Action:** Consider **tiered rewards** (0.5% if sold immediately, 0.7% if held >7 days)
+- **Rationale:** Align incentives with BCH adoption mission
+
+### Data Collection During Phase 0
+
+We'll track:
+- ✅ **Bounty acceptance rate** (% of posted bounties accepted by sellers)
+- ✅ **Response time** (how fast sellers accept bounties)
+- ✅ **Merchant holding behavior** (% who hold BCH vs. sell immediately)
+- ✅ **Merchant retention** (do merchants continue after first transaction?)
+- ✅ **Covenant completion rate** (% of covenants that execute successfully)
+- ✅ **Profitability surveys** ("Is 0.5% worth your time/risk?")
+
+### How We'll Decide
+
+**After 30+ successful remittances across 5+ senders:**
+1. Review metrics against success criteria
+2. Survey participants (BCH sellers + merchants) about perceived fairness
+3. Calculate actual profitability (fees earned vs. costs incurred)
+4. Make data-driven adjustment if needed
+5. Document decision rationale
+
+**If metrics are green (success signals):** Keep 0.5%/0.5%  
+**If one side struggles:** Shift split (0.6%/0.4% or 0.4%/0.6%)  
+**If both struggle:** Increase total fee (1.4%)  
+
+**We will NOT guess.** Phase 0 exists to replace assumptions with evidence.
 
 ---
 
@@ -82,9 +211,9 @@ Recipient receives: 99% (transfer amount minus fees)
 
 **Covenant distribution when mature:**
 ```
-Total BCH in covenant: €107 (overcollateralized by seller)
+Total BCH in covenant: €107 (with volatility buffer by seller)
 ├─ Merchant receives: €99.50 worth of BCH (€99 principal + €0.50 fee)
-└─ BCH seller receives: €7.50 (€7 overcollateralization surplus + €0.50 fee)
+└─ BCH seller receives: €7.50 (€7 volatility buffer surplus + €0.50 fee)
 
 Merchant hands to recipient: €99.00 worth of VES cash
 Merchant keeps: €0.50 (0.5% reward in BCH)
@@ -94,7 +223,7 @@ Merchant keeps: €0.50 (0.5% reward in BCH)
 - Sender paid: €100.00
 - Recipient got: €99.00 worth of VES
 - Merchant earned: €0.50 in BCH (holds for future use)
-- BCH seller earned: €0.50 + overcollateralization surplus
+- BCH seller earned: €0.50 + volatility buffer surplus
 
 ---
 
@@ -143,7 +272,7 @@ Merchant accepts: Sends BCH, receives €99.00 fiat
 
 **Covenant distribution when mature:**
 ```
-BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus
+BCH Seller receives: €0.50 (0.5% fee) + volatility buffer surplus
 Recipient receives: €9.90 worth of BCH (0.0198 BCH)
 Merchant receives: €0 (no merchant involved)
 ```
@@ -163,7 +292,7 @@ Merchant receives: €0 (no merchant involved)
 
 **Covenant distribution when mature:**
 ```
-BCH Seller receives: €0.50 (0.5% fee) + overcollateralization surplus  
+BCH Seller receives: €0.50 (0.5% fee) + volatility buffer surplus  
 Merchant receives: €9.90 worth of BCH
 Merchant hands: €9.85 cash to recipient
 Merchant keeps: €0.05 in BCH (0.5% of €9.90)
@@ -239,12 +368,12 @@ Why bother? Same as having no reward at all!
 **Best case for BCH sellers:**
 - Already own BCH (miners from mining rewards, HODLers from past purchases)
 - **Zero acquisition cost**
-- Post overcollateralized BCH to covenant (e.g., €107 for €100 bounty)
-- Earn 0.5% fee (€0.50) + overcollateralization surplus if BCH rises
+- Post BCH + volatility buffer to covenant (e.g., €107 for €100 bounty)
+- Earn 0.5% fee (€0.50) + volatility buffer surplus if BCH rises
 
 **Example: BCH miner processes 100 bounties/month:**
 - Fees: 100 × €0.50 = €50/month
-- Overcollateralization surplus: Variable (depends on BCH price movement)
+- Volatility buffer surplus: Variable (depends on BCH price movement)
 - **No exchange fees** (using mined BCH)
 - **Total revenue:** Mining rewards + seller fees + surplus
 
@@ -256,8 +385,8 @@ Why bother? Same as having no reward at all!
 
 **For traders or those without BCH inventory:**
 - Buy BCH on exchange (Kraken 0.26%, Binance 0.10%, etc.)
-- Post to covenant as overcollateralized bounty
-- Earn 0.5% fee (€0.50) + overcollateralization surplus
+- Post to covenant as bounty + volatility buffer
+- Earn 0.5% fee (€0.50) + volatility buffer surplus
 
 **Net profit calculation:**
 ```
@@ -278,13 +407,13 @@ Net: €0.24 + surplus
 ### Option C: Hybrid Approach
 
 **Use own BCH when available, buy when depleted:**
-- Post overcollateralized BCH from holdings first (0% cost)
+- Post BCH + volatility buffer from holdings first (0% cost)
 - Buy from exchange when holdings run low (0.10-0.26% cost)
 - Mix strategies based on volume and capital availability
 
 ---
 
-## Overcollateralization Economics (Separate from Fee)
+## Volatility buffer Economics (Separate from Fee)
 
 **BCH seller's additional revenue source:**
 
@@ -293,7 +422,7 @@ Net: €0.24 + surplus
 Seller posted: €107 worth of BCH (at lock time)
 24 hours later: BCH rises 5%
 Covenant holds: €107 × 1.05 = €112.35 worth
-Merchant takes: €99.50 worth (at maturity)
+Merchant takes: €99.50 worth (at settlement)
 Seller gets back: €112.35 - €99.50 = €12.85
 Seller's total: €0.50 fee + €12.85 surplus = €13.35 on €100 bounty!
 ```
@@ -314,7 +443,7 @@ Seller must add more BCH or bounty refunds
 Opportunity cost + reputation penalty
 ```
 
-**Overcollateralization is:**
+**Volatility buffer is:**
 - ✅ Separate from fee (volatility buffer, not compensation)
 - ✅ Profit opportunity (if BCH rises)
 - ⚠️ Risk exposure (if BCH drops >7%)
@@ -389,7 +518,7 @@ Input: €107 worth of BCH (posted by seller)
 
 Outputs:
 ├─ Merchant address: €99.50 worth of BCH (€99 principal + €0.50 fee)
-└─ Seller address: €7.50 worth of BCH (€7 overcollateralization + €0.50 fee)
+└─ Seller address: €7.50 worth of BCH (€7 volatility buffer + €0.50 fee)
 
 On-chain, immutable, deterministic
 ```
@@ -408,7 +537,7 @@ On-chain, immutable, deterministic
   Merchant fee:     €0.50 (0.5%)
   Recipient gets:   €99.00 worth of VES
   Total cost:       €1.00 (1%)
-  Overcollateralization: €7.00 (7%)
+  Volatility buffer: €7.00 (7%)
   ```
 - Participants can verify on blockchain (immutable)
 - Public covenant code (open-source, auditable)
@@ -537,7 +666,7 @@ BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
 **How we verify this decision:**
 - ⏳ **Pending:** Chipnet testing (May 2026)
   - Deploy covenant with 0.5% fee split
-  - Test overcollateralization surplus calculation
+  - Test volatility buffer surplus calculation
   - Verify merchant receives correct BCH amount
 - ⏳ **Pending:** Phase 0 mainnet (June 2026)
   - Real transfers with 1-2 trusted merchants
@@ -597,10 +726,60 @@ BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
 
 ---
 
+## Fiat Chargeback Risk (Phase 0 Limited, Phase 1+ Addressed)
+
+**The legitimate concern:** In traditional P2P crypto markets, sellers face the risk that fiat payments (like Bizum, SEPA, PayPal) can be reversed after the seller has released cryptocurrency. This chargeback risk is typically priced into spreads (1-3% premium).
+
+**Asgaya's exposure:**
+- **Phase 0 (Current):** Minimal risk
+  - All participants are trusted family, friends, and forum members
+  - Reputation-based vetting (bitcoincashresearch.org contributors)
+  - Small transaction sizes (€50-200)
+  - Known identities (not anonymous)
+
+**Why Bizum is relatively safe:**
+- Instant settlement in Spain (not easily reversible like credit cards)
+- Bank-to-bank transfer (not payment processor with buyer protection)
+- Fraud requires bank cooperation (Spanish banks have anti-fraud KYC)
+
+**Phase 1+ Solutions (When Opening to General Public):**
+
+1. **Reputation Scoring Tied to On-Chain Identity**
+   - Senders build reputation through successful transactions
+   - Low-reputation senders pay slightly higher fees (chargeback insurance premium)
+   - High-reputation senders (50+ transactions) get preferred rates
+
+2. **Seller-Funded Chargeback Insurance Pool**
+   - Sellers contribute 0.1% of transaction volume to insurance fund
+   - Fund compensates sellers hit by chargebacks
+   - Spreads risk across all sellers (insurance model)
+   - Dishonest senders get banned + blacklisted
+
+3. **Seller-Configurable Risk Premiums**
+   - Sellers can set their own spread (0.5-2%) based on risk tolerance
+   - New senders → higher spread (1.5-2%)
+   - Established senders → base spread (0.5%)
+   - Market-driven pricing for risk
+
+4. **Integration with Universal Bot Fraud Prevention**
+   - Sender's bot creates cryptographic proof of payment
+   - If chargeback occurs, seller submits proof to dispute
+   - Sender's stake slashed if fraudulent chargeback proven
+   - See [Universal Bot Fraud Prevention](../concepts/universal-bot-fraud-prevention.md)
+
+**Why this doesn't block Phase 0:**
+- Trusted participant model eliminates chargeback risk
+- Real-world validation needed before designing insurance systems
+- Phase 0 data will inform Phase 1 risk pricing
+
+**Mitigation priority:** Post-Phase 0, based on actual chargeback frequency data (target: <0.1% of transactions).
+
+---
+
 ## Related Concepts
 
 - [BCH Sellers](../concepts/bch-sellers.md) — Who provides liquidity and why (miners especially)
-- [Overcollateralized Bounty Contracts](../concepts/overcollateralized-bounty-contracts.md) — Technical covenant implementation
+- [Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) — Technical covenant implementation
 - [Pull System](../concepts/pull-system.md) — Why recipient-triggered execution is critical
 - [Dynamic Reward Modulation](../concepts/dynamic-reward-modulation.md) — Future fee optimization
 
