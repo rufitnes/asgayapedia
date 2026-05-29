@@ -38,7 +38,7 @@ Shown when app cannot connect to required services:
 
 **Interactions:**
 - **Tap "Try Again"** → Retry previous action (reload data, retry transaction)
-- **Tap "Go to Home"** → Return to [Screen 1: Home](../covenant-setup/1-home.md)
+- **Tap "Go to Home"** → Return to [Screen 1: Home](../../home-screen.md)
 
 ---
 
@@ -406,7 +406,7 @@ reportError({
 
 ## Related Documentation
 
-- [Screen 1: Home](../covenant-setup/1-home.md) - Entry point
+- [Screen 1: Home](../../home-screen.md) - Entry point
 - [Screen 4.5: Select Seller](../buy-seller-path/4.5-select-seller.md) - Bulletin board dependency
 - [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md) - Exchange rate dependency
 - [Bizum Timeout Error](./bizum-timeout.md) - Payment window expiry

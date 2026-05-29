@@ -1,0 +1,5314 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BCH covenant-based remittance protocol for Spain-Venezuela corridor">
+      
+      
+      
+        <link rel="canonical" href="https://docs.asgaya.org/research/RS052_compliance_architecture/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>RS052: MiCA Compliance & Regulatory Pitfalls to Avoid - Asgaya Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/bch-colors.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rs052-mica-compliance-regulatory-pitfalls-to-avoid" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Asgaya Documentation" class="md-header__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Asgaya Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              RS052: MiCA Compliance &amp; Regulatory Pitfalls to Avoid
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/" class="md-tabs__link">
+          
+  
+  
+  Android App
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../decisions/" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../unknowns/" class="md-tabs__link">
+          
+  
+  
+  Unknowns
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../RS053_MUSD/" class="md-tabs__link">
+          
+  
+  
+  Research
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Asgaya Documentation" class="md-nav__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Asgaya Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android App
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android App
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/home-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sender Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sender Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_2" id="__nav_2_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Covenant Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/2-recipient-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/3-amount-entry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amount Entry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/4-payment-method/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_3" id="__nav_2_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Own Wallet Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Own Wallet Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/4a-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/6a-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/7a-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_4" id="__nav_2_2_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buy Seller Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Buy Seller Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Purchase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4.5-select-seller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Select Seller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/5-payment-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Instructions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/6b-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/7b-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_5" id="__nav_2_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Screens
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Error Screens
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/pending-covenant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Covenant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/seller-non-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Non-Delivery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/bizum-timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Timeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/network-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/recipient-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Direct Payment Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/1-scan-merchant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Merchant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/2-enter-amount/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enter Amount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/3-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/4-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/trade-bch-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trade BCH Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/merchant-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_8" id="__nav_2_2_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive (Pre-Covenant)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive (Pre-Covenant)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/bch-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/lp-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/remittance-merchant-cash-out/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Cash Out
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backend APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/rate-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/user-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/common-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/covenant-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_7" id="__nav_2_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blockchain Scanner
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blockchain Scanner
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/blockchain-scanner/nft-scanner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NFT Scanner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_8" id="__nav_2_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Bot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Seller Bot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/seller-bot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_9" id="__nav_2_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/pichan-regtest-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pichan Regtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/multi-device-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Device Test Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_10" id="__nav_2_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/archive/ENGINEERING_JOURNEY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Journey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notification Listener
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notification Listener
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/bizum-android/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Android
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/pagomovil-android/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PagoMóvil Android
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/opreturn-spv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OP_RETURN SPV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-permissionless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Permissionless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-self-custody/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Self-Custody
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-no-kyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why No KYC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-market-rate-exchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Market Rates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-cheaper-than-legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Cheaper Than Legacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-promote-adoption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Promote Adoption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-bch-usage-incentive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why BCH Usage Incentive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-minimal-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Minimal Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/risk-allocation-principle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Risk Allocation Principle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-sellers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-buyers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bounty-contracts-with-volatility-buffer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bounty Contracts with Volatility Buffer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/rfid-card-recipients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RFID Card Recipients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/dynamic-reward-modulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic Reward Modulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/fee-splitting-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/two-step-settlement-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-Step Settlement Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/dispute-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dispute Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/payment-timeout-window/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Timeout Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/unclaimed-transaction-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unclaimed Transaction Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/bizum-concept-field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Concept Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/how-exchange-rates-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Exchange Rates Work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/musd-integration-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MUSD Integration Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/phase-0-progressive-decentralization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Progressive Decentralization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/phase-0-validation-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Validation Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unknowns
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unknowns
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Economic
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Economic
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/economic/overcollateralization-rate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overcollateralization Rate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Behavioral
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Behavioral
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/behavioral/claim-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claim Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RS053_MUSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS053 MUSD Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RS054_cashtoken_swaps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS054 CashToken Swaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-mica-crypto-asset-service-provider-casp-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. MiCA: Crypto-Asset Service Provider (CASP) Definitions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. MiCA: Crypto-Asset Service Provider (CASP) Definitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-the-triggering-clause" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 The Triggering Clause
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-the-ten-regulated-crypto-asset-services-mica-annex-i" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 The Ten Regulated Crypto-Asset Services (MiCA Annex I)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-spain-specific-casp-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Spain-Specific CASP Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-professional-basis-the-critical-ambiguity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 "Professional Basis" — The Critical Ambiguity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-psd2-payment-service-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. PSD2: Payment Service Definitions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. PSD2: Payment Service Definitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-what-psd2-regulates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 What PSD2 Regulates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-relevant-payment-services-for-asgaya-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Relevant Payment Services for Asgaya Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-money-remittance-the-most-dangerous-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Money Remittance — The Most Dangerous Category
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-the-commercial-agent-exclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 The "Commercial Agent" Exclusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-spain-specific-psd2-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Spain-Specific PSD2 Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-eu-e-commerce-directive-information-society-service-protections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. EU E-Commerce Directive: Information Society Service Protections
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. EU E-Commerce Directive: Information Society Service Protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-the-directives-core-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 The Directive's Core Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-hosting-protection-article-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Hosting Protection (Article 14)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-what-removes-hosting-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 What Removes Hosting Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-spains-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Spain's Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-bulletin-board-precedents-what-survived-and-what-fell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Bulletin Board Precedents: What Survived and What Fell
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Bulletin Board Precedents: What Survived and What Fell">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-bittorrent-trackers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 BitTorrent Trackers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-localbitcoins-early-phase-pre-2019" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 LocalBitcoins (Early Phase, Pre-2019)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-bisq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Bisq
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-openbazaar-now-defunct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 OpenBazaar (Now Defunct)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-hodl-hodl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Hodl Hodl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-summary-of-precedent-lessons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Summary of Precedent Lessons
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-red-lines-specific-actions-that-would-trigger-regulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Red Lines: Specific Actions That Would Trigger Regulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Red Lines: Specific Actions That Would Trigger Regulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-red-lines-for-the-asgaya-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Red Lines for the Asgaya Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-red-lines-for-individual-sellers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Red Lines for Individual Sellers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-red-lines-for-the-protocols-operator-entity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Red Lines for the Protocol's Operator Entity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-safe-harbor-criteria-how-to-maintain-information-service-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Safe Harbor Criteria: How to Maintain Information Service Status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Safe Harbor Criteria: How to Maintain Information Service Status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-structural-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Structural Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-operational-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Operational Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-jurisdictional-safe-harbors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Jurisdictional Safe Harbors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-the-decentralization-spectrum-and-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 The Decentralization Spectrum and Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-per-jurisdiction-variations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Per-Jurisdiction Variations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Per-Jurisdiction Variations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-spain-home-jurisdiction-for-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Spain (Home Jurisdiction for Phase 0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-germany" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Germany
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-france" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 France
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-netherlands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Netherlands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-estonia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Estonia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-summary-the-uncrossable-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Summary: The Uncrossable Line
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-sources-and-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Sources and Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="rs052-mica-compliance-regulatory-pitfalls-to-avoid">RS052: MiCA Compliance &amp; Regulatory Pitfalls to Avoid<a class="headerlink" href="#rs052-mica-compliance-regulatory-pitfalls-to-avoid" title="Permanent link">&para;</a></h1>
+<p><strong>Status:</strong> Research Document (No Decisions)<br />
+<strong>Date:</strong> 2026-05-09<br />
+<strong>Context:</strong> Asgaya redesigned as pure P2P bulletin board; must remain outside MiCA, PSD2, and related regimes<br />
+<strong>Scope:</strong> EU-level analysis with emphasis on Spain</p>
+<hr />
+<h2 id="1-mica-crypto-asset-service-provider-casp-definitions">1. MiCA: Crypto-Asset Service Provider (CASP) Definitions<a class="headerlink" href="#1-mica-crypto-asset-service-provider-casp-definitions" title="Permanent link">&para;</a></h2>
+<h3 id="11-the-triggering-clause">1.1 The Triggering Clause<a class="headerlink" href="#11-the-triggering-clause" title="Permanent link">&para;</a></h3>
+<p>MiCA Article 3(1)(15) defines a CASP as:</p>
+<blockquote>
+<p>"a legal person or other undertaking whose occupation or business is the provision of one or more crypto-asset services to clients on a professional basis."</p>
+</blockquote>
+<p>Three elements must ALL be present:
+1. <strong>Legal person or undertaking</strong> — natural persons acting in a purely private capacity are excluded.
+2. <strong>Provision of a listed crypto-asset service</strong> — the activity must match one of the ten services in MiCA Annex I.
+3. <strong>Professional basis</strong> — occasional, isolated acts do not qualify; there must be regularity, organization, and commercial purpose.</p>
+<p>If any element is missing, the entity is not a CASP. Asgaya's participants (senders, sellers, merchants, recipients) are natural persons. The protocol itself is software, not a legal person. This structural separation is the first line of defense.</p>
+<h3 id="12-the-ten-regulated-crypto-asset-services-mica-annex-i">1.2 The Ten Regulated Crypto-Asset Services (MiCA Annex I)<a class="headerlink" href="#12-the-ten-regulated-crypto-asset-services-mica-annex-i" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Service</th>
+<th>Relevance to Asgaya</th>
+<th>Trigger risk if Asgaya...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Custody and administration of crypto-assets on behalf of clients</td>
+<td><strong>EXTREME</strong></td>
+<td>Holds private keys, even temporarily, for any participant's funds</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Operation of a trading platform for crypto-assets</td>
+<td><strong>HIGH</strong></td>
+<td>Algorithmically matches orders or executes trades</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Exchange of crypto-assets for funds</td>
+<td><strong>HIGH</strong></td>
+<td>Systematically converts EUR→BCH or BCH→VES as a business</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Exchange of crypto-assets for other crypto-assets</td>
+<td>Low</td>
+<td>Irrelevant to single-asset corridor</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Execution of orders on behalf of clients</td>
+<td><strong>HIGH</strong></td>
+<td>Places buy/sell orders for participants</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Placing of crypto-assets</td>
+<td>Low</td>
+<td>Only relevant for token issuances</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Providing transfer services for crypto-assets on behalf of clients</td>
+<td><strong>HIGH</strong></td>
+<td>Initiates or controls transfers for others</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Reception and transmission of orders</td>
+<td><strong>HIGH</strong></td>
+<td>Routes orders to specific counterparties</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Advice on crypto-assets</td>
+<td>Low</td>
+<td>Only if providing personalized recommendations as a business</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Portfolio management</td>
+<td>Low</td>
+<td>Irrelevant</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Services Asgaya must structurally avoid triggering:</strong> #1, #2, #3, #5, #7, #8.</p>
+<h3 id="13-spain-specific-casp-implementation">1.3 Spain-Specific CASP Implementation<a class="headerlink" href="#13-spain-specific-casp-implementation" title="Permanent link">&para;</a></h3>
+<p>Spain designated the <strong>CNMV (Comisión Nacional del Mercado de Valores)</strong> as the competent authority for MiCA authorization and supervision. Key Spanish particulars:</p>
+<ul>
+<li><strong>Transitional period:</strong> Existing registered providers under Spain's previous crypto registry (operational since 2021) have until December 30, 2025 (extendable to July 1, 2026) to obtain full MiCA authorization. New entrants must be authorized before commencing operations.</li>
+<li><strong>CNMV registration portal:</strong> Opened in 2023 for the transitional period; MiCA-compliant portal expected mid-2025.</li>
+<li><strong>Spanish regulatory culture:</strong> The CNMV has historically taken an expansive view of what constitutes "professional activity" and has been aggressive with unregistered entities. Spain was among the first EU member states to implement a crypto registry, signaling regulatory vigilance.</li>
+<li><strong>Enforcement precedent:</strong> The CNMV has issued multiple warnings and sanctions against unregistered crypto platforms operating in Spain, including those based outside Spain but targeting Spanish residents.</li>
+</ul>
+<h3 id="14-professional-basis-the-critical-ambiguity">1.4 "Professional Basis" — The Critical Ambiguity<a class="headerlink" href="#14-professional-basis-the-critical-ambiguity" title="Permanent link">&para;</a></h3>
+<p>MiCA does not define "professional basis" with quantitative precision. ESMA guidance and national interpretations have provided factors that indicate professional activity:</p>
+<table>
+<thead>
+<tr>
+<th>Factor indicating professional activity</th>
+<th>Factor indicating private activity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regular, repeated transactions</td>
+<td>Occasional, isolated operations</td>
+</tr>
+<tr>
+<td>Public advertising or holding out to the public</td>
+<td>Private arrangements between known parties</td>
+</tr>
+<tr>
+<td>Commercial infrastructure (website, app, bot)</td>
+<td>Personal tools used intermittently</td>
+</tr>
+<tr>
+<td>Fee structure or profit motive</td>
+<td>Cost-recovery or zero-profit</td>
+</tr>
+<tr>
+<td>Multiple counterparties</td>
+<td>Limited counterparties</td>
+</tr>
+<tr>
+<td>Standardized terms and conditions</td>
+<td>Negotiated terms per transaction</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For Asgaya sellers:</strong> A seller using <code>smsbridge_loop.py</code> that processes dozens of transactions daily, advertises on the Asgaya bulletin board, and charges a spread will almost certainly be viewed as operating on a professional basis by the CNMV. This is <strong>not Asgaya's problem</strong> but must be clearly documented as the seller's responsibility.</p>
+<p><strong>For Asgaya as a protocol:</strong> The software itself, operated by a non-profit entity that does not charge fees and does not participate in any transaction, is unlikely to cross the professional threshold for providing crypto-asset services — provided it never touches assets.</p>
+<hr />
+<h2 id="2-psd2-payment-service-definitions">2. PSD2: Payment Service Definitions<a class="headerlink" href="#2-psd2-payment-service-definitions" title="Permanent link">&para;</a></h2>
+<h3 id="21-what-psd2-regulates">2.1 What PSD2 Regulates<a class="headerlink" href="#21-what-psd2-regulates" title="Permanent link">&para;</a></h3>
+<p>PSD2 regulates <strong>payment services</strong> provided by <strong>payment service providers</strong> (PSPs). The directive lists eight payment services in its Annex I.</p>
+<h3 id="22-relevant-payment-services-for-asgaya-analysis">2.2 Relevant Payment Services for Asgaya Analysis<a class="headerlink" href="#22-relevant-payment-services-for-asgaya-analysis" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>PSD2 Service</th>
+<th>Relevance</th>
+<th>Trigger risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Execution of payment transactions (direct debits, credit transfers, card payments)</td>
+<td><strong>HIGH</strong></td>
+<td>If Asgaya or any party systematically executes EUR transfers for others</td>
+</tr>
+<tr>
+<td>Issuing and/or acquiring of payment instruments</td>
+<td>Low</td>
+<td>Irrelevant</td>
+</tr>
+<tr>
+<td>Money remittance</td>
+<td><strong>EXTREME</strong></td>
+<td>If a party receives funds from a payer and makes funds available to a payee without creating payment accounts</td>
+</tr>
+<tr>
+<td>Account information services</td>
+<td>Low</td>
+<td>Only if accessing bank account data</td>
+</tr>
+<tr>
+<td>Payment initiation services</td>
+<td><strong>MODERATE</strong></td>
+<td>If the protocol triggers payment orders on behalf of users</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-money-remittance-the-most-dangerous-category">2.3 Money Remittance — The Most Dangerous Category<a class="headerlink" href="#23-money-remittance-the-most-dangerous-category" title="Permanent link">&para;</a></h3>
+<p>PSD2 Article 4(22) defines money remittance as:</p>
+<blockquote>
+<p>"a payment service where funds are received from a payer, without any payment accounts being created in the name of the payer or the payee, for the sole purpose of transferring a corresponding amount to a payee or to another payment service provider acting on behalf of the payee, and/or where such funds are received on behalf of and made available to the payee."</p>
+</blockquote>
+<p><strong>The Asgaya model structurally avoids this</strong> because:
+- No party receives funds from Iris (the payer) and then makes funds available to Elena (the payee).
+- Iris pays a seller for BCH. The seller sends BCH to a merchant. The merchant gives cash to Elena. These are three separate bilateral transactions, not a single remittance chain orchestrated by any one party.
+- There is no entity that "receives funds from a payer... for the purpose of transferring to a payee."</p>
+<h3 id="24-the-commercial-agent-exclusion">2.4 The "Commercial Agent" Exclusion<a class="headerlink" href="#24-the-commercial-agent-exclusion" title="Permanent link">&para;</a></h3>
+<p>PSD2 Article 3(b) excludes from scope:</p>
+<blockquote>
+<p>"payment transactions from the payer to the payee through a commercial agent authorised to negotiate or conclude the sale or purchase of goods or services on behalf of either the payer or the payee."</p>
+</blockquote>
+<p>If a party were to negotiate the BCH-to-cash exchange on behalf of Elena, they would be a commercial agent. Asgaya does not negotiate — it merely presents information. The exclusion is a useful reference point but not a primary defense.</p>
+<h3 id="25-spain-specific-psd2-notes">2.5 Spain-Specific PSD2 Notes<a class="headerlink" href="#25-spain-specific-psd2-notes" title="Permanent link">&para;</a></h3>
+<p>Spain implemented PSD2 via Real Decreto-ley 19/2018. The Bank of Spain (Banco de España) supervises payment institutions. Key Spanish interpretations:
+- The Bank of Spain has taken a broad view of what constitutes "money remittance," particularly when services involve non-bank entities.
+- Even informal, app-based remittance services have drawn scrutiny if they appear to systematize the transfer of value between locations.
+- The Bizum rail itself is operated by licensed payment institutions; using Bizum as an end-user does not create licensing obligations for the payer or payee.</p>
+<hr />
+<h2 id="3-eu-e-commerce-directive-information-society-service-protections">3. EU E-Commerce Directive: Information Society Service Protections<a class="headerlink" href="#3-eu-e-commerce-directive-information-society-service-protections" title="Permanent link">&para;</a></h2>
+<h3 id="31-the-directives-core-framework">3.1 The Directive's Core Framework<a class="headerlink" href="#31-the-directives-core-framework" title="Permanent link">&para;</a></h3>
+<p>Directive 2000/31/EC (E-Commerce Directive) establishes a regulatory framework for "information society services," defined as:</p>
+<blockquote>
+<p>"any service normally provided for remuneration, at a distance, by electronic means and at the individual request of a recipient of services."</p>
+</blockquote>
+<p>Key protections for information society services:
+- <strong>Country of origin principle:</strong> The service is regulated only by the member state where the provider is established; other member states cannot impose additional restrictions.
+- <strong>No general obligation to monitor:</strong> Article 15 prohibits member states from imposing a general obligation on providers to monitor the information they transmit or store.
+- <strong>Mere conduit, caching, hosting protections:</strong> Articles 12-14 establish graduated liability shields for intermediaries.</p>
+<h3 id="32-hosting-protection-article-14">3.2 Hosting Protection (Article 14)<a class="headerlink" href="#32-hosting-protection-article-14" title="Permanent link">&para;</a></h3>
+<p>If Asgaya stores information provided by users (seller listings, merchant profiles, bounty postings), it qualifies for the hosting protection:</p>
+<blockquote>
+<p>Service providers are not liable for the information stored at the request of a recipient of the service, provided that they do not have actual knowledge of illegal activity and, upon obtaining such knowledge, act expeditiously to remove or disable access to the information.</p>
+</blockquote>
+<p>This means Asgaya can host seller and merchant listings without becoming liable for their actions, as long as it acts on notices of illegality. This is the same protection that allows eBay, Airbnb, and early crypto P2P platforms to operate.</p>
+<h3 id="33-what-removes-hosting-protection">3.3 What Removes Hosting Protection<a class="headerlink" href="#33-what-removes-hosting-protection" title="Permanent link">&para;</a></h3>
+<p>The hosting shield is lost if the service provider:
+- Has actual knowledge of illegal activity and fails to act.
+- Exercises editorial control over the content (curating, modifying, or endorsing listings).
+- Participates in the underlying transaction (becomes an intermediary, custodian, or counterparty).
+- Derives financial benefit directly from the illegal activity.</p>
+<p><strong>Red line for Asgaya:</strong> The moment the protocol selectively promotes, endorses, or guarantees specific sellers or merchants, it risks losing hosting protection and being viewed as a participant in the transaction.</p>
+<h3 id="34-spains-implementation">3.4 Spain's Implementation<a class="headerlink" href="#34-spains-implementation" title="Permanent link">&para;</a></h3>
+<p>Spain implemented the E-Commerce Directive via Ley 34/2002 (LSSI). Spain's implementation is broadly consistent with the Directive but includes specific obligations:
+- The service provider must make its identification and contact details available.
+- The CNMV and other authorities have the power to order the removal of content related to unregistered financial services.
+- Spain has been proactive in enforcing LSSI against platforms that facilitate unregistered financial activities.</p>
+<hr />
+<h2 id="4-bulletin-board-precedents-what-survived-and-what-fell">4. Bulletin Board Precedents: What Survived and What Fell<a class="headerlink" href="#4-bulletin-board-precedents-what-survived-and-what-fell" title="Permanent link">&para;</a></h2>
+<h3 id="41-bittorrent-trackers">4.1 BitTorrent Trackers<a class="headerlink" href="#41-bittorrent-trackers" title="Permanent link">&para;</a></h3>
+<p><strong>What they did:</strong> Trackers maintained lists of peers sharing specific files. They did not host files, execute transfers, or control which peers connected to which.</p>
+<p><strong>Regulatory outcome:</strong> Trackers were classified as information society services. The technology itself was never successfully regulated as a content distribution service. The legal focus shifted to the uploaders/downloaders, not the tracker operators.</p>
+<p><strong>Key lesson for Asgaya:</strong> A protocol that only maintains a directory of willing counterparties and does not participate in the data (value) transfer is an information society service, not a financial service.</p>
+<h3 id="42-localbitcoins-early-phase-pre-2019">4.2 LocalBitcoins (Early Phase, Pre-2019)<a class="headerlink" href="#42-localbitcoins-early-phase-pre-2019" title="Permanent link">&para;</a></h3>
+<p><strong>What it did:</strong> Provided a bulletin board where users posted buy/sell offers. Trades were executed directly between users. LocalBitcoins did not hold funds or execute trades. Disputes were handled by user reputation, not platform intervention.</p>
+<p><strong>Regulatory outcome:</strong> Operated for years without financial licensing in most jurisdictions. Finnish regulators (home jurisdiction) did not classify it as a payment service or exchange during its early P2P phase.</p>
+<p><strong>What changed:</strong> LocalBitcoins later introduced an escrow service (holding bitcoin during trades). This triggered regulatory obligations under Finnish payment service laws and subsequently under EU AML directives. The introduction of escrow — not the bulletin board — was the licensing trigger.</p>
+<p><strong>Critical distinction:</strong> The escrow function, not the bulletin board function, created the regulated service. LocalBitcoins' eventual shutdown was tied to AML compliance, not the bulletin board model per se.</p>
+<h3 id="43-bisq">4.3 Bisq<a class="headerlink" href="#43-bisq" title="Permanent link">&para;</a></h3>
+<p><strong>What it is:</strong> A decentralized, non-custodial P2P exchange. The software runs on users' machines. Trades are executed via multi-signature escrow on the Bitcoin blockchain. There is no central server, no company holding funds, no identity verification.</p>
+<p><strong>Regulatory outcome:</strong> Bisq has operated since 2017 without any financial licensing. Its fully decentralized architecture (no central operator, no custodied funds) has proven regulatorily resilient. The DAO that governs Bisq does not custody assets or execute trades.</p>
+<p><strong>Key lesson for Asgaya:</strong> The more decentralized the infrastructure, the stronger the regulatory immunity. Bisq's model — where the protocol provides only software that users run themselves — represents the maximum safe harbor.</p>
+<h3 id="44-openbazaar-now-defunct">4.4 OpenBazaar (Now Defunct)<a class="headerlink" href="#44-openbazaar-now-defunct" title="Permanent link">&para;</a></h3>
+<p><strong>What it did:</strong> A fully P2P marketplace protocol with no central servers, no fees, no intermediary. Users connected directly and traded goods and services for crypto.</p>
+<p><strong>Regulatory outcome:</strong> Operated without licensing. The regulatory challenge was not licensing but the practical difficulty of enforcing regulations against a fully decentralized system without a central operator. The project eventually shut down due to adoption and funding challenges, not regulatory action.</p>
+<h3 id="45-hodl-hodl">4.5 Hodl Hodl<a class="headerlink" href="#45-hodl-hodl" title="Permanent link">&para;</a></h3>
+<p><strong>What it is:</strong> A non-custodial P2P exchange using multi-signature escrow on Bitcoin/Liquid. The platform does not hold funds — the escrow is on-chain. Users must complete KYC with third-party providers to access certain features.</p>
+<p><strong>Regulatory outcome:</strong> Operates without a financial license in most jurisdictions, including the EU. Its non-custodial architecture and the separation of escrow from the platform are key defenses. The company is registered in the British Virgin Islands, outside direct EU jurisdiction.</p>
+<h3 id="46-summary-of-precedent-lessons">4.6 Summary of Precedent Lessons<a class="headerlink" href="#46-summary-of-precedent-lessons" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Precedent</th>
+<th>Bulletin board?</th>
+<th>Custody?</th>
+<th>Central operator?</th>
+<th>Licensing required?</th>
+<th>Survived?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BitTorrent tracker</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>LocalBitcoins (pre-escrow)</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes (for years)</td>
+</tr>
+<tr>
+<td>LocalBitcoins (post-escrow)</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No (shut down)</td>
+</tr>
+<tr>
+<td>Bisq</td>
+<td>Yes (P2P)</td>
+<td>No (on-chain multisig)</td>
+<td>No (DAO)</td>
+<td>No</td>
+<td>Yes (operational)</td>
+</tr>
+<tr>
+<td>OpenBazaar</td>
+<td>Yes (P2P)</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Yes (regulatorily; failed for adoption)</td>
+</tr>
+<tr>
+<td>Hodl Hodl</td>
+<td>Yes</td>
+<td>No (on-chain multisig)</td>
+<td>Yes (non-custodial)</td>
+<td>No</td>
+<td>Yes (operational)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The pattern is unequivocal: custody and central execution trigger regulation. Pure bulletin boards, even with central operators, generally do not.</strong></p>
+<hr />
+<h2 id="5-red-lines-specific-actions-that-would-trigger-regulation">5. Red Lines: Specific Actions That Would Trigger Regulation<a class="headerlink" href="#5-red-lines-specific-actions-that-would-trigger-regulation" title="Permanent link">&para;</a></h2>
+<p>This section defines the precise activities that would reclassify Asgaya or its participants as regulated entities. These are <strong>hard constraints</strong> — if any of these occur, the regulatory analysis changes fundamentally.</p>
+<h3 id="51-red-lines-for-the-asgaya-protocol">5.1 Red Lines for the Asgaya Protocol<a class="headerlink" href="#51-red-lines-for-the-asgaya-protocol" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Action</th>
+<th>Regulation triggered</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>Holding private keys for any participant's funds, even temporarily</td>
+<td>MiCA CASP service #1 (custody)</td>
+<td>Custody is the single clearest trigger for CASP licensing. No duration threshold applies — even seconds of key control creates custody risk.</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>Algorithmically matching orders or executing trades automatically</td>
+<td>MiCA CASP service #2 (trading platform)</td>
+<td>A system that "brings together multiple third-party buying and selling interests in a way that results in a contract" is a trading platform.</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>Receiving EUR from senders and forwarding BCH to recipients</td>
+<td>MiCA CASP service #3 (exchange) + PSD2 money remittance</td>
+<td>This creates a single entity that converts and transmits value — a classic financial intermediary.</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>Holding EUR on behalf of senders before BCH is sent</td>
+<td>PSD2 payment service (money remittance)</td>
+<td>Holding client funds, even briefly, creates a payment service obligation.</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Setting exchange rates or prices for transactions</td>
+<td>MiCA CASP service #5 (execution of orders)</td>
+<td>Price-setting indicates the protocol is a counterparty or exchange operator, not a neutral bulletin board.</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>Routing orders to specific counterparties based on non-transparent criteria</td>
+<td>MiCA CASP service #8 (reception and transmission of orders)</td>
+<td>Selective routing indicates discretion and intermediation.</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>Guaranteeing, insuring, or indemnifying transactions</td>
+<td>PSD2 / general financial regulation</td>
+<td>A guarantee transforms the protocol from a passive bulletin board to an active financial intermediary.</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>Adjudicating disputes and compelling fund movements</td>
+<td>MiCA custody + PSD2 payment service</td>
+<td>Active dispute resolution with enforcement power is a hallmark of a regulated marketplace.</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>Selecting or endorsing specific sellers or merchants as "approved"</td>
+<td>May lose E-Commerce Directive Article 14 protection</td>
+<td>Editorial control blurs the line between hosting and participation. Listing rules must be objective and non-discretionary.</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>Charging transaction fees as a percentage of value</td>
+<td>May trigger "professional basis" and "remuneration" analysis under MiCA and E-Commerce Directive</td>
+<td>While not automatically fatal, percentage-based fees suggest participation in the transaction value chain. Flat, cost-recovery fees are safer.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-red-lines-for-individual-sellers">5.2 Red Lines for Individual Sellers<a class="headerlink" href="#52-red-lines-for-individual-sellers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Action</th>
+<th>Regulation triggered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>Holding client fiat for more than a few seconds before sending BCH</td>
+<td>PSD2 money remittance</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>Advertising publicly and systematically on Asgaya with large volumes</td>
+<td>May trigger "professional basis" under MiCA, requiring CASP authorization</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>Promising future delivery of BCH at a price not yet determined</td>
+<td>MiCA exchange service (forward contract)</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>Holding BCH on behalf of senders and releasing conditionally</td>
+<td>MiCA custody + conditional transfer service</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>Acting as a market maker with posted bid/ask spreads</td>
+<td>MiCA trading platform or exchange service</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-red-lines-for-the-protocols-operator-entity">5.3 Red Lines for the Protocol's Operator Entity<a class="headerlink" href="#53-red-lines-for-the-protocols-operator-entity" title="Permanent link">&para;</a></h3>
+<p>If Asgaya is operated by a legal entity (e.g., a non-profit association or foundation), that entity must additionally avoid:
+- Employing the sellers or merchants.
+- Having any financial interest in transactions.
+- Exercising editorial control over listings beyond enforcing objective, pre-published rules.
+- Handling any reportable data that would make it an "obligated entity" under AEAT Modelo 172/173.</p>
+<hr />
+<h2 id="6-safe-harbor-criteria-how-to-maintain-information-service-status">6. Safe Harbor Criteria: How to Maintain Information Service Status<a class="headerlink" href="#6-safe-harbor-criteria-how-to-maintain-information-service-status" title="Permanent link">&para;</a></h2>
+<h3 id="61-structural-requirements">6.1 Structural Requirements<a class="headerlink" href="#61-structural-requirements" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Implementation for Asgaya</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No custody</strong></td>
+<td>The protocol's software must never hold private keys. All key operations happen on user devices.</td>
+</tr>
+<tr>
+<td><strong>No execution</strong></td>
+<td>The protocol presents information; users (or their client software) make decisions and initiate transactions independently.</td>
+</tr>
+<tr>
+<td><strong>No price-setting</strong></td>
+<td>The protocol does not determine exchange rates. Sellers set their own offers; senders choose among them.</td>
+</tr>
+<tr>
+<td><strong>No conditional transfers</strong></td>
+<td>No transaction ever depends on an external signal verified by the protocol. All transfers are unconditional and immediate between peers.</td>
+</tr>
+<tr>
+<td><strong>No dispute resolution</strong></td>
+<td>The protocol provides no mechanism to reverse, freeze, or adjudicate transactions. Disputes are civil matters between the parties.</td>
+</tr>
+<tr>
+<td><strong>No client funds handling</strong></td>
+<td>No EUR, BCH, or other value ever passes through an account controlled by the protocol operator.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-operational-requirements">6.2 Operational Requirements<a class="headerlink" href="#62-operational-requirements" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Transparent, objective listing rules</strong></td>
+<td>Any seller or merchant meeting published criteria can be listed. Criteria are technical (e.g., "must include valid OP_RETURN," "must respond within X seconds"). No discretionary approval.</td>
+</tr>
+<tr>
+<td><strong>No editorial endorsement</strong></td>
+<td>Listings are not ranked, featured, or recommended by the protocol. Sorting is by objective, pre-defined parameters (e.g., completion rate, time listed).</td>
+</tr>
+<tr>
+<td><strong>Passive presentation</strong></td>
+<td>Senders choose sellers; recipients choose merchants. The protocol does not auto-assign or auto-match.</td>
+</tr>
+<tr>
+<td><strong>Clear disclaimers</strong></td>
+<td>The protocol prominently states that it is not a financial service, does not custody assets, and that all transactions are private bilateral arrangements between independent third parties.</td>
+</tr>
+<tr>
+<td><strong>No transaction fees</strong></td>
+<td>The protocol generates revenue (if any) through means unrelated to transaction value: donations, grants, optional premium features, or flat listing fees that are not proportional to transaction size.</td>
+</tr>
+<tr>
+<td><strong>No KYC/AML collection</strong></td>
+<td>The protocol does not collect, verify, or store identity documents. Any KYC obligations belong to the individual sellers if they become regulated entities.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-jurisdictional-safe-harbors">6.3 Jurisdictional Safe Harbors<a class="headerlink" href="#63-jurisdictional-safe-harbors" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Jurisdiction</th>
+<th>Specific protections</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EU-wide</strong> (E-Commerce Directive)</td>
+<td>Country of origin principle, hosting protection (Art. 14)</td>
+<td>Establish the operator in a member state with clear information society service protections</td>
+</tr>
+<tr>
+<td><strong>Spain</strong> (LSSI)</td>
+<td>Consistent with EU Directive; proactive enforcement against unregistered financial services</td>
+<td>Spanish establishment is viable if the protocol scrupulously avoids financial service triggers</td>
+</tr>
+<tr>
+<td><strong>Estonia</strong></td>
+<td>Well-established e-residency program; clear regulatory framework for information society services; crypto-friendly</td>
+<td>Potential jurisdiction for the operator entity if Spanish risk is too high</td>
+</tr>
+<tr>
+<td><strong>Portugal</strong></td>
+<td>No specific crypto tax for individuals on P2P transactions (as of 2025); relatively permissive tech environment</td>
+<td>Lower compliance overhead for P2P participants</td>
+</tr>
+<tr>
+<td><strong>Netherlands</strong></td>
+<td>Strong tradition of internet freedom and information society protections; DNB has clear CASP guidelines</td>
+<td>Regulatory clarity is high; compliance culture is rigorous</td>
+</tr>
+</tbody>
+</table>
+<h3 id="64-the-decentralization-spectrum-and-safety">6.4 The Decentralization Spectrum and Safety<a class="headerlink" href="#64-the-decentralization-spectrum-and-safety" title="Permanent link">&para;</a></h3>
+<p>The legal safety of Asgaya increases as it moves toward full decentralization:</p>
+<div class="highlight"><pre><span></span><code>INFORMATION SOCIETY SERVICE (Safe)         FINANCIAL SERVICE (Regulated)
+┌──────────────────────────────────────────────────────────────────┐
+│ Pure       │ Bulletin   │ Matching   │ Automated  │ Centralized  │
+│ tracker    │ board      │ UI         │ execution  │ escrow       │
+│ (BitTorrent)│(Early LBC) │ (Asgaya)  │ (Exchange) │ (Old model)  │
+│ ← SAFER                                         RISKIER →       │
+└──────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p>Asgaya's target position is between "Bulletin board" and "Matching UI" — presenting information with user-controlled selection, never crossing into automated execution or centralized escrow.</p>
+<hr />
+<h2 id="7-per-jurisdiction-variations">7. Per-Jurisdiction Variations<a class="headerlink" href="#7-per-jurisdiction-variations" title="Permanent link">&para;</a></h2>
+<h3 id="71-spain-home-jurisdiction-for-phase-0">7.1 Spain (Home Jurisdiction for Phase 0)<a class="headerlink" href="#71-spain-home-jurisdiction-for-phase-0" title="Permanent link">&para;</a></h3>
+<p><strong>Regulatory bodies:</strong>
+- <strong>CNMV (Comisión Nacional del Mercado de Valores):</strong> CASP authorization under MiCA.
+- <strong>Banco de España:</strong> Payment institution licensing under PSD2.
+- <strong>AEAT (Agencia Tributaria):</strong> Tax reporting (Modelo 172/173 and future Modelo 175).</p>
+<p><strong>Spain-specific risks:</strong>
+- Spain was among the first EU members to implement a crypto registry and has been proactive in enforcement.
+- The CNMV maintains a "grey list" of unregistered entities and has issued warnings against dozens of crypto platforms.
+- Spanish courts have upheld CNMV's expansive interpretation of financial intermediation.
+- AEAT's reporting obligations (Modelo 172, 173, and the forthcoming Modelo 175 implementing DAC8) are triggered by custody of keys and exchange services. A pure bulletin board that never touches assets or keys does not trigger these obligations.</p>
+<p><strong>Spain-specific safe harbors:</strong>
+- LSSI (Ley 34/2002) provides clear hosting protections consistent with the EU E-Commerce Directive.
+- The CNMV's guidance has explicitly acknowledged that mere information provision does not constitute a crypto-asset service.
+- Spain's vibrant crypto community and multiple P2P platforms provide a body of informal regulatory interpretation.</p>
+<h3 id="72-germany">7.2 Germany<a class="headerlink" href="#72-germany" title="Permanent link">&para;</a></h3>
+<p><strong>BaFin</strong> has been one of the most aggressive EU regulators. It classifies many crypto-related activities as financial services requiring authorization. However, pure P2P platforms that do not custody or execute have not been targeted. The German implementation of MiCA is expected to be rigorous but consistent with the Directive.</p>
+<h3 id="73-france">7.3 France<a class="headerlink" href="#73-france" title="Permanent link">&para;</a></h3>
+<p><strong>AMF</strong> has a relatively sophisticated crypto framework. The PACTE law created an optional CASP registration regime before MiCA. P2P bulletin boards have operated without incident. France's approach to information society services is generally protective.</p>
+<h3 id="74-netherlands">7.4 Netherlands<a class="headerlink" href="#74-netherlands" title="Permanent link">&para;</a></h3>
+<p><strong>DNB</strong> has clear guidelines and has been pragmatic about P2P platforms. The Dutch implementation of MiCA is expected to be faithful to the Directive's text. The Netherlands has a strong tradition of protecting internet intermediaries.</p>
+<h3 id="75-estonia">7.5 Estonia<a class="headerlink" href="#75-estonia" title="Permanent link">&para;</a></h3>
+<p>Estonia's e-residency program and digital-forward regulatory environment make it an attractive jurisdiction for protocol operators. The Estonian implementation of MiCA is expected to be more permissive than southern European counterparts.</p>
+<hr />
+<h2 id="8-summary-the-uncrossable-line">8. Summary: The Uncrossable Line<a class="headerlink" href="#8-summary-the-uncrossable-line" title="Permanent link">&para;</a></h2>
+<p>This diagram captures the single regulatory fault line that Asgaya must never cross:</p>
+<div class="highlight"><pre><span></span><code>═══════════════════════════════════════════════════════════════
+                    UNCROSSABLE REGULATORY LINE
+═══════════════════════════════════════════════════════════════
+
+ABOVE THE LINE (non-regulated):
+  • Software that presents information to users
+  • Users making their own decisions and executing their own transactions
+  • Private individuals buying and selling digital assets
+  • Cryptographic proofs on a public blockchain
+  • Objective, transparent, non-discretionary listing rules
+  • No handling of funds, keys, or transactions
+
+═══════════════════════════════════════════════════════════════
+
+BELOW THE LINE (regulated, requires licensing):
+  • Holding private keys for any participant
+  • Receiving client funds, even temporarily
+  • Executing trades or algorithmically matching orders
+  • Conditional transfers based on off-chain signals
+  • Dispute resolution with enforcement power
+  • Setting prices, rates, or execution terms
+  • Guaranteeing, insuring, or indemnifying transactions
+
+═══════════════════════════════════════════════════════════════
+</code></pre></div>
+<hr />
+<h2 id="9-sources-and-further-reading">9. Sources and Further Reading<a class="headerlink" href="#9-sources-and-further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Regulation (EU) 2023/1114 (MiCA):</strong> Official text, specifically Articles 3, 59-64, and Annex I.</li>
+<li><strong>Directive (EU) 2015/2366 (PSD2):</strong> Articles 1-4, Annex I.</li>
+<li><strong>Directive 2000/31/EC (E-Commerce Directive):</strong> Articles 12-15.</li>
+<li><strong>Ley 34/2002, de 11 de julio (LSSI):</strong> Spanish implementation of E-Commerce Directive.</li>
+<li><strong>Real Decreto-ley 19/2018:</strong> Spanish PSD2 implementation.</li>
+<li><strong>ESMA Consultation Papers on MiCA (2023-2024):</strong> Technical standards and guidance.</li>
+<li><strong>CNMV Crypto Registry Guidance:</strong> Published statements on unregistered platforms.</li>
+<li><strong>AEAT FAQs on Modelos 172 and 173 (2024):</strong> Clarifications on reporting obligations for crypto-related activities.</li>
+<li><strong>LocalBitcoins regulatory history:</strong> Finnish FSA statements; EU AML/CTF compliance analysis.</li>
+<li><strong>Bisq whitepaper and DAO governance documentation:</strong> Decentralized exchange architecture.</li>
+<li><strong>Hodl Hodl terms of service and architecture overview:</strong> Non-custodial P2P model.</li>
+<li><strong>Case law:</strong> CJEU decisions on information society service classifications (Google France, L'Oréal v eBay, etc.).</li>
+</ul>
+<hr />
+<p><em>This document is pure research and analysis. It contains no design decisions. It serves as the foundational reference for Asgaya's compliance architecture documentation.</em></p>
+        <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
+            <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
+        </div>
+        <script>
+        async function copyMarkdownToClipboard() {
+            try {
+                const currentPath = window.location.pathname;
+                const mdPath = currentPath.endsWith('/') ? currentPath + 'index.md' : currentPath.replace(/\.html$/, '.md');
+
+                const response = await fetch(mdPath);
+                if (response.ok) {
+                    const markdown = await response.text();
+                    await navigator.clipboard.writeText(markdown);
+                    // Show feedback
+                    const button = document.querySelector('#llms-copy-button button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007acc';
+                    }, 2000);
+                } else {
+                    throw new Error('Markdown file not found');
+                }
+            } catch (err) {
+                console.error('Failed to copy markdown:', err);
+                alert('Failed to copy markdown content');
+            }
+        }
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.breadcrumbs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

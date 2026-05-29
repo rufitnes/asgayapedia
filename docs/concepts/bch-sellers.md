@@ -2,18 +2,29 @@
 
 **Core Concept:** BCH sellers provide BCH inventory to the Asgaya network by posting BCH + volatility buffer to covenant contracts, earning fees while benefiting from a built-in hedge against BCH price volatility.
 
-**Related:** [Pull System](./pull-system.md), [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md), [Fee Splitting Model](../decisions/fee-splitting-model.md)
+**Related:** [Bulletin Board](./bulletin-board.md), [Pull System](./pull-system.md), [Bounty Contracts with Volatility Buffer](./bounty-contracts-with-volatility-buffer.md), [Fee Splitting Model](../decisions/fee-splitting-model.md)
 
 ---
 
 ## What Is a BCH Seller?
 
 A BCH seller is anyone who:
-1. **Accepts bounties** posted on the Asgaya bulletin board
-2. **Posts BCH + volatility buffer** to covenant contracts (typically 107% of requested amount)
+1. **Posts a seller listing** on the [Asgaya Bulletin Board](./bulletin-board.md) (NFT category: `ASGAYA_SELLER_V1`)
+2. **Posts BCH + volatility buffer** to covenant contracts when sender pays (typically 107% of requested amount)
 3. **Receives EUR (or other fiat)** from senders via Bizum/bank transfer
 4. **Earns BCH fees** (0.5% of transaction in BCH) + gets back volatility buffer
 5. **Can voluntarily time extension** to earn uptime incentives if BCH price drops significantly
+
+**On the bulletin board:**
+```
+Type: ASGAYA_SELLER_V1
+Payment Methods: ["Bizum", "SEPA", "bank_transfer"]
+Corridors: ["EUR-VES", "USD-VES"]
+Fee: 0.5%
+Buffer: 7%
+```
+
+**See:** [Bulletin Board](./bulletin-board.md#1-bch-sellers-provide-bch--receive-fiat) for complete listing mechanics.
 
 **BCH sellers are NOT:**
 - ❌ Custodians (don't hold client funds—post their own BCH as collateral)

@@ -151,8 +151,8 @@ We acknowledge all substantial contributions:
 
 ## More Information
 
-- **For detailed review guidance:** See [AI Review Guide](meta/ai-review-guide.md)
-- **For governance questions:** See [Accountability](meta/accountability.md)
+- **For detailed review guidance:** See [AI Review Guide](ai-review-guide.md)
+- **For governance questions:** See [Accountability](accountability.md)
 - **To browse docs:** Visit https://docs.asgaya.org
 
 ---

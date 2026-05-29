@@ -109,7 +109,7 @@ Shown when recipient doesn't claim covenant within 24-hour window. Different ref
 - **Tap "Create New Order"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
   - Pre-fills previous recipient (Elena#142)
   - User can retry with same or adjusted amount
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../covenant-setup/1-home.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
 
 ---
 

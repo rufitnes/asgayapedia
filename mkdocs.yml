@@ -33,6 +33,7 @@ theme:
         name: Switch to light mode
   icon:
     repo: fontawesome/brands/github
+  font: false  # Disable Google Fonts to avoid fonts.gstatic.com 404s
 
 extra_css:
   - stylesheets/bch-colors.css
@@ -104,6 +105,11 @@ nav:
         - Complete: android-app/flows/direct-payment-flows/4-complete.md
       - Trade BCH Screen: android-app/flows/trade-bch-screen.md
       - Merchant Flows: android-app/flows/merchant-flows.md
+      - Archive (Pre-Covenant):
+        - Overview: android-app/flows/archive/README.md
+        - BCH Payment Flows: android-app/flows/archive/bch-payment-flows.md
+        - LP Flows: android-app/flows/archive/lp-flows.md
+        - Merchant Cash Out: android-app/flows/archive/remittance-merchant-cash-out.md
     - Backend APIs:
       - Overview: android-app/backend-apis/README.md
       - BCH Native Architecture: android-app/backend-apis/bch-native-architecture.md
@@ -120,6 +126,13 @@ nav:
         - Multi-Device Test Plan: android-app/backend-apis/multi-device-test-plan.md
       - Archive:
         - Engineering Journey: android-app/backend-apis/archive/ENGINEERING_JOURNEY.md
+    - Notification Listener:
+      - Overview: android-app/notification-listener/README.md
+      - Bizum Android: android-app/notification-listener/bizum-android.md
+      - PagoMóvil Android: android-app/notification-listener/pagomovil-android.md
+      - OP_RETURN SPV: android-app/notification-listener/opreturn-spv.md
+      - Security: android-app/notification-listener/security.md
+      - Testing: android-app/notification-listener/testing.md
   - Architecture:
     - BCH Native Architecture: android-app/backend-apis/bch-native-architecture.md
     - Why Permissionless: core-architecture/why-permissionless.md

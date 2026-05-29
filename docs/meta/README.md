@@ -8,7 +8,7 @@ Information about contributing to Asgaya and how the project is governed.
 
 ## Documents
 
-### [Contributing](meta/contributing.md)
+### [Contributing](contributing.md)
 How to contribute to Asgaya documentation and protocol development.
 
 **For:**
@@ -18,7 +18,7 @@ How to contribute to Asgaya documentation and protocol development.
 
 ---
 
-### [AI Review Guide](meta/ai-review-guide.md)
+### [AI Review Guide](ai-review-guide.md)
 Detailed guide for AI instances reviewing Asgaya documentation.
 
 **Includes:**
@@ -29,7 +29,7 @@ Detailed guide for AI instances reviewing Asgaya documentation.
 
 ---
 
-### [Accountability](meta/accountability.md)
+### [Accountability](accountability.md)
 How decisions are made and how we resolve disagreements.
 
 **Covers:**
@@ -44,13 +44,13 @@ How decisions are made and how we resolve disagreements.
 ## Quick Links
 
 **Want to help review?**
-→ Start with [AI Review Guide](meta/ai-review-guide.md)
+→ Start with [AI Review Guide](ai-review-guide.md)
 
 **Want to contribute code?**
-→ Read [Contributing](meta/contributing.md) first (note: not accepting code yet - still in documentation phase)
+→ Read [Contributing](contributing.md) first (note: not accepting code yet - still in documentation phase)
 
 **Questions about governance?**
-→ See [Accountability](meta/accountability.md)
+→ See [Accountability](accountability.md)
 
 ---
 
@@ -65,7 +65,7 @@ How decisions are made and how we resolve disagreements.
 - BCH protocol (OP_RETURN usage, SPV integration)
 
 **How to help:**
-Choose a review branch in the [AI Review Guide](meta/ai-review-guide.md) and submit feedback via GitHub Issues.
+Choose a review branch in the [AI Review Guide](ai-review-guide.md) and submit feedback via GitHub Issues.
 
 ---
 

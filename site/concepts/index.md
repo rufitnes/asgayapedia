@@ -10,14 +10,20 @@ Key concepts that underpin Asgaya's covenant-based architecture.
 
 ## Core Concepts (Active - Phase 0)
 
+### [Bulletin Board](bulletin-board.md) ⭐
+The decentralized coordination layer: NFT-based listings on the BCH blockchain for matching BCH Sellers (provide BCH) and BCH Buyers (provide fiat). Only two listing types needed. Merchants are BCH buyers with payment_method="cash".
+
 ### [Risk Allocation Principle](risk-allocation-principle.md) ⭐
 The foundational design principle: merchants never bear volatility risk. Explains WHO bears WHICH risk in Asgaya's covenant architecture and why sender risk allocation is correct.
 
-### [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md)
+### [Bounty Contracts with Volatility Buffer](bounty-contracts-with-volatility-buffer.md)
 The heart of Asgaya: covenant smart contracts that hold BCH with 7% volatility buffer, enabling volatility protection and split refunds without custody.
 
 ### [BCH Sellers](bch-sellers.md)
 Participants who post BCH + volatility buffer to covenants, earning 0.5% fees plus hedge benefits. Replaces the old "Escrow Operator" role with a permissionless, automated model.
+
+### [BCH Buyers](bch-buyers.md)
+Participants who provide fiat in exchange for BCH. **Includes merchants** (payment_method="cash") and online buyers (PagoMóvil, bank transfer). Phase 1+ adds MUSD stablecoin integration.
 
 ### [Merchant Business Case](merchant-business-case.md) ⭐
 Why neighborhood stores will self-onboard: the triple-dip economics (0.5% merchant fee + 15-30% product margin + 0.5% seller fee = €22-44 per €180 remittance). This is the pitch for BCH adoption through self-interest, not ideology.
@@ -43,9 +49,6 @@ Cryptographic proof system that protects senders when sellers don't sign covenan
 ---
 
 ## Phase 1+ Concepts (Planned)
-
-### [BCH Buyers](bch-buyers.md) ⚠️ **Phase 1.1+**
-Global participants who buy BCH from merchants using MUSD (stablecoin), providing instant liquidity without geographic lock-in. Replaces the escrow-era "Liquidity Provider" concept.
 
 ### [RFID Card Recipients](rfid-card-recipients.md) ⚠️ **Phase 1+**
 How recipients without smartphones can claim covenants using NFC-enabled cards. Extends hardware accessibility beyond Android phones.
@@ -77,13 +80,14 @@ Old escrow-era concept describing Liquidity Providers. Replaced by BCH Buyers (P
 ## Why These Matter
 
 These concepts are referenced throughout the documentation. Understanding them helps you understand:
+- How participants discover each other (bulletin board with two listing types)
 - Why covenants replace escrow (regulatory compliance + no custody)
-- How economic incentives align (BCH Seller hedge + Merchant fees)
+- How economic incentives align (BCH Seller hedge + Merchant/Buyer fees)
 - How volatility protection works (pull system + volatility buffer)
-- How the system scales (permissionless participation, global BCH buyers)
+- How the system scales (permissionless participation, bidirectional fiat-BCH flow)
 
-**Start with:** [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md) - the covenant mechanism that makes everything else possible.
+**Start with:** [Bulletin Board](bulletin-board.md) - the coordination layer where everything begins, or [Bounty Contracts with Volatility Buffer](bounty-contracts-with-volatility-buffer.md) - the covenant mechanism that makes execution possible.
 
 ---
 
-*Last updated: May 19, 2026 (Covenant Architecture v2.0)*
+*Last updated: May 28, 2026 (Bulletin Board two-listing model)*

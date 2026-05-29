@@ -3,7 +3,7 @@
 **Type:** Concept Document  
 **Status:** ✅ Active — Core Pitch  
 **Date:** 2026-05-20  
-**Related:** [Fee-Splitting Model](../decisions/fee-splitting-model.md), [Cold-Start Strategy](../decisions/cold-start-strategy.md), [BCH Sellers](bch-sellers.md), [RS062 — Seller Profitability Simulation](../research/RS062_seller_profitability_simulation.md)
+**Related:** [Bulletin Board](bulletin-board.md), [Fee-Splitting Model](../decisions/fee-splitting-model.md), [Cold-Start Strategy](../decisions/cold-start-strategy.md), [BCH Sellers](bch-sellers.md), [RS062 — Seller Profitability Simulation](../research/RS062_seller_profitability_simulation.md)
 
 ---
 
@@ -21,6 +21,32 @@ A Venezuelan neighborhood store that accepts Asgaya cash-outs earns **three time
 
 A competitor who doesn't accept Asgaya earns **€0**.  
 Self-onboarding is economically inevitable.
+
+---
+
+## Understanding the Merchant Role: BCH Buyer with Cash
+
+**Key architectural insight:** On the [Asgaya Bulletin Board](bulletin-board.md), **merchants are BCH buyers** with a specific payment method.
+
+**Why this matters:**
+- **BCH Buyers** provide fiat → receive BCH
+- **Merchants** provide cash at a shop → receive BCH from covenant
+- Payment method: `"cash"` with physical location
+
+**Bulletin board listing:**
+```
+Type: ASGAYA_BUYER_V1
+Payment Method: "cash"
+Location: "Bodega La Esperanza, Caracas, Av. Libertador 123"
+Hours: "Mon-Sat 8am-8pm"
+Spread: 0.5% (merchant fee)
+```
+
+**This is NOT a special third category.** Merchants are buyers. The triple-dip works because merchants can **also** post as **BCH sellers** (via family in Spain), earning fees on both sides.
+
+**For the rest of this document:** We use "merchant" to mean "BCH buyer with cash payment method at a physical shop." The economics are the same — we're just using familiar language.
+
+**See:** [Bulletin Board](bulletin-board.md) for the complete two-listing model.
 
 ---
 
@@ -51,9 +77,20 @@ In reality, many recipients spend nearly the entire remittance on essentials. A 
 
 ### Third Dip — The Seller Fee (0.5%)
 
-The BCH the merchant received from the covenant can be sold to a **new sender**. The merchant posts it on the Asgaya bulletin board. The merchant's family member in Spain (who has a Spanish bank account) receives the sender's fiat payment. The merchant's bot detects the payment and auto-signs the covenant. The BCH moves on-chain. The merchant earns another **€0.90**.
+The BCH the merchant received from the covenant can be sold to a **new sender**. The merchant posts a **second listing on the bulletin board** as a **BCH seller** (via family member in Spain who has a Spanish bank account). When a sender pays via Bizum to the family member's account, the merchant's bot detects the payment and auto-signs the covenant. The BCH moves on-chain. The merchant earns another **€0.90**.
 
-**The same BCH earned the merchant a fee coming in, and another fee going out.**
+**The same BCH earned the merchant a fee coming in (as BCH buyer), and another fee going out (as BCH seller).**
+
+**On the bulletin board:**
+```
+Listing 1: ASGAYA_BUYER_V1 (Merchant role)
+└─ payment_method: "cash", location: shop address
+
+Listing 2: ASGAYA_SELLER_V1 (Seller role via family)  
+└─ payment_method: "Bizum", receives via Spain bank account
+```
+
+**See:** [Bulletin Board Multi-Role Patterns](bulletin-board.md#pattern-2-the-triple-dip-merchant--seller--product-margin) for complete flow.
 
 ---
 

@@ -227,20 +227,22 @@ Merchant keeps: €0.50 (0.5% reward in BCH)
 
 ---
 
-### With Instant Settlement (Merchant sells BCH immediately)
+### With Instant Settlement (Merchant converts BCH to fiat)
 
-**Merchant chooses instant settlement** (wants fiat, not BCH):
+**Merchant wants fiat, not BCH** — Two conversion paths available:
 
-**Step 1: Covenant matures (same as above)**
+#### Path A: Merchant Sells (Instant, Loses Full Reward)
+
+**Step 1: Covenant matures**
 ```
 Merchant receives: €99.50 worth of BCH from covenant
 ```
 
-**Step 2: Merchant sells to BCH buyer (separate market)**
+**Step 2: Merchant posts sell offer**
 ```
 Merchant posts on bulletin board: "Selling €99.50 BCH now"
 BCH buyer offers: €99.00 fiat (0.5% spread)
-Merchant accepts: Sends BCH, receives €99.00 fiat
+Merchant accepts: Sends BCH, receives €99.00 fiat immediately
 ```
 
 **Net result:**
@@ -253,6 +255,35 @@ Merchant accepts: Sends BCH, receives €99.00 fiat
 - Paid merchant: €99.00 fiat
 - Received: €99.50 worth of BCH
 - Profit: €0.50 (the 0.5% spread = merchant's reward transferred to buyer)
+
+---
+
+#### Path B: BCH Buyer Posts Buy Offer (Covenant-Based, Merchant Keeps Partial Reward)
+
+**Step 1: Covenant matures**
+```
+Merchant receives: €99.50 worth of BCH from covenant
+```
+
+**Step 2: Merchant accepts BCH buyer's posted offer**
+```
+BCH buyer posted: "Buying BCH, 0.3% spread" (€99.20 fiat for €99.50 BCH)
+Merchant creates covenant: Locks €99.50 BCH as collateral
+BCH buyer pays: €99.20 via bank transfer to merchant
+Bot detects payment: Parses notification, releases BCH to buyer
+Timeout: 1 hour (allows manual payment processing)
+```
+
+**Net result:**
+- Merchant received from covenant: €99.50 BCH
+- Merchant converts to: €99.20 fiat (0.3% spread)
+- **Merchant's partial reward kept:** €0.20 (vs €0 in Path A)
+- Merchant's final position: €99.20 fiat (better than instant sale!)
+
+**BCH buyer earns:**
+- Paid merchant: €99.20 fiat
+- Received: €99.50 worth of BCH
+- Profit: €0.30 (0.3% spread, competitive market pricing)
 
 ---
 
@@ -450,34 +481,103 @@ Opportunity cost + reputation penalty
 
 ---
 
-## BCH Buyer Economics (Optional Instant Settlement)
+## Merchant Cash-Out Options
 
-**BCH buyers participate in a separate market** (not part of covenant):
+**When merchants receive BCH from covenants, they have three options:**
 
-**Their role:**
-- Monitor bulletin board for merchants wanting instant settlement
+### Option 1: Hold BCH (Target Behavior)
+- Keep BCH in wallet for future use
+- Pay suppliers who accept BCH
+- Use for inventory restocking
+- **Keeps full 0.5% reward** ✅
+
+### Option 2: Become a BCH Seller (Triple-Dip)
+- Post on bulletin board as BCH Seller
+- Sell BCH to next sender needing to create covenant
+- Earn another 0.5% seller fee
+- **Requires:** Family member in Spain with bank account (to receive Bizum)
+- **Total earnings:** 0.5% merchant fee + 0.5% seller fee = 1% per cycle
+
+### Option 3: Sell to BCH Buyer (Double-Dip Exit)
+- Two sub-options available:
+
+**Option 3A: Merchant initiates (instant settlement)**
+- Merchant posts: "Selling €99.50 BCH now"
+- BCH Buyers compete to buy (0.2-0.5% spread)
+- Merchant sends BCH, receives fiat immediately
+- **Cost:** Loses reward to spread (gets €99.00-€99.30 fiat)
+
+**Option 3B: BCH Buyer initiates (merchant-friendly)**
+- **BCH Buyer posts buy offer** on bulletin board
+- Merchant accepts offer (wants fiat, not BCH)
+- **Merchant creates covenant** funded with their BCH
+- **BCH Buyer pays fiat** to merchant (bank transfer or cash at register)
+- **Notification listener bot** parses payment, releases BCH to buyer
+- **Longer timeout:** 1 hour (vs 5 minutes for senders) for manual processing
+- **Result:** Merchant keeps ~0.5% reward, converts BCH to fiat
+
+**Key differences:**
+- **Option 3A** (merchant sells): Instant, but loses reward to spread
+- **Option 3B** (buyer posts): Covenant-based, merchant keeps more reward, buyer gets better price
+
+---
+
+## BCH Buyer Economics (Two Acquisition Paths)
+
+**BCH buyers participate in a separate market** (not part of remittance covenant):
+
+### Path A: Buy from Merchants (Instant Settlement)
+
+**Flow:**
+- Monitor bulletin board for merchants selling BCH
 - Compete to offer best spread (lowest fee)
-- Buy BCH from merchants, provide fiat immediately
+- Pay fiat, receive BCH immediately
 
 **Revenue model:**
 ```
 Buy from merchant: €99.50 worth of BCH for €99.00 fiat (0.5% spread)
-Sell later or hold: €99.50 worth of BCH
-Profit: €0.50 (the spread)
+Profit: €0.50 (the spread captured from merchant's reward)
 ```
 
-**In reality, spreads might be competitive:**
-- BCH Buyer A offers: 0.5% spread (€99.00 fiat)
-- BCH Buyer B offers: 0.3% spread (€99.20 fiat) ← Merchant picks this!
-- BCH Buyer C offers: 0.2% spread (€99.30 fiat) ← Even better!
+### Path B: Post Buy Offers (Covenant-Based)
 
-**But in Asgaya examples, we use 0.5% spread** to show:
-> "If you sell immediately, you lose your entire reward. Hold BCH to keep your reward!"
+**Flow:**
+- Post buy offer on bulletin board: "Buying BCH, paying 0.3% spread"
+- Merchant accepts (wants fiat)
+- **Merchant creates covenant** with their BCH as collateral
+- **Buyer pays fiat** to merchant (Bizum, bank transfer, or cash)
+- **Bot detects payment** notification, co-signs covenant
+- **BCH released** to buyer's wallet
+
+**Revenue model:**
+```
+Pay merchant: €99.20 fiat (0.3% spread)
+Receive: €99.50 worth of BCH
+Profit: €0.30 (better for merchant, competitive pricing)
+```
+
+**Timeout difference:**
+- **Senders:** 5 minutes (Bizum instant)
+- **BCH Buyers:** 1 hour (allows manual bank transfers, cash payments)
+
+**Why longer timeout works:**
+- Buyer already committed via covenant creation
+- Payment notification is verifiable (bot parses it)
+- Merchant has BCH locked as collateral
+- Both parties incentivized to complete
+
+**Competitive dynamics:**
+```
+BCH Buyer A: 0.5% spread (€99.00 fiat) - instant, no covenant
+BCH Buyer B: 0.3% spread (€99.20 fiat) - covenant, 1hr window ← Merchant picks this!
+BCH Buyer C: 0.2% spread (€99.30 fiat) - covenant, bank transfer ← Even better!
+```
 
 **Why BCH buyers participate:**
-- Accumulate BCH at slight discount (0.2-0.5% below market)
-- Provide valuable service (fiat liquidity for merchants who need it)
+- Accumulate BCH at discount (0.2-0.5% below market rate)
+- Provide valuable service (fiat liquidity for merchants)
 - Profit from spread
+- Covenant structure reduces fraud risk (bot-verified payment)
 
 ---
 
@@ -604,7 +704,7 @@ Merchant's profit:
 
 ---
 
-### Case 2: Merchant Wants Instant Settlement
+### Case 2: Merchant Wants Instant Settlement (Two Paths)
 
 **Merchant prefers fiat over BCH.**
 
@@ -613,11 +713,13 @@ Merchant's profit:
 Merchant receives: €99.50 BCH from covenant
 ```
 
+#### Path A: Merchant Initiates Sale (Instant, Full Reward Loss)
+
 **Separate market transaction:**
 ```
 Merchant posts: "Selling €99.50 BCH now"
 BCH buyer responds: "€99.00 fiat" (0.5% spread)
-Merchant accepts: Sends BCH, receives fiat
+Merchant accepts: Sends BCH, receives fiat instantly
 ```
 
 **Merchant's final position:**
@@ -634,7 +736,34 @@ Merchant accepts: Sends BCH, receives fiat
 - Merchant: €0 (lost to spread)
 - BCH buyer: €0.50 (earned from spread, not covenant)
 
-**This shows:** Instant settlement transfers merchant's reward to BCH buyer.
+---
+
+#### Path B: Merchant Accepts Buy Offer (Covenant-Based, Partial Reward)
+
+**Covenant-based transaction:**
+```
+BCH buyer posted: "Buying BCH, 0.3% spread"
+Merchant creates covenant: Locks €99.50 BCH
+BCH buyer pays merchant: €99.20 fiat (bank transfer)
+Bot releases BCH: After payment verification (1hr timeout)
+```
+
+**Merchant's final position:**
+- Received from covenant: €99.50 BCH
+- Converted to: €99.20 fiat (via buyer's covenant)
+- **Net profit: €0.20** (partial reward kept!)
+
+**BCH buyer's profit:**
+- Paid: €99.20 fiat
+- Received: €99.50 BCH
+- Spread: €0.30 (0.3%)
+
+**Fee split (effectively 3 participants, better for merchant):**
+- BCH seller: €0.50 (from remittance covenant)
+- Merchant: €0.20 (kept from reward)
+- BCH buyer: €0.30 (earned from spread via buy covenant)
+
+**This shows:** Covenant-based cash-out lets merchant keep more reward than instant sale.
 
 ---
 
@@ -778,7 +907,10 @@ BCH Buyer E: €99.35 fiat (0.15% spread) ← Even better! (if volume justifies)
 
 ## Related Concepts
 
+- [Bulletin Board](../concepts/bulletin-board.md) — Two-listing model: BCH Sellers and BCH Buyers (including merchants)
 - [BCH Sellers](../concepts/bch-sellers.md) — Who provides liquidity and why (miners especially)
+- [BCH Buyers](../concepts/bch-buyers.md) — Merchants (cash) and online buyers (fiat)  
+- [Merchant Business Case](../concepts/merchant-business-case.md) — Triple-dip economics
 - [Bounty Contracts with Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) — Technical covenant implementation
 - [Pull System](../concepts/pull-system.md) — Why recipient-triggered execution is critical
 - [Dynamic Reward Modulation](../concepts/dynamic-reward-modulation.md) — Future fee optimization
