@@ -181,7 +181,7 @@ To the maximum extent permitted by law:
 - **Technical questions:** See [Contributing Guide](meta/contributing.md)
 - **Legal questions:** Consult your own legal counsel (we cannot provide legal advice)
 - **Regulatory questions:** Contact your local financial authority
-- **General discussion:** [GitHub Discussions](https://github.com/asgaya/docs/discussions)
+- **General discussion:** [GitHub Discussions](https://github.com/rufitnes/asgayapedia/discussions)
 
 ---
 

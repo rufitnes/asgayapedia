@@ -79,7 +79,7 @@ Asgaya doesn't reinvent the wheel—it synthesizes proven innovations from the B
 
 ### Key Technologies We Build On
 
-**[CashAccounts](https://www.cashaccount.info/)**  
+**[CashAccounts](https://gitlab.com/cash-accounts/specification)**  
 Human-readable addresses (`Elena#142`) replace cryptographic hashes. Makes crypto accessible to non-technical users.
 
 **[AnyHedge](https://anyhedge.com/)**  
@@ -1561,7 +1561,7 @@ To the maximum extent permitted by law:
 - **Technical questions:** See [Contributing Guide](meta/contributing.md)
 - **Legal questions:** Consult your own legal counsel (we cannot provide legal advice)
 - **Regulatory questions:** Contact your local financial authority
-- **General discussion:** [GitHub Discussions](https://github.com/asgaya/docs/discussions)
+- **General discussion:** [GitHub Discussions](https://github.com/rufitnes/asgayapedia/discussions)
 
 ---
 
@@ -7441,6 +7441,161 @@ A: Recommended for best visibility, but not required. Your NFT shows "Offline" w
 ---
 
 **Ready to start? Follow the setup guide above! 🚀**
+
+
+## Cash Accounts
+
+# Cash Accounts
+
+**What they are:** Human-readable payment identifiers on Bitcoin Cash (e.g., `username#123`)
+
+## Overview
+
+CashAccounts provide a user-friendly alternative to cryptocurrency addresses. Instead of sending BCH to a long hexadecimal address, users can send to readable identifiers like `carlos#42567`.
+
+## How Asgaya Uses CashAccounts
+
+### Recipient Identification
+When a sender creates a remittance covenant, they specify the recipient's CashAccount. This identifies:
+- Who can claim the BCH
+- Where to send claim notifications
+- The recipient's public key for covenant validation
+
+### Example Flow
+```
+1. Sender enters: "carlos#42567"
+2. App resolves to BCH address: bitcoincash:qr...
+3. Covenant created addressed to that pubkey
+4. Recipient "carlos" receives notification
+5. Carlos claims using his CashAccount credentials
+```
+
+## Technical Details
+
+- **Format:** `username#number`
+- **Blockchain:** BCH CashAccounts are registered on-chain
+- **Resolution:** Apps query the blockchain to resolve CashAccount → address
+- **Collision Prevention:** The number suffix ensures uniqueness
+
+## Benefits for Asgaya
+
+1. **User-Friendly:** Recipients remembered by name, not hex strings
+2. **Notification Target:** CashAccount username can link to phone/app
+3. **Verification:** Sender can confirm they're sending to the right person
+4. **Privacy:** One CashAccount can represent multiple addresses
+
+## Security Considerations
+
+- CashAccounts are publicly registered on BCH blockchain
+- Anyone can look up a CashAccount and see its associated address
+- For privacy, users can register multiple CashAccounts
+- Asgaya validates CashAccount signatures to prevent impersonation
+
+## Related Documentation
+
+- [Bitcoin Cash CashAccounts Specification](https://gitlab.com/cash-accounts/specification) - Protocol specification
+- [Covenant Setup Flow](../flows/sender-flows/covenant-setup/2-recipient-selection.md)
+- [Bulletin Board](../../concepts/bulletin-board.md) - How merchants advertise CashAccounts
+
+
+## Remittance Corridors
+
+# Remittance Corridors
+
+**What they are:** Supported sending country → receiving country pairs for remittances
+
+## Overview
+
+A remittance corridor represents a directional flow of money between two countries. Asgaya focuses on specific corridors where:
+- High remittance volume exists
+- Legacy fees are excessive (>3%)
+- Regulatory environment permits permissionless services
+- Local payment rails are accessible
+
+## Phase 0 Corridor: Spain → Venezuela
+
+### Why This Corridor?
+
+**Sender Side (Spain):**
+- Large Venezuelan diaspora (~300,000+ people)
+- EU regulatory framework (MiCA-compliant possible)
+- Instant payment rail available (Bizum)
+- BCH-friendly banking environment
+
+**Receiver Side (Venezuela):**
+- High remittance dependency (>4% of GDP from Spain)
+- Legacy services charge 6-10% fees
+- Local instant payment available (PagoMóvil)
+- Cash-based economy (merchant network viable)
+
+**Market Conditions:**
+- High fee differential: 6% legacy vs 1% Asgaya
+- Strong demand signals from both diaspora and recipients
+- Regulatory gap: no established crypto remittance services
+
+## Corridor Economics
+
+Each corridor has unique characteristics:
+
+| Factor | Spain→Venezuela | Future: USA→Mexico |
+|--------|-----------------|-------------------|
+| **Volume** | ~€500M annually | ~$50B annually |
+| **Legacy Fee** | 6-10% | 3-5% |
+| **Sender Rail** | Bizum (instant) | Zelle/ACH |
+| **Receiver Rail** | PagoMóvil (instant) | SPEI (instant) |
+| **Merchant Density** | Moderate | High |
+| **Regulatory** | MiCA | FinCEN/BSA |
+
+## Corridor Expansion Criteria
+
+Before adding a new corridor, validate:
+
+1. **Demand Signal:** >$100M annual remittance flow
+2. **Fee Gap:** Legacy services charge >3%
+3. **Payment Rails:** Instant fiat transfers available both sides
+4. **Merchant Network:** Cash-out points accessible
+5. **Regulatory:** Permissionless operation possible
+6. **BCH Liquidity:** Sellers available with capital
+
+## Future Corridors (Phase 1+)
+
+Potential expansion targets:
+- **USA → Mexico:** Largest global corridor (~$50B)
+- **Spain → Latin America:** Colombia, Ecuador, Peru
+- **UAE → South Asia:** India, Pakistan, Bangladesh
+- **Italy → North Africa:** Egypt, Tunisia
+
+Each requires corridor-specific research and pilot testing.
+
+## Technical Implementation
+
+### Corridor Configuration
+```json
+{
+  "corridorId": "ESP-VEN",
+  "senderCountry": "ES",
+  "receiverCountry": "VE",
+  "senderCurrency": "EUR",
+  "receiverCurrency": "VES",
+  "senderPaymentMethods": ["bizum", "sepa"],
+  "receiverPaymentMethods": ["pagomovil", "cash"],
+  "exchangeRateSource": "DolarAPI",
+  "active": true
+}
+```
+
+### Corridor-Specific Logic
+- Exchange rate calculations
+- Payment method availability
+- Merchant discovery (filtered by corridor)
+- Fee structures (may vary by corridor economics)
+
+## Related Documentation
+
+- [Cold Start Strategy](../../decisions/cold-start-strategy.md) - How we launch in new corridors
+- [Exchange Rates](../../decisions/how-exchange-rates-work.md) - Multi-currency conversion
+- [Bulletin Board](../../concepts/bulletin-board.md) - Corridor filtering for merchants
+- [Unknown: Corridor Demand Signals](../../unknowns/market/corridor-demand-signals.md)
 
 
 ## Overview
@@ -32554,7 +32709,6 @@ function handleEarlyMaturity(covenant) {
 4. **Does sender risk tolerance match usage patterns?**
    - Metric: Do senders choose longer or shorter claim windows?
    - Hypothesis: >60% choose 2h windows (minimize risk)
-   - See: [Time-Based Settlement Incentives](../../collaborative_workspace/time_based_settlement_incentives.md)
 
 ---
 
@@ -42403,7 +42557,7 @@ Permanent credits page:
 ## Questions About Governance?
 
 **Open a GitHub discussion:**
-https://github.com/asgaya/docs/discussions
+https://github.com/rufitnes/asgayapedia/discussions
 
 **We commit to:**
 - Responding within 5 days
@@ -42817,7 +42971,7 @@ All AI instances who provide substantial feedback will be credited in:
 
 **Contact:**
 - GitHub Issues: https://github.com/asgaya/docs/issues
-- Discussion: https://github.com/asgaya/docs/discussions
+- Discussion: https://github.com/rufitnes/asgayapedia/discussions
 
 ---
 
@@ -43162,7 +43316,7 @@ That's it. No complex process, just good ideas and constructive discussion.
 
 **Primary:**
 - GitHub Issues: https://github.com/asgaya/docs/issues
-- GitHub Discussions: https://github.com/asgaya/docs/discussions
+- GitHub Discussions: https://github.com/rufitnes/asgayapedia/discussions
 
 **For critical security issues:**
 - [security email TBD]
@@ -91973,6 +92127,8 @@ def calculate_hnl_from_eur(eur_amount):
 - Simple, works for PoC
 
 ### DolarSi API (Phase 2):
+**Note:** API endpoint may require authentication or be rate-limited.
+
 ```bash
 curl "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
 ```
@@ -95510,7 +95666,7 @@ MUSD works because Moria has a clear incentive (fees + MEUR holders wanting liqu
 
 ## Sources
 
-- [CashTokens Specification (CHIP-2022-02)](https://github.com/bitcoincashorg/bitcoincash.org/blob/master/spec/cashtokens.md)
+- [CashTokens Specification (CHIP-2022-02)](https://github.com/bitjson/cashtokens)
 - [Moria Protocol Docs](https://docs.moria.money/)
 - [Cauldron DEX](https://www.cauldron.quest/)
 - [MUSD on BULB](https://www.bulbapp.io/p/398b4486-caa2-425b-a014-78144c949861/musd-and-its-role-in-the-bitcoin-cash-ecosystem)
@@ -96540,7 +96696,6 @@ We have no empirical data on:
 
 ### 1. **Time-Based Settlement Incentive Design**
 
-The [time-based settlement incentives proposal](../../collaborative_workspace/time_based_settlement_incentives.md) depends entirely on realistic claim timing:
 
 - If recipients typically claim within 2 hours → 2h/6h/12h/24h windows make sense
 - If recipients typically claim within 12-18 hours → Need different brackets
@@ -96772,7 +96927,6 @@ The 24h expiry window is arbitrary:
 
 ## Related Documents
 
-- [Time-Based Settlement Incentives Proposal](../../collaborative_workspace/time_based_settlement_incentives.md)
 - [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
 - [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
 - [Capital Recycling Strategy](../../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model)
@@ -97286,10 +97440,7 @@ If we launch during low volatility and hit high volatility later:
 ## Related Documents
 
 - [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
-- [Time-Based Settlement Incentives Proposal](../../collaborative_workspace/time_based_settlement_incentives.md)
 - [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
-- [Grok's Review](../../collaborative_workspace/permissionless_contributions/Grok_reply_to_gemini_prompt.md) (Line 19-26: "7% insufficient")
-- [ChatGPT's Review](../../collaborative_workspace/permissionless_contributions/ChatGPT_reply_to_gemini_prompt.md) (Line 62-106: Volatility buffer concerns)
 
 ---
 

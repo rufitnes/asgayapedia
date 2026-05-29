@@ -28,7 +28,6 @@ We have no empirical data on:
 
 ### 1. **Time-Based Settlement Incentive Design**
 
-The [time-based settlement incentives proposal](../../collaborative_workspace/time_based_settlement_incentives.md) depends entirely on realistic claim timing:
 
 - If recipients typically claim within 2 hours → 2h/6h/12h/24h windows make sense
 - If recipients typically claim within 12-18 hours → Need different brackets
@@ -260,7 +259,6 @@ The 24h expiry window is arbitrary:
 
 ## Related Documents
 
-- [Time-Based Settlement Incentives Proposal](../../collaborative_workspace/time_based_settlement_incentives.md)
 - [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
 - [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
 - [Capital Recycling Strategy](../../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model)

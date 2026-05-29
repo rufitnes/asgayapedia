@@ -126,7 +126,7 @@ That's it. No complex process, just good ideas and constructive discussion.
 
 **Primary:**
 - GitHub Issues: https://github.com/asgaya/docs/issues
-- GitHub Discussions: https://github.com/asgaya/docs/discussions
+- GitHub Discussions: https://github.com/rufitnes/asgayapedia/discussions
 
 **For critical security issues:**
 - [security email TBD]

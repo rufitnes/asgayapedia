@@ -380,7 +380,7 @@ All AI instances who provide substantial feedback will be credited in:
 
 **Contact:**
 - GitHub Issues: https://github.com/asgaya/docs/issues
-- Discussion: https://github.com/asgaya/docs/discussions
+- Discussion: https://github.com/rufitnes/asgayapedia/discussions
 
 ---
 

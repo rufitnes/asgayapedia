@@ -267,7 +267,7 @@ Permanent credits page:
 ## Questions About Governance?
 
 **Open a GitHub discussion:**
-https://github.com/asgaya/docs/discussions
+https://github.com/rufitnes/asgayapedia/discussions
 
 **We commit to:**
 - Responding within 5 days

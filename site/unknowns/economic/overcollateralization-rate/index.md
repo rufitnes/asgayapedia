@@ -326,10 +326,7 @@ If we launch during low volatility and hit high volatility later:
 ## Related Documents
 
 - [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
-- [Time-Based Settlement Incentives Proposal](../../collaborative_workspace/time_based_settlement_incentives.md)
 - [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
-- [Grok's Review](../../collaborative_workspace/permissionless_contributions/Grok_reply_to_gemini_prompt.md) (Line 19-26: "7% insufficient")
-- [ChatGPT's Review](../../collaborative_workspace/permissionless_contributions/ChatGPT_reply_to_gemini_prompt.md) (Line 62-106: Volatility buffer concerns)
 
 ---
 

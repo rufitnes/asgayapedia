@@ -71,7 +71,7 @@ Asgaya doesn't reinvent the wheel—it synthesizes proven innovations from the B
 
 ### Key Technologies We Build On
 
-**[CashAccounts](https://www.cashaccount.info/)**  
+**[CashAccounts](https://gitlab.com/cash-accounts/specification)**  
 Human-readable addresses (`Elena#142`) replace cryptographic hashes. Makes crypto accessible to non-technical users.
 
 **[AnyHedge](https://anyhedge.com/)**  

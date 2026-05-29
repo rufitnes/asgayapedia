@@ -262,7 +262,6 @@ function handleEarlyMaturity(covenant) {
 4. **Does sender risk tolerance match usage patterns?**
    - Metric: Do senders choose longer or shorter claim windows?
    - Hypothesis: >60% choose 2h windows (minimize risk)
-   - See: [Time-Based Settlement Incentives](../../collaborative_workspace/time_based_settlement_incentives.md)
 
 ---
 
