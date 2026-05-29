@@ -253,6 +253,8 @@ def calculate_hnl_from_eur(eur_amount):
 - Simple, works for PoC
 
 ### DolarSi API (Phase 2):
+**Note:** API endpoint may require authentication or be rate-limited.
+
 ```bash
 curl "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
 ```

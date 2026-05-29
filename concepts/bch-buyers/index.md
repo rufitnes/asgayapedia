@@ -1,21 +1,128 @@
 ← [Back to Concepts](README.md)
 
-# BCH Buyers: Global Liquidity Without Geographic Lock-In
+# BCH Buyers: Provide Fiat, Receive BCH
 
-**Status:** Planned (Phase 1+)  
-**Related:** [Phase 1 Stability Layer](../roadmap/phase-1-stability-layer.md), [BCH Sellers](bch-sellers.md), [Pull System](pull-system.md)
+**Status:** ✅ Phase 0 (Core) — Merchants are BCH buyers with cash  
+**Phase 1+:** MUSD integration adds stablecoin payment method  
+**Related:** [Bulletin Board](bulletin-board.md), [Merchant Business Case](merchant-business-case.md), [Fee Splitting Model](../decisions/fee-splitting-model.md), [BCH Sellers](bch-sellers.md)
 
 ---
 
 ## Overview
 
-**BCH Buyers** are participants who hold stable assets (MUSD, EUR, etc.) and offer to purchase BCH from merchants who just received it from covenant settlements. This inverts the failed "Liquidity Provider" model from the old escrow architecture, turning a geographically-locked, inflation-exposed role into a permissionless global market.
+**BCH Buyers** are participants who provide fiat (cash, bank transfer, PagoMóvil) in exchange for BCH. They post buy offers on the [Asgaya Bulletin Board](bulletin-board.md) and acquire BCH at a small discount (0.2-0.5% spread).
 
-**Key innovation:** Buyers don't need to be in Venezuela with bolívares. They can be anywhere with MUSD, buying BCH from Venezuelan merchants via the Asgaya bulletin board.
+**Critical insight:** **Merchants are BCH buyers** with payment method `"cash"`. When a recipient visits a shop to claim their remittance, the merchant provides cash and receives BCH — that's a BCH buyer transaction.
+
+**Key innovation:** The bulletin board supports **bidirectional flow**:
+- **BCH Sellers:** Provide BCH → Receive fiat (enable remittances)
+- **BCH Buyers:** Provide fiat → Receive BCH (enable cash-outs)
+
+**On the bulletin board:**
+```
+Type: ASGAYA_BUYER_V1
+Payment Methods: 
+├─ "cash" (merchants at physical shops)
+├─ "PagoMóvil" (Venezuelan online buyers)
+├─ "bank_transfer" (international buyers)
+└─ "MUSD" (Phase 1+: stablecoin swaps)
+```
+
+**See:** [Bulletin Board](bulletin-board.md#2-bch-buyers-provide-fiat--receive-bch) for complete listing mechanics.
 
 ---
 
-## The Problem: Merchants Receive Volatile BCH
+## Phase 0: BCH Buyers with Fiat (Including Merchants)
+
+### Payment Method Variants
+
+**All BCH buyers have the same fundamental role** (provide fiat → receive BCH), but differ by payment method:
+
+#### 1. Merchants (Cash Buyers)
+
+**Bulletin board listing:**
+```
+Type: ASGAYA_BUYER_V1
+Payment Method: "cash"
+Location: "Bodega Rosa, Caracas, Av. Libertador 456"
+Hours: "Mon-Sat 8am-8pm"
+Limits: $10-$200 per transaction
+Spread: 0.5%
+```
+
+**Flow:**
+1. Recipient visits shop with claim code
+2. Merchant provides cash (fiat out)
+3. Covenant releases BCH to merchant
+4. Merchant earns 0.5% fee in BCH
+
+**Why merchants are buyers:** They exchange fiat for BCH — exactly the BCH buyer role. The payment method is "cash at physical location" instead of "bank transfer" or "PagoMóvil".
+
+**See:** [Merchant Business Case](merchant-business-case.md) for complete economics.
+
+---
+
+#### 2. Online Buyers (Bank Transfer, PagoMóvil)
+
+**Bulletin board listing:**
+```
+Type: ASGAYA_BUYER_V1
+Payment Method: "PagoMóvil"
+Corridors: ["EUR-VES"]
+Limits: $50-$500 per transaction
+Spread: 0.3%
+```
+
+**Flow:**
+1. Merchant (who just received BCH from covenant) wants to cash out
+2. Merchant accepts buyer's posted offer
+3. **Merchant creates covenant** with their BCH as collateral
+4. **Buyer pays fiat** to merchant via PagoMóvil/bank transfer
+5. **Notification listener bot** detects payment, co-signs covenant
+6. **BCH released** to buyer (1-hour timeout for manual processing)
+
+**Key difference from merchants:**
+- **Merchants:** Instant covenant (recipient present, 5-minute timeout)
+- **Online buyers:** Longer timeout (1 hour) to allow bank transfers
+
+**Why longer timeout works:**
+- Buyer committed via covenant creation
+- Merchant's BCH locked as collateral
+- Payment notification verifiable (bot parses it)
+- Both parties incentivized to complete
+
+**See:** [Fee Splitting Model - BCH Buyer Economics](../decisions/fee-splitting-model.md#bch-buyer-economics-two-acquisition-paths) for covenant-based flow.
+
+---
+
+#### 3. Double-Dip Pattern (Buyer + Seller)
+
+**Participant with bank accounts in both countries** can post two listings:
+
+```
+Listing 1: ASGAYA_SELLER_V1
+├─ Payment Method: "Bizum" (Spain account)
+└─ Earns: 0.5% seller fee
+
+Listing 2: ASGAYA_BUYER_V1  
+├─ Payment Method: "PagoMóvil" (Venezuela account)
+└─ Earns: 0.3% spread
+```
+
+**Capital recycling:**
+1. Sell BCH to sender in Spain (receive €100 Bizum)
+2. Lock €107 BCH into covenant
+3. Merchant in Venezuela receives BCH
+4. Buy BCH back from merchant (pay VES via PagoMóvil)
+5. BCH returns to wallet, ready for next cycle
+
+**Net:** €0.50 + €0.30 = €0.80 per cycle, same BCH reused
+
+**See:** [Bulletin Board Multi-Role Patterns](bulletin-board.md#pattern-1-the-double-dip-seller--buyer) for complete flow.
+
+---
+
+## Phase 1+: BCH Buyers with MUSD (Stablecoin Integration)
 
 In the covenant model, merchants receive BCH when bounties mature:
 

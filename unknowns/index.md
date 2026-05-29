@@ -211,8 +211,7 @@ Every unknown follows this format:
 ## Related Concepts
 
 - [Phase 0 Validation Checklist](../decisions/phase-0-validation-checklist.md) — What needs validation (points here for how)
-- [Contributing Guide](../contributing.md) — How to contribute to Asgaya docs
-- [Permissionless Contribution Model](../concepts/permissionless-contribution.md) — Philosophy behind this approach
+- [Contributing Guide](../meta/contributing.md) — How to contribute to Asgaya docs
 - [AI Review Guide](../meta/ai-review-guide.md) — How AI assistants can help investigate unknowns
 
 ---
