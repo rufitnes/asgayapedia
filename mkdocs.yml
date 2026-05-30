@@ -95,6 +95,7 @@ nav:
           - Pending Covenant: android-app/flows/sender-flows/errors/pending-covenant.md
           - Seller Non-Delivery: android-app/flows/sender-flows/errors/seller-non-delivery.md
           - Bizum Timeout: android-app/flows/sender-flows/errors/bizum-timeout.md
+          - Covenant Expiry: android-app/flows/sender-flows/errors/covenant-expiry.md
           - Network Errors: android-app/flows/sender-flows/errors/network-errors.md
       - Recipient Flows: android-app/flows/recipient-flows.md
       - Direct Payment Flows:
@@ -146,6 +147,8 @@ nav:
   - Concepts:
     - Overview: concepts/README.md
     - Risk Allocation Principle: concepts/risk-allocation-principle.md
+    - Cash Accounts: concepts/cash-accounts.md
+    - Corridors: concepts/corridors.md
     - BCH Sellers: concepts/bch-sellers.md
     - BCH Buyers: concepts/bch-buyers.md
     - Bounty Contracts with Volatility Buffer: concepts/bounty-contracts-with-volatility-buffer.md

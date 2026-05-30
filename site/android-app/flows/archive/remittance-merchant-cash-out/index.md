@@ -1491,10 +1491,10 @@ Secondary (outline):
 ## Related Documentation
 
 **Flows:**
-- [BCH Payment Flows](../bch-payment-flows.md) — Simpler flow, build FIRST
+- [BCH Payment Flows](bch-payment-flows.md) — Simpler flow, build FIRST
 - [Recipient Flows](../recipient-flows.md) — Recipient claim process (6 screens)
 - [Merchant Flows](../merchant-flows.md) — Merchant VES sale process (5 screens)
-- [BCH Seller Flows](../bch-seller-flows.md) — Seller collateral posting
+- [Trade BCH Screen](../trade-bch-screen.md) — BCH seller and buyer hub
 
 **Decisions:**
 - [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement

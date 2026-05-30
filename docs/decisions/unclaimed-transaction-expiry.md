@@ -311,7 +311,6 @@ expired_unclaimed → refunded (covenant timeout, BCH returned to seller, EUR re
 
 ## Related Research
 
-- **[RS010_Bizum.md](../research/RS010_Bizum.md)** — Bizum refund capabilities and timing
 - **[Two-Step Settlement Timing](two-step-settlement-timing.md)** — Why covenant-based architecture prevents volatility risk
 
 ---

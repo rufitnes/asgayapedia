@@ -12,8 +12,8 @@ This section contains detailed documentation for the Asgaya Android app, coverin
 ## Structure
 
 ### User Flows
-- **Remittance & Merchant Cash-Out** (`/android-app/flows/remittance-merchant-cash-out.md`) - How senders initiate remittances
-- **BCH Payment Flows** (`/android-app/flows/bch-payment-flows.md`) - Direct BCH payments
+- **Remittance & Merchant Cash-Out** (`/android-app/flows/archive/remittance-merchant-cash-out.md`) - How senders initiate remittances (ARCHIVE - pre-covenant)
+- **BCH Payment Flows** (`/android-app/flows/archive/bch-payment-flows.md`) - Direct BCH payments (ARCHIVE - pre-covenant)
 - **Recipient Flows** (`/android-app/flows/recipient-flows.md`) - How recipients receive cash
 - **Merchant Flows** (`/android-app/flows/merchant-flows.md`) - How merchants provide liquidity
 
@@ -58,7 +58,7 @@ The "heart of the app" - parses payment notifications to auto-confirm transactio
 3. **User Flow Completeness**
    - What edge cases are missing?
    - Are error states handled?
-   - Review: `/android-app/flows/remittance-merchant-cash-out.md` and `/android-app/flows/bch-payment-flows.md`
+   - Review: `/android-app/flows/archive/remittance-merchant-cash-out.md` and `/android-app/flows/archive/bch-payment-flows.md`
 
 ## Status
 

@@ -3,7 +3,7 @@
 **Research Type:** Technical Specification
 **Status:** Draft
 **Created:** 2026-04-27
-**Related:** [RS046-5 Backend APIs](android-app/backend-apis/README.md)
+**Related:** [RS046-5 Backend APIs](../backend-apis/README.md)
 
 ---
 
@@ -862,9 +862,9 @@ Settings > Apps > Asgaya > Notification Access
 ## Related Documents
 
 
-- **APIs:** [RS046-5 Backend APIs](android-app/backend-apis/README.md) - Escrow endpoint spec
-- **UX:** [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md) - User journey context
-- **Security:** [RS046-8 Security](android-app/notification-listener/security.md) - Full security spec (TBD)
+- **APIs:** [RS046-5 Backend APIs](../backend-apis/README.md) - Escrow endpoint spec
+- **UX:** [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md) - User journey context
+- **Security:** [RS046-8 Security](security.md) - Full security spec (TBD)
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Category:** Security & Fraud Prevention
 **Priority:** 🔴 Critical
-**Related:** [Index](android-app/notification-listener/README.md), [bizum-android.md](android-app/notification-listener/bizum-android.md), [pagomovil-android.md](android-app/notification-listener/pagomovil-android.md)
+**Related:** [Index](README.md), [bizum-android.md](bizum-android.md), [pagomovil-android.md](pagomovil-android.md)
 
 ---
 
@@ -647,9 +647,9 @@ if not AUTO_PARSING_ENABLED:
 
 ## Related Documents
 
-- **Index:** [NotificationListener Architecture](android-app/notification-listener/README.md) - Overview
-- **Testing:** [testing.md](android-app/notification-listener/testing.md) - Security testing details
-- **Monitoring:** [README.md](android-app/notification-listener/README.md) - Security metrics
+- **Index:** [NotificationListener Architecture](README.md) - Overview
+- **Testing:** [testing.md](testing.md) - Security testing details
+- **Monitoring:** [README.md](README.md) - Security metrics
 
 ---
 

@@ -30,7 +30,7 @@
 
 ## UI Mockups Reference
 
-**All screen designs documented in:** [User Flows](../flows/)
+**All screen designs documented in:** [User Flows](../flows/README.md)
 
 **Sender Screens (8 total):**
 1. Home (Entry Point)
@@ -413,7 +413,7 @@ fun testFullSenderFlow_OwnBCH() {
 
 - [Pichan Regtest Setup](./pichan-regtest-setup.md) - Server configuration
 - [Phase 0 Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md) - Overall strategy
-- [User Flows](../flows/) - UI mockups and flow documentation
+- [User Flows](../flows/README.md) - UI mockups and flow documentation
 - [With volatility buffer Bounty Contracts](../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant logic
 
 ---

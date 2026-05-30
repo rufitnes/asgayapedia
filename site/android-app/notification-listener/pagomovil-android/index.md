@@ -952,10 +952,10 @@ suspend fun pollBanescoPayments() {
 
 ## Related Documents
 
-- **Index:** [NotificationListener Architecture](android-app/notification-listener/README.md)
-- **Bizum:** [bizum-android.md](android-app/notification-listener/bizum-android.md) - Similar pattern for EUR
-- **OP_RETURN:** [opreturn-spv.md](android-app/notification-listener/opreturn-spv.md) - BCH notifications
-- **Backend:** [settlement-apis.md](android-app/backend-apis/settlement-apis.md) - Settlement state machine
+- **Index:** [NotificationListener Architecture](README.md)
+- **Bizum:** [bizum-android.md](bizum-android.md) - Similar pattern for EUR
+- **OP_RETURN:** [opreturn-spv.md](opreturn-spv.md) - BCH notifications
+- **Backend:** [settlement-apis.md](../backend-apis/settlement-apis.md) - Settlement state machine
 
 ---
 

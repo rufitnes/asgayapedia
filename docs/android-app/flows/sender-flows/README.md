@@ -148,7 +148,7 @@ This directory contains all **sender-side screens** for creating and tracking BC
 ## Navigation Tips
 
 **For reviewers:**
-- Start with [1-home.md](covenant-setup/1-home.md) for entry point
+- Start with [1-home.md](home-screen.md) for entry point
 - Follow one complete branch (A or B) to understand full flow
 - Check [errors/](errors/) for edge cases
 

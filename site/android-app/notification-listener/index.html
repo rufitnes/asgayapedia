@@ -1373,6 +1373,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../flows/sender-flows/errors/covenant-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../flows/sender-flows/errors/network-errors/" class="md-nav__link">
         
   
@@ -3470,6 +3498,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concepts/cash-accounts.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cash Accounts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/corridors.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Corridors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concepts/bch-sellers/" class="md-nav__link">
         
   
@@ -4731,7 +4815,7 @@
 <h1 id="rs046-6-notificationlistener-architecture">RS046-6: NotificationListener Architecture<a class="headerlink" href="#rs046-6-notificationlistener-architecture" title="Permanent link">&para;</a></h1>
 <p><strong>Category:</strong> Core Component (MVP Critical)
 <strong>Priority:</strong> 🔴 Critical (The Heart of the App)
-<strong>Related:</strong> <a href="../backend-apis/">RS046-5 Backend APIs</a>, <a href="../flows/remittance-merchant-cash-out.md">RS046-2 Remittance &amp; Merchant Cash-Out</a></p>
+<strong>Related:</strong> <a href="../backend-apis/">RS046-5 Backend APIs</a>, <a href="../flows/archive/remittance-merchant-cash-out/">RS046-2 Remittance &amp; Merchant Cash-Out</a></p>
 <hr />
 <h2 id="document-structure">Document Structure<a class="headerlink" href="#document-structure" title="Permanent link">&para;</a></h2>
 <p>This folder contains:</p>
@@ -4744,7 +4828,7 @@
 <p>MVP priorities</p>
 </li>
 <li>
-<p><strong><a href="android-app/notification-listener/bizum-android.md">bizum-android.md</a></strong></p>
+<p><strong><a href="bizum-android/">bizum-android.md</a></strong></p>
 </li>
 <li>Android NotificationListenerService implementation</li>
 <li>Sabadell-specific parsing</li>
@@ -4752,7 +4836,7 @@
 <p>Escrow device setup</p>
 </li>
 <li>
-<p><strong><a href="android-app/notification-listener/pagomovil-android.md">pagomovil-android.md</a></strong></p>
+<p><strong><a href="pagomovil-android/">pagomovil-android.md</a></strong></p>
 </li>
 <li>Android SMS receiver implementation</li>
 <li>Venezuelan bank formats (Banesco, Mercantil, Provincial)</li>
@@ -4760,7 +4844,7 @@
 <p>Merchant device setup</p>
 </li>
 <li>
-<p><strong><a href="android-app/notification-listener/opreturn-spv.md">opreturn-spv.md</a></strong></p>
+<p><strong><a href="opreturn-spv/">opreturn-spv.md</a></strong></p>
 </li>
 <li>SPV wallet integration</li>
 <li>OP_RETURN message formats</li>
@@ -4768,7 +4852,7 @@
 <p>Cross-platform (Android/iOS)</p>
 </li>
 <li>
-<p><strong><a href="android-app/notification-listener/security.md">security.md</a></strong></p>
+<p><strong><a href="security/">security.md</a></strong></p>
 </li>
 <li>SMS spoofing prevention (bank shortcode whitelist)</li>
 <li>Escrow centralization rationale</li>
@@ -4777,7 +4861,7 @@
 <p>Privacy protections</p>
 </li>
 <li>
-<p><strong><a href="android-app/notification-listener/testing.md">testing.md</a></strong></p>
+<p><strong><a href="testing/">testing.md</a></strong></p>
 </li>
 <li>Payment flow testing (MVP first)</li>
 <li>Remittance flow testing (post-beta)</li>
@@ -4836,7 +4920,7 @@ Transaction moves to payment_received
 - Serves as extra verification layer
 - Backend matches: recipient BCH address + phone number
 - Prevents misdirected payments</p>
-<p><strong>Details:</strong> See <a href="android-app/notification-listener/bizum-android.md">bizum-android.md</a></p>
+<p><strong>Details:</strong> See <a href="bizum-android/">bizum-android.md</a></p>
 <hr />
 <h3 id="2-pagomovil-notifications-ves-merchant">2. PagoMóvil Notifications (VES → Merchant)<a class="headerlink" href="#2-pagomovil-notifications-ves-merchant" title="Permanent link">&para;</a></h3>
 <p><strong>What:</strong> Venezuelan instant payment system
@@ -4848,7 +4932,7 @@ Transaction moves to payment_received
 NotificationListener parses → Escrow backend updates →
 Settlement moves to ves_confirmed → BCH released to LP
 </code></pre></div></p>
-<p><strong>Details:</strong> See <a href="android-app/notification-listener/pagomovil-android.md">pagomovil-android.md</a></p>
+<p><strong>Details:</strong> See <a href="pagomovil-android/">pagomovil-android.md</a></p>
 <hr />
 <h3 id="3-op_return-notifications-bch-all-parties">3. OP_RETURN Notifications (BCH → All Parties)<a class="headerlink" href="#3-op_return-notifications-bch-all-parties" title="Permanent link">&para;</a></h3>
 <p><strong>What:</strong> On-chain BCH messages to user's address
@@ -4859,7 +4943,7 @@ Settlement moves to ves_confirmed → BCH released to LP
 <div class="highlight"><pre><span></span><code>Escrow receives EUR → Backend sends OP_RETURN to recipient&#39;s address →
 SPV wallet detects transaction → App shows &quot;€100 ready! Code: 7382&quot;
 </code></pre></div></p>
-<p><strong>Details:</strong> See <a href="android-app/notification-listener/opreturn-spv.md">opreturn-spv.md</a></p>
+<p><strong>Details:</strong> See <a href="opreturn-spv/">opreturn-spv.md</a></p>
 <hr />
 <h2 id="why-this-matters">Why This Matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h2>
 <h3 id="traditional-approach-centralized">Traditional Approach (Centralized)<a class="headerlink" href="#traditional-approach-centralized" title="Permanent link">&para;</a></h3>
@@ -5050,22 +5134,22 @@ Merchant → PagoMóvil → Settlement
 <h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Backend APIs:</strong></li>
-<li><a href="android-app/backend-apis/transaction-apis.md">Transaction APIs</a> - State machine triggered by notifications</li>
-<li><a href="android-app/backend-apis/settlement-apis.md">Settlement APIs</a> - LP settlement confirmations</li>
+<li><a href="../backend-apis/transaction-apis.md">Transaction APIs</a> - State machine triggered by notifications</li>
+<li><a href="../backend-apis/settlement-apis.md">Settlement APIs</a> - LP settlement confirmations</li>
 <li>
-<p><a href="android-app/backend-apis/user-apis.md">User APIs</a> - OP_RETURN notification system</p>
+<p><a href="../backend-apis/user-apis/">User APIs</a> - OP_RETURN notification system</p>
 </li>
 <li>
 <p><strong>User Flows:</strong></p>
 </li>
-<li><a href="../flows/remittance-merchant-cash-out.md">RS046-2 Remittance &amp; Merchant Cash-Out</a> - Sender experience</li>
+<li><a href="../flows/archive/remittance-merchant-cash-out/">RS046-2 Remittance &amp; Merchant Cash-Out</a> - Sender experience</li>
 <li>
 <p><a href="../flows/merchant-flows/">RS046-3 Merchant Flows</a> - Merchant confirmation</p>
 </li>
 <li>
 <p><strong>Architecture:</strong></p>
 </li>
-<li><a href="android-app/backend-apis/bch-native-architecture.md">bch-native-architecture.md</a> - Overall philosophy</li>
+<li><a href="../backend-apis/bch-native-architecture/">bch-native-architecture.md</a> - Overall philosophy</li>
 </ul>
 <hr />
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>

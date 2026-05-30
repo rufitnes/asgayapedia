@@ -2,7 +2,7 @@
 
 **Category:** Quality Assurance & Validation
 **Priority:** 🔴 Critical
-**Related:** [Index](android-app/notification-listener/README.md), [security.md](android-app/notification-listener/security.md)
+**Related:** [Index](README.md), [security.md](security.md)
 
 ---
 
@@ -740,9 +740,9 @@ Fuzzy Detector
 
 ## Related Documents
 
-- **Index:** [NotificationListener Architecture](android-app/notification-listener/README.md) - Overview
-- **Security:** [security.md](android-app/notification-listener/security.md) - Security testing
-- **Monitoring:** [README.md](android-app/notification-listener/README.md) - Production metrics
+- **Index:** [NotificationListener Architecture](README.md) - Overview
+- **Security:** [security.md](security.md) - Security testing
+- **Monitoring:** [README.md](README.md) - Production metrics
 
 ---
 

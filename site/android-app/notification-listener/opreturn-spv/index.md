@@ -105,14 +105,30 @@
 - ✅ Privacy (doesn't expose which addresses you're watching)
 - ✅ Decentralized (connects to BCH network directly)
 
-**Libraries:**
-- **Android:** [bitcoincashj](https://github.com/pokkst/bitcoincashj-thin) (Java/Kotlin)
-- **iOS:** [BitcoinKit](https://github.com/horizontalsystems/BitcoinKit.Swift) (Swift)
-- **Cross-platform:** [Cash-Lib](https://cashweb.cash/) (Kotlin Multiplatform)
+**Implementation Approach:**
+
+- **Android:** [Electrum Client](https://electrum.readthedocs.io/en/latest/protocol.html) ✅ Recommended  
+  Query Asgaya's Fulcrum server for address monitoring and OP_RETURN parsing. Lightweight alternative to full SPV wallet.  
+  *Note:* [bitcoincashj](https://github.com/pokkst/bitcoincashj) is no longer maintained.
+
+- **iOS:** [BitcoinCashKit.Swift](https://github.com/horizontalsystems/BitcoinCashKit.Swift) ✅ Active  
+  Swift library for Bitcoin Cash with SPV wallet and OP_RETURN support. Builds on BitcoinKit, adds BCH-specific features.
+
+- **Cross-platform:** No mature KMP SPV library exists. Use platform-native clients (Electrum for Android, BitcoinCashKit for iOS) with shared business logic in a Kotlin Multiplatform module.
 
 ---
 
-### Android Implementation (bitcoincashj)
+### Android Implementation (Electrum Client)
+
+> ⚠️ **Documentation Update Needed (May 30, 2026)**  
+> The implementation below uses `bitcoincashj`, which is **no longer maintained**.  
+> **Recommended approach:** Use Electrum JSON-RPC client to query Fulcrum server.  
+> This section will be updated with Electrum client implementation in a future research session (RS064).
+
+<details>
+<summary>🗄️ Legacy bitcoincashj Implementation (Reference Only - DO NOT USE)</summary>
+
+### Android Implementation (bitcoincashj - DEPRECATED)
 
 **Dependencies:**
 
@@ -377,6 +393,8 @@ class AsgayaWallet(
 ```
 
 ---
+
+</details>
 
 ### Notification Display
 
@@ -963,7 +981,10 @@ sendOpReturnNotification(address, "ASGAYA_TXN_READY_7382")
 
 ### iOS Implementation
 
-**Use BitcoinKit.Swift:**
+**Recommended: Use [BitcoinCashKit.Swift](https://github.com/horizontalsystems/BitcoinCashKit.Swift)**  
+(BCH-specific library built on BitcoinKit, adds OP_RETURN and CashAddr support)
+
+**Example using BitcoinKit.Swift (also works):**
 
 ```swift
 import BitcoinKit
@@ -1006,10 +1027,10 @@ class AsgayaWallet {
 
 ## Related Documents
 
-- **Index:** [NotificationListener Architecture](android-app/notification-listener/README.md) - Overview
-- **Bizum:** [bizum-android.md](android-app/notification-listener/bizum-android.md) - EUR notifications
-- **PagoMóvil:** [pagomovil-android.md](android-app/notification-listener/pagomovil-android.md) - VES notifications
-- **User APIs:** [user-apis.md](android-app/backend-apis/user-apis.md) - OP_RETURN message formats
+- **Index:** [NotificationListener Architecture](README.md) - Overview
+- **Bizum:** [bizum-android.md](bizum-android.md) - EUR notifications
+- **PagoMóvil:** [pagomovil-android.md](pagomovil-android.md) - VES notifications
+- **User APIs:** [user-apis.md](../backend-apis/user-apis.md) - OP_RETURN message formats
 - **Architecture:** [README.md](../README.md) - Philosophy
 
 ---

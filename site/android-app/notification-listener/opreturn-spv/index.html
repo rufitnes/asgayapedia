@@ -1373,6 +1373,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../flows/sender-flows/errors/covenant-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../flows/sender-flows/errors/network-errors/" class="md-nav__link">
         
   
@@ -2749,21 +2777,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#android-implementation-bitcoincashj" class="md-nav__link">
+  <a href="#android-implementation-electrum-client" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Android Implementation (bitcoincashj)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#spv-wallet-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SPV Wallet Setup
+        Android Implementation (Electrum Client)
       
     </span>
   </a>
@@ -3628,6 +3645,62 @@
     
   
     Risk Allocation Principle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/cash-accounts.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cash Accounts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/corridors.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Corridors
   
 
     
@@ -4670,21 +4743,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#android-implementation-bitcoincashj" class="md-nav__link">
+  <a href="#android-implementation-electrum-client" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Android Implementation (bitcoincashj)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#spv-wallet-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SPV Wallet Setup
+        Android Implementation (Electrum Client)
       
     </span>
   </a>
@@ -5201,21 +5263,47 @@
 - ✅ Fast sync (minutes, not hours)
 - ✅ Privacy (doesn't expose which addresses you're watching)
 - ✅ Decentralized (connects to BCH network directly)</p>
-<p><strong>Libraries:</strong>
-- <strong>Android:</strong> <a href="https://github.com/pokkst/bitcoincashj-thin">bitcoincashj</a> (Java/Kotlin)
-- <strong>iOS:</strong> <a href="https://github.com/horizontalsystems/BitcoinKit.Swift">BitcoinKit</a> (Swift)
-- <strong>Cross-platform:</strong> <a href="https://cashweb.cash/">Cash-Lib</a> (Kotlin Multiplatform)</p>
+<p><strong>Implementation Approach:</strong></p>
+<ul>
+<li>
+<p><strong>Android:</strong> <a href="https://electrum.readthedocs.io/en/latest/protocol.html">Electrum Client</a> ✅ Recommended<br />
+  Query Asgaya's Fulcrum server for address monitoring and OP_RETURN parsing. Lightweight alternative to full SPV wallet.<br />
+<em>Note:</em> <a href="https://github.com/pokkst/bitcoincashj">bitcoincashj</a> is no longer maintained.</p>
+</li>
+<li>
+<p><strong>iOS:</strong> <a href="https://github.com/horizontalsystems/BitcoinCashKit.Swift">BitcoinCashKit.Swift</a> ✅ Active<br />
+  Swift library for Bitcoin Cash with SPV wallet and OP_RETURN support. Builds on BitcoinKit, adds BCH-specific features.</p>
+</li>
+<li>
+<p><strong>Cross-platform:</strong> No mature KMP SPV library exists. Use platform-native clients (Electrum for Android, BitcoinCashKit for iOS) with shared business logic in a Kotlin Multiplatform module.</p>
+</li>
+</ul>
 <hr />
-<h3 id="android-implementation-bitcoincashj">Android Implementation (bitcoincashj)<a class="headerlink" href="#android-implementation-bitcoincashj" title="Permanent link">&para;</a></h3>
-<p><strong>Dependencies:</strong></p>
+<h3 id="android-implementation-electrum-client">Android Implementation (Electrum Client)<a class="headerlink" href="#android-implementation-electrum-client" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>⚠️ <strong>Documentation Update Needed (May 30, 2026)</strong><br />
+The implementation below uses <code>bitcoincashj</code>, which is <strong>no longer maintained</strong>.<br />
+<strong>Recommended approach:</strong> Use Electrum JSON-RPC client to query Fulcrum server.<br />
+This section will be updated with Electrum client implementation in a future research session (RS064).</p>
+</blockquote>
+<details>
+<summary>🗄️ Legacy bitcoincashj Implementation (Reference Only - DO NOT USE)</summary>
+
+### Android Implementation (bitcoincashj - DEPRECATED)
+
+**Dependencies:**
+
 <div class="highlight"><pre><span></span><code>// build.gradle.kts
 dependencies {
     implementation(&quot;cash.bitcoinj:bitcoinj-core:0.16.2&quot;)
     implementation(&quot;org.slf4j:slf4j-android:1.7.36&quot;)
 }
 </code></pre></div>
-<hr />
-<h3 id="spv-wallet-setup">SPV Wallet Setup<a class="headerlink" href="#spv-wallet-setup" title="Permanent link">&para;</a></h3>
+
+---
+
+### SPV Wallet Setup
+
 <div class="highlight"><pre><span></span><code><span class="k">package</span><span class="w"> </span><span class="nn">com.asgaya.wallet</span>
 
 <span class="k">import</span><span class="w"> </span><span class="nn">org.bitcoinj.core.*</span>
@@ -5462,7 +5550,11 @@ dependencies {
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<hr />
+
+---
+
+</details>
+
 <h3 id="notification-display">Notification Display<a class="headerlink" href="#notification-display" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">showNotification</span><span class="p">(</span>
 <span class="w">    </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
@@ -5944,7 +6036,9 @@ dependencies {
 <hr />
 <h2 id="cross-platform-support">Cross-Platform Support<a class="headerlink" href="#cross-platform-support" title="Permanent link">&para;</a></h2>
 <h3 id="ios-implementation">iOS Implementation<a class="headerlink" href="#ios-implementation" title="Permanent link">&para;</a></h3>
-<p><strong>Use BitcoinKit.Swift:</strong></p>
+<p><strong>Recommended: Use <a href="https://github.com/horizontalsystems/BitcoinCashKit.Swift">BitcoinCashKit.Swift</a></strong><br />
+(BCH-specific library built on BitcoinKit, adds OP_RETURN and CashAddr support)</p>
+<p><strong>Example using BitcoinKit.Swift (also works):</strong></p>
 <div class="highlight"><pre><span></span><code><span class="kd">import</span><span class="w"> </span><span class="nc">BitcoinKit</span>
 
 <span class="kd">class</span><span class="w"> </span><span class="nc">AsgayaWallet</span><span class="w"> </span><span class="p">{</span>
@@ -5982,10 +6076,10 @@ dependencies {
 <hr />
 <h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Index:</strong> <a href="android-app/notification-listener/README.md">NotificationListener Architecture</a> - Overview</li>
-<li><strong>Bizum:</strong> <a href="android-app/notification-listener/bizum-android.md">bizum-android.md</a> - EUR notifications</li>
-<li><strong>PagoMóvil:</strong> <a href="android-app/notification-listener/pagomovil-android.md">pagomovil-android.md</a> - VES notifications</li>
-<li><strong>User APIs:</strong> <a href="android-app/backend-apis/user-apis.md">user-apis.md</a> - OP_RETURN message formats</li>
+<li><strong>Index:</strong> <a href="../">NotificationListener Architecture</a> - Overview</li>
+<li><strong>Bizum:</strong> <a href="../bizum-android/">bizum-android.md</a> - EUR notifications</li>
+<li><strong>PagoMóvil:</strong> <a href="../pagomovil-android/">pagomovil-android.md</a> - VES notifications</li>
+<li><strong>User APIs:</strong> <a href="../../backend-apis/user-apis/">user-apis.md</a> - OP_RETURN message formats</li>
 <li><strong>Architecture:</strong> <a href="../../">README.md</a> - Philosophy</li>
 </ul>
 <hr />
