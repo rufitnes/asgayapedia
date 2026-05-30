@@ -508,7 +508,7 @@ Example: VES 5,750
 
 **Implementation:**
 - `knowledge/code/smsbridge_loop.py` — Working notification listener
-- [Settlement APIs](android-app/backend-apis/settlement-apis.md) — API endpoints for this flow
+- [Settlement APIs](../../backend-apis/settlement-apis.md) — API endpoints for this flow
 
 ---
 

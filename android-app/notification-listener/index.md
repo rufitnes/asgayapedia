@@ -4,7 +4,7 @@
 
 **Category:** Core Component (MVP Critical)
 **Priority:** 🔴 Critical (The Heart of the App)
-**Related:** [RS046-5 Backend APIs](../backend-apis/), [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md)
+**Related:** [RS046-5 Backend APIs](../backend-apis/), [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md)
 
 ---
 
@@ -18,28 +18,28 @@ This folder contains:
    - Data flow examples
    - MVP priorities
 
-2. **[bizum-android.md](android-app/notification-listener/bizum-android.md)**
+2. **[bizum-android.md](bizum-android.md)**
    - Android NotificationListenerService implementation
    - Sabadell-specific parsing
    - Escrow device setup
 
-3. **[pagomovil-android.md](android-app/notification-listener/pagomovil-android.md)**
+3. **[pagomovil-android.md](pagomovil-android.md)**
    - Android SMS receiver implementation
    - Venezuelan bank formats (Banesco, Mercantil, Provincial)
    - Merchant device setup
 
-4. **[opreturn-spv.md](android-app/notification-listener/opreturn-spv.md)**
+4. **[opreturn-spv.md](opreturn-spv.md)**
    - SPV wallet integration
    - OP_RETURN message formats
    - Cross-platform (Android/iOS)
 
-5. **[security.md](android-app/notification-listener/security.md)**
+5. **[security.md](security.md)**
    - SMS spoofing prevention (bank shortcode whitelist)
    - Escrow centralization rationale
    - Fraud detection
    - Privacy protections
 
-6. **[testing.md](android-app/notification-listener/testing.md)**
+6. **[testing.md](testing.md)**
    - Payment flow testing (MVP first)
    - Remittance flow testing (post-beta)
    - Unit tests, integration tests, real-world tests
@@ -115,7 +115,7 @@ Transaction moves to payment_received
 - Backend matches: recipient BCH address + phone number
 - Prevents misdirected payments
 
-**Details:** See [bizum-android.md](android-app/notification-listener/bizum-android.md)
+**Details:** See [bizum-android.md](bizum-android.md)
 
 ---
 
@@ -133,7 +133,7 @@ NotificationListener parses → Escrow backend updates →
 Settlement moves to ves_confirmed → BCH released to LP
 ```
 
-**Details:** See [pagomovil-android.md](android-app/notification-listener/pagomovil-android.md)
+**Details:** See [pagomovil-android.md](pagomovil-android.md)
 
 ---
 
@@ -150,7 +150,7 @@ Escrow receives EUR → Backend sends OP_RETURN to recipient's address →
 SPV wallet detects transaction → App shows "€100 ready! Code: 7382"
 ```
 
-**Details:** See [opreturn-spv.md](android-app/notification-listener/opreturn-spv.md)
+**Details:** See [opreturn-spv.md](opreturn-spv.md)
 
 ---
 
@@ -366,16 +366,16 @@ Merchant → PagoMóvil → Settlement
 ## Related Documents
 
 - **Backend APIs:**
-  - [Transaction APIs](android-app/backend-apis/transaction-apis.md) - State machine triggered by notifications
-  - [Settlement APIs](android-app/backend-apis/settlement-apis.md) - LP settlement confirmations
-  - [User APIs](android-app/backend-apis/user-apis.md) - OP_RETURN notification system
+  - [Transaction APIs](../backend-apis/transaction-apis.md) - State machine triggered by notifications
+  - [Settlement APIs](../backend-apis/settlement-apis.md) - LP settlement confirmations
+  - [User APIs](../backend-apis/user-apis.md) - OP_RETURN notification system
 
 - **User Flows:**
-  - [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md) - Sender experience
+  - [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md) - Sender experience
   - [RS046-3 Merchant Flows](../flows/merchant-flows.md) - Merchant confirmation
 
 - **Architecture:**
-  - [bch-native-architecture.md](android-app/backend-apis/bch-native-architecture.md) - Overall philosophy
+  - [bch-native-architecture.md](../backend-apis/bch-native-architecture.md) - Overall philosophy
 
 ---
 

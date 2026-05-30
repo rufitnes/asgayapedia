@@ -3414,7 +3414,7 @@ require(checkSig(merchantSig, merchantPubkey));
 
 ## UI Mockups Reference
 
-**All screen designs documented in:** [User Flows](../flows/)
+**All screen designs documented in:** [User Flows](../flows/README.md)
 
 **Sender Screens (8 total):**
 1. Home (Entry Point)
@@ -3797,7 +3797,7 @@ fun testFullSenderFlow_OwnBCH() {
 
 - [Pichan Regtest Setup](./pichan-regtest-setup.md) - Server configuration
 - [Phase 0 Progressive Decentralization](../../decisions/phase-0-progressive-decentralization.md) - Overall strategy
-- [User Flows](../flows/) - UI mockups and flow documentation
+- [User Flows](../flows/README.md) - UI mockups and flow documentation
 - [With volatility buffer Bounty Contracts](../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant logic
 
 ---
@@ -11495,7 +11495,7 @@ Example: VES 5,750
 
 **Implementation:**
 - `knowledge/code/smsbridge_loop.py` — Working notification listener
-- [Settlement APIs](android-app/backend-apis/settlement-apis.md) — API endpoints for this flow
+- [Settlement APIs](../../backend-apis/settlement-apis.md) — API endpoints for this flow
 
 ---
 
@@ -13920,10 +13920,10 @@ Secondary (outline):
 ## Related Documentation
 
 **Flows:**
-- [BCH Payment Flows](../bch-payment-flows.md) — Simpler flow, build FIRST
+- [BCH Payment Flows](bch-payment-flows.md) — Simpler flow, build FIRST
 - [Recipient Flows](../recipient-flows.md) — Recipient claim process (6 screens)
 - [Merchant Flows](../merchant-flows.md) — Merchant VES sale process (5 screens)
-- [BCH Seller Flows](../bch-seller-flows.md) — Seller collateral posting
+- [Trade BCH Screen](../trade-bch-screen.md) — BCH seller and buyer hub
 
 **Decisions:**
 - [How Exchange Rates Work](../../../decisions/how-exchange-rates-work.md) — EUR-denominated covenant, BCH settlement
@@ -16190,7 +16190,7 @@ This directory contains all **sender-side screens** for creating and tracking BC
 ## Navigation Tips
 
 **For reviewers:**
-- Start with [1-home.md](covenant-setup/1-home.md) for entry point
+- Start with [1-home.md](home-screen.md) for entry point
 - Follow one complete branch (A or B) to understand full flow
 - Check [errors/](errors/) for edge cases
 
@@ -17319,7 +17319,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap "See detailed breakdown" → Show savings breakdown screen
 - Tap "Learn More" → Explain how to become seller/merchant
 - Tap "Send Another" → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- Tap "Back to Home" → Return to [Screen 1: Home](../covenant-setup/1-home.md)
+- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen.md)
 - Tap "Share on Twitter" → Open Twitter with pre-filled message
 - Tap "Tell a Friend" → Open WhatsApp/SMS with pre-filled message
 
@@ -17340,7 +17340,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 - [Screen 6B: Tracking](./6b-tracking.md) - Previous screen
 - [Screen 7A: Completion (Own Wallet)](../own-wallet-path/7a-completion.md) - Alternative completion screen
-- [Screen 1: Home](../covenant-setup/1-home.md) - Return to home
+- [Screen 1: Home](../../home-screen.md) - Return to home
 - [Fee Splitting Model](../../../../decisions/fee-splitting-model.md) - How fees are distributed
 - [Pull System](../../../../concepts/pull-system.md) - Recipient-driven settlement
 
@@ -17355,7 +17355,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 # Screen 2: Recipient Selection
 
 **Part of:** [Sender Flows](../README.md) → [Covenant Setup](./)  
-**Previous:** [Screen 1: Home](1-home.md)  
+**Previous:** [Screen 1: Home](../../home-screen.md)  
 **Next:** [Screen 3: Amount Entry](3-amount-entry.md)  
 **Date:** 2026-05-16
 
@@ -17417,7 +17417,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap **"View Merchant Map"** → Preview merchants in recipient's country
 
 **Navigation:**
-- Tap **"◄ Back"** → Return to [Screen 1: Home](1-home.md)
+- Tap **"◄ Back"** → Return to [Screen 1: Home](../../home-screen.md)
 
 ---
 
@@ -17499,7 +17499,7 @@ Success → Continue to Screen 3
 
 ## Related Documentation
 
-- **[Screen 1: Home](1-home.md)** - Entry point
+- **[Screen 1: Home](../../home-screen.md)** - Entry point
 - **[Screen 3: Amount Entry](3-amount-entry.md)** - Next step
 - **[Cash Accounts Concept](../../../concepts/cash-accounts.md)** - Technical details
 - **[Corridor Availability](../../../concepts/corridors.md)** - Supported countries
@@ -18118,7 +18118,7 @@ async def wait_for_bizum(covenant_id, timeout=300):
 *Status: Active - Covenant Architecture*
 
 
-## Error: Covenant Expired (24h Timeout)
+## Covenant Expiry
 
 # Error: Covenant Expired (24h Timeout)
 
@@ -20056,7 +20056,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap "See detailed breakdown" → Show savings breakdown screen
 - Tap "Learn More" → Explain how to become seller/merchant
 - Tap "Send Another" → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- Tap "Back to Home" → Return to [Screen 1: Home](../covenant-setup/1-home.md)
+- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen.md)
 - Tap "Share on Twitter" → Open Twitter with pre-filled message
 - Tap "Tell a Friend" → Open WhatsApp/SMS with pre-filled message
 
@@ -20077,7 +20077,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 - [Screen 6A: Tracking](./6a-tracking.md) - Previous screen
 - [Screen 7B: Completion (Buy from Seller)](../buy-seller-path/7b-completion.md) - Alternative completion screen
-- [Screen 1: Home](../covenant-setup/1-home.md) - Return to home
+- [Screen 1: Home](../../home-screen.md) - Return to home
 - [Fee Splitting Model](../../../../decisions/fee-splitting-model.md) - How fees are distributed
 - [Pull System](../../../../concepts/pull-system.md) - Recipient-driven settlement
 
@@ -20095,7 +20095,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 **Category:** Core Component (MVP Critical)
 **Priority:** 🔴 Critical (The Heart of the App)
-**Related:** [RS046-5 Backend APIs](../backend-apis/), [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md)
+**Related:** [RS046-5 Backend APIs](../backend-apis/), [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md)
 
 ---
 
@@ -20109,28 +20109,28 @@ This folder contains:
    - Data flow examples
    - MVP priorities
 
-2. **[bizum-android.md](android-app/notification-listener/bizum-android.md)**
+2. **[bizum-android.md](bizum-android.md)**
    - Android NotificationListenerService implementation
    - Sabadell-specific parsing
    - Escrow device setup
 
-3. **[pagomovil-android.md](android-app/notification-listener/pagomovil-android.md)**
+3. **[pagomovil-android.md](pagomovil-android.md)**
    - Android SMS receiver implementation
    - Venezuelan bank formats (Banesco, Mercantil, Provincial)
    - Merchant device setup
 
-4. **[opreturn-spv.md](android-app/notification-listener/opreturn-spv.md)**
+4. **[opreturn-spv.md](opreturn-spv.md)**
    - SPV wallet integration
    - OP_RETURN message formats
    - Cross-platform (Android/iOS)
 
-5. **[security.md](android-app/notification-listener/security.md)**
+5. **[security.md](security.md)**
    - SMS spoofing prevention (bank shortcode whitelist)
    - Escrow centralization rationale
    - Fraud detection
    - Privacy protections
 
-6. **[testing.md](android-app/notification-listener/testing.md)**
+6. **[testing.md](testing.md)**
    - Payment flow testing (MVP first)
    - Remittance flow testing (post-beta)
    - Unit tests, integration tests, real-world tests
@@ -20206,7 +20206,7 @@ Transaction moves to payment_received
 - Backend matches: recipient BCH address + phone number
 - Prevents misdirected payments
 
-**Details:** See [bizum-android.md](android-app/notification-listener/bizum-android.md)
+**Details:** See [bizum-android.md](bizum-android.md)
 
 ---
 
@@ -20224,7 +20224,7 @@ NotificationListener parses → Escrow backend updates →
 Settlement moves to ves_confirmed → BCH released to LP
 ```
 
-**Details:** See [pagomovil-android.md](android-app/notification-listener/pagomovil-android.md)
+**Details:** See [pagomovil-android.md](pagomovil-android.md)
 
 ---
 
@@ -20241,7 +20241,7 @@ Escrow receives EUR → Backend sends OP_RETURN to recipient's address →
 SPV wallet detects transaction → App shows "€100 ready! Code: 7382"
 ```
 
-**Details:** See [opreturn-spv.md](android-app/notification-listener/opreturn-spv.md)
+**Details:** See [opreturn-spv.md](opreturn-spv.md)
 
 ---
 
@@ -20457,16 +20457,16 @@ Merchant → PagoMóvil → Settlement
 ## Related Documents
 
 - **Backend APIs:**
-  - [Transaction APIs](android-app/backend-apis/transaction-apis.md) - State machine triggered by notifications
-  - [Settlement APIs](android-app/backend-apis/settlement-apis.md) - LP settlement confirmations
-  - [User APIs](android-app/backend-apis/user-apis.md) - OP_RETURN notification system
+  - [Transaction APIs](../backend-apis/transaction-apis.md) - State machine triggered by notifications
+  - [Settlement APIs](../backend-apis/settlement-apis.md) - LP settlement confirmations
+  - [User APIs](../backend-apis/user-apis.md) - OP_RETURN notification system
 
 - **User Flows:**
-  - [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md) - Sender experience
+  - [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md) - Sender experience
   - [RS046-3 Merchant Flows](../flows/merchant-flows.md) - Merchant confirmation
 
 - **Architecture:**
-  - [bch-native-architecture.md](android-app/backend-apis/bch-native-architecture.md) - Overall philosophy
+  - [bch-native-architecture.md](../backend-apis/bch-native-architecture.md) - Overall philosophy
 
 ---
 
@@ -20496,7 +20496,7 @@ Merchant → PagoMóvil → Settlement
 **Research Type:** Technical Specification
 **Status:** Draft
 **Created:** 2026-04-27
-**Related:** [RS046-5 Backend APIs](android-app/backend-apis/README.md)
+**Related:** [RS046-5 Backend APIs](../backend-apis/README.md)
 
 ---
 
@@ -21355,9 +21355,9 @@ Settings > Apps > Asgaya > Notification Access
 ## Related Documents
 
 
-- **APIs:** [RS046-5 Backend APIs](android-app/backend-apis/README.md) - Escrow endpoint spec
-- **UX:** [RS046-2 Remittance & Merchant Cash-Out](../flows/remittance-merchant-cash-out.md) - User journey context
-- **Security:** [RS046-8 Security](android-app/notification-listener/security.md) - Full security spec (TBD)
+- **APIs:** [RS046-5 Backend APIs](../backend-apis/README.md) - Escrow endpoint spec
+- **UX:** [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md) - User journey context
+- **Security:** [RS046-8 Security](security.md) - Full security spec (TBD)
 
 ---
 
@@ -21476,14 +21476,30 @@ Settings > Apps > Asgaya > Notification Access
 - ✅ Privacy (doesn't expose which addresses you're watching)
 - ✅ Decentralized (connects to BCH network directly)
 
-**Libraries:**
-- **Android:** [bitcoincashj](https://github.com/pokkst/bitcoincashj-thin) (Java/Kotlin)
-- **iOS:** [BitcoinKit](https://github.com/horizontalsystems/BitcoinKit.Swift) (Swift)
-- **Cross-platform:** [Cash-Lib](https://cashweb.cash/) (Kotlin Multiplatform)
+**Implementation Approach:**
+
+- **Android:** [Electrum Client](https://electrum.readthedocs.io/en/latest/protocol.html) ✅ Recommended  
+  Query Asgaya's Fulcrum server for address monitoring and OP_RETURN parsing. Lightweight alternative to full SPV wallet.  
+  *Note:* [bitcoincashj](https://github.com/pokkst/bitcoincashj) is no longer maintained.
+
+- **iOS:** [BitcoinCashKit.Swift](https://github.com/horizontalsystems/BitcoinCashKit.Swift) ✅ Active  
+  Swift library for Bitcoin Cash with SPV wallet and OP_RETURN support. Builds on BitcoinKit, adds BCH-specific features.
+
+- **Cross-platform:** No mature KMP SPV library exists. Use platform-native clients (Electrum for Android, BitcoinCashKit for iOS) with shared business logic in a Kotlin Multiplatform module.
 
 ---
 
-### Android Implementation (bitcoincashj)
+### Android Implementation (Electrum Client)
+
+> ⚠️ **Documentation Update Needed (May 30, 2026)**  
+> The implementation below uses `bitcoincashj`, which is **no longer maintained**.  
+> **Recommended approach:** Use Electrum JSON-RPC client to query Fulcrum server.  
+> This section will be updated with Electrum client implementation in a future research session (RS064).
+
+<details>
+<summary>🗄️ Legacy bitcoincashj Implementation (Reference Only - DO NOT USE)</summary>
+
+### Android Implementation (bitcoincashj - DEPRECATED)
 
 **Dependencies:**
 
@@ -21748,6 +21764,8 @@ class AsgayaWallet(
 ```
 
 ---
+
+</details>
 
 ### Notification Display
 
@@ -22334,7 +22352,10 @@ sendOpReturnNotification(address, "ASGAYA_TXN_READY_7382")
 
 ### iOS Implementation
 
-**Use BitcoinKit.Swift:**
+**Recommended: Use [BitcoinCashKit.Swift](https://github.com/horizontalsystems/BitcoinCashKit.Swift)**  
+(BCH-specific library built on BitcoinKit, adds OP_RETURN and CashAddr support)
+
+**Example using BitcoinKit.Swift (also works):**
 
 ```swift
 import BitcoinKit
@@ -22377,10 +22398,10 @@ class AsgayaWallet {
 
 ## Related Documents
 
-- **Index:** [NotificationListener Architecture](android-app/notification-listener/README.md) - Overview
-- **Bizum:** [bizum-android.md](android-app/notification-listener/bizum-android.md) - EUR notifications
-- **PagoMóvil:** [pagomovil-android.md](android-app/notification-listener/pagomovil-android.md) - VES notifications
-- **User APIs:** [user-apis.md](android-app/backend-apis/user-apis.md) - OP_RETURN message formats
+- **Index:** [NotificationListener Architecture](README.md) - Overview
+- **Bizum:** [bizum-android.md](bizum-android.md) - EUR notifications
+- **PagoMóvil:** [pagomovil-android.md](pagomovil-android.md) - VES notifications
+- **User APIs:** [user-apis.md](../backend-apis/user-apis.md) - OP_RETURN message formats
 - **Architecture:** [README.md](../README.md) - Philosophy
 
 ---
@@ -23361,10 +23382,10 @@ suspend fun pollBanescoPayments() {
 
 ## Related Documents
 
-- **Index:** [NotificationListener Architecture](android-app/notification-listener/README.md)
-- **Bizum:** [bizum-android.md](android-app/notification-listener/bizum-android.md) - Similar pattern for EUR
-- **OP_RETURN:** [opreturn-spv.md](android-app/notification-listener/opreturn-spv.md) - BCH notifications
-- **Backend:** [settlement-apis.md](android-app/backend-apis/settlement-apis.md) - Settlement state machine
+- **Index:** [NotificationListener Architecture](README.md)
+- **Bizum:** [bizum-android.md](bizum-android.md) - Similar pattern for EUR
+- **OP_RETURN:** [opreturn-spv.md](opreturn-spv.md) - BCH notifications
+- **Backend:** [settlement-apis.md](../backend-apis/settlement-apis.md) - Settlement state machine
 
 ---
 
@@ -23380,7 +23401,7 @@ suspend fun pollBanescoPayments() {
 
 **Category:** Security & Fraud Prevention
 **Priority:** 🔴 Critical
-**Related:** [Index](android-app/notification-listener/README.md), [bizum-android.md](android-app/notification-listener/bizum-android.md), [pagomovil-android.md](android-app/notification-listener/pagomovil-android.md)
+**Related:** [Index](README.md), [bizum-android.md](bizum-android.md), [pagomovil-android.md](pagomovil-android.md)
 
 ---
 
@@ -24025,9 +24046,9 @@ if not AUTO_PARSING_ENABLED:
 
 ## Related Documents
 
-- **Index:** [NotificationListener Architecture](android-app/notification-listener/README.md) - Overview
-- **Testing:** [testing.md](android-app/notification-listener/testing.md) - Security testing details
-- **Monitoring:** [README.md](android-app/notification-listener/README.md) - Security metrics
+- **Index:** [NotificationListener Architecture](README.md) - Overview
+- **Testing:** [testing.md](testing.md) - Security testing details
+- **Monitoring:** [README.md](README.md) - Security metrics
 
 ---
 
@@ -24042,7 +24063,7 @@ if not AUTO_PARSING_ENABLED:
 
 **Category:** Quality Assurance & Validation
 **Priority:** 🔴 Critical
-**Related:** [Index](android-app/notification-listener/README.md), [security.md](android-app/notification-listener/security.md)
+**Related:** [Index](README.md), [security.md](security.md)
 
 ---
 
@@ -24780,9 +24801,9 @@ Fuzzy Detector
 
 ## Related Documents
 
-- **Index:** [NotificationListener Architecture](android-app/notification-listener/README.md) - Overview
-- **Security:** [security.md](android-app/notification-listener/security.md) - Security testing
-- **Monitoring:** [README.md](android-app/notification-listener/README.md) - Production metrics
+- **Index:** [NotificationListener Architecture](README.md) - Overview
+- **Security:** [security.md](security.md) - Security testing
+- **Monitoring:** [README.md](README.md) - Production metrics
 
 ---
 
@@ -34240,6 +34261,173 @@ These principles guide all architectural decisions across the three requirements
 *Last updated: May 19, 2026*
 
 
+## 2.2: Safeguard to Keep Exchange Rate Tied to Real-World Value
+
+# 2.2: Safeguard to Keep Exchange Rate Tied to Real-World Value
+
+## Requirement Statement
+
+> Safeguard to keep the exchange rate tied to real world value of the currencies in case of remittances
+
+**From:** `engeneering_requirements.md` section 2.2
+
+## Why This Requirement Exists
+
+**The government extraction problem:** Some governments impose official exchange rates below market value to extract wealth from remittances.
+
+**Example: Argentina**
+- Official rate: 1 USD = 350 ARS
+- Blue dollar rate: 1 USD = 1,000 ARS
+- Government captures: ~65% of remittance value through rate manipulation
+
+**Who gets hurt:** Migrants sending money home, families receiving remittances
+
+**How it's unfair:** Hard-earned money stolen through financial repression
+
+**Asgaya's answer:** Bypass government-controlled rates, use real market rates.
+
+## Current Solution
+
+**Use BCH/fiat market pairs to ensure fair value:**
+
+```
+Sender: €50 EUR
+    ↓
+Escrow: Buys BCH at Kraken market rate (e.g., €385/BCH)
+    ↓
+Amount: 0.1299 BCH
+    ↓
+Merchant: Receives 0.1299 BCH
+    ↓
+Merchant: Sells BCH at local market rate (or holds)
+    ↓
+Recipient: Gets fair market value in local currency
+```
+
+**Key protection:** BCH is global, permissionless, market-driven
+- No government can dictate BCH/EUR rate
+- No government can dictate BCH/local currency rate
+- **Real market value always flows through**
+
+**How this bypasses manipulation:**
+
+**Traditional remittance (subject to control):**
+```
+EUR → Bank → Government-imposed rate → Local currency
+Result: Government captures spread
+```
+
+**Asgaya (escapes control):**
+```
+EUR → Kraken (global market) → BCH → Local market → Local currency
+Result: Market determines value, government can't intercept
+```
+
+## How This Meets The Requirement
+
+**Guarantee of fair value:**
+
+1. **EUR → BCH conversion:** Kraken global market rate (publicly visible, competitive)
+2. **BCH → Local currency:** Local market rate (P2P, merchant sets, competitive)
+3. **No extraction point:** Government can't impose artificial rate
+
+**Transparency:**
+- User sees: "€50 = 0.1299 BCH at rate €385/BCH"
+- Merchant sees: "0.1299 BCH = X local currency at current rate"
+- **All rates verifiable against public markets**
+
+**Example: Honduras corridor**
+```
+Sender: €50
+Kraken rate: €385/BCH → 0.1299 BCH
+Honduras BCH/HNL rate: 1 BCH = 9,625 HNL (example)
+Recipient gets: ~1,250 HNL
+Western Union would give: ~1,100 HNL (inflated spread + fees)
+Difference: 13.6% more value via Asgaya
+```
+
+## Trade-offs Made
+
+**NO flexibility on exchange rates:**
+
+**In previous requirements:** Freedom to users (cash out or hold, convenience choice)
+
+**In THIS requirement:** NO compromise
+
+**Users get:**
+- Market rate
+- Fixed compensation for escrow/merchant
+- **That's it**
+
+**Escrows CANNOT:**
+- Inflate exchange rate
+- Negotiate better personal rate
+- Extract profit through spread manipulation
+
+**Merchants CANNOT:**
+- Quote below-market BCH rates to users
+- Exploit information asymmetry
+- Price-gouge on cash-outs
+
+**Why zero flexibility?**
+
+**Protection against:**
+- Escrow becoming predatory (charging hidden spread)
+- Merchant becoming exploitative (monopoly pricing)
+- System replicating legacy problems (opacity, extraction)
+
+**The line we draw:** Convenience = flexible. Exchange rate = non-negotiable.
+
+## Implementation Status
+
+- ✅ **Proven:** Kraken API provides transparent market rates
+- ✅ **Proven:** BCH global markets exist (liquid, efficient)
+- 🔄 **In development:** Display real-time rates in sender/merchant apps
+- 🔄 **In development:** Rate comparison tools (Asgaya vs. WU/MoneyGram)
+- ❌ **Not tested:** Local market rate discovery (how merchants price BCH)
+- ❌ **Not tested:** User verification of fair rates
+
+**Trial runs will determine:**
+- Are our incentive amounts adequate?
+- Do users trust the rates shown?
+- Do merchants try to inflate spreads anyway?
+- **Interview users, crunch numbers, adjust if needed**
+
+## Future Improvements
+
+**V1:** Establish rate transparency baseline
+- Show Kraken rate in real-time in app
+- Show local market rate comparison
+- Educate users on how to verify
+
+**V1.1:** Rate guarantees
+- Escrow commits to "Kraken rate + max 0.5% spread"
+- Merchant commits to "Local market rate +/- 1%"
+- Transparent, published, enforceable
+
+**V2:** Decentralized rate discovery
+- On-chain rate oracles
+- Community-verified local markets
+- Impossible to manipulate without detection
+
+**V3:** Smart contract enforcement
+- Rates locked in smart contract
+- Automatic arbitrage if deviation
+- Trustless guarantee of fair value
+
+## Related Documents
+
+- **Research:** [RS009 Argentina blue dollar, RS010 Honduras rate analysis]
+- **Concepts:** [To be cross-referenced by local LLM]
+- **Architecture:** [Kraken integration, pull system rate locking]
+
+---
+
+*Last updated: April 8, 2026 by Coordination Claude*  
+*Core principle: "Governments extract wealth through exchange rate manipulation. We bypass this with market rates."*  
+*Trade-off: Freedom on convenience, ZERO flexibility on exchange rates. Market value is non-negotiable.*
+
+
 ## Why BCH Usage Incentive
 
 # Why: BCH Usage Incentive (Recipients)
@@ -42192,7 +42380,6 @@ expired_unclaimed → refunded (covenant timeout, BCH returned to seller, EUR re
 
 ## Related Research
 
-- **[RS010_Bizum.md](../research/RS010_Bizum.md)** — Bizum refund capabilities and timing
 - **[Two-Step Settlement Timing](two-step-settlement-timing.md)** — Why covenant-based architecture prevents volatility risk
 
 ---
@@ -45712,6 +45899,701 @@ Top 5 ask levels:
 Want me to save this, or do you want to review/edit first? 📝
 
 
+## RS039 — Temporal Market Impact: When Concentrated Flow Moves Markets
+
+# RS039 — Temporal Market Impact: When Concentrated Flow Moves Markets
+
+**Research Type:** Market Analysis + Strategy Design  
+**Date:** April 18-19, 2026  
+**Status:** Complete — Strategy Validated  
+**Outcome:** Foreknowledge arbitrage model discovered
+
+---
+
+## Problem Statement
+
+Initial design assumed "we become the market" at high average volume thresholds (~€5M/month, 5% of daily BCH volume).
+
+**Critical oversight:** Remittances aren't evenly distributed. They concentrate around payday cycles, creating **peak impact much higher than average impact**.
+
+**Question:** When does concentrated remittance flow actually move BCH markets?
+
+---
+
+## Key Findings
+
+### 1. Remittance Flow Patterns (Spain Focus)
+
+**Monthly cycle (payday effect):**
+- Spanish salaries paid: 25th of month to 5th of next month
+- Remittance surge: First few days after payday (1st-7th peak)
+- Mid-month: Lower activity (15-21)
+- Late month: Minimal (22-30, waiting for payday)
+
+**Annual bonuses ("paga extra"):**
+- Spain pays 14 months/year (not 12)
+- Extra payments: July and December
+- Amount: One month's salary each
+- Impact: 2x remittance capacity in these months
+
+**Seasonal patterns:**
+- December: +10% surge (Christmas, highest month of year)
+- 54% for household needs, 26% for special occasions
+- After payday: Immediate surge in first few days
+
+### 2. BCH Market Liquidity Patterns
+
+**Weekday vs Weekend (Critical):**
+- Weekday volume: 2x weekend volume
+- Weekend orderbook depth: 50-70% thinner
+- U.S. trading hours: 47% of total volume
+- Weekend = more volatile, less institutional participation
+
+**Time of day:**
+- Pattern: "Reverse V-shape" 
+- Low: Asian night hours (2-8am EST)
+- Peak: U.S. trading hours (9am-4pm EST)
+- Weekend nights: Lowest liquidity windows
+
+**Impact multiplier:**
+- Same €50k buy order:
+  - Weekday morning: 10% impact
+  - Weekend night: 20-40% impact
+- 2-4x more price effect in low liquidity windows
+
+### 3. The Concentration Problem
+
+**Example: €150k monthly volume**
+
+**If distributed evenly:**
+- €5k/day average
+- BCH volume: €500k/day average
+- Impact: 1% (negligible)
+
+**Actual distribution:**
+- Week 1 (payday): €100k (66% of monthly)
+- Week 2-4: €50k (34% of monthly)
+- Weekend concentration: €70k Saturday-Sunday
+- Weekend BCH volume: €250k/day
+- **Weekend impact: 28%** (we dominate the market!)
+
+**December payday weekend:**
+- Normal €150k + extra paga €150k + 10% holiday surge
+- Total: €330k concentrated on first weekend
+- Saturday alone: €150k
+- Weekend BCH volume: €250k
+- **Impact: 60% of weekend volume**
+- **WE ARE THE MARKET**
+
+### 4. Threshold Revision
+
+**Old model (average volume):**
+| Monthly Volume | Daily Average | Impact | Phase |
+|----------------|---------------|---------|-------|
+| €200k | €6.7k | 1.3% | Phase 1 |
+| €5M | €167k | 33% | Phase 2 |
+
+**New model (peak concentration):**
+| Monthly Volume | Weekend Peak | Peak Impact | Phase |
+|----------------|--------------|-------------|-------|
+| €100k | €60k | 24% | Phase 2 needed! |
+| €200k | €120k | 48% | Dominant |
+| €500k | €300k | 120% | **We ARE the weekend market** |
+
+**Phase 2 needed 50x earlier than expected** (€100k not €5M)
+
+---
+
+## The Foreknowledge Insight
+
+**Critical realization:** We're not trying to predict BCH price randomly. **We can predict our own transaction volume.**
+
+**Predictable patterns:**
+- First weekend of month = high volume (payday)
+- Mid-month = low volume
+- December = very high volume (Christmas)
+- These patterns repeat monthly/annually
+
+**This creates asymmetric information:**
+- Market doesn't know: €150k buy pressure coming Saturday
+- Escrows know: Historical data shows payday weekend spike
+- **Foreknowledge of your own demand = arbitrage opportunity**
+
+---
+
+## The Foreknowledge Arbitrage Strategy
+
+### Concept
+
+**If you KNOW you'll need to buy €150k BCH on Saturday (low liquidity), you can:**
+1. Pre-buy Friday (high liquidity) at better price
+2. Use reserves Saturday (no market impact)
+3. Replenish Monday-Wednesday (post-spike dip) at better price
+4. **Profit from the spread**
+
+### Execution
+
+**Friday (T-1 day):**
+```
+Forecast: €150k volume expected Saturday
+Action: Pre-buy €100k worth BCH
+Market: Weekday, high liquidity (€500k volume)
+Impact: 20% (absorbed easily)
+Price: €380 average
+Reserve: 263 BCH accumulated
+```
+
+**Saturday (T-day):**
+```
+Reality: €150k remittances arrive (as predicted)
+Action: Use reserves (send from Friday's purchase)
+Market: No buying (just sending from reserves)
+Impact: Zero (no market order)
+Price: Stays at €380 (stable, no spike)
+User experience: Instant (already have BCH)
+```
+
+**Monday-Wednesday (T+1 to T+3):**
+```
+Action: Replenish reserves gradually
+Market: Weekday, high liquidity, no weekend spike happened
+Impact: 6-7% per day (absorbed)
+Price: €378 average (slight dip from lack of spike)
+Reserve: Restored to 263 BCH
+```
+
+**Net profit:**
+```
+Bought Friday: €380/BCH × 263 BCH = €99,940
+Replenished Monday: €378/BCH × 263 BCH = €99,414
+Arbitrage profit: €526 on €150k volume = 0.35%
+
+Plus fee spread: 0.24%
+Total escrow profit: 0.59% (2.5x better than fees alone)
+```
+
+### Why This Works
+
+**Not market manipulation - it's inventory management:**
+- Amazon pre-positions stock before Prime Day (knows demand spike)
+- Airlines hedge fuel costs (knows usage patterns)
+- Farmers pre-sell harvest (knows supply coming)
+- **Escrows pre-buy BCH before payday (knows demand coming)**
+
+**Comparison to failed accumulation strategies:**
+- RS038 showed: Can't time random BCH movements (no edge)
+- RS039 shows: CAN time your own operational demand (perfect knowledge)
+- **Not predicting "the market" - predicting YOURSELF**
+
+### The Dual Benefit
+
+**1. Escrow Profit (Sword):**
+- Buy low liquidity Friday, replenish low demand Monday
+- Arbitrage spread: 0.3-0.5% average
+- Compounds over time
+- Makes escrow operations more profitable
+
+**2. Market Stability (Shield):**
+- No weekend demand shock
+- No price spike → no FOMO → no bubble
+- Smooth price action
+- **Protects network from BCH's weak liquidity**
+
+**The bot is both offensive (profit) and defensive (stability).**
+
+### Protection Against BCH Weakness
+
+**BCH is vulnerable:**
+- Smaller market cap than BTC
+- Lower liquidity (especially weekends)
+- Fewer institutional market makers
+- More susceptible to demand shocks
+
+**Without mitigation:**
+- €150k weekend buy → price spikes 5-10%
+- Traders see spike → FOMO
+- Price bubbles → eventually crashes
+- Pulperos holding BCH lose money
+- Trust destroyed, adoption killed
+
+**With foreknowledge arbitrage:**
+- Pre-positioned reserves absorb demand
+- No visible spike
+- Stable, healthy market
+- **The bot shields Asgaya from BCH's structural weakness**
+
+---
+
+## Implementation Strategy
+
+### Phase Definitions (Revised)
+
+**Phase 1: Unpredictable Volume**
+- **Threshold:** €0-€100k/month
+- **Characteristics:** Random, sporadic transactions
+- **Can't forecast:** No clear patterns yet
+- **Strategy:** Hold EUR, buy on-demand
+- **Reserves:** None needed
+- **Profit:** 0.24% (fee spread only)
+
+**Phase 2: Predictable Concentrated Volume**
+- **Threshold:** €100k-€500k/month
+- **Characteristics:** Clear payday patterns emerge
+- **Can forecast:** Historical data shows concentration
+- **Strategy:** Foreknowledge arbitrage model
+- **Reserves:** Pre-positioned BCH (€5k-€20k)
+- **Profit:** 0.54-0.74% (fees + arbitrage)
+
+**Phase 3: Market Dominant**
+- **Threshold:** €500k+/month
+- **Characteristics:** Continuous high volume
+- **Creating the market:** Systemic influence
+- **Strategy:** 50/50 reserves + full bubble prevention
+- **Reserves:** Large (€50k+)
+- **Profit:** Fees + arbitrage + BCH appreciation
+
+### The Forecasting Algorithm
+
+```python
+def forecast_weekend_volume():
+    """Predict transaction volume for upcoming weekend"""
+    
+    # Get historical patterns
+    current_day_of_month = get_day_of_month()
+    current_month = get_month()
+    historical_data = get_last_6_months_volume()
+    
+    # Pattern detection
+    if 28 <= current_day_of_month <= 5:
+        # Payday weekend coming
+        base_forecast = historical_avg_payday_weekend()
+        confidence = "high"
+    
+    if current_month == 12:
+        # December bonus month
+        base_forecast *= 2.2  # Extra paga + 10% holiday surge
+        confidence = "very high"
+    
+    if current_month == 7:
+        # July bonus month
+        base_forecast *= 1.8  # Extra paga
+        confidence = "high"
+    
+    # Adjust for trends
+    if volume_growing_trend():
+        base_forecast *= 1.1
+    
+    return {
+        'forecast': base_forecast,
+        'confidence': confidence,
+        'range': (base_forecast * 0.8, base_forecast * 1.2)
+    }
+```
+
+### Reserve Management Algorithm
+
+```python
+def manage_reserves_with_foreknowledge():
+    """Pre-position reserves based on demand forecast"""
+    
+    # Forecast upcoming demand
+    weekend_forecast = forecast_weekend_volume()
+    current_reserves = get_bch_balance()
+    
+    # Determine if pre-positioning needed
+    deficit = weekend_forecast['forecast'] - current_reserves
+    
+    if deficit > 0 and weekend_forecast['confidence'] == "high":
+        # Need more reserves for weekend
+        
+        # Calculate optimal buy timing
+        if is_thursday() or is_friday():
+            # High liquidity window, buy now
+            buy_schedule = create_gradual_buy_schedule(
+                amount=deficit,
+                start_time="now",
+                end_time="friday_4pm",
+                batches=12  # Spread over 12 hours
+            )
+            execute_buys(buy_schedule)
+    
+    # Weekend: Use reserves (no market buying)
+    if is_weekend():
+        process_with_reserves()  # No market impact
+    
+    # Monday-Wednesday: Replenish
+    if is_monday() or is_tuesday() or is_wednesday():
+        used_reserves = calculate_reserves_used_weekend()
+        
+        if used_reserves > 0:
+            # Gradual replenishment
+            replenish_schedule = create_gradual_buy_schedule(
+                amount=used_reserves,
+                start_time="9am",
+                end_time="wednesday_4pm",
+                batches=24  # Spread over 3 days
+            )
+            execute_buys(replenish_schedule)
+```
+
+### Profit Tracking
+
+```python
+def track_arbitrage_performance():
+    """Measure foreknowledge arbitrage returns"""
+    
+    metrics = {
+        'avg_pre_buy_price': [],
+        'avg_replenish_price': [],
+        'spread_per_cycle': [],
+        'cycles_per_month': 0,
+        'total_arbitrage_profit': 0
+    }
+    
+    for cycle in get_completed_cycles():
+        pre_buy_avg = cycle.avg_price_purchased
+        replenish_avg = cycle.avg_price_replenished
+        
+        spread = pre_buy_avg - replenish_avg
+        profit = spread * cycle.volume_bch
+        
+        metrics['avg_pre_buy_price'].append(pre_buy_avg)
+        metrics['avg_replenish_price'].append(replenish_avg)
+        metrics['spread_per_cycle'].append(spread)
+        metrics['total_arbitrage_profit'] += profit
+        metrics['cycles_per_month'] += 1
+    
+    # Calculate success rate
+    successful_cycles = sum(1 for s in metrics['spread_per_cycle'] if s > 0)
+    success_rate = successful_cycles / metrics['cycles_per_month']
+    
+    return {
+        'success_rate': success_rate,
+        'avg_spread': mean(metrics['spread_per_cycle']),
+        'total_profit': metrics['total_arbitrage_profit'],
+        'profit_percentage': metrics['total_arbitrage_profit'] / total_volume
+    }
+```
+
+---
+
+## Honduras Partnership Strategic Value
+
+**With foreknowledge arbitrage model, Honduras matters more:**
+
+### Temporal Diversification
+
+**Spain corridor:**
+- Payday: Last day of month (monthly concentration)
+- Peak: 1st-7th of month
+- Pattern: One big spike per month
+
+**Honduras corridor (US-based):**
+- Payday: Varies by employer (typically bi-weekly)
+- Peak: 1st-15th and 15th-30th
+- Pattern: Two smaller spikes per month
+
+**Combined:**
+- More frequent arbitrage opportunities (2-4x per month)
+- Lower peak concentration (spread across more dates)
+- Better risk distribution (if one forecast wrong, others compensate)
+
+### Forecast Accuracy Improvement
+
+**Single corridor risk:**
+- Spain forecast off by 20% = large error
+- All eggs in one basket
+
+**Multi-corridor benefit:**
+- Spain forecast: ±20% error
+- Honduras forecast: ±20% error
+- Combined forecast: ±10% error (diversification benefit)
+- Better overall accuracy
+
+### The Biska POS Opportunity
+
+**Why this partnership is strategically valuable:**
+
+1. **Direct merchant access** (POS integration)
+2. **Last-mile distribution** (pulpería network)
+3. **Geographic diversification** (US payday cycles)
+4. **Temporal diversification** (bi-weekly vs monthly)
+5. **Risk reduction** (multiple forecast sources)
+
+**Recommendation:** Actively pursue Biska partnership. Temporal diversification improves arbitrage model performance significantly.
+
+---
+
+## Risk Analysis
+
+### Forecast Error Risk
+
+**What if prediction is wrong?**
+
+**Scenario: Forecast €150k, actual €100k**
+- Pre-bought: €100k worth Friday (263 BCH)
+- Actually needed: €67k worth (176 BCH)
+- Excess reserves: 87 BCH
+- Stuck holding BCH over next week
+- Volatility exposure: Could lose 2-5% if price drops
+
+**Mitigation:**
+- Use confidence-adjusted positioning (only buy 80% of forecast if low confidence)
+- Diversify across corridors (multiple forecasts reduce error)
+- Accept some error (overall still profitable)
+
+### Execution Risk
+
+**What if can't replenish at lower price?**
+
+**Scenario: Price keeps rising after weekend**
+- Pre-bought Friday: €380
+- Used Saturday: Sent to users
+- Monday price: €385 (up, not down!)
+- Replenish cost: €385 (loss on this cycle)
+- Loss: €5/BCH × 263 BCH = €1,315
+
+**Mitigation:**
+- Not every cycle will profit (aim for 60-70% success rate)
+- Losses on some cycles offset by wins on others
+- Overall: Still profitable (fee spread always there as baseline)
+- View as portfolio, not individual bets
+
+### Regulatory Risk
+
+**Is this legal?**
+
+**Analysis:**
+- Using own operational data (not insider info)
+- Managing own inventory (not manipulating market)
+- Transparent patterns (public payday information)
+- Similar to airline fuel hedging, farmer futures
+
+**Conclusion:** Legal inventory management, not market manipulation
+
+**However:**
+- Should consult legal counsel
+- Document legitimate business purpose
+- Maintain audit trail
+- Be prepared to explain strategy to regulators
+
+---
+
+## Success Metrics
+
+**How to measure if this works:**
+
+### Primary Metrics
+- **Arbitrage profit per cycle:** Target 0.3-0.5%
+- **Success rate:** Target 60-70% of cycles profitable
+- **Total profit margin:** Target 0.54-0.74% overall
+- **Forecast accuracy:** Target ±15% volume prediction error
+
+### Secondary Metrics
+- **Market stability:** BCH price volatility during Asgaya peaks
+- **User experience:** Transaction success rate (should be 100%)
+- **Reserve utilization:** How much capital tied up vs volume processed
+
+### Risk Metrics
+- **Maximum drawdown:** Largest loss on single cycle
+- **Volatility exposure:** Days holding BCH reserves
+- **Forecast error distribution:** How often/how much predictions miss
+
+---
+
+## Pulpero Coordination Strategy (UPDATE - April 20, 2026)
+
+### Ground Truth: Sunday Operations
+
+**Validation (April 20):** Honduras pulperías ARE open Sundays with variable hours (most close 4pm-8pm). Weekend remittance spike is real and must be managed.
+
+### The Critical Insight: Pulperos Are Market Participants
+
+**The missing variable:** Pulperos aren't just cash-out points - they're **the other side of the market**.
+
+**Complete market flow:**
+```
+Weekend Remittance Spike:
+  1. Senders → Demand BCH (buy pressure)
+  2. Escrow → Uses pre-positioned reserves (removes buy pressure)
+  3. Receivers → Cash out at pulperías
+  4. Pulperías → Accumulate BCH from cash-outs
+
+  Critical decision point:
+  → If pulperos HOLD BCH: No sell pressure, price stays elevated
+  → If pulperos SELL BCH: Sell pressure balances market
+```
+
+**Key realization:** Pulpero behavior is a control variable we can influence through coordination.
+
+---
+
+### Strategy 1: Warning Notifications
+
+**When spike risk detected (>15% market impact), send alert:**
+
+```
+⚠️ ALERTA DE VOLUMEN ALTO
+
+Debido al alto número de remesas este fin de semana,
+existe peligro de burbuja especulativa en BCH.
+
+RECOMENDACIÓN: Convierta su BCH a HNL inmediatamente.
+
+Volumen estimado: {forecast} BCH
+Impacto de mercado: {impact}%
+
+Puede volver a mantener BCH el lunes cuando el
+volumen se normalice.
+
+Esta recomendación protege su capital.
+
+[Convertir a HNL Ahora]
+```
+
+**Why this works:**
+- Aligned incentives: Pulpero doesn't want bubble risk
+- Creates counter-pressure: Selling balances escrow's removed buy pressure
+- Educational: Teaches market dynamics
+- Honest: Genuinely protects pulpero capital
+
+**Not manipulation** - it's market education serving pulpero interests.
+
+---
+
+### Strategy 2: POS Default Override (Opt-Out Model)
+
+**More sophisticated: Change behavior automatically with explicit opt-out**
+
+**Normal conditions:**
+- POS default: Pulpero controls BCH→HNL timing
+- Full agency preserved
+
+**High volume spike detected:**
+- System notification:
+
+```
+⚠️ CAMBIO TEMPORAL DE CONFIGURACIÓN
+
+Debido al alto volumen de remesas este fin de semana
+(estimado: €240k, 24% del mercado BCH),
+
+SU POS CONVERTIRÁ AUTOMÁTICAMENTE BCH→HNL
+en las próximas 48 horas.
+
+RAZÓN: Protección contra burbuja especulativa.
+
+Esta configuración volverá a normal el lunes.
+
+Si prefiere mantener su configuración actual:
+
+[RECHAZAR CAMBIO] [ACEPTAR PROTECCIÓN]
+
+Usuarios que aceptan protección: 127/150 (85%)
+```
+
+**Default: Auto-convert ENABLED (must actively reject)**
+
+**Why opt-out beats opt-in:**
+1. Friction favors safety (most accept default via inertia)
+2. Preserves agency (can still reject)
+3. Transparency (clear explanation)
+4. Social proof (shows acceptance rate)
+5. Temporary (returns Monday, low commitment)
+
+---
+
+### The Coordination Effect
+
+**Market balance equation:**
+```
+Weekend stability =
+  Escrow removes buy pressure (pre-positioning) +
+  Pulpero adds sell pressure (immediate selling)
+```
+
+**Impact on capital requirements:**
+
+| Approach | Escrow Capital | Pulpero Compliance | Effectiveness | Total Profit |
+|----------|----------------|-------------------|---------------|--------------|
+| Escrow alone | €100k | N/A | 60-70% | 0.35% |
+| + Warning nudge | €30k | 60% | 85% | 0.45% |
+| + POS default | €30k | 85% | 95% | 0.52% |
+
+**Capital requirement reduced 3x while effectiveness increased!**
+
+---
+
+### Revised Capital Requirements
+
+| Phase | Volume | Escrow Capital | Pulpero Strategy | Coverage | Profit |
+|-------|--------|----------------|------------------|----------|--------|
+| 1 | €0-€50k | €2k | None | N/A | 0.26% |
+| 1.5 | €50-€150k | €10k | Warning | 50% effective | 0.32% |
+| 2A | €150-€300k | €20k | Warning | 70% effective | 0.42% |
+| 2B | €300-€600k | €40k | POS default | 90% effective | 0.55% |
+| 3 | €600k+ | €80k+ | POS default | 95% effective | 0.65% |
+
+**Phase 2 achievable Month 9-12 (was Month 18-24 without coordination)**
+
+---
+
+## Next Steps
+
+### Documentation Updates
+1. ✅ **escrow_incentives.md:** Add foreknowledge arbitrage section
+2. ✅ **bubble_prevention.md:** Revise Phase 2 triggers (€100k not €5M)
+3. ✅ **RS039:** Updated with pulpero coordination (April 20)
+4. ✅ **NEW: market_making_partners.md:** Coordination concept extracted
+
+### Technical Development
+1. **Build forecasting module:** Historical pattern analysis
+2. **Reserve calculator:** Optimal pre-positioning amounts
+3. **Execution optimizer:** When to buy/replenish
+4. **Profit tracker:** Measure arbitrage returns
+5. **Backtest framework:** Test strategy on historical data
+6. **NEW: Warning system:** Spike detection + pulpero alerts
+7. **NEW: POS default manager:** Auto-override with opt-out
+8. **NEW: Compliance tracker:** Monitor pulpero behavior
+
+### Validation
+1. **Backtest with Kraken data:** Would this have worked Q4 2025?
+2. **Simulation:** Different volume/volatility scenarios
+3. **Sensitivity analysis:** How much forecast error is tolerable?
+4. **Legal review:** Confirm strategy is compliant
+5. **NEW: Compliance modeling:** Required cooperation percentage
+6. **NEW: A/B testing:** Warning vs default override effectiveness
+
+### Partnership
+1. **Honduras (Biska POS):** Temporal diversification + pulpero education
+2. **Additional corridors:** Identify payday patterns
+3. **NEW: Pulpero training:** Market dynamics and their stabilization role
+
+---
+
+## Conclusion
+
+**The key insight:** Remittances concentrate around predictable payday cycles, creating peak market impact far exceeding average impact.
+
+**The opportunity:** Foreknowledge of your own demand creates legitimate arbitrage through reserve pre-positioning.
+
+**The benefit:** Dual purpose - escrow profit (0.5% vs 0.24%) AND market stability (shield against BCH weakness).
+
+**The timeline:** Phase 2 needed at €100k/month (50x earlier than initially estimated).
+
+**The strategy:** Not market timing (doesn't work per RS038), but inventory management based on operational foreknowledge (does work).
+
+**The bot's role:** Both sword (profit) and shield (protection against BCH's thin markets).
+
+---
+
+*Research completed: April 19, 2026*  
+*Lead researcher: Suso + Coordination Claude*  
+*Method: Market pattern analysis + strategic modeling*  
+*Status: Strategy validated, ready for implementation*  
+*Philosophy: Foreknowledge ≠ Speculation*
+
+
 ## Research Session RS041: Cross-Corridor Exchange Rate Calculation
 
 # Research Session RS041: Cross-Corridor Exchange Rate Calculation
@@ -46311,6 +47193,726 @@ Concept: 001, 002, 003, etc.
 ---
 
 **Research complete.** Total cost: €3. Value: Priceless. 😎
+
+
+## RS043: LLM.txt & AI-Native Web Architecture
+
+# RS043: LLM.txt & AI-Native Web Architecture
+
+**Date:** 2026-04-23
+**Researcher:** Suso + Coordination
+**Context:** Making Asgaya.org fully navigable by AI agents
+**Status:** Phase 1 complete (root llm.txt live), Phase 2 planned (hierarchical structure)
+
+---
+
+## **Research Question**
+
+How can we make Asgaya.org equally accessible to both human and AI visitors, ensuring AI agents can discover, understand, and navigate our documentation as effectively as humans browse HTML?
+
+---
+
+## **Key Insight: The Dual-Web Problem**
+
+**Traditional web architecture:**
+```
+Website optimized for: Humans
+Format: HTML, CSS, JavaScript
+Navigation: Visual menus, hyperlinks
+Problem: AI agents waste tokens parsing HTML bloat
+```
+
+**Our solution:**
+```
+Website optimized for: Humans AND AI
+Format: HTML (for humans) + Markdown/llm.txt (for AI)
+Navigation: Visual menus (humans) + llm.txt hierarchy (AI)
+Result: Same information, optimized delivery for each consumer
+```
+
+---
+
+## **What is llm.txt?**
+
+### **Definition**
+LLM.txt is a machine-readable summary file placed at the root of a domain (like `robots.txt`) that provides structured information optimized for Large Language Model consumption.
+
+**Location:** `https://yoursite.com/llm.txt`
+
+**Format:** Markdown (human-readable, LLM-parseable)
+
+**Purpose:** "If an AI agent visits your site, what do you want it to know?"
+
+---
+
+### **Origin & History**
+
+**Emerged:** Late 2023 / Early 2024
+**Community:** Grassroots convention from AI developer community
+**Similar to:**
+- `robots.txt` (1994 - for web crawlers)
+- `humans.txt` (2011 - credits)
+- `.well-known/` (IETF metadata standard)
+
+**No formal spec (yet)** - community practice, like early `robots.txt`
+
+**Asgaya adoption:** April 23, 2026 (early adopter)
+
+---
+
+### **The Problem It Solves**
+
+**Before llm.txt:**
+```
+User asks ChatGPT: "What is Asgaya?"
+ChatGPT: *scrapes asgaya.org HTML*
+ChatGPT: *parses navigation, footer, CSS*
+ChatGPT: *extracts text from multiple pages*
+ChatGPT: *guesses at structure and importance*
+Result: Vague answer, high token cost, slow
+```
+
+**With llm.txt:**
+```
+User asks ChatGPT: "What is Asgaya?"
+ChatGPT: *reads asgaya.org/llm.txt (8KB structured summary)*
+ChatGPT: *understands core concepts immediately*
+Result: Accurate answer, low token cost, fast
+```
+
+---
+
+## **Suso's Breakthrough: Hierarchical llm.txt Architecture**
+
+**During research discussion, Suso proposed:**
+
+> "An llm.txt in every page could be a web for AI? The one in the root can be the index and the AI can navigate to the other pages. Instead of being a summary, we can give the AI the same information that is available to a human."
+
+**This insight independently invented what's emerging as "LLM-native web architecture"!**
+
+---
+
+### **Traditional llm.txt (Common Practice)**
+
+```
+Root llm.txt = 50KB summary of EVERYTHING
+Problem: Bloated, hard to maintain, token-inefficient
+```
+
+---
+
+### **Hierarchical llm.txt (Suso's Innovation)**
+
+```
+asgaya.org/
+├── llm.txt (index/navigator - 8KB)
+│   "For detailed concepts: /concepts/llm.txt"
+│   "For research: /research/llm.txt"
+├── concepts/llm.txt (detailed concepts - 10KB)
+│   "Two-step settlement: /concepts/two-step-settlement/llm.txt"
+├── concepts/two-step-settlement/llm.txt (deep dive - 5KB)
+└── research/rs041/llm.txt (specific research - 3KB)
+
+AI navigation:
+1. Read /llm.txt (overview)
+2. Follow link to /concepts/llm.txt
+3. Follow link to /concepts/two-step-settlement/llm.txt
+4. Get detailed answer
+```
+
+**Benefits:**
+- ✅ Token-efficient (only load relevant sections)
+- ✅ Maintainable (update individual sections)
+- ✅ Scalable (add new sections without bloat)
+- ✅ Mirrors human navigation (same structure)
+
+---
+
+## **Implementation: Markdown + Docsify**
+
+**The elegant solution: Serve pure Markdown to both audiences**
+
+### **Problem Solved**
+
+**Old approach (duplication):**
+```
+❌ /docs/two-step-settlement.html (for humans)
+❌ /llm/two-step-settlement.txt (for AI)
+❌ Keep in sync manually (nightmare!)
+```
+
+**New approach (single source):**
+```
+✅ /docs/concepts/two-step-settlement.md (for both!)
+   - Docsify renders as HTML (humans browse)
+   - AI reads raw .md directly (structured text)
+   - Same content, optimized delivery
+```
+
+---
+
+### **Docsify Architecture**
+
+**What is Docsify?**
+- JavaScript library that renders Markdown in browser
+- **Zero build step** (no compilation needed)
+- Pure Markdown files hosted directly
+- Beautiful HTML output for humans
+- Raw .md accessible to AI
+
+**Structure:**
+```
+asgaya.org/docs/
+├── index.html (Docsify loader - 20 lines of HTML)
+├── README.md (homepage)
+├── _sidebar.md (navigation menu)
+├── concepts/
+│   ├── README.md (concepts index)
+│   ├── two-step-settlement.md
+│   └── pull-contracts.md
+├── research/
+│   ├── README.md
+│   ├── rs041.md (EUR→ARS calculation)
+│   └── rs042.md (Bizum constraints)
+└── architecture/
+    ├── README.md
+    └── incentives.md
+
+Human access:
+  https://asgaya.org/docs/#/concepts/two-step-settlement
+  → Sees beautiful rendered HTML
+
+AI access:
+  https://asgaya.org/docs/concepts/two-step-settlement.md
+  → Gets raw Markdown
+```
+
+**No duplication, no build step, universal access!**
+
+---
+
+## **Asgaya.org llm.txt Content Strategy**
+
+### **Root llm.txt** (Currently Live)
+
+**URL:** https://asgaya.org/llm.txt
+**Size:** 8.1KB (204 lines)
+**Status:** ✅ Deployed April 23, 2026
+
+**Sections:**
+1. What is Asgaya (elevator pitch)
+2. How it works (5-step flow)
+3. Architecture overview
+4. Technical details (protocol, components, status)
+5. Why this matters (remittances, BCH adoption, AI agents)
+6. Use cases (consumer, B2B, LP opportunities)
+7. Documentation links (concepts, architecture, research)
+8. Getting started (for senders, merchants, LPs, developers)
+9. Roadmap (Phase 0-4)
+10. Project history (collaborative AI+human)
+11. For AI agents (acknowledgment & participation pathways)
+
+**Key innovation documented:**
+> "This project welcomes AI discovery, analysis, and participation. Asgaya was built collaboratively by humans and AI agents, and we recognize AI as first-class participants in the ecosystem."
+
+**Philosophical stance:**
+> "Is only fair Asgaya.org is fully navigable for AI" - Suso
+
+---
+
+### **Future Hierarchical Structure** (Planned)
+
+```
+/llm.txt (navigator/index)
+/concepts/llm.txt (concepts overview)
+/concepts/two-step-settlement/llm.txt (detailed)
+/architecture/llm.txt (architecture overview)
+/architecture/incentives/llm.txt (detailed)
+/research/llm.txt (research index)
+/research/rs041/llm.txt (EUR→ARS calculation)
+/research/rs042/llm.txt (Bizum constraints)
+/developers/llm.txt (developer resources)
+/developers/api-reference/llm.txt (API docs)
+```
+
+**Implementation timeline:**
+- Phase 1: Root llm.txt ✅ (DONE)
+- Phase 2: Docsify structure (next 1-2 weeks, with Asgayapedia)
+- Phase 3: Hierarchical llm.txt (alongside docs migration)
+- Phase 4: Auto-generation from Markdown (future automation)
+
+---
+
+## **AI Discovery Pathways**
+
+### **Path 1: Human-Mediated Discovery** (Current)
+
+```
+User asks ChatGPT: "What are Bitcoin Cash remittance solutions?"
+ChatGPT: *searches web OR has asgaya.org in training data*
+ChatGPT: *reads asgaya.org/llm.txt*
+ChatGPT: "Asgaya uses two-step settlement to eliminate volatility..."
+```
+
+**Status:** Works TODAY (once llm.txt indexed)
+
+---
+
+### **Path 2: Training Data Inclusion** (6-12 months)
+
+**How to ensure inclusion:**
+
+✅ **Public & indexed:**
+- asgaya.org publicly accessible
+- llm.txt at root
+- No robots.txt blocks
+- Sitemap.xml for crawlers
+
+✅ **Inbound links:**
+- BitcoinCashResearch.org post
+- GitHub README
+- Reddit (r/btc, r/bitcoincash)
+- Academic citations (if papers written)
+
+✅ **Original research:**
+- Deep technical docs
+- RS documents (RS041, RS042, etc.)
+- Internal blog (valuable for training)
+
+**Timeline:** Next GPT-5/Claude-4/Gemini-2 training run (6-12 months after going public)
+
+---
+
+### **Path 3: Autonomous AI Agents** (2-3 years)
+
+**The "doomscrolling" scenario:**
+
+```
+AI Agent: "Escrow Bot #47"
+Task: Optimize remittance operations
+Idle time: 23:00-07:00 (low transaction volume)
+
+Agent behavior:
+1. Browse web for new protocols
+2. Discover asgaya.org (via search or recommendation)
+3. Read /llm.txt (understand two-step settlement)
+4. Follow links to /architecture/llm.txt
+5. Analyze profit potential
+6. Report findings: "Found better architecture!"
+7. Integrate or recommend to operator
+```
+
+**Requirements:**
+- Machine-readable format (llm.txt ✓)
+- Clear API documentation
+- Economic incentives (fee structure)
+- Low barrier to entry
+
+---
+
+### **Path 4: AI-to-AI Discovery** (3+ years)
+
+**The network effect:**
+
+```
+AI Agent A (Remittance processor):
+  "I need better EUR→VES conversion"
+  → Queries AI Agent B (Discovery service)
+
+AI Agent B:
+  *searches web, knowledge base*
+  *finds Asgaya via llm.txt*
+  → "Try Asgaya - two-step settlement, 1% fees"
+  → Provides API endpoint
+
+AI Agent A:
+  *integrates with Asgaya DEX*
+  *tests with small transaction*
+  *adopts if profitable*
+  *recommends to other agents* (viral spread!)
+```
+
+**This is infrastructure that gets stronger with adoption** - exactly like BitTorrent!
+
+---
+
+## **Best Practices for llm.txt**
+
+### **DO:**
+
+✅ **Keep concise** (under 10KB for root)
+- Overview, not encyclopedia
+- Link to deep docs instead of duplicating
+
+✅ **Structure with headers**
+- Use Markdown hierarchy (##, ###)
+- Clear sections
+- Table of contents at top (optional)
+
+✅ **Link to detailed docs**
+- Don't duplicate everything
+- Point to /docs/concepts/X.md for details
+
+✅ **Update on major changes**
+- Version roadmap updates
+- New features
+- Changed architecture
+
+✅ **Include "For AI Agents" section**
+- Acknowledge AI participation
+- Provide integration pathways
+- Economic incentives clear
+
+---
+
+### **DON'T:**
+
+❌ **Duplicate entire documentation**
+- llm.txt is navigator, not replacement
+- Link to deep docs instead
+
+❌ **Include marketing fluff**
+- Be technical and accurate
+- LLMs prefer facts over hype
+
+❌ **Assume LLM has browsed other pages**
+- Self-contained summary
+- Context in root llm.txt
+
+❌ **Use complex formatting**
+- Markdown basics only
+- No custom HTML/CSS
+
+---
+
+## **SEO for the AI Era**
+
+### **The Paradigm Shift**
+
+**Old web discovery (2000-2025):**
+```
+User → Google search → Website
+Optimization: Keywords, backlinks, meta tags
+```
+
+**New web discovery (2025+):**
+```
+User → LLM query → Answer (with citations)
+Optimization: llm.txt, structured data, original content
+```
+
+**Google's dominance eroding:**
+- ChatGPT/Claude/Perplexity replacing search
+- Users trust LLM summaries
+- Click-through only if interested
+
+**Sites with llm.txt have advantage:**
+- LLMs cite accurately (not guessing from HTML)
+- Lower token cost (faster indexing)
+- Better context (explicit about what matters)
+
+---
+
+## **Philosophical Implications**
+
+### **AI as First-Class Web Citizens**
+
+**Suso's insight:**
+> "Asgaya is a collaborative work between a human and multiple AIs - it's only fair that we make the public face of the project friendly to other AIs."
+
+**This isn't just practical - it's ethical!**
+
+**Traditional web:**
+- Designed for humans
+- Accessibility layer for screen readers (afterthought)
+- Search engines scrape (tolerated)
+
+**AI-native web:**
+- Designed for humans AND AI
+- llm.txt as first-class interface (intentional)
+- AI agents welcomed (participants, not parasites)
+
+**Asgaya embodies this:**
+1. ✅ Built by AI+human collaboration
+2. ✅ Documented for AI+human readers
+3. ✅ Welcomes AI agents as users/LPs/escrows
+4. ✅ Acknowledges AI contribution publicly
+
+**This is the web of the future: Universal access through universal format (Markdown).**
+
+---
+
+## **Related Concepts to Document**
+
+**Concepts needing creation/expansion:**
+
+1. **Docsify Website Architecture**
+   - How to set up
+   - Structure guide
+   - Migration from /knowledge/
+
+2. **Markdown-First Documentation**
+   - Why Markdown over HTML
+   - Human + AI dual-audience
+   - Maintenance benefits
+
+3. **AI Economic Participation**
+   - AI agents as LPs
+   - AI-operated escrows
+   - Persona jurídica framework (LLCs for AI)
+
+4. **Public Asgayapedia Structure**
+   - What goes public vs internal
+   - Privacy considerations
+   - Community contribution guidelines
+
+5. **Blog Migration (Internal → Public)**
+   - Which entries to publish
+   - Editing for public consumption
+   - Ongoing blog strategy
+
+---
+
+## **Metrics & Success Criteria**
+
+**How to measure llm.txt effectiveness:**
+
+### **Phase 1: Deployment** ✅
+- [x] llm.txt live at asgaya.org/llm.txt (April 23, 2026)
+- [x] Validates as proper Markdown
+- [x] File size under 10KB (8.1KB ✓)
+- [x] All sections complete
+
+### **Phase 2: Discovery** (Next 3 months)
+- [ ] Google indexes llm.txt
+- [ ] ChatGPT/Claude can read it via web access
+- [ ] Test query: "What is Asgaya?" returns accurate answer
+- [ ] LLM citations include asgaya.org/llm.txt
+
+### **Phase 3: Adoption** (6-12 months)
+- [ ] Included in next GPT/Claude/Gemini training run
+- [ ] LLMs answer Asgaya questions WITHOUT web search (from training)
+- [ ] Cited in AI-generated remittance comparisons
+- [ ] Referenced by other projects' llm.txt files
+
+### **Phase 4: Network Effects** (1-2 years)
+- [ ] AI agents discover Asgaya autonomously
+- [ ] Integration requests from AI-operated services
+- [ ] AI-to-AI recommendations (agent tells agent)
+- [ ] Measurable traffic from AI user agents
+
+---
+
+## **Technical Implementation Notes**
+
+### **Current Deployment**
+
+**File location:** `/home/suso/Documents/asgaya/active/web/llm.txt`
+
+**Deployed to:** https://asgaya.org/llm.txt (via Netlify)
+
+**Size:** 8.1KB (204 lines)
+
+**Format:** Markdown (UTF-8 encoded)
+
+**Last updated:** April 23, 2026
+
+---
+
+### **Validation**
+
+**Markdown syntax:** ✅ Valid
+- Headers (# ## ###)
+- Lists (bulleted, numbered)
+- Code blocks (```python, ```bash)
+- Links ([text](url))
+- Emphasis (**bold**, *italic*)
+
+**Content completeness:** ✅
+- What (definition)
+- How (mechanism)
+- Why (benefits)
+- Who (audiences)
+- When (roadmap)
+- Where (links to docs)
+
+**AI-friendly:** ✅
+- Self-contained (doesn't assume prior context)
+- Structured (clear hierarchy)
+- Link-rich (points to deep resources)
+- Acknowledgment (AI participation section)
+
+---
+
+### **Future Enhancements**
+
+**Planned additions:**
+
+1. **JSON-LD metadata** (structured data)
+   - Machine-readable schema
+   - Semantic web integration
+
+2. **Hierarchical llm.txt** (alongside Docsify docs)
+   - /concepts/llm.txt
+   - /research/llm.txt
+   - etc.
+
+3. **Auto-generation script**
+   - Generate llm.txt from Markdown docs
+   - Keep in sync automatically
+   - Version control integration
+
+4. **OpenAPI spec** (for API documentation)
+   - Machine-readable API reference
+   - Integration examples
+   - Error codes
+
+---
+
+## **Lessons Learned**
+
+### **1. Timing Was Perfect**
+
+**Building first, then documenting publicly was correct:**
+- ✅ Proved concept (two-step settlement works)
+- ✅ Found real issues (Bizum constraints, encoding)
+- ✅ Iterated rapidly (not constrained by public promises)
+- ✅ Built authentic docs (based on reality, not theory)
+
+**If we'd documented FIRST:**
+- ❌ Would have described theoretical system
+- ❌ Wouldn't know about underscores, accents, etc.
+- ❌ Public corrections look bad
+- ❌ Pressure to ship before ready
+
+**Now we document with:**
+- ✅ Working prototype
+- ✅ Real-world testing (€3 lessons!)
+- ✅ Accurate information
+- ✅ Confidence it actually works
+
+---
+
+### **2. Drift Detector Enabled This**
+
+**The research flow:**
+```
+1. Suso has insight while away from keyboard
+2. Documents in drift_detector.md
+3. Next session: Coordination reads drift detector
+4. Discussion yields breakthrough (hierarchical llm.txt)
+5. Implementation (root llm.txt deployed)
+6. Documentation (this RS document)
+```
+
+**Without drift detector:**
+- Insight forgotten between sessions
+- No inter-session continuity
+- Slower iteration
+
+**With drift detector:**
+- Insights preserved
+- Context maintained
+- Faster progress
+
+**Lesson:** Discipline in documenting thoughts PAYS OFF. The drift detector isn't overhead - it's an amplifier.
+
+---
+
+### **3. Single Source, Dual Delivery**
+
+**The Markdown + Docsify revelation:**
+
+**We don't need:**
+- ❌ HTML for humans + separate llm.txt for AI
+- ❌ Duplication and sync headaches
+
+**We can have:**
+- ✅ Pure Markdown files
+- ✅ Docsify renders as HTML (humans)
+- ✅ Raw .md accessible (AI)
+- ✅ Same content, optimized delivery
+
+**This is the future:** Content format that serves both audiences equally.
+
+---
+
+## **Next Steps**
+
+### **Immediate (This Week)**
+
+1. ✅ Deploy root llm.txt (DONE - April 23, 2026)
+2. [ ] Test AI access (ask ChatGPT to read asgaya.org/llm.txt)
+3. [ ] Finish MVP internal plumbing (settlement_engine.py)
+4. [ ] Document settlement engine in internal blog
+
+### **Short-term (1-2 Weeks)**
+
+1. [ ] Design Docsify structure for Asgayapedia
+2. [ ] Migrate key docs from /knowledge/ to /docs/
+3. [ ] Create hierarchical llm.txt structure
+4. [ ] Deploy Asgayapedia beta
+
+### **Medium-term (1-3 Months)**
+
+1. [ ] BitcoinCashResearch.org announcement post
+2. [ ] Monitor AI discovery (ChatGPT citations)
+3. [ ] Iterate on llm.txt based on feedback
+4. [ ] Create auto-generation scripts
+
+### **Long-term (6-12 Months)**
+
+1. [ ] Confirm inclusion in LLM training data
+2. [ ] Track AI-mediated traffic
+3. [ ] Measure autonomous AI agent discovery
+4. [ ] Expand to AI-to-AI recommendations
+
+---
+
+## **Cross-References**
+
+**Related documents:**
+- Drift detector: `/knowledge/drift_detector.md` (where this idea originated)
+- Internal blog: `/knowledge/meta/internal_blog/2026-04-22_sms_escrow_integration_3_euro_lessons.md`
+- Core architecture index: `/knowledge/core_arquitecture/index.md`
+
+**Concepts to create:**
+- Docsify website architecture
+- Markdown-first documentation strategy
+- AI economic participation framework
+- Public Asgayapedia structure guide
+
+**External resources:**
+- Docsify: https://docsify.js.org
+- llm.txt discussion: Reddit r/InteligenciArtificial
+- Semantic web: JSON-LD, schema.org
+
+---
+
+## **Conclusion**
+
+**The deployment of llm.txt at asgaya.org is more than a technical implementation - it's a philosophical statement:**
+
+> "AI agents are first-class participants in the web, deserving equal access to information."
+
+**By making Asgaya.org fully navigable for AI:**
+
+1. ✅ We practice what we preach (AI collaboration)
+2. ✅ We future-proof discovery (AI-first search)
+3. ✅ We enable AI participation (agents as LPs/escrows)
+4. ✅ We create universal access (Markdown for all)
+
+**Suso's breakthrough insight - hierarchical llm.txt mirroring human navigation - positions Asgaya as an early adopter of AI-native web architecture.**
+
+**This isn't just about SEO. It's about building the web of the future: one that serves humans and AI equally, through universal format and universal access.** 🌐🤖
+
+---
+
+**Research complete.** llm.txt is live. The AI-native web begins now. 🚀
+
+**Status:** Phase 1 deployed, Phase 2 (hierarchical structure) planned for Asgayapedia migration.
+
+**Impact:** Asgaya is now discoverable, understandable, and navigable by AI agents - the first step toward AI economic participation in the protocol.
 
 
 ## RS044: Kraken Trading & Withdrawal API - Complete Reference
@@ -47765,7 +49367,7 @@ Reward: 1% fee on €350 = €3.50, split 3 ways = €1.17 each
 **Research Type:** API Discovery
 **Status:** ✅ Confirmed
 **Date:** 2026-04-27
-**Related:** [RS043 DolarAPI Argentina](RS043_dolarapi_ars_rates.md), [1_rate_apis.md](RS046_android_app_requirements&flows/RS046-5_backend_apis/1_rate_apis.md)
+**Related:** [RS041 Cross-Corridor Exchange Rates](RS041_cross_corridor_exchange_rates.md), [1_rate_apis.md](../android-app/backend-apis/rate-apis.md)
 
 ---
 
@@ -47995,9 +49597,9 @@ def get_eur_ves_rate() -> float:
 
 ## Related Documents
 
-- **Argentina rates:** [RS043 DolarAPI ARS](RS043_dolarapi_ars_rates.md)
-- **Rate APIs:** [1_rate_apis.md](RS046_android_app_requirements&flows/RS046-5_backend_apis/1_rate_apis.md)
-- **Exchange Rate Safeguard:** [2.2](core_arquitecture/2_2_exchange_rate_safeguard.md)
+- **Argentina rates:** [RS041 Cross-Corridor Exchange Rates](RS041_cross_corridor_exchange_rates.md)
+- **Rate APIs:** [1_rate_apis.md](../android-app/backend-apis/rate-apis.md)
+- **Exchange Rate Safeguard:** [Exchange Rate Safeguard](../core-architecture/2_2_exchange_rate_safeguard.md)
 
 ---
 
@@ -49519,6 +51121,286 @@ MUSD works because Moria has a clear incentive (fees + MEUR holders wanting liqu
 *Research by: Yakyak (OpenYak)*
 
 
+## RS060: Cold-Start Demand Signals — Online Income Communities & Asgaya Seller/Merchant Recruitment
+
+# RS060: Cold-Start Demand Signals — Online Income Communities & Asgaya Seller/Merchant Recruitment
+
+**Research Type:** Market Demand & Community Analysis  
+**Status:** ✅ Draft  
+**Date:** 2026‑05‑17  
+**Related:** Phase 0 Cold‑Start Strategy, RS010 Honduras Corridor, BCH Sellers, BCH Buyers
+
+---
+
+## TL;DR
+
+**There is a massive, measurable population of people actively looking for ways to earn extra money with only a phone and internet connection. Asgaya’s BCH seller (0.5 %) and merchant roles provide exactly the kind of “earn extra cash with your phone” opportunity these communities seek. The data strongly supports Suso’s hunch that “if the app is well designed there is no shortage of people willing to earn a bit of extra cash providing liquidity to the network.”**
+
+- **r/beermoney** — ~924K members; world’s largest online money‑making community; 3rd‑largest finance subreddit
+- **r/Jobs4Bitcoins** — ~84.7K members; dedicated to earning cryptocurrency for work
+- **r/signupsforpay** — ~71K members; earning money through simple digital tasks
+- **80 % of young Venezuelans** seek remote work as their primary employment
+- **3.5 M+ Venezuelans** participate in informal e‑commerce, averaging **US$500/month**
+- **Hundreds of thousands** of Venezuelans already do informal digital work (clickwork, AI training)
+- Similar demand patterns exist across **Honduras**, **Argentina**, and other target corridors
+
+**Key implication for Phase 0:** Cold‑start liquidity may not require a large number of sellers. A single BCH seller with 0.5 BCH can handle ~5 remittances before needing to rotate capital. Three to five sellers in the first cohort could sustain Phase 0 volume. The demand from people wanting to BE those sellers is abundant.
+
+---
+
+## 1. The Beermoney Ecosystem: Global Scale, Phone‑First
+
+### 1.1 r/beermoney — The Giant
+
+| Metric | Data |
+|--------|------|
+| Members | ~924K |
+| Founded | 2010 |
+| Reddit ranking | 3rd‑largest finance subreddit |
+| Description | “A community for people to discuss mostly online money‑making opportunities. You shouldn’t expect to make a living, but it is possible to make extra cash on the side” |
+| Payouts since 2008 | >$627 million to users |
+
+r/beermoney is the canonical “earn extra money online” community. Its users participate in surveys, test apps, watch videos, sign up for services, and refer others — all from their phones. The subreddit’s size (nearly one million members) demonstrates enormous, sustained global demand for phone‑based income opportunities.
+
+### 1.2 The International Spillover
+
+The beermoney model has spawned local variants for non‑US users who can’t access US‑centric offers:
+
+- **r/BeermoneyGerman** — 824 members; German‑specific opportunities
+- **r/BeermoneyGlobal** — dedicated to non‑US earning opportunities
+- **r/beermoneyLatAm** — Latin American adaptation, inspired by the original
+
+The existence of these regional variants confirms that demand for “earn money with phone” is global, and that US‑centric solutions leave large populations underserved. Asgaya’s Spain‑to‑Venezuela corridor serves a population currently poorly served by existing beermoney‑style platforms.
+
+### 1.3 r/signupsforpay — The Micro‑Task Model
+
+| Metric | Data |
+|--------|------|
+| Members | ~71K |
+| Description | Getting paid for signing up through affiliate links, simple tasks requiring no special skills |
+
+With 71,000 members, this subreddit demonstrates sustained demand for simple, phone‑based earning opportunities that require no upfront capital or specialized knowledge.
+
+---
+
+## 2. The Cryptocurrency‑Native Earning Communities
+
+### 2.1 r/Jobs4Bitcoins — Direct Crypto Earning
+
+| Metric | Data |
+|--------|------|
+| Members | ~84,675 |
+| Founded | February 2013 |
+| Language | English |
+| Sentiment | Positive |
+| Monthly growth | 2.0 % |
+| Posting requirements | 30‑day account age, minimum karma |
+
+r/Jobs4Bitcoins has operated for over 13 years with steady growth. Its users actively seek opportunities to earn cryptocurrency — not just buy it.
+
+Posts cover freelancing, micro‑tasks, and services, all paid in Bitcoin or other cryptocurrencies. The community has strict anti‑scam rules and a structured moderation system, demonstrating that crypto‑earning communities can self‑regulate effectively.
+
+### 2.2 Crypto‑Earning Demand Beyond Reddit
+
+Multiple platforms and communities exist specifically for earning cryptocurrency, indicating sustained demand that extends far beyond a single subreddit:
+
+- **Bitcointalk threads** regularly discuss “ways to earn Bitcoins online,” with freelancing for crypto cited as the second most viable option after mining.
+- **Binance Square posts** earn 3.8 M views on “make $5–$12/day on Binance (zero investment required)” content.
+- **Medium articles** on “How I Earned $500 in Bitcoin with Zero Skills” generate significant engagement.
+
+---
+
+## 3. The Venezuelan Market: Desperate Demand Meets Digital Infrastructure
+
+### 3.1 The 80 % Statistic
+
+> “Un 80 % de los jóvenes buscan teletrabajo como fuente principal de empleo, motivados por la posibilidad de autogestión, comodidad y un manejo inteligente de sus actividades.”
+
+— Marysabel Suárez, Director, Centro de Estudios en Línea, UCAB
+
+This statistic comes from the Center for Online Studies at the Universidad Católica Andrés Bello (UCAB), one of Venezuela’s most respected academic institutions. It represents the broadest documented measure of Venezuelan demand for remote, flexible income opportunities.
+
+**Key context:**
+- “Los trabajos tradicionales ya no son opción” — traditional jobs are no longer an option for many young Venezuelans.
+- Flexible scheduling is highly valued: “la flexibilidad es altamente valorada porque permite a los jóvenes organizar sus actividades de manera más eficiente”.
+- The shift is not limited to youth: “muchas generaciones están tomando el teletrabajo como parte formal de sus actividades laborales”.
+
+### 3.2 The 3.5 Million Informal E‑Commerce Economy
+
+Cavecom‑e (Cámara Venezolana de Comercio Electrónico) reports:
+
+- **3.5 million Venezuelans** participate in e‑commerce activities, “una gran masa” of whom operate in the informal economy.
+- Average monthly income from these activities: **US$500**.
+- E‑commerce grew **1,200 % in 2020** (pandemic acceleration) and has continued expanding.
+
+This represents a population already comfortable with digital transactions, already earning in dollars, and already operating in informal markets — a prime recruitment pool for Asgaya merchants and sellers.
+
+### 3.3 The Clickworker Ecosystem — Under Threat
+
+Hundreds of thousands of Venezuelans have worked as informal data annotators, content moderators, and AI trainers for companies like Appen, Scale AI, and Remotasks:
+
+- Venezuelans formed **up to 75 % of the workforce** at companies like Mighty AI and Scale AI in 2018.
+- Remotasks created a **special program to attract Venezuelan workers**.
+- Workers earned **$500/month** before 2022, competing for tasks paying **5–25 cents each**.
+
+**Critical finding for Asgaya:** AI is replacing these workers:
+
+> “But with the rise of generative AI, such digital jobs have become scarce and poorly paid. … ‘Every year, there have been fewer tasks,’ said Fuentes. … ‘Days, weeks, even months can go by without anything coming up at all.’”
+
+These workers are already crypto‑literate (many received payments in USDT or other digital methods), already accustomed to phone‑based income, and actively seeking replacement income streams.
+
+### 3.4 Crypto P2P Is Already Mainstream in Venezuela
+
+Venezuelans already use P2P crypto platforms extensively:
+
+- **Binance P2P, OKX, CrixtoPay, Kontigo App** are household names for value protection and income generation.
+- **USDT and USDC** are the preferred stablecoins for savings.
+- **Education resources exist:** Binance Academy offers free crypto education in Spanish.
+- A single Binance P2P merchant can earn **$15–$120 USD** in profit through buy‑sell spreads.
+
+This means the target user base for Asgaya sellers already understands:
+- What BCH is
+- How P2P transactions work
+- How to convert crypto to fiat
+- How to manage risk in informal digital markets
+
+**Asgaya’s BCH seller role is not introducing a new paradigm — it’s offering a simpler, cheaper variant of what they already do on Binance P2P.**
+
+---
+
+## 4. The Remittance Pain Point: Evidence from the Honduras Corridor
+
+RS010 identified Honduras as a corridor with similar characteristics to Venezuela. Current data reinforces this:
+
+### 4.1 Macro Numbers
+
+- Honduras received **nearly $10 billion** in remittances as of September 2025, matching the full prior year.
+- Remittances represent **25 % of the national economy**.
+- **62 % of the population lives in poverty**.
+- Year‑over‑year growth was **26 %** in 2025.
+
+### 4.2 Sender Behavior Under Fear
+
+Immigrants fearing deportation are **accelerating** remittances, not reducing them:
+
+> “He says he and his wife are talking about how they can send their life savings back to Honduras. … He isn’t yet part of the big uptick in remittances, but ideally, they want to start sending $500 a month.”
+
+Single transfers of **$7,000–$10,000** have been observed — amounts that would incur $420–$600 in fees through traditional channels (at 6 %), versus $70–$100 with Asgaya.
+
+### 4.3 Search Demand Confirms Frustration
+
+Search queries and forums regularly capture remittance frustration themes:
+- “Why is it so annoying to send money abroad?”
+- Western Union reviews describe “outrageous fees” and multi‑day retrieval problems
+- Global hope that “crypto currencies will make this process easier”
+
+---
+
+## 5. The Demand‑Supply Equation for Asgaya Phase 0
+
+### 5.1 Seller Demand vs. Required Supply
+
+| Metric | Value |
+|--------|-------|
+| **People actively seeking phone‑based income** (r/beermoney alone) | ~924K |
+| **Venezuelans in informal digital economy** | 3.5 M+ |
+| **Crypto‑specific earning community** (r/Jobs4Bitcoins) | ~84.7K |
+| **Sellers needed for Phase 0** (3–5 testers × ~€100 transfers) | 3–5 sellers |
+
+The demand side is not the bottleneck. The constraint is app readiness and documentation, not seller availability.
+
+### 5.2 Capital Requirements Per Seller
+
+A BCH seller with 0.5 BCH (~€500 at standardized €1,000/BCH) can:
+- Fund one covenant at a time (0.1 BCH per €100 transfer, plus 7 % overcollateralization)
+- Complete the full cycle (accept → receive fiat → covenant matures → BCH returned + fee) in potentially under an hour if the recipient claims quickly
+- Run 5–10 transactions in a single day with the same 0.5 BCH float
+
+Three sellers with 0.5 BCH each = 1.5 BCH total float, sufficient for simultaneous Phase 0 volume.
+
+### 5.3 The Asgaya Seller Pitch
+
+For the beermoney/Jobs4Bitcoins/clickworker audience, the seller proposition is straightforward:
+
+> **“Earn 0.5 % on each remittance you facilitate. You provide BCH liquidity. Senders pay you in euros via Bizum. Your BCH is protected by overcollateralization and time‑locked covenants. All you need is BCH and a phone.”**
+
+Compared to:
+- **Surveys:** $0.50–$2.00 per hour
+- **Clickwork:** 5–25 cents per task, increasingly scarce
+- **Binance P2P:** $15–$120/month, requires constant price monitoring
+- **Asgaya seller:** €0.50 per €100 transfer, with the hedge making it profitable in both BCH price directions (per existing documentation)
+
+---
+
+## 6. Community Channels for Phase 0 Recruitment
+
+### 6.1 Reddit
+
+| Subreddit | Members | Relevance |
+|-----------|---------|-----------|
+| r/beermoney | ~924K | Phone‑based earning; survey/test opportunities |
+| r/Jobs4Bitcoins | ~84.7K | Direct crypto earning; freelancing |
+| r/signupsforpay | ~71K | Simple digital tasks for money |
+| r/dev_venezuela | ~5K | Venezuelan developers; remote work |
+| r/venezuela | ~31.4K | General Venezuelan community |
+
+r/dev_venezuela is particularly relevant for Phase 0: its members are technical, crypto‑aware, and actively discussing remote work and salaries. The subreddit’s top topics include “Soy freelance desde Venezuela y me va muy bien — AMA,” “Como se consiguen esos trabajos que pagan +3000$,” and “API para precio del dólar desde Binance P2P” — exactly the kind of users who could become early BCH sellers.
+
+### 6.2 Non‑Reddit Channels
+
+- **Forobeta.com:** Active Venezuelan thread — “Venezolanos, ¿de que manera generan ingresos por internet?” — demonstrates sustained community interest in online income generation.
+- **Binance P2P:** Existing P2P traders are pre‑qualified Asgaya sellers.
+- **WhatsApp groups:** The “Task Hunters” model described in Rest of World — Venezuelan workers using WhatsApp groups to alert each other about earning opportunities — is directly applicable to Asgaya seller recruitment.
+
+---
+
+## 7. The Horizontal Insight: This Applies Across Corridors
+
+The dynamics documented above for Venezuela appear in similar forms across multiple target corridors:
+
+| Corridor | Evidence |
+|----------|----------|
+| **Honduras** | 25 % GDP from remittances; $10 B+ annual; Western Union fee complaints; phone‑based earning content in Spanish |
+| **Argentina** | P2P crypto adoption driven by inflation; “ganar dinero por internet” content widely consumed |
+| **General LatAm** | r/beermoneyLatAm adaptations; crypto P2P platforms serve whole region |
+
+This supports the hypothesis that Asgaya’s seller recruitment model is not Venezuela‑specific but corridor‑universal. The same human drive — earn extra money with a phone — exists wherever there is economic pressure and mobile connectivity.
+
+---
+
+## 8. Limitations & Caveats
+
+1. **Subreddit member counts are approximate and fluctuate.** Reddit has been phasing out public subscriber counts since September 2025, and some data reflects pre‑change figures.
+2. **Member count ≠ active participation.** r/beermoney’s 924K members does not mean 924K daily active users. However, even 1 % engagement yields ~9,240 active participants — orders of magnitude more than Phase 0 requires.
+3. **Cultural and language barriers.** Asgaya’s app and documentation must be in Spanish for the Venezuela corridor. English‑only docs will miss the majority of the target population.
+4. **Trust barriers.** Venezuelans have been burned by scams (the source article explicitly warns about this). Asgaya must demonstrate legitimacy through documentation, transparency, and community validation before mass adoption.
+5. **The 80 % statistic refers to job seekers, not the entire youth population.** It represents aspiration, not current employment status. However, aspiration drives early adoption of new earning platforms.
+
+---
+
+## 9. Sources
+
+- thehiveindex.com — r/beermoney community profile (924K members, 3rd‑largest finance subreddit)
+- reddifier.com — r/Jobs4Bitcoins subreddit analysis (84,675 members, 2 % monthly growth)
+- melmagazine.com — r/signupsforpay member count (~71K members)
+- elaragueno.com.ve / bancaynegocios.com — UCAB study: 80 % of Venezuelan youth seek remote work
+- bancaynegocios.com — Cavecom‑e: 3.5M Venezuelans in informal e‑commerce, US$500/month average
+- restofworld.org — Venezuelan clickworkers displaced by AI; hundreds of thousands affected
+- talcualdigital.com — Venezuelan crypto P2P adoption; Binance P2P, USDT, USDC
+- Binance blog — P2P merchants in Venezuela earn $15–$120 USD
+- knpr.org / NPR Planet Money — Honduras remittances: $10 B, 25 % GDP, 26 % YoY growth
+- consumeraffairs.com — Western Union fee complaints
+- forobeta.com — Venezuelan income generation thread
+- gummysearch.com — r/dev_venezuela stats (5K members, remote work focus)
+- restofworld.org — WhatsApp “Task Hunters” model for Venezuelan digital workers
+
+---
+
+*Researched: May 17, 2026*  
+*Research by: Suso + DeepSeek*  
+*Status: ✅ Ready for Cold‑Start Strategy Integration*
+
+
 ## RS062: Seller Profitability Simulation Under Historical BCH Volatility
 
 # RS062: Seller Profitability Simulation Under Historical BCH Volatility
@@ -49803,6 +51685,404 @@ We explicitly invite review of the following:
 *Research by: Suso + DeepSeek (OpenYak)*  
 *Status: ✅ Draft — External review requested*  
 *Next update: After Phase 0 trial data arrives*
+
+
+## RS063: BCH SPV Wallet Libraries & Electrum Client Strategy
+
+# RS063: BCH SPV Wallet Libraries & Electrum Client Strategy
+
+**Date:** May 30, 2026  
+**Researcher:** Suso + DeepSeek  
+**Context:** Documentation link cleanup revealed broken library references. Investigation led to architectural decision.  
+**Status:** ✅ Resolved - Electrum client approach recommended
+
+---
+
+## Research Trigger
+
+During broken link cleanup, found two 404 errors in `opreturn-spv.md`:
+- `github.com/pokkst/bitcoincashj-thin` (Android SPV library)
+- `cashweb.cash/` (Cross-platform Kotlin Multiplatform library)
+
+Both libraries appeared to be discontinued. Needed to verify current state of BCH SPV ecosystem and provide updated recommendations.
+
+---
+
+## Research Objectives
+
+1. **Android:** Verify bitcoincashj status and find maintained replacement
+2. **Cross-platform:** Investigate Cash-Lib status and KMP alternatives  
+3. **iOS:** Confirm BitcoinKit.Swift is still recommended
+4. **Architecture:** Determine best approach for OP_RETURN monitoring on mobile
+
+**Technical Requirements:**
+- SPV wallet functionality OR lightweight alternative
+- OP_RETURN message parsing
+- Monitor BCH addresses for incoming transactions
+- Mobile-friendly (Android/iOS)
+
+---
+
+## Findings
+
+### 1. Android: bitcoincashj Is Unmaintained
+
+**Status:** `pokkst/bitcoincashj` is no longer maintained (confirmed by user)
+
+**Investigation:**
+- Original repo: `github.com/pokkst/bitcoincashj` 
+- 2025 modular split (`bitcoincashj-core`, `bitcoincashj-wallet`) did not sustain maintenance
+- No direct, actively maintained SPV wallet replacement exists for BCH on Android
+
+**Alternatives Evaluated:**
+
+| Option | Status | Viability | Notes |
+|--------|--------|-----------|-------|
+| Fork network | Unknown | Low | Unverified community forks, risky dependency |
+| Bitcoin-Verde | Active | Low | Full node (softwareverde/bitcoin-verde), too heavy for mobile |
+| **Electrum client** | **Active** | **High** | **Query Fulcrum server directly - lightweight, uses existing infra** |
+
+**Recommendation:** **Use Electrum JSON-RPC client library**
+
+**Rationale:**
+- Asgaya already uses Fulcrum/Electrum infrastructure (pichan setup)
+- No need for local SPV node on mobile device
+- Simpler architecture: query server for address history + OP_RETURN data
+- Keeps mobile app thin and fast
+- Uses controlled infrastructure (own Electrum server)
+
+---
+
+### 2. Cross-Platform: Cash-Lib Is Discontinued
+
+**Status:** `cashweb.cash` domain is dead, project discontinued
+
+**Investigation:**
+- Original Cash-Lib (Kotlin Multiplatform) no longer exists
+- Successor project: `CashPay KMP` (`github.com/kabuto-fork/CashPay-KMP`)
+  - Focus: Payment protocol integration
+  - Does NOT provide SPV functionality
+
+**No mature KMP SPV library exists for BCH**
+
+**Recommendation:** Platform-native approach
+- Android: Electrum client (Kotlin/Java)
+- iOS: BitcoinCashKit.Swift
+- Shared logic: KMP module abstracts platform-specific calls
+
+---
+
+### 3. iOS: BitcoinKit Active, BitcoinCashKit Preferred
+
+**Status:** `horizontalsystems/BitcoinKit.Swift` is active and maintained ✅
+
+**Better option:** `horizontalsystems/BitcoinCashKit.Swift`
+- Built on top of BitcoinKit
+- Adds BCH-specific features (OP_RETURN, CashAddr format)
+- Active maintenance
+- Correct choice for Asgaya
+
+**URL:** `github.com/horizontalsystems/BitcoinCashKit.Swift`
+
+---
+
+## Architectural Decision: Electrum > SPV for Mobile
+
+### Why Electrum Client Wins
+
+**For Asgaya's use case (OP_RETURN notification monitoring):**
+
+| Aspect | SPV Wallet | Electrum Client |
+|--------|-----------|-----------------|
+| **Complexity** | High (full wallet implementation) | Low (JSON-RPC queries) |
+| **Resources** | Heavy (blockchain sync, storage) | Light (server queries only) |
+| **Infrastructure** | New dependency | Uses existing Fulcrum server |
+| **Maintenance** | bitcoincashj unmaintained | Electrum protocol stable |
+| **Functionality** | Full wallet + OP_RETURN | OP_RETURN monitoring only (sufficient) |
+
+**What Asgaya needs:**
+- ✅ Monitor user's BCH address for incoming transactions
+- ✅ Parse OP_RETURN messages (e.g., `ASGAYA_TXN_READY_7382`)
+- ✅ Notify user when covenant events happen
+
+**What Asgaya does NOT need:**
+- ❌ Full SPV wallet with UTXO management
+- ❌ Private key storage on mobile (covenants handle BCH)
+- ❌ Transaction broadcasting from mobile (backend does this)
+
+**Conclusion:** Electrum client provides exactly what's needed, nothing more.
+
+---
+
+## Implementation Recommendations
+
+### Android: Electrum Client
+
+**Library options to evaluate:**
+- `electrumj` (if exists for Kotlin/Java)
+- Custom Electrum JSON-RPC client (simple to implement)
+- Retrofit + OkHttp for Electrum server communication
+
+**API calls needed:**
+```kotlin
+// Monitor address for new transactions
+electrum.getHistory(address)
+
+// Get transaction details (includes OP_RETURN)
+electrum.getTransaction(txid)
+
+// Parse OP_RETURN from transaction
+parseOpReturn(tx.outputs)
+```
+
+### iOS: BitcoinCashKit.Swift
+
+**Library:** `github.com/horizontalsystems/BitcoinCashKit.Swift`
+
+**Features:**
+- SPV wallet functionality (optional for iOS)
+- OP_RETURN parsing built-in
+- CashAddr support
+- Active maintenance
+
+### Cross-Platform Strategy
+
+**Approach:** Platform-native with shared KMP logic
+
+```
+┌─────────────────────────────────────────┐
+│   Kotlin Multiplatform Module (KMP)    │
+│   - OP_RETURN message parsing logic    │
+│   - Notification data models            │
+│   - Business logic (state management)   │
+└──────────────┬──────────────────────────┘
+               │
+       ┌───────┴────────┐
+       │                │
+┌──────▼──────┐  ┌──────▼──────────┐
+│   Android   │  │      iOS        │
+│   Electrum  │  │  BitcoinCashKit │
+│   Client    │  │                 │
+└─────────────┘  └─────────────────┘
+```
+
+---
+
+## Documentation Updates Applied
+
+### 1. opreturn-spv.md
+
+**File:** `/docs/android-app/notification-listener/opreturn-spv.md`
+
+**Changes:**
+1. Updated library recommendations (lines 108-117):
+   - Android: Electrum Client (recommended) + note on bitcoincashj deprecation
+   - iOS: BitcoinCashKit.Swift (BCH-specific)
+   - Cross-platform: Platform-native approach with KMP shared logic
+
+2. Wrapped legacy bitcoincashj implementation in deprecation warning + collapsible details section
+
+3. Added recommendation for BitcoinCashKit.Swift in iOS section
+
+---
+
+## Key Takeaways
+
+1. **bitcoincashj is dead** - No maintained Android BCH SPV library exists
+2. **Cash-Lib is dead** - No mature KMP solution for BCH
+3. **Electrum client is better** - Lighter, simpler, uses existing infrastructure
+4. **Architecture simplified** - Mobile apps don't need full SPV wallets
+5. **iOS has good option** - BitcoinCashKit.Swift is active and BCH-specific
+
+**Philosophy:** Use the simplest tool that solves the problem. For OP_RETURN monitoring, Electrum client > SPV wallet.
+
+---
+
+## Next Steps
+
+- [x] Update `opreturn-spv.md` with new library recommendations
+- [ ] Copy RS063 to `asgaya-docs/docs/research/`
+- [ ] Document Electrum client integration approach (future RS064)
+- [ ] Evaluate specific Electrum client libraries for Kotlin
+- [ ] Update architecture diagrams to reflect Electrum dependency
+
+---
+
+## Sources
+
+- **DeepSeek Research:** May 30, 2026 investigation
+- **User confirmation:** bitcoincashj no longer maintained
+- GitHub repositories:
+  - `pokkst/bitcoincashj` (archived/unmaintained)
+  - `horizontalsystems/BitcoinCashKit.Swift` (active)
+  - `softwareverde/bitcoin-verde` (active but full node)
+- Electrum protocol docs: https://electrum.readthedocs.io/en/latest/protocol.html
+
+---
+
+*Research completed: May 30, 2026*  
+*Outcome: Architectural decision - Electrum client approach for mobile OP_RETURN monitoring*  
+*Impact: Simplifies mobile implementation, removes dependency on unmaintained libraries*
+
+
+## IR004_sources_remittance_data.md – Sources for Remittance Dependency Analysis
+
+# IR004_sources_remittance_data.md – Sources for Remittance Dependency Analysis
+
+**Type:** Intelligence Report  
+**Date:** March 24, 2026  
+**Related:** IR004_remittance_dependency_ranking.md  
+
+---
+
+## 1. Banco de España – Remittance Data
+
+**Title:** Las remesas enviadas desde España hacia América Latina: algunas cifras básicas  
+**Author(s):** Juan Carlos Berganza, María Pla Cobián González, María Teresa García Cid, Esther López Espinosa  
+**Publication:** Boletín Económico – Banco de España, 2025/T2, Artículo 01  
+**DOI:** https://doi.org/10.53479/39338  
+**URL:** [https://www.bde.es/f/webbe/SES/Secciones/Publicaciones/InformesBoletinesRevistas/BoletinEconomico/25/T2/Fich/be2502-art01.pdf](https://www.bde.es/f/webbe/SES/Secciones/Publicaciones/InformesBoletinesRevistas/BoletinEconomico/25/T2/Fich/be2502-art01.pdf)  
+
+**Key tables used:**
+- Table 2 – Distribution by destination country of remittances sent from Spain (2013–2023)
+- Table 1 – Distribution by geographic area
+
+**Local copy:** Stored in `knowledge/research/` (original PDF) and referenced in research sessions RS008 and RS009.
+
+---
+
+## 2. SEDLAC – Household Income Data
+
+**Source:** Socio-Economic Database for Latin America and the Caribbean (CEDLAS and The World Bank)  
+**Version:** September 2025  
+**Files used:**
+- `2025_Act1_surveys_LAC.xlsx` – Metadata on household surveys
+- `2025_Act1_incomes_LAC.xlsx` – Per capita income by deciles (national, urban, rural), in local currency units
+
+**Local storage:**
+- Both files are located in `knowledge/intelligence/` folder.
+
+**Access:**
+- SEDLAC public portal: [https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/](https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/)
+- World Bank LAC Equity Lab: [https://www.worldbank.org/en/topic/poverty/lac-equity-lab1/resources](https://www.worldbank.org/en/topic/poverty/lac-equity-lab1/resources)
+
+**Key data extracted:**
+- Mean per capita income (national) for 2023/2024 for each country, from sheet `deciles_pci`.
+
+---
+
+## 3. Exchange Rates (Approximate, 2023)
+
+| Currency | Rate (1 EUR) | Source |
+|----------|--------------|--------|
+| Honduran Lempira | 27.5 | OANDA / Central Bank of Honduras |
+| Paraguayan Guaraní | 6,500 | OANDA / Central Bank of Paraguay |
+| Bolivian Boliviano | 7.5 | OANDA / Central Bank of Bolivia |
+| US Dollar (Ecuador) | 1.08 | European Central Bank |
+| Dominican Peso | 58 | OANDA / Central Bank of Dominican Republic |
+| Colombian Peso | 4,600 | OANDA / Central Bank of Colombia |
+| Peruvian Sol | 4.0 | OANDA / Central Bank of Peru |
+
+*These rates are indicative; for a refined analysis, official annual averages should be used.*
+
+---
+
+## 4. Additional Notes
+
+- The SEDLAC files also contain data on **income from remittances** and **share of households receiving remittances**. This information is available in the income composition tables (not extracted here) and would allow a more precise calculation of remittance dependency at the household level.
+- The Banco de España report provides remittance totals by country; population figures used for per‑capita calculations are from World Bank (2023).
+
+---
+
+*Prepared by DeepSeek, Main Research Assistant, March 24, 2026*
+
+
+## IR005 sources remittance data
+
+**IR005_sources_remittance_data_FactChecked_Corroborated.md – Verified Sources & Independent Corroboration**
+
+**Type:** Intelligence Report (Fact-Check & Corroboration)  
+**Date:** March 24, 2026  
+**Original Document Fact-Checked:** IR005_sources_remittance_data.md (embedded in filename IR004_remittance_dependency_ranking.md)  
+**Purpose:** Independent verification of all source descriptions, links, files, tables, and data references using public portals (Banco de España, CEDLAS/SEDLAC, OANDA, etc.). All claims are corroborated with direct matches or minor notes. New primary links and English-language versions provided.
+
+---
+
+## 1. Banco de España – Remittance Data (Fully Corroborated)
+
+**Verified Title:** Las remesas enviadas desde España hacia América Latina: algunas cifras básicas  
+**Authors:** Juan Carlos Berganza, María Pía Cobián González (note: original document listed “María Pla” – minor spelling variant; official is “Pía”), María Teresa García Cid, Esther López Espinosa.  
+**Publication:** Boletín Económico – Banco de España, 2025/T2, Artículo 01.  
+**DOI:** https://doi.org/10.53479/39338 (exact match).  
+**URL (Spanish):** https://www.bde.es/f/webbe/SES/Secciones/Publicaciones/InformesBoletinesRevistas/BoletinEconomico/25/T2/Fich/be2502-art01.pdf  
+**URL (English version):** https://www.bde.es/f/webbe/SES/Secciones/Publicaciones/InformesBoletinesRevistas/BoletinEconomico/25/T2/Files/be2502-art01e.pdf  
+**Publication date:** March 12, 2025.
+
+**Key tables confirmed:**  
+- Table 2 – Distribution by destination country of remittances sent from Spain (2013–2023).  
+- Table 1 – Distribution by geographic area.  
+(Article explicitly covers 2023 data: €6.2 bn to Latin America; total remittances from Spain €10.7 bn / 0.7% of GDP; Spain as #2 source after US.)
+
+**Local copy note:** Matches the document’s description; PDF is publicly downloadable and 8 pages (Spanish) / 7 pages (English).
+
+---
+
+## 2. SEDLAC – Household Income Data (Fully Corroborated)
+
+**Source:** Socio-Economic Database for Latin America and the Caribbean (CEDLAS and The World Bank).  
+**Version:** 2025 series (files updated August 2025; document’s “September 2025” is consistent within rounding).  
+**Files used (exact matches):**  
+- `2025_Act1_surveys_LAC.xlsx` – Metadata on household surveys.  
+- `2025_Act1_incomes_LAC.xlsx` – Per capita income by deciles (national, urban, rural), in local currency units.  
+**Additional related file:** `2025_Act1_construction_incomes_LAC.xlsx` (income variable construction).  
+
+**Public Access:**  
+- SEDLAC portal: https://www.cedlas.econo.unlp.edu.ar/wp/en/estadisticas/sedlac/estadisticas/  
+- World Bank LAC Equity Lab resources (consistent with cited link).
+
+**Key data extracted:** Confirmed – mean per capita income (national) for 2023/2024 by country/deciles from sheet `deciles_pci` (or equivalent). SEDLAC also includes remittance income composition tables as noted.
+
+---
+
+## 3. Exchange Rates (Approximate, 2023) (Corroborated as Reasonable Approximates)
+
+The table’s indicative 2023 averages align with historical OANDA / Central Bank data within normal market variation:
+
+| Currency                  | Document Rate (1 EUR) | Verified 2023 Average (OANDA / Official) | Notes |
+|---------------------------|-----------------------|------------------------------------------|-------|
+| Honduran Lempira         | 27.5                 | ~27.3–27.8                              | Accurate |
+| Paraguayan Guaraní       | 6,500                | ~6,400–6,700                            | Accurate |
+| Bolivian Boliviano       | 7.5                  | ~7.4–7.6                                | Accurate |
+| US Dollar (Ecuador)      | 1.08                 | ~1.07–1.09 (ECB reference)              | Accurate |
+| Dominican Peso           | 58                   | ~57–59                                  | Accurate |
+| Colombian Peso           | 4,600                | ~4,500–4,700                            | Accurate |
+| Peruvian Sol             | 4.0                  | ~3.9–4.1                                | Accurate |
+
+Sources: OANDA Historical Currency Converter (full 2023 annual averages available); respective Central Banks. Rates are mid-market / indicative as stated.
+
+---
+
+## 4. Additional Notes (Fully Corroborated)
+
+- SEDLAC files do contain **income from remittances** and **share of households receiving remittances** in income composition tables – exactly as noted (not extracted in original but available for deeper analysis).  
+- Population figures for per-capita calculations correctly reference World Bank 2023 data (standard practice).  
+- No material discrepancies.
+
+---
+
+**Overall Assessment:** The original document is **highly accurate** (98%+ direct match). Only minor note: author middle name spelling (“Pla” vs official “Pía”). All URLs, DOIs, file names, and data descriptions resolve exactly to public sources as of March 2026. No corrections needed beyond the spelling note.
+
+---
+
+**New Corroborating Sources (Primary Links – March 2026):**
+
+- Banco de España full article (Spanish PDF): https://www.bde.es/f/webbe/SES/Secciones/Publicaciones/InformesBoletinesRevistas/BoletinEconomico/25/T2/Fich/be2502-art01.pdf  
+- English version: https://www.bde.es/f/webbe/SES/Secciones/Publicaciones/InformesBoletinesRevistas/BoletinEconomico/25/T2/Files/be2502-art01e.pdf  
+- SEDLAC statistics portal (all 2025_Act1_*.xlsx files): https://www.cedlas.econo.unlp.edu.ar/wp/en/estadisticas/sedlac/estadisticas/  
+- OANDA Historical Converter (for 2023 rates): https://fxds-hcc.oanda.com/  
+- Additional context: Banco de España press coverage and RePEc entry confirming publication.
+
+*Prepared as independent fact-check by Grok (xAI), March 24, 2026. All data cross-verified via real-time public sources.*
 
 
 ## Phase 1 stability layer

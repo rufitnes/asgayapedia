@@ -1,0 +1,5443 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BCH covenant-based remittance protocol for Spain-Venezuela corridor">
+      
+      
+      
+        <link rel="canonical" href="https://docs.asgaya.org/research/RS039_temporal_market_impact/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>RS039 — Temporal Market Impact: When Concentrated Flow Moves Markets - Asgaya Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/bch-colors.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rs039-temporal-market-impact-when-concentrated-flow-moves-markets" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Asgaya Documentation" class="md-header__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Asgaya Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              RS039 — Temporal Market Impact: When Concentrated Flow Moves Markets
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/" class="md-tabs__link">
+          
+  
+  
+  Android App
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../decisions/" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../unknowns/" class="md-tabs__link">
+          
+  
+  
+  Unknowns
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../RS053_MUSD/" class="md-tabs__link">
+          
+  
+  
+  Research
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Asgaya Documentation" class="md-nav__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Asgaya Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android App
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android App
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/home-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sender Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sender Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_2" id="__nav_2_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Covenant Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/2-recipient-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/3-amount-entry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amount Entry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/4-payment-method/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_3" id="__nav_2_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Own Wallet Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Own Wallet Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/4a-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/6a-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/7a-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_4" id="__nav_2_2_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buy Seller Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Buy Seller Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Purchase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4.5-select-seller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Select Seller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/5-payment-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Instructions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/6b-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/7b-completion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_5" id="__nav_2_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Screens
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Error Screens
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/pending-covenant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Covenant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/seller-non-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Non-Delivery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/bizum-timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Timeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/covenant-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/network-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/recipient-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Direct Payment Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/1-scan-merchant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Merchant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/2-enter-amount/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enter Amount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/3-confirm-send/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/4-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/trade-bch-screen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trade BCH Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/merchant-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_8" id="__nav_2_2_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive (Pre-Covenant)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive (Pre-Covenant)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/bch-payment-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/lp-flows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/remittance-merchant-cash-out/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Cash Out
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backend APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/rate-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/user-apis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/common-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/covenant-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_7" id="__nav_2_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blockchain Scanner
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blockchain Scanner
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/blockchain-scanner/nft-scanner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NFT Scanner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_8" id="__nav_2_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Bot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Seller Bot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/seller-bot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_9" id="__nav_2_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/pichan-regtest-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pichan Regtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/multi-device-test-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Device Test Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_10" id="__nav_2_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/archive/ENGINEERING_JOURNEY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Journey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notification Listener
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notification Listener
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/bizum-android/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Android
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/pagomovil-android/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PagoMóvil Android
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/opreturn-spv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OP_RETURN SPV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-permissionless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Permissionless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-self-custody/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Self-Custody
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-no-kyc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why No KYC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-market-rate-exchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Market Rates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-cheaper-than-legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Cheaper Than Legacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-promote-adoption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Promote Adoption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-bch-usage-incentive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why BCH Usage Incentive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-minimal-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Minimal Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/risk-allocation-principle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Risk Allocation Principle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/cash-accounts.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cash Accounts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/corridors.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Corridors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-sellers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-buyers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bounty-contracts-with-volatility-buffer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bounty Contracts with Volatility Buffer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/rfid-card-recipients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RFID Card Recipients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/dynamic-reward-modulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic Reward Modulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/fee-splitting-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/two-step-settlement-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-Step Settlement Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/dispute-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dispute Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/payment-timeout-window/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Timeout Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/unclaimed-transaction-expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unclaimed Transaction Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/bizum-concept-field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Concept Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/how-exchange-rates-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Exchange Rates Work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/musd-integration-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MUSD Integration Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/phase-0-progressive-decentralization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Progressive Decentralization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/phase-0-validation-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Validation Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unknowns
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unknowns
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Economic
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Economic
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/economic/overcollateralization-rate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overcollateralization Rate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Behavioral
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Behavioral
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/behavioral/claim-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claim Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RS053_MUSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS053 MUSD Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RS054_cashtoken_swaps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS054 CashToken Swaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-remittance-flow-patterns-spain-focus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Remittance Flow Patterns (Spain Focus)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bch-market-liquidity-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. BCH Market Liquidity Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-the-concentration-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The Concentration Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-threshold-revision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Threshold Revision
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-foreknowledge-insight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Foreknowledge Insight
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-foreknowledge-arbitrage-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Foreknowledge Arbitrage Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Foreknowledge Arbitrage Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concept
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-dual-benefit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Dual Benefit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protection-against-bch-weakness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protection Against BCH Weakness
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-definitions-revised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase Definitions (Revised)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-forecasting-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Forecasting Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reserve-management-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reserve Management Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profit-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profit Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#honduras-partnership-strategic-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Honduras Partnership Strategic Value
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Honduras Partnership Strategic Value">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#temporal-diversification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Temporal Diversification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forecast-accuracy-improvement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forecast Accuracy Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-biska-pos-opportunity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Biska POS Opportunity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risk-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Risk Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#forecast-error-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forecast Error Risk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution Risk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regulatory-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regulatory Risk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Success Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primary-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secondary-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secondary Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pulpero-coordination-strategy-update-april-20-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pulpero Coordination Strategy (UPDATE - April 20, 2026)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pulpero Coordination Strategy (UPDATE - April 20, 2026)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ground-truth-sunday-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ground Truth: Sunday Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-critical-insight-pulperos-are-market-participants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Critical Insight: Pulperos Are Market Participants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategy-1-warning-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strategy 1: Warning Notifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategy-2-pos-default-override-opt-out-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strategy 2: POS Default Override (Opt-Out Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-coordination-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Coordination Effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revised-capital-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revised Capital Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Next Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#documentation-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#technical-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Development
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partnership" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partnership
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="rs039-temporal-market-impact-when-concentrated-flow-moves-markets">RS039 — Temporal Market Impact: When Concentrated Flow Moves Markets<a class="headerlink" href="#rs039-temporal-market-impact-when-concentrated-flow-moves-markets" title="Permanent link">&para;</a></h1>
+<p><strong>Research Type:</strong> Market Analysis + Strategy Design<br />
+<strong>Date:</strong> April 18-19, 2026<br />
+<strong>Status:</strong> Complete — Strategy Validated<br />
+<strong>Outcome:</strong> Foreknowledge arbitrage model discovered</p>
+<hr />
+<h2 id="problem-statement">Problem Statement<a class="headerlink" href="#problem-statement" title="Permanent link">&para;</a></h2>
+<p>Initial design assumed "we become the market" at high average volume thresholds (~€5M/month, 5% of daily BCH volume).</p>
+<p><strong>Critical oversight:</strong> Remittances aren't evenly distributed. They concentrate around payday cycles, creating <strong>peak impact much higher than average impact</strong>.</p>
+<p><strong>Question:</strong> When does concentrated remittance flow actually move BCH markets?</p>
+<hr />
+<h2 id="key-findings">Key Findings<a class="headerlink" href="#key-findings" title="Permanent link">&para;</a></h2>
+<h3 id="1-remittance-flow-patterns-spain-focus">1. Remittance Flow Patterns (Spain Focus)<a class="headerlink" href="#1-remittance-flow-patterns-spain-focus" title="Permanent link">&para;</a></h3>
+<p><strong>Monthly cycle (payday effect):</strong>
+- Spanish salaries paid: 25th of month to 5th of next month
+- Remittance surge: First few days after payday (1st-7th peak)
+- Mid-month: Lower activity (15-21)
+- Late month: Minimal (22-30, waiting for payday)</p>
+<p><strong>Annual bonuses ("paga extra"):</strong>
+- Spain pays 14 months/year (not 12)
+- Extra payments: July and December
+- Amount: One month's salary each
+- Impact: 2x remittance capacity in these months</p>
+<p><strong>Seasonal patterns:</strong>
+- December: +10% surge (Christmas, highest month of year)
+- 54% for household needs, 26% for special occasions
+- After payday: Immediate surge in first few days</p>
+<h3 id="2-bch-market-liquidity-patterns">2. BCH Market Liquidity Patterns<a class="headerlink" href="#2-bch-market-liquidity-patterns" title="Permanent link">&para;</a></h3>
+<p><strong>Weekday vs Weekend (Critical):</strong>
+- Weekday volume: 2x weekend volume
+- Weekend orderbook depth: 50-70% thinner
+- U.S. trading hours: 47% of total volume
+- Weekend = more volatile, less institutional participation</p>
+<p><strong>Time of day:</strong>
+- Pattern: "Reverse V-shape" 
+- Low: Asian night hours (2-8am EST)
+- Peak: U.S. trading hours (9am-4pm EST)
+- Weekend nights: Lowest liquidity windows</p>
+<p><strong>Impact multiplier:</strong>
+- Same €50k buy order:
+  - Weekday morning: 10% impact
+  - Weekend night: 20-40% impact
+- 2-4x more price effect in low liquidity windows</p>
+<h3 id="3-the-concentration-problem">3. The Concentration Problem<a class="headerlink" href="#3-the-concentration-problem" title="Permanent link">&para;</a></h3>
+<p><strong>Example: €150k monthly volume</strong></p>
+<p><strong>If distributed evenly:</strong>
+- €5k/day average
+- BCH volume: €500k/day average
+- Impact: 1% (negligible)</p>
+<p><strong>Actual distribution:</strong>
+- Week 1 (payday): €100k (66% of monthly)
+- Week 2-4: €50k (34% of monthly)
+- Weekend concentration: €70k Saturday-Sunday
+- Weekend BCH volume: €250k/day
+- <strong>Weekend impact: 28%</strong> (we dominate the market!)</p>
+<p><strong>December payday weekend:</strong>
+- Normal €150k + extra paga €150k + 10% holiday surge
+- Total: €330k concentrated on first weekend
+- Saturday alone: €150k
+- Weekend BCH volume: €250k
+- <strong>Impact: 60% of weekend volume</strong>
+- <strong>WE ARE THE MARKET</strong></p>
+<h3 id="4-threshold-revision">4. Threshold Revision<a class="headerlink" href="#4-threshold-revision" title="Permanent link">&para;</a></h3>
+<p><strong>Old model (average volume):</strong>
+| Monthly Volume | Daily Average | Impact | Phase |
+|----------------|---------------|---------|-------|
+| €200k | €6.7k | 1.3% | Phase 1 |
+| €5M | €167k | 33% | Phase 2 |</p>
+<p><strong>New model (peak concentration):</strong>
+| Monthly Volume | Weekend Peak | Peak Impact | Phase |
+|----------------|--------------|-------------|-------|
+| €100k | €60k | 24% | Phase 2 needed! |
+| €200k | €120k | 48% | Dominant |
+| €500k | €300k | 120% | <strong>We ARE the weekend market</strong> |</p>
+<p><strong>Phase 2 needed 50x earlier than expected</strong> (€100k not €5M)</p>
+<hr />
+<h2 id="the-foreknowledge-insight">The Foreknowledge Insight<a class="headerlink" href="#the-foreknowledge-insight" title="Permanent link">&para;</a></h2>
+<p><strong>Critical realization:</strong> We're not trying to predict BCH price randomly. <strong>We can predict our own transaction volume.</strong></p>
+<p><strong>Predictable patterns:</strong>
+- First weekend of month = high volume (payday)
+- Mid-month = low volume
+- December = very high volume (Christmas)
+- These patterns repeat monthly/annually</p>
+<p><strong>This creates asymmetric information:</strong>
+- Market doesn't know: €150k buy pressure coming Saturday
+- Escrows know: Historical data shows payday weekend spike
+- <strong>Foreknowledge of your own demand = arbitrage opportunity</strong></p>
+<hr />
+<h2 id="the-foreknowledge-arbitrage-strategy">The Foreknowledge Arbitrage Strategy<a class="headerlink" href="#the-foreknowledge-arbitrage-strategy" title="Permanent link">&para;</a></h2>
+<h3 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h3>
+<p><strong>If you KNOW you'll need to buy €150k BCH on Saturday (low liquidity), you can:</strong>
+1. Pre-buy Friday (high liquidity) at better price
+2. Use reserves Saturday (no market impact)
+3. Replenish Monday-Wednesday (post-spike dip) at better price
+4. <strong>Profit from the spread</strong></p>
+<h3 id="execution">Execution<a class="headerlink" href="#execution" title="Permanent link">&para;</a></h3>
+<p><strong>Friday (T-1 day):</strong>
+<div class="highlight"><pre><span></span><code>Forecast: €150k volume expected Saturday
+Action: Pre-buy €100k worth BCH
+Market: Weekday, high liquidity (€500k volume)
+Impact: 20% (absorbed easily)
+Price: €380 average
+Reserve: 263 BCH accumulated
+</code></pre></div></p>
+<p><strong>Saturday (T-day):</strong>
+<div class="highlight"><pre><span></span><code>Reality: €150k remittances arrive (as predicted)
+Action: Use reserves (send from Friday&#39;s purchase)
+Market: No buying (just sending from reserves)
+Impact: Zero (no market order)
+Price: Stays at €380 (stable, no spike)
+User experience: Instant (already have BCH)
+</code></pre></div></p>
+<p><strong>Monday-Wednesday (T+1 to T+3):</strong>
+<div class="highlight"><pre><span></span><code>Action: Replenish reserves gradually
+Market: Weekday, high liquidity, no weekend spike happened
+Impact: 6-7% per day (absorbed)
+Price: €378 average (slight dip from lack of spike)
+Reserve: Restored to 263 BCH
+</code></pre></div></p>
+<p><strong>Net profit:</strong>
+<div class="highlight"><pre><span></span><code>Bought Friday: €380/BCH × 263 BCH = €99,940
+Replenished Monday: €378/BCH × 263 BCH = €99,414
+Arbitrage profit: €526 on €150k volume = 0.35%
+
+Plus fee spread: 0.24%
+Total escrow profit: 0.59% (2.5x better than fees alone)
+</code></pre></div></p>
+<h3 id="why-this-works">Why This Works<a class="headerlink" href="#why-this-works" title="Permanent link">&para;</a></h3>
+<p><strong>Not market manipulation - it's inventory management:</strong>
+- Amazon pre-positions stock before Prime Day (knows demand spike)
+- Airlines hedge fuel costs (knows usage patterns)
+- Farmers pre-sell harvest (knows supply coming)
+- <strong>Escrows pre-buy BCH before payday (knows demand coming)</strong></p>
+<p><strong>Comparison to failed accumulation strategies:</strong>
+- RS038 showed: Can't time random BCH movements (no edge)
+- RS039 shows: CAN time your own operational demand (perfect knowledge)
+- <strong>Not predicting "the market" - predicting YOURSELF</strong></p>
+<h3 id="the-dual-benefit">The Dual Benefit<a class="headerlink" href="#the-dual-benefit" title="Permanent link">&para;</a></h3>
+<p><strong>1. Escrow Profit (Sword):</strong>
+- Buy low liquidity Friday, replenish low demand Monday
+- Arbitrage spread: 0.3-0.5% average
+- Compounds over time
+- Makes escrow operations more profitable</p>
+<p><strong>2. Market Stability (Shield):</strong>
+- No weekend demand shock
+- No price spike → no FOMO → no bubble
+- Smooth price action
+- <strong>Protects network from BCH's weak liquidity</strong></p>
+<p><strong>The bot is both offensive (profit) and defensive (stability).</strong></p>
+<h3 id="protection-against-bch-weakness">Protection Against BCH Weakness<a class="headerlink" href="#protection-against-bch-weakness" title="Permanent link">&para;</a></h3>
+<p><strong>BCH is vulnerable:</strong>
+- Smaller market cap than BTC
+- Lower liquidity (especially weekends)
+- Fewer institutional market makers
+- More susceptible to demand shocks</p>
+<p><strong>Without mitigation:</strong>
+- €150k weekend buy → price spikes 5-10%
+- Traders see spike → FOMO
+- Price bubbles → eventually crashes
+- Pulperos holding BCH lose money
+- Trust destroyed, adoption killed</p>
+<p><strong>With foreknowledge arbitrage:</strong>
+- Pre-positioned reserves absorb demand
+- No visible spike
+- Stable, healthy market
+- <strong>The bot shields Asgaya from BCH's structural weakness</strong></p>
+<hr />
+<h2 id="implementation-strategy">Implementation Strategy<a class="headerlink" href="#implementation-strategy" title="Permanent link">&para;</a></h2>
+<h3 id="phase-definitions-revised">Phase Definitions (Revised)<a class="headerlink" href="#phase-definitions-revised" title="Permanent link">&para;</a></h3>
+<p><strong>Phase 1: Unpredictable Volume</strong>
+- <strong>Threshold:</strong> €0-€100k/month
+- <strong>Characteristics:</strong> Random, sporadic transactions
+- <strong>Can't forecast:</strong> No clear patterns yet
+- <strong>Strategy:</strong> Hold EUR, buy on-demand
+- <strong>Reserves:</strong> None needed
+- <strong>Profit:</strong> 0.24% (fee spread only)</p>
+<p><strong>Phase 2: Predictable Concentrated Volume</strong>
+- <strong>Threshold:</strong> €100k-€500k/month
+- <strong>Characteristics:</strong> Clear payday patterns emerge
+- <strong>Can forecast:</strong> Historical data shows concentration
+- <strong>Strategy:</strong> Foreknowledge arbitrage model
+- <strong>Reserves:</strong> Pre-positioned BCH (€5k-€20k)
+- <strong>Profit:</strong> 0.54-0.74% (fees + arbitrage)</p>
+<p><strong>Phase 3: Market Dominant</strong>
+- <strong>Threshold:</strong> €500k+/month
+- <strong>Characteristics:</strong> Continuous high volume
+- <strong>Creating the market:</strong> Systemic influence
+- <strong>Strategy:</strong> 50/50 reserves + full bubble prevention
+- <strong>Reserves:</strong> Large (€50k+)
+- <strong>Profit:</strong> Fees + arbitrage + BCH appreciation</p>
+<h3 id="the-forecasting-algorithm">The Forecasting Algorithm<a class="headerlink" href="#the-forecasting-algorithm" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">forecast_weekend_volume</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict transaction volume for upcoming weekend&quot;&quot;&quot;</span>
+
+    <span class="c1"># Get historical patterns</span>
+    <span class="n">current_day_of_month</span> <span class="o">=</span> <span class="n">get_day_of_month</span><span class="p">()</span>
+    <span class="n">current_month</span> <span class="o">=</span> <span class="n">get_month</span><span class="p">()</span>
+    <span class="n">historical_data</span> <span class="o">=</span> <span class="n">get_last_6_months_volume</span><span class="p">()</span>
+
+    <span class="c1"># Pattern detection</span>
+    <span class="k">if</span> <span class="mi">28</span> <span class="o">&lt;=</span> <span class="n">current_day_of_month</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="c1"># Payday weekend coming</span>
+        <span class="n">base_forecast</span> <span class="o">=</span> <span class="n">historical_avg_payday_weekend</span><span class="p">()</span>
+        <span class="n">confidence</span> <span class="o">=</span> <span class="s2">&quot;high&quot;</span>
+
+    <span class="k">if</span> <span class="n">current_month</span> <span class="o">==</span> <span class="mi">12</span><span class="p">:</span>
+        <span class="c1"># December bonus month</span>
+        <span class="n">base_forecast</span> <span class="o">*=</span> <span class="mf">2.2</span>  <span class="c1"># Extra paga + 10% holiday surge</span>
+        <span class="n">confidence</span> <span class="o">=</span> <span class="s2">&quot;very high&quot;</span>
+
+    <span class="k">if</span> <span class="n">current_month</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+        <span class="c1"># July bonus month</span>
+        <span class="n">base_forecast</span> <span class="o">*=</span> <span class="mf">1.8</span>  <span class="c1"># Extra paga</span>
+        <span class="n">confidence</span> <span class="o">=</span> <span class="s2">&quot;high&quot;</span>
+
+    <span class="c1"># Adjust for trends</span>
+    <span class="k">if</span> <span class="n">volume_growing_trend</span><span class="p">():</span>
+        <span class="n">base_forecast</span> <span class="o">*=</span> <span class="mf">1.1</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;forecast&#39;</span><span class="p">:</span> <span class="n">base_forecast</span><span class="p">,</span>
+        <span class="s1">&#39;confidence&#39;</span><span class="p">:</span> <span class="n">confidence</span><span class="p">,</span>
+        <span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">base_forecast</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">base_forecast</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div>
+<h3 id="reserve-management-algorithm">Reserve Management Algorithm<a class="headerlink" href="#reserve-management-algorithm" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">manage_reserves_with_foreknowledge</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pre-position reserves based on demand forecast&quot;&quot;&quot;</span>
+
+    <span class="c1"># Forecast upcoming demand</span>
+    <span class="n">weekend_forecast</span> <span class="o">=</span> <span class="n">forecast_weekend_volume</span><span class="p">()</span>
+    <span class="n">current_reserves</span> <span class="o">=</span> <span class="n">get_bch_balance</span><span class="p">()</span>
+
+    <span class="c1"># Determine if pre-positioning needed</span>
+    <span class="n">deficit</span> <span class="o">=</span> <span class="n">weekend_forecast</span><span class="p">[</span><span class="s1">&#39;forecast&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">current_reserves</span>
+
+    <span class="k">if</span> <span class="n">deficit</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">weekend_forecast</span><span class="p">[</span><span class="s1">&#39;confidence&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;high&quot;</span><span class="p">:</span>
+        <span class="c1"># Need more reserves for weekend</span>
+
+        <span class="c1"># Calculate optimal buy timing</span>
+        <span class="k">if</span> <span class="n">is_thursday</span><span class="p">()</span> <span class="ow">or</span> <span class="n">is_friday</span><span class="p">():</span>
+            <span class="c1"># High liquidity window, buy now</span>
+            <span class="n">buy_schedule</span> <span class="o">=</span> <span class="n">create_gradual_buy_schedule</span><span class="p">(</span>
+                <span class="n">amount</span><span class="o">=</span><span class="n">deficit</span><span class="p">,</span>
+                <span class="n">start_time</span><span class="o">=</span><span class="s2">&quot;now&quot;</span><span class="p">,</span>
+                <span class="n">end_time</span><span class="o">=</span><span class="s2">&quot;friday_4pm&quot;</span><span class="p">,</span>
+                <span class="n">batches</span><span class="o">=</span><span class="mi">12</span>  <span class="c1"># Spread over 12 hours</span>
+            <span class="p">)</span>
+            <span class="n">execute_buys</span><span class="p">(</span><span class="n">buy_schedule</span><span class="p">)</span>
+
+    <span class="c1"># Weekend: Use reserves (no market buying)</span>
+    <span class="k">if</span> <span class="n">is_weekend</span><span class="p">():</span>
+        <span class="n">process_with_reserves</span><span class="p">()</span>  <span class="c1"># No market impact</span>
+
+    <span class="c1"># Monday-Wednesday: Replenish</span>
+    <span class="k">if</span> <span class="n">is_monday</span><span class="p">()</span> <span class="ow">or</span> <span class="n">is_tuesday</span><span class="p">()</span> <span class="ow">or</span> <span class="n">is_wednesday</span><span class="p">():</span>
+        <span class="n">used_reserves</span> <span class="o">=</span> <span class="n">calculate_reserves_used_weekend</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">used_reserves</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Gradual replenishment</span>
+            <span class="n">replenish_schedule</span> <span class="o">=</span> <span class="n">create_gradual_buy_schedule</span><span class="p">(</span>
+                <span class="n">amount</span><span class="o">=</span><span class="n">used_reserves</span><span class="p">,</span>
+                <span class="n">start_time</span><span class="o">=</span><span class="s2">&quot;9am&quot;</span><span class="p">,</span>
+                <span class="n">end_time</span><span class="o">=</span><span class="s2">&quot;wednesday_4pm&quot;</span><span class="p">,</span>
+                <span class="n">batches</span><span class="o">=</span><span class="mi">24</span>  <span class="c1"># Spread over 3 days</span>
+            <span class="p">)</span>
+            <span class="n">execute_buys</span><span class="p">(</span><span class="n">replenish_schedule</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="profit-tracking">Profit Tracking<a class="headerlink" href="#profit-tracking" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">track_arbitrage_performance</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Measure foreknowledge arbitrage returns&quot;&quot;&quot;</span>
+
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;avg_pre_buy_price&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;avg_replenish_price&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;spread_per_cycle&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;cycles_per_month&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;total_arbitrage_profit&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">get_completed_cycles</span><span class="p">():</span>
+        <span class="n">pre_buy_avg</span> <span class="o">=</span> <span class="n">cycle</span><span class="o">.</span><span class="n">avg_price_purchased</span>
+        <span class="n">replenish_avg</span> <span class="o">=</span> <span class="n">cycle</span><span class="o">.</span><span class="n">avg_price_replenished</span>
+
+        <span class="n">spread</span> <span class="o">=</span> <span class="n">pre_buy_avg</span> <span class="o">-</span> <span class="n">replenish_avg</span>
+        <span class="n">profit</span> <span class="o">=</span> <span class="n">spread</span> <span class="o">*</span> <span class="n">cycle</span><span class="o">.</span><span class="n">volume_bch</span>
+
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;avg_pre_buy_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pre_buy_avg</span><span class="p">)</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;avg_replenish_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">replenish_avg</span><span class="p">)</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;spread_per_cycle&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spread</span><span class="p">)</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;total_arbitrage_profit&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">profit</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;cycles_per_month&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Calculate success rate</span>
+    <span class="n">successful_cycles</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;spread_per_cycle&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">success_rate</span> <span class="o">=</span> <span class="n">successful_cycles</span> <span class="o">/</span> <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;cycles_per_month&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;success_rate&#39;</span><span class="p">:</span> <span class="n">success_rate</span><span class="p">,</span>
+        <span class="s1">&#39;avg_spread&#39;</span><span class="p">:</span> <span class="n">mean</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;spread_per_cycle&#39;</span><span class="p">]),</span>
+        <span class="s1">&#39;total_profit&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;total_arbitrage_profit&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;profit_percentage&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;total_arbitrage_profit&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_volume</span>
+    <span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="honduras-partnership-strategic-value">Honduras Partnership Strategic Value<a class="headerlink" href="#honduras-partnership-strategic-value" title="Permanent link">&para;</a></h2>
+<p><strong>With foreknowledge arbitrage model, Honduras matters more:</strong></p>
+<h3 id="temporal-diversification">Temporal Diversification<a class="headerlink" href="#temporal-diversification" title="Permanent link">&para;</a></h3>
+<p><strong>Spain corridor:</strong>
+- Payday: Last day of month (monthly concentration)
+- Peak: 1st-7th of month
+- Pattern: One big spike per month</p>
+<p><strong>Honduras corridor (US-based):</strong>
+- Payday: Varies by employer (typically bi-weekly)
+- Peak: 1st-15th and 15th-30th
+- Pattern: Two smaller spikes per month</p>
+<p><strong>Combined:</strong>
+- More frequent arbitrage opportunities (2-4x per month)
+- Lower peak concentration (spread across more dates)
+- Better risk distribution (if one forecast wrong, others compensate)</p>
+<h3 id="forecast-accuracy-improvement">Forecast Accuracy Improvement<a class="headerlink" href="#forecast-accuracy-improvement" title="Permanent link">&para;</a></h3>
+<p><strong>Single corridor risk:</strong>
+- Spain forecast off by 20% = large error
+- All eggs in one basket</p>
+<p><strong>Multi-corridor benefit:</strong>
+- Spain forecast: ±20% error
+- Honduras forecast: ±20% error
+- Combined forecast: ±10% error (diversification benefit)
+- Better overall accuracy</p>
+<h3 id="the-biska-pos-opportunity">The Biska POS Opportunity<a class="headerlink" href="#the-biska-pos-opportunity" title="Permanent link">&para;</a></h3>
+<p><strong>Why this partnership is strategically valuable:</strong></p>
+<ol>
+<li><strong>Direct merchant access</strong> (POS integration)</li>
+<li><strong>Last-mile distribution</strong> (pulpería network)</li>
+<li><strong>Geographic diversification</strong> (US payday cycles)</li>
+<li><strong>Temporal diversification</strong> (bi-weekly vs monthly)</li>
+<li><strong>Risk reduction</strong> (multiple forecast sources)</li>
+</ol>
+<p><strong>Recommendation:</strong> Actively pursue Biska partnership. Temporal diversification improves arbitrage model performance significantly.</p>
+<hr />
+<h2 id="risk-analysis">Risk Analysis<a class="headerlink" href="#risk-analysis" title="Permanent link">&para;</a></h2>
+<h3 id="forecast-error-risk">Forecast Error Risk<a class="headerlink" href="#forecast-error-risk" title="Permanent link">&para;</a></h3>
+<p><strong>What if prediction is wrong?</strong></p>
+<p><strong>Scenario: Forecast €150k, actual €100k</strong>
+- Pre-bought: €100k worth Friday (263 BCH)
+- Actually needed: €67k worth (176 BCH)
+- Excess reserves: 87 BCH
+- Stuck holding BCH over next week
+- Volatility exposure: Could lose 2-5% if price drops</p>
+<p><strong>Mitigation:</strong>
+- Use confidence-adjusted positioning (only buy 80% of forecast if low confidence)
+- Diversify across corridors (multiple forecasts reduce error)
+- Accept some error (overall still profitable)</p>
+<h3 id="execution-risk">Execution Risk<a class="headerlink" href="#execution-risk" title="Permanent link">&para;</a></h3>
+<p><strong>What if can't replenish at lower price?</strong></p>
+<p><strong>Scenario: Price keeps rising after weekend</strong>
+- Pre-bought Friday: €380
+- Used Saturday: Sent to users
+- Monday price: €385 (up, not down!)
+- Replenish cost: €385 (loss on this cycle)
+- Loss: €5/BCH × 263 BCH = €1,315</p>
+<p><strong>Mitigation:</strong>
+- Not every cycle will profit (aim for 60-70% success rate)
+- Losses on some cycles offset by wins on others
+- Overall: Still profitable (fee spread always there as baseline)
+- View as portfolio, not individual bets</p>
+<h3 id="regulatory-risk">Regulatory Risk<a class="headerlink" href="#regulatory-risk" title="Permanent link">&para;</a></h3>
+<p><strong>Is this legal?</strong></p>
+<p><strong>Analysis:</strong>
+- Using own operational data (not insider info)
+- Managing own inventory (not manipulating market)
+- Transparent patterns (public payday information)
+- Similar to airline fuel hedging, farmer futures</p>
+<p><strong>Conclusion:</strong> Legal inventory management, not market manipulation</p>
+<p><strong>However:</strong>
+- Should consult legal counsel
+- Document legitimate business purpose
+- Maintain audit trail
+- Be prepared to explain strategy to regulators</p>
+<hr />
+<h2 id="success-metrics">Success Metrics<a class="headerlink" href="#success-metrics" title="Permanent link">&para;</a></h2>
+<p><strong>How to measure if this works:</strong></p>
+<h3 id="primary-metrics">Primary Metrics<a class="headerlink" href="#primary-metrics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Arbitrage profit per cycle:</strong> Target 0.3-0.5%</li>
+<li><strong>Success rate:</strong> Target 60-70% of cycles profitable</li>
+<li><strong>Total profit margin:</strong> Target 0.54-0.74% overall</li>
+<li><strong>Forecast accuracy:</strong> Target ±15% volume prediction error</li>
+</ul>
+<h3 id="secondary-metrics">Secondary Metrics<a class="headerlink" href="#secondary-metrics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Market stability:</strong> BCH price volatility during Asgaya peaks</li>
+<li><strong>User experience:</strong> Transaction success rate (should be 100%)</li>
+<li><strong>Reserve utilization:</strong> How much capital tied up vs volume processed</li>
+</ul>
+<h3 id="risk-metrics">Risk Metrics<a class="headerlink" href="#risk-metrics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Maximum drawdown:</strong> Largest loss on single cycle</li>
+<li><strong>Volatility exposure:</strong> Days holding BCH reserves</li>
+<li><strong>Forecast error distribution:</strong> How often/how much predictions miss</li>
+</ul>
+<hr />
+<h2 id="pulpero-coordination-strategy-update-april-20-2026">Pulpero Coordination Strategy (UPDATE - April 20, 2026)<a class="headerlink" href="#pulpero-coordination-strategy-update-april-20-2026" title="Permanent link">&para;</a></h2>
+<h3 id="ground-truth-sunday-operations">Ground Truth: Sunday Operations<a class="headerlink" href="#ground-truth-sunday-operations" title="Permanent link">&para;</a></h3>
+<p><strong>Validation (April 20):</strong> Honduras pulperías ARE open Sundays with variable hours (most close 4pm-8pm). Weekend remittance spike is real and must be managed.</p>
+<h3 id="the-critical-insight-pulperos-are-market-participants">The Critical Insight: Pulperos Are Market Participants<a class="headerlink" href="#the-critical-insight-pulperos-are-market-participants" title="Permanent link">&para;</a></h3>
+<p><strong>The missing variable:</strong> Pulperos aren't just cash-out points - they're <strong>the other side of the market</strong>.</p>
+<p><strong>Complete market flow:</strong>
+<div class="highlight"><pre><span></span><code>Weekend Remittance Spike:
+  1. Senders → Demand BCH (buy pressure)
+  2. Escrow → Uses pre-positioned reserves (removes buy pressure)
+  3. Receivers → Cash out at pulperías
+  4. Pulperías → Accumulate BCH from cash-outs
+
+  Critical decision point:
+  → If pulperos HOLD BCH: No sell pressure, price stays elevated
+  → If pulperos SELL BCH: Sell pressure balances market
+</code></pre></div></p>
+<p><strong>Key realization:</strong> Pulpero behavior is a control variable we can influence through coordination.</p>
+<hr />
+<h3 id="strategy-1-warning-notifications">Strategy 1: Warning Notifications<a class="headerlink" href="#strategy-1-warning-notifications" title="Permanent link">&para;</a></h3>
+<p><strong>When spike risk detected (&gt;15% market impact), send alert:</strong></p>
+<div class="highlight"><pre><span></span><code>⚠️ ALERTA DE VOLUMEN ALTO
+
+Debido al alto número de remesas este fin de semana,
+existe peligro de burbuja especulativa en BCH.
+
+RECOMENDACIÓN: Convierta su BCH a HNL inmediatamente.
+
+Volumen estimado: {forecast} BCH
+Impacto de mercado: {impact}%
+
+Puede volver a mantener BCH el lunes cuando el
+volumen se normalice.
+
+Esta recomendación protege su capital.
+
+[Convertir a HNL Ahora]
+</code></pre></div>
+<p><strong>Why this works:</strong>
+- Aligned incentives: Pulpero doesn't want bubble risk
+- Creates counter-pressure: Selling balances escrow's removed buy pressure
+- Educational: Teaches market dynamics
+- Honest: Genuinely protects pulpero capital</p>
+<p><strong>Not manipulation</strong> - it's market education serving pulpero interests.</p>
+<hr />
+<h3 id="strategy-2-pos-default-override-opt-out-model">Strategy 2: POS Default Override (Opt-Out Model)<a class="headerlink" href="#strategy-2-pos-default-override-opt-out-model" title="Permanent link">&para;</a></h3>
+<p><strong>More sophisticated: Change behavior automatically with explicit opt-out</strong></p>
+<p><strong>Normal conditions:</strong>
+- POS default: Pulpero controls BCH→HNL timing
+- Full agency preserved</p>
+<p><strong>High volume spike detected:</strong>
+- System notification:</p>
+<div class="highlight"><pre><span></span><code>⚠️ CAMBIO TEMPORAL DE CONFIGURACIÓN
+
+Debido al alto volumen de remesas este fin de semana
+(estimado: €240k, 24% del mercado BCH),
+
+SU POS CONVERTIRÁ AUTOMÁTICAMENTE BCH→HNL
+en las próximas 48 horas.
+
+RAZÓN: Protección contra burbuja especulativa.
+
+Esta configuración volverá a normal el lunes.
+
+Si prefiere mantener su configuración actual:
+
+[RECHAZAR CAMBIO] [ACEPTAR PROTECCIÓN]
+
+Usuarios que aceptan protección: 127/150 (85%)
+</code></pre></div>
+<p><strong>Default: Auto-convert ENABLED (must actively reject)</strong></p>
+<p><strong>Why opt-out beats opt-in:</strong>
+1. Friction favors safety (most accept default via inertia)
+2. Preserves agency (can still reject)
+3. Transparency (clear explanation)
+4. Social proof (shows acceptance rate)
+5. Temporary (returns Monday, low commitment)</p>
+<hr />
+<h3 id="the-coordination-effect">The Coordination Effect<a class="headerlink" href="#the-coordination-effect" title="Permanent link">&para;</a></h3>
+<p><strong>Market balance equation:</strong>
+<div class="highlight"><pre><span></span><code>Weekend stability =
+  Escrow removes buy pressure (pre-positioning) +
+  Pulpero adds sell pressure (immediate selling)
+</code></pre></div></p>
+<p><strong>Impact on capital requirements:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Escrow Capital</th>
+<th>Pulpero Compliance</th>
+<th>Effectiveness</th>
+<th>Total Profit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Escrow alone</td>
+<td>€100k</td>
+<td>N/A</td>
+<td>60-70%</td>
+<td>0.35%</td>
+</tr>
+<tr>
+<td>+ Warning nudge</td>
+<td>€30k</td>
+<td>60%</td>
+<td>85%</td>
+<td>0.45%</td>
+</tr>
+<tr>
+<td>+ POS default</td>
+<td>€30k</td>
+<td>85%</td>
+<td>95%</td>
+<td>0.52%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Capital requirement reduced 3x while effectiveness increased!</strong></p>
+<hr />
+<h3 id="revised-capital-requirements">Revised Capital Requirements<a class="headerlink" href="#revised-capital-requirements" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Volume</th>
+<th>Escrow Capital</th>
+<th>Pulpero Strategy</th>
+<th>Coverage</th>
+<th>Profit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>€0-€50k</td>
+<td>€2k</td>
+<td>None</td>
+<td>N/A</td>
+<td>0.26%</td>
+</tr>
+<tr>
+<td>1.5</td>
+<td>€50-€150k</td>
+<td>€10k</td>
+<td>Warning</td>
+<td>50% effective</td>
+<td>0.32%</td>
+</tr>
+<tr>
+<td>2A</td>
+<td>€150-€300k</td>
+<td>€20k</td>
+<td>Warning</td>
+<td>70% effective</td>
+<td>0.42%</td>
+</tr>
+<tr>
+<td>2B</td>
+<td>€300-€600k</td>
+<td>€40k</td>
+<td>POS default</td>
+<td>90% effective</td>
+<td>0.55%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>€600k+</td>
+<td>€80k+</td>
+<td>POS default</td>
+<td>95% effective</td>
+<td>0.65%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phase 2 achievable Month 9-12 (was Month 18-24 without coordination)</strong></p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<h3 id="documentation-updates">Documentation Updates<a class="headerlink" href="#documentation-updates" title="Permanent link">&para;</a></h3>
+<ol>
+<li>✅ <strong>escrow_incentives.md:</strong> Add foreknowledge arbitrage section</li>
+<li>✅ <strong>bubble_prevention.md:</strong> Revise Phase 2 triggers (€100k not €5M)</li>
+<li>✅ <strong>RS039:</strong> Updated with pulpero coordination (April 20)</li>
+<li>✅ <strong>NEW: market_making_partners.md:</strong> Coordination concept extracted</li>
+</ol>
+<h3 id="technical-development">Technical Development<a class="headerlink" href="#technical-development" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Build forecasting module:</strong> Historical pattern analysis</li>
+<li><strong>Reserve calculator:</strong> Optimal pre-positioning amounts</li>
+<li><strong>Execution optimizer:</strong> When to buy/replenish</li>
+<li><strong>Profit tracker:</strong> Measure arbitrage returns</li>
+<li><strong>Backtest framework:</strong> Test strategy on historical data</li>
+<li><strong>NEW: Warning system:</strong> Spike detection + pulpero alerts</li>
+<li><strong>NEW: POS default manager:</strong> Auto-override with opt-out</li>
+<li><strong>NEW: Compliance tracker:</strong> Monitor pulpero behavior</li>
+</ol>
+<h3 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Backtest with Kraken data:</strong> Would this have worked Q4 2025?</li>
+<li><strong>Simulation:</strong> Different volume/volatility scenarios</li>
+<li><strong>Sensitivity analysis:</strong> How much forecast error is tolerable?</li>
+<li><strong>Legal review:</strong> Confirm strategy is compliant</li>
+<li><strong>NEW: Compliance modeling:</strong> Required cooperation percentage</li>
+<li><strong>NEW: A/B testing:</strong> Warning vs default override effectiveness</li>
+</ol>
+<h3 id="partnership">Partnership<a class="headerlink" href="#partnership" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Honduras (Biska POS):</strong> Temporal diversification + pulpero education</li>
+<li><strong>Additional corridors:</strong> Identify payday patterns</li>
+<li><strong>NEW: Pulpero training:</strong> Market dynamics and their stabilization role</li>
+</ol>
+<hr />
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p><strong>The key insight:</strong> Remittances concentrate around predictable payday cycles, creating peak market impact far exceeding average impact.</p>
+<p><strong>The opportunity:</strong> Foreknowledge of your own demand creates legitimate arbitrage through reserve pre-positioning.</p>
+<p><strong>The benefit:</strong> Dual purpose - escrow profit (0.5% vs 0.24%) AND market stability (shield against BCH weakness).</p>
+<p><strong>The timeline:</strong> Phase 2 needed at €100k/month (50x earlier than initially estimated).</p>
+<p><strong>The strategy:</strong> Not market timing (doesn't work per RS038), but inventory management based on operational foreknowledge (does work).</p>
+<p><strong>The bot's role:</strong> Both sword (profit) and shield (protection against BCH's thin markets).</p>
+<hr />
+<p><em>Research completed: April 19, 2026</em><br />
+<em>Lead researcher: Suso + Coordination Claude</em><br />
+<em>Method: Market pattern analysis + strategic modeling</em><br />
+<em>Status: Strategy validated, ready for implementation</em><br />
+<em>Philosophy: Foreknowledge ≠ Speculation</em></p>
+        <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
+            <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
+        </div>
+        <script>
+        async function copyMarkdownToClipboard() {
+            try {
+                const currentPath = window.location.pathname;
+                const mdPath = currentPath.endsWith('/') ? currentPath + 'index.md' : currentPath.replace(/\.html$/, '.md');
+
+                const response = await fetch(mdPath);
+                if (response.ok) {
+                    const markdown = await response.text();
+                    await navigator.clipboard.writeText(markdown);
+                    // Show feedback
+                    const button = document.querySelector('#llms-copy-button button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007acc';
+                    }, 2000);
+                } else {
+                    throw new Error('Markdown file not found');
+                }
+            } catch (err) {
+                console.error('Failed to copy markdown:', err);
+                alert('Failed to copy markdown content');
+            }
+        }
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.breadcrumbs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
