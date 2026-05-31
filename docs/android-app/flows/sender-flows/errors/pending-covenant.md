@@ -1,6 +1,6 @@
 # Error: Pending Covenant
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md)
 
 ---

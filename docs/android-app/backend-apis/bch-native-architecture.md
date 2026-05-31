@@ -94,9 +94,7 @@ For 100 covenants: ~€1.00 total (blockchain fees only)
 ```
 
 **Implementation:**
-- See: `transaction-apis.md` - Lines 210-216
-- See: `settlement-apis.md` - Lines 537-551
-- See: `5_user_apis.md` - "Notifications: OP_RETURN" section
+- See: `covenant-creation.md` - Covenant transaction implementation
 
 ---
 
@@ -190,7 +188,7 @@ T+0:31  Covenant executes autonomously
 ```
 
 **Implementation:**
-- See: `transaction-apis.md` - Lines 115-131
+- See: `covenant-creation.md` - Covenant implementation details
 
 ---
 

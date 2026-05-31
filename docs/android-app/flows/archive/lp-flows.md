@@ -748,9 +748,9 @@ Referencia: REM-89234
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — Why LP is needed
-- [Recipient Flows](../recipient-flows.md) — Recipient claims at merchant
-- [Merchant Flows](../merchant-flows.md) — Merchant confirms LP payment
+- [Remittance Merchant Cash-Out](./remittance-merchant-cash-out/) — Why LP is needed
+- [Recipient Flows](../recipient-flows/) — Recipient claims at merchant
+- [Merchant Flows](../merchant-flows/) — Merchant confirms LP payment
 
 **Decisions:**
 - [Fee Splitting Model](../../../decisions/fee-splitting-model.md) — Where LP reward comes from

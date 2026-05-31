@@ -1,6 +1,6 @@
 # Error: Covenant Expired (24h Timeout)
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 6A: Tracking](../own-wallet-path/6a-tracking.md) or [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md)
 
 ---
