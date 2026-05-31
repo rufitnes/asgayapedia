@@ -147,8 +147,8 @@ Success → Continue to Screen 3
 
 - **[Screen 1: Home](../../home-screen.md)** - Entry point
 - **[Screen 3: Amount Entry](3-amount-entry.md)** - Next step
-- **[Cash Accounts Concept](../../../concepts/cash-accounts.md)** - Technical details
-- **[Corridor Availability](../../../concepts/corridors.md)** - Supported countries
+- **[Cash Accounts Concept](../../../concepts/cash-accounts/)** - Technical details
+- **[Corridor Availability](../../../concepts/corridors/)** - Supported countries
 
 ---
 
