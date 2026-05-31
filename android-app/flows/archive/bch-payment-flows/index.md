@@ -497,18 +497,17 @@ Example: VES 5,750
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — More complex flow with merchant claim
-- [Merchant Flows](../merchant-flows.md) — Merchant perspective (receiving BCH)
-- [LP Flows](../lp-flows.md) — LP perspective (providing liquidity)
+- [Remittance Merchant Cash-Out](./remittance-merchant-cash-out/) — More complex flow with merchant claim
+- [Merchant Flows](../merchant-flows/) — Merchant perspective (receiving BCH)
+- [LP Flows](./lp-flows/) — LP perspective (providing liquidity)
 
 **Decisions:**
-- [Payment Timeout Window](../../../decisions/payment-timeout-window.md) — Why 10 minutes
-- [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work.md) — DolarAPI + Kraken
-- [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md) — EUR first, then BCH
+- [Payment Timeout Window](../../../decisions/payment-timeout-window/) — Why 10 minutes
+- [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work/) — DolarAPI + Kraken
+- [Two-Step Settlement](../../../decisions/two-step-settlement-timing/) — EUR first, then BCH
 
 **Implementation:**
 - `knowledge/code/smsbridge_loop.py` — Working notification listener
-- [Settlement APIs](../../backend-apis/settlement-apis.md) — API endpoints for this flow
 
 ---
 

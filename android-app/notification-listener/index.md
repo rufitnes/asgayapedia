@@ -366,9 +366,8 @@ Merchant → PagoMóvil → Settlement
 ## Related Documents
 
 - **Backend APIs:**
-  - [Transaction APIs](../backend-apis/transaction-apis.md) - State machine triggered by notifications
-  - [Settlement APIs](../backend-apis/settlement-apis.md) - LP settlement confirmations
-  - [User APIs](../backend-apis/user-apis.md) - OP_RETURN notification system
+  - [Covenant Creation](../backend-apis/covenant-creation/) - State machine triggered by notifications
+  - [User APIs](../backend-apis/user-apis/) - OP_RETURN notification system
 
 - **User Flows:**
   - [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md) - Sender experience

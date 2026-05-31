@@ -1,6 +1,6 @@
 # Error: Network Errors
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** Any screen that requires network connectivity
 
 ---

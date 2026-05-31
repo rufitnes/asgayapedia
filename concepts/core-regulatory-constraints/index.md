@@ -277,8 +277,7 @@ For any proposed architectural change, ask:
 
 - [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) — Full regulatory analysis
 - [RS051: Escrow Legal Framework](../research/RS051_escrow_legal_framework.md) — Why escrow model failed
-- [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md) — Compliant pull-system alternative
-- [Core Architecture: Why No Custody](../core-architecture/why-no-custody-no-intermediation.md) — Detailed reasoning (to be created)
+- [Bounty Contracts with Volatility Buffer](./bounty-contracts-with-volatility-buffer.md) — Compliant pull-system alternative
 
 ---
 

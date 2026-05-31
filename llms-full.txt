@@ -2113,9 +2113,7 @@ For 100 covenants: ~€1.00 total (blockchain fees only)
 ```
 
 **Implementation:**
-- See: `transaction-apis.md` - Lines 210-216
-- See: `settlement-apis.md` - Lines 537-551
-- See: `5_user_apis.md` - "Notifications: OP_RETURN" section
+- See: `covenant-creation.md` - Covenant transaction implementation
 
 ---
 
@@ -2209,7 +2207,7 @@ T+0:31  Covenant executes autonomously
 ```
 
 **Implementation:**
-- See: `transaction-apis.md` - Lines 115-131
+- See: `covenant-creation.md` - Covenant implementation details
 
 ---
 
@@ -11484,18 +11482,17 @@ Example: VES 5,750
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — More complex flow with merchant claim
-- [Merchant Flows](../merchant-flows.md) — Merchant perspective (receiving BCH)
-- [LP Flows](../lp-flows.md) — LP perspective (providing liquidity)
+- [Remittance Merchant Cash-Out](./remittance-merchant-cash-out/) — More complex flow with merchant claim
+- [Merchant Flows](../merchant-flows/) — Merchant perspective (receiving BCH)
+- [LP Flows](./lp-flows/) — LP perspective (providing liquidity)
 
 **Decisions:**
-- [Payment Timeout Window](../../../decisions/payment-timeout-window.md) — Why 10 minutes
-- [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work.md) — DolarAPI + Kraken
-- [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md) — EUR first, then BCH
+- [Payment Timeout Window](../../../decisions/payment-timeout-window/) — Why 10 minutes
+- [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work/) — DolarAPI + Kraken
+- [Two-Step Settlement](../../../decisions/two-step-settlement-timing/) — EUR first, then BCH
 
 **Implementation:**
 - `knowledge/code/smsbridge_loop.py` — Working notification listener
-- [Settlement APIs](../../backend-apis/settlement-apis.md) — API endpoints for this flow
 
 ---
 
@@ -12281,9 +12278,9 @@ Referencia: REM-89234
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — Why LP is needed
-- [Recipient Flows](../recipient-flows.md) — Recipient claims at merchant
-- [Merchant Flows](../merchant-flows.md) — Merchant confirms LP payment
+- [Remittance Merchant Cash-Out](./remittance-merchant-cash-out/) — Why LP is needed
+- [Recipient Flows](../recipient-flows/) — Recipient claims at merchant
+- [Merchant Flows](../merchant-flows/) — Merchant confirms LP payment
 
 **Decisions:**
 - [Fee Splitting Model](../../../decisions/fee-splitting-model.md) — Where LP reward comes from
@@ -14352,7 +14349,7 @@ if (isCashAccount(qrData)) {
 
 - **[Screen 2: Enter Amount](2-enter-amount.md)** - Next step
 - **[Direct Payment Overview](README.md)** - Flow structure
-- **[Cash Accounts Concept](../../../concepts/cash-accounts.md)** - Technical details
+- **[Cash Accounts Concept](../../../concepts/cash-accounts/)** - Technical details
 
 ---
 
@@ -17501,8 +17498,8 @@ Success → Continue to Screen 3
 
 - **[Screen 1: Home](../../home-screen.md)** - Entry point
 - **[Screen 3: Amount Entry](3-amount-entry.md)** - Next step
-- **[Cash Accounts Concept](../../../concepts/cash-accounts.md)** - Technical details
-- **[Corridor Availability](../../../concepts/corridors.md)** - Supported countries
+- **[Cash Accounts Concept](../../../concepts/cash-accounts/)** - Technical details
+- **[Corridor Availability](../../../concepts/corridors/)** - Supported countries
 
 ---
 
@@ -17849,7 +17846,7 @@ if (senderBalance >= transferNeeds + networkFee) {
 
 # Error: Bizum Timeout
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md) (Buy from Seller Path)
 
 ---
@@ -18122,7 +18119,7 @@ async def wait_for_bizum(covenant_id, timeout=300):
 
 # Error: Covenant Expired (24h Timeout)
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 6A: Tracking](../own-wallet-path/6a-tracking.md) or [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md)
 
 ---
@@ -18508,7 +18505,7 @@ const refundTx = {
 
 # Error: Network Errors
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** Any screen that requires network connectivity
 
 ---
@@ -18930,7 +18927,7 @@ reportError({
 
 # Error: Pending Covenant
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md)
 
 ---
@@ -20457,9 +20454,8 @@ Merchant → PagoMóvil → Settlement
 ## Related Documents
 
 - **Backend APIs:**
-  - [Transaction APIs](../backend-apis/transaction-apis.md) - State machine triggered by notifications
-  - [Settlement APIs](../backend-apis/settlement-apis.md) - LP settlement confirmations
-  - [User APIs](../backend-apis/user-apis.md) - OP_RETURN notification system
+  - [Covenant Creation](../backend-apis/covenant-creation/) - State machine triggered by notifications
+  - [User APIs](../backend-apis/user-apis/) - OP_RETURN notification system
 
 - **User Flows:**
   - [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md) - Sender experience
@@ -23385,7 +23381,6 @@ suspend fun pollBanescoPayments() {
 - **Index:** [NotificationListener Architecture](README.md)
 - **Bizum:** [bizum-android.md](bizum-android.md) - Similar pattern for EUR
 - **OP_RETURN:** [opreturn-spv.md](opreturn-spv.md) - BCH notifications
-- **Backend:** [settlement-apis.md](../backend-apis/settlement-apis.md) - Settlement state machine
 
 ---
 
@@ -27514,7 +27509,6 @@ MiCA/PSD2 licensing requirements. Zero protocol fee = information society servic
 - [Core Regulatory Constraints](./core-regulatory-constraints.md) — Why this architecture is necessary
 - [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) — Full regulatory analysis
 - [Pull System](./pull-system.md) — Decentralized bulletin board architecture
-- [Core Architecture: Why No Custody](../core-architecture/why-no-custody-no-intermediation.md) — Detailed legal reasoning (to be created)
 
 ---
 
@@ -28712,8 +28706,7 @@ For any proposed architectural change, ask:
 
 - [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) — Full regulatory analysis
 - [RS051: Escrow Legal Framework](../research/RS051_escrow_legal_framework.md) — Why escrow model failed
-- [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md) — Compliant pull-system alternative
-- [Core Architecture: Why No Custody](../core-architecture/why-no-custody-no-intermediation.md) — Detailed reasoning (to be created)
+- [Bounty Contracts with Volatility Buffer](./bounty-contracts-with-volatility-buffer.md) — Compliant pull-system alternative
 
 ---
 
@@ -29871,7 +29864,6 @@ def auto_resolve_fraud(covenant, sender, seller, proof):
 ## Related Concepts
 
 - **[Universal Bot Fraud Prevention](universal-bot-fraud-prevention.md)** - Complete system overview
-- **[Seller Heartbeat Mechanism](seller-heartbeat-mechanism.md)** - Liveness proof
 - **[Unclaimed Transaction Expiry](../decisions/unclaimed-transaction-expiry.md)** - Timeout handling
 - **[Two-Step Settlement](../decisions/two-step-settlement-timing.md)** - Covenant mechanics
 
@@ -34105,8 +34097,7 @@ def submit_fraud_proof(covenant_id, proof, signature):
 ## Related Concepts
 
 - [Fraud Proof Mechanism](fraud-proof-mechanism.md) - Technical implementation
-- [Seller Heartbeat Mechanism](seller-heartbeat-mechanism.md) - Liveness proof system
-- [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md) - Capital recycling strategy
+- [Bounty Contracts with Volatility Buffer](bounty-contracts-with-volatility-buffer.md) - Capital recycling strategy
 - [Unclaimed Transaction Expiry](../decisions/unclaimed-transaction-expiry.md) - Timeout handling
 - [Fee Splitting Model](../decisions/fee-splitting-model.md) - Economic incentives
 
@@ -42073,7 +42064,7 @@ Re-evaluate this decision if:
 
 **Status:** Active (MVP)  
 **Category:** User Protection & Covenant Operations  
-**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Transaction APIs](../android-app/backend-apis/transaction-apis.md)
+**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Covenant Creation](../android-app/backend-apis/covenant-creation/)
 
 ---
 

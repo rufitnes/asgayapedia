@@ -1,6 +1,6 @@
 # Error: Bizum Timeout
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md) (Buy from Seller Path)
 
 ---
