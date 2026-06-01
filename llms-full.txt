@@ -7496,7 +7496,7 @@ When a sender creates a remittance covenant, they specify the recipient's CashAc
 - [Bulletin Board](../../concepts/bulletin-board.md) - How merchants advertise CashAccounts
 
 
-## Remittance Corridors
+## Corridors
 
 # Remittance Corridors
 

@@ -22,7 +22,7 @@
 - [NFT Scanner](https://docs.asgaya.org/android-app/backend-apis/blockchain-scanner/nft-scanner/index.md)
 - [Overview](https://docs.asgaya.org/android-app/backend-apis/seller-bot/index.md)
 - [Cash Accounts](https://docs.asgaya.org/android-app/concepts/cash-accounts/index.md)
-- [Remittance Corridors](https://docs.asgaya.org/android-app/concepts/corridors/index.md)
+- [Corridors](https://docs.asgaya.org/android-app/concepts/corridors/index.md)
 - [Overview](https://docs.asgaya.org/android-app/flows/index.md)
 - [Flow Review Notes - 2026-05-16](https://docs.asgaya.org/android-app/flows/REVIEW_NOTES/index.md)
 - [Home Screen](https://docs.asgaya.org/android-app/flows/home-screen/index.md)
