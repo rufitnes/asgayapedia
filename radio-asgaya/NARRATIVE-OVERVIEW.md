@@ -2,6 +2,12 @@
 
 **For Review:** This document provides a strategic overview of all 37 Radio Asgaya episodes for narrative structure analysis and improvement suggestions.
 
+**⚠️ DeepSeek Review (June 2, 2026):** Critical corrections applied based on DeepSeek audit. Key fixes:
+- **Overcollateralization corrected:** 7% (not 30%) throughout
+- **Episode 3400 placement:** Should move to Episode 3 (noted in recommendations)
+- **Episode numbering:** Over-engineered, will simplify to conventional numbering before public launch
+- **Factual corrections:** Episode 700 (7% abort), 900 (payment-first flow), 2100 (CoinGecko), 2300 (bulletin board model)
+
 **Purpose:** Share with AI reviewers (DeepSeek, Claude, etc.) to discuss:
 - Episode sequencing and flow
 - Narrative coherence across the series
@@ -84,25 +90,26 @@
 
 **700 - 3% Early Warning System** (~8 min)
 - **Thesis:** Protective mechanism prevents volatility losses
-- **Key insight:** If BCH crashes >3%, covenant refunds EUR to sender
+- **Key insight:** If BCH drops 3%, recipient gets warning to claim soon. If BCH drops 7%, covenant aborts and refunds BCH to sender's wallet (seller keeps EUR)
 - **Narrative role:** Addresses "what if BCH crashes during hold" objection
-- **Critical data:** Triggered 2x in 12-month backtest (rare but critical)
+- **Critical data:** 3% = warning threshold, 7% = abort threshold. Triggered 2x in 12-month backtest
 - **Audience:** Risk-conscious senders, merchants
 
 **800 - Bounty Contracts** (~18 min) **[CRITICAL EPISODE]**
 - **Thesis:** May 10th breakthrough—covenants enable pull system without custody
 - **Key insight:** Regulatory constraint → technical innovation
 - **Narrative role:** Dramatic reveal of core protocol architecture
-- **Critical data:** Overcollateralization (30% buffer) protects all parties
+- **Critical data:** Overcollateralization (7% buffer) protects all parties. Seller locks 107% of face value (100% + 7% volatility buffer)
 - **Audience:** Protocol designers, BCH developers, technical reviewers
 - **Strategic note:** Most important technical episode
 
 **900 - Two-Step Settlement Timing** (~15 min)
-- **Thesis:** 5-minute sender protection + 24-hour merchant hold window
-- **Key insight:** Balance between certainty (sender) and optionality (merchant)
-- **Narrative role:** Explains timing choices and trade-offs
-- **Critical data:** 5 min = Bizum timeout, 24h = typical claim window
+- **Thesis:** Payment-first, lock-second flow with 5-minute seller response window
+- **Key insight:** Sender pays fiat first → Seller detects payment → Seller locks BCH within 5 minutes. 24-hour grace period if seller non-responsive.
+- **Narrative role:** Explains timing choices and fraud prevention model
+- **Critical data:** 5 min = seller's deadline to lock after detecting payment. Seller's bank acts as notary.
 - **Audience:** UX designers, merchants, technical reviewers
+- **Note:** Updated May 31, 2026 to payment-first flow
 
 **1000 - Cash Accounts** (~9 min)
 - **Thesis:** Human-readable names replace BCH addresses
@@ -201,7 +208,7 @@
 - **Audience:** Investors, strategic planners
 
 **2100 - Exchange Rates** (~7 min)
-- **Thesis:** Live market rates (Kraken for BCH, DolarAPI for VES)
+- **Thesis:** Live market rates (CoinGecko for BCH, DolarAPI for VES)
 - **Key insight:** No markup, no spread—transparent pricing
 - **Narrative role:** Explains rate calculation and fairness
 - **Critical data:** Updated every API call, auditable
@@ -215,10 +222,10 @@
 - **Audience:** Legal reviewers, UI designers
 
 **2300 - MUSD Integration** (~14 min)
-- **Thesis:** Phase 1 adds stablecoin option to reduce volatility concerns
-- **Key insight:** BCH for hardcore adopters, MUSD for cautious merchants
-- **Narrative role:** Explains evolution beyond BCH-only
-- **Critical data:** MUSD = BCH-native stablecoin on Cauldron DEX
+- **Thesis:** MUSD sellers can list on bulletin board once liquidity exists
+- **Key insight:** Bulletin board listing model, not protocol upgrade. BCH for hardcore adopters, MUSD for cautious merchants.
+- **Narrative role:** Explains how stablecoin option emerges naturally from marketplace
+- **Critical data:** MUSD = BCH-native stablecoin on Cauldron DEX. Sellers list MUSD same way they list BCH.
 - **Audience:** Merchants, BCH community (some controversy)
 
 **2350 - Covenant Flows** (~9 min)
@@ -240,10 +247,10 @@
 ### Unknowns & Vision (2500-3400)
 
 **2500 - Unknown: Overcollateralization Rate** (~10 min)
-- **Thesis:** Is 30% buffer sufficient? Or can we reduce to 25%/20%?
+- **Thesis:** Is 7% buffer sufficient? Or can we reduce to 5%?
 - **Key insight:** Phase 0 will measure real volatility vs required buffer
 - **Narrative role:** Example of structured ignorance
-- **Critical data:** 30% = conservative guess, data will refine
+- **Critical data:** 7% = current buffer from RS062 simulation (0.55% abort rate). Data will refine.
 - **Audience:** Risk analysts, economists
 
 **2600 - Unknown: Claim Timing** (~10 min)
@@ -387,7 +394,7 @@
 - ✅ BCH > VES on 96% of days (100, 200, 3400)
 - ✅ VES lost 62% in one year (200, 3400)
 - ✅ Legacy fees 6.49% vs Asgaya 1% (100, 1200)
-- ✅ 30% overcollateralization buffer (800, 2500)
+- ✅ 7% overcollateralization buffer (800, 2500) — **CORRECTED from 30% error**
 - ❓ Should RS064/RS065 be explicitly cited in episodes?
 
 **Terminology consistency:**
@@ -398,7 +405,107 @@
 
 ---
 
-## Recommendations for DeepSeek Review
+## DeepSeek Audit Findings (June 2, 2026)
+
+**Critical issues identified and corrected:**
+
+### 1. ❌ Overcollateralization Error (CRITICAL)
+- **Error:** Episodes 800 and 2500 summaries stated 30% buffer
+- **Correct:** 7% buffer (seller locks 107% of face value)
+- **Source:** RS062 simulation shows 0.55% abort rate with 7% buffer
+- **Status:** ✅ Corrected in this overview. Must fix in actual episode scripts.
+
+### 2. ❌ Episode 3400 Placement (CRITICAL)
+- **Issue:** "The Melting Currency Problem" is Episode 34 (end of series)
+- **Problem:** Foundational context about VES depreciation buried after 33 technical episodes
+- **Recommendation:** **Move to Episode 3** (after Mission and Merchant Case, before Risk Allocation)
+- **Rationale:** Listeners need macroeconomic context BEFORE technical details
+- **Status:** ⚠️ Noted. Will reorder before public launch.
+
+### 3. ❌ Episode 700 Description (CRITICAL)
+- **Error:** "If BCH crashes >3%, covenant refunds EUR to sender"
+- **Correct:** 3% triggers warning, 7% triggers abort, refunds BCH (not EUR) to sender's wallet
+- **Status:** ✅ Corrected in this overview. Must fix episode script.
+
+### 4. ❌ Episode 900 Description (HIGH)
+- **Error:** "5-minute sender protection + 24-hour merchant hold window"
+- **Correct:** Payment-first flow: Sender pays → Seller detects → Seller locks within 5 min → 24h grace if non-responsive
+- **Status:** ✅ Corrected in this overview. Must fix episode script.
+
+### 5. ❌ Episode 2100 Data Source (MEDIUM)
+- **Error:** "Kraken for BCH"
+- **Correct:** CoinGecko for BCH (Kraken no longer used)
+- **Status:** ✅ Corrected in this overview. Must fix episode script.
+
+### 6. ❌ Episode 2300 Model (HIGH)
+- **Error:** "Phase 1 adds stablecoin option"
+- **Correct:** MUSD sellers list on bulletin board (not a protocol upgrade)
+- **Status:** ✅ Corrected in this overview. Must fix episode script.
+
+### 7. 🔴 Missing Episodes Identified by DeepSeek
+
+**A. Payment-First Fraud Prevention Model**
+- **Gap:** No episode explains May 31 redesign (payment-first, lock-second)
+- **Content needed:** Why flow changed, how seller's bank acts as notary, 24h grace period, police/courts backstop
+- **Suggestion:** Add new episode or significantly expand Episode 2400 (Fraud Proofs)
+
+**B. The Bulletin Board Architecture**
+- **Gap:** No dedicated episode explaining the coordination layer
+- **Content needed:** Two listing types (sellers/buyers), blockchain discovery, merchants as buyer subtype, double-dip patterns
+- **Suggestion:** Add new episode (e.g., "The Bulletin Board — How Peers Find Each Other") or expand Episode 600
+
+**C. The Seller Hedge (Counterintuitive Math)**
+- **Gap:** Episode 600 mentions "passive income" but doesn't explain WHY sellers always win
+- **Content needed:** Seller passively accumulates BCH regardless of price direction
+- **Suggestion:** Expand Episode 600 or add dedicated episode
+
+### 8. 🟡 Episode Numbering (ACKNOWLEDGED)
+- **Issue:** 100, 200, 300... numbering is over-engineered
+- **User agrees:** Will simplify to conventional 01-37 numbering before public launch
+- **Status:** ⏳ Pending pre-launch cleanup
+
+### 9. 📋 Spanish Translation Priority (DeepSeek Recommendation)
+
+| Priority | Episode | Reason |
+|----------|---------|--------|
+| 🔴 Critical | 100 — The Mission | Sets strategic frame |
+| 🔴 Critical | 200 — Merchant Business Case | Core merchant pitch |
+| 🔴 Critical | 3 (3400) — Melting Currency | Explains WHY merchants want BCH |
+| 🟡 High | 1000 — Cash Accounts | Most accessible, practical |
+| 🟡 High | 1200 — Why Cheaper | Convinces senders |
+| 🟡 High | 2400 — Fraud Proofs | Trust/security assurance |
+| 🟢 Medium | 1300 — Cold Start | For participants |
+| 🟢 Medium | 2900 — Contributing | For contributors |
+
+---
+
+## Action Items Before Public Launch
+
+**Must fix (scripts + audio):**
+- [ ] Episode 700: Correct 3% vs 7% abort description
+- [ ] Episode 800: Correct 30% → 7% overcollateralization
+- [ ] Episode 900: Update to payment-first flow
+- [ ] Episode 2100: Update Kraken → CoinGecko
+- [ ] Episode 2300: Update to bulletin board listing model
+- [ ] Episode 2500: Correct 30% → 7% buffer question
+
+**Must reorder:**
+- [ ] Move Episode 3400 (Melting Currency) to Episode 3
+- [ ] Renumber subsequent episodes accordingly
+
+**Consider adding:**
+- [ ] New episode: Payment-First Fraud Prevention Model
+- [ ] New episode: The Bulletin Board Architecture
+- [ ] Expand Episode 600: The Seller Hedge (counterintuitive math)
+
+**Pre-launch cleanup:**
+- [ ] Simplify numbering: 100-series → 01-37 conventional
+- [ ] Verify all data consistency across episodes
+- [ ] Spanish translation for critical episodes (100, 200, 3)
+
+---
+
+## Original DeepSeek Review Questions
 
 **Priority questions:**
 1. **Episode order:** Does the current sequence make sense, or should we reorder?
