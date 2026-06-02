@@ -44957,7 +44957,7 @@ New research documents should:
 
 **Date:** March 24, 2026  
 **Participants:** Suso (Founder), DeepSeek (Main Research Assistant)  
-**Related Intelligence Reports:** [IR004_remittance_dependency_ranking.md](../intelligence/IR004_remittance_dependency_ranking.md), [IR005_sources_remittance_data.md](../intelligence/IR005_sources_remittance_data.md)
+**Related Intelligence Reports:** [IR004_remittance_dependency_ranking.md](intelligence/IR004_remittance_dependency_ranking.md), [IR005_sources_remittance_data.md](intelligence/IR005_sources_remittance_data.md)
 
 ---
 
@@ -52531,6 +52531,12 @@ Demand and adoption signals:
 - [Recipient Smartphone Access](market/recipient-smartphone-access.md) — What devices do recipients have?
 - [Corridor Demand Signals](market/corridor-demand-signals.md) — Which corridors show strongest demand?
 
+### 🚀 Strategic Unknowns
+Long-term effects and expansion strategy:
+- [Adoption-Stabilization Effect](adoption-stabilization-effect.md) — Does BCH adoption reduce volatility over time?
+- [Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Do merchants in hyperinflation economies hold BCH longer?
+- [Cascade Effect](cascade-effect-stabilization.md) — Does hyperinflation-country success make stable-currency adoption easier?
+
 ---
 
 ## How to Use This Directory
@@ -52723,6 +52729,1152 @@ Every unknown follows this format:
 **Questions?** Email jesgf@yahoo.es or open a GitHub issue.
 
 **Let's turn unknowns into knowns—together.**
+
+
+## Unknown: Does Remittance-Driven BCH Adoption Stabilize Price Volatility?
+
+# Unknown: Does Remittance-Driven BCH Adoption Stabilize Price Volatility?
+
+**Status:** Not Started  
+**Priority:** High  
+**Last Updated:** 2026-06-02  
+**Contributors Welcome:** Yes  
+**Related Research:** [RS064](../research/RS064_bch_sov_in_venezuela.md), [RS065](../research/RS065_BCH_price_volatility_decline.md)
+
+---
+
+## What We Don't Know
+
+Does a higher volume of BCH remittances and merchant payments cause the BCH exchange rate against local currencies to become less volatile? We hypothesize that regular, real-world usage anchors the price to economic activity and reduces speculative swings. But we have not yet tested this hypothesis with corridor-specific data.
+
+---
+
+## Why It Matters
+
+### 1. Economics Improve Over Time
+
+If adoption stabilizes BCH, the **overcollateralization buffer can be reduced**, making remittances cheaper:
+
+```
+Phase 0: 30% buffer (high volatility, low volume)
+  ↓ 6 months of data
+Phase 1: 25% buffer (volatility declining, volume growing)
+  ↓ 1 year of data
+Phase 2: 20% buffer (clear stabilization effect)
+  ↓ 2 years of data
+Mature: 15% buffer (corridor fully stabilized)
+```
+
+**Impact:** Remittances become 50% cheaper over time without changing the protocol.
+
+### 2. Merchant Business Case Strengthens
+
+A merchant who holds BCH is not only earning fees but is holding an asset that is becoming progressively less risky as adoption grows. The "volatility concern" becomes self-resolving.
+
+### 3. Powerful External Narrative
+
+"Asgaya doesn't just use BCH—it improves BCH." This differentiates from every other crypto payment project and gives the BCH community a compelling reason to support Asgaya.
+
+### 4. Positive Externality
+
+Success in one corridor (Venezuela) makes all future corridors easier by reducing global BCH volatility. Each user improves the system for all future users.
+
+---
+
+## Current Hypothesis
+
+**Adoption stabilizes price.** As BCH is used for a higher percentage of corridor-specific remittances and merchant payments, its exchange rate against local currencies (e.g., BCH/VES, BCH/EUR) will show lower volatility than the broad BCH/USD market rate. The effect should increase with transaction volume.
+
+### The Mechanism
+
+**Speculation drives volatility:**
+- Traders react to news, sentiment, technical patterns
+- Large swings based on emotion, not fundamentals
+- Price disconnected from real-world value
+
+**Real economic activity anchors price:**
+- Predictable demand from remitters creates buy pressure around payday cycles ([RS039](../research/RS039_temporal_market_impact.md))
+- Merchant acceptance creates a real-economy anchor: a merchant who reliably exchanges 0.1 BCH for a week's groceries ties the BCH price to the food basket
+- Increased velocity: BCH circulates among senders, sellers, merchants, and buyers without touching exchanges, reducing the influence of speculative traders
+
+**Result:** Corridor-specific BCH/VES rate becomes MORE stable than global BCH/USD rate.
+
+---
+
+## Historical Evidence (Supportive)
+
+From [RS065](../research/RS065_BCH_price_volatility_decline.md):
+
+- **Annualized volatility:** 150-200% (2017-2019) → 60-80% (2025-2026) — Halved over 5 years
+- **Extreme daily moves:** 50-60/year (2017-2018) → 2/year (2025-2026) — 95% reduction
+- **Maximum drawdowns:** -97% (2017-2018) → -15% (2025-2026) — 6x improvement
+
+**Correlation with adoption:**
+- 2017-2019: Pure speculation, no real-world usage → Extreme volatility
+- 2020-2022: Some merchant adoption (St. Kitts, Venezuela small scale) → Moderate volatility
+- 2023-2026: MUSD, Cauldron DEX, growing merchant adoption → Declining volatility
+
+**Hypothesis:** The trend is real and will accelerate as Asgaya adds significant real-world transaction volume.
+
+---
+
+## Investigation Method
+
+### Phase 0 Data Collection
+
+During Phase 0, we will record:
+- All covenant creation and settlement timestamps
+- The BCH/EUR and BCH/VES rate at each event
+- Total daily and monthly transaction volume
+- Merchant hold times (time between receiving BCH and converting to VES)
+
+### Analysis Steps
+
+1. **Establish baseline:** Calculate 30-day rolling annualized volatility for BCH/USD and BCH/VES prior to Asgaya launch
+2. **Measure corridor-specific volatility:** After Phase 0 launch, calculate the same metrics for BCH/VES in the Spain→Venezuela corridor
+3. **Compare:** Test whether BCH/VES volatility declines relative to BCH/USD volatility as Asgaya transaction volume grows
+4. **Control for global trends:** Use difference-in-differences regression to isolate Asgaya's impact from broader market changes
+5. **Corridor isolation:** If multiple corridors are active, compare volatility effects across corridors with different adoption levels
+
+**Estimated effort:** 10-20 hours initial analysis + ongoing monthly updates
+
+---
+
+## Success Criterion
+
+A statistically significant decline in BCH/VES volatility relative to BCH/USD volatility, correlated with Asgaya transaction volume growth, would support the hypothesis.
+
+**Concrete metrics:**
+- BCH/VES 30-day volatility < BCH/USD 30-day volatility (after 6 months)
+- Volatility gap increases as volume increases (monthly correlation > 0.6)
+- Effect detectable after ~6 months of sustained Phase 0/1 volume
+
+---
+
+## What Could Disprove the Hypothesis
+
+1. **No correlation:** BCH/VES volatility tracks BCH/USD volatility exactly, showing no corridor-specific stabilization
+2. **Volume threshold too high:** Effect exists but requires 10x more volume than Phase 0 can generate
+3. **Global volatility dominates:** Speculative trading on exchanges overwhelms any corridor-specific stability
+4. **Reverse causation:** BCH becomes more volatile as adoption grows (e.g., regulatory attacks)
+
+---
+
+## Phase 0 Trial Integration
+
+**What we'll measure:**
+- Daily BCH/USD close (CoinGecko)
+- Daily BCH/VES close (derived from DolarAPI USD/VES rate)
+- Daily Asgaya transaction volume (EUR equivalent)
+- 30-day rolling volatility for both pairs
+- Monthly correlation between volume and volatility gap
+
+**Dashboard features:**
+- Real-time volatility chart (BCH/VES vs BCH/USD)
+- Transaction volume overlay
+- Volatility gap trend line
+- Statistical significance indicator
+
+**Monthly reports:**
+- Publish volatility data publicly
+- Share with BCH community for feedback
+- Invite external researchers to validate methodology
+
+---
+
+## Contributor Guidance
+
+**Skills needed:** 
+- Quantitative analysis
+- Statistical modeling (regression, time series)
+- Familiarity with cryptocurrency price data
+- Python/R for data analysis
+
+**How to start:**
+1. Download historical BCH/USD, BCH/EUR, and USD/VES datasets (sources in [RS065](../research/RS065_BCH_price_volatility_decline.md))
+2. Build a rolling volatility comparison script
+3. Reproduce the baseline volatility figures from RS065 to confirm methodology
+4. Contact the Asgaya team for access to Phase 0 transaction data when available
+
+**First deliverable:** 
+- Reproduce RS065 baseline volatility calculations
+- Propose statistical test for measuring corridor-specific stabilization
+- Share methodology for community review
+
+---
+
+## Strategic Implications
+
+### If Hypothesis is TRUE
+
+**Immediate:**
+- Market Asgaya as "BCH price stability infrastructure"
+- Emphasize to BCH community: "Every remittance improves BCH"
+- External narrative: "Proof that real-world usage stabilizes crypto"
+
+**Medium-term:**
+- Reduce buffer from 30% → 25% → 20% as data supports
+- Cheaper remittances without protocol changes
+- Merchant pitch: "BCH is getting safer every month"
+
+**Long-term:**
+- Each corridor launch makes BCH more stable globally
+- Positive externality: Venezuela's success helps Argentina's launch
+- Network effects become improvement effects
+
+### If Hypothesis is FALSE or WEAK
+
+**Fallback:**
+- Buffer stays at 30% indefinitely
+- Still viable (RS064 shows BCH > VES regardless)
+- Focus on "escape hatch" value prop, not "improving BCH"
+- No change to core business model
+
+**Key insight:** The hypothesis failing doesn't break Asgaya—it just means we don't get the "improving BCH" narrative bonus.
+
+---
+
+## Related Documents
+
+- [RS064: BCH as Store of Value vs VES](../research/RS064_bch_sov_in_venezuela.md) — Data showing BCH > VES 96% of days
+- [RS065: BCH Volatility Declining Over Time](../research/RS065_BCH_price_volatility_decline.md) — Historical trend analysis
+- [RS062: Seller Profitability Simulation](../research/RS062_seller_profitability_simulation.md) — 12-month backtest with volatility data
+- [RS039: Temporal Market Impact](../research/RS039_temporal_market_impact.md) — Payday concentration effects
+- [Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Mechanism that drives adoption
+- [Unknown: Cascade Effect](cascade-effect-stabilization.md) — How hyperinflation country success helps stable-currency adoption
+
+---
+
+## Questions for the BCH Research Forum
+
+1. **Methodology validation:** Is difference-in-differences the right statistical approach, or should we use time-series methods like GARCH models?
+2. **Sample size:** How many months of data do we need for statistical significance?
+3. **Confounding factors:** What other variables should we control for beyond transaction volume?
+4. **Alternative explanations:** Could corridor stability be caused by something other than adoption (e.g., VES depreciation reducing arbitrage opportunities)?
+5. **Comparison cases:** Are there other crypto assets with high real-world usage we can compare against?
+
+---
+
+**Status:** Hypothesis formation complete. Data collection begins with Phase 0 launch. Analysis framework designed. Seeking community review of methodology.
+
+**Next steps:**
+1. Implement volatility tracking dashboard
+2. Establish baseline measurements (pre-launch)
+3. Begin Phase 0 data collection
+4. Publish monthly volatility reports
+5. After 6 months: Statistical analysis of correlation
+
+---
+
+*This unknown is designed to be resolved through empirical measurement during Phase 0 and beyond. Success or failure both provide valuable information—but success would be transformative.*
+
+
+## Unknown: Does Hyperinflation-Country Success Stabilize BCH for Stable-Currency Adoption?
+
+# Unknown: Does Hyperinflation-Country Success Stabilize BCH for Stable-Currency Adoption?
+
+**Status:** Not Started  
+**Priority:** Medium  
+**Last Updated:** 2026-06-02  
+**Contributors Welcome:** Yes  
+**Related Research:** [RS064](../research/RS064_bch_sov_in_venezuela.md), [RS065](../research/RS065_BCH_price_volatility_decline.md)
+
+---
+
+## What We Don't Know
+
+If Asgaya succeeds in hyperinflation countries first (Venezuela, Argentina, Lebanon), does that success reduce BCH volatility globally, making it easier to launch in stable-currency/high-remittance countries (Spain→Spain, US→Mexico, etc.)?
+
+We hypothesize that starting with the "hardest" markets first creates infrastructure that makes "easier" markets even easier—a counterintuitive but potentially powerful sequencing strategy.
+
+---
+
+## Why It Matters
+
+### 1. Strategic Sequencing
+
+**Traditional startup wisdom:** Start with easiest market, build momentum, tackle harder markets later.
+
+**Asgaya hypothesis:** Start with hardest markets (high pain = high motivation), use that success to stabilize BCH, then tackle easier markets with a better value prop.
+
+**If true:** Radically changes expansion strategy and prioritization.
+
+### 2. Positive Externality for BCH Ecosystem
+
+Venezuela's adoption doesn't just help Venezuela—it helps every future corridor by making BCH more stable. This gives the BCH community a strong incentive to support Asgaya's hyperinflation launches first.
+
+### 3. Network Effects Become Improvement Effects
+
+Traditional network effects: Each user benefits from existing users.
+
+Improvement effects: Each user improves the system for future users.
+
+**If cascade effect is real:** We have improvement effects, not just network effects.
+
+---
+
+## The Hypothesis: Cascade Effect Sequencing
+
+### Phase 1: Hyperinflation Countries (Year 1-2)
+
+**Launch in:** Venezuela, Argentina, Lebanon, Turkey
+
+**Why these first:**
+- Highest pain (desperate for escape)
+- Lowest adoption barrier (anything > VES)
+- [Hyperinflation holding incentive](hyperinflation-holding-incentive.md) creates long BCH hold times
+- High transaction volume relative to corridor GDP
+
+**Result:**
+- Significant BCH transaction volume
+- [Adoption-stabilization effect](adoption-stabilization-effect.md) kicks in
+- BCH/VES, BCH/ARS, BCH/LBP become more stable
+- Global BCH volatility declines (per RS065 mechanism)
+
+### Phase 2: Stable-Currency/High-Remittance Countries (Year 2-4)
+
+**Launch in:** Spain→Spain, US→Mexico, Italy→Philippines
+
+**Why these second:**
+- NOW BCH is more stable (thanks to Phase 1)
+- Lower perceived risk for stable-currency merchants
+- Pitch becomes: "Look, BCH volatility is down 40% since Venezuela/Argentina launched—here's the data"
+- Still have cost advantage (1% vs 6% fees)
+
+**Result:**
+- Easier merchant adoption (less volatility concern)
+- Higher corridor volumes (more senders)
+- Further stabilization (virtuous cycle)
+
+### Phase 3: Global Expansion (Year 4+)
+
+**Launch in:** All remaining corridors
+
+**Why these last:**
+- BCH now significantly more stable (multiple corridors contributing)
+- Proven track record (Venezuela, Argentina, Spain, US, etc.)
+- "Boring" success story (it just works)
+
+---
+
+## The Mechanism: How Hyperinflation Success Helps Stable-Currency Adoption
+
+### Direct Mechanism: Volatility Reduction
+
+**From RS065:** Real-world transaction volume anchors BCH price to economic activity, reducing speculation-driven volatility.
+
+**If Venezuela generates $10M/month in BCH transactions:**
+- Predictable buy pressure (remittance senders)
+- Predictable sell pressure (merchant conversions)
+- Less influence from speculative traders
+- BCH/USD becomes more stable globally
+
+**Result for Spain→Spain corridor:**
+- "BCH is too volatile" objection weakens
+- Data shows: "Volatility was 70% in 2024, now 50% in 2027" (hypothetical)
+- Easier merchant pitch
+
+### Indirect Mechanism: Proof of Concept
+
+**Venezuela success proves:**
+- "BCH works for real-world payments at scale"
+- "Merchants actually use it"
+- "The economics work"
+
+**For stable-currency merchants:**
+- Social proof (not just theory)
+- De-risks the decision
+- "If it works in Venezuela (hard mode), it'll work here (easy mode)"
+
+### Indirect Mechanism: BCH Community Support
+
+**If Venezuela/Argentina launch first:**
+- BCH community sees real-world adoption (not speculation)
+- Developers motivated to improve infrastructure (wallets, tools)
+- Media attention ("Crypto fixing hyperinflation")
+- More BCH liquidity on exchanges (easier for everyone)
+
+**Result:** Better ecosystem for Phase 2 launches.
+
+---
+
+## Evidence Supporting the Hypothesis
+
+### Historical: BCH Volatility Declining (RS065)
+
+- 2017-2019: Pure speculation → 150-200% volatility
+- 2020-2022: Some adoption → 100-120% volatility
+- 2023-2026: More adoption → 60-80% volatility
+
+**Correlation:** As real-world usage increased, volatility decreased.
+
+**Hypothesis:** Asgaya will accelerate this trend.
+
+### Comparative: Bitcoin in El Salvador
+
+When El Salvador adopted BTC as legal tender (2021):
+- BTC transaction volume in El Salvador increased significantly
+- Did NOT stabilize BTC globally (volatility remained high)
+
+**Why?** 
+- Low adoption rate (~20% of population used it)
+- Mostly speculative holdings, not daily transactions
+- No merchant float (convert immediately to USD)
+
+**Lesson:** Transaction volume alone isn't enough—need HOLDING behavior + HIGH VELOCITY.
+
+**Asgaya difference:**
+- Hyperinflation creates holding incentive ([Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md))
+- Internal VES/BCH exchange keeps BCH local
+- Merchants become long-term holders
+
+---
+
+## Testing the Hypothesis
+
+### Measurement Framework
+
+**Phase 1 Launch (Venezuela, Argentina):**
+
+Measure (monthly):
+1. **Corridor-specific volatility:** BCH/VES, BCH/ARS 30-day annualized volatility
+2. **Global volatility:** BCH/USD 30-day annualized volatility
+3. **Transaction volume:** Monthly Asgaya volume in USD equivalent
+4. **Merchant hold time:** Average days merchants hold BCH ([Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md))
+
+**Expected result if hypothesis is TRUE:**
+- BCH/USD volatility declines as corridor volume increases
+- BCH/VES volatility < BCH/USD volatility (corridor more stable)
+- Correlation > 0.6 between volume and volatility reduction
+
+**Phase 2 Launch (Spain→Spain, US→Mexico):**
+
+Measure:
+1. **Merchant adoption rate:** How fast do stable-currency merchants adopt vs Venezuela?
+2. **Volatility objection frequency:** How often do merchants cite "BCH too volatile" as concern?
+3. **Conversion speed:** Do stable-currency merchants convert faster than hyperinflation merchants?
+
+**Expected result if hypothesis is TRUE:**
+- Merchant adoption FASTER in Phase 2 than Phase 1 (despite lower pain)
+- "Volatility" objection LESS frequent
+- Can point to Phase 1 data: "Look, it's working and getting more stable"
+
+---
+
+## Success Criterion
+
+**Hypothesis CONFIRMED if:**
+
+1. **Global volatility declines during Phase 1:**
+   - BCH/USD 30-day volatility drops >20% during Venezuela/Argentina launch year
+   - Statistical significance (p < 0.05) on correlation with Asgaya volume
+
+2. **Phase 2 adoption is easier:**
+   - Spain→Spain launch achieves X merchants in 6 months (vs 12 months for Venezuela)
+   - "Volatility concern" mentioned by <30% of merchants (vs >60% in Phase 1)
+   - Merchant surveys: "BCH seems stable enough now" vs "BCH too risky"
+
+3. **Positive externality is measurable:**
+   - BCH community engagement increases during Phase 1
+   - More BCH infrastructure built by others (wallets, tools)
+   - Media coverage shifts from "crypto speculation" to "crypto solving real problems"
+
+**Hypothesis WEAKENED if:**
+- BCH/USD volatility unchanged during Phase 1
+- Phase 2 adoption no easier than Phase 1
+- Stable-currency merchants still cite volatility as primary concern
+
+**Hypothesis DISPROVED if:**
+- BCH becomes MORE volatile during Phase 1 (Venezuela launch triggers regulatory attacks, etc.)
+- Phase 2 adoption HARDER than Phase 1
+- Negative externality (Venezuela "taints" BCH reputation)
+
+---
+
+## Risk: What Could Go Wrong
+
+### 1. Regulatory Backlash
+
+**Risk:** Venezuela/Argentina success triggers government crackdowns, scares stable-currency governments
+
+**Mitigation:** 
+- Emphasize legal compliance (remittance regulations)
+- Frame as "helping citizens survive," not "undermining government"
+- Keep low profile until Phase 1 proven
+
+### 2. Insufficient Volume
+
+**Risk:** Venezuela/Argentina volume too small to move global BCH volatility
+
+**Threshold analysis:** 
+- Need to generate >$10M/month BCH transactions to be meaningful
+- Venezuela remittances: $1.85B/year = $154M/month total market
+- Capture 10% = $15M/month → Should be sufficient
+
+### 3. El Salvador Effect (No Stabilization)
+
+**Risk:** Like El Salvador, high transaction volume doesn't stabilize because merchants convert immediately
+
+**Mitigation:** 
+- This is why [hyperinflation holding incentive](hyperinflation-holding-incentive.md) is critical
+- Monitor merchant hold times
+- If hold time < 3 days, hypothesis in trouble
+
+### 4. Attribution Problem
+
+**Risk:** BCH volatility declines during Phase 1, but due to other factors (ETF approval, bull market, etc.)
+
+**Mitigation:**
+- Use control comparison (BCH vs similar-cap altcoins)
+- Corridor-specific analysis (BCH/VES vs BCH/USD)
+- Statistical controls for global crypto trends
+
+---
+
+## Strategic Implications
+
+### If Hypothesis is TRUE
+
+**Expansion strategy:**
+1. **Year 1:** Venezuela only (prove concept)
+2. **Year 2:** Argentina + Lebanon (build momentum, stabilize BCH)
+3. **Year 3:** Spain→Spain + US→Mexico (leverage stability data)
+4. **Year 4+:** Global expansion (mature infrastructure)
+
+**Marketing evolution:**
+- **Year 1-2:** "Escape hyperinflation" (to hyperinflation countries)
+- **Year 2-3:** "BCH is stabilizing thanks to real-world use" (to BCH community)
+- **Year 3+:** "Cheapest remittances globally" (to everyone)
+
+**Funding narrative:**
+- Investors: "Each hyperinflation launch makes future launches easier—positive externality compounds"
+- BCH community: "Support Venezuela launch to benefit entire BCH ecosystem"
+
+### If Hypothesis is FALSE
+
+**Expansion strategy:**
+- Launch wherever adoption is fastest, no sequencing needed
+- Prioritize by TAM (total addressable market), not by currency stability
+- US→Mexico might launch before Venezuela (higher volume potential)
+
+**Marketing:**
+- Each corridor independent
+- No "BCH improvement" narrative
+- Focus on cost savings only
+
+---
+
+## Comparative Cases to Study
+
+### 1. M-Pesa in Kenya (2007-2015)
+
+**Relevant:** Started in one hard market (Kenya, low banking penetration), became easier to expand to other African countries after proving concept.
+
+**Lesson:** First-mover proof of concept reduces risk perception for later markets.
+
+### 2. Bitcoin in Venezuela (2016-2023)
+
+**Relevant:** Organic BCH/BTC adoption in Venezuela driven by hyperinflation.
+
+**Lesson:** Desperation drives adoption, but lack of coordinated infrastructure limited stabilization effect.
+
+### 3. Stablecoin Adoption in Argentina (2020-2025)
+
+**Relevant:** USDT/USDC adoption in Argentina due to peso depreciation.
+
+**Lesson:** Hyperinflation creates strong demand for ANY stable alternative—BCH can compete with stablecoins if infrastructure exists.
+
+---
+
+## Questions for the BCH Community
+
+1. **Volume threshold:** How much BCH transaction volume is needed to measurably reduce global volatility?
+2. **Corridor isolation:** Can corridor-specific stability (BCH/VES) affect global stability (BCH/USD)?
+3. **Time horizon:** How long after Phase 1 launch should we expect to see stabilization effect?
+4. **Alternative mechanisms:** Are there other ways hyperinflation-country success helps stable-currency adoption beyond volatility reduction?
+5. **Negative externalities:** Could successful hyperinflation launches HURT stable-currency adoption (regulatory fears, "taint by association")?
+
+---
+
+## Related Documents
+
+- [RS064: BCH as Store of Value vs VES](../research/RS064_bch_sov_in_venezuela.md) — Why hyperinflation merchants want BCH
+- [RS065: BCH Volatility Declining](../research/RS065_BCH_price_volatility_decline.md) — Historical stabilization trend
+- [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — Core mechanism
+- [Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Why merchants hold BCH longer
+- [Episode 3400: Melting Currency Problem](../meta/radio_asgaya/scripts/3400-melting-currency-problem.md) — Merchant psychology
+
+---
+
+## Contributor Guidance
+
+**Skills needed:**
+- Strategic thinking (sequencing, market entry)
+- Econometrics (causality, control variables)
+- Comparative case study analysis
+
+**How to contribute:**
+1. **Case studies:** Find similar examples of "hard market first" strategies in other industries
+2. **Econometric design:** Propose methods for isolating Asgaya's impact on BCH volatility from other factors
+3. **Risk analysis:** Identify additional risks we haven't considered
+4. **Alternative sequencing:** Propose alternative launch sequences and their trade-offs
+
+---
+
+**Status:** Hypothesis formed. Measurement framework designed. Awaiting Phase 1 launch data. This is a multi-year question that will only be resolved retrospectively.
+
+**Next steps:**
+1. Launch Venezuela (Phase 1)
+2. Track global BCH/USD volatility monthly
+3. After 12 months: Preliminary analysis
+4. After 24 months: Decide whether to prioritize hyperinflation or stable-currency for Phase 2
+5. After Phase 2 launches: Retrospective comparison of adoption rates
+
+---
+
+*This unknown asks: Should we deliberately do things in the "harder" order because success in hard markets creates infrastructure for easy markets? It's a bet on positive externalities and improvement effects—worth testing.*
+
+
+## Unknown: Does Hyperinflation Create Natural BCH Holding Incentives?
+
+# Unknown: Does Hyperinflation Create Natural BCH Holding Incentives?
+
+**Status:** Not Started  
+**Priority:** High  
+**Last Updated:** 2026-06-02  
+**Contributors Welcome:** Yes  
+**Related Research:** [RS064](../research/RS064_bch_sov_in_venezuela.md), [RS065](../research/RS065_BCH_price_volatility_decline.md)
+
+---
+
+## What We Don't Know
+
+Do merchants in hyperinflation economies hold Bitcoin Cash significantly longer than merchants in stable-currency economies, creating a natural "BCH float" that drives adoption and potentially stabilizes prices?
+
+We hypothesize that VES depreciation creates such strong incentives to escape that merchants will hold BCH for days or weeks rather than converting immediately—behavior opposite to what we'd expect in stable-currency countries.
+
+---
+
+## Why It Matters
+
+### 1. Drives the Adoption-Stabilization Effect
+
+If merchants hold BCH longer:
+- More BCH circulates in local economy
+- Less conversion pressure on exchanges
+- Natural demand buffer during price dips
+- Accelerates the [adoption-stabilization effect](adoption-stabilization-effect.md)
+
+### 2. Changes Phase 0 Design Priorities
+
+**If merchants hold BCH (hypothesis TRUE):**
+- Internal VES/BCH exchange becomes critical feature
+- Dashboard should encourage holding ("You've preserved X% more than VES")
+- Merchant education focuses on "hold strategy"
+
+**If merchants convert immediately (hypothesis FALSE):**
+- Fast VES liquidity becomes critical
+- Need more BCH sellers on bulletin board
+- Merchant education focuses on "quick escape"
+
+### 3. Validates the Mental Model Shift
+
+**Old assumption:**
+- Merchants scared of volatility → convert fast
+
+**New hypothesis:**
+- Merchants scared of VES depreciation → hold BCH longer
+
+If true, proves the entire "escape hatch" reframing is correct.
+
+---
+
+## Current Hypothesis
+
+**Hyperinflation reverses holding incentives.** Merchants in Venezuela will hold BCH significantly longer (days to weeks) compared to hypothetical merchants in Spain/US (who would convert within hours) because:
+
+1. **VES depreciation is guaranteed:** Holding VES = certain loss, holding BCH = possible gain
+2. **Time arbitrage:** Merchants can choose WHEN to convert BCH→VES, but VES depreciates continuously
+3. **Data supports holding:** RS064 shows 96% of days BCH > VES
+4. **Escape mentality:** Merchants want OUT of VES, not just "through" BCH
+
+**Prediction:** Average merchant hold time > 7 days in Phase 0.
+
+---
+
+## The Economic Logic
+
+### In Stable-Currency Countries (EUR, USD)
+
+**Merchant psychology:**
+```
+Receive BCH → Think: "Volatile, risky, convert fast"
+Hold time: Hours to 1 day
+Reason: Fiat is stable, BCH is perceived risk
+```
+
+### In Hyperinflation Countries (VES, ARS, LBP)
+
+**Merchant psychology:**
+```
+Receive BCH → Think: "Escape! Don't return to VES unless needed"
+Hold time: Days to weeks
+Reason: Fiat is melting, BCH is relative safety
+```
+
+**The inversion:** What's "risky" flips. The mental model reverses.
+
+---
+
+## Evidence Supporting the Hypothesis
+
+### From RS064: BCH vs VES Performance
+
+- BCH declined vs VES on <15/365 days (4%)
+- For 2+ week holds: 0% probability of loss vs VES
+- Average merchant who holds 7 days: ~96% likely to gain vs VES
+
+**Rational behavior:** Hold BCH, only buy VES when absolutely needed.
+
+### From Merchant Interviews (Anecdotal)
+
+We haven't launched Phase 0 yet, but informal conversations with Venezuelan merchants reveal:
+- "I check the dollar rate twice a day, sometimes three times"
+- "By evening the cash in my register is worth less"
+- "I try to spend bolivares as fast as I can"
+- "If I could hold something stable, even for a week, that would help"
+
+**Implication:** They're already trying to minimize VES holding time—BCH gives them the tool.
+
+### From St. Kitts BCH Adoption (2018-2023)
+
+Merchants there who accepted BCH often held it for weeks/months, not because they "believed in crypto" but because:
+- XCD (Eastern Caribbean Dollar) is pegged to USD but has liquidity constraints
+- BCH gave them optionality
+- Some merchants became accidental HODLers and benefited
+
+**Note:** St. Kitts is not hyperinflation, but shows holding behavior emerges when local currency has issues.
+
+---
+
+## Investigation Method
+
+### Phase 0 Measurement
+
+**Data to collect:**
+1. **Merchant receive time:** When covenant releases BCH to merchant wallet
+2. **Merchant convert time:** When merchant sells BCH for VES (via bulletin board or external)
+3. **Hold duration:** Time between receive and convert
+4. **Reason for conversion:** (Survey) "Why did you convert now?"
+   - Need VES for float (next remittance)
+   - Need VES for supplier payment
+   - Need VES for personal expense
+   - Nervous about BCH volatility
+   - Other
+
+**Metrics:**
+- Average hold time (days)
+- Median hold time (days)
+- Distribution: <1 day, 1-3 days, 3-7 days, 7-14 days, 14+ days
+- Correlation with BCH price movement
+- Correlation with VES depreciation rate
+
+### Control Comparison (If Possible)
+
+If we launch a stable-currency corridor (e.g., Spain → Spain internal remittances), compare:
+- Venezuela merchant hold time vs Spain merchant hold time
+- Hypothesis: Venezuela > Spain by 5-10x
+
+---
+
+## Success Criterion
+
+**Hypothesis confirmed if:**
+- Average merchant hold time > 7 days in Venezuela
+- >50% of merchants hold for 3+ days
+- Hold time negatively correlated with VES depreciation rate (faster VES decline = longer BCH hold)
+- Merchants voluntarily report "using BCH as savings" in surveys
+
+**Hypothesis weakened if:**
+- Average hold time < 3 days
+- >70% convert within 24 hours
+- Merchants cite "BCH volatility fear" as primary reason for fast conversion
+
+**Hypothesis disproved if:**
+- Average hold time < 1 day
+- Behavior indistinguishable from stable-currency merchants
+
+---
+
+## What This Enables
+
+### If TRUE: Changes Everything
+
+**1. Merchant pitch:**
+- "Don't convert immediately—hold BCH until you actually need VES"
+- Show RS064 data: "Statistically safer"
+- Dashboard feature: "Days held: 8 | Gain vs VES: +2.3%"
+
+**2. Product design:**
+- Emphasis on internal VES/BCH exchange (merchant-to-merchant)
+- "Buy VES only when needed" workflow
+- Holdings dashboard (like savings account)
+
+**3. Circular economy emerges faster:**
+- BCH stays in Venezuela longer
+- Merchants trade BCH among themselves
+- Recipients pay merchants in BCH directly (skip VES)
+
+**4. Adoption-stabilization accelerates:**
+- Longer hold times = more BCH float
+- Less exchange pressure
+- Corridor becomes more stable
+
+### If FALSE: Adjust Strategy
+
+**1. Merchant pitch:**
+- "Fast escape from VES—two taps, done"
+- Emphasize speed, not holding
+- De-emphasize "store of value" angle
+
+**2. Product design:**
+- Fast VES liquidity critical
+- Need many BCH sellers on bulletin board
+- Real-time exchange matching
+
+**3. Circular economy slower:**
+- BCH passes through quickly
+- More dependence on external exchanges
+- Recipients still convert to VES immediately
+
+---
+
+## Strategic Implications by Corridor Type
+
+### Hyperinflation Corridors (Venezuela, Argentina, Lebanon)
+
+**If holding incentive is strong:**
+- Launch strategy: Emphasize "escape VES" over "earn fees"
+- Merchant education: "Hold BCH, buy VES when needed"
+- Success metric: Merchant hold time > 7 days
+
+### Stable-Currency Corridors (Spain, US, EU)
+
+**If holding incentive is weak (expected):**
+- Launch strategy: Emphasize "cheaper remittances" over "escape fiat"
+- Merchant education: "Fast liquidity, convert anytime"
+- Success metric: Fast conversion < 1 day (proves liquidity works)
+
+**Key insight:** Same protocol, different psychology, different pitch.
+
+---
+
+## Phase 0 Experiments to Run
+
+### 1. Default Choice Architecture
+
+**Test:** Does default option affect hold time?
+
+- **Group A:** "Get VES now" (default) vs "Hold as BCH"
+- **Group B:** "Hold as BCH" (default) vs "Get VES now"
+
+Measure: Does Group B hold longer?
+
+### 2. Data Transparency
+
+**Test:** Does showing RS064 data increase hold time?
+
+- **Group A:** Dashboard shows hold time only
+- **Group B:** Dashboard shows hold time + "Gain vs VES: +X%"
+
+Measure: Does Group B hold longer when they see they're winning?
+
+### 3. Social Proof
+
+**Test:** Does showing other merchants' behavior affect hold time?
+
+- Show: "Average merchant holds for 8 days"
+- Measure: Do new merchants match the average?
+
+---
+
+## Questions for Validation
+
+1. **What's the minimum viable hold time** to consider hypothesis confirmed? (We say 7 days, but is that right?)
+2. **Cultural factors:** Are Venezuelan merchants uniquely suited to this, or will Argentine/Lebanese merchants behave similarly?
+3. **Learning curve:** Will hold time increase over time as merchants gain confidence?
+4. **BCH literacy:** Do merchants need to understand "what is Bitcoin Cash" or just "this is safer than VES"?
+5. **Trust threshold:** How many successful hold cycles before merchant becomes comfortable holding 2+ weeks?
+
+---
+
+## Related Documents
+
+- [RS064: BCH as Store of Value vs VES](../research/RS064_bch_sov_in_venezuela.md) — Data supporting holding strategy
+- [RS065: BCH Volatility Declining](../research/RS065_BCH_price_volatility_decline.md) — Historical trend
+- [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — How holding drives stability
+- [Unknown: Cascade Effect](cascade-effect-stabilization.md) — How this helps future corridors
+- [Episode 3400: Melting Currency Problem](../meta/radio_asgaya/scripts/3400-melting-currency-problem.md) — Merchant psychology explanation
+
+---
+
+## Contributor Guidance
+
+**Skills needed:**
+- Behavioral economics
+- Survey design
+- Data analysis (Python/R)
+- Experience with hyperinflation economies (ideal)
+
+**How to contribute:**
+1. **Pre-launch:** Design survey questions for merchant hold behavior
+2. **During Phase 0:** Analyze hold time data monthly
+3. **Comparative research:** Find similar behavior in other hyperinflation contexts
+4. **A/B test design:** Propose experiments to optimize hold time
+
+---
+
+**Status:** Hypothesis formed. Measurement framework designed. Awaiting Phase 0 launch for data collection.
+
+**Next steps:**
+1. Build merchant dashboard with hold time tracking
+2. Design default choice architecture (A/B test)
+3. Create merchant education materials (when to hold, when to convert)
+4. Implement "gain vs VES" calculator
+5. After 3 months: Publish hold time data, analyze correlation with VES depreciation
+
+---
+
+*This unknown tests whether the "escape hatch" mental model is empirically correct. If merchants hold BCH longer than expected, it validates the entire strategic reframing from yesterday's breakthrough.*
+
+
+## Payment Info Exchange Method
+
+# Payment Info Exchange Method
+
+**Category:** Technical  
+**Impact:** High (affects every covenant creation)  
+**Phase:** Phase 0 critical  
+**Status:** Open for collaboration
+
+---
+
+## The Question
+
+**How should the sender obtain the seller's payment details (bank account, reference code, amount) in a way that is peer-to-peer, censorship-resistant, and privacy-preserving?**
+
+---
+
+## Why This Matters
+
+Under Asgaya's payment-first, lock-second flow:
+
+1. Sender creates covenant on-chain
+2. Sender selects a BCH seller from bulletin board
+3. **Sender needs seller's payment details to pay fiat via Bizum/SEPA**
+4. Seller's bot locks BCH only after receiving fiat payment
+
+The payment info delivery is a critical checkpoint that also serves as a **seller liveness check**: if the seller's bot doesn't respond with payment details, the sender knows not to proceed with the fiat payment.
+
+---
+
+## Design Requirements
+
+The payment info exchange mechanism must satisfy:
+
+### Must Have:
+- ✅ **Peer-to-peer:** No central server dependency
+- ✅ **Privacy:** Only the sender can read the payment details
+- ✅ **Censorship-resistant:** No single point of failure
+- ✅ **Liveness proof:** Proves seller's bot is online before sender pays
+- ✅ **Fast:** Response within 2 minutes (sender won't wait longer)
+
+### Nice to Have:
+- ✅ **Minimal on-chain footprint:** Avoid bloating the blockchain unnecessarily
+- ✅ **Standard protocols:** Use existing, well-tested solutions
+- ✅ **Simple implementation:** Reduce development complexity
+- ✅ **Cross-platform:** Works on Android, iOS, desktop
+
+---
+
+## Current Leading Options
+
+### Option 1: Nostr Direct Messages (NIP-04)
+
+**How it works:**
+```
+1. Seller includes Nostr pubkey in bulletin board listing
+2. Sender's app sends encrypted DM: "Need payment info for covenant_xyz789"
+3. Seller's bot responds via encrypted DM with payment details
+4. Total latency: <1 second
+```
+
+**Pros:**
+- ✅ Existing protocol (Nostr already used for bulletin board)
+- ✅ End-to-end encrypted (NIP-04)
+- ✅ Sub-second latency (very fast)
+- ✅ Zero on-chain footprint
+- ✅ Simple implementation (Nostr libraries well-supported)
+- ✅ **Bonus:** Enables user-to-user messaging for coordination
+
+**Cons:**
+- ⚠️ Depends on Nostr relay availability
+- ⚠️ Censorship resistance = good but not maximum (relays can be blocked)
+- ⚠️ Requires separate Nostr integration (but already needed for bulletin board)
+
+**Estimated effort:** Low (Nostr already integrated)
+
+---
+
+### Option 2: Encrypted OP_RETURN on BCH
+
+**How it works:**
+```
+1. Sender posts request to blockchain (optional)
+2. Seller's bot posts OP_RETURN transaction with payment info
+3. Payment info encrypted with ECIES using sender's covenant pubkey
+4. Sender's bot monitors blockchain, decrypts info
+5. Total latency: ~2 minutes (one block confirmation)
+```
+
+**Pros:**
+- ✅ Maximum censorship resistance (on BCH blockchain)
+- ✅ End-to-end encrypted (ECIES)
+- ✅ Verifiable (payment info cryptographically tied to covenant)
+- ✅ No external dependencies (pure BCH)
+
+**Cons:**
+- ⚠️ Permanent on-chain storage (~200 bytes per covenant)
+- ⚠️ Higher latency (~2 minutes vs <1 second)
+- ⚠️ Small cost to seller (~€0.002 per covenant)
+- ⚠️ More complex implementation (ECIES encryption, OP_RETURN monitoring)
+
+**Estimated effort:** Moderate (requires encryption library and monitoring)
+
+---
+
+## Alternative Proposals Welcome
+
+The Bitcoin Cash community may have better solutions we haven't considered:
+
+**Possible alternatives:**
+- WebRTC with Nostr signaling (P2P, fast, no on-chain data)
+- Custom BCH-native messaging protocol
+- Hybrid approach (Nostr primary, OP_RETURN fallback)
+- Other decentralized messaging protocols
+
+**What we're looking for:**
+- Maintains privacy (encryption)
+- Maintains decentralization (no central server)
+- Works reliably in adversarial conditions
+- Simple enough to implement in Phase 0
+
+---
+
+## Success Criteria
+
+A solution is considered successful if:
+
+1. **Reliability:** >99% success rate in delivering payment info within 2 minutes
+2. **Privacy:** Payment details only readable by intended sender
+3. **Censorship resistance:** Works even if some infrastructure is blocked/down
+4. **User experience:** Feels instant to user (<5 second perceived latency)
+5. **Implementation:** Can be built and tested within 2-4 weeks
+6. **Maintenance:** Doesn't require constant manual intervention
+
+---
+
+## Investigation Methods
+
+### 1. Protocol Analysis
+- Compare Nostr NIP-04 encryption vs ECIES on BCH
+- Evaluate relay network topology and censorship vectors
+- Benchmark OP_RETURN monitoring performance
+- Test cross-platform library support
+
+### 2. Security Review
+- Threat model for payment info interception
+- Man-in-the-middle attack scenarios
+- Relay operator malicious behavior
+- Chain reorganization edge cases
+
+### 3. Performance Testing
+- Latency measurements: Nostr DM vs OP_RETURN
+- Reliability under different network conditions
+- Failover behavior when primary method unavailable
+- Mobile device battery/data usage
+
+### 4. Community Feedback
+- Present both options to BCH Research Forum
+- Gather input from BCH protocol developers
+- Learn from similar projects (CashAccounts, AnyHedge, etc.)
+- Identify edge cases we haven't considered
+
+---
+
+## How to Contribute
+
+**If you have expertise in:**
+- Nostr protocol and relay infrastructure
+- BCH OP_RETURN best practices
+- Decentralized messaging systems
+- Cryptographic primitives (ECIES, NIP-04)
+
+**We'd love your input on:**
+1. Which option (Nostr or OP_RETURN) is better for Phase 0?
+2. Are there hybrid approaches we should consider?
+3. What edge cases or failure modes are we missing?
+4. Are there existing BCH projects solving similar problems?
+
+**How to help:**
+- Comment on this unknown in BCH Research Forum
+- Share relevant protocol documentation or examples
+- Propose alternative approaches with rationale
+- Review our technical assumptions
+
+---
+
+## Related Documents
+
+### Technical Context:
+- [Fraud Prevention: Payment-First Model](../collaborative_workspace/simplify-documentation-proposal/fraud-prevention-payment-first.md) - Why payment-first requires this
+- [Encrypted Payment Info Technical Briefing](../collaborative_workspace/simplify-documentation-proposal/encrypted-payment-info-liveness-check.md) - Deep technical dive on OP_RETURN approach
+- [Nostr Messaging Benefits](../collaborative_workspace/simplify-documentation-proposal/nostr-messaging-benefits.md) - User messaging bonus if Nostr chosen
+
+### Architectural Context:
+- [Covenant Architecture](../concepts/bounty-contracts-with-volatility-buffer.md) - How covenants work
+- [Bulletin Board](../concepts/bulletin-board.md) - How sellers are discovered
+- [Seller Bot](../android-app/backend-apis/seller-bot/README.md) - What needs to respond
+
+---
+
+## Current Status
+
+**Decision:** Not yet made (Phase 0 design)  
+**Recommendation:** Nostr DM (faster, simpler, enables messaging bonus)  
+**Seeking:** BCH community technical review and feedback  
+**Timeline:** Decision needed before Phase 0 implementation begins
+
+---
+
+## Questions for Discussion
+
+1. **Nostr relay trust:** How much do we trust Nostr relay operators? Can they censor specific message types?
+
+2. **On-chain bloat:** Is 200 bytes per covenant acceptable permanent on-chain storage? Or is this wasteful?
+
+3. **Hybrid approach:** Should we implement both (Nostr primary, OP_RETURN fallback)? Or is this over-engineering?
+
+4. **User messaging:** If Nostr is chosen, should we also enable user-to-user messaging for coordination? (sender→recipient, recipient→merchant)
+
+5. **Future-proofing:** Which approach is more likely to still work in 5 years? 10 years?
+
+---
+
+**This unknown represents a critical Phase 0 design decision. Your expertise can help Asgaya choose the right path.**
+
+*Last updated: 2026-05-31*  
+*Status: Seeking community input*
 
 
 ## Cash Float Management
