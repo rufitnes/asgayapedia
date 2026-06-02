@@ -1,6 +1,7 @@
 # Concept: RFID Card Recipients
 
 **Status:** ⚠️ **FUTURE ENHANCEMENT (Phase 1+)** - Not implemented in Phase 0  
+**⚠️ Architecture Note:** This document was written for the old escrow architecture. Needs significant redesign for covenant-based architecture where recipients must sign transactions with merchants. RFID tap authentication may not be sufficient for covenant claims.  
 **Related Requirement:** [Minimal Hardware](../core-architecture/why-minimal-hardware.md)
 
 ---
@@ -48,6 +49,7 @@ An alternative recipient identity system using RFID cards instead of smartphones
 ### Recipient Flow (RFID Card)
 
 ```
+OLD ARCHITECTURE (Escrow-based):
 1. Sender sends €100 via Bizum to escrow
 2. Escrow notifies recipient via SMS: "Code: 847293"
 3. Recipient goes to merchant with RFID card
@@ -58,6 +60,12 @@ An alternative recipient identity system using RFID cards instead of smartphones
 8. Recipient taps RFID card on merchant device (NFC)
 9. Card cryptographically signs transaction with completion code
 10. Merchant device verifies signature → Transaction complete ✅
+
+⚠️ NOTE: This flow needs redesign for covenant architecture where:
+- Sender creates covenant on-chain (not escrow)
+- Seller funds covenant with BCH (not escrow holding fiat)
+- Recipient + Merchant both sign covenant claim transaction
+- RFID tap may need to sign on-chain transaction, not just authenticate
 ```
 
 **Key difference from smartphone flow:**
@@ -98,6 +106,7 @@ MERCHANT DEVICE:
 **Option 1: Merchant-Assisted Onboarding (Preferred)**
 
 ```
+OLD ARCHITECTURE:
 1. Recipient goes to merchant with blank RFID card
 2. Merchant opens Asgaya app → "Onboard New Recipient"
 3. Merchant hands phone to recipient
@@ -107,6 +116,11 @@ MERCHANT DEVICE:
 7. App writes private key to RFID card
 8. App sends public key to escrow (registers recipient)
 9. Recipient takes card home → ready to receive remittances ✅
+
+⚠️ Covenant architecture changes:
+- Step 8: Public key goes to sender (via CashAccount), not escrow
+- RFID card stores BCH wallet private key (for signing covenant claims)
+- Recipient needs to generate valid BCH address from card
 ```
 
 **Why merchant-assisted:**
@@ -167,9 +181,11 @@ MERCHANT DEVICE:
 
 **Security properties:**
 - Private key never leaves card
-- Card signs completion code using private key
-- Merchant device verifies signature with public key (on escrow)
+- Card signs covenant claim transaction using private key
+- Merchant device verifies signature with public key (on blockchain via CashAccount)
 - Merchant cannot extract private key (read-protected)
+
+⚠️ NOTE: With covenant architecture, card must sign BCH transaction, not just authenticate
 
 ---
 
@@ -180,8 +196,9 @@ MERCHANT DEVICE:
 **Current design (Phase 1):**
 - Card is bearer instrument (whoever has it can use it)
 - Similar to cash or prepaid card
-- Sender notified via SMS before each cash-out
-- Recipient can report card lost → escrow disables public key
+- Sender notified when covenant created
+- Recipient can report card lost → sender can abort unfunded covenants
+- ⚠️ Once covenant claimed, funds are settled (no central authority to "disable")
 
 **Future enhancement (Phase 2):**
 - PIN protection (4-6 digit PIN required before tap)
@@ -202,11 +219,13 @@ MERCHANT DEVICE:
 **Why it fails:**
 1. Private key stored in read-protected memory
 2. NFC tap only allows signing, not key extraction
-3. Even if merchant clones card → escrow knows recipient phone number
-4. Recipient gets SMS for every transaction
-5. Cloned card use → recipient reports fraud → merchant Strike 3
+3. Even if merchant clones card → sender knows recipient CashAccount
+4. Sender gets notification for every covenant claim
+5. Cloned card use → sender reports fraud → bulletin board reputation damaged
 
-**Result:** Cloning not economically viable (too risky, recipient alerted immediately).
+**Result:** Cloning not economically viable (too risky, on-chain proof of fraud).
+
+⚠️ NOTE: Covenant architecture changes fraud detection - relies on blockchain transparency, not central escrow monitoring
 
 ---
 
@@ -239,11 +258,12 @@ MERCHANT DEVICE:
 **Recipient:**
 - ✅ RFID card (NTAG216 or compatible)
 - ❌ No smartphone needed
-- ❌ No internet needed
+- ❌ No internet needed (card signs offline)
 
-**Escrow:**
-- ✅ Database of recipient public keys
-- ✅ SMS notification system (alert recipient on each tx)
+**Blockchain (replaces Escrow):**
+- ✅ Covenant holds BCH for recipient
+- ✅ CashAccount maps to recipient public key
+- ✅ SMS notifications from sender (optional, not protocol-level)
 
 ---
 
@@ -251,16 +271,16 @@ MERCHANT DEVICE:
 
 **Asgaya Android app additions:**
 - NFC card read/write library (Android NFC API)
-- Key generation (Ed25519 or secp256k1)
-- Card provisioning flow
-- Signature verification during cash-out
-- "Tap card" UI instead of "Enter code" for RFID recipients
+- Key generation (secp256k1 for BCH compatibility)
+- Card provisioning flow (generate BCH wallet on card)
+- Transaction signing via NFC tap (sign covenant claim)
+- "Tap card" UI for covenant claim execution
 
-**Escrow backend additions:**
-- Store recipient public keys
-- Verify RFID card signatures
-- Track which recipients use RFID vs app
-- Card deactivation API (if lost/stolen)
+**No backend needed (replaced by blockchain):**
+- ~~Store recipient public keys~~ → CashAccount system on BCH blockchain
+- ~~Verify RFID card signatures~~ → Blockchain verifies covenant claim signatures
+- ~~Track recipients~~ → On-chain transaction history
+- ~~Card deactivation API~~ → No central authority (decentralized)
 
 ---
 
@@ -430,18 +450,31 @@ MERCHANT DEVICE:
 
 ## Status
 
-**Current:** Concept documented, not implemented  
-**Next steps:**
-1. Validate card availability in Venezuela (research)
-2. Prototype NFC provisioning flow (development)
-3. Order 100 test cards (procurement)
-4. Pilot with 2-3 merchants (validation)
-5. Measure adoption vs smartphone app (metrics)
+**Current:** Concept documented for old escrow architecture  
+**⚠️ Architecture Migration Needed:**
+This document describes RFID cards working with escrow-based architecture. With covenant architecture, the concept needs significant redesign:
 
-**Decision gate:** Only implement if demand validated + cards available + merchant NFC support confirmed.
+**Key changes needed:**
+1. RFID card must store BCH wallet private key (secp256k1)
+2. Card must sign covenant claim transactions (not just authenticate)
+3. CashAccount system replaces central recipient registry
+4. No backend needed - blockchain handles verification
+5. NFC tap must generate valid BCH transaction signatures
+
+**Next steps (after redesign):**
+1. Validate card can sign BCH transactions (technical feasibility)
+2. Prototype covenant claim via NFC tap (development)
+3. Test signing performance (tap speed acceptable?)
+4. Validate card availability in Venezuela (procurement)
+5. Pilot with 2-3 merchants if redesign successful
+
+**Decision gate:** 
+- Technical: Can RFID card sign BCH covenant claims? (unknown)
+- UX: Is tap-to-sign fast enough? (unknown)
+- Demand: Do recipients prefer card vs app? (validate in Phase 0 first)
 
 ---
 
-*Concept proposed: May 2026*  
-*Status: Future Enhancement (Phase 1+)*  
-*Blocker: None (cards available globally, Android NFC common)*
+*Concept proposed: May 2026 (escrow architecture)*  
+*Status: Needs Redesign for Covenant Architecture*  
+*Blocker: Technical feasibility of on-chain transaction signing via RFID tap*
