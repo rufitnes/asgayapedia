@@ -4,7 +4,7 @@
 **Priority:** High  
 **Last Updated:** 2026-06-02  
 **Contributors Welcome:** Yes  
-**Related Research:** [RS064](../research/RS064_bch_sov_in_venezuela.md), [RS065](../research/RS065_BCH_price_volatility_decline.md)
+**Related Research:** [RS064](../../research/RS064_bch_sov_in_venezuela.md), [RS065](../../research/RS065_BCH_price_volatility_decline.md)
 
 ---
 
@@ -271,8 +271,8 @@ Measure: Does Group B hold longer when they see they're winning?
 
 ## Related Documents
 
-- [RS064: BCH as Store of Value vs VES](../research/RS064_bch_sov_in_venezuela.md) — Data supporting holding strategy
-- [RS065: BCH Volatility Declining](../research/RS065_BCH_price_volatility_decline.md) — Historical trend
+- [RS064: BCH as Store of Value vs VES](../../research/RS064_bch_sov_in_venezuela.md) — Data supporting holding strategy
+- [RS065: BCH Volatility Declining](../../research/RS065_BCH_price_volatility_decline.md) — Historical trend
 - [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — How holding drives stability
 - [Unknown: Cascade Effect](cascade-effect-stabilization.md) — How this helps future corridors
 - [Episode 3400: Melting Currency Problem](../meta/radio_asgaya/scripts/3400-melting-currency-problem.md) — Merchant psychology explanation

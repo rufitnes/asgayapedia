@@ -4,7 +4,7 @@
 **Priority:** Medium  
 **Last Updated:** 2026-06-02  
 **Contributors Welcome:** Yes  
-**Related Research:** [RS064](../research/RS064_bch_sov_in_venezuela.md), [RS065](../research/RS065_BCH_price_volatility_decline.md)
+**Related Research:** [RS064](../../research/RS064_bch_sov_in_venezuela.md), [RS065](../../research/RS065_BCH_price_volatility_decline.md)
 
 ---
 
@@ -325,8 +325,8 @@ Measure:
 
 ## Related Documents
 
-- [RS064: BCH as Store of Value vs VES](../research/RS064_bch_sov_in_venezuela.md) — Why hyperinflation merchants want BCH
-- [RS065: BCH Volatility Declining](../research/RS065_BCH_price_volatility_decline.md) — Historical stabilization trend
+- [RS064: BCH as Store of Value vs VES](../../research/RS064_bch_sov_in_venezuela.md) — Why hyperinflation merchants want BCH
+- [RS065: BCH Volatility Declining](../../research/RS065_BCH_price_volatility_decline.md) — Historical stabilization trend
 - [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — Core mechanism
 - [Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Why merchants hold BCH longer
 - [Episode 3400: Melting Currency Problem](../meta/radio_asgaya/scripts/3400-melting-currency-problem.md) — Merchant psychology
