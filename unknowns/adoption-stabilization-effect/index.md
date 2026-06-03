@@ -4,7 +4,7 @@
 **Priority:** High  
 **Last Updated:** 2026-06-02  
 **Contributors Welcome:** Yes  
-**Related Research:** [RS064](../research/RS064_bch_sov_in_venezuela.md), [RS065](../research/RS065_BCH_price_volatility_decline.md)
+**Related Research:** [RS064](../../research/RS064_bch_sov_in_venezuela.md), [RS065](../../research/RS065_BCH_price_volatility_decline.md)
 
 ---
 
@@ -68,7 +68,7 @@ Success in one corridor (Venezuela) makes all future corridors easier by reducin
 
 ## Historical Evidence (Supportive)
 
-From [RS065](../research/RS065_BCH_price_volatility_decline.md):
+From [RS065](../../research/RS065_BCH_price_volatility_decline.md):
 
 - **Annualized volatility:** 150-200% (2017-2019) → 60-80% (2025-2026) — Halved over 5 years
 - **Extreme daily moves:** 50-60/year (2017-2018) → 2/year (2025-2026) — 95% reduction
@@ -156,7 +156,7 @@ A statistically significant decline in BCH/VES volatility relative to BCH/USD vo
 - Python/R for data analysis
 
 **How to start:**
-1. Download historical BCH/USD, BCH/EUR, and USD/VES datasets (sources in [RS065](../research/RS065_BCH_price_volatility_decline.md))
+1. Download historical BCH/USD, BCH/EUR, and USD/VES datasets (sources in [RS065](../../research/RS065_BCH_price_volatility_decline.md))
 2. Build a rolling volatility comparison script
 3. Reproduce the baseline volatility figures from RS065 to confirm methodology
 4. Contact the Asgaya team for access to Phase 0 transaction data when available
@@ -201,10 +201,10 @@ A statistically significant decline in BCH/VES volatility relative to BCH/USD vo
 
 ## Related Documents
 
-- [RS064: BCH as Store of Value vs VES](../research/RS064_bch_sov_in_venezuela.md) — Data showing BCH > VES 96% of days
-- [RS065: BCH Volatility Declining Over Time](../research/RS065_BCH_price_volatility_decline.md) — Historical trend analysis
-- [RS062: Seller Profitability Simulation](../research/RS062_seller_profitability_simulation.md) — 12-month backtest with volatility data
-- [RS039: Temporal Market Impact](../research/RS039_temporal_market_impact.md) — Payday concentration effects
+- [RS064: BCH as Store of Value vs VES](../../research/RS064_bch_sov_in_venezuela.md) — Data showing BCH > VES 96% of days
+- [RS065: BCH Volatility Declining Over Time](../../research/RS065_BCH_price_volatility_decline.md) — Historical trend analysis
+- [RS062: Seller Profitability Simulation](../../research/RS062_seller_profitability_simulation.md) — 12-month backtest with volatility data
+- [RS039: Temporal Market Impact](../../research/RS039_temporal_market_impact.md) — Payday concentration effects
 - [Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Mechanism that drives adoption
 - [Unknown: Cascade Effect](cascade-effect-stabilization.md) — How hyperinflation country success helps stable-currency adoption
 

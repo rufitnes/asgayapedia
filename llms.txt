@@ -137,6 +137,8 @@
 - [RS060: Cold-Start Demand Signals — Online Income Communities & Asgaya Seller/Merchant Recruitment](https://docs.asgaya.org/research/RS060_online_income_communities/index.md)
 - [RS062: Seller Profitability Simulation Under Historical BCH Volatility](https://docs.asgaya.org/research/RS062_seller_profitability_simulation/index.md)
 - [RS063: BCH SPV Wallet Libraries & Electrum Client Strategy](https://docs.asgaya.org/research/RS063_bch_spv_libraries/index.md)
+- [RS064: BCH as Store of Value vs. VES in Venezuela](https://docs.asgaya.org/research/RS064_bch_sov_in_venezuela/index.md)
+- [RS065: BCH Price Volatility Decline & Adoption Stabilisation](https://docs.asgaya.org/research/RS065_BCH_price_volatility_decline/index.md)
 - [IR004_sources_remittance_data.md – Sources for Remittance Dependency Analysis](https://docs.asgaya.org/research/intelligence/IR004_remittance_dependency_ranking/index.md)
 - [IR005 sources remittance data](https://docs.asgaya.org/research/intelligence/IR005_sources_remittance_data/index.md)
 - [Phase 1 stability layer](https://docs.asgaya.org/roadmap/phase-1-stability-layer/index.md)
