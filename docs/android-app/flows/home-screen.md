@@ -71,12 +71,12 @@ The home screen is the **main entry point** for all Asgaya app functionality. It
 ### Send & Receive (All Users)
 
 **📤 Send to Asgaya User**
-- Tap → Go to [sender-flows/](sender-flows/) (covenant-based remittance)
+- Tap → Go to [../sender-flows/](../sender-flows/) (covenant-based remittance)
 - Use case: Send money to family/friends in Asgaya network
 - Features: Recipient chooses BCH or cash, 24h claim window
 
 **💳 Pay with Bitcoin Cash**
-- Tap → Go to [direct-payment-flows/](direct-payment-flows/)
+- Tap → Go to [../direct-payment-flows/](../direct-payment-flows/)
 - Use case: Pay merchants who accept BCH (outside Asgaya network)
 - Features: Instant settlement, standard BCH transaction
 
@@ -113,12 +113,12 @@ Tap any transaction → See details
 
 ```
 Home Screen
-├─ 📤 Send to Asgaya User → sender-flows/
+├─ 📤 Send to Asgaya User → ../sender-flows/
 │  ├─ covenant-setup/ (recipient, amount, payment method)
 │  ├─ own-wallet-path/ (if sender has BCH)
 │  └─ buy-seller-path/ (if sender buys BCH from bulletin)
 │
-├─ 💳 Pay with Bitcoin Cash → direct-payment-flows/
+├─ 💳 Pay with Bitcoin Cash → ../direct-payment-flows/
 │  ├─ 1-scan-merchant.md
 │  ├─ 2-enter-amount.md
 │  ├─ 3-confirm-send.md
@@ -270,11 +270,11 @@ if (count > 0) {
 const handleNavigation = (destination) => {
   switch(destination) {
     case "send-asgaya":
-      navigate("sender-flows/covenant-setup/1-home");
+      navigate("../sender-flows/covenant-setup/1-home");
       break;
     
     case "pay-bch":
-      navigate("direct-payment-flows/1-scan-merchant");
+      navigate("../direct-payment-flows/1-scan-merchant");
       break;
     
     case "claim-money":
@@ -292,8 +292,8 @@ const handleNavigation = (destination) => {
 
 ## Related Documentation
 
-- **[Sender Flows](sender-flows/)** - Covenant-based remittances
-- **[Direct Payment Flows](direct-payment-flows/)** - Pay merchants with BCH
+- **[Sender Flows](../sender-flows/)** - Covenant-based remittances
+- **[Direct Payment Flows](../direct-payment-flows/)** - Pay merchants with BCH
 - **[Recipient Flows](recipient-flows.md)** - Claim incoming covenants
 - **[Trade BCH Screen](trade-bch-screen.md)** - Bulletin board for liquidity providers
 

@@ -140,7 +140,7 @@ goToScreen6A();
 - **[Screen 6A: Tracking](6a-tracking.md)** - Next step (covenant tracking)
 - **[Screen 7A: Completion](7a-completion.md)** - Final step (success screen)
 - **[Screen 4B: Buy from Seller](../buy-seller-path/4b-confirm-purchase.md)** - Alternative path
-- **[Own Wallet Path Overview](./README.md)** - Complete path documentation
+- **[Own Wallet Path Overview](./)** - Complete path documentation
 
 ---
 

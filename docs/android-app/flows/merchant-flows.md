@@ -995,7 +995,7 @@ Otherwise → Show specific error
 
 **Flows:**
 - [Recipient Flows](recipient-flows.md) — Elena's perspective (other side of co-signing)
-- [Sender Flows](sender-flows/) — Iris creates covenant and sends
+- [Sender Flows](../sender-flows/) — Iris creates covenant and sends
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
