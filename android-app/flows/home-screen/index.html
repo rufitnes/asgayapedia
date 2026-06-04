@@ -4858,11 +4858,11 @@
 <h2 id="interactions">Interactions<a class="headerlink" href="#interactions" title="Permanent link">&para;</a></h2>
 <h3 id="send-receive-all-users">Send &amp; Receive (All Users)<a class="headerlink" href="#send-receive-all-users" title="Permanent link">&para;</a></h3>
 <p><strong>📤 Send to Asgaya User</strong>
-- Tap → Go to <a href="sender-flows/">sender-flows/</a> (covenant-based remittance)
+- Tap → Go to <a href="../sender-flows/">../sender-flows/</a> (covenant-based remittance)
 - Use case: Send money to family/friends in Asgaya network
 - Features: Recipient chooses BCH or cash, 24h claim window</p>
 <p><strong>💳 Pay with Bitcoin Cash</strong>
-- Tap → Go to <a href="direct-payment-flows/">direct-payment-flows/</a>
+- Tap → Go to <a href="../direct-payment-flows/">../direct-payment-flows/</a>
 - Use case: Pay merchants who accept BCH (outside Asgaya network)
 - Features: Instant settlement, standard BCH transaction</p>
 <p><strong>📥 Claim Money</strong>
@@ -4887,12 +4887,12 @@
 <hr />
 <h2 id="navigation-map">Navigation Map<a class="headerlink" href="#navigation-map" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>Home Screen
-├─ 📤 Send to Asgaya User → sender-flows/
+├─ 📤 Send to Asgaya User → ../sender-flows/
 │  ├─ covenant-setup/ (recipient, amount, payment method)
 │  ├─ own-wallet-path/ (if sender has BCH)
 │  └─ buy-seller-path/ (if sender buys BCH from bulletin)
 │
-├─ 💳 Pay with Bitcoin Cash → direct-payment-flows/
+├─ 💳 Pay with Bitcoin Cash → ../direct-payment-flows/
 │  ├─ 1-scan-merchant.md
 │  ├─ 2-enter-amount.md
 │  ├─ 3-confirm-send.md
@@ -5014,11 +5014,11 @@
 <span class="kd">const</span><span class="w"> </span><span class="nx">handleNavigation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">destination</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">switch</span><span class="p">(</span><span class="nx">destination</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;send-asgaya&quot;</span><span class="o">:</span>
-<span class="w">      </span><span class="nx">navigate</span><span class="p">(</span><span class="s2">&quot;sender-flows/covenant-setup/1-home&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">navigate</span><span class="p">(</span><span class="s2">&quot;../sender-flows/covenant-setup/1-home&quot;</span><span class="p">);</span>
 <span class="w">      </span><span class="k">break</span><span class="p">;</span>
 
 <span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;pay-bch&quot;</span><span class="o">:</span>
-<span class="w">      </span><span class="nx">navigate</span><span class="p">(</span><span class="s2">&quot;direct-payment-flows/1-scan-merchant&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">navigate</span><span class="p">(</span><span class="s2">&quot;../direct-payment-flows/1-scan-merchant&quot;</span><span class="p">);</span>
 <span class="w">      </span><span class="k">break</span><span class="p">;</span>
 
 <span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;claim-money&quot;</span><span class="o">:</span>
@@ -5034,8 +5034,8 @@
 <hr />
 <h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><a href="sender-flows/">Sender Flows</a></strong> - Covenant-based remittances</li>
-<li><strong><a href="direct-payment-flows/">Direct Payment Flows</a></strong> - Pay merchants with BCH</li>
+<li><strong><a href="../sender-flows/">Sender Flows</a></strong> - Covenant-based remittances</li>
+<li><strong><a href="../direct-payment-flows/">Direct Payment Flows</a></strong> - Pay merchants with BCH</li>
 <li><strong><a href="../recipient-flows/">Recipient Flows</a></strong> - Claim incoming covenants</li>
 <li><strong><a href="../trade-bch-screen/">Trade BCH Screen</a></strong> - Bulletin board for liquidity providers</li>
 </ul>

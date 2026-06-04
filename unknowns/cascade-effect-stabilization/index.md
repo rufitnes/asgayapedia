@@ -329,7 +329,6 @@ Measure:
 - [RS065: BCH Volatility Declining](../../research/RS065_BCH_price_volatility_decline.md) — Historical stabilization trend
 - [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — Core mechanism
 - [Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Why merchants hold BCH longer
-- [Episode 3400: Melting Currency Problem](../meta/radio_asgaya/scripts/3400-melting-currency-problem.md) — Merchant psychology
 
 ---
 

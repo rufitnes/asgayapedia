@@ -8089,12 +8089,12 @@ The home screen is the **main entry point** for all Asgaya app functionality. It
 ### Send & Receive (All Users)
 
 **📤 Send to Asgaya User**
-- Tap → Go to [sender-flows/](sender-flows/) (covenant-based remittance)
+- Tap → Go to [../sender-flows/](../sender-flows/) (covenant-based remittance)
 - Use case: Send money to family/friends in Asgaya network
 - Features: Recipient chooses BCH or cash, 24h claim window
 
 **💳 Pay with Bitcoin Cash**
-- Tap → Go to [direct-payment-flows/](direct-payment-flows/)
+- Tap → Go to [../direct-payment-flows/](../direct-payment-flows/)
 - Use case: Pay merchants who accept BCH (outside Asgaya network)
 - Features: Instant settlement, standard BCH transaction
 
@@ -8131,12 +8131,12 @@ Tap any transaction → See details
 
 ```
 Home Screen
-├─ 📤 Send to Asgaya User → sender-flows/
+├─ 📤 Send to Asgaya User → ../sender-flows/
 │  ├─ covenant-setup/ (recipient, amount, payment method)
 │  ├─ own-wallet-path/ (if sender has BCH)
 │  └─ buy-seller-path/ (if sender buys BCH from bulletin)
 │
-├─ 💳 Pay with Bitcoin Cash → direct-payment-flows/
+├─ 💳 Pay with Bitcoin Cash → ../direct-payment-flows/
 │  ├─ 1-scan-merchant.md
 │  ├─ 2-enter-amount.md
 │  ├─ 3-confirm-send.md
@@ -8288,11 +8288,11 @@ if (count > 0) {
 const handleNavigation = (destination) => {
   switch(destination) {
     case "send-asgaya":
-      navigate("sender-flows/covenant-setup/1-home");
+      navigate("../sender-flows/covenant-setup/1-home");
       break;
     
     case "pay-bch":
-      navigate("direct-payment-flows/1-scan-merchant");
+      navigate("../direct-payment-flows/1-scan-merchant");
       break;
     
     case "claim-money":
@@ -8310,8 +8310,8 @@ const handleNavigation = (destination) => {
 
 ## Related Documentation
 
-- **[Sender Flows](sender-flows/)** - Covenant-based remittances
-- **[Direct Payment Flows](direct-payment-flows/)** - Pay merchants with BCH
+- **[Sender Flows](../sender-flows/)** - Covenant-based remittances
+- **[Direct Payment Flows](../direct-payment-flows/)** - Pay merchants with BCH
 - **[Recipient Flows](recipient-flows.md)** - Claim incoming covenants
 - **[Trade BCH Screen](trade-bch-screen.md)** - Bulletin board for liquidity providers
 
@@ -9320,7 +9320,7 @@ Otherwise → Show specific error
 
 **Flows:**
 - [Recipient Flows](recipient-flows.md) — Elena's perspective (other side of co-signing)
-- [Sender Flows](sender-flows/) — Iris creates covenant and sends
+- [Sender Flows](../sender-flows/) — Iris creates covenant and sends
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
@@ -10407,7 +10407,7 @@ pending → claimed → accepted → partially_signed → completed
 ## Related Documentation
 
 **Flows:**
-- [Sender Flows](sender-flows/) — How Iris creates covenant and sends
+- [Sender Flows](../sender-flows/) — How Iris creates covenant and sends
 - [Merchant Flows](merchant-flows.md) — How merchant sells VES for BCH (other side of co-signing)
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
@@ -16057,7 +16057,7 @@ This directory contains all **sender-side screens** for creating and tracking BC
 
 ## Flow Structure
 
-**Entry point:** [Home Screen](../home-screen.md) → Tap "Send to Asgaya User"
+**Entry point:** [Home Screen](../home-screen/) → Tap "Send to Asgaya User"
 
 ### Common Path (All Senders)
 1. **[Recipient Selection](covenant-setup/2-recipient-selection.md)** - Enter Cash Account (Elena#142)
@@ -16180,14 +16180,14 @@ This directory contains all **sender-side screens** for creating and tracking BC
 
 - **[Recipient Flows](../recipient-flows.md)** - How recipients claim BCH or cash
 - **[Merchant Flows](../merchant-flows.md)** - How merchants provide cash-out
-- **[BCH Seller Flows](../../backend-apis/seller-bot/README.md)** - How sellers post collateral
+- **[BCH Seller Flows](../../backend-apis/seller-bot/)** - How sellers post collateral
 
 ---
 
 ## Navigation Tips
 
 **For reviewers:**
-- Start with [1-home.md](home-screen.md) for entry point
+- Start with [Home Screen](../home-screen/) for entry point
 - Follow one complete branch (A or B) to understand full flow
 - Check [errors/](errors/) for edge cases
 
@@ -17316,7 +17316,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap "See detailed breakdown" → Show savings breakdown screen
 - Tap "Learn More" → Explain how to become seller/merchant
 - Tap "Send Another" → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen.md)
+- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen/)
 - Tap "Share on Twitter" → Open Twitter with pre-filled message
 - Tap "Tell a Friend" → Open WhatsApp/SMS with pre-filled message
 
@@ -17337,7 +17337,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 - [Screen 6B: Tracking](./6b-tracking.md) - Previous screen
 - [Screen 7A: Completion (Own Wallet)](../own-wallet-path/7a-completion.md) - Alternative completion screen
-- [Screen 1: Home](../../home-screen.md) - Return to home
+- [Screen 1: Home](../../home-screen/) - Return to home
 - [Fee Splitting Model](../../../../decisions/fee-splitting-model.md) - How fees are distributed
 - [Pull System](../../../../concepts/pull-system.md) - Recipient-driven settlement
 
@@ -17352,7 +17352,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 # Screen 2: Recipient Selection
 
 **Part of:** [Sender Flows](../README.md) → [Covenant Setup](./)  
-**Previous:** [Screen 1: Home](../../home-screen.md)  
+**Previous:** [Screen 1: Home](../../home-screen/)  
 **Next:** [Screen 3: Amount Entry](3-amount-entry.md)  
 **Date:** 2026-05-16
 
@@ -17414,7 +17414,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap **"View Merchant Map"** → Preview merchants in recipient's country
 
 **Navigation:**
-- Tap **"◄ Back"** → Return to [Screen 1: Home](../../home-screen.md)
+- Tap **"◄ Back"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -17496,10 +17496,10 @@ Success → Continue to Screen 3
 
 ## Related Documentation
 
-- **[Screen 1: Home](../../home-screen.md)** - Entry point
+- **[Screen 1: Home](../../home-screen/)** - Entry point
 - **[Screen 3: Amount Entry](3-amount-entry.md)** - Next step
-- **[Cash Accounts Concept](../../../concepts/cash-accounts/)** - Technical details
-- **[Corridor Availability](../../../concepts/corridors/)** - Supported countries
+- **[Cash Accounts Concept](../../../../../concepts/cash-accounts/)** - Technical details
+- **[Corridor Availability](../../../../../concepts/corridors/)** - Supported countries
 
 ---
 
@@ -17900,7 +17900,7 @@ Shown when sender doesn't send Bizum payment to BCH seller within the 5-minute v
 - **Tap "Create New Order"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
   - Pre-fills previous recipient (Elena#142)
   - User can adjust amount or continue with same details
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -18228,7 +18228,7 @@ Shown when recipient doesn't claim covenant within 24-hour window. Different ref
 - **Tap "Create New Order"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
   - Pre-fills previous recipient (Elena#142)
   - User can retry with same or adjusted amount
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -18543,7 +18543,7 @@ Shown when app cannot connect to required services:
 
 **Interactions:**
 - **Tap "Try Again"** → Retry previous action (reload data, retry transaction)
-- **Tap "Go to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Go to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -18911,7 +18911,7 @@ reportError({
 
 ## Related Documentation
 
-- [Screen 1: Home](../../home-screen.md) - Entry point
+- [Screen 1: Home](../../home-screen/) - Entry point
 - [Screen 4.5: Select Seller](../buy-seller-path/4.5-select-seller.md) - Bulletin board dependency
 - [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md) - Exchange rate dependency
 - [Bizum Timeout Error](./bizum-timeout.md) - Payment window expiry
@@ -19006,7 +19006,7 @@ if (hasPendingCovenant) {
   - If covenant from own wallet → [Screen 6A: Tracking](../own-wallet-path/6a-tracking.md)
   - If covenant from seller → [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md)
 - **Tap "Choose Different Recipient"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -19599,7 +19599,7 @@ goToScreen6A();
 - **[Screen 6A: Tracking](6a-tracking.md)** - Next step (covenant tracking)
 - **[Screen 7A: Completion](7a-completion.md)** - Final step (success screen)
 - **[Screen 4B: Buy from Seller](../buy-seller-path/4b-confirm-purchase.md)** - Alternative path
-- **[Own Wallet Path Overview](./README.md)** - Complete path documentation
+- **[Own Wallet Path Overview](./)** - Complete path documentation
 
 ---
 
@@ -19611,9 +19611,9 @@ goToScreen6A();
 
 # Screen 6A: Tracking (Own Wallet Path)
 
-**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send.md)  
-**Previous:** [4A: Confirm Send](./4a-confirm-send.md)  
-**Next:** [7A: Completion](./7a-completion.md)
+**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send/)  
+**Previous:** [4A: Confirm Send](./4a-confirm-send/)  
+**Next:** [7A: Completion](./7a-completion/)
 
 ---
 
@@ -19809,7 +19809,7 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 ```
 
 **Interactions:**
-- Tap "See details" → Go to [Screen 7A: Completion](./7a-completion.md)
+- Tap "See details" → Go to [Screen 7A: Completion](./7a-completion/)
 - Real-time updates (push notifications or polling)
 
 **Notes:**
@@ -19835,8 +19835,8 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 
 ## Related Documentation
 
-- [Screen 4A: Confirm Send](./4a-confirm-send.md) - Previous screen
-- [Screen 7A: Completion](./7a-completion.md) - Next screen
+- [Screen 4A: Confirm Send](./4a-confirm-send/) - Previous screen
+- [Screen 7A: Completion](./7a-completion/) - Next screen
 - [Screen 6B: Tracking (Buy from Seller)](../buy-seller-path/6b-tracking.md) - Alternative tracking screen
 - [Covenant Expiry Error](../errors/covenant-expiry.md) - If recipient doesn't claim
 - [With volatility buffer Bounty Contracts](../../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant specification
@@ -19851,8 +19851,8 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 
 # Screen 7A: Completion (Own Wallet Path)
 
-**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send.md)  
-**Previous:** [6A: Tracking](./6a-tracking.md)
+**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send/)  
+**Previous:** [6A: Tracking](./6a-tracking/)
 
 ---
 
@@ -20053,7 +20053,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap "See detailed breakdown" → Show savings breakdown screen
 - Tap "Learn More" → Explain how to become seller/merchant
 - Tap "Send Another" → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen.md)
+- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen/)
 - Tap "Share on Twitter" → Open Twitter with pre-filled message
 - Tap "Tell a Friend" → Open WhatsApp/SMS with pre-filled message
 
@@ -20072,9 +20072,9 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 ## Related Documentation
 
-- [Screen 6A: Tracking](./6a-tracking.md) - Previous screen
+- [Screen 6A: Tracking](./6a-tracking/) - Previous screen
 - [Screen 7B: Completion (Buy from Seller)](../buy-seller-path/7b-completion.md) - Alternative completion screen
-- [Screen 1: Home](../../home-screen.md) - Return to home
+- [Screen 1: Home](../../home-screen/) - Return to home
 - [Fee Splitting Model](../../../../decisions/fee-splitting-model.md) - How fees are distributed
 - [Pull System](../../../../concepts/pull-system.md) - Recipient-driven settlement
 
@@ -28025,9 +28025,10 @@ Both listing types support multiple payment methods as **attributes**, not separ
 | Payment Method | Description | Typical Use |
 |---------------|-------------|-------------|
 | **Bizum** | Spain instant bank transfer | Spanish senders |
-| **SEPA** | EU bank transfer (1-2 days) | European senders |
-| **Bank transfer** | Generic wire transfer | International senders |
+| **SEPA Instant** | EU instant bank transfer | European senders |
 | **Revolut** | Digital bank instant transfer | UK/EU senders |
+
+**Note:** All payment methods must support instant or near-instant settlement for the notification listener bot to work effectively. Traditional SEPA (1-2 days) is not suitable.
 
 ### For BCH Buyers (fiat output)
 | Payment Method | Description | Typical Use |
@@ -28312,6 +28313,10 @@ Cost = 1000 × €0.50 = €500
 
 **Reclaim on removal:** When spending listing UTXO, BCH value returns to creator (minus tx fee).
 
+**Phase 0 baseline:** This is the starting approach. Additional strategies (listing limits, device fingerprinting, payment method verification) are under consideration.
+
+**See:** [Unknown: Bulletin Board Anti-Spam Strategies](../unknowns/bulletin-board-anti-spam.md) for full analysis of alternatives and testing plan.
+
 ---
 
 ## Privacy Considerations
@@ -28336,22 +28341,27 @@ Cost = 1000 × €0.50 = €500
 
 **The bulletin board coordinates, covenants execute:**
 
-### BCH Seller Flow
+### BCH Seller Flow (Sender → Seller)
 ```
 1. Sender finds seller on bulletin board
-2. Sender pays fiat to seller (off-chain)
-3. Seller's bot creates covenant (on-chain)
-4. Covenant executes when conditions met
-5. Seller no longer directly involved (covenant is self-enforcing)
+2. Sender creates covenant with seller's details (on-chain)
+3. Sender pays fiat to seller (off-chain)
+4. Seller's bot detects payment, co-signs covenant
+5. BCH released to sender's designated recipient
 ```
 
-### BCH Buyer Flow
+**Key:** The sender (active user) creates the covenant, not the seller (listing owner).
+
+### BCH Buyer Flow (Recipient → Merchant)
 ```
-1. Merchant finds buyer on bulletin board
-2. Merchant creates covenant with their BCH (on-chain)
-3. Buyer pays fiat to merchant (off-chain)
-4. Buyer's bot detects payment, co-signs covenant
-5. BCH released to buyer
+1. Recipient finds merchant/buyer on bulletin board
+2. Recipient creates covenant with merchant's details (on-chain)
+3. Recipient receives fiat from merchant (off-chain)
+4. Merchant's bot detects receipt, co-signs covenant
+5. BCH released to merchant
+```
+
+**Key:** The recipient (active user) creates the covenant, not the merchant (listing owner).
 ```
 
 **Bulletin board = discovery layer**  
@@ -28379,10 +28389,28 @@ They're separate but complementary.
 - App calculates optimal corridor based on spread + forex
 - Cross-corridor arbitrage opportunities highlighted
 
-### V2: Reputation Graphs
+### V2: Reputation & Merchant Highlighting
+
+**Merchant Priority (Phase 0+):**
+
+Merchant listings should be highlighted/prioritized because:
+- **Physical location = reputation at stake** (can't disappear like online-only traders)
+- **Easy to audit** (visit shop, verify business license)
+- **Professional service** (ready documentation for accounting, regular hours)
+- **Adoption engine goal** (we want merchants to earn money and promote Asgaya)
+
+**Implementation:**
+- "Verified Merchant" badge (requires proof of physical location)
+- Sort order: Merchants first, then other traders
+- Map view: Show merchant locations prominently
+
+**Anti-spam benefit:** Merchants less likely to spam (reputation risk), so highlighting them reduces spam visibility.
+
+**General Reputation (Phase 1+):**
 - Web of trust (vouch for other participants)
 - Social graph integration (prefer friends' listings)
 - Dispute resolution history (how conflicts resolved)
+- Trade count & volume (established traders ranked higher)
 
 ---
 
@@ -31545,7 +31573,7 @@ Every merchant that joins Asgaya becomes a BCH stakeholder who wants the network
 4. **Competitor response time?** How quickly do other stores adopt after first mover?
 5. **BCH holding behavior?** Do merchants recycle immediately or hold for price appreciation?
 
-**See:** [unknowns/behavioral/merchant-spending-patterns.md](../unknowns/behavioral/) for investigation methods
+**See:** [Merchant BCH Preference](../unknowns/behavioral/merchant-bch-preference/) for investigation methods
 
 ---
 
@@ -51432,7 +51460,7 @@ This supports the hypothesis that Asgaya’s seller recruitment model is not Ven
 **Research Type:** Quantitative Risk & Incentive Analysis  
 **Status:** ✅ Draft — Seeking External Review  
 **Date:** 2026‑05‑20  
-**Related:** [Fee‑Splitting Model](../decisions/fee-splitting-model.md), [Two‑Step Settlement Timing](../decisions/two-step-settlement-timing.md), [Capital Recycling Strategy](../concepts/overcollateralized‑bounty‑contracts.md#capital‑recycling‑strategy‑the‑sellers‑business‑model), [RS039 — Temporal Market Impact](RS039_temporal_market_impact.md)
+**Related:** [Fee‑Splitting Model](../decisions/fee-splitting-model.md), [Two‑Step Settlement Timing](../decisions/two-step-settlement-timing.md), [Capital Recycling Strategy](../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy), [RS039 — Temporal Market Impact](RS039_temporal_market_impact.md)
 
 ---
 
@@ -53278,6 +53306,328 @@ A statistically significant decline in BCH/VES volatility relative to BCH/USD vo
 *This unknown is designed to be resolved through empirical measurement during Phase 0 and beyond. Success or failure both provide valuable information—but success would be transformative.*
 
 
+## Unknown: Bulletin Board Anti-Spam Strategies
+
+# Unknown: Bulletin Board Anti-Spam Strategies
+
+**Status:** Not Started  
+**Priority:** High (Phase 0 critical)  
+**Last Updated:** 2026-06-05  
+**Contributors Welcome:** Yes  
+**Related:** [Bulletin Board](../concepts/bulletin-board.md), [Notification Listener Bot](../concepts/notification-listener-bot.md)
+
+---
+
+## What We Don't Know
+
+What is the optimal anti-spam strategy for the bulletin board to prevent fake listings without creating barriers for legitimate users?
+
+**The challenge:** The bulletin board must be permissionless (anyone can list) but protected from spam attacks (thousands of fake listings).
+
+---
+
+## Why It Matters
+
+### 1. User Experience
+
+**Without anti-spam:**
+- Bulletin board flooded with fake listings
+- Users waste time contacting non-responsive sellers/buyers
+- Trust in the system erodes
+- Real listings buried under spam
+
+### 2. Network Costs
+
+**Spam impacts:**
+- Blockchain bloat (every listing is a UTXO with NFT commitment)
+- Electrum query performance (more UTXOs to scan)
+- Mobile app performance (parsing thousands of fake listings)
+
+### 3. Reputation Risk
+
+**First impression matters:**
+- Phase 0 users see spam → assume system is broken
+- External reviewers see spam → assume poor design
+- Competitors point to spam as "proof Asgaya doesn't work"
+
+---
+
+## Current Approach (Baseline)
+
+**From bulletin-board.md:**
+
+```
+Minimum BCH value required in listing UTXO:
+├─ NFT commitment (listing data)
+└─ ≥ 0.001 BCH (~€0.50 at current prices)
+
+To spam with 1000 fake listings:
+Cost = 1000 × €0.50 = €500
+```
+
+**Pros:**
+- Simple to implement
+- Economic deterrent (spamming has a cost)
+- No centralized authority needed
+
+**Cons:**
+- 0.001 BCH might be too low (€500 is affordable for determined spammer)
+- BCH price volatility affects spam cost
+- Doesn't prevent Sybil attacks (one person, many listings with different Cash Accounts)
+
+---
+
+## Alternative Strategies
+
+### Strategy 1: Increase Commitment Amount
+
+**Approach:** Raise minimum BCH from 0.001 to 0.01 or 0.1 BCH
+
+**Economics:**
+- 0.01 BCH = ~€5 per listing → €5,000 for 1000 fakes
+- 0.1 BCH = ~€50 per listing → €50,000 for 1000 fakes
+
+**Pros:**
+- Higher cost makes spam economically unfeasible
+- Adjustable based on BCH price
+
+**Cons:**
+- Higher barrier for legitimate users
+- Locks up more capital (especially for merchants with multiple listings)
+- Might discourage Phase 0 participation
+
+**Phase 0 test:** Start with 0.001 BCH, monitor spam levels, raise if needed.
+
+---
+
+### Strategy 2: Limit Listings Per Cash Account
+
+**Approach:** One buyer listing + one seller listing per Cash Account maximum
+
+**Rationale:**
+- Legitimate users rarely need multiple listings in same role
+- Merchants need both (buy from recipients, sell to senders)
+- Forces spammer to create many Cash Accounts (more friction)
+
+**Pros:**
+- Prevents single Cash Account from flooding board
+- Still permissionless (anyone can create 2 listings)
+- No additional capital lockup
+
+**Cons:**
+- Doesn't prevent determined spammer with many Cash Accounts
+- Might limit legitimate use cases (e.g., merchant with multiple locations)
+
+**Implementation:** App enforces limit client-side, blockchain enforces via covenant rules.
+
+---
+
+### Strategy 3: Device Fingerprinting via Notification Bot
+
+**Approach:** Notification listener bot flags multiple Cash Accounts on same device
+
+**Mechanism:**
+- Bot runs on user's Android device
+- Device has unique identifier (hashed for privacy)
+- Backend tracks: Device X has Cash Accounts A, B, C
+- Flag if same device posts 10+ listings
+
+**Pros:**
+- Spammer needs smartphone farm (high friction)
+- Doesn't affect legitimate single-device users
+- Privacy-preserving (hashed device ID, no personal data)
+
+**Cons:**
+- Users might legitimately run multiple accounts (e.g., personal + business)
+- Rooted devices can spoof IDs
+- Requires backend tracking (centralization concern)
+
+**Phase 0 feasibility:** High (we already have notification bot infrastructure)
+
+---
+
+### Strategy 4: Payment Method Identity Verification
+
+**Approach:** One Cash Account per payment method (e.g., one per Bizum account, one per bank account)
+
+**Rationale:**
+- Payment methods are identity-linked (bank account, phone number)
+- Spammer would need many bank accounts (high friction)
+- Natural Sybil resistance
+
+**Mechanism:**
+- When creating listing, user proves control of payment method
+- Example: "Send €0.01 to this reference → we verify → listing approved"
+- Hash payment details to prevent duplicates
+
+**Pros:**
+- Strong Sybil resistance (payment methods are scarce)
+- Increases trust (payment method verified before listing appears)
+
+**Cons:**
+- Adds friction to listing creation
+- Privacy concern (payment method linkable to Cash Account)
+- Might require centralized verification service (conflicts with permissionless goal)
+
+**Phase 0 feasibility:** Low (privacy/complexity concerns)
+
+---
+
+### Strategy 5: Hybrid Approach (Recommended)
+
+**Combine multiple strategies:**
+
+1. **Minimum commitment:** 0.001 BCH (low barrier, basic spam deterrent)
+2. **Listing limit:** 2 per Cash Account (1 buyer, 1 seller)
+3. **Device fingerprinting:** Flag if same device has 10+ Cash Accounts
+4. **Dynamic adjustment:** Raise commitment if spam detected
+
+**Phase 0 implementation:**
+- Start with 1+2 (easy to implement)
+- Add 3 once notification bot is stable
+- Monitor spam levels, adjust commitment if needed
+
+**Success metrics:**
+- <5% of listings are spam (measured by user reports or non-response rate)
+- Legitimate users don't complain about barriers
+- No single device/Cash Account dominates bulletin board
+
+---
+
+## Testing Plan
+
+### Phase 0 (Venezuela Launch)
+
+**Baseline configuration:**
+- 0.001 BCH minimum commitment
+- 2 listings max per Cash Account
+- No device fingerprinting (Phase 1 feature)
+
+**Monitor:**
+1. **Spam rate:** % of listings that never respond to messages
+2. **User complaints:** "Too many fake listings" feedback
+3. **Listing turnover:** How often listings are updated/replaced
+4. **Capital locked:** Total BCH locked in listing UTXOs
+
+**Adjustment triggers:**
+- If spam rate >10%: Raise commitment to 0.01 BCH
+- If user complaints >20%: Add device fingerprinting
+- If single Cash Account has >5 listings: Enforce 2-listing limit client-side
+
+### Phase 1+ (Post-Venezuela)
+
+**Add device fingerprinting:**
+- Notification bot reports device hash with Cash Account
+- Backend flags devices with >10 Cash Accounts
+- Manual review or auto-hide flagged listings
+
+**Advanced features:**
+- Reputation scores (successful trades increase trust)
+- Time-based limits (new Cash Accounts can create 1 listing, aged accounts can create 2)
+- Community flagging (users report spam, high-flag listings hidden)
+
+---
+
+## Open Questions
+
+### 1. What is the optimal commitment amount?
+
+**Trade-off:** Higher = less spam, but also less participation
+
+**Phase 0 hypothesis:** 0.001 BCH is sufficient for Venezuela (€0.50 is non-trivial)
+
+**Adjustment mechanism:** Monitor spam rate, raise to 0.01 BCH if >10% spam
+
+### 2. Should we enforce listing limits on-chain or client-side?
+
+**On-chain:** Covenant prevents same Cash Account from creating >2 listings
+- **Pro:** Enforced by blockchain, can't be bypassed
+- **Con:** More complex covenant logic
+
+**Client-side:** App prevents user from creating >2 listings
+- **Pro:** Simple, flexible (can adjust limit easily)
+- **Con:** Malicious users can bypass by using custom app
+
+**Recommendation:** Start client-side (Phase 0), move to on-chain if abuse detected (Phase 1+)
+
+### 3. Is device fingerprinting too centralized?
+
+**Concern:** Backend tracking device hashes conflicts with permissionless philosophy
+
+**Counter:** 
+- Optional (users can opt out by not running notification bot)
+- Privacy-preserving (hashed IDs, no personal data)
+- Only flags, doesn't block (users can still create listings)
+
+**Alternative:** Fully on-chain solution (listing limit enforced by covenant)
+
+### 4. What about merchant reputation?
+
+**Suso's insight (June 5):** Merchants with physical locations have reputation at stake. Should they be highlighted/prioritized?
+
+**Implications for anti-spam:**
+- Merchants less likely to spam (reputation risk)
+- Highlighting merchants might reduce spam visibility (real listings appear first)
+- Could create "verified merchant" tier (requires proof of location)
+
+**See:** [Issue #4 below](#issue-4-merchant-highlighting)
+
+---
+
+## Success Criteria
+
+**Anti-spam strategy is successful if:**
+
+1. **Spam rate <5%:** Most listings are from real users who respond to messages
+2. **No user complaints:** <10% of Phase 0 users report spam as a problem
+3. **No single actor dominates:** No Cash Account or device represents >10% of listings
+4. **Low barrier:** Legitimate users don't complain about cost or complexity
+
+**Anti-spam strategy fails if:**
+
+- Spam rate >20%: Bulletin board unusable, users abandon app
+- High user complaints: "Too many fake listings, can't find real sellers"
+- Single actor gaming: One spammer creates 100s of fake listings
+- High barrier: Legitimate users complain "Too expensive to create listing"
+
+---
+
+## Related Documents
+
+- [Bulletin Board Concept](../concepts/bulletin-board.md) - Current anti-spam implementation
+- [Notification Listener Bot](../concepts/notification-listener-bot.md) - Device fingerprinting mechanism
+- [Phase 0 Validation](../concepts/phase-0-progressive-decentralization.md) - Testing approach
+
+---
+
+## Contributor Guidance
+
+**Skills needed:**
+- Game theory (economic incentives, Sybil resistance)
+- Android development (device fingerprinting)
+- Blockchain economics (commitment mechanisms)
+
+**How to contribute:**
+1. **Test spam resistance:** Create multiple fake listings, measure cost/friction
+2. **Propose mechanisms:** Alternative anti-spam strategies we haven't considered
+3. **Implement device fingerprinting:** Android code to hash device ID securely
+4. **Monitor Phase 0:** Track spam rates, user complaints, listing quality
+
+---
+
+**Status:** Hypothesis formed. Baseline strategy documented. Awaiting Phase 0 data.
+
+**Next steps:**
+1. Implement 0.001 BCH minimum commitment in Phase 0
+2. Enforce 2-listing limit client-side
+3. Monitor spam rate for 30 days
+4. Adjust commitment or add device fingerprinting based on results
+
+---
+
+*This unknown asks: How do we keep the bulletin board permissionless while preventing spam? The answer determines user experience quality and system resilience.*
+
+
 ## Unknown: Does Hyperinflation-Country Success Stabilize BCH for Stable-Currency Adoption?
 
 # Unknown: Does Hyperinflation-Country Success Stabilize BCH for Stable-Currency Adoption?
@@ -53611,7 +53961,6 @@ Measure:
 - [RS065: BCH Volatility Declining](../../research/RS065_BCH_price_volatility_decline.md) — Historical stabilization trend
 - [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — Core mechanism
 - [Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Why merchants hold BCH longer
-- [Episode 3400: Melting Currency Problem](../meta/radio_asgaya/scripts/3400-melting-currency-problem.md) — Merchant psychology
 
 ---
 
@@ -53923,7 +54272,6 @@ Measure: Does Group B hold longer when they see they're winning?
 - [RS065: BCH Volatility Declining](../../research/RS065_BCH_price_volatility_decline.md) — Historical trend
 - [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — How holding drives stability
 - [Unknown: Cascade Effect](cascade-effect-stabilization.md) — How this helps future corridors
-- [Episode 3400: Melting Currency Problem](../meta/radio_asgaya/scripts/3400-melting-currency-problem.md) — Merchant psychology explanation
 
 ---
 
@@ -54184,6 +54532,652 @@ A solution is considered successful if:
 
 *Last updated: 2026-05-31*  
 *Status: Seeking community input*
+
+
+## Unknown: Variable Buffer Rate (Per-Hour Pricing)
+
+# Unknown: Variable Buffer Rate (Per-Hour Pricing)
+
+**Status:** Not Started  
+**Priority:** Medium (Phase 0 enhancement)  
+**Last Updated:** 2026-06-05  
+**Contributors Welcome:** Yes  
+**Related:** [Bulletin Board](../concepts/bulletin-board.md), [Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md)
+
+---
+
+## What We Don't Know
+
+Should the volatility buffer rate be **fixed** (7% for 24 hours) or **variable** (seller sets hourly rate, sender chooses timeout)?
+
+**The proposal:** Sellers post buffer rate per hour (e.g., 1%/hour). Senders choose timeout when creating covenant (e.g., 4 hours = 4% buffer).
+
+---
+
+## Why It Matters
+
+### 1. Market Competition
+
+**Fixed buffer (current):**
+- All sellers provide same 7% buffer
+- No differentiation on volatility risk tolerance
+- One-size-fits-all (might be too high or too low)
+
+**Variable buffer (proposed):**
+- Sellers compete: 0.5%/hour vs 2%/hour
+- Market discovers optimal rate (~1%/hour likely)
+- Better price for coordinated transfers
+
+### 2. Sender-Recipient Coordination
+
+**Current:**
+- Sender pays for 24-hour window even if recipient claims in 2 hours
+- No incentive to coordinate timing
+
+**Proposed:**
+```
+Sender to recipient:
+"Can you claim in 4 hours?"
+
+Recipient: "Yes"
+
+Sender: Creates 4-hour covenant → 4% buffer instead of 24%
+```
+
+**Savings:** €20 buffer → €4 buffer (80% reduction for coordinated transfer)
+
+### 3. Capital Efficiency
+
+**Seller perspective:**
+
+**Current:**
+- Lock 107% for up to 24 hours
+- Capital recycling: 365 days / 1 day = 365 cycles max
+- But most claims happen in <4 hours (wasted buffer)
+
+**Proposed:**
+- Lock 104% for 4 hours (if sender chooses 4h timeout)
+- Capital recycling: 365 days / 0.17 days = 2,147 cycles max
+- **6x more efficient** if average claim time is 4 hours
+
+**Seller APR with 1%/hour rate:**
+- Current (24h): 7% buffer × 365 cycles = 2,555% APR (but overkill)
+- Proposed (4h avg): 4% buffer × 2,147 cycles = 8,588% APR
+- **3.4x higher APR** by matching buffer to actual claim time
+
+---
+
+## The Mechanism
+
+### Listing Format
+
+**Seller posts in bulletin board:**
+```json
+{
+  "category": "ASGAYA_SELLER_V1",
+  "payment_methods": ["Bizum", "SEPA Instant"],
+  "corridors": ["EUR-VES"],
+  "limits": { "min": 50, "max": 500 },
+  "fee_rate": 0.005,
+  "buffer_rate_per_hour": 0.01,  ← NEW (1% per hour)
+  "max_timeout_hours": 24,        ← NEW (ceiling)
+  "contact": "seller#123"
+}
+```
+
+### Covenant Creation
+
+**Sender chooses timeout:**
+```javascript
+// UI: Sender selects timeout from slider/buttons
+const timeout_hours = 4; // Sender's choice
+
+// Fetch seller's hourly rate from listing
+const hourly_rate = 0.01; // 1% per hour
+
+// Calculate required buffer
+const buffer_multiplier = 1 + (hourly_rate * timeout_hours);
+// 1 + (0.01 × 4) = 1.04
+
+// Covenant requires this much BCH from seller
+const required_bch = amount_eur / eur_bch_rate * buffer_multiplier;
+
+// Covenant timeout
+const timeout_timestamp = now() + (timeout_hours * 3600);
+```
+
+### Covenant Logic
+
+```
+When recipient claims:
+├─ Check: claim_time < timeout_timestamp ✓
+├─ Release: required_bch to recipient
+└─ Seller keeps: fee (0.5%) + unused buffer
+
+When timeout expires (no claim):
+├─ Sender reclaims: original BCH
+└─ Seller reclaims: buffer
+```
+
+**Same covenant architecture, just variable timeout and buffer calculation.**
+
+---
+
+## User Experience
+
+### Sender Flow
+
+```
+┌─────────────────────────────────────┐
+│ Step 3: Choose claim window         │
+├─────────────────────────────────────┤
+│                                     │
+│ How soon can recipient claim?       │
+│                                     │
+│ Selected seller's rate: 1% per hour │
+│                                     │
+│ ⚡ 1 hour   → 1% buffer  (€1.00)   │
+│ ⏱️  2 hours  → 2% buffer  (€2.00)   │
+│ ⏱️  4 hours  → 4% buffer  (€4.00)   │ ← Default
+│ 🕐 8 hours  → 8% buffer  (€8.00)   │
+│ 🕐 12 hours → 12% buffer (€12.00)   │
+│ 📅 24 hours → 24% buffer (€24.00)   │
+│                                     │
+│ 💡 Coordinate with recipient to     │
+│    save on buffer costs!            │
+│                                     │
+│ [ Continue ]                        │
+└─────────────────────────────────────┘
+```
+
+**Default:** 4 hours (reasonable coordination window)
+
+**Power user:** Sender messages recipient first → "Can you claim in 2 hours?" → Selects 2 hours
+
+### Recipient Flow
+
+**No change!** Recipient sees:
+```
+Incoming: €100
+Claim before: [4 hours from now]
+Options: BCH (free) | Cash at merchant (0.5% fee)
+```
+
+Recipient doesn't need to know about buffer rates - just the deadline.
+
+---
+
+## Economics
+
+### Seller Competition
+
+**Scenario:** Three sellers in EUR-VES corridor
+
+| Seller | Hourly Rate | 4h Buffer | 24h Buffer | Strategy |
+|--------|-------------|-----------|------------|----------|
+| Alice | 0.5%/hour | 2% | 12% | Aggressive (undercut) |
+| Bob | 1%/hour | 4% | 24% | Standard (market rate) |
+| Carol | 2%/hour | 8% | 48% | Conservative (high volatility protection) |
+
+**Market dynamics:**
+- Alice gets more volume (lower cost for senders)
+- Carol gets less volume but higher margin
+- Bob is middle ground
+
+**Expected outcome:** Market settles around 1%/hour (similar to current 7%/24h ≈ 0.29%/hour, but accounts for actual volatility risk)
+
+### Sender Optimization
+
+**Example:** Sending €100 to Venezuela
+
+**Without coordination:**
+- Sender: "I don't know when recipient will claim"
+- Chooses: 24 hours (safe but expensive)
+- Buffer cost: €24
+
+**With coordination:**
+- Sender messages recipient: "Can you claim today?"
+- Recipient: "Yes, I'll go to merchant in 3 hours"
+- Sender chooses: 4 hours (enough margin)
+- Buffer cost: €4
+
+**Savings: €20 (83% reduction)**
+
+### Capital Recycling APR
+
+**Seller with 1%/hour rate:**
+
+| Avg Claim Time | Buffer % | Cycles/Year | APR |
+|----------------|----------|-------------|-----|
+| 2 hours | 2% | 4,380 | 8,760% |
+| 4 hours | 4% | 2,190 | 8,760% |
+| 8 hours | 8% | 1,095 | 8,760% |
+| 24 hours | 24% | 365 | 8,760% |
+
+**Wait, the APR is the same!** Because hourly rate accounts for time.
+
+**Actual benefit:** Senders pay less for coordinated transfers, sellers get more volume (more 4h covenants than 24h covenants).
+
+---
+
+## Implementation Complexity
+
+### Easy (No blocker)
+
+**Listing format:**
+- Add `buffer_rate_per_hour` field to NFT commitment
+- Add `max_timeout_hours` field (default 24)
+
+**Covenant logic:**
+- Multiply hourly rate × timeout hours
+- Set timeout timestamp
+- Same pull system, same abort conditions
+
+**Backend:**
+- No changes needed (covenant is self-enforcing)
+
+### Moderate (UI work)
+
+**Sender UX:**
+- Slider or button grid for timeout selection
+- Real-time buffer cost calculation
+- Default recommendation (4 hours)
+
+**Listing display:**
+- Show "1%/hour" instead of "7% buffer"
+- Calculator: "4h = €4 buffer" preview
+
+### Unknown (Needs testing)
+
+**Market discovery:**
+- What hourly rate will sellers choose?
+- Will senders understand per-hour pricing?
+- Does coordination actually happen?
+
+**Edge cases:**
+- What if sender chooses 1h but recipient takes 4h? (Covenant expires, sender reclaims)
+- Should there be a minimum timeout? (Probably 1 hour)
+- Should there be warnings? "Your recipient might not claim in time!"
+
+---
+
+## Testing Plan
+
+### Phase 0a: Fixed Buffer (Baseline)
+
+**Configuration:**
+- All sellers use 7% fixed buffer
+- 24-hour fixed timeout
+- Measure: Average claim time, buffer surplus distribution
+
+**Data to collect:**
+- 50% of recipients claim in <X hours
+- 90% of recipients claim in <Y hours
+- Median claim time: Z hours
+
+**Expected result:** Most claims happen in <4 hours (wasting 20% of buffer)
+
+### Phase 0b: Variable Buffer (A/B Test)
+
+**Configuration:**
+- 50% of sellers use fixed 7%/24h
+- 50% of sellers use 1%/hour (capped at 24h)
+- Measure: Which sellers get more volume? Do senders coordinate?
+
+**Success criteria:**
+- Variable buffer sellers get ≥50% of volume (proves market preference)
+- Average timeout chosen <12 hours (proves coordination happens)
+- No increase in covenant expirations (proves senders aren't setting timeout too low)
+
+**If successful:** Roll out to 100% in Phase 1
+
+---
+
+## Success Criteria
+
+**Variable buffer succeeds if:**
+
+1. **Sellers adopt it:** ≥75% of sellers post hourly rates (vs fixed)
+2. **Senders coordinate:** Average timeout chosen is <12 hours (proves sender-recipient communication)
+3. **Cost savings:** Average buffer paid drops from 7% to <5% (proves efficiency gain)
+4. **No failures:** Covenant expiration rate <5% (proves senders aren't setting timeout too low)
+
+**Variable buffer fails if:**
+
+- Senders confused: ">50% choose default without coordination" (UX too complex)
+- No cost savings: "Average buffer paid still ~7%" (no coordination happening)
+- High expiration: ">10% covenants expire unclaimed" (senders setting timeout too low)
+
+---
+
+## Risks
+
+### Risk 1: UX Complexity
+
+**Concern:** "Sender has to choose timeout AND understand buffer calculation"
+
+**Mitigation:**
+- Simple default: 4 hours (good for most cases)
+- Visual calculator: "4h = €4 buffer" (no math required)
+- Recommended range: "Most people choose 2-8 hours"
+
+### Risk 2: Market Confusion
+
+**Concern:** "Sellers don't know what hourly rate to set"
+
+**Mitigation:**
+- Guidance: "Recommended: 0.5-2%/hour"
+- Default: 1%/hour (matches current 24%/24h ≈ 1%/hour)
+- Dashboard: "Your rate vs market average"
+
+### Risk 3: Coordination Failure
+
+**Concern:** "Senders don't actually coordinate with recipients"
+
+**Mitigation:**
+- If senders always choose 24h: They pay same as fixed buffer (no harm)
+- If senders experiment: Some learn to coordinate (gradual adoption)
+- Education: "Save money by coordinating claim time!"
+
+### Risk 4: Covenant Expirations
+
+**Concern:** "Sender chooses 1h, recipient takes 4h, covenant expires"
+
+**Mitigation:**
+- Minimum timeout: 1 hour (can't choose 0)
+- Warning: "If recipient doesn't claim by [time], you'll get your money back"
+- Recommended: "Choose 4h to be safe"
+
+---
+
+## Related Documents
+
+- [Bulletin Board](../concepts/bulletin-board.md) - Listing format
+- [Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) - Current 7% fixed buffer
+- [Sender Flows](../android-app/flows/sender-flows/) - Where timeout selection happens
+
+---
+
+## Contributor Guidance
+
+**Skills needed:**
+- Game theory (pricing mechanisms, market dynamics)
+- UX design (how to make per-hour pricing intuitive)
+- Android development (timeout selection UI)
+
+**How to contribute:**
+1. **UX mockups:** Design timeout selection interface
+2. **Economic modeling:** Simulate seller competition at different hourly rates
+3. **Prototype:** Implement variable buffer in covenant testnet
+4. **User testing:** Ask users to choose timeout and explain their reasoning
+
+---
+
+## Phased Rollout: Crawl → Walk → Run
+
+### Phase 0: Fixed Everything (Venezuela Launch)
+
+**Configuration:**
+- Buffer: 7% (fixed)
+- Fee: 0.5% (fixed)  
+- Timeout: 24 hours (fixed)
+
+**Rationale:**
+- **The buffer concept is counter-intuitive** ("Lock €107 to earn €0.50?")
+- Sellers need to learn and trust the basic mechanic first
+- Focus on education: "Your €7 buffer comes back + you earn €0.50 fee"
+- No decisions needed: Accept or decline each trade
+
+**Success criteria:**
+- 50+ sellers understand and trust buffers
+- <5% opt-out due to confusion
+- Average claim time measured (establishes baseline)
+
+### Phase 1: Time-Based Fees (IF NEEDED - Data-Driven)
+
+**Consideration:** Before adding any variable pricing, evaluate Phase 0 data.
+
+**Add time-based fees only if:**
+- ✅ 50%+ of claims happen in <4 hours (coordination is happening)
+- ✅ Users complain about flat fee (want discount for fast claims)
+- ✅ Sellers request ability to compete on price
+
+**Alternative: Keep it simple**
+- If Phase 0 works well with 7% / 0.5% / 24h, don't change it
+- "Don't fix what isn't broken"
+
+**If adding time-based fees:**
+
+**Configuration:**
+- Buffer: 7% (still fixed - no complexity)
+- Fee: Variable based on timeout (e.g., 0.2% for 2h, 0.6% for 24h)
+- Timeout: 2-24 hours (sender chooses)
+
+**Rationale:**
+- Users have 10+ successful transfers (understand flow)
+- ONE choice (timeout) - intuitive, not technical
+- Creates coordination incentive (3x fee difference)
+- No buffer complexity (sender doesn't see 7%)
+
+**Value:**
+- Learn user preferences for claim timing
+- Reward coordination with lower fees
+- Fair pricing (seller compensated for longer capital lockup)
+
+**UX:**
+```
+How soon can Elena claim?
+
+⚡ 2h  → €0.20 fee | Coordinate first!
+⏱️  4h  → €0.30 fee | Recommended ✓
+🕐 8h  → €0.40 fee
+📅 24h → €0.60 fee | Safe if unsure
+```
+
+**Success criteria:**
+- Users understand choice (no confusion)
+- Shorter timeouts chosen when coordinated (data shows value)
+- No increase in timeout expirations (users not choosing too short)
+
+### Phase 2: Two-Dimensional Pricing (MAYBE - Even More Uncertain)
+
+**Only consider if Phase 1 time-based fees succeed and users want more.**
+
+**Configuration:**
+- Buffer: 0.5-2% per hour (seller chooses - variable buffer finally introduced)
+- Fee: Base + hourly (e.g., 0.3% + 0.1%/hour) (seller chooses)
+- Timeout: 1-24 hours (sender chooses)
+
+**Rationale:**
+- Sellers are now pros (100+ trades each)
+- Understand buffer-capital-fee relationship fully
+- Ready for sophisticated pricing and market segmentation
+- Premium sellers charge for reliability, economy sellers compete on price
+
+**Warning:** This adds significant complexity (back to the double-sided education problem). Only implement if:
+- Phase 1 time-based fees working perfectly
+- Users explicitly requesting more control
+- Market data shows value of variable buffers
+
+**Success criteria:**
+- Market segments into economy/standard/premium tiers naturally
+- Coordination incentives work (5x+ fee difference for slow claims)
+- Capital efficiency drives innovation
+- No increase in user confusion or covenant failures
+
+---
+
+## Why Not Phase 0?
+
+### Risk 1: Seller Confusion (Buffer Concept)
+
+If we launch Venezuela with variable buffer:
+- Seller: "This is too complicated, I don't understand"
+- Seller: "Why do I lock MORE BCH than I receive?"
+- Seller: "This sounds like a scam - too many numbers"
+- **Result:** Low seller adoption, high opt-out
+
+### Risk 2: Sender Confusion (Critical UX Failure)
+
+**The disaster scenario:**
+
+```
+Sender sees three sellers:
+├─ Economy: 0.5%/hour buffer → €12.50 total for 24h
+├─ Standard: 1%/hour buffer → €24.50 total for 24h
+└─ Premium: 2%/hour buffer → €48.70 total for 24h
+
+Sender thinks: "Economy is cheapest! I'll save €36!"
+(Doesn't understand buffer = volatility protection)
+
+BCH drops 15% during 24-hour window
+Economy seller's 12% buffer insufficient
+Covenant ABORTS
+
+Sender: "Asgaya is broken! My money is stuck!"
+```
+
+**The double-sided complexity problem:**
+
+**Sellers need to understand:**
+- Why lock more BCH than received (buffer concept)
+- What buffer rate to offer (market positioning)
+- What happens if buffer insufficient (recipient doesn't get paid)
+
+**Senders ALSO need to understand:**
+- What a buffer is (volatility protection, not just cost)
+- Why bigger buffer = more reliable (protects against BCH drops)
+- Trade-off between cheap (risky) vs expensive (safe)
+- When to choose which (stable vs volatile periods)
+
+**In Phase 0, with Venezuelan grandmothers sending remittances, this is way too much cognitive load.**
+
+### The Phase 0 User Reality
+
+**Target sender: María, 55, Madrid → Caracas**
+- Sends €100/month to daughter
+- Barely understands Bitcoin
+- Just wants it to work
+
+**What María can handle:**
+```
+✅ Send €100 to Elena#142
+✅ Pay via Bizum (she knows Bizum)
+✅ Elena receives in ~4 hours
+✅ Total cost: €0.50
+```
+
+**What María CANNOT handle:**
+```
+❌ Choose buffer rate: 0.5%, 1%, or 2%?
+❌ "Economy sellers cheaper but riskier"
+❌ "If BCH drops >12%, covenant aborts"
+❌ "You'll get refund if buffer insufficient"
+```
+
+**Result:** Too many decisions → Abandons app → Asgaya fails
+
+### The Right Sequence
+
+**Phase 0: Build trust through simplicity**
+- Fixed buffer (7%) → No decisions, just works
+- Focus: Prove the system is reliable
+- If covenant aborts (rare): "Try again, price stabilized" (sender gets refund automatically)
+
+**Phase 1: Add sophistication once trust established**
+- Sender has 10+ successful transfers (understands flow)
+- Sender has seen 1+ abort due to volatility (understands risk)
+- App provides recommendations based on recent volatility
+- Clear labeling: "Economy (less reliable)" vs "Premium (guaranteed)"
+
+**Phase 2: Full market competition**
+- Senders are pros (50+ transfers)
+- Understand buffer-volatility-fee relationships
+- Ready for two-dimensional pricing
+
+**Crawl before you run.**
+
+---
+
+## Recommendation
+
+**For Phase 0 (Venezuela - ONLY COMMITMENT):**
+- ✅ Fixed: 7% buffer, 0.5% fee, 24h timeout
+- ✅ Simple pitch: "Lock €107, earn €0.50, get €107 back"
+- ✅ Focus: Build trust in buffer mechanic
+- ✅ Zero choices: Sender and seller just use the system
+
+**After Phase 0 (6 months - DATA-DRIVEN DECISION):**
+1. ✅ Measure actual claim times (median, 90th percentile)
+2. ✅ Analyze coordination patterns (do users message first?)
+3. ✅ Collect user feedback (complaints about fees? requests for options?)
+4. ✅ Evaluate covenant abort rate (is 7% buffer sufficient?)
+
+**Then decide:**
+- **If simple works:** Keep Phase 0 pricing forever (don't fix what isn't broken)
+- **If data shows value:** Add Phase 1 time-based fees (one choice: timeout)
+- **If data unclear:** Wait longer, gather more data
+
+**Phase 2 (two-dimensional pricing):** Only consider if Phase 1 succeeds and users explicitly request more control. Unlikely to be needed.
+
+**Key principle:** Don't optimize until data shows the optimization is valuable. Premature complexity kills products.
+
+---
+
+**Status:** Hypothesis formed. Implementation straightforward. Awaiting UX design and A/B test.
+
+**Expected outcome:** 
+- Phase 1: Variable buffer becomes default, senders save 50%+ on buffer costs through coordination
+- Phase 2: Two-dimensional pricing enables market segmentation and perfect incentive alignment
+
+---
+
+## Phase 2 Extension: Two-Dimensional Pricing
+
+**The enhancement (for Phase 2):**
+
+Link buffer rate to fee rate, so sellers are compensated for capital lockup.
+
+**Listing format:**
+```json
+{
+  "buffer_rate_per_hour": 0.02,      // 2% per hour (high reliability)
+  "fee_base": 0.003,                 // 0.3% base fee
+  "fee_per_hour": 0.001,             // 0.1% per hour
+  "max_timeout_hours": 24
+}
+```
+
+**Calculation:**
+```javascript
+// Buffer (same as Phase 1)
+buffer_pct = buffer_rate_per_hour × timeout_hours
+
+// Fee (NEW - two components)
+fee_pct = fee_base + (fee_per_hour × timeout_hours)
+```
+
+**Market segmentation:**
+
+| Seller Type | Buffer/hr | Base Fee | Hourly Fee | 4h Total Fee | 24h Total Fee |
+|-------------|-----------|----------|------------|--------------|---------------|
+| Economy | 0.5%/hr | 0.5% | 0% | 0.5% | 0.5% |
+| Standard | 1%/hr | 0.3% | 0.05%/hr | 0.5% | 1.5% |
+| Premium | 2%/hr | 0.3% | 0.1%/hr | 0.7% | 2.7% |
+
+**Why this works:**
+
+1. **Compensates capital lockup:** Premium seller locks 48% for 24h (vs Economy's 12%), earns 5.4x more fee (fair)
+2. **Coordination incentive:** Premium seller 2h claim = 0.5% fee, 24h claim = 2.7% fee (5.4x difference!)
+3. **Market efficiency:** Sellers compete on reliability (buffer) AND cost (fee)
+
+**When to introduce:** Phase 2 (12+ months), after sellers fully understand buffer efficiency and capital recycling.
+
+**Documentation:** This two-dimensional pricing should be marked as Phase 2+ feature in bulletin-board.md.
+
+---
+
+*This unknown asks: Can we give senders and sellers more agency while reducing costs and improving capital efficiency? The answer is likely yes—per-hour pricing aligns incentives perfectly.*
 
 
 ## Cash Float Management
