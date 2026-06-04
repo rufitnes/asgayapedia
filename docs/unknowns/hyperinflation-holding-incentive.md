@@ -275,7 +275,6 @@ Measure: Does Group B hold longer when they see they're winning?
 - [RS065: BCH Volatility Declining](../../research/RS065_BCH_price_volatility_decline.md) — Historical trend
 - [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — How holding drives stability
 - [Unknown: Cascade Effect](cascade-effect-stabilization.md) — How this helps future corridors
-- [Episode 3400: Melting Currency Problem](../meta/radio_asgaya/scripts/3400-melting-currency-problem.md) — Merchant psychology explanation
 
 ---
 

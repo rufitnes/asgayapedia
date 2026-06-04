@@ -18,7 +18,7 @@ This directory contains all **sender-side screens** for creating and tracking BC
 
 ## Flow Structure
 
-**Entry point:** [Home Screen](../home-screen.md) → Tap "Send to Asgaya User"
+**Entry point:** [Home Screen](../home-screen/) → Tap "Send to Asgaya User"
 
 ### Common Path (All Senders)
 1. **[Recipient Selection](covenant-setup/2-recipient-selection.md)** - Enter Cash Account (Elena#142)
@@ -141,14 +141,14 @@ This directory contains all **sender-side screens** for creating and tracking BC
 
 - **[Recipient Flows](../recipient-flows.md)** - How recipients claim BCH or cash
 - **[Merchant Flows](../merchant-flows.md)** - How merchants provide cash-out
-- **[BCH Seller Flows](../../backend-apis/seller-bot/README.md)** - How sellers post collateral
+- **[BCH Seller Flows](../../backend-apis/seller-bot/)** - How sellers post collateral
 
 ---
 
 ## Navigation Tips
 
 **For reviewers:**
-- Start with [1-home.md](home-screen.md) for entry point
+- Start with [Home Screen](../home-screen/) for entry point
 - Follow one complete branch (A or B) to understand full flow
 - Check [errors/](errors/) for edge cases
 
