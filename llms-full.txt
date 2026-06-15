@@ -42449,6 +42449,1723 @@ expired_unclaimed → refunded (covenant timeout, BCH returned to seller, EUR re
 **Next review:** After Phase 1 (50+ transactions)
 
 
+## Overview
+
+# Asgaya: A Bitcoin Cash Adoption Engine
+
+**Send €100 to Venezuela for €0.50 instead of €5.**
+No company. No custody. No KYC. Just four components working together.
+
+---
+
+## Mission: Make Ourselves Unnecessary
+
+Asgaya is a cheap, user‑friendly fiat on/off‑ramp for people and businesses
+underserved by both banks (5‑8% remittance fees) and crypto exchanges (complex
+UX, KYC, unavailable in many countries).
+
+But the real goal is **Bitcoin Cash merchant adoption**. Every remittance creates
+demand for BCH‑accepting merchants, rewards them with a 0.5% spread, and offers
+an escape hatch from hyperinflation. When merchants accept BCH directly, Asgaya
+becomes unnecessary. **Success means we disappear.**
+
+---
+
+## The Four Gears
+
+| Gear | What it does |
+|------|--------------|
+| ⚙️ **Wallet** | Where users hold BCH and establish identity (Cash Accounts replace phone numbers) |
+| ⚙️ **Bulletin Board** | Where buyers and sellers find each other (NFTs on the BCH blockchain — anyone can read) |
+| ⚙️ **Nostr** | How they coordinate payment details (encrypted P2P messaging) |
+| ⚙️ **Notification Bot** | How it runs automatically (the killer feature — set and forget) |
+
+---
+
+## A Complete Transaction (€100 Spain → Venezuela)
+
+1. **Wallet:** María opens her wallet, enters Elena’s Cash Account (`Elena#142`).
+2. **Covenant:** María creates a covenant (smart contract) specifying the terms.
+3. **Bulletin Board:** The app queries the blockchain and finds a seller accepting Bizum.
+4. **Nostr:** María selects a seller and receives the payment instructions.
+5. **Notification Bot:** The seller’s bot detects María’s Bizum payment and funds the covenant.
+6. **Recipient:** Elena gets a notification and can claim BCH to her wallet or cash it out at a local merchant.
+
+**Cost:** 0.5% (€0.50) vs 5% (€5) via Western Union.  
+**Time:** 5 minutes–4 hours vs 1–2 days.  
+**Trust:** The seller never locks BCH until paid. The sender has legal recourse if the seller ghosts.
+
+---
+
+## There Are Only Buyers and Sellers
+
+| Role | What They Really Are |
+|------|---------------------|
+| Sender (María) | BCH buyer (buys from seller to send) |
+| Recipient (Elena) | BCH seller (sells to merchant for cash) |
+| Merchant | BCH buyer (buys from recipient) |
+| Trader | Both (buys and sells for arbitrage) |
+
+**The entire system is a bulletin board where buyers and sellers discover each other
+and execute trades via covenants.**
+
+---
+
+## Why It Works
+
+**Payment‑First Covenants.** The seller’s bank notification acts as a notary; BCH moves
+only after payment is confirmed. Fraud is criminal, and personal payment information
+is traceable.
+
+**Volatility Buffer.** Seller locks 107% (€107 for €100 trade). The 7% buffer absorbs
+typical daily swings. Unused buffer returns to the seller.
+
+**On‑Chain Bulletin Board.** Listings are NFTs on the BCH blockchain. No central server
+to shut down. Anyone can read, anyone can post.
+
+**Notification Bot.** Once the seller posts a listing, the bot watches the blockchain
+and bank notifications. No manual intervention needed — scale without effort.
+
+---
+
+## The Merchant Problem: Post‑Cashout Volatility
+
+**After Elena cashes out at a merchant, that merchant holds BCH.** If they need to convert to VES for rent in two weeks, they're exposed to ±20% monthly volatility. Lose 15% once, they quit.
+
+**Solution:** Optional stability tokens backed by pooled AnyHedge contracts.
+
+### Two Stability Options
+
+| Token | Pegged To | Why Merchants Choose It |
+|-------|-----------|------------------------|
+| **H€** (Heuro) | Euro | Familiar unit, easy mental math, quick conversion to VES |
+| **HAu** (How) | Gold (XAU) | Maximum protection, hedges ALL fiat inflation (EUR + VES), universal value |
+
+**Mechanism:**
+1. Merchant receives BCH from covenant cashout
+2. Wallet asks: "Stabilize as H€, HAu, or keep BCH?"
+3. If H€/HAu chosen and pool has capacity:
+   - Creates standard AnyHedge contract (merchant shorts BCH vs asset)
+   - Bull pool provides long side (leveraged BCH exposure)
+   - Mints stability tokens (30‑day auto‑renewing)
+4. Merchant holds stable value, trades it for VES when needed
+
+**If pool exhausted:** Falls back to BCH delivery. Existing tokens still tradeable. System degrades gracefully.
+
+**Why gold oracle is best:** 24/7 global trading (LBMA, CME, COMEX), centuries of price history, $12T market cap (manipulation‑resistant). More reliable than any fiat/BCH pair.
+
+**Phase 0 capital:** €3K unified pool (approved assets: H€, HAu). High merchant velocity (weekly VES conversion) means low capital lock. Supports ~80 merchants initially.
+
+**The hook:** Merchants come for remittances (0.5% spread). Stay for stability (hedge hyperinflation without trusting banks).
+
+---
+
+## Why Bitcoin Cash?
+
+Low fees (~€0.002/tx), fast settlement, native covenant support (CashTokens),
+and a permissionless, global settlement layer. We chose BCH because it earned our
+respect.
+
+---
+
+## Status: Phase 0 (Pre‑Launch)
+
+**Launch corridor:** Spain → Venezuela (EUR → VES) — Q3 2026.  
+**Current:** Documentation in progress; stability tokens (H€/HAu) design validated.  
+**Validating:** Does the 7% buffer hold? Will merchants adopt stability tokens? Can bull pool scale?
+
+**Start here:** [Bulletin Board](bulletin-board.md) — the core innovation.  
+**Then:** [Buyers and Sellers](buyers-and-sellers.md) — the user perspective.  
+**New:** [Universal Stability](universal-stability.md) — post‑fiat asset backing.  
+**Deeper rationale:** [Why This Design](why-this-design/) — requirements, evidence, open questions.
+
+---
+
+**Authors:** Suso + Claude Sonnet 4.5 + DeepSeek  
+**Updated:** 2026‑06‑15 · **Experimental structure — feedback welcomed**
+
+
+## Bulletin Board
+
+# The Bulletin Board: Where Buyers and Sellers Find Each Other
+
+**The core innovation.** No company, no servers, no permission needed.
+
+---
+
+## What It Is
+
+The Asgaya Bulletin Board is searchable data stored on the Bitcoin Cash blockchain. Not a website. Not a database. Just NFT tokens on the blockchain that say "I'm selling BCH for euros" or "I'm buying BCH with bolivares."
+
+Anyone can post. Anyone can read. No one can censor it.
+
+---
+
+## Two Listing Types (Only Two)
+
+Every participant is either a **BCH Seller** (has BCH, wants fiat) or a **BCH Buyer** (has fiat, wants BCH). Everything else is just payment method variations.
+
+### BCH Sellers: "I Have BCH, I'll Lock It for Your Remittance"
+
+A seller posts a listing with their accepted payment methods (Bizum, SEPA), fee (0.5%), and volatility buffer (7%). When a sender selects them and pays €100 via Bizum, the seller's bot detects the payment and locks €107 worth of BCH into the covenant. The seller earns 0.5% (€0.50) plus any unused buffer if BCH appreciates during the window.
+
+**Guarantee:** The seller never locks BCH until their bank confirms the fiat payment. No capital risk.
+
+### BCH Buyers: "I Have Fiat, I'll Buy Your BCH"
+
+A buyer posts a listing with their payment method. For a merchant, that method is "cash at my shop" plus a location. For an online buyer, it's "bank transfer" or "PagoMóvil."
+
+**Merchants are BCH buyers.** Nothing more. A merchant is just a buyer whose payment method is cash and who has a physical address. The system doesn't need a separate "merchant" category.
+
+When a recipient visits the merchant, they hand over the claim, receive cash, and both sign. The merchant earns 0.5% in BCH. The recipient is now in the shop—likely to buy groceries. The remittance fee is the door opener.
+
+---
+
+## Why This Design Beats Centralized P2P Markets
+
+| Feature | LocalBitcoins / Binance P2P | Asgaya Bulletin Board |
+|---------|----------------------------|----------------------|
+| **Storage** | Central database (company servers) | On-chain NFTs (blockchain) |
+| **Discovery** | Website API (single point of failure) | Electrum queries (any node) |
+| **Censorship** | Platform can ban you | Permissionless |
+| **Trust** | Platform escrow (custody risk) | Covenants (non-custodial) |
+| **Regulation** | Platform liable (KYC required) | No intermediary (MiCA compliant) |
+| **Uptime** | Depends on company | Depends on BCH network (99.99%) |
+
+There's no company to shut down. LocalBitcoins was ordered to close. The bulletin board is just data on the blockchain. No one can turn it off.
+
+---
+
+## How Discovery Works
+
+### Posting a Listing
+
+The app creates a Bitcoin Cash transaction with an NFT UTXO:
+
+- **Category:** `ASGAYA_SELLER_V1` or `ASGAYA_BUYER_V1`
+- **Commitment:** Listing details (payment methods, fee, contact)
+- **Value:** 0.001 BCH (~€0.50) anti-spam deposit (reclaimed when you remove the listing)
+- **Covenant:** Rules for updating or removing
+
+Broadcast it. Confirmed in ~10 minutes. Now it's live.
+
+### Finding a Listing
+
+The app queries an Electrum node for UTXOs with the relevant NFT category, filtered by payment method and corridor. No API. No website. Just standard blockchain queries that any Bitcoin Cash wallet can do.
+
+### Updating or Removing
+
+Spend the old listing UTXO (reclaim your 0.001 BCH), create a new one with updated details. Old listing vanishes, new one appears. To pause, spend the UTXO and don't recreate it.
+
+---
+
+## Anti-Spam: An Unknown We're Testing
+
+**Phase 0 baseline:** Every listing UTXO must contain ≥ 0.001 BCH (~€0.50). To spam with 1,000 fake listings costs €500. You reclaim the deposit when you remove the listing (minus ~€0.002 transaction fee).
+
+**This is an unknown.** We don't know if this simple economic barrier is sufficient, or if we need additional measures like listing limits per account, device fingerprinting, or payment method verification. Phase 0 will test whether the 0.001 BCH deposit alone deters spam effectively.
+
+**See:** [Bulletin Board Anti-Spam Strategies](../docs/unknowns/bulletin-board-anti-spam.md) for full analysis of alternatives and testing plan.
+
+---
+
+## Multi-Role Strategies: Playing Both Sides
+
+Because listings are just NFTs, you can post as many as you want.
+
+### Double-Dip (Seller + Buyer)
+
+You have bank accounts in Spain and Venezuela. Post as a BCH Seller (accepting Bizum) and as a BCH Buyer (paying via PagoMóvil). Receive €100 from a sender, lock BCH into a covenant. The merchant in Venezuela receives the BCH. Buy that same BCH back from the merchant via PagoMóvil. Your BCH returns to your wallet. Net: seller fee + buyer spread on the same capital.
+
+### Triple-Dip (Merchant + Seller + Product Margin)
+
+You're a merchant in Venezuela with family in Spain. Post as a BCH Buyer (cash at shop) and as a BCH Seller (via family's Bizum). A sender pays your family €100. You receive the BCH at your shop, hand cash to the recipient, and they buy €20 of groceries. Recycle the BCH through your family's seller listing. Net: merchant fee + seller fee + grocery margin. The remittance is the door opener.
+
+### International Business (Multi-Currency)
+
+You receive income in multiple currencies. Post as a BCH Buyer accepting all your incoming payment rails (Bizum, MB Way, SEPA, PayPal). Post as a BCH Seller paying out in your target currencies (WeChat, Alipay). Earn a small spread on each conversion.
+
+---
+
+## How It Connects to Covenants
+
+**Bulletin board = discovery. Covenants = execution.**
+
+**Seller flow:** Sender finds a seller on the bulletin board → creates a covenant → pays the seller via Bizum → seller's bot detects payment and locks BCH → covenant releases BCH to the recipient.
+
+**Buyer flow:** Recipient finds a buyer (merchant) on the bulletin board → creates a covenant → visits the merchant and receives cash → both sign → covenant releases BCH to the merchant.
+
+**Key:** The sender (or recipient) creates the covenant, not the seller or merchant. The counterparty co-signs after confirming payment or handing over cash.
+
+---
+
+## Privacy
+
+**Visible on-chain:** Listing type, payment methods, corridor, fee, contact info.  
+**Not on-chain:** Real identity (unless you put it in the contact field), transaction volume, customer details.
+
+Pseudonymous by default. Merchants reveal location because cash pickup requires it. Online traders need only a CashAccount nickname.
+
+---
+
+## Reputation (Phase 1+)
+
+Phase 0 uses trusted participants only. Phase 1+ will add on-chain reputation linked to your CashAccount: transaction count, success rate, response time, total volume. Physical merchants get priority because location is reputation at stake—they can't disappear overnight.
+
+---
+
+## Key Takeaways
+
+1. **On-chain bulletin board** — Listings are NFT UTXOs on the BCH blockchain; no central server.
+2. **Two listing types** — BCH Sellers and BCH Buyers. That's it.
+3. **Merchants are BCH buyers** — Payment method "cash" plus location. Nothing special.
+4. **Permissionless** — Anyone can post, anyone can read. No gatekeeper.
+5. **Multi-role earnings** — Post multiple listings to earn on both sides.
+6. **Censorship-resistant** — No company to shut down. Just blockchain data.
+7. **Works with covenants** — Bulletin board discovers; covenants execute.
+
+The bulletin board isn't a product. It's infrastructure. When regulators shut down LocalBitcoins, users lost their marketplace. When they come for Asgaya, there's nothing to shut down. The listings are already on the blockchain.
+
+That's the point.
+
+---
+
+**Next:** [Wallet](wallet.md) — Where you hold BCH and establish identity  
+**Related:** [Buyers and Sellers](buyers-and-sellers.md) — The user perspective
+
+
+## Buyers and Sellers
+
+# Buyers and Sellers: There Are Only Two Roles
+
+**Everything collapses into this:** Some people have BCH and want fiat. Some people have fiat and want BCH. The bulletin board connects them. Covenants execute the trades. Nostr coordinates. Bots automate.
+
+---
+
+## The Core Insight
+
+| Role | Has | Wants |
+|------|-----|-------|
+| **BCH Seller** | BCH | Fiat (EUR, VES, USD) |
+| **BCH Buyer** | Fiat (cash, bank transfer) | BCH |
+
+That's it. Everything else is context.
+
+---
+
+## The Real Distinction: Active vs Passive
+
+### Passive Users (Post Listings, Bot Automates)
+
+- Post a listing once.
+- The bot handles requests 24/7.
+- Zero cognitive load, fully scalable, passive income.
+
+**Examples:** Isabel posts as a BCH Seller (Bizum) → senders select her. Carlos posts as a BCH Buyer (cash at store) → recipients visit him.
+
+### Active Users (Query, Select, Transact)
+
+- Open the app when needed.
+- Query the bulletin board for available counterparties.
+- Pick the best option and transact.
+
+**Examples:** María (sender) selects a seller and pays. Elena (recipient) selects a merchant and gets cash.
+
+**The key realization:** The same person can be passive at some times and active at others. This is what enables capital recycling.
+
+---
+
+## Why This Distinction Matters
+
+- **Flexibility:** No one is locked into a single role. A merchant can passively accumulate BCH, then actively sell when rent is due.
+- **Capital efficiency:** Passive mode accumulates; active mode liquidates. The cycle is self‑sustaining.
+- **No central coordinator:** Passive bots provide 24/7 liquidity; active users always find counterparties. The market self‑organizes.
+- **Scales naturally:** Passive income scales with capital; active demand attracts more passive liquidity.
+
+---
+
+## Examples (Focused on High‑Inflation Economies)
+
+### 1. Carlos the Merchant (Venezuela) — The Central Use Case
+
+Carlos runs a grocery store. VES loses 5 % per week. He needs stable value to preserve purchasing power and bolívars for daily operations.
+
+**Passive mode (most of the month):** Posts as a BCH Buyer (cash at store, 0.5 % spread). Recipients visit, get cash, and Carlos accumulates BCH automatically—no effort, just foot traffic and grocery sales.
+
+**Stability option:** When Carlos cashes out a remittance covenant, his wallet offers: *Keep BCH or stabilice with H€ (Euro), or HAu (Gold)?* We thing he's going to pick **H€** (familiar unit, he's used to convert to VES) but we don't know that's why we want to offer a non fiat denominated option. The app mints H€ or HAu tokens backed by pooled AnyHedge contracts. Carlos now holds stable value, immune to BCH's ±20 % monthly swings.
+
+**Active mode (end of month, rent due):** Opens the app, sells H€ to another merchant or customer for VES at current EUR/VES rate. Zero volatility exposure—what he earned is what he keeps.
+
+**Result:** Carlos earns spreads and sales while passive; he preserves capital via the stability tokens. No BCH volatility, no hyperinflation erosion. Triple win.
+
+### 2. María (Sender) & Elena (Recipient) — Pure Active Users
+
+María sends €100 to Elena. She opens the app, enters `Elena#142`, selects the cheapest seller, and pays via Bizum. The bot handles the rest. Elena gets a notification, decides to cash out, picks the nearest merchant from the bulletin board, walks over, gets cash, and buys groceries. Both are pure active users—no listings needed.
+
+### 3. Isabel (Passive Seller — Arbitrageur)
+
+Isabel posts a single listing as a BCH Seller (Bizum, 0.5 % fee) and enables the bot. She goes to sleep. Overnight, the bot responds to requests, detects payments, and funds covenants. Isabel wakes up to €1.50 in fees without lifting a finger. Her bot even replenishes BCH via Kraken automatically.
+
+### 4. Roberto (Passive Seller — Miner)
+
+Roberto mines BCH. He posts a listing and lets the bot sell his mined coins directly to senders, avoiding exchange fees entirely. Fully passive, zero extra work.
+
+---
+
+## Traditional Labels vs Active/Passive Reality
+
+| Traditional Label | Active/Passive | What They Really Do |
+|------------------|----------------|---------------------|
+| **Sender** (María) | Always Active | Queries sellers, creates covenant, pays |
+| **Recipient** (Elena) | Always Active | Queries merchants, creates covenant, receives cash |
+| **Merchant** (Carlos) | Usually Passive | Posts as buyer, bot handles recipients, accumulates BCH |
+| | Sometimes Active | Queries buyers, sells accumulated BCH for bolívars |
+| **Seller** (Isabel/Roberto) | Usually Passive | Posts as seller, bot handles senders, earns fees |
+| | Could be Active | If they needed BCH urgently, could query buyers |
+
+---
+
+## Phase 0 Expectations (Spain → Venezuela)
+
+| Role | Mode | Count | Who |
+|------|------|-------|-----|
+| **Senders** | Active | 50–100 | Spanish residents sending to family |
+| **Recipients** | Active | 50–100 | Venezuelans receiving remittances |
+| **Merchants** | Passive buyer | 20–30 | Venezuelan businesses (cash pickup) |
+| | Active seller | 20–30 | Same merchants (when needing bolívars) |
+| **Sellers** | Passive seller | 10–20 | Miners, arbitrageurs |
+
+**Success:** At least 5 passive sellers online 24/7; at least 15 passive merchants in Caracas. Active users always see 3+ options, and response times are under 1 minute.
+
+---
+
+## How Active & Passive Use the Four Gears
+
+**Active Mode:** Wallet → Bulletin Board (query) → Nostr (coordination) → Covenant (transaction). User experience is like a price comparison site plus a payment app.
+
+**Passive Mode:** Wallet → Bulletin Board (post listing) → Bot monitors Nostr, bank notifications, and blockchain → Bot auto‑responds and funds covenants. User experience is like a vending machine—stock once, check revenue later.
+
+---
+
+## Key Takeaways
+
+1. **Two roles, two modes.** BCH Seller/Buyer × Active/Passive = the entire protocol.
+2. **Merchants in inflationary economies win twice.** Passive accumulation protects against depreciation; active liquidation preserves purchasing power when needed.
+3. **Bots make passive mode possible.** 24/7 liquidity, no human attention required.
+4. **Active mode is simple.** Query, select, transact—no listing necessary.
+5. **The market self‑organizes.** Passive liquidity + active demand = automatic matching, no central coordinator.
+
+When someone asks, *“What is Asgaya?”* — it’s a bulletin board where passive bots provide 24/7 liquidity and active users pick the best offer. Covenants make it safe; Bitcoin Cash makes it cheap and permissionless.
+
+---
+
+**Next:** [How They Interact](how-they-interact.md) — End‑to‑end walkthrough  
+**Related:** [Bulletin Board](bulletin-board.md), [Notification Bot](notification-bot.md), [Wallet](wallet.md)
+
+
+## How They Interact
+
+# How They Interact: A Complete End‑to‑End Flow
+
+**One transaction. Four gears.** Wallet, Bulletin Board, Nostr, Notification Bot—working together.
+
+---
+
+## The Transaction
+
+**María** (Madrid) sends €100 to **Elena** (Caracas).  
+**Isabel** (Barcelona) provides BCH passively. **Carlos** (Maracaibo) cashes Elena out.
+
+**Total elapsed:** ~4 h (most is Elena’s decision delay)  
+**Total cost:** €0.90 (0.4 % seller + 0.5 % merchant) vs. €5 (Western Union)
+
+---
+
+## Part 1: María Sends (Active Sender)
+
+### Step 1 — Wallet & Bulletin Board
+
+María opens the app, enters `Elena#142`, specifies €100. The app resolves Elena’s Cash Account on‑chain and creates a covenant template (€100 worth of BCH, 7 % buffer, 24‑h timeout).
+
+The app then queries the bulletin board for BCH sellers accepting Bizum in the EUR→VES corridor. It finds three passive sellers. María chooses the cheapest: Isabel (0.4 %, good rating, Bizum).
+
+### Step 2 — Nostr & Bot
+
+María’s app sends an encrypted Nostr request (“Need payment details for covenant xyz789”) to Isabel’s bot. The bot validates the covenant, generates a unique reference (`Elena#142`), and replies with the bank details (Bizum phone number, concept, amount €100.40) in under a second.
+
+María sees the payment instructions, taps “Open Bizum,” and pays €100.40 instantly.
+
+### Step 3 — Bot Funds Covenant
+
+Isabel’s Android notification listener detects the BBVA message (“Recibido 100,40 € … Concepto: Elena#142”), parses it, and matches it to the pending covenant. The bot creates a funding transaction locking €107 of Isabel’s BCH, signs it with limited covenant keys, and broadcasts it. Total processing time: ~2 seconds. Isabel is at work, completely unaware.
+
+María’s app confirms the covenant is funded. Elena receives a push notification: “María sent you €100 in BCH.”
+
+---
+
+## Part 2: Elena Receives (Active Recipient)
+
+### Step 4 — Claim BCH to Wallet
+
+Elena’s phone buzzed four hours ago; she now opens Asgaya and taps “Claim BCH to Wallet.” The covenant releases the BCH to Elena’s address; the unused buffer returns to Isabel. **Elena now owns the BCH.**
+
+### Step 5 — Decide & Discover
+
+Elena chooses “Cash Out” (she needs bolívars today). The app queries the bulletin board for BCH buyers near Caracas. It finds Carlos’s Grocery (0.8 km, 0.5 % spread, open). Elena selects it.
+
+### Step 6 — Walk, Exchange, Shop
+
+Elena walks to the store. Carlos’s bot has already detected her sell covenant and pre‑filled a cash‑out screen. Carlos counts 398,000 VES (400k VES less 0.5 %), hands it to Elena. Both sign on their phones. The covenant executes, sending Elena’s BCH to Carlos.
+
+Elena then buys groceries worth 300,000 VES from Carlos’s store.
+
+**Carlos’s triple‑dip from this one visit:**
+- 2,000 VES spread
+- ~60,000 VES product margin (20 % on 300k)
+- 0.2564 BCH position (hedge against VES depreciation)
+
+### Step 7 — Stabilize (Optional)
+
+Carlos's wallet now asks: **"Stabilize this BCH?"**
+
+- **Keep BCH:** Accept volatility, potential upside
+- **H€ (Heuro):** Lock in €99.50 value (familiar unit, easy to convert to VES)
+- **HAu (Gold):** Lock in ~0.05 oz gold value (hedge ALL fiat inflation)
+
+Carlos chooses **H€** (he knows EUR/VES rates, easier mental math). The app:
+1. Checks H€ pool availability (founder's long capital for phase 0)
+2. Creates 30‑day AnyHedge contract (Carlos shorts BCH/EUR, pool goes long)
+3. Mints 99.50 H€ tokens to Carlos's wallet
+4. Auto‑renews monthly unless Carlos burns tokens for BCH
+
+**If pool exhausted:** Carlos keeps BCH (graceful degradation). Existing H€ holders unaffected.
+
+**Carlos now holds stable EUR value.** When he needs VES for rent next week, he sells H€ to another merchant or customer at current EUR/VES rate. Zero BCH volatility exposure.
+
+---
+
+## The Four Gears at Work
+
+- **Wallet:** María creates covenant, Elena claims, Carlos receives. Cash Accounts provide identity.
+- **Bulletin Board:** María queries sellers; Elena queries merchants. Passive listings discovered on‑chain.
+- **Nostr:** María’s app requests payment details from Isabel’s bot. Encrypted, sub‑second, no phone number.
+- **Bot:** Isabel’s bot detects the bank notification and funds the covenant automatically. Carlos’s bot notifies him of the claim.
+
+---
+
+## Two Transactions = Clear Compliance
+
+1. **María → Elena (remittance):** Completed when Elena claims BCH to her wallet. A family transfer.
+2. **Elena → Carlos (commerce):** Elena sells her BCH for cash. A separate, voluntary transaction.
+
+**Elena could have kept the BCH or spent it directly at the store.** The end goal is that enough merchants accept BCH directly so recipients never need to cash out.
+
+---
+
+## Timeline
+
+| Step | Duration |
+|------|----------|
+| María creates covenant & pays | ~2 min |
+| Isabel’s bot funds covenant | ~1 min |
+| Elena claims BCH to wallet | ~2 min (after 4 h delay) |
+| Elena walks to Carlos’s store | ~10 min |
+| Cash exchange & shopping | ~8 min |
+| **Total active human time** | **~12 min** |
+
+---
+
+## What Could Go Wrong (And Didn’t)
+
+- **Seller offline:** Nostr request times out after 2 min; María picks another seller.
+- **BCH drops >7 %:** Covenant aborts; María gets the BCH back (refund). Isabel keeps the fiat and the fee.
+- **Elena never claims:** Covenant expires; María gets the BCH back.
+
+---
+
+## Cost Breakdown
+
+| Party | Out | In | Net |
+|-------|-----|-----|-----|
+| María | €100.40 | (remittance delivered) | –€100.40 |
+| Isabel | €107 BCH locked | €100.40 fiat + €0.40 fee | +€0.40 |
+| Elena | 2k VES spread | €100 worth of BCH → 398k VES | +€99.50 equiv |
+| Carlos | 398k VES cash | 0.2564 BCH + 2k spread + 60k sales | +€12.4 equiv |
+
+**Total fee:** 0.9 % vs. Western Union’s 5 %.  
+If Elena had spent BCH directly at the store (Option B), total fee would have been **0.4 %** (Isabel’s seller fee only).
+
+---
+
+## Key Takeaways
+
+1. **Two transactions = clear compliance.** Remittance (María→Elena) and commerce (Elena→Carlos) are separate.
+2. **Passive bots provide 24/7 liquidity.** Isabel and Carlos posted once; bots handled everything.
+3. **The end goal is visible.** Elena could have spent BCH directly—that’s the destination.
+4. **Privacy through segmentation.** María and Carlos never interact; only the blockchain sees the full flow.
+5. **Hyperinflation makes this urgent.** VES loses 5 %/week; BCH volatility is the lesser evil.
+6. **Merchants earn on multiple levels.** Spread + foot traffic + product sales = triple‑dip.
+7. **The system self‑organizes.** No coordinator. Passive bots + active queries = automatic matching.
+
+When recipients spend BCH directly at merchants, Asgaya has succeeded.
+
+---
+
+**Related:** [Index](index.md), [Buyers and Sellers](buyers-and-sellers.md), [Bulletin Board](bulletin-board.md), [Wallet](wallet.md), [Nostr](nostr.md), [Notification Bot](notification-bot.md)
+
+
+## Nostr
+
+# Nostr: How Buyers and Sellers Coordinate Privately
+
+**Encrypted. Peer-to-peer. No server.** Payment details delivered in under a second.
+
+---
+
+## What It Is
+
+**Nostr** is a decentralized messaging protocol that Asgaya uses for **private coordination** between buyers and sellers after they find each other on the bulletin board.
+
+Not WhatsApp. Not Telegram. Not email. Just **encrypted direct messages sent over a network of relays** that no single entity controls.
+
+When María selects a BCH seller from the bulletin board, she sends an encrypted message: "I need payment details for covenant xyz789." The seller's bot responds instantly with bank account info. **Total latency: under 1 second.** María never sees a phone number, email, or centralized chat interface—just payment instructions delivered directly to her app.
+
+---
+
+## The Coordination Problem
+
+**After the bulletin board, before the payment, there's a gap:**
+
+```
+1. María finds seller on bulletin board ✅
+2. María creates covenant on-chain ✅
+3. María needs seller's payment details ❓
+   - Bank account number
+   - Payment reference code
+   - Exact amount to send
+4. María pays via Bizum ✅
+5. Seller's bot locks BCH ✅
+```
+
+**Step 3 is the coordination problem.** The bulletin board listing can't include bank account numbers (privacy risk, changes frequently). The blockchain can't store sensitive data (public forever). Email/SMS requires phone numbers (KYC, surveillance, censorship).
+
+**Nostr solves this:** Encrypted, peer-to-peer, instant delivery of payment details. No phone number needed. No central server to block. No permanent record on the blockchain.
+
+---
+
+## How Nostr Works (The Basics)
+
+### Keys Instead of Accounts
+
+Unlike traditional messaging apps (WhatsApp, Signal), Nostr has **no accounts, no phone numbers, no registration.**
+
+**You have two keys:**
+- **Private key:** Like your password. Never share it. Stored encrypted on your phone.
+- **Public key:** Like your username. Share it freely. This is how people message you.
+
+**Your public key is your Nostr identity.** It looks like this:
+```
+npub1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z
+```
+
+No company controls it. No telecom can block it. No government can seize it.
+
+---
+
+### Relays Deliver Messages
+
+Nostr messages are sent to **relays**—simple servers that receive and forward messages. Think of them like post offices, but:
+
+- **No single relay is required:** Messages are sent to multiple relays simultaneously
+- **Relays can't read your messages:** End-to-end encryption (only sender and recipient have keys)
+- **Anyone can run a relay:** No permission needed, no company required
+- **Relays are cheap:** A VPS costs €5/month, handles thousands of users
+
+**Asgaya doesn't run relays.** We use public Nostr relays (Damus, Primal, etc.) that already exist. If one relay goes down, messages route through others. If all public relays are blocked, users can run their own.
+
+---
+
+### Encrypted Direct Messages (NIP-04)
+
+When María sends a message to the seller:
+
+```
+1. María's app encrypts message with seller's public key
+2. App sends encrypted message to 3-5 Nostr relays
+3. Relays forward to anyone subscribed to seller's public key
+4. Seller's bot decrypts message with seller's private key
+5. Seller's bot encrypts response with María's public key
+6. Response delivered to María's app via relays
+7. María's app decrypts response
+
+Total time: <1 second
+```
+
+**The relays never see the content.** They only see:
+- Sender's public key (npub1...)
+- Recipient's public key (npub1...)
+- Encrypted blob of data
+- Timestamp
+
+They can't read the payment details, the bank account, or any sensitive information.
+
+---
+
+## How Asgaya Uses Nostr
+
+### Step 1: Bulletin Board Discovery
+
+María queries the bulletin board and finds a seller:
+
+```
+Seller listing:
+├─ Payment methods: Bizum, SEPA
+├─ Fee: 0.5%
+├─ Buffer: 7%
+└─ Contact: npub1seller... (Nostr public key)
+```
+
+The seller's **Nostr public key** is their contact info. No phone number, no email, no company-mediated chat.
+
+---
+
+### Step 2: Payment Info Request
+
+María's app sends an encrypted Nostr message:
+
+```json
+{
+  "type": "payment_info_request",
+  "covenant_id": "covenant_xyz789",
+  "amount_eur": 100,
+  "payment_method": "Bizum",
+  "sender_pubkey": "npub1maria..."
+}
+```
+
+**Encrypted with seller's public key.** Only the seller's bot can decrypt it.
+
+---
+
+### Step 3: Seller Bot Response
+
+The seller's bot (running on their phone or VPS) receives the request and responds:
+
+```json
+{
+  "type": "payment_info_response",
+  "covenant_id": "covenant_xyz789",
+  "payment_method": "Bizum",
+  "account_number": "+34-612-345-678",
+  "reference": "ASGAYA-XYZ789",
+  "amount_exact": "€100.00",
+  "expires_at": "2026-06-10T15:30:00Z"
+}
+```
+
+**Encrypted with María's public key.** Only María's app can decrypt it.
+
+**Delivered in under 1 second.** María sees payment instructions immediately.
+
+---
+
+### Step 4: María Pays
+
+María's app displays:
+
+```
+Pay €100.00 to:
+  Phone: +34-612-345-678
+  Reference: recipient cash account
+  
+Tap to open Bizum app →
+```
+
+María completes the payment. The seller's bot detects it (bank notification), locks BCH into the covenant. Elena can now claim her remittance.
+
+---
+
+## Why Nostr Instead of Alternatives
+
+### Why Not Email?
+
+- ❌ Requires email registration (KYC in some countries)
+- ❌ Slow (minutes, not seconds)
+- ❌ Centralized (Gmail, Outlook can censor or monitor)
+- ❌ Not designed for automated bots
+
+**Nostr:**
+- ✅ No registration (just generate keys)
+- ✅ Instant (sub-second)
+- ✅ Decentralized (no single company)
+- ✅ Bot-friendly (relays designed for programmatic access)
+
+---
+
+### Why Not Telegram/WhatsApp?
+
+- ❌ Requires phone number (KYC, SIM card, telecom surveillance)
+- ❌ Centralized (company can ban users, block messages)
+- ❌ Not designed for automated payment info exchange
+- ❌ Limited API access (bots restricted)
+
+**Nostr:**
+- ✅ No phone number (just public key)
+- ✅ Decentralized (no company to ban you)
+- ✅ Designed for automation (relays are APIs)
+- ✅ Bot-native (no restrictions)
+
+---
+
+### Why Not On-Chain (OP_RETURN)?
+
+**OP_RETURN approach:** Seller posts encrypted payment info as a blockchain transaction.
+
+**Pros:**
+- ✅ Maximum censorship resistance (on BCH blockchain)
+- ✅ No external dependencies
+
+**Cons:**
+- ❌ Slower (~2 minutes for one block confirmation)
+- ❌ Costs the seller €0.002 per covenant
+- ❌ Permanent on-chain storage (privacy risk if encryption breaks in 20 years)
+- ❌ More complex implementation
+
+**Nostr:**
+- ✅ Faster (<1 second)
+- ✅ Free (relays don't charge)
+- ✅ Ephemeral (messages not stored permanently)
+- ✅ Simpler (standard protocol, existing libraries)
+
+**Trade-off:** Nostr has *good* censorship resistance (multiple relays, anyone can run one) vs OP_RETURN's *maximum* censorship resistance (BCH blockchain). For Phase 0, good is enough. We can add OP_RETURN fallback in Phase 1+ if needed.
+
+---
+
+## Nostr Key Management in Asgaya
+
+**Your wallet already has BCH keys.** Nostr adds a separate key pair:
+
+```
+Your Asgaya wallet contains:
+├─ BCH private key (for signing transactions)
+├─ BCH public key (your address)
+├─ Cash Account (Elena#142)
+├─ Nostr private key (for decrypting messages)
+└─ Nostr public key (your messaging identity)
+```
+
+**Why separate keys?**
+- **Security:** If Nostr key is compromised, your BCH funds are safe
+- **Privacy:** Nostr messages don't link directly to BCH transactions
+- **Flexibility:** Can change Nostr key without affecting BCH wallet
+
+**Generated together:** When you create your Asgaya wallet, both keys are generated from the same 12-word recovery phrase. Restore your wallet, restore both.
+
+---
+
+## Privacy: What Nostr Reveals
+
+**Visible to relays (public):**
+- ✅ Your Nostr public key
+- ✅ Recipient's Nostr public key
+- ✅ Timestamp
+- ✅ Encrypted message (unreadable blob)
+
+**Not visible to relays:**
+- ❌ Message content (encrypted)
+- ❌ Payment details (encrypted)
+- ❌ Your real identity (unless you dox yourself)
+- ❌ Your BCH address (separate key)
+
+**Visible to recipient (seller's bot):**
+- ✅ Message content (they decrypt it)
+- ✅ Covenant ID (links message to on-chain covenant)
+
+**Metadata analysis risk:** A relay operator who logs all messages could see that npub1maria sent a message to npub1seller, guess it's payment coordination, and infer a transaction happened. But they can't read the content or link it to BCH addresses.
+
+**Phase 0 acceptable.** Phase 1+ we can add onion routing or mix networks if metadata analysis becomes a concern.
+
+---
+
+## Liveness Check: Proof the Seller is Online
+
+**A critical side benefit:** When the seller's bot responds with payment info, it proves the seller is online and ready to lock BCH.
+
+**Without liveness check:**
+```
+1. María creates covenant
+2. María pays seller via Bizum
+3. Seller's bot is offline (phone died, server crashed)
+4. María waits... seller never locks BCH
+5. María stuck (paid fiat, covenant expires, funds returned after 48h)
+```
+
+**With Nostr liveness check:**
+```
+1. María creates covenant
+2. María sends Nostr message
+3. No response within 2 minutes → Warning: "Seller may be offline"
+4. María cancels covenant, picks different seller
+5. No fiat payment wasted
+```
+
+**Result:** María never pays fiat unless the seller proves they're online and ready.
+
+---
+
+## How Nostr Connects to the Other Gears
+
+### Bulletin Board → Nostr
+
+**The bulletin board is discovery.** It tells you *who* is selling BCH (their Nostr public key).
+
+**Nostr is coordination.** It tells you *how* to pay them (bank account, reference code).
+
+**Separation of concerns:**
+- Bulletin board: Public, permanent, on-chain (listings visible forever)
+- Nostr: Private, ephemeral, off-chain (payment details disappear after use)
+
+---
+
+### Wallet → Nostr
+
+**Your wallet generates Nostr keys.** When you create an Asgaya wallet, you get:
+- BCH keys (for transactions)
+- Cash Account (for identity)
+- Nostr keys (for messaging)
+
+**All linked, all restored from 12 words.**
+
+---
+
+### Nostr → Notification Bot
+
+**The seller's notification bot listens on Nostr.** When a payment info request arrives:
+1. Bot decrypts message
+2. Bot generates payment details (unique reference code per covenant)
+3. Bot sends encrypted response
+4. Bot watches for Bizum payment with that reference code
+5. Bot locks BCH when payment detected
+
+**Nostr is the bot's communication channel.** Without Nostr, the bot can't respond to senders.
+
+---
+
+## User Experience: What María Sees
+
+María doesn't know Nostr exists. The app hides all complexity:
+
+```
+María's screen:
+┌─────────────────────────────┐
+│  Select Seller:             │
+│                              │
+│  ✅ seller$asgaya.org        │
+│     Fee: 0.5%                │
+│     Response time: 12 sec    │
+│     [Select] ←              │
+│                              │
+│  Fetching payment details... │← Nostr happening here
+│                              │
+│  Pay €100.00 to:             │
+│    Phone: +34-612-345-678    │
+│    Reference: ASGAYA-XYZ789  │
+│                              │
+│  [Open Bizum App]            │
+└─────────────────────────────┘
+```
+
+**"Fetching payment details..."** = Nostr message sent, response received, decrypted. Happens in <1 second. María thinks it's just the app loading data.
+
+**She never sees:**
+- Public keys (npub1...)
+- Relay selection
+- Encryption/decryption
+- Message routing
+
+**Just results:** Payment instructions, ready to use.
+
+---
+
+## Seller Experience: What the Bot Does
+
+The seller doesn't manually respond to messages. **The bot automates everything:**
+
+**Setup (one time):**
+1. Seller installs Asgaya app or runs bot on VPS
+2. App generates Nostr keys
+3. Seller posts bulletin board listing with Nostr public key
+4. Bot connects to 3-5 Nostr relays, subscribes to messages
+
+**Runtime (automated):**
+1. Bot receives encrypted message
+2. Bot decrypts with private key
+3. Bot validates covenant exists on-chain
+4. Bot generates unique payment reference code
+5. Bot sends encrypted response
+6. Bot watches for bank notification matching reference
+7. Bot locks BCH when payment detected
+
+**Seller's job:** Keep phone/server online. Bot handles everything else.
+
+---
+
+## Nostr Features in Phase 0
+
+**What's ready:**
+- ✅ Nostr key generation and management
+- ✅ Encrypted direct messages (NIP-04)
+- ✅ Payment info request/response flow
+- ✅ Multi-relay support (automatic failover)
+- ✅ Liveness check (2-minute timeout)
+
+**What's coming (Phase 1+):**
+- User-to-user messaging (ask seller questions before committing)
+- Group chat (community coordination)
+- Dispute resolution chat (mediation if payment fails)
+- Reputation comments (public reviews linked to Nostr identity)
+- Nostr-native reputation (web of trust)
+
+**Phase 0 keeps it simple:** Automated payment info exchange only. No manual messaging. Bot-to-bot coordination.
+
+---
+
+## What Happens If Nostr Relays Go Down
+
+**Scenario 1: One relay is down**
+
+**Impact:** None. Messages automatically route through other relays.
+
+**Asgaya default:** Connect to 5 relays (Damus, Primal, Nostr.wine, relay.snort.social, custom relay). If 1-2 fail, 3-4 still work.
+
+---
+
+**Scenario 2: All public relays are blocked (censorship attack)**
+
+**Mitigation:**
+1. Seller runs own relay on VPS (€5/month)
+2. Bulletin board listing includes custom relay URL
+3. Sender's app connects to seller's relay
+4. Messages delivered peer-to-peer
+
+**Still works.** Just requires sellers to run infrastructure (Phase 1+ feature).
+
+---
+
+**Scenario 3: Complete Nostr network failure (catastrophic)**
+
+**Fallback (Phase 1+):**
+- Use OP_RETURN on BCH blockchain for payment info
+- Slower (~2 minutes), costs €0.002, but still works
+- Maintains censorship resistance
+
+**Phase 0:** If Nostr completely fails, Asgaya pauses until relays recover. Acceptable risk—Nostr has been running reliably since 2022.
+
+---
+
+## Security Model
+
+**What an attacker CAN'T do:**
+- ❌ Read your messages (end-to-end encrypted)
+- ❌ Impersonate the seller (needs seller's private key)
+- ❌ Tamper with payment details (detected by signature verification)
+- ❌ Block all messages (would need to control all relays)
+
+**What an attacker CAN do:**
+- ⚠️ Log metadata (npub1maria messaged npub1seller at timestamp X)
+- ⚠️ Correlate messages with on-chain covenants (timing analysis)
+- ⚠️ Run malicious relays that don't forward messages (sender switches to different relay)
+
+**Phase 0 mitigation:**
+- Use multiple relays (redundancy)
+- Rotate Nostr keys periodically (reduces long-term metadata correlation)
+- No real names in Nostr identity (pseudonymous by default)
+
+**Phase 1+ mitigation:**
+- Onion routing (hide metadata from relays)
+- Mix networks (decorrelate timing)
+- Tor integration (hide IP address)
+
+---
+
+## Why Nostr is a Big Deal Beyond Asgaya
+
+**Nostr isn't just for Asgaya.** It's a general-purpose decentralized messaging protocol used by:
+- Social media (Damus, Primal, Amethyst apps)
+- Bitcoin Lightning wallets (payment coordination)
+- Marketplaces (OpenBazaar-style P2P commerce)
+- Identity systems (web of trust, reputation)
+
+**By using Nostr, Asgaya plugs into an existing ecosystem:**
+- Relays already running (no infrastructure cost)
+- Libraries already built (faster development)
+- Users already familiar (if they use Damus/Primal)
+- Network effects (more relays = more resilience)
+
+**Asgaya improves Nostr too:**
+- New use case (payment coordination)
+- More relay traffic (justifies relay operators' costs)
+- More developers building Nostr tools (benefits everyone)
+
+**Mutual benefit.** We're not building in isolation.
+
+---
+
+## Comparison to Other Coordination Methods
+
+| Feature | Nostr DMs | OP_RETURN | Email | Telegram |
+|---------|-----------|-----------|-------|----------|
+| **Speed** | <1 second | ~2 minutes | Minutes-hours | <1 second |
+| **Cost** | Free | €0.002/message | Free | Free |
+| **Privacy** | End-to-end encrypted | End-to-end encrypted | Not encrypted (unless PGP) | Encrypted (server can read) |
+| **Censorship resistance** | Good (multiple relays) | Maximum (blockchain) | Poor (centralized) | Poor (centralized) |
+| **Requires** | Nostr keys | BCH transaction | Email account | Phone number |
+| **Automation** | Bot-native | Bot-native | Limited | Restricted |
+| **Permanence** | Ephemeral | Permanent on-chain | Depends on server | Depends on server |
+
+**Nostr wins on speed, cost, and automation.** OP_RETURN wins on maximum censorship resistance. Email and Telegram lose on privacy and decentralization.
+
+**Phase 0 uses Nostr.** Phase 1+ adds OP_RETURN fallback if needed.
+
+---
+
+## Common Questions
+
+**Q: What if the seller's Nostr key is compromised?**
+
+**A:** Attacker can read incoming payment info requests and send fake payment details. But:
+- María's fiat payment goes to seller's real bank account (not attacker's)
+- Seller's bot still detects the payment and locks BCH
+- María gets her remittance, attacker gains nothing
+- Seller should rotate Nostr keys periodically (Phase 1+ feature)
+
+**Q: Can I use Nostr for regular messaging (not just payment info)?**
+
+**A:** Phase 1+, yes. Phase 0, no—Nostr is automated for bot coordination only. But if you have a Nostr client app (Damus, Amethyst), you can message other users using your Asgaya Nostr keys.
+
+**Q: What if relays censor me?**
+
+**A:** Switch to different relays. If all public relays censor you, run your own (€5/month VPS). Can't be stopped.
+
+**Q: Does Nostr leak my BCH address?**
+
+**A:** No. Nostr keys are separate from BCH keys. Even if someone knows your Nostr public key, they can't derive your BCH address from it.
+
+**Q: What's the difference between Nostr and Signal/WhatsApp?**
+
+**A:** Signal/WhatsApp require phone numbers, run on centralized servers (company can block you), and aren't designed for automated bots. Nostr has no phone numbers, no central server, and is bot-native.
+
+---
+
+## Key Takeaways
+
+1. **Encrypted messaging layer** — Private coordination between buyers and sellers
+2. **Nostr protocol** — Decentralized, relay-based, end-to-end encrypted
+3. **Payment info exchange** — Delivers bank account details in under 1 second
+4. **Liveness check** — Proves seller is online before sender pays fiat
+5. **No phone number required** — Just public keys (pseudonymous by default)
+6. **Bot-native** — Automated responses, no manual intervention
+7. **Ephemeral** — Messages don't live on blockchain permanently (privacy)
+
+**Nostr is the invisible glue.** The bulletin board discovers sellers. Nostr coordinates the payment. The covenant executes the trade. Users never see Nostr—just instant payment instructions.
+
+When regulators ask "where's the chat server we can subpoena?" there isn't one. It's just relays forwarding encrypted blobs. No company, no database, no records to seize.
+
+That's the point.
+
+---
+
+**Next:** [Notification Bot](notification-bot.md) — How it runs automatically  
+**Related:** [Bulletin Board](bulletin-board.md) — Where sellers are discovered  
+**Related:** [Wallet](wallet.md) — Where Nostr keys are generated
+
+
+## Notification Bot
+
+# The Notification Bot: Automation That Makes Asgaya Scale
+
+**Set it and forget it.** Post your listing once. The bot handles everything else—24/7.
+
+---
+
+## What It Is
+
+The notification bot is a background process running on the seller's device. It continuously monitors three data streams:
+
+1. **Nostr messages** — incoming payment requests from senders
+2. **Bank notifications** — incoming fiat payments via Bizum, SEPA, etc.
+3. **Blockchain state** — covenant status and expiration times
+
+When a sender pays, the bot automatically funds the covenant, signs it, and broadcasts it to the BCH network. The seller never touches the app.
+
+**Without the bot:** Manual checking, 5–10 transactions/day max, seller must be awake and attentive.  
+**With the bot:** Sub‑second response, 100+ transactions/day, zero cognitive load.
+
+---
+
+## Three Core Functions
+
+### 1. Nostr Message Handler
+
+Listens on 3–5 Nostr relays for messages addressed to the seller's public key. Decrypts with the seller's private key. Validates the covenant exists on‑chain and the amount is within the seller's limits. Generates a unique payment reference using the recipient's Cash Account. Replies with encrypted bank details in under one second.
+
+### 2. Bank Notification Listener
+
+Uses the Android Notification Listener Service to intercept banking app notifications. Extracts payment amount, sender info, and the reference code. Matches the reference to a pending covenant. Verifies the amount (within a small tolerance). Triggers covenant funding.
+
+**Key insight:** The bank notification is the payment proof. No API scraping, no login credentials stored, no polling required. The bot only reads notification summaries, which contain non‑sensitive data like "You received €100 from María, ref: Elena#142."
+
+**Compatibility:** Works with any online banking app that notifies the customer within minutes.
+
+### 3. Covenant Manager
+
+Queries Electrum for covenant state, creates funding transactions (locking the seller's BCH per the covenant terms), signs with pre‑authorised keys limited to covenant UTXOs only, and broadcasts to the BCH network. Monitors for confirmation and reclaims if the covenant expires unfunded.
+
+---
+
+## Security Model
+
+**What the bot can access:**
+- Read‑only: wallet balance, covenant state, bank notification summaries, Nostr messages.
+- Write (limited): sign covenant funding transactions, send Nostr payment responses, write local logs.
+
+**What the bot CANNOT access:**
+- The recovery phrase (never stored).
+- Full wallet private keys (only covenant‑specific derived keys).
+- Bank login credentials (never requested or stored).
+- Arbitrary transaction signing (limited to covenant UTXOs).
+
+**If the bot is compromised:** The attacker can read recent notification summaries and attempt to fund unpaid covenants (losing BCH), but cannot drain the wallet, redirect covenants, fake bank notifications, or access the bank account. Loss is limited to covenants in progress—typically 1–3 at a time, maximum ~€300 exposure.
+
+**Key storage:** The Nostr private key is encrypted via Android Keystore. Covenant signing keys are derived from the wallet but segregated (HD path `m/44'/145'/0'/2/`). The main wallet keys remain separate.
+
+---
+
+## Seller Experience
+
+**One‑time setup (2–3 minutes):** Enable the bot, grant notification access and background execution, select the banking app to monitor, test with a €2 self‑payment.
+
+**Daily operation (zero effort):** The seller checks earnings and buys BCH again to fund more covenants when convenient. The bot processes transactions while the seller works, sleeps, or ignores the phone. Optional push notifications ("Covenant funded: +€0.50 earned") can be silenced.
+
+**When something goes wrong:**
+
+| Scenario | Bot Response | Seller Impact |
+|----------|-------------|---------------|
+| Bot offline (phone dead) | No Nostr response within 2 min | Sender picks different seller; no loss |
+| Payment amount mismatch | Bot detects, does NOT fund | Manual resolution needed (rare) |
+| Bank notification delayed | Bot funds when notification arrives | 5‑minute delay for sender; acceptable |
+| False positive (phantom notification) | Bot attempts fund, finds no covenant | Logged error; no financial loss |
+
+---
+
+## Why the Bot Enables Scale
+
+Without automation, sellers are constrained by attention: 8–12 hours of availability, 5–10 transactions per day, high fees needed to earn a decent hourly rate, limited to one city. With the bot, a single seller can serve an entire country, 24/7, processing 100+ transactions daily. The required seller count drops by 10×, and response times improve by 300×.
+
+**A sender at 2:00 AM finds three bots awake and responsive.** She picks the cheapest, pays, and the covenant is funded in under a minute. Without bots, she'd wait until morning or pay Western Union €5.
+
+---
+
+## How It Connects
+
+- **Wallet:** The bot has limited signing authority (covenant keys only).
+- **Bulletin Board:** The bot posts and updates the seller's listing.
+- **Nostr:** The bot listens for requests and sends payment details.
+- **Bank notifications:** The bot detects payments and triggers covenant funding.
+
+**Complete automated flow:**
+
+1. **Bulletin board:** Listing posted (one‑time, manual)
+2. **Nostr:** Bot listens, responds with payment details (automated, <1 s)
+3. **Bank:** Sender pays via Bizum (manual, sender's side)
+4. **Bot:** Detects notification, creates and signs funding tx (automated)
+5. **Blockchain:** Transaction confirmed (automated)
+6. **Seller:** Checks earnings when convenient (manual)
+
+Steps 2–5 are fully automated. The seller only touches steps 1 and 6.
+
+---
+
+## Technical Essentials
+
+**Android:** Foreground service with a persistent notification, partial wake lock, WiFi‑preferred with mobile data fallback. Battery impact: ~5–10 % per day.
+
+**Nostr:** rust‑nostr via JNI, 3–5 public relays with exponential backoff reconnection. Messages use NIP‑04 encryption. A 30‑second keepalive detects dead connections.
+
+**Bank parsing:** Pattern matching on notification text (e.g., "Has recibido 100,00 € de María García. Concepto: Elena#142"). Extracts amount and reference. Multiple regex patterns per bank handle format variations. If all patterns fail, the bot alerts the seller for manual verification.
+
+**Covenant matching:** Resolves the Cash Account on‑chain, queries Electrum for unfunded covenants where recipient matches and amount is within tolerance, creates the funding transaction (107 % of face value), signs with the covenant‑specific key, and broadcasts.
+
+---
+
+## Phase 0 Scope
+
+**Ready:** Nostr message handler, bank notification parser (Spanish banks), covenant manager, multi‑relay failover, reconciliation logs, limited key permissions, error handling.
+
+**Phase 1+:** VPS deployment option, multi‑currency support, dispute mediation interface, advanced accounting exports, concurrent multi‑corridor support.
+
+---
+
+## Key Takeaways
+
+1. **Automation is the killer feature.** Without it, Asgaya doesn't scale.
+2. **Set and forget.** Post a listing once; the bot earns passive income 24/7.
+3. **Secure by design.** Limited key permissions; separate from the main wallet.
+4. **Bank notification = payment proof.** No API scraping, no credentials stored.
+5. **10× reduction in required sellers.** The bot makes liquidity accessible to anyone with capital.
+
+The bot transforms Asgaya from a manual P2P trading platform into a passive income generator backed by real remittance demand. That's the point.
+
+---
+
+**Next:** [Buyers and Sellers](buyers-and-sellers.md) — The user perspective  
+**Related:** [Bulletin Board](bulletin-board.md) — Where listings are posted  
+**Related:** [Nostr](nostr.md) — How coordination happens  
+**Related:** [Wallet](wallet.md) — Where keys are stored
+
+
+## Universal Stability
+
+# Universal Stability: Depegging from Fiat
+
+**The mechanism that powers H€ and HAu works for any measurable asset with a reliable oracle.** Gold and Euro are just the beginning.
+
+---
+
+## The Core Insight
+
+BCH volatility is a problem. Fiat inflation is a problem. **Solution:** Stabilize BCH against *real-world value* instead of government currencies.
+
+**Traditional stablecoins:** Peg to USD or EUR (still dependent on central banks).  
+**Universal stability:** Peg to commodities, energy, or purchasing power baskets (independent of policy).
+
+---
+
+## How It Works (Any Asset)
+
+### The Pattern
+
+1. **Merchant receives BCH** (from covenant cashout, mining, sales)
+2. **Wallet asks:** "Stabilize against which asset?"
+3. **If merchant chooses H-ASSET:**
+   - App checks pool availability (bull capital for that asset)
+   - Creates standard AnyHedge contract:
+     - Merchant shorts BCH vs ASSET
+     - Pool provides long BCH
+     - Duration: 30 days, auto-renewing
+   - Mints H-ASSET tokens (CashTokens)
+   - Sends to merchant's wallet
+4. **Merchant holds stable value** relative to chosen asset
+5. **Merchant trades tokens** when needed (P2P, merchant-to-merchant, DEX)
+
+**If pool exhausted:** Merchant keeps BCH (graceful degradation). Existing token holders unaffected.
+
+---
+
+## Phase 0: EUR & Gold
+
+| Token | Pegged To | Oracle Source | Why Merchants Choose It |
+|-------|-----------|---------------|------------------------|
+| **H€** (Heuro) | Euro (EUR) | GeneralProtocol, CoinGecko | Familiar unit, easy mental math, quick VES conversion |
+| **HAu** (How) | Gold (XAU) | LBMA, CME, COMEX | Universal value, hedges ALL fiat inflation, 24/7 trading |
+
+**Capital allocation:** €3K founder pool. Merchant velocity determines actual lock.
+
+---
+
+## Future: Beyond Fiat
+
+### Commodities (Raw Materials)
+
+**H-COPPER (Copper ore):**
+- 1 token = 1 ton copper spot price
+- Oracle: CME, LME (London Metal Exchange)
+- Use case: Mining regions, construction merchants
+
+**H-OIL (Crude oil):**
+- 1 token = 1 barrel WTI crude
+- Oracle: NYMEX, ICE
+- Use case: Energy economies, transport businesses
+
+**H-IRON (Iron ore):**
+- 1 token = 1 ton iron ore
+- Oracle: Platts, Metal Bulletin
+- Use case: Manufacturing regions
+
+### Energy (Physics-Based Value)
+
+**H-KWH (Kilowatt-hour):**
+- 1 token = 1 kWh electricity (regional spot price)
+- Oracle: Regional electricity markets
+- Use case: Universal (everyone needs energy)
+- Cannot be inflated (thermodynamics doesn't change)
+
+### Purchasing Power (Essential Goods)
+
+**H-BASKET (Venezuelan essentials):**
+```
+1 token = Cost of basket:
+├─ 1kg rice (spot price)
+├─ 1kg beans
+├─ 1L cooking oil
+├─ 1kg chicken
+├─ 500g sugar
+└─ 1L milk
+```
+- Oracle: Local market survey (weekly updates)
+- Use case: Direct purchasing power preservation
+- Immune to ALL currency manipulation
+
+**H-CPI (Consumer Price Index):**
+- 1 token = CPI-adjusted purchasing power
+- Oracle: National statistics offices
+- Use case: Long-term savings, inflation hedge
+
+---
+
+## Why This Is Post-Fiat
+
+**Traditional finance:**
+```
+Store value in USD → US Fed can inflate
+Store value in EUR → ECB can inflate
+Store value in VES → Venezuelan govt hyperinflates
+Result: Savings destroyed by policy
+```
+
+**Crypto (current):**
+```
+Store value in BCH → Volatile (±20% monthly)
+Store value in BTC → Volatile (±15% monthly)
+Result: Can't plan, can't save predictably
+```
+
+**Universal stability:**
+```
+Store value in H-COPPER → Value = copper (govts can't print copper)
+Store value in H-BASKET → Value = food (measures real purchasing power)
+Store value in H-KWH → Value = energy (physics-based, not policy-based)
+Result: Stable value independent of govt or crypto volatility
+```
+
+**The paradigm shift:** From "stable vs fiat" to "stable vs real-world value."
+
+---
+
+## Oracle Requirements
+
+### Easy Oracles (Existing Feeds)
+
+**Commodities:**
+- Gold, silver, copper (CME, COMEX, LME)
+- Oil, natural gas (NYMEX, ICE)
+- Agricultural (CBOT, ICE)
+
+**Energy:**
+- Electricity spot prices (regional markets)
+- Natural gas, coal (global markets)
+
+**Fiat pairs:**
+- EUR/BCH, USD/BCH (crypto exchanges)
+- Forex rates (central banks, Bloomberg)
+
+### Custom Oracles (Need to Build)
+
+**Essential goods baskets:**
+- Local market surveys (weekly/monthly)
+- Weighted average of staple prices
+- Regional variations (Caracas basket ≠ Maracaibo basket)
+
+**Regional indices:**
+- Cost of living (rent + utilities + food)
+- Industry-specific baskets (construction materials, restaurant inputs)
+
+**How to build:**
+1. Define basket composition (standardized quantities)
+2. Survey local prices (weekly web scraping or manual)
+3. Calculate weighted average
+4. Sign with oracle key
+5. Publish to AnyHedge-compatible feed
+
+**The beautiful thing:** Start with easy oracles (gold, oil, EUR), add custom as demand proves.
+
+---
+
+## Capital Requirements
+
+**Key insight:** Pool size depends on merchant velocity, not token supply.
+
+### High Velocity (Trust-Building Phase)
+
+```
+Scenario: 10 merchants, €100/month each, weekly VES conversion
+Volume: €1000/month
+Lock: €250 avg (weekly turnover)
+Pool needed: €3000 supports 120 merchants at this velocity
+```
+
+### Lower Velocity (Trust Established, Hoarding)
+
+```
+Scenario: 10 merchants, €100/month each, monthly hold
+Volume: €1000/month
+Lock: €1000 avg (monthly turnover)
+Pool needed: €3000 supports 30 merchants
+```
+
+**Phase 0:** High velocity (money tight, dump fast). €3K pool sufficient.  
+**Phase 1:** Crowdfund bull pool (€50K+) when demand proven.
+
+---
+
+## Unified Pool Model
+
+**Phase 0 (€3K founder capital):**
+
+The bull pool approves which assets merchants can mint (H€, HAu) and dynamically allocates capital based on demand.
+
+**No split needed:**
+- Pool capital flows to whichever asset merchants choose
+- If all merchants want H€ → full €3K available for H€
+- If mix of H€/HAu → capital allocated based on actual requests
+- Future: Add H-BASKET when demand appears (same pool)
+
+**Why unified is better:** Splitting pools (70% H€, 30% HAu) wastes capital. If all merchants want H€, the HAu allocation sits idle. Unified pool maximizes capital efficiency.
+
+**The magic:** Same €3K backs multiple asset types via velocity. Not locked 1:1.
+
+---
+
+## Network Effects
+
+**Phase 0 (Remittances):**
+- H€ for EUR→VES corridor (prove mechanism)
+- HAu for gold bugs (test sound-money demand)
+
+**Phase 1 (Multi-Corridor):**
+- H$ for US→LatAm corridors
+- H₱ for Philippines corridors
+- Still fiat-denominated
+
+**Phase 2 (Post-Fiat):**
+- H-BASKET for purchasing power preservation
+- H-KWH for energy-based savings
+- H-COPPER for commodity exposure
+- Merchants choose asset based on needs
+
+**Phase 3 (Ecosystem):**
+- Local DEXs list H-ASSET tokens (Cauldron, etc.)
+- Bulls trade tokens for yield (leverage pools)
+- Secondary markets emerge (merchant-to-merchant)
+- H-ASSET becomes BCH's stable-value layer
+
+---
+
+## Why Gold Oracle Is Best (For Now)
+
+**Comparing oracle reliability:**
+
+| Asset | Market Cap | Trading Hours | Price Sources | Manipulation Risk | History |
+|-------|-----------|---------------|---------------|------------------|---------|
+| **Gold** | $12T | 24/7 global | LBMA, CME, COMEX, Shanghai | Very low (massive market) | Centuries |
+| **EUR/BCH** | ~$1B | Exchange hours | Kraken, Coinbase, Binance | Medium (smaller market) | Years |
+| **Oil** | $2T | 24/5 | NYMEX, ICE, Brent | Low (large, liquid) | Decades |
+| **Copper** | $200B | 24/5 | CME, LME | Medium (smaller than gold) | Decades |
+| **Electricity** | Varies | Regional | Spot markets | High (regional, manipulation) | Years |
+| **Basket** | N/A | Manual survey | Custom | Medium (survey quality) | New |
+
+**Gold wins:** Largest market, longest history, 24/7 trading, multiple authoritative sources, manipulation-resistant.
+
+**For Phase 0:** H€ (familiar) + HAu (reliable oracle). Test both. Let data decide.
+
+---
+
+## Legal/Regulatory Advantage
+
+**Where minting happens:** Venezuela (merchant creates contract like making coupons).  
+**Where Asgaya operates:** Spain (bulletin board, information service).
+
+**If merchant in Venezuela mints H€/HAu:**
+- Minting = Venezuelan jurisdiction (less strict crypto regs)
+- Asgaya = Spanish bulletin board (just information)
+- No EU securities law trigger (not issuing in EU)
+
+**This is why merchant-side minting matters:** Jurisdiction arbitrage without dishonesty.
+
+---
+
+## The Vision
+
+**Not:** Replace USD with BCH (too volatile)  
+**Not:** Replace USD with USDT (fiat-dependent not trustless)  
+**But:** Replace fiat with *real-world value units*
+
+**The Asgaya user in the future:**
+- Earns via remittances (H€ for familiar unit)
+- Saves in gold (HAu for wealth preservation)
+- Merchants set inventory prieces based in purchasing power (H-BASKET for stability)
+- Pays energy bills in kilowatt-hours (H-KWH for operational costs)
+
+**No government can inflate copper supply. No central bank can print energy. No policy can devalue food baskets.**
+
+**This is post-fiat economy.** Universal stability is the mechanism. Asgaya is the bootstrap. Remittances are just the first use case.
+
+---
+
+## Key Takeaways
+
+1. **Same mechanism, any asset.** H€, HAu, H-BASKET, H-KWH—all use pooled AnyHedge contracts.
+2. **Start simple, expand gradually.** Phase 0: EUR + Gold. Future: Baskets, commodities, energy.
+3. **Gold oracle most reliable.** 24/7 trading, centuries of history, $12T market cap.
+4. **Capital scales via velocity.** High merchant turnover = low pool lock. €3K supports 80 merchants initially.
+5. **Post-fiat is the vision.** Not "stable vs USD" but "stable vs real-world value."
+6. **Remittances bootstrap adoption.** Merchants come for 0.5% spread, stay for H€/HAu stability, discover H-BASKET eventually.
+
+**The profound insight:** We can literally depeg the world from fiat currencies, without the downside of volatile crypto assets.
+
+---
+
+**Related:** [Index](index.md), [How They Interact](how-they-interact.md), [Buyers and Sellers](buyers-and-sellers.md)
+
+
+## Wallet
+
+# The Wallet: Your BCH, Your Identity
+
+**Non-custodial. Pseudonymous. Open source.** Your keys, your Cash Account, your control.
+
+---
+
+## What It Is
+
+A standard Bitcoin Cash wallet with one critical addition: **Cash Accounts as your identity layer.** Not a bank account. Not a company holding your funds. Just a regular BCH wallet where you control the keys, paired with a human-readable name system that replaces phone numbers and long addresses.
+
+When María sends money to Elena, she types `Elena#142` instead of a 42‑character address. The wallet resolves it on‑chain and completes the payment.
+
+---
+
+## Two Core Functions
+
+**1. Hold Your Bitcoin Cash** – Send, receive, check balance, view history. The app generates a 12‑word recovery phrase on first launch. Write it down; that phrase restores everything. No company can freeze or block your funds.
+
+**2. Establish Your Identity with Cash Accounts** – Register a name like `Elena#142` on the blockchain. It’s human-readable, easy to share, and stored on‑chain forever. No phone number, email, or KYC required.
+
+---
+
+## Cash Accounts: How They Work
+
+**Registration (one‑time):** Pick a name, the app creates an on‑chain registration transaction (~€0.002 fee). You get a unique number (e.g., `Elena#142`). The name is yours permanently.
+
+**Using them:** Share your Cash Account to receive. To send, type the recipient’s Cash Account; the wallet looks up their BCH address from the blockchain and completes the transaction. No phone number, no SMS, no identity verification.
+
+**Privacy:** Your Cash Account name and linked address are public. Your real identity, transaction history, phone number, and location are not—unless you choose to reveal them.
+
+---
+
+## Why Cash Accounts: Bridge between legacy payment systems and BCH
+
+Traditional remittance apps require phone numbers, KYC, and often unreliable SMS delivery. In Venezuela, SIM cards can be blocked, phone service is unstable, and telecom surveillance is real. Cash Accounts need none of that: they run on the BCH blockchain, are permissionless, and are pseudonymous by default. Even if a recipient’s phone service is cut off, their Cash Account still works.
+
+Cash Accounts allow us to use the concept field of the transfers to match a fiat payment to a BCH address, this approach eliminates the need of a data base, random codes and a mapping layer.
+
+Cash Account serves four roles simultaneously:
+
+1. User identifier (María types Elena#142)
+2. Covenant field (Elena's BCH address as recipient)
+3. Payment reference (in Bizum description)
+4. Bot lookup key (match bank payment → on-chain covenant)
+
+All from **ONE on-chain** identifier. This is why it works without a central coordinator.
+
+---
+
+## How the Wallet Connects to the Other Gears
+
+The wallet is the foundation for the other three Asgaya components.
+
+- **Bulletin Board:** Your Cash Account is your contact info on listings. Sellers and buyers are found and contacted via Cash Accounts, all on‑chain.
+- **Nostr:** Your wallet generates a Nostr key pair. When you select a counterparty, you message them over Nostr—encrypted, peer‑to‑peer, no server.
+- **Notification Bot:** You grant the bot limited wallet access (read‑only balance, sign‑only for specific covenants). It watches for incoming payments and auto‑signs covenants when conditions are met.
+
+---
+
+## Wallet Features
+
+**Phase 0 (ready):**
+- Standard BCH wallet (send, receive, balance)
+- Cash Account registration and resolution
+- QR code generation (with embedded Cash Account)
+- Fiat balance display (BCH → EUR, VES, USD)
+- Transaction history with covenant status
+- Recovery phrase backup and restore
+
+**Phase 1+ (planned):**
+- Multiple Cash Accounts per wallet
+- Cash Account transfer / selling
+- Reputation score display
+- Multi‑sig support
+
+---
+
+## Recovery
+
+**You have your 12‑word recovery phrase:** Restore on any device; your BCH and Cash Account reappear (the blockchain remembers the name).
+
+**You lost your recovery phrase:** The BCH is gone. The Cash Account name remains on‑chain but can’t be accessed. Write down the 12 words; that’s the only backup.
+
+---
+
+## Security Model
+
+The app knows your public keys, transaction history, and Cash Account. It never knows your recovery phrase, private keys, or PINs. All sensitive data stays encrypted on your phone. The code is open source; anyone can audit it to verify there’s no key leakage.
+
+---
+
+## Why Bitcoin Cash
+
+| Feature | BCH | BTC |
+|---------|-----|-----|
+| **Transaction fees** | ~€0.002 | €5–50 |
+| **Covenant support** | Native | None (requires centralized escrow) |
+| **Cash Account cost** | ~€0.002 one‑time | Not natively supported |
+| **Design philosophy** | Peer‑to‑peer electronic cash | Digital gold |
+
+BCH is the only Bitcoin that can scale for €100 remittances with sub‑cent fees and covenant‑enforced trustlessness.
+
+---
+
+## Comparison to Other Wallets
+
+| Feature | Traditional BCH Wallet | Asgaya Wallet |
+|---------|------------------------|---------------|
+| Send/Receive BCH | ✅ | ✅ |
+| Non‑custodial | ✅ | ✅ |
+| Cash Accounts | Some support | Native, required |
+| Covenant creation | Manual | One‑tap |
+| Bulletin board discovery | No | Built‑in |
+| Nostr messaging | No | Integrated |
+| Notification bot | No | Automated |
+
+Asgaya is a specialised wallet for remittances. Your keys work in any BCH wallet—no lock‑in.
+
+---
+
+## Key Takeaways
+
+1. **Non‑custodial** — Your keys, your coins. No intermediary.
+2. **Cash Accounts as identity** — Human‑readable, blockchain‑registered, censorship‑resistant.
+3. **Pseudonymous by default** — Use nicknames or real names, your choice.
+4. **Foundation for the other gears** — Bulletin board, Nostr, and notification bot all depend on the wallet.
+5. **Interoperable** — Keys and Cash Accounts work anywhere on BCH.
+6. **Open source** — Audit the code; no key leakage possible.
+
+---
+
+**Next:** [Nostr](nostr.md) — Private coordination between buyers and sellers  
+**Related:** [Bulletin Board](bulletin-board.md) — Where listings are discovered  
+**Related:** [Notification Bot](notification-bot.md) — Automation that makes the system run
+
+
 ## Index
 
 ← [Back to Home](README.md)
