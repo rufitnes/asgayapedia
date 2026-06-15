@@ -485,7 +485,6 @@ def auto_resolve_fraud(covenant, sender, seller, proof):
 ## Related Concepts
 
 - **[Universal Bot Fraud Prevention](universal-bot-fraud-prevention.md)** - Complete system overview
-- **[Seller Heartbeat Mechanism](seller-heartbeat-mechanism.md)** - Liveness proof
 - **[Unclaimed Transaction Expiry](../decisions/unclaimed-transaction-expiry.md)** - Timeout handling
 - **[Two-Step Settlement](../decisions/two-step-settlement-timing.md)** - Covenant mechanics
 

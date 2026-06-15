@@ -1,6 +1,6 @@
 # Error: Bizum Timeout
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md) (Buy from Seller Path)
 
 ---
@@ -54,7 +54,7 @@ Shown when sender doesn't send Bizum payment to BCH seller within the 5-minute v
 - **Tap "Create New Order"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
   - Pre-fills previous recipient (Elena#142)
   - User can adjust amount or continue with same details
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 

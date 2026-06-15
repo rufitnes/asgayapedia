@@ -4,7 +4,7 @@
 
 **Status:** Active (MVP)  
 **Category:** User Protection & Covenant Operations  
-**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Transaction APIs](../android-app/backend-apis/transaction-apis.md)
+**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Covenant Creation](../android-app/backend-apis/covenant-creation/)
 
 ---
 

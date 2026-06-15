@@ -1,6 +1,6 @@
 # Error: Pending Covenant
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md)
 
 ---
@@ -79,7 +79,7 @@ if (hasPendingCovenant) {
   - If covenant from own wallet → [Screen 6A: Tracking](../own-wallet-path/6a-tracking.md)
   - If covenant from seller → [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md)
 - **Tap "Choose Different Recipient"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 

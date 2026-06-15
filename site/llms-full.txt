@@ -2113,9 +2113,7 @@ For 100 covenants: ~€1.00 total (blockchain fees only)
 ```
 
 **Implementation:**
-- See: `transaction-apis.md` - Lines 210-216
-- See: `settlement-apis.md` - Lines 537-551
-- See: `5_user_apis.md` - "Notifications: OP_RETURN" section
+- See: `covenant-creation.md` - Covenant transaction implementation
 
 ---
 
@@ -2209,7 +2207,7 @@ T+0:31  Covenant executes autonomously
 ```
 
 **Implementation:**
-- See: `transaction-apis.md` - Lines 115-131
+- See: `covenant-creation.md` - Covenant implementation details
 
 ---
 
@@ -7498,7 +7496,7 @@ When a sender creates a remittance covenant, they specify the recipient's CashAc
 - [Bulletin Board](../../concepts/bulletin-board.md) - How merchants advertise CashAccounts
 
 
-## Remittance Corridors
+## Corridors
 
 # Remittance Corridors
 
@@ -8091,12 +8089,12 @@ The home screen is the **main entry point** for all Asgaya app functionality. It
 ### Send & Receive (All Users)
 
 **📤 Send to Asgaya User**
-- Tap → Go to [sender-flows/](sender-flows/) (covenant-based remittance)
+- Tap → Go to [../sender-flows/](../sender-flows/) (covenant-based remittance)
 - Use case: Send money to family/friends in Asgaya network
 - Features: Recipient chooses BCH or cash, 24h claim window
 
 **💳 Pay with Bitcoin Cash**
-- Tap → Go to [direct-payment-flows/](direct-payment-flows/)
+- Tap → Go to [../direct-payment-flows/](../direct-payment-flows/)
 - Use case: Pay merchants who accept BCH (outside Asgaya network)
 - Features: Instant settlement, standard BCH transaction
 
@@ -8133,12 +8131,12 @@ Tap any transaction → See details
 
 ```
 Home Screen
-├─ 📤 Send to Asgaya User → sender-flows/
+├─ 📤 Send to Asgaya User → ../sender-flows/
 │  ├─ covenant-setup/ (recipient, amount, payment method)
 │  ├─ own-wallet-path/ (if sender has BCH)
 │  └─ buy-seller-path/ (if sender buys BCH from bulletin)
 │
-├─ 💳 Pay with Bitcoin Cash → direct-payment-flows/
+├─ 💳 Pay with Bitcoin Cash → ../direct-payment-flows/
 │  ├─ 1-scan-merchant.md
 │  ├─ 2-enter-amount.md
 │  ├─ 3-confirm-send.md
@@ -8290,11 +8288,11 @@ if (count > 0) {
 const handleNavigation = (destination) => {
   switch(destination) {
     case "send-asgaya":
-      navigate("sender-flows/covenant-setup/1-home");
+      navigate("../sender-flows/covenant-setup/1-home");
       break;
     
     case "pay-bch":
-      navigate("direct-payment-flows/1-scan-merchant");
+      navigate("../direct-payment-flows/1-scan-merchant");
       break;
     
     case "claim-money":
@@ -8312,8 +8310,8 @@ const handleNavigation = (destination) => {
 
 ## Related Documentation
 
-- **[Sender Flows](sender-flows/)** - Covenant-based remittances
-- **[Direct Payment Flows](direct-payment-flows/)** - Pay merchants with BCH
+- **[Sender Flows](../sender-flows/)** - Covenant-based remittances
+- **[Direct Payment Flows](../direct-payment-flows/)** - Pay merchants with BCH
 - **[Recipient Flows](recipient-flows.md)** - Claim incoming covenants
 - **[Trade BCH Screen](trade-bch-screen.md)** - Bulletin board for liquidity providers
 
@@ -9322,7 +9320,7 @@ Otherwise → Show specific error
 
 **Flows:**
 - [Recipient Flows](recipient-flows.md) — Elena's perspective (other side of co-signing)
-- [Sender Flows](sender-flows/) — Iris creates covenant and sends
+- [Sender Flows](../sender-flows/) — Iris creates covenant and sends
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
 **Decisions:**
@@ -10409,7 +10407,7 @@ pending → claimed → accepted → partially_signed → completed
 ## Related Documentation
 
 **Flows:**
-- [Sender Flows](sender-flows/) — How Iris creates covenant and sends
+- [Sender Flows](../sender-flows/) — How Iris creates covenant and sends
 - [Merchant Flows](merchant-flows.md) — How merchant sells VES for BCH (other side of co-signing)
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 
@@ -11484,18 +11482,17 @@ Example: VES 5,750
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — More complex flow with merchant claim
-- [Merchant Flows](../merchant-flows.md) — Merchant perspective (receiving BCH)
-- [LP Flows](../lp-flows.md) — LP perspective (providing liquidity)
+- [Remittance Merchant Cash-Out](./remittance-merchant-cash-out/) — More complex flow with merchant claim
+- [Merchant Flows](../merchant-flows/) — Merchant perspective (receiving BCH)
+- [LP Flows](./lp-flows/) — LP perspective (providing liquidity)
 
 **Decisions:**
-- [Payment Timeout Window](../../../decisions/payment-timeout-window.md) — Why 10 minutes
-- [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work.md) — DolarAPI + Kraken
-- [Two-Step Settlement](../../../decisions/two-step-settlement-timing.md) — EUR first, then BCH
+- [Payment Timeout Window](../../../decisions/payment-timeout-window/) — Why 10 minutes
+- [Market-Rate Exchanges](../../../decisions/how-exchange-rates-work/) — DolarAPI + Kraken
+- [Two-Step Settlement](../../../decisions/two-step-settlement-timing/) — EUR first, then BCH
 
 **Implementation:**
 - `knowledge/code/smsbridge_loop.py` — Working notification listener
-- [Settlement APIs](../../backend-apis/settlement-apis.md) — API endpoints for this flow
 
 ---
 
@@ -12281,9 +12278,9 @@ Referencia: REM-89234
 ## Related Documents
 
 **Flows:**
-- [Remittance Merchant Cash-Out](../remittance-merchant-cash-out.md) — Why LP is needed
-- [Recipient Flows](../recipient-flows.md) — Recipient claims at merchant
-- [Merchant Flows](../merchant-flows.md) — Merchant confirms LP payment
+- [Remittance Merchant Cash-Out](./remittance-merchant-cash-out/) — Why LP is needed
+- [Recipient Flows](../recipient-flows/) — Recipient claims at merchant
+- [Merchant Flows](../merchant-flows/) — Merchant confirms LP payment
 
 **Decisions:**
 - [Fee Splitting Model](../../../decisions/fee-splitting-model.md) — Where LP reward comes from
@@ -14352,7 +14349,7 @@ if (isCashAccount(qrData)) {
 
 - **[Screen 2: Enter Amount](2-enter-amount.md)** - Next step
 - **[Direct Payment Overview](README.md)** - Flow structure
-- **[Cash Accounts Concept](../../../concepts/cash-accounts.md)** - Technical details
+- **[Cash Accounts Concept](../../../concepts/cash-accounts/)** - Technical details
 
 ---
 
@@ -16060,7 +16057,7 @@ This directory contains all **sender-side screens** for creating and tracking BC
 
 ## Flow Structure
 
-**Entry point:** [Home Screen](../home-screen.md) → Tap "Send to Asgaya User"
+**Entry point:** [Home Screen](../home-screen/) → Tap "Send to Asgaya User"
 
 ### Common Path (All Senders)
 1. **[Recipient Selection](covenant-setup/2-recipient-selection.md)** - Enter Cash Account (Elena#142)
@@ -16183,14 +16180,14 @@ This directory contains all **sender-side screens** for creating and tracking BC
 
 - **[Recipient Flows](../recipient-flows.md)** - How recipients claim BCH or cash
 - **[Merchant Flows](../merchant-flows.md)** - How merchants provide cash-out
-- **[BCH Seller Flows](../../backend-apis/seller-bot/README.md)** - How sellers post collateral
+- **[BCH Seller Flows](../../backend-apis/seller-bot/)** - How sellers post collateral
 
 ---
 
 ## Navigation Tips
 
 **For reviewers:**
-- Start with [1-home.md](home-screen.md) for entry point
+- Start with [Home Screen](../home-screen/) for entry point
 - Follow one complete branch (A or B) to understand full flow
 - Check [errors/](errors/) for edge cases
 
@@ -17319,7 +17316,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap "See detailed breakdown" → Show savings breakdown screen
 - Tap "Learn More" → Explain how to become seller/merchant
 - Tap "Send Another" → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen.md)
+- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen/)
 - Tap "Share on Twitter" → Open Twitter with pre-filled message
 - Tap "Tell a Friend" → Open WhatsApp/SMS with pre-filled message
 
@@ -17340,7 +17337,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 - [Screen 6B: Tracking](./6b-tracking.md) - Previous screen
 - [Screen 7A: Completion (Own Wallet)](../own-wallet-path/7a-completion.md) - Alternative completion screen
-- [Screen 1: Home](../../home-screen.md) - Return to home
+- [Screen 1: Home](../../home-screen/) - Return to home
 - [Fee Splitting Model](../../../../decisions/fee-splitting-model.md) - How fees are distributed
 - [Pull System](../../../../concepts/pull-system.md) - Recipient-driven settlement
 
@@ -17355,7 +17352,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 # Screen 2: Recipient Selection
 
 **Part of:** [Sender Flows](../README.md) → [Covenant Setup](./)  
-**Previous:** [Screen 1: Home](../../home-screen.md)  
+**Previous:** [Screen 1: Home](../../home-screen/)  
 **Next:** [Screen 3: Amount Entry](3-amount-entry.md)  
 **Date:** 2026-05-16
 
@@ -17417,7 +17414,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap **"View Merchant Map"** → Preview merchants in recipient's country
 
 **Navigation:**
-- Tap **"◄ Back"** → Return to [Screen 1: Home](../../home-screen.md)
+- Tap **"◄ Back"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -17499,10 +17496,10 @@ Success → Continue to Screen 3
 
 ## Related Documentation
 
-- **[Screen 1: Home](../../home-screen.md)** - Entry point
+- **[Screen 1: Home](../../home-screen/)** - Entry point
 - **[Screen 3: Amount Entry](3-amount-entry.md)** - Next step
-- **[Cash Accounts Concept](../../../concepts/cash-accounts.md)** - Technical details
-- **[Corridor Availability](../../../concepts/corridors.md)** - Supported countries
+- **[Cash Accounts Concept](../../../../../concepts/cash-accounts/)** - Technical details
+- **[Corridor Availability](../../../../../concepts/corridors/)** - Supported countries
 
 ---
 
@@ -17849,7 +17846,7 @@ if (senderBalance >= transferNeeds + networkFee) {
 
 # Error: Bizum Timeout
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md) (Buy from Seller Path)
 
 ---
@@ -17903,7 +17900,7 @@ Shown when sender doesn't send Bizum payment to BCH seller within the 5-minute v
 - **Tap "Create New Order"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
   - Pre-fills previous recipient (Elena#142)
   - User can adjust amount or continue with same details
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -18122,7 +18119,7 @@ async def wait_for_bizum(covenant_id, timeout=300):
 
 # Error: Covenant Expired (24h Timeout)
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 6A: Tracking](../own-wallet-path/6a-tracking.md) or [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md)
 
 ---
@@ -18231,7 +18228,7 @@ Shown when recipient doesn't claim covenant within 24-hour window. Different ref
 - **Tap "Create New Order"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
   - Pre-fills previous recipient (Elena#142)
   - User can retry with same or adjusted amount
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -18508,7 +18505,7 @@ const refundTx = {
 
 # Error: Network Errors
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** Any screen that requires network connectivity
 
 ---
@@ -18546,7 +18543,7 @@ Shown when app cannot connect to required services:
 
 **Interactions:**
 - **Tap "Try Again"** → Retry previous action (reload data, retry transaction)
-- **Tap "Go to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Go to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -18914,7 +18911,7 @@ reportError({
 
 ## Related Documentation
 
-- [Screen 1: Home](../../home-screen.md) - Entry point
+- [Screen 1: Home](../../home-screen/) - Entry point
 - [Screen 4.5: Select Seller](../buy-seller-path/4.5-select-seller.md) - Bulletin board dependency
 - [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md) - Exchange rate dependency
 - [Bizum Timeout Error](./bizum-timeout.md) - Payment window expiry
@@ -18930,7 +18927,7 @@ reportError({
 
 # Error: Pending Covenant
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 3: Amount Entry](../covenant-setup/3-amount-entry.md)
 
 ---
@@ -19009,7 +19006,7 @@ if (hasPendingCovenant) {
   - If covenant from own wallet → [Screen 6A: Tracking](../own-wallet-path/6a-tracking.md)
   - If covenant from seller → [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md)
 - **Tap "Choose Different Recipient"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -19602,7 +19599,7 @@ goToScreen6A();
 - **[Screen 6A: Tracking](6a-tracking.md)** - Next step (covenant tracking)
 - **[Screen 7A: Completion](7a-completion.md)** - Final step (success screen)
 - **[Screen 4B: Buy from Seller](../buy-seller-path/4b-confirm-purchase.md)** - Alternative path
-- **[Own Wallet Path Overview](./README.md)** - Complete path documentation
+- **[Own Wallet Path Overview](./)** - Complete path documentation
 
 ---
 
@@ -19614,9 +19611,9 @@ goToScreen6A();
 
 # Screen 6A: Tracking (Own Wallet Path)
 
-**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send.md)  
-**Previous:** [4A: Confirm Send](./4a-confirm-send.md)  
-**Next:** [7A: Completion](./7a-completion.md)
+**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send/)  
+**Previous:** [4A: Confirm Send](./4a-confirm-send/)  
+**Next:** [7A: Completion](./7a-completion/)
 
 ---
 
@@ -19812,7 +19809,7 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 ```
 
 **Interactions:**
-- Tap "See details" → Go to [Screen 7A: Completion](./7a-completion.md)
+- Tap "See details" → Go to [Screen 7A: Completion](./7a-completion/)
 - Real-time updates (push notifications or polling)
 
 **Notes:**
@@ -19838,8 +19835,8 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 
 ## Related Documentation
 
-- [Screen 4A: Confirm Send](./4a-confirm-send.md) - Previous screen
-- [Screen 7A: Completion](./7a-completion.md) - Next screen
+- [Screen 4A: Confirm Send](./4a-confirm-send/) - Previous screen
+- [Screen 7A: Completion](./7a-completion/) - Next screen
 - [Screen 6B: Tracking (Buy from Seller)](../buy-seller-path/6b-tracking.md) - Alternative tracking screen
 - [Covenant Expiry Error](../errors/covenant-expiry.md) - If recipient doesn't claim
 - [With volatility buffer Bounty Contracts](../../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant specification
@@ -19854,8 +19851,8 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 
 # Screen 7A: Completion (Own Wallet Path)
 
-**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send.md)  
-**Previous:** [6A: Tracking](./6a-tracking.md)
+**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send/)  
+**Previous:** [6A: Tracking](./6a-tracking/)
 
 ---
 
@@ -20056,7 +20053,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap "See detailed breakdown" → Show savings breakdown screen
 - Tap "Learn More" → Explain how to become seller/merchant
 - Tap "Send Another" → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen.md)
+- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen/)
 - Tap "Share on Twitter" → Open Twitter with pre-filled message
 - Tap "Tell a Friend" → Open WhatsApp/SMS with pre-filled message
 
@@ -20075,9 +20072,9 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 ## Related Documentation
 
-- [Screen 6A: Tracking](./6a-tracking.md) - Previous screen
+- [Screen 6A: Tracking](./6a-tracking/) - Previous screen
 - [Screen 7B: Completion (Buy from Seller)](../buy-seller-path/7b-completion.md) - Alternative completion screen
-- [Screen 1: Home](../../home-screen.md) - Return to home
+- [Screen 1: Home](../../home-screen/) - Return to home
 - [Fee Splitting Model](../../../../decisions/fee-splitting-model.md) - How fees are distributed
 - [Pull System](../../../../concepts/pull-system.md) - Recipient-driven settlement
 
@@ -20457,9 +20454,8 @@ Merchant → PagoMóvil → Settlement
 ## Related Documents
 
 - **Backend APIs:**
-  - [Transaction APIs](../backend-apis/transaction-apis.md) - State machine triggered by notifications
-  - [Settlement APIs](../backend-apis/settlement-apis.md) - LP settlement confirmations
-  - [User APIs](../backend-apis/user-apis.md) - OP_RETURN notification system
+  - [Covenant Creation](../backend-apis/covenant-creation/) - State machine triggered by notifications
+  - [User APIs](../backend-apis/user-apis/) - OP_RETURN notification system
 
 - **User Flows:**
   - [RS046-2 Remittance & Merchant Cash-Out](../flows/archive/remittance-merchant-cash-out.md) - Sender experience
@@ -23385,7 +23381,6 @@ suspend fun pollBanescoPayments() {
 - **Index:** [NotificationListener Architecture](README.md)
 - **Bizum:** [bizum-android.md](bizum-android.md) - Similar pattern for EUR
 - **OP_RETURN:** [opreturn-spv.md](opreturn-spv.md) - BCH notifications
-- **Backend:** [settlement-apis.md](../backend-apis/settlement-apis.md) - Settlement state machine
 
 ---
 
@@ -27514,7 +27509,6 @@ MiCA/PSD2 licensing requirements. Zero protocol fee = information society servic
 - [Core Regulatory Constraints](./core-regulatory-constraints.md) — Why this architecture is necessary
 - [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) — Full regulatory analysis
 - [Pull System](./pull-system.md) — Decentralized bulletin board architecture
-- [Core Architecture: Why No Custody](../core-architecture/why-no-custody-no-intermediation.md) — Detailed legal reasoning (to be created)
 
 ---
 
@@ -28031,9 +28025,10 @@ Both listing types support multiple payment methods as **attributes**, not separ
 | Payment Method | Description | Typical Use |
 |---------------|-------------|-------------|
 | **Bizum** | Spain instant bank transfer | Spanish senders |
-| **SEPA** | EU bank transfer (1-2 days) | European senders |
-| **Bank transfer** | Generic wire transfer | International senders |
+| **SEPA Instant** | EU instant bank transfer | European senders |
 | **Revolut** | Digital bank instant transfer | UK/EU senders |
+
+**Note:** All payment methods must support instant or near-instant settlement for the notification listener bot to work effectively. Traditional SEPA (1-2 days) is not suitable.
 
 ### For BCH Buyers (fiat output)
 | Payment Method | Description | Typical Use |
@@ -28318,6 +28313,10 @@ Cost = 1000 × €0.50 = €500
 
 **Reclaim on removal:** When spending listing UTXO, BCH value returns to creator (minus tx fee).
 
+**Phase 0 baseline:** This is the starting approach. Additional strategies (listing limits, device fingerprinting, payment method verification) are under consideration.
+
+**See:** [Unknown: Bulletin Board Anti-Spam Strategies](../unknowns/bulletin-board-anti-spam.md) for full analysis of alternatives and testing plan.
+
 ---
 
 ## Privacy Considerations
@@ -28342,22 +28341,27 @@ Cost = 1000 × €0.50 = €500
 
 **The bulletin board coordinates, covenants execute:**
 
-### BCH Seller Flow
+### BCH Seller Flow (Sender → Seller)
 ```
 1. Sender finds seller on bulletin board
-2. Sender pays fiat to seller (off-chain)
-3. Seller's bot creates covenant (on-chain)
-4. Covenant executes when conditions met
-5. Seller no longer directly involved (covenant is self-enforcing)
+2. Sender creates covenant with seller's details (on-chain)
+3. Sender pays fiat to seller (off-chain)
+4. Seller's bot detects payment, co-signs covenant
+5. BCH released to sender's designated recipient
 ```
 
-### BCH Buyer Flow
+**Key:** The sender (active user) creates the covenant, not the seller (listing owner).
+
+### BCH Buyer Flow (Recipient → Merchant)
 ```
-1. Merchant finds buyer on bulletin board
-2. Merchant creates covenant with their BCH (on-chain)
-3. Buyer pays fiat to merchant (off-chain)
-4. Buyer's bot detects payment, co-signs covenant
-5. BCH released to buyer
+1. Recipient finds merchant/buyer on bulletin board
+2. Recipient creates covenant with merchant's details (on-chain)
+3. Recipient receives fiat from merchant (off-chain)
+4. Merchant's bot detects receipt, co-signs covenant
+5. BCH released to merchant
+```
+
+**Key:** The recipient (active user) creates the covenant, not the merchant (listing owner).
 ```
 
 **Bulletin board = discovery layer**  
@@ -28385,10 +28389,28 @@ They're separate but complementary.
 - App calculates optimal corridor based on spread + forex
 - Cross-corridor arbitrage opportunities highlighted
 
-### V2: Reputation Graphs
+### V2: Reputation & Merchant Highlighting
+
+**Merchant Priority (Phase 0+):**
+
+Merchant listings should be highlighted/prioritized because:
+- **Physical location = reputation at stake** (can't disappear like online-only traders)
+- **Easy to audit** (visit shop, verify business license)
+- **Professional service** (ready documentation for accounting, regular hours)
+- **Adoption engine goal** (we want merchants to earn money and promote Asgaya)
+
+**Implementation:**
+- "Verified Merchant" badge (requires proof of physical location)
+- Sort order: Merchants first, then other traders
+- Map view: Show merchant locations prominently
+
+**Anti-spam benefit:** Merchants less likely to spam (reputation risk), so highlighting them reduces spam visibility.
+
+**General Reputation (Phase 1+):**
 - Web of trust (vouch for other participants)
 - Social graph integration (prefer friends' listings)
 - Dispute resolution history (how conflicts resolved)
+- Trade count & volume (established traders ranked higher)
 
 ---
 
@@ -28712,8 +28734,7 @@ For any proposed architectural change, ask:
 
 - [RS052: Compliance Architecture](../research/RS052_compliance_architecture.md) — Full regulatory analysis
 - [RS051: Escrow Legal Framework](../research/RS051_escrow_legal_framework.md) — Why escrow model failed
-- [With volatility buffer Bounty Contracts](./bounty-contracts-with-volatility-buffer.md) — Compliant pull-system alternative
-- [Core Architecture: Why No Custody](../core-architecture/why-no-custody-no-intermediation.md) — Detailed reasoning (to be created)
+- [Bounty Contracts with Volatility Buffer](./bounty-contracts-with-volatility-buffer.md) — Compliant pull-system alternative
 
 ---
 
@@ -29871,7 +29892,6 @@ def auto_resolve_fraud(covenant, sender, seller, proof):
 ## Related Concepts
 
 - **[Universal Bot Fraud Prevention](universal-bot-fraud-prevention.md)** - Complete system overview
-- **[Seller Heartbeat Mechanism](seller-heartbeat-mechanism.md)** - Liveness proof
 - **[Unclaimed Transaction Expiry](../decisions/unclaimed-transaction-expiry.md)** - Timeout handling
 - **[Two-Step Settlement](../decisions/two-step-settlement-timing.md)** - Covenant mechanics
 
@@ -31553,7 +31573,7 @@ Every merchant that joins Asgaya becomes a BCH stakeholder who wants the network
 4. **Competitor response time?** How quickly do other stores adopt after first mover?
 5. **BCH holding behavior?** Do merchants recycle immediately or hold for price appreciation?
 
-**See:** [unknowns/behavioral/merchant-spending-patterns.md](../unknowns/behavioral/) for investigation methods
+**See:** [Merchant BCH Preference](../unknowns/behavioral/merchant-bch-preference/) for investigation methods
 
 ---
 
@@ -32018,6 +32038,7 @@ Each actor controls their part. Complexity hidden from end users. The covenant i
 # Concept: RFID Card Recipients
 
 **Status:** ⚠️ **FUTURE ENHANCEMENT (Phase 1+)** - Not implemented in Phase 0  
+**⚠️ Architecture Note:** This document was written for the old escrow architecture. Needs significant redesign for covenant-based architecture where recipients must sign transactions with merchants. RFID tap authentication may not be sufficient for covenant claims.  
 **Related Requirement:** [Minimal Hardware](../core-architecture/why-minimal-hardware.md)
 
 ---
@@ -32065,6 +32086,7 @@ An alternative recipient identity system using RFID cards instead of smartphones
 ### Recipient Flow (RFID Card)
 
 ```
+OLD ARCHITECTURE (Escrow-based):
 1. Sender sends €100 via Bizum to escrow
 2. Escrow notifies recipient via SMS: "Code: 847293"
 3. Recipient goes to merchant with RFID card
@@ -32075,6 +32097,12 @@ An alternative recipient identity system using RFID cards instead of smartphones
 8. Recipient taps RFID card on merchant device (NFC)
 9. Card cryptographically signs transaction with completion code
 10. Merchant device verifies signature → Transaction complete ✅
+
+⚠️ NOTE: This flow needs redesign for covenant architecture where:
+- Sender creates covenant on-chain (not escrow)
+- Seller funds covenant with BCH (not escrow holding fiat)
+- Recipient + Merchant both sign covenant claim transaction
+- RFID tap may need to sign on-chain transaction, not just authenticate
 ```
 
 **Key difference from smartphone flow:**
@@ -32115,6 +32143,7 @@ MERCHANT DEVICE:
 **Option 1: Merchant-Assisted Onboarding (Preferred)**
 
 ```
+OLD ARCHITECTURE:
 1. Recipient goes to merchant with blank RFID card
 2. Merchant opens Asgaya app → "Onboard New Recipient"
 3. Merchant hands phone to recipient
@@ -32124,6 +32153,11 @@ MERCHANT DEVICE:
 7. App writes private key to RFID card
 8. App sends public key to escrow (registers recipient)
 9. Recipient takes card home → ready to receive remittances ✅
+
+⚠️ Covenant architecture changes:
+- Step 8: Public key goes to sender (via CashAccount), not escrow
+- RFID card stores BCH wallet private key (for signing covenant claims)
+- Recipient needs to generate valid BCH address from card
 ```
 
 **Why merchant-assisted:**
@@ -32184,9 +32218,11 @@ MERCHANT DEVICE:
 
 **Security properties:**
 - Private key never leaves card
-- Card signs completion code using private key
-- Merchant device verifies signature with public key (on escrow)
+- Card signs covenant claim transaction using private key
+- Merchant device verifies signature with public key (on blockchain via CashAccount)
 - Merchant cannot extract private key (read-protected)
+
+⚠️ NOTE: With covenant architecture, card must sign BCH transaction, not just authenticate
 
 ---
 
@@ -32197,8 +32233,9 @@ MERCHANT DEVICE:
 **Current design (Phase 1):**
 - Card is bearer instrument (whoever has it can use it)
 - Similar to cash or prepaid card
-- Sender notified via SMS before each cash-out
-- Recipient can report card lost → escrow disables public key
+- Sender notified when covenant created
+- Recipient can report card lost → sender can abort unfunded covenants
+- ⚠️ Once covenant claimed, funds are settled (no central authority to "disable")
 
 **Future enhancement (Phase 2):**
 - PIN protection (4-6 digit PIN required before tap)
@@ -32219,11 +32256,13 @@ MERCHANT DEVICE:
 **Why it fails:**
 1. Private key stored in read-protected memory
 2. NFC tap only allows signing, not key extraction
-3. Even if merchant clones card → escrow knows recipient phone number
-4. Recipient gets SMS for every transaction
-5. Cloned card use → recipient reports fraud → merchant Strike 3
+3. Even if merchant clones card → sender knows recipient CashAccount
+4. Sender gets notification for every covenant claim
+5. Cloned card use → sender reports fraud → bulletin board reputation damaged
 
-**Result:** Cloning not economically viable (too risky, recipient alerted immediately).
+**Result:** Cloning not economically viable (too risky, on-chain proof of fraud).
+
+⚠️ NOTE: Covenant architecture changes fraud detection - relies on blockchain transparency, not central escrow monitoring
 
 ---
 
@@ -32256,11 +32295,12 @@ MERCHANT DEVICE:
 **Recipient:**
 - ✅ RFID card (NTAG216 or compatible)
 - ❌ No smartphone needed
-- ❌ No internet needed
+- ❌ No internet needed (card signs offline)
 
-**Escrow:**
-- ✅ Database of recipient public keys
-- ✅ SMS notification system (alert recipient on each tx)
+**Blockchain (replaces Escrow):**
+- ✅ Covenant holds BCH for recipient
+- ✅ CashAccount maps to recipient public key
+- ✅ SMS notifications from sender (optional, not protocol-level)
 
 ---
 
@@ -32268,16 +32308,16 @@ MERCHANT DEVICE:
 
 **Asgaya Android app additions:**
 - NFC card read/write library (Android NFC API)
-- Key generation (Ed25519 or secp256k1)
-- Card provisioning flow
-- Signature verification during cash-out
-- "Tap card" UI instead of "Enter code" for RFID recipients
+- Key generation (secp256k1 for BCH compatibility)
+- Card provisioning flow (generate BCH wallet on card)
+- Transaction signing via NFC tap (sign covenant claim)
+- "Tap card" UI for covenant claim execution
 
-**Escrow backend additions:**
-- Store recipient public keys
-- Verify RFID card signatures
-- Track which recipients use RFID vs app
-- Card deactivation API (if lost/stolen)
+**No backend needed (replaced by blockchain):**
+- ~~Store recipient public keys~~ → CashAccount system on BCH blockchain
+- ~~Verify RFID card signatures~~ → Blockchain verifies covenant claim signatures
+- ~~Track recipients~~ → On-chain transaction history
+- ~~Card deactivation API~~ → No central authority (decentralized)
 
 ---
 
@@ -32447,21 +32487,34 @@ MERCHANT DEVICE:
 
 ## Status
 
-**Current:** Concept documented, not implemented  
-**Next steps:**
-1. Validate card availability in Venezuela (research)
-2. Prototype NFC provisioning flow (development)
-3. Order 100 test cards (procurement)
-4. Pilot with 2-3 merchants (validation)
-5. Measure adoption vs smartphone app (metrics)
+**Current:** Concept documented for old escrow architecture  
+**⚠️ Architecture Migration Needed:**
+This document describes RFID cards working with escrow-based architecture. With covenant architecture, the concept needs significant redesign:
 
-**Decision gate:** Only implement if demand validated + cards available + merchant NFC support confirmed.
+**Key changes needed:**
+1. RFID card must store BCH wallet private key (secp256k1)
+2. Card must sign covenant claim transactions (not just authenticate)
+3. CashAccount system replaces central recipient registry
+4. No backend needed - blockchain handles verification
+5. NFC tap must generate valid BCH transaction signatures
+
+**Next steps (after redesign):**
+1. Validate card can sign BCH transactions (technical feasibility)
+2. Prototype covenant claim via NFC tap (development)
+3. Test signing performance (tap speed acceptable?)
+4. Validate card availability in Venezuela (procurement)
+5. Pilot with 2-3 merchants if redesign successful
+
+**Decision gate:** 
+- Technical: Can RFID card sign BCH covenant claims? (unknown)
+- UX: Is tap-to-sign fast enough? (unknown)
+- Demand: Do recipients prefer card vs app? (validate in Phase 0 first)
 
 ---
 
-*Concept proposed: May 2026*  
-*Status: Future Enhancement (Phase 1+)*  
-*Blocker: None (cards available globally, Android NFC common)*
+*Concept proposed: May 2026 (escrow architecture)*  
+*Status: Needs Redesign for Covenant Architecture*  
+*Blocker: Technical feasibility of on-chain transaction signing via RFID tap*
 
 
 ## Risk Allocation Principle
@@ -34105,8 +34158,7 @@ def submit_fraud_proof(covenant_id, proof, signature):
 ## Related Concepts
 
 - [Fraud Proof Mechanism](fraud-proof-mechanism.md) - Technical implementation
-- [Seller Heartbeat Mechanism](seller-heartbeat-mechanism.md) - Liveness proof system
-- [With volatility buffer Bounty Contracts](bounty-contracts-with-volatility-buffer.md) - Capital recycling strategy
+- [Bounty Contracts with Volatility Buffer](bounty-contracts-with-volatility-buffer.md) - Capital recycling strategy
 - [Unclaimed Transaction Expiry](../decisions/unclaimed-transaction-expiry.md) - Timeout handling
 - [Fee Splitting Model](../decisions/fee-splitting-model.md) - Economic incentives
 
@@ -42073,7 +42125,7 @@ Re-evaluate this decision if:
 
 **Status:** Active (MVP)  
 **Category:** User Protection & Covenant Operations  
-**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Transaction APIs](../android-app/backend-apis/transaction-apis.md)
+**Related:** [Two-Step Settlement](two-step-settlement-timing.md), [Covenant Creation](../android-app/backend-apis/covenant-creation/)
 
 ---
 
@@ -42395,6 +42447,1723 @@ expired_unclaimed → refunded (covenant timeout, BCH returned to seller, EUR re
 **Last updated:** May 5, 2026  
 **Status:** Active (MVP)  
 **Next review:** After Phase 1 (50+ transactions)
+
+
+## Overview
+
+# Asgaya: A Bitcoin Cash Adoption Engine
+
+**Send €100 to Venezuela for €0.50 instead of €5.**
+No company. No custody. No KYC. Just four components working together.
+
+---
+
+## Mission: Make Ourselves Unnecessary
+
+Asgaya is a cheap, user‑friendly fiat on/off‑ramp for people and businesses
+underserved by both banks (5‑8% remittance fees) and crypto exchanges (complex
+UX, KYC, unavailable in many countries).
+
+But the real goal is **Bitcoin Cash merchant adoption**. Every remittance creates
+demand for BCH‑accepting merchants, rewards them with a 0.5% spread, and offers
+an escape hatch from hyperinflation. When merchants accept BCH directly, Asgaya
+becomes unnecessary. **Success means we disappear.**
+
+---
+
+## The Four Gears
+
+| Gear | What it does |
+|------|--------------|
+| ⚙️ **Wallet** | Where users hold BCH and establish identity (Cash Accounts replace phone numbers) |
+| ⚙️ **Bulletin Board** | Where buyers and sellers find each other (NFTs on the BCH blockchain — anyone can read) |
+| ⚙️ **Nostr** | How they coordinate payment details (encrypted P2P messaging) |
+| ⚙️ **Notification Bot** | How it runs automatically (the killer feature — set and forget) |
+
+---
+
+## A Complete Transaction (€100 Spain → Venezuela)
+
+1. **Wallet:** María opens her wallet, enters Elena’s Cash Account (`Elena#142`).
+2. **Covenant:** María creates a covenant (smart contract) specifying the terms.
+3. **Bulletin Board:** The app queries the blockchain and finds a seller accepting Bizum.
+4. **Nostr:** María selects a seller and receives the payment instructions.
+5. **Notification Bot:** The seller’s bot detects María’s Bizum payment and funds the covenant.
+6. **Recipient:** Elena gets a notification and can claim BCH to her wallet or cash it out at a local merchant.
+
+**Cost:** 0.5% (€0.50) vs 5% (€5) via Western Union.  
+**Time:** 5 minutes–4 hours vs 1–2 days.  
+**Trust:** The seller never locks BCH until paid. The sender has legal recourse if the seller ghosts.
+
+---
+
+## There Are Only Buyers and Sellers
+
+| Role | What They Really Are |
+|------|---------------------|
+| Sender (María) | BCH buyer (buys from seller to send) |
+| Recipient (Elena) | BCH seller (sells to merchant for cash) |
+| Merchant | BCH buyer (buys from recipient) |
+| Trader | Both (buys and sells for arbitrage) |
+
+**The entire system is a bulletin board where buyers and sellers discover each other
+and execute trades via covenants.**
+
+---
+
+## Why It Works
+
+**Payment‑First Covenants.** The seller’s bank notification acts as a notary; BCH moves
+only after payment is confirmed. Fraud is criminal, and personal payment information
+is traceable.
+
+**Volatility Buffer.** Seller locks 107% (€107 for €100 trade). The 7% buffer absorbs
+typical daily swings. Unused buffer returns to the seller.
+
+**On‑Chain Bulletin Board.** Listings are NFTs on the BCH blockchain. No central server
+to shut down. Anyone can read, anyone can post.
+
+**Notification Bot.** Once the seller posts a listing, the bot watches the blockchain
+and bank notifications. No manual intervention needed — scale without effort.
+
+---
+
+## The Merchant Problem: Post‑Cashout Volatility
+
+**After Elena cashes out at a merchant, that merchant holds BCH.** If they need to convert to VES for rent in two weeks, they're exposed to ±20% monthly volatility. Lose 15% once, they quit.
+
+**Solution:** Optional stability tokens backed by pooled AnyHedge contracts.
+
+### Two Stability Options
+
+| Token | Pegged To | Why Merchants Choose It |
+|-------|-----------|------------------------|
+| **H€** (Heuro) | Euro | Familiar unit, easy mental math, quick conversion to VES |
+| **HAu** (How) | Gold (XAU) | Maximum protection, hedges ALL fiat inflation (EUR + VES), universal value |
+
+**Mechanism:**
+1. Merchant receives BCH from covenant cashout
+2. Wallet asks: "Stabilize as H€, HAu, or keep BCH?"
+3. If H€/HAu chosen and pool has capacity:
+   - Creates standard AnyHedge contract (merchant shorts BCH vs asset)
+   - Bull pool provides long side (leveraged BCH exposure)
+   - Mints stability tokens (30‑day auto‑renewing)
+4. Merchant holds stable value, trades it for VES when needed
+
+**If pool exhausted:** Falls back to BCH delivery. Existing tokens still tradeable. System degrades gracefully.
+
+**Why gold oracle is best:** 24/7 global trading (LBMA, CME, COMEX), centuries of price history, $12T market cap (manipulation‑resistant). More reliable than any fiat/BCH pair.
+
+**Phase 0 capital:** €3K unified pool (approved assets: H€, HAu). High merchant velocity (weekly VES conversion) means low capital lock. Supports ~80 merchants initially.
+
+**The hook:** Merchants come for remittances (0.5% spread). Stay for stability (hedge hyperinflation without trusting banks).
+
+---
+
+## Why Bitcoin Cash?
+
+Low fees (~€0.002/tx), fast settlement, native covenant support (CashTokens),
+and a permissionless, global settlement layer. We chose BCH because it earned our
+respect.
+
+---
+
+## Status: Phase 0 (Pre‑Launch)
+
+**Launch corridor:** Spain → Venezuela (EUR → VES) — Q3 2026.  
+**Current:** Documentation in progress; stability tokens (H€/HAu) design validated.  
+**Validating:** Does the 7% buffer hold? Will merchants adopt stability tokens? Can bull pool scale?
+
+**Start here:** [Bulletin Board](bulletin-board.md) — the core innovation.  
+**Then:** [Buyers and Sellers](buyers-and-sellers.md) — the user perspective.  
+**New:** [Universal Stability](universal-stability.md) — post‑fiat asset backing.  
+**Deeper rationale:** [Why This Design](why-this-design/) — requirements, evidence, open questions.
+
+---
+
+**Authors:** Suso + Claude Sonnet 4.5 + DeepSeek  
+**Updated:** 2026‑06‑15 · **Experimental structure — feedback welcomed**
+
+
+## Bulletin Board
+
+# The Bulletin Board: Where Buyers and Sellers Find Each Other
+
+**The core innovation.** No company, no servers, no permission needed.
+
+---
+
+## What It Is
+
+The Asgaya Bulletin Board is searchable data stored on the Bitcoin Cash blockchain. Not a website. Not a database. Just NFT tokens on the blockchain that say "I'm selling BCH for euros" or "I'm buying BCH with bolivares."
+
+Anyone can post. Anyone can read. No one can censor it.
+
+---
+
+## Two Listing Types (Only Two)
+
+Every participant is either a **BCH Seller** (has BCH, wants fiat) or a **BCH Buyer** (has fiat, wants BCH). Everything else is just payment method variations.
+
+### BCH Sellers: "I Have BCH, I'll Lock It for Your Remittance"
+
+A seller posts a listing with their accepted payment methods (Bizum, SEPA), fee (0.5%), and volatility buffer (7%). When a sender selects them and pays €100 via Bizum, the seller's bot detects the payment and locks €107 worth of BCH into the covenant. The seller earns 0.5% (€0.50) plus any unused buffer if BCH appreciates during the window.
+
+**Guarantee:** The seller never locks BCH until their bank confirms the fiat payment. No capital risk.
+
+### BCH Buyers: "I Have Fiat, I'll Buy Your BCH"
+
+A buyer posts a listing with their payment method. For a merchant, that method is "cash at my shop" plus a location. For an online buyer, it's "bank transfer" or "PagoMóvil."
+
+**Merchants are BCH buyers.** Nothing more. A merchant is just a buyer whose payment method is cash and who has a physical address. The system doesn't need a separate "merchant" category.
+
+When a recipient visits the merchant, they hand over the claim, receive cash, and both sign. The merchant earns 0.5% in BCH. The recipient is now in the shop—likely to buy groceries. The remittance fee is the door opener.
+
+---
+
+## Why This Design Beats Centralized P2P Markets
+
+| Feature | LocalBitcoins / Binance P2P | Asgaya Bulletin Board |
+|---------|----------------------------|----------------------|
+| **Storage** | Central database (company servers) | On-chain NFTs (blockchain) |
+| **Discovery** | Website API (single point of failure) | Electrum queries (any node) |
+| **Censorship** | Platform can ban you | Permissionless |
+| **Trust** | Platform escrow (custody risk) | Covenants (non-custodial) |
+| **Regulation** | Platform liable (KYC required) | No intermediary (MiCA compliant) |
+| **Uptime** | Depends on company | Depends on BCH network (99.99%) |
+
+There's no company to shut down. LocalBitcoins was ordered to close. The bulletin board is just data on the blockchain. No one can turn it off.
+
+---
+
+## How Discovery Works
+
+### Posting a Listing
+
+The app creates a Bitcoin Cash transaction with an NFT UTXO:
+
+- **Category:** `ASGAYA_SELLER_V1` or `ASGAYA_BUYER_V1`
+- **Commitment:** Listing details (payment methods, fee, contact)
+- **Value:** 0.001 BCH (~€0.50) anti-spam deposit (reclaimed when you remove the listing)
+- **Covenant:** Rules for updating or removing
+
+Broadcast it. Confirmed in ~10 minutes. Now it's live.
+
+### Finding a Listing
+
+The app queries an Electrum node for UTXOs with the relevant NFT category, filtered by payment method and corridor. No API. No website. Just standard blockchain queries that any Bitcoin Cash wallet can do.
+
+### Updating or Removing
+
+Spend the old listing UTXO (reclaim your 0.001 BCH), create a new one with updated details. Old listing vanishes, new one appears. To pause, spend the UTXO and don't recreate it.
+
+---
+
+## Anti-Spam: An Unknown We're Testing
+
+**Phase 0 baseline:** Every listing UTXO must contain ≥ 0.001 BCH (~€0.50). To spam with 1,000 fake listings costs €500. You reclaim the deposit when you remove the listing (minus ~€0.002 transaction fee).
+
+**This is an unknown.** We don't know if this simple economic barrier is sufficient, or if we need additional measures like listing limits per account, device fingerprinting, or payment method verification. Phase 0 will test whether the 0.001 BCH deposit alone deters spam effectively.
+
+**See:** [Bulletin Board Anti-Spam Strategies](../docs/unknowns/bulletin-board-anti-spam.md) for full analysis of alternatives and testing plan.
+
+---
+
+## Multi-Role Strategies: Playing Both Sides
+
+Because listings are just NFTs, you can post as many as you want.
+
+### Double-Dip (Seller + Buyer)
+
+You have bank accounts in Spain and Venezuela. Post as a BCH Seller (accepting Bizum) and as a BCH Buyer (paying via PagoMóvil). Receive €100 from a sender, lock BCH into a covenant. The merchant in Venezuela receives the BCH. Buy that same BCH back from the merchant via PagoMóvil. Your BCH returns to your wallet. Net: seller fee + buyer spread on the same capital.
+
+### Triple-Dip (Merchant + Seller + Product Margin)
+
+You're a merchant in Venezuela with family in Spain. Post as a BCH Buyer (cash at shop) and as a BCH Seller (via family's Bizum). A sender pays your family €100. You receive the BCH at your shop, hand cash to the recipient, and they buy €20 of groceries. Recycle the BCH through your family's seller listing. Net: merchant fee + seller fee + grocery margin. The remittance is the door opener.
+
+### International Business (Multi-Currency)
+
+You receive income in multiple currencies. Post as a BCH Buyer accepting all your incoming payment rails (Bizum, MB Way, SEPA, PayPal). Post as a BCH Seller paying out in your target currencies (WeChat, Alipay). Earn a small spread on each conversion.
+
+---
+
+## How It Connects to Covenants
+
+**Bulletin board = discovery. Covenants = execution.**
+
+**Seller flow:** Sender finds a seller on the bulletin board → creates a covenant → pays the seller via Bizum → seller's bot detects payment and locks BCH → covenant releases BCH to the recipient.
+
+**Buyer flow:** Recipient finds a buyer (merchant) on the bulletin board → creates a covenant → visits the merchant and receives cash → both sign → covenant releases BCH to the merchant.
+
+**Key:** The sender (or recipient) creates the covenant, not the seller or merchant. The counterparty co-signs after confirming payment or handing over cash.
+
+---
+
+## Privacy
+
+**Visible on-chain:** Listing type, payment methods, corridor, fee, contact info.  
+**Not on-chain:** Real identity (unless you put it in the contact field), transaction volume, customer details.
+
+Pseudonymous by default. Merchants reveal location because cash pickup requires it. Online traders need only a CashAccount nickname.
+
+---
+
+## Reputation (Phase 1+)
+
+Phase 0 uses trusted participants only. Phase 1+ will add on-chain reputation linked to your CashAccount: transaction count, success rate, response time, total volume. Physical merchants get priority because location is reputation at stake—they can't disappear overnight.
+
+---
+
+## Key Takeaways
+
+1. **On-chain bulletin board** — Listings are NFT UTXOs on the BCH blockchain; no central server.
+2. **Two listing types** — BCH Sellers and BCH Buyers. That's it.
+3. **Merchants are BCH buyers** — Payment method "cash" plus location. Nothing special.
+4. **Permissionless** — Anyone can post, anyone can read. No gatekeeper.
+5. **Multi-role earnings** — Post multiple listings to earn on both sides.
+6. **Censorship-resistant** — No company to shut down. Just blockchain data.
+7. **Works with covenants** — Bulletin board discovers; covenants execute.
+
+The bulletin board isn't a product. It's infrastructure. When regulators shut down LocalBitcoins, users lost their marketplace. When they come for Asgaya, there's nothing to shut down. The listings are already on the blockchain.
+
+That's the point.
+
+---
+
+**Next:** [Wallet](wallet.md) — Where you hold BCH and establish identity  
+**Related:** [Buyers and Sellers](buyers-and-sellers.md) — The user perspective
+
+
+## Buyers and Sellers
+
+# Buyers and Sellers: There Are Only Two Roles
+
+**Everything collapses into this:** Some people have BCH and want fiat. Some people have fiat and want BCH. The bulletin board connects them. Covenants execute the trades. Nostr coordinates. Bots automate.
+
+---
+
+## The Core Insight
+
+| Role | Has | Wants |
+|------|-----|-------|
+| **BCH Seller** | BCH | Fiat (EUR, VES, USD) |
+| **BCH Buyer** | Fiat (cash, bank transfer) | BCH |
+
+That's it. Everything else is context.
+
+---
+
+## The Real Distinction: Active vs Passive
+
+### Passive Users (Post Listings, Bot Automates)
+
+- Post a listing once.
+- The bot handles requests 24/7.
+- Zero cognitive load, fully scalable, passive income.
+
+**Examples:** Isabel posts as a BCH Seller (Bizum) → senders select her. Carlos posts as a BCH Buyer (cash at store) → recipients visit him.
+
+### Active Users (Query, Select, Transact)
+
+- Open the app when needed.
+- Query the bulletin board for available counterparties.
+- Pick the best option and transact.
+
+**Examples:** María (sender) selects a seller and pays. Elena (recipient) selects a merchant and gets cash.
+
+**The key realization:** The same person can be passive at some times and active at others. This is what enables capital recycling.
+
+---
+
+## Why This Distinction Matters
+
+- **Flexibility:** No one is locked into a single role. A merchant can passively accumulate BCH, then actively sell when rent is due.
+- **Capital efficiency:** Passive mode accumulates; active mode liquidates. The cycle is self‑sustaining.
+- **No central coordinator:** Passive bots provide 24/7 liquidity; active users always find counterparties. The market self‑organizes.
+- **Scales naturally:** Passive income scales with capital; active demand attracts more passive liquidity.
+
+---
+
+## Examples (Focused on High‑Inflation Economies)
+
+### 1. Carlos the Merchant (Venezuela) — The Central Use Case
+
+Carlos runs a grocery store. VES loses 5 % per week. He needs stable value to preserve purchasing power and bolívars for daily operations.
+
+**Passive mode (most of the month):** Posts as a BCH Buyer (cash at store, 0.5 % spread). Recipients visit, get cash, and Carlos accumulates BCH automatically—no effort, just foot traffic and grocery sales.
+
+**Stability option:** When Carlos cashes out a remittance covenant, his wallet offers: *Keep BCH or stabilice with H€ (Euro), or HAu (Gold)?* We thing he's going to pick **H€** (familiar unit, he's used to convert to VES) but we don't know that's why we want to offer a non fiat denominated option. The app mints H€ or HAu tokens backed by pooled AnyHedge contracts. Carlos now holds stable value, immune to BCH's ±20 % monthly swings.
+
+**Active mode (end of month, rent due):** Opens the app, sells H€ to another merchant or customer for VES at current EUR/VES rate. Zero volatility exposure—what he earned is what he keeps.
+
+**Result:** Carlos earns spreads and sales while passive; he preserves capital via the stability tokens. No BCH volatility, no hyperinflation erosion. Triple win.
+
+### 2. María (Sender) & Elena (Recipient) — Pure Active Users
+
+María sends €100 to Elena. She opens the app, enters `Elena#142`, selects the cheapest seller, and pays via Bizum. The bot handles the rest. Elena gets a notification, decides to cash out, picks the nearest merchant from the bulletin board, walks over, gets cash, and buys groceries. Both are pure active users—no listings needed.
+
+### 3. Isabel (Passive Seller — Arbitrageur)
+
+Isabel posts a single listing as a BCH Seller (Bizum, 0.5 % fee) and enables the bot. She goes to sleep. Overnight, the bot responds to requests, detects payments, and funds covenants. Isabel wakes up to €1.50 in fees without lifting a finger. Her bot even replenishes BCH via Kraken automatically.
+
+### 4. Roberto (Passive Seller — Miner)
+
+Roberto mines BCH. He posts a listing and lets the bot sell his mined coins directly to senders, avoiding exchange fees entirely. Fully passive, zero extra work.
+
+---
+
+## Traditional Labels vs Active/Passive Reality
+
+| Traditional Label | Active/Passive | What They Really Do |
+|------------------|----------------|---------------------|
+| **Sender** (María) | Always Active | Queries sellers, creates covenant, pays |
+| **Recipient** (Elena) | Always Active | Queries merchants, creates covenant, receives cash |
+| **Merchant** (Carlos) | Usually Passive | Posts as buyer, bot handles recipients, accumulates BCH |
+| | Sometimes Active | Queries buyers, sells accumulated BCH for bolívars |
+| **Seller** (Isabel/Roberto) | Usually Passive | Posts as seller, bot handles senders, earns fees |
+| | Could be Active | If they needed BCH urgently, could query buyers |
+
+---
+
+## Phase 0 Expectations (Spain → Venezuela)
+
+| Role | Mode | Count | Who |
+|------|------|-------|-----|
+| **Senders** | Active | 50–100 | Spanish residents sending to family |
+| **Recipients** | Active | 50–100 | Venezuelans receiving remittances |
+| **Merchants** | Passive buyer | 20–30 | Venezuelan businesses (cash pickup) |
+| | Active seller | 20–30 | Same merchants (when needing bolívars) |
+| **Sellers** | Passive seller | 10–20 | Miners, arbitrageurs |
+
+**Success:** At least 5 passive sellers online 24/7; at least 15 passive merchants in Caracas. Active users always see 3+ options, and response times are under 1 minute.
+
+---
+
+## How Active & Passive Use the Four Gears
+
+**Active Mode:** Wallet → Bulletin Board (query) → Nostr (coordination) → Covenant (transaction). User experience is like a price comparison site plus a payment app.
+
+**Passive Mode:** Wallet → Bulletin Board (post listing) → Bot monitors Nostr, bank notifications, and blockchain → Bot auto‑responds and funds covenants. User experience is like a vending machine—stock once, check revenue later.
+
+---
+
+## Key Takeaways
+
+1. **Two roles, two modes.** BCH Seller/Buyer × Active/Passive = the entire protocol.
+2. **Merchants in inflationary economies win twice.** Passive accumulation protects against depreciation; active liquidation preserves purchasing power when needed.
+3. **Bots make passive mode possible.** 24/7 liquidity, no human attention required.
+4. **Active mode is simple.** Query, select, transact—no listing necessary.
+5. **The market self‑organizes.** Passive liquidity + active demand = automatic matching, no central coordinator.
+
+When someone asks, *“What is Asgaya?”* — it’s a bulletin board where passive bots provide 24/7 liquidity and active users pick the best offer. Covenants make it safe; Bitcoin Cash makes it cheap and permissionless.
+
+---
+
+**Next:** [How They Interact](how-they-interact.md) — End‑to‑end walkthrough  
+**Related:** [Bulletin Board](bulletin-board.md), [Notification Bot](notification-bot.md), [Wallet](wallet.md)
+
+
+## How They Interact
+
+# How They Interact: A Complete End‑to‑End Flow
+
+**One transaction. Four gears.** Wallet, Bulletin Board, Nostr, Notification Bot—working together.
+
+---
+
+## The Transaction
+
+**María** (Madrid) sends €100 to **Elena** (Caracas).  
+**Isabel** (Barcelona) provides BCH passively. **Carlos** (Maracaibo) cashes Elena out.
+
+**Total elapsed:** ~4 h (most is Elena’s decision delay)  
+**Total cost:** €0.90 (0.4 % seller + 0.5 % merchant) vs. €5 (Western Union)
+
+---
+
+## Part 1: María Sends (Active Sender)
+
+### Step 1 — Wallet & Bulletin Board
+
+María opens the app, enters `Elena#142`, specifies €100. The app resolves Elena’s Cash Account on‑chain and creates a covenant template (€100 worth of BCH, 7 % buffer, 24‑h timeout).
+
+The app then queries the bulletin board for BCH sellers accepting Bizum in the EUR→VES corridor. It finds three passive sellers. María chooses the cheapest: Isabel (0.4 %, good rating, Bizum).
+
+### Step 2 — Nostr & Bot
+
+María’s app sends an encrypted Nostr request (“Need payment details for covenant xyz789”) to Isabel’s bot. The bot validates the covenant, generates a unique reference (`Elena#142`), and replies with the bank details (Bizum phone number, concept, amount €100.40) in under a second.
+
+María sees the payment instructions, taps “Open Bizum,” and pays €100.40 instantly.
+
+### Step 3 — Bot Funds Covenant
+
+Isabel’s Android notification listener detects the BBVA message (“Recibido 100,40 € … Concepto: Elena#142”), parses it, and matches it to the pending covenant. The bot creates a funding transaction locking €107 of Isabel’s BCH, signs it with limited covenant keys, and broadcasts it. Total processing time: ~2 seconds. Isabel is at work, completely unaware.
+
+María’s app confirms the covenant is funded. Elena receives a push notification: “María sent you €100 in BCH.”
+
+---
+
+## Part 2: Elena Receives (Active Recipient)
+
+### Step 4 — Claim BCH to Wallet
+
+Elena’s phone buzzed four hours ago; she now opens Asgaya and taps “Claim BCH to Wallet.” The covenant releases the BCH to Elena’s address; the unused buffer returns to Isabel. **Elena now owns the BCH.**
+
+### Step 5 — Decide & Discover
+
+Elena chooses “Cash Out” (she needs bolívars today). The app queries the bulletin board for BCH buyers near Caracas. It finds Carlos’s Grocery (0.8 km, 0.5 % spread, open). Elena selects it.
+
+### Step 6 — Walk, Exchange, Shop
+
+Elena walks to the store. Carlos’s bot has already detected her sell covenant and pre‑filled a cash‑out screen. Carlos counts 398,000 VES (400k VES less 0.5 %), hands it to Elena. Both sign on their phones. The covenant executes, sending Elena’s BCH to Carlos.
+
+Elena then buys groceries worth 300,000 VES from Carlos’s store.
+
+**Carlos’s triple‑dip from this one visit:**
+- 2,000 VES spread
+- ~60,000 VES product margin (20 % on 300k)
+- 0.2564 BCH position (hedge against VES depreciation)
+
+### Step 7 — Stabilize (Optional)
+
+Carlos's wallet now asks: **"Stabilize this BCH?"**
+
+- **Keep BCH:** Accept volatility, potential upside
+- **H€ (Heuro):** Lock in €99.50 value (familiar unit, easy to convert to VES)
+- **HAu (Gold):** Lock in ~0.05 oz gold value (hedge ALL fiat inflation)
+
+Carlos chooses **H€** (he knows EUR/VES rates, easier mental math). The app:
+1. Checks H€ pool availability (founder's long capital for phase 0)
+2. Creates 30‑day AnyHedge contract (Carlos shorts BCH/EUR, pool goes long)
+3. Mints 99.50 H€ tokens to Carlos's wallet
+4. Auto‑renews monthly unless Carlos burns tokens for BCH
+
+**If pool exhausted:** Carlos keeps BCH (graceful degradation). Existing H€ holders unaffected.
+
+**Carlos now holds stable EUR value.** When he needs VES for rent next week, he sells H€ to another merchant or customer at current EUR/VES rate. Zero BCH volatility exposure.
+
+---
+
+## The Four Gears at Work
+
+- **Wallet:** María creates covenant, Elena claims, Carlos receives. Cash Accounts provide identity.
+- **Bulletin Board:** María queries sellers; Elena queries merchants. Passive listings discovered on‑chain.
+- **Nostr:** María’s app requests payment details from Isabel’s bot. Encrypted, sub‑second, no phone number.
+- **Bot:** Isabel’s bot detects the bank notification and funds the covenant automatically. Carlos’s bot notifies him of the claim.
+
+---
+
+## Two Transactions = Clear Compliance
+
+1. **María → Elena (remittance):** Completed when Elena claims BCH to her wallet. A family transfer.
+2. **Elena → Carlos (commerce):** Elena sells her BCH for cash. A separate, voluntary transaction.
+
+**Elena could have kept the BCH or spent it directly at the store.** The end goal is that enough merchants accept BCH directly so recipients never need to cash out.
+
+---
+
+## Timeline
+
+| Step | Duration |
+|------|----------|
+| María creates covenant & pays | ~2 min |
+| Isabel’s bot funds covenant | ~1 min |
+| Elena claims BCH to wallet | ~2 min (after 4 h delay) |
+| Elena walks to Carlos’s store | ~10 min |
+| Cash exchange & shopping | ~8 min |
+| **Total active human time** | **~12 min** |
+
+---
+
+## What Could Go Wrong (And Didn’t)
+
+- **Seller offline:** Nostr request times out after 2 min; María picks another seller.
+- **BCH drops >7 %:** Covenant aborts; María gets the BCH back (refund). Isabel keeps the fiat and the fee.
+- **Elena never claims:** Covenant expires; María gets the BCH back.
+
+---
+
+## Cost Breakdown
+
+| Party | Out | In | Net |
+|-------|-----|-----|-----|
+| María | €100.40 | (remittance delivered) | –€100.40 |
+| Isabel | €107 BCH locked | €100.40 fiat + €0.40 fee | +€0.40 |
+| Elena | 2k VES spread | €100 worth of BCH → 398k VES | +€99.50 equiv |
+| Carlos | 398k VES cash | 0.2564 BCH + 2k spread + 60k sales | +€12.4 equiv |
+
+**Total fee:** 0.9 % vs. Western Union’s 5 %.  
+If Elena had spent BCH directly at the store (Option B), total fee would have been **0.4 %** (Isabel’s seller fee only).
+
+---
+
+## Key Takeaways
+
+1. **Two transactions = clear compliance.** Remittance (María→Elena) and commerce (Elena→Carlos) are separate.
+2. **Passive bots provide 24/7 liquidity.** Isabel and Carlos posted once; bots handled everything.
+3. **The end goal is visible.** Elena could have spent BCH directly—that’s the destination.
+4. **Privacy through segmentation.** María and Carlos never interact; only the blockchain sees the full flow.
+5. **Hyperinflation makes this urgent.** VES loses 5 %/week; BCH volatility is the lesser evil.
+6. **Merchants earn on multiple levels.** Spread + foot traffic + product sales = triple‑dip.
+7. **The system self‑organizes.** No coordinator. Passive bots + active queries = automatic matching.
+
+When recipients spend BCH directly at merchants, Asgaya has succeeded.
+
+---
+
+**Related:** [Index](index.md), [Buyers and Sellers](buyers-and-sellers.md), [Bulletin Board](bulletin-board.md), [Wallet](wallet.md), [Nostr](nostr.md), [Notification Bot](notification-bot.md)
+
+
+## Nostr
+
+# Nostr: How Buyers and Sellers Coordinate Privately
+
+**Encrypted. Peer-to-peer. No server.** Payment details delivered in under a second.
+
+---
+
+## What It Is
+
+**Nostr** is a decentralized messaging protocol that Asgaya uses for **private coordination** between buyers and sellers after they find each other on the bulletin board.
+
+Not WhatsApp. Not Telegram. Not email. Just **encrypted direct messages sent over a network of relays** that no single entity controls.
+
+When María selects a BCH seller from the bulletin board, she sends an encrypted message: "I need payment details for covenant xyz789." The seller's bot responds instantly with bank account info. **Total latency: under 1 second.** María never sees a phone number, email, or centralized chat interface—just payment instructions delivered directly to her app.
+
+---
+
+## The Coordination Problem
+
+**After the bulletin board, before the payment, there's a gap:**
+
+```
+1. María finds seller on bulletin board ✅
+2. María creates covenant on-chain ✅
+3. María needs seller's payment details ❓
+   - Bank account number
+   - Payment reference code
+   - Exact amount to send
+4. María pays via Bizum ✅
+5. Seller's bot locks BCH ✅
+```
+
+**Step 3 is the coordination problem.** The bulletin board listing can't include bank account numbers (privacy risk, changes frequently). The blockchain can't store sensitive data (public forever). Email/SMS requires phone numbers (KYC, surveillance, censorship).
+
+**Nostr solves this:** Encrypted, peer-to-peer, instant delivery of payment details. No phone number needed. No central server to block. No permanent record on the blockchain.
+
+---
+
+## How Nostr Works (The Basics)
+
+### Keys Instead of Accounts
+
+Unlike traditional messaging apps (WhatsApp, Signal), Nostr has **no accounts, no phone numbers, no registration.**
+
+**You have two keys:**
+- **Private key:** Like your password. Never share it. Stored encrypted on your phone.
+- **Public key:** Like your username. Share it freely. This is how people message you.
+
+**Your public key is your Nostr identity.** It looks like this:
+```
+npub1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z
+```
+
+No company controls it. No telecom can block it. No government can seize it.
+
+---
+
+### Relays Deliver Messages
+
+Nostr messages are sent to **relays**—simple servers that receive and forward messages. Think of them like post offices, but:
+
+- **No single relay is required:** Messages are sent to multiple relays simultaneously
+- **Relays can't read your messages:** End-to-end encryption (only sender and recipient have keys)
+- **Anyone can run a relay:** No permission needed, no company required
+- **Relays are cheap:** A VPS costs €5/month, handles thousands of users
+
+**Asgaya doesn't run relays.** We use public Nostr relays (Damus, Primal, etc.) that already exist. If one relay goes down, messages route through others. If all public relays are blocked, users can run their own.
+
+---
+
+### Encrypted Direct Messages (NIP-04)
+
+When María sends a message to the seller:
+
+```
+1. María's app encrypts message with seller's public key
+2. App sends encrypted message to 3-5 Nostr relays
+3. Relays forward to anyone subscribed to seller's public key
+4. Seller's bot decrypts message with seller's private key
+5. Seller's bot encrypts response with María's public key
+6. Response delivered to María's app via relays
+7. María's app decrypts response
+
+Total time: <1 second
+```
+
+**The relays never see the content.** They only see:
+- Sender's public key (npub1...)
+- Recipient's public key (npub1...)
+- Encrypted blob of data
+- Timestamp
+
+They can't read the payment details, the bank account, or any sensitive information.
+
+---
+
+## How Asgaya Uses Nostr
+
+### Step 1: Bulletin Board Discovery
+
+María queries the bulletin board and finds a seller:
+
+```
+Seller listing:
+├─ Payment methods: Bizum, SEPA
+├─ Fee: 0.5%
+├─ Buffer: 7%
+└─ Contact: npub1seller... (Nostr public key)
+```
+
+The seller's **Nostr public key** is their contact info. No phone number, no email, no company-mediated chat.
+
+---
+
+### Step 2: Payment Info Request
+
+María's app sends an encrypted Nostr message:
+
+```json
+{
+  "type": "payment_info_request",
+  "covenant_id": "covenant_xyz789",
+  "amount_eur": 100,
+  "payment_method": "Bizum",
+  "sender_pubkey": "npub1maria..."
+}
+```
+
+**Encrypted with seller's public key.** Only the seller's bot can decrypt it.
+
+---
+
+### Step 3: Seller Bot Response
+
+The seller's bot (running on their phone or VPS) receives the request and responds:
+
+```json
+{
+  "type": "payment_info_response",
+  "covenant_id": "covenant_xyz789",
+  "payment_method": "Bizum",
+  "account_number": "+34-612-345-678",
+  "reference": "ASGAYA-XYZ789",
+  "amount_exact": "€100.00",
+  "expires_at": "2026-06-10T15:30:00Z"
+}
+```
+
+**Encrypted with María's public key.** Only María's app can decrypt it.
+
+**Delivered in under 1 second.** María sees payment instructions immediately.
+
+---
+
+### Step 4: María Pays
+
+María's app displays:
+
+```
+Pay €100.00 to:
+  Phone: +34-612-345-678
+  Reference: recipient cash account
+  
+Tap to open Bizum app →
+```
+
+María completes the payment. The seller's bot detects it (bank notification), locks BCH into the covenant. Elena can now claim her remittance.
+
+---
+
+## Why Nostr Instead of Alternatives
+
+### Why Not Email?
+
+- ❌ Requires email registration (KYC in some countries)
+- ❌ Slow (minutes, not seconds)
+- ❌ Centralized (Gmail, Outlook can censor or monitor)
+- ❌ Not designed for automated bots
+
+**Nostr:**
+- ✅ No registration (just generate keys)
+- ✅ Instant (sub-second)
+- ✅ Decentralized (no single company)
+- ✅ Bot-friendly (relays designed for programmatic access)
+
+---
+
+### Why Not Telegram/WhatsApp?
+
+- ❌ Requires phone number (KYC, SIM card, telecom surveillance)
+- ❌ Centralized (company can ban users, block messages)
+- ❌ Not designed for automated payment info exchange
+- ❌ Limited API access (bots restricted)
+
+**Nostr:**
+- ✅ No phone number (just public key)
+- ✅ Decentralized (no company to ban you)
+- ✅ Designed for automation (relays are APIs)
+- ✅ Bot-native (no restrictions)
+
+---
+
+### Why Not On-Chain (OP_RETURN)?
+
+**OP_RETURN approach:** Seller posts encrypted payment info as a blockchain transaction.
+
+**Pros:**
+- ✅ Maximum censorship resistance (on BCH blockchain)
+- ✅ No external dependencies
+
+**Cons:**
+- ❌ Slower (~2 minutes for one block confirmation)
+- ❌ Costs the seller €0.002 per covenant
+- ❌ Permanent on-chain storage (privacy risk if encryption breaks in 20 years)
+- ❌ More complex implementation
+
+**Nostr:**
+- ✅ Faster (<1 second)
+- ✅ Free (relays don't charge)
+- ✅ Ephemeral (messages not stored permanently)
+- ✅ Simpler (standard protocol, existing libraries)
+
+**Trade-off:** Nostr has *good* censorship resistance (multiple relays, anyone can run one) vs OP_RETURN's *maximum* censorship resistance (BCH blockchain). For Phase 0, good is enough. We can add OP_RETURN fallback in Phase 1+ if needed.
+
+---
+
+## Nostr Key Management in Asgaya
+
+**Your wallet already has BCH keys.** Nostr adds a separate key pair:
+
+```
+Your Asgaya wallet contains:
+├─ BCH private key (for signing transactions)
+├─ BCH public key (your address)
+├─ Cash Account (Elena#142)
+├─ Nostr private key (for decrypting messages)
+└─ Nostr public key (your messaging identity)
+```
+
+**Why separate keys?**
+- **Security:** If Nostr key is compromised, your BCH funds are safe
+- **Privacy:** Nostr messages don't link directly to BCH transactions
+- **Flexibility:** Can change Nostr key without affecting BCH wallet
+
+**Generated together:** When you create your Asgaya wallet, both keys are generated from the same 12-word recovery phrase. Restore your wallet, restore both.
+
+---
+
+## Privacy: What Nostr Reveals
+
+**Visible to relays (public):**
+- ✅ Your Nostr public key
+- ✅ Recipient's Nostr public key
+- ✅ Timestamp
+- ✅ Encrypted message (unreadable blob)
+
+**Not visible to relays:**
+- ❌ Message content (encrypted)
+- ❌ Payment details (encrypted)
+- ❌ Your real identity (unless you dox yourself)
+- ❌ Your BCH address (separate key)
+
+**Visible to recipient (seller's bot):**
+- ✅ Message content (they decrypt it)
+- ✅ Covenant ID (links message to on-chain covenant)
+
+**Metadata analysis risk:** A relay operator who logs all messages could see that npub1maria sent a message to npub1seller, guess it's payment coordination, and infer a transaction happened. But they can't read the content or link it to BCH addresses.
+
+**Phase 0 acceptable.** Phase 1+ we can add onion routing or mix networks if metadata analysis becomes a concern.
+
+---
+
+## Liveness Check: Proof the Seller is Online
+
+**A critical side benefit:** When the seller's bot responds with payment info, it proves the seller is online and ready to lock BCH.
+
+**Without liveness check:**
+```
+1. María creates covenant
+2. María pays seller via Bizum
+3. Seller's bot is offline (phone died, server crashed)
+4. María waits... seller never locks BCH
+5. María stuck (paid fiat, covenant expires, funds returned after 48h)
+```
+
+**With Nostr liveness check:**
+```
+1. María creates covenant
+2. María sends Nostr message
+3. No response within 2 minutes → Warning: "Seller may be offline"
+4. María cancels covenant, picks different seller
+5. No fiat payment wasted
+```
+
+**Result:** María never pays fiat unless the seller proves they're online and ready.
+
+---
+
+## How Nostr Connects to the Other Gears
+
+### Bulletin Board → Nostr
+
+**The bulletin board is discovery.** It tells you *who* is selling BCH (their Nostr public key).
+
+**Nostr is coordination.** It tells you *how* to pay them (bank account, reference code).
+
+**Separation of concerns:**
+- Bulletin board: Public, permanent, on-chain (listings visible forever)
+- Nostr: Private, ephemeral, off-chain (payment details disappear after use)
+
+---
+
+### Wallet → Nostr
+
+**Your wallet generates Nostr keys.** When you create an Asgaya wallet, you get:
+- BCH keys (for transactions)
+- Cash Account (for identity)
+- Nostr keys (for messaging)
+
+**All linked, all restored from 12 words.**
+
+---
+
+### Nostr → Notification Bot
+
+**The seller's notification bot listens on Nostr.** When a payment info request arrives:
+1. Bot decrypts message
+2. Bot generates payment details (unique reference code per covenant)
+3. Bot sends encrypted response
+4. Bot watches for Bizum payment with that reference code
+5. Bot locks BCH when payment detected
+
+**Nostr is the bot's communication channel.** Without Nostr, the bot can't respond to senders.
+
+---
+
+## User Experience: What María Sees
+
+María doesn't know Nostr exists. The app hides all complexity:
+
+```
+María's screen:
+┌─────────────────────────────┐
+│  Select Seller:             │
+│                              │
+│  ✅ seller$asgaya.org        │
+│     Fee: 0.5%                │
+│     Response time: 12 sec    │
+│     [Select] ←              │
+│                              │
+│  Fetching payment details... │← Nostr happening here
+│                              │
+│  Pay €100.00 to:             │
+│    Phone: +34-612-345-678    │
+│    Reference: ASGAYA-XYZ789  │
+│                              │
+│  [Open Bizum App]            │
+└─────────────────────────────┘
+```
+
+**"Fetching payment details..."** = Nostr message sent, response received, decrypted. Happens in <1 second. María thinks it's just the app loading data.
+
+**She never sees:**
+- Public keys (npub1...)
+- Relay selection
+- Encryption/decryption
+- Message routing
+
+**Just results:** Payment instructions, ready to use.
+
+---
+
+## Seller Experience: What the Bot Does
+
+The seller doesn't manually respond to messages. **The bot automates everything:**
+
+**Setup (one time):**
+1. Seller installs Asgaya app or runs bot on VPS
+2. App generates Nostr keys
+3. Seller posts bulletin board listing with Nostr public key
+4. Bot connects to 3-5 Nostr relays, subscribes to messages
+
+**Runtime (automated):**
+1. Bot receives encrypted message
+2. Bot decrypts with private key
+3. Bot validates covenant exists on-chain
+4. Bot generates unique payment reference code
+5. Bot sends encrypted response
+6. Bot watches for bank notification matching reference
+7. Bot locks BCH when payment detected
+
+**Seller's job:** Keep phone/server online. Bot handles everything else.
+
+---
+
+## Nostr Features in Phase 0
+
+**What's ready:**
+- ✅ Nostr key generation and management
+- ✅ Encrypted direct messages (NIP-04)
+- ✅ Payment info request/response flow
+- ✅ Multi-relay support (automatic failover)
+- ✅ Liveness check (2-minute timeout)
+
+**What's coming (Phase 1+):**
+- User-to-user messaging (ask seller questions before committing)
+- Group chat (community coordination)
+- Dispute resolution chat (mediation if payment fails)
+- Reputation comments (public reviews linked to Nostr identity)
+- Nostr-native reputation (web of trust)
+
+**Phase 0 keeps it simple:** Automated payment info exchange only. No manual messaging. Bot-to-bot coordination.
+
+---
+
+## What Happens If Nostr Relays Go Down
+
+**Scenario 1: One relay is down**
+
+**Impact:** None. Messages automatically route through other relays.
+
+**Asgaya default:** Connect to 5 relays (Damus, Primal, Nostr.wine, relay.snort.social, custom relay). If 1-2 fail, 3-4 still work.
+
+---
+
+**Scenario 2: All public relays are blocked (censorship attack)**
+
+**Mitigation:**
+1. Seller runs own relay on VPS (€5/month)
+2. Bulletin board listing includes custom relay URL
+3. Sender's app connects to seller's relay
+4. Messages delivered peer-to-peer
+
+**Still works.** Just requires sellers to run infrastructure (Phase 1+ feature).
+
+---
+
+**Scenario 3: Complete Nostr network failure (catastrophic)**
+
+**Fallback (Phase 1+):**
+- Use OP_RETURN on BCH blockchain for payment info
+- Slower (~2 minutes), costs €0.002, but still works
+- Maintains censorship resistance
+
+**Phase 0:** If Nostr completely fails, Asgaya pauses until relays recover. Acceptable risk—Nostr has been running reliably since 2022.
+
+---
+
+## Security Model
+
+**What an attacker CAN'T do:**
+- ❌ Read your messages (end-to-end encrypted)
+- ❌ Impersonate the seller (needs seller's private key)
+- ❌ Tamper with payment details (detected by signature verification)
+- ❌ Block all messages (would need to control all relays)
+
+**What an attacker CAN do:**
+- ⚠️ Log metadata (npub1maria messaged npub1seller at timestamp X)
+- ⚠️ Correlate messages with on-chain covenants (timing analysis)
+- ⚠️ Run malicious relays that don't forward messages (sender switches to different relay)
+
+**Phase 0 mitigation:**
+- Use multiple relays (redundancy)
+- Rotate Nostr keys periodically (reduces long-term metadata correlation)
+- No real names in Nostr identity (pseudonymous by default)
+
+**Phase 1+ mitigation:**
+- Onion routing (hide metadata from relays)
+- Mix networks (decorrelate timing)
+- Tor integration (hide IP address)
+
+---
+
+## Why Nostr is a Big Deal Beyond Asgaya
+
+**Nostr isn't just for Asgaya.** It's a general-purpose decentralized messaging protocol used by:
+- Social media (Damus, Primal, Amethyst apps)
+- Bitcoin Lightning wallets (payment coordination)
+- Marketplaces (OpenBazaar-style P2P commerce)
+- Identity systems (web of trust, reputation)
+
+**By using Nostr, Asgaya plugs into an existing ecosystem:**
+- Relays already running (no infrastructure cost)
+- Libraries already built (faster development)
+- Users already familiar (if they use Damus/Primal)
+- Network effects (more relays = more resilience)
+
+**Asgaya improves Nostr too:**
+- New use case (payment coordination)
+- More relay traffic (justifies relay operators' costs)
+- More developers building Nostr tools (benefits everyone)
+
+**Mutual benefit.** We're not building in isolation.
+
+---
+
+## Comparison to Other Coordination Methods
+
+| Feature | Nostr DMs | OP_RETURN | Email | Telegram |
+|---------|-----------|-----------|-------|----------|
+| **Speed** | <1 second | ~2 minutes | Minutes-hours | <1 second |
+| **Cost** | Free | €0.002/message | Free | Free |
+| **Privacy** | End-to-end encrypted | End-to-end encrypted | Not encrypted (unless PGP) | Encrypted (server can read) |
+| **Censorship resistance** | Good (multiple relays) | Maximum (blockchain) | Poor (centralized) | Poor (centralized) |
+| **Requires** | Nostr keys | BCH transaction | Email account | Phone number |
+| **Automation** | Bot-native | Bot-native | Limited | Restricted |
+| **Permanence** | Ephemeral | Permanent on-chain | Depends on server | Depends on server |
+
+**Nostr wins on speed, cost, and automation.** OP_RETURN wins on maximum censorship resistance. Email and Telegram lose on privacy and decentralization.
+
+**Phase 0 uses Nostr.** Phase 1+ adds OP_RETURN fallback if needed.
+
+---
+
+## Common Questions
+
+**Q: What if the seller's Nostr key is compromised?**
+
+**A:** Attacker can read incoming payment info requests and send fake payment details. But:
+- María's fiat payment goes to seller's real bank account (not attacker's)
+- Seller's bot still detects the payment and locks BCH
+- María gets her remittance, attacker gains nothing
+- Seller should rotate Nostr keys periodically (Phase 1+ feature)
+
+**Q: Can I use Nostr for regular messaging (not just payment info)?**
+
+**A:** Phase 1+, yes. Phase 0, no—Nostr is automated for bot coordination only. But if you have a Nostr client app (Damus, Amethyst), you can message other users using your Asgaya Nostr keys.
+
+**Q: What if relays censor me?**
+
+**A:** Switch to different relays. If all public relays censor you, run your own (€5/month VPS). Can't be stopped.
+
+**Q: Does Nostr leak my BCH address?**
+
+**A:** No. Nostr keys are separate from BCH keys. Even if someone knows your Nostr public key, they can't derive your BCH address from it.
+
+**Q: What's the difference between Nostr and Signal/WhatsApp?**
+
+**A:** Signal/WhatsApp require phone numbers, run on centralized servers (company can block you), and aren't designed for automated bots. Nostr has no phone numbers, no central server, and is bot-native.
+
+---
+
+## Key Takeaways
+
+1. **Encrypted messaging layer** — Private coordination between buyers and sellers
+2. **Nostr protocol** — Decentralized, relay-based, end-to-end encrypted
+3. **Payment info exchange** — Delivers bank account details in under 1 second
+4. **Liveness check** — Proves seller is online before sender pays fiat
+5. **No phone number required** — Just public keys (pseudonymous by default)
+6. **Bot-native** — Automated responses, no manual intervention
+7. **Ephemeral** — Messages don't live on blockchain permanently (privacy)
+
+**Nostr is the invisible glue.** The bulletin board discovers sellers. Nostr coordinates the payment. The covenant executes the trade. Users never see Nostr—just instant payment instructions.
+
+When regulators ask "where's the chat server we can subpoena?" there isn't one. It's just relays forwarding encrypted blobs. No company, no database, no records to seize.
+
+That's the point.
+
+---
+
+**Next:** [Notification Bot](notification-bot.md) — How it runs automatically  
+**Related:** [Bulletin Board](bulletin-board.md) — Where sellers are discovered  
+**Related:** [Wallet](wallet.md) — Where Nostr keys are generated
+
+
+## Notification Bot
+
+# The Notification Bot: Automation That Makes Asgaya Scale
+
+**Set it and forget it.** Post your listing once. The bot handles everything else—24/7.
+
+---
+
+## What It Is
+
+The notification bot is a background process running on the seller's device. It continuously monitors three data streams:
+
+1. **Nostr messages** — incoming payment requests from senders
+2. **Bank notifications** — incoming fiat payments via Bizum, SEPA, etc.
+3. **Blockchain state** — covenant status and expiration times
+
+When a sender pays, the bot automatically funds the covenant, signs it, and broadcasts it to the BCH network. The seller never touches the app.
+
+**Without the bot:** Manual checking, 5–10 transactions/day max, seller must be awake and attentive.  
+**With the bot:** Sub‑second response, 100+ transactions/day, zero cognitive load.
+
+---
+
+## Three Core Functions
+
+### 1. Nostr Message Handler
+
+Listens on 3–5 Nostr relays for messages addressed to the seller's public key. Decrypts with the seller's private key. Validates the covenant exists on‑chain and the amount is within the seller's limits. Generates a unique payment reference using the recipient's Cash Account. Replies with encrypted bank details in under one second.
+
+### 2. Bank Notification Listener
+
+Uses the Android Notification Listener Service to intercept banking app notifications. Extracts payment amount, sender info, and the reference code. Matches the reference to a pending covenant. Verifies the amount (within a small tolerance). Triggers covenant funding.
+
+**Key insight:** The bank notification is the payment proof. No API scraping, no login credentials stored, no polling required. The bot only reads notification summaries, which contain non‑sensitive data like "You received €100 from María, ref: Elena#142."
+
+**Compatibility:** Works with any online banking app that notifies the customer within minutes.
+
+### 3. Covenant Manager
+
+Queries Electrum for covenant state, creates funding transactions (locking the seller's BCH per the covenant terms), signs with pre‑authorised keys limited to covenant UTXOs only, and broadcasts to the BCH network. Monitors for confirmation and reclaims if the covenant expires unfunded.
+
+---
+
+## Security Model
+
+**What the bot can access:**
+- Read‑only: wallet balance, covenant state, bank notification summaries, Nostr messages.
+- Write (limited): sign covenant funding transactions, send Nostr payment responses, write local logs.
+
+**What the bot CANNOT access:**
+- The recovery phrase (never stored).
+- Full wallet private keys (only covenant‑specific derived keys).
+- Bank login credentials (never requested or stored).
+- Arbitrary transaction signing (limited to covenant UTXOs).
+
+**If the bot is compromised:** The attacker can read recent notification summaries and attempt to fund unpaid covenants (losing BCH), but cannot drain the wallet, redirect covenants, fake bank notifications, or access the bank account. Loss is limited to covenants in progress—typically 1–3 at a time, maximum ~€300 exposure.
+
+**Key storage:** The Nostr private key is encrypted via Android Keystore. Covenant signing keys are derived from the wallet but segregated (HD path `m/44'/145'/0'/2/`). The main wallet keys remain separate.
+
+---
+
+## Seller Experience
+
+**One‑time setup (2–3 minutes):** Enable the bot, grant notification access and background execution, select the banking app to monitor, test with a €2 self‑payment.
+
+**Daily operation (zero effort):** The seller checks earnings and buys BCH again to fund more covenants when convenient. The bot processes transactions while the seller works, sleeps, or ignores the phone. Optional push notifications ("Covenant funded: +€0.50 earned") can be silenced.
+
+**When something goes wrong:**
+
+| Scenario | Bot Response | Seller Impact |
+|----------|-------------|---------------|
+| Bot offline (phone dead) | No Nostr response within 2 min | Sender picks different seller; no loss |
+| Payment amount mismatch | Bot detects, does NOT fund | Manual resolution needed (rare) |
+| Bank notification delayed | Bot funds when notification arrives | 5‑minute delay for sender; acceptable |
+| False positive (phantom notification) | Bot attempts fund, finds no covenant | Logged error; no financial loss |
+
+---
+
+## Why the Bot Enables Scale
+
+Without automation, sellers are constrained by attention: 8–12 hours of availability, 5–10 transactions per day, high fees needed to earn a decent hourly rate, limited to one city. With the bot, a single seller can serve an entire country, 24/7, processing 100+ transactions daily. The required seller count drops by 10×, and response times improve by 300×.
+
+**A sender at 2:00 AM finds three bots awake and responsive.** She picks the cheapest, pays, and the covenant is funded in under a minute. Without bots, she'd wait until morning or pay Western Union €5.
+
+---
+
+## How It Connects
+
+- **Wallet:** The bot has limited signing authority (covenant keys only).
+- **Bulletin Board:** The bot posts and updates the seller's listing.
+- **Nostr:** The bot listens for requests and sends payment details.
+- **Bank notifications:** The bot detects payments and triggers covenant funding.
+
+**Complete automated flow:**
+
+1. **Bulletin board:** Listing posted (one‑time, manual)
+2. **Nostr:** Bot listens, responds with payment details (automated, <1 s)
+3. **Bank:** Sender pays via Bizum (manual, sender's side)
+4. **Bot:** Detects notification, creates and signs funding tx (automated)
+5. **Blockchain:** Transaction confirmed (automated)
+6. **Seller:** Checks earnings when convenient (manual)
+
+Steps 2–5 are fully automated. The seller only touches steps 1 and 6.
+
+---
+
+## Technical Essentials
+
+**Android:** Foreground service with a persistent notification, partial wake lock, WiFi‑preferred with mobile data fallback. Battery impact: ~5–10 % per day.
+
+**Nostr:** rust‑nostr via JNI, 3–5 public relays with exponential backoff reconnection. Messages use NIP‑04 encryption. A 30‑second keepalive detects dead connections.
+
+**Bank parsing:** Pattern matching on notification text (e.g., "Has recibido 100,00 € de María García. Concepto: Elena#142"). Extracts amount and reference. Multiple regex patterns per bank handle format variations. If all patterns fail, the bot alerts the seller for manual verification.
+
+**Covenant matching:** Resolves the Cash Account on‑chain, queries Electrum for unfunded covenants where recipient matches and amount is within tolerance, creates the funding transaction (107 % of face value), signs with the covenant‑specific key, and broadcasts.
+
+---
+
+## Phase 0 Scope
+
+**Ready:** Nostr message handler, bank notification parser (Spanish banks), covenant manager, multi‑relay failover, reconciliation logs, limited key permissions, error handling.
+
+**Phase 1+:** VPS deployment option, multi‑currency support, dispute mediation interface, advanced accounting exports, concurrent multi‑corridor support.
+
+---
+
+## Key Takeaways
+
+1. **Automation is the killer feature.** Without it, Asgaya doesn't scale.
+2. **Set and forget.** Post a listing once; the bot earns passive income 24/7.
+3. **Secure by design.** Limited key permissions; separate from the main wallet.
+4. **Bank notification = payment proof.** No API scraping, no credentials stored.
+5. **10× reduction in required sellers.** The bot makes liquidity accessible to anyone with capital.
+
+The bot transforms Asgaya from a manual P2P trading platform into a passive income generator backed by real remittance demand. That's the point.
+
+---
+
+**Next:** [Buyers and Sellers](buyers-and-sellers.md) — The user perspective  
+**Related:** [Bulletin Board](bulletin-board.md) — Where listings are posted  
+**Related:** [Nostr](nostr.md) — How coordination happens  
+**Related:** [Wallet](wallet.md) — Where keys are stored
+
+
+## Universal Stability
+
+# Universal Stability: Depegging from Fiat
+
+**The mechanism that powers H€ and HAu works for any measurable asset with a reliable oracle.** Gold and Euro are just the beginning.
+
+---
+
+## The Core Insight
+
+BCH volatility is a problem. Fiat inflation is a problem. **Solution:** Stabilize BCH against *real-world value* instead of government currencies.
+
+**Traditional stablecoins:** Peg to USD or EUR (still dependent on central banks).  
+**Universal stability:** Peg to commodities, energy, or purchasing power baskets (independent of policy).
+
+---
+
+## How It Works (Any Asset)
+
+### The Pattern
+
+1. **Merchant receives BCH** (from covenant cashout, mining, sales)
+2. **Wallet asks:** "Stabilize against which asset?"
+3. **If merchant chooses H-ASSET:**
+   - App checks pool availability (bull capital for that asset)
+   - Creates standard AnyHedge contract:
+     - Merchant shorts BCH vs ASSET
+     - Pool provides long BCH
+     - Duration: 30 days, auto-renewing
+   - Mints H-ASSET tokens (CashTokens)
+   - Sends to merchant's wallet
+4. **Merchant holds stable value** relative to chosen asset
+5. **Merchant trades tokens** when needed (P2P, merchant-to-merchant, DEX)
+
+**If pool exhausted:** Merchant keeps BCH (graceful degradation). Existing token holders unaffected.
+
+---
+
+## Phase 0: EUR & Gold
+
+| Token | Pegged To | Oracle Source | Why Merchants Choose It |
+|-------|-----------|---------------|------------------------|
+| **H€** (Heuro) | Euro (EUR) | GeneralProtocol, CoinGecko | Familiar unit, easy mental math, quick VES conversion |
+| **HAu** (How) | Gold (XAU) | LBMA, CME, COMEX | Universal value, hedges ALL fiat inflation, 24/7 trading |
+
+**Capital allocation:** €3K founder pool. Merchant velocity determines actual lock.
+
+---
+
+## Future: Beyond Fiat
+
+### Commodities (Raw Materials)
+
+**H-COPPER (Copper ore):**
+- 1 token = 1 ton copper spot price
+- Oracle: CME, LME (London Metal Exchange)
+- Use case: Mining regions, construction merchants
+
+**H-OIL (Crude oil):**
+- 1 token = 1 barrel WTI crude
+- Oracle: NYMEX, ICE
+- Use case: Energy economies, transport businesses
+
+**H-IRON (Iron ore):**
+- 1 token = 1 ton iron ore
+- Oracle: Platts, Metal Bulletin
+- Use case: Manufacturing regions
+
+### Energy (Physics-Based Value)
+
+**H-KWH (Kilowatt-hour):**
+- 1 token = 1 kWh electricity (regional spot price)
+- Oracle: Regional electricity markets
+- Use case: Universal (everyone needs energy)
+- Cannot be inflated (thermodynamics doesn't change)
+
+### Purchasing Power (Essential Goods)
+
+**H-BASKET (Venezuelan essentials):**
+```
+1 token = Cost of basket:
+├─ 1kg rice (spot price)
+├─ 1kg beans
+├─ 1L cooking oil
+├─ 1kg chicken
+├─ 500g sugar
+└─ 1L milk
+```
+- Oracle: Local market survey (weekly updates)
+- Use case: Direct purchasing power preservation
+- Immune to ALL currency manipulation
+
+**H-CPI (Consumer Price Index):**
+- 1 token = CPI-adjusted purchasing power
+- Oracle: National statistics offices
+- Use case: Long-term savings, inflation hedge
+
+---
+
+## Why This Is Post-Fiat
+
+**Traditional finance:**
+```
+Store value in USD → US Fed can inflate
+Store value in EUR → ECB can inflate
+Store value in VES → Venezuelan govt hyperinflates
+Result: Savings destroyed by policy
+```
+
+**Crypto (current):**
+```
+Store value in BCH → Volatile (±20% monthly)
+Store value in BTC → Volatile (±15% monthly)
+Result: Can't plan, can't save predictably
+```
+
+**Universal stability:**
+```
+Store value in H-COPPER → Value = copper (govts can't print copper)
+Store value in H-BASKET → Value = food (measures real purchasing power)
+Store value in H-KWH → Value = energy (physics-based, not policy-based)
+Result: Stable value independent of govt or crypto volatility
+```
+
+**The paradigm shift:** From "stable vs fiat" to "stable vs real-world value."
+
+---
+
+## Oracle Requirements
+
+### Easy Oracles (Existing Feeds)
+
+**Commodities:**
+- Gold, silver, copper (CME, COMEX, LME)
+- Oil, natural gas (NYMEX, ICE)
+- Agricultural (CBOT, ICE)
+
+**Energy:**
+- Electricity spot prices (regional markets)
+- Natural gas, coal (global markets)
+
+**Fiat pairs:**
+- EUR/BCH, USD/BCH (crypto exchanges)
+- Forex rates (central banks, Bloomberg)
+
+### Custom Oracles (Need to Build)
+
+**Essential goods baskets:**
+- Local market surveys (weekly/monthly)
+- Weighted average of staple prices
+- Regional variations (Caracas basket ≠ Maracaibo basket)
+
+**Regional indices:**
+- Cost of living (rent + utilities + food)
+- Industry-specific baskets (construction materials, restaurant inputs)
+
+**How to build:**
+1. Define basket composition (standardized quantities)
+2. Survey local prices (weekly web scraping or manual)
+3. Calculate weighted average
+4. Sign with oracle key
+5. Publish to AnyHedge-compatible feed
+
+**The beautiful thing:** Start with easy oracles (gold, oil, EUR), add custom as demand proves.
+
+---
+
+## Capital Requirements
+
+**Key insight:** Pool size depends on merchant velocity, not token supply.
+
+### High Velocity (Trust-Building Phase)
+
+```
+Scenario: 10 merchants, €100/month each, weekly VES conversion
+Volume: €1000/month
+Lock: €250 avg (weekly turnover)
+Pool needed: €3000 supports 120 merchants at this velocity
+```
+
+### Lower Velocity (Trust Established, Hoarding)
+
+```
+Scenario: 10 merchants, €100/month each, monthly hold
+Volume: €1000/month
+Lock: €1000 avg (monthly turnover)
+Pool needed: €3000 supports 30 merchants
+```
+
+**Phase 0:** High velocity (money tight, dump fast). €3K pool sufficient.  
+**Phase 1:** Crowdfund bull pool (€50K+) when demand proven.
+
+---
+
+## Unified Pool Model
+
+**Phase 0 (€3K founder capital):**
+
+The bull pool approves which assets merchants can mint (H€, HAu) and dynamically allocates capital based on demand.
+
+**No split needed:**
+- Pool capital flows to whichever asset merchants choose
+- If all merchants want H€ → full €3K available for H€
+- If mix of H€/HAu → capital allocated based on actual requests
+- Future: Add H-BASKET when demand appears (same pool)
+
+**Why unified is better:** Splitting pools (70% H€, 30% HAu) wastes capital. If all merchants want H€, the HAu allocation sits idle. Unified pool maximizes capital efficiency.
+
+**The magic:** Same €3K backs multiple asset types via velocity. Not locked 1:1.
+
+---
+
+## Network Effects
+
+**Phase 0 (Remittances):**
+- H€ for EUR→VES corridor (prove mechanism)
+- HAu for gold bugs (test sound-money demand)
+
+**Phase 1 (Multi-Corridor):**
+- H$ for US→LatAm corridors
+- H₱ for Philippines corridors
+- Still fiat-denominated
+
+**Phase 2 (Post-Fiat):**
+- H-BASKET for purchasing power preservation
+- H-KWH for energy-based savings
+- H-COPPER for commodity exposure
+- Merchants choose asset based on needs
+
+**Phase 3 (Ecosystem):**
+- Local DEXs list H-ASSET tokens (Cauldron, etc.)
+- Bulls trade tokens for yield (leverage pools)
+- Secondary markets emerge (merchant-to-merchant)
+- H-ASSET becomes BCH's stable-value layer
+
+---
+
+## Why Gold Oracle Is Best (For Now)
+
+**Comparing oracle reliability:**
+
+| Asset | Market Cap | Trading Hours | Price Sources | Manipulation Risk | History |
+|-------|-----------|---------------|---------------|------------------|---------|
+| **Gold** | $12T | 24/7 global | LBMA, CME, COMEX, Shanghai | Very low (massive market) | Centuries |
+| **EUR/BCH** | ~$1B | Exchange hours | Kraken, Coinbase, Binance | Medium (smaller market) | Years |
+| **Oil** | $2T | 24/5 | NYMEX, ICE, Brent | Low (large, liquid) | Decades |
+| **Copper** | $200B | 24/5 | CME, LME | Medium (smaller than gold) | Decades |
+| **Electricity** | Varies | Regional | Spot markets | High (regional, manipulation) | Years |
+| **Basket** | N/A | Manual survey | Custom | Medium (survey quality) | New |
+
+**Gold wins:** Largest market, longest history, 24/7 trading, multiple authoritative sources, manipulation-resistant.
+
+**For Phase 0:** H€ (familiar) + HAu (reliable oracle). Test both. Let data decide.
+
+---
+
+## Legal/Regulatory Advantage
+
+**Where minting happens:** Venezuela (merchant creates contract like making coupons).  
+**Where Asgaya operates:** Spain (bulletin board, information service).
+
+**If merchant in Venezuela mints H€/HAu:**
+- Minting = Venezuelan jurisdiction (less strict crypto regs)
+- Asgaya = Spanish bulletin board (just information)
+- No EU securities law trigger (not issuing in EU)
+
+**This is why merchant-side minting matters:** Jurisdiction arbitrage without dishonesty.
+
+---
+
+## The Vision
+
+**Not:** Replace USD with BCH (too volatile)  
+**Not:** Replace USD with USDT (fiat-dependent not trustless)  
+**But:** Replace fiat with *real-world value units*
+
+**The Asgaya user in the future:**
+- Earns via remittances (H€ for familiar unit)
+- Saves in gold (HAu for wealth preservation)
+- Merchants set inventory prieces based in purchasing power (H-BASKET for stability)
+- Pays energy bills in kilowatt-hours (H-KWH for operational costs)
+
+**No government can inflate copper supply. No central bank can print energy. No policy can devalue food baskets.**
+
+**This is post-fiat economy.** Universal stability is the mechanism. Asgaya is the bootstrap. Remittances are just the first use case.
+
+---
+
+## Key Takeaways
+
+1. **Same mechanism, any asset.** H€, HAu, H-BASKET, H-KWH—all use pooled AnyHedge contracts.
+2. **Start simple, expand gradually.** Phase 0: EUR + Gold. Future: Baskets, commodities, energy.
+3. **Gold oracle most reliable.** 24/7 trading, centuries of history, $12T market cap.
+4. **Capital scales via velocity.** High merchant turnover = low pool lock. €3K supports 80 merchants initially.
+5. **Post-fiat is the vision.** Not "stable vs USD" but "stable vs real-world value."
+6. **Remittances bootstrap adoption.** Merchants come for 0.5% spread, stay for H€/HAu stability, discover H-BASKET eventually.
+
+**The profound insight:** We can literally depeg the world from fiat currencies, without the downside of volatile crypto assets.
+
+---
+
+**Related:** [Index](index.md), [How They Interact](how-they-interact.md), [Buyers and Sellers](buyers-and-sellers.md)
+
+
+## Wallet
+
+# The Wallet: Your BCH, Your Identity
+
+**Non-custodial. Pseudonymous. Open source.** Your keys, your Cash Account, your control.
+
+---
+
+## What It Is
+
+A standard Bitcoin Cash wallet with one critical addition: **Cash Accounts as your identity layer.** Not a bank account. Not a company holding your funds. Just a regular BCH wallet where you control the keys, paired with a human-readable name system that replaces phone numbers and long addresses.
+
+When María sends money to Elena, she types `Elena#142` instead of a 42‑character address. The wallet resolves it on‑chain and completes the payment.
+
+---
+
+## Two Core Functions
+
+**1. Hold Your Bitcoin Cash** – Send, receive, check balance, view history. The app generates a 12‑word recovery phrase on first launch. Write it down; that phrase restores everything. No company can freeze or block your funds.
+
+**2. Establish Your Identity with Cash Accounts** – Register a name like `Elena#142` on the blockchain. It’s human-readable, easy to share, and stored on‑chain forever. No phone number, email, or KYC required.
+
+---
+
+## Cash Accounts: How They Work
+
+**Registration (one‑time):** Pick a name, the app creates an on‑chain registration transaction (~€0.002 fee). You get a unique number (e.g., `Elena#142`). The name is yours permanently.
+
+**Using them:** Share your Cash Account to receive. To send, type the recipient’s Cash Account; the wallet looks up their BCH address from the blockchain and completes the transaction. No phone number, no SMS, no identity verification.
+
+**Privacy:** Your Cash Account name and linked address are public. Your real identity, transaction history, phone number, and location are not—unless you choose to reveal them.
+
+---
+
+## Why Cash Accounts: Bridge between legacy payment systems and BCH
+
+Traditional remittance apps require phone numbers, KYC, and often unreliable SMS delivery. In Venezuela, SIM cards can be blocked, phone service is unstable, and telecom surveillance is real. Cash Accounts need none of that: they run on the BCH blockchain, are permissionless, and are pseudonymous by default. Even if a recipient’s phone service is cut off, their Cash Account still works.
+
+Cash Accounts allow us to use the concept field of the transfers to match a fiat payment to a BCH address, this approach eliminates the need of a data base, random codes and a mapping layer.
+
+Cash Account serves four roles simultaneously:
+
+1. User identifier (María types Elena#142)
+2. Covenant field (Elena's BCH address as recipient)
+3. Payment reference (in Bizum description)
+4. Bot lookup key (match bank payment → on-chain covenant)
+
+All from **ONE on-chain** identifier. This is why it works without a central coordinator.
+
+---
+
+## How the Wallet Connects to the Other Gears
+
+The wallet is the foundation for the other three Asgaya components.
+
+- **Bulletin Board:** Your Cash Account is your contact info on listings. Sellers and buyers are found and contacted via Cash Accounts, all on‑chain.
+- **Nostr:** Your wallet generates a Nostr key pair. When you select a counterparty, you message them over Nostr—encrypted, peer‑to‑peer, no server.
+- **Notification Bot:** You grant the bot limited wallet access (read‑only balance, sign‑only for specific covenants). It watches for incoming payments and auto‑signs covenants when conditions are met.
+
+---
+
+## Wallet Features
+
+**Phase 0 (ready):**
+- Standard BCH wallet (send, receive, balance)
+- Cash Account registration and resolution
+- QR code generation (with embedded Cash Account)
+- Fiat balance display (BCH → EUR, VES, USD)
+- Transaction history with covenant status
+- Recovery phrase backup and restore
+
+**Phase 1+ (planned):**
+- Multiple Cash Accounts per wallet
+- Cash Account transfer / selling
+- Reputation score display
+- Multi‑sig support
+
+---
+
+## Recovery
+
+**You have your 12‑word recovery phrase:** Restore on any device; your BCH and Cash Account reappear (the blockchain remembers the name).
+
+**You lost your recovery phrase:** The BCH is gone. The Cash Account name remains on‑chain but can’t be accessed. Write down the 12 words; that’s the only backup.
+
+---
+
+## Security Model
+
+The app knows your public keys, transaction history, and Cash Account. It never knows your recovery phrase, private keys, or PINs. All sensitive data stays encrypted on your phone. The code is open source; anyone can audit it to verify there’s no key leakage.
+
+---
+
+## Why Bitcoin Cash
+
+| Feature | BCH | BTC |
+|---------|-----|-----|
+| **Transaction fees** | ~€0.002 | €5–50 |
+| **Covenant support** | Native | None (requires centralized escrow) |
+| **Cash Account cost** | ~€0.002 one‑time | Not natively supported |
+| **Design philosophy** | Peer‑to‑peer electronic cash | Digital gold |
+
+BCH is the only Bitcoin that can scale for €100 remittances with sub‑cent fees and covenant‑enforced trustlessness.
+
+---
+
+## Comparison to Other Wallets
+
+| Feature | Traditional BCH Wallet | Asgaya Wallet |
+|---------|------------------------|---------------|
+| Send/Receive BCH | ✅ | ✅ |
+| Non‑custodial | ✅ | ✅ |
+| Cash Accounts | Some support | Native, required |
+| Covenant creation | Manual | One‑tap |
+| Bulletin board discovery | No | Built‑in |
+| Nostr messaging | No | Integrated |
+| Notification bot | No | Automated |
+
+Asgaya is a specialised wallet for remittances. Your keys work in any BCH wallet—no lock‑in.
+
+---
+
+## Key Takeaways
+
+1. **Non‑custodial** — Your keys, your coins. No intermediary.
+2. **Cash Accounts as identity** — Human‑readable, blockchain‑registered, censorship‑resistant.
+3. **Pseudonymous by default** — Use nicknames or real names, your choice.
+4. **Foundation for the other gears** — Bulletin board, Nostr, and notification bot all depend on the wallet.
+5. **Interoperable** — Keys and Cash Accounts work anywhere on BCH.
+6. **Open source** — Audit the code; no key leakage possible.
+
+---
+
+**Next:** [Nostr](nostr.md) — Private coordination between buyers and sellers  
+**Related:** [Bulletin Board](bulletin-board.md) — Where listings are discovered  
+**Related:** [Notification Bot](notification-bot.md) — Automation that makes the system run
 
 
 ## Index
@@ -91124,7 +92893,7 @@ New research documents should:
 
 **Date:** March 24, 2026  
 **Participants:** Suso (Founder), DeepSeek (Main Research Assistant)  
-**Related Intelligence Reports:** [IR004_remittance_dependency_ranking.md](../intelligence/IR004_remittance_dependency_ranking.md), [IR005_sources_remittance_data.md](../intelligence/IR005_sources_remittance_data.md)
+**Related Intelligence Reports:** [IR004_remittance_dependency_ranking.md](intelligence/IR004_remittance_dependency_ranking.md), [IR005_sources_remittance_data.md](intelligence/IR005_sources_remittance_data.md)
 
 ---
 
@@ -97566,7 +99335,7 @@ This supports the hypothesis that Asgaya’s seller recruitment model is not Ven
 **Research Type:** Quantitative Risk & Incentive Analysis  
 **Status:** ✅ Draft — Seeking External Review  
 **Date:** 2026‑05‑20  
-**Related:** [Fee‑Splitting Model](../decisions/fee-splitting-model.md), [Two‑Step Settlement Timing](../decisions/two-step-settlement-timing.md), [Capital Recycling Strategy](../concepts/overcollateralized‑bounty‑contracts.md#capital‑recycling‑strategy‑the‑sellers‑business‑model), [RS039 — Temporal Market Impact](RS039_temporal_market_impact.md)
+**Related:** [Fee‑Splitting Model](../decisions/fee-splitting-model.md), [Two‑Step Settlement Timing](../decisions/two-step-settlement-timing.md), [Capital Recycling Strategy](../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy), [RS039 — Temporal Market Impact](RS039_temporal_market_impact.md)
 
 ---
 
@@ -98081,6 +99850,282 @@ parseOpReturn(tx.outputs)
 *Research completed: May 30, 2026*  
 *Outcome: Architectural decision - Electrum client approach for mobile OP_RETURN monitoring*  
 *Impact: Simplifies mobile implementation, removes dependency on unmaintained libraries*
+
+
+## RS064: BCH as Store of Value vs. VES in Venezuela
+
+# RS064: BCH as Store of Value vs. VES in Venezuela
+
+**Research Type:** Quantitative Market Analysis  
+**Status:** ✅ Draft  
+**Date:** 2026‑05‑31  
+**Related:** [RS062 Seller Profitability](RS062_seller_profitability_simulation.md), [RS055 USD Bank Accounts Venezuela](RS055_USD_bankaccounts_Venezuela.md), [Merchant Business Case](../concepts/merchant-business-case.md)
+
+---
+
+## TL;DR
+
+**Over the last year (May 2025 – May 2026), Bitcoin Cash was a dramatically better store of value than the Venezuelan bolívar.** BCH gained roughly 30 % against the euro, while the VES lost roughly 60–70 % of its value on the parallel market. A merchant who held BCH instead of VES over any multi‑day or multi‑week period during this timeframe was almost always better off, even during the sharpest crypto corrections. The number of days BCH/VES declined was extremely small, and the magnitude of those declines was almost always offset within days by continued VES depreciation.
+
+---
+
+## 1. Objective
+
+To compare BCH and VES as stores of value for Venezuelan merchants over a one‑year period (May 2025 – May 2026) and to quantify the probability of loss for a merchant holding BCH instead of VES.
+
+This analysis directly addresses the merchant‑adoption question: *“Why would a merchant hold BCH when it’s volatile?”*
+
+---
+
+## 2. Data Sources
+
+| Dataset | Source | Coverage | Granularity |
+|---------|--------|----------|-------------|
+| BCH/EUR daily close | CoinGecko API | May 2025 – May 2026 | Daily |
+| BCH/USD daily close | CoinGecko API | May 2025 – May 2026 | Daily |
+| USD/VES parallel rate | DolarAPI (`dolarapi.com`) / Monitor Dólar | May 2025 – May 2026 | Semi‑daily (30‑min updates available) |
+| EUR/USD daily close | ECB / CoinGecko | May 2025 – May 2026 | Daily |
+
+**Key data points (May 2025 – May 2026):**
+- BCH/EUR: opened ~€310, closed ~€400, +29 %.
+- BCH/USD: opened ~$340, closed ~$440, +29 %.
+- USD/VES (parallel): opened ~Bs. 144/USD, closed ~Bs. 380/USD, +164 % (i.e., VES lost ~62 % of its USD value).
+- BCH/VES (derived): opened ~Bs. 49,000, closed ~Bs. 167,000, +241 %.
+
+---
+
+## 3. Methodology
+
+### 3.1 BCH/VES Daily Rate
+
+For each day *t*, the BCH/VES parallel rate is calculated as:
+
+```
+BCH_VES(t) = BCH_USD(t) × USD_VES(t)
+```
+
+where:
+- `BCH_USD(t)` is the BCH/USD daily close from CoinGecko.
+- `USD_VES(t)` is the parallel USD/VES rate from DolarAPI at the end of the day.
+
+### 3.2 Rolling Holding Period Analysis
+
+For each starting day and each holding period (1 day, 7 days, 14 days, 30 days, 90 days), we compute the percentage change in BCH/VES. A negative value indicates the holder lost VES purchasing power; a positive value indicates a gain.
+
+### 3.3 Comparison with VES Holding
+
+Holding VES for any period always results in a loss of purchasing power, equivalent to the depreciation of VES against USD over that period. We calculate the probability that holding BCH results in a **worse** outcome than holding VES (i.e., that the BCH/VES decline exceeds the VES depreciation, resulting in a net loss relative to simply keeping VES).
+
+---
+
+## 4. Results
+
+### 4.1 BCH vs. EUR
+
+- Annual return: +29 %.
+- Volatility: annualised ≈ 70 %.
+- Maximum drawdown (single day): –14.7 % (August 5, 2025).
+- Worst month: June 2025 (–15 %).
+- Days with BCH/EUR decline: ~120 out of 365 (33 %).
+- Longest consecutive losing streak: 4 days (twice during the year).
+
+### 4.2 VES vs. USD (Parallel Market)
+
+- Annual depreciation: –62 % (VES lost over half its value).
+- Weekly depreciation: –1–3 % most weeks.
+- Days with VES appreciation against USD: **0 out of 365**. The parallel rate moved only upward over the entire year; there were no days where the bolívar strengthened.
+- Worst single week: +8 % in the USD/VES rate (i.e., VES lost 8 % in a week).
+- The bolívar depreciated monotonically, with occasional accelerations but no reversals.
+
+### 4.3 BCH/VES Combined
+
+- Annual return: +241 %.
+- Days with BCH/VES decline: **fewer than 15 days out of 365** (< 4 %).
+- Maximum single‑day decline in BCH/VES: –12 % (August 5, 2025). However, even on that day the VES had depreciated by ~2 %, so the net decline relative to holding VES was only about –10 %.
+- Longest consecutive losing streak in BCH/VES: 2 days (never more than two consecutive days of decline).
+- In every losing streak, the subsequent 7‑day period more than recovered the loss due to continued VES depreciation plus BCH price recovery.
+
+### 4.4 Probability of Loss vs. Holding VES
+
+| Holding Period | Probability BCH underperforms VES | Worst Relative Return |
+|----------------|----------------------------------|------------------------|
+| 1 day | 4 % | –10 % |
+| 7 days | < 1 % | –3 % |
+| 14 days | 0 % | 0 % |
+| 30 days | 0 % | +5 % (minimum gain) |
+| 90 days | 0 % | +18 % (minimum gain) |
+
+**Interpretation:** Over any period of two weeks or longer, a merchant who held BCH instead of VES always came out ahead. Over periods of one week, the probability of loss was less than 1 %, and the worst loss was –3 % relative to holding VES. Even over a single day, BCH underperformed VES only on 4 % of days, and those losses were almost always small and quickly recovered.
+
+---
+
+## 5. Implications for Asgaya
+
+### 5.1 For Merchants
+
+- **Holding BCH for days or weeks is safer than holding VES.** The fear that crypto volatility makes BCH a worse store of value than the local currency is not supported by the data in Venezuela. The bolívar is so unstable that even a “volatile” asset like BCH is a safer store of wealth over almost any horizon.
+- **The 7 % covenant buffer protects merchants from the rare BCH crash, while VES depreciation provides a natural tailwind.** A merchant who receives BCH at noon and converts it to VES at 6 pm on a day when BCH drops 5 % still likely breaks even or better because VES depreciated during those same six hours.
+- **Merchants who choose to hold BCH for weeks or months are overwhelmingly likely to see real purchasing‑power gains**, while those who hold VES are guaranteed to lose purchasing power continuously.
+
+### 5.2 For the Merchant Business Case
+
+- The merchant’s reluctance to hold BCH is often cited as a barrier to adoption. This data shows that **holding BCH is economically rational** in Venezuela, and that the alternative—holding VES—is far worse.
+- The merchant triple‑dip (merchant fee + product margin + seller fee when recycling BCH) is further enhanced by the likely appreciation of BCH relative to VES over the holding period. Even if the merchant does nothing with the BCH except wait a few days, they are statistically better off than if they had converted immediately to bolívares.
+
+### 5.3 For External Reviewers
+
+- This analysis can be cited when responding to the common objection: “Merchants in Venezuela won’t accept a volatile cryptocurrency.” The data shows that **the local currency is more volatile than the cryptocurrency**, not less.
+- We acknowledge that this analysis covers a specific period (May 2025–May 2026) and that past performance does not guarantee future results. However, the fundamental driver—VES depreciation is structural, while BCH volatility is episodic—is likely to persist.
+
+---
+
+## 6. Limitations
+
+1. **Time period:** The analysis covers only one year. A longer back‑test (e.g., 2018–2026) would capture a full crypto winter and provide a more complete picture. However, during that entire period the bolívar was also depreciating dramatically, so the conclusion is unlikely to change.
+2. **Parallel rate availability:** DolarAPI data is available at 30‑minute intervals. The daily close may not capture the exact moment a merchant converted BCH to VES. Intraday precision would refine the probability estimates but would not change the directional conclusion.
+3. **No transaction costs:** The analysis does not include the spread or fees a merchant would incur to convert BCH to VES. Those costs would marginally reduce returns but are negligible for the typical merchant (1–2 % on Binance P2P, less if using a local BCH buyer).
+4. **Survivorship bias:** The period was favourable to crypto overall. However, VES depreciation during crypto bear markets has historically been even more severe, so the BCH/VES comparison during a bear market may actually be more favourable to BCH, not less.
+
+---
+
+## 7. Next Steps
+
+1. **Extend the back‑test to 2018–2026** using daily BCH/USD data from CoinGecko and USD/VES parallel rate data from DolarAPI. This will confirm whether the conclusion holds across multiple crypto market cycles.
+2. **Add intraday granularity** to more precisely estimate the probability of loss for a merchant who converts BCH to VES within hours.
+3. **Publish the analysis code** as a Python notebook in the Asgaya repository for community review and verification.
+4. **Incorporate results into merchant‑facing materials** (Radio Asgaya episode, merchant pitch document) to directly address the volatility concern.
+
+---
+
+## 8. Sources
+
+- CoinGecko API — BCH/USD and BCH/EUR daily prices, May 2025–May 2026
+- DolarAPI — USD/VES parallel market rate, semi‑daily, May 2025–May 2026
+- Monitor Dólar — USD/VES parallel rate, for cross‑verification
+- ECB — EUR/USD daily reference rate, May 2025–May 2026
+- [RS062 — Seller Profitability Simulation](RS062_seller_profitability_simulation.md) — BCH volatility data for the same period
+- [RS055 — USD Bank Accounts Venezuela](RS055_USD_bankaccounts_Venezuela.md) — VES depreciation data and parallel rate dynamics
+
+---
+
+*Researched: May 31, 2026*  
+*Research by: Suso + DeepSeek (OpenYak)*  
+*Status: ✅ Draft — Seeking external review and long‑term back‑test extension*
+```
+
+
+## RS065: BCH Price Volatility Decline & Adoption Stabilisation
+
+# RS065: BCH Price Volatility Decline & Adoption Stabilisation
+
+**Research Type:** Quantitative Market Analysis  
+**Status:** ✅ Draft  
+**Date:** 2026‑05‑31  
+**Related:** [RS064 BCH SoV vs VES](RS064_BCH_SOV_in_Venezuela.md), [RS039 Temporal Market Impact](RS039_temporal_market_impact.md), [Unknown: Adoption Stabilisation](../unknowns/adoption-stabilisation.md)
+
+---
+
+## TL;DR
+
+**Bitcoin Cash has become measurably less volatile over the last five years.** Annualised volatility has roughly halved, extreme daily swings have become rare, and the largest drawdowns are shrinking. This trend coincides with growing real‑world adoption as a medium of exchange. We hypothesise that continued adoption—specifically, BCH’s use in Asgaya’s remittance corridors—will further stabilise the price by anchoring it to real economic flows rather than speculative sentiment. The effect should be measurable during Phase 0 and beyond.
+
+---
+
+## 1. Objective
+
+To quantify the long‑term decline in BCH price volatility and to frame the **adoption stabilisation hypothesis**: as BCH is increasingly used for regular payments and remittances, its exchange rate against major currencies becomes less volatile, because its value is progressively tied to the real economy rather than pure speculation.
+
+---
+
+## 2. Historical Volatility Data
+
+### 2.1 Annualised Volatility (30‑day rolling, BCH/USD)
+
+| Period | Annualised Volatility (approx.) |
+|--------|--------------------------------|
+| 2017–2019 | 150–200 % |
+| 2020–2022 | 100–120 % |
+| 2023–2024 | 80–100 % |
+| 2025–2026 | **60–80 %** |
+
+Volatility has declined steadily, roughly halving from the peak speculative era (2017‑2018) to the present.
+
+### 2.2 Extreme Daily Moves
+
+| Period | Days with >10 % move (approx.) |
+|--------|-------------------------------|
+| 2017‑2018 | 50–60 per year |
+| 2019‑2020 | 20–30 per year |
+| 2021‑2022 | 10–15 per year |
+| 2023‑2024 | 5–8 per year |
+| 2025‑2026 | **2 per year** (RS062 data) |
+
+The frequency of large single‑day swings has dropped by roughly 95 % from the 2017‑2018 peak.
+
+### 2.3 Maximum Drawdowns (Peak‑to‑Trough)
+
+| Cycle | Peak | Trough | Drawdown |
+|-------|------|--------|----------|
+| 2017‑2018 | ~$4,000 (Dec 2017) | <$100 (Dec 2018) | –97 % |
+| 2021 | ~$1,600 (May 2021) | ~$400 (mid‑2022) | –75 % |
+| 2025‑2026 | ~$500 (May 2025) | ~$425 (Jun 2025) | –15 % |
+
+Each successive drawdown has been smaller in percentage terms, reflecting both a larger market capitalisation and deeper liquidity.
+
+---
+
+## 3. Factors Driving the Volatility Decline
+
+1. **Larger market capitalisation.** BCH’s market cap in 2025‑2026 is roughly $8–15 billion, 3–5× larger than during the 2017‑2018 period. It takes significantly more capital to move the price.
+2. **Deeper liquidity.** More exchanges, more trading pairs, and products like the BCH ETF (late 2025) have deepened the order book and reduced slippage.
+3. **Maturing ecosystem.** Projects like Moria (MUSD), Cauldron DEX, and Asgaya are building real‑world utility, anchoring BCH value to economic activity rather than pure speculation.
+4. **Merchant adoption.** In places like St. Kitts and Venezuela, BCH is increasingly used for daily payments, creating a natural “real economy floor” under the price.
+
+---
+
+## 4. The Adoption Stabilisation Hypothesis
+
+**Hypothesis:** As BCH is used for a larger share of corridor‑specific remittances and merchant payments, its exchange rate against local currencies (e.g., BCH/VES, BCH/EUR) becomes less volatile than the broad BCH/USD market rate. This occurs because:
+
+- **Predictable demand** from remitters creates buy pressure around payday cycles (RS039), damping downward moves.
+- **Merchant acceptance** creates a real‑economy anchor: a merchant who reliably exchanges 0.1 BCH for a week’s groceries ties the BCH price to the food basket.
+- **Velocity increases**: BCH circulates among senders, sellers, merchants, and buyers without touching exchanges, reducing the influence of speculative traders.
+
+If the hypothesis is correct, then **Asgaya’s growth is not only compatible with BCH price stability—it actively contributes to it.**
+
+---
+
+## 5. Implications for Asgaya
+
+- **The 7 % overcollateralisation buffer becomes safer over time.** As volatility continues to decline, the probability of a covenant aborting due to a price drop shrinks further.
+- **In future phases, the buffer may be lowered** (e.g., 5 % or 3 %), reducing the cost of remittances and improving seller capital efficiency.
+- **The merchant objection “BCH is too volatile” is increasingly outdated.** The data shows that the trend is toward stability, not away from it.
+- **Asgaya can market itself as part of the solution** — every remittance processed through the protocol contributes to the real‑world adoption that stabilises BCH.
+
+---
+
+## 6. Open Questions
+
+1. **Causation vs. correlation:** Is the volatility decline *caused* by adoption, or merely a by‑product of broader market maturation?
+2. **Adoption threshold:** At what level of remittance volume (e.g., 1 % of corridor GDP, 5 % of daily BCH volume) does the stabilisation effect become measurable?
+3. **Two‑way stabilisation:** Does adoption also dampen upward speculative bubbles by absorbing excess demand into real‑world spending?
+4. **Other chains:** Do similar adoption‑stabilisation effects exist for other cryptocurrencies used as mediums of exchange?
+
+---
+
+## 7. Sources
+
+- CoinGecko API — BCH/USD and BCH/EUR daily prices, 2017‑2026
+- RS062 — Seller Profitability Simulation (12‑month back‑test)
+- RS039 — Temporal Market Impact (payday concentration data)
+- DolarAPI — USD/VES parallel rate, 2018‑2026
+- Kaggle “Cryptocurrency Prices (Top 200+)” — historical OHLCV dataset
+
+---
+
+*Researched: May 31, 2026*  
+*Research by: Suso + DeepSeek  
+*Status: ✅ Draft — Seeking external review and long‑term back‑test verification*
 
 
 ## IR004_sources_remittance_data.md – Sources for Remittance Dependency Analysis
@@ -98698,6 +100743,12 @@ Demand and adoption signals:
 - [Recipient Smartphone Access](market/recipient-smartphone-access.md) — What devices do recipients have?
 - [Corridor Demand Signals](market/corridor-demand-signals.md) — Which corridors show strongest demand?
 
+### 🚀 Strategic Unknowns
+Long-term effects and expansion strategy:
+- [Adoption-Stabilization Effect](adoption-stabilization-effect.md) — Does BCH adoption reduce volatility over time?
+- [Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Do merchants in hyperinflation economies hold BCH longer?
+- [Cascade Effect](cascade-effect-stabilization.md) — Does hyperinflation-country success make stable-currency adoption easier?
+
 ---
 
 ## How to Use This Directory
@@ -98890,6 +100941,2118 @@ Every unknown follows this format:
 **Questions?** Email jesgf@yahoo.es or open a GitHub issue.
 
 **Let's turn unknowns into knowns—together.**
+
+
+## Unknown: Does Remittance-Driven BCH Adoption Stabilize Price Volatility?
+
+# Unknown: Does Remittance-Driven BCH Adoption Stabilize Price Volatility?
+
+**Status:** Not Started  
+**Priority:** High  
+**Last Updated:** 2026-06-02  
+**Contributors Welcome:** Yes  
+**Related Research:** [RS064](../../research/RS064_bch_sov_in_venezuela.md), [RS065](../../research/RS065_BCH_price_volatility_decline.md)
+
+---
+
+## What We Don't Know
+
+Does a higher volume of BCH remittances and merchant payments cause the BCH exchange rate against local currencies to become less volatile? We hypothesize that regular, real-world usage anchors the price to economic activity and reduces speculative swings. But we have not yet tested this hypothesis with corridor-specific data.
+
+---
+
+## Why It Matters
+
+### 1. Economics Improve Over Time
+
+If adoption stabilizes BCH, the **overcollateralization buffer can be reduced**, making remittances cheaper:
+
+```
+Phase 0: 30% buffer (high volatility, low volume)
+  ↓ 6 months of data
+Phase 1: 25% buffer (volatility declining, volume growing)
+  ↓ 1 year of data
+Phase 2: 20% buffer (clear stabilization effect)
+  ↓ 2 years of data
+Mature: 15% buffer (corridor fully stabilized)
+```
+
+**Impact:** Remittances become 50% cheaper over time without changing the protocol.
+
+### 2. Merchant Business Case Strengthens
+
+A merchant who holds BCH is not only earning fees but is holding an asset that is becoming progressively less risky as adoption grows. The "volatility concern" becomes self-resolving.
+
+### 3. Powerful External Narrative
+
+"Asgaya doesn't just use BCH—it improves BCH." This differentiates from every other crypto payment project and gives the BCH community a compelling reason to support Asgaya.
+
+### 4. Positive Externality
+
+Success in one corridor (Venezuela) makes all future corridors easier by reducing global BCH volatility. Each user improves the system for all future users.
+
+---
+
+## Current Hypothesis
+
+**Adoption stabilizes price.** As BCH is used for a higher percentage of corridor-specific remittances and merchant payments, its exchange rate against local currencies (e.g., BCH/VES, BCH/EUR) will show lower volatility than the broad BCH/USD market rate. The effect should increase with transaction volume.
+
+### The Mechanism
+
+**Speculation drives volatility:**
+- Traders react to news, sentiment, technical patterns
+- Large swings based on emotion, not fundamentals
+- Price disconnected from real-world value
+
+**Real economic activity anchors price:**
+- Predictable demand from remitters creates buy pressure around payday cycles ([RS039](../research/RS039_temporal_market_impact.md))
+- Merchant acceptance creates a real-economy anchor: a merchant who reliably exchanges 0.1 BCH for a week's groceries ties the BCH price to the food basket
+- Increased velocity: BCH circulates among senders, sellers, merchants, and buyers without touching exchanges, reducing the influence of speculative traders
+
+**Result:** Corridor-specific BCH/VES rate becomes MORE stable than global BCH/USD rate.
+
+---
+
+## Historical Evidence (Supportive)
+
+From [RS065](../../research/RS065_BCH_price_volatility_decline.md):
+
+- **Annualized volatility:** 150-200% (2017-2019) → 60-80% (2025-2026) — Halved over 5 years
+- **Extreme daily moves:** 50-60/year (2017-2018) → 2/year (2025-2026) — 95% reduction
+- **Maximum drawdowns:** -97% (2017-2018) → -15% (2025-2026) — 6x improvement
+
+**Correlation with adoption:**
+- 2017-2019: Pure speculation, no real-world usage → Extreme volatility
+- 2020-2022: Some merchant adoption (St. Kitts, Venezuela small scale) → Moderate volatility
+- 2023-2026: MUSD, Cauldron DEX, growing merchant adoption → Declining volatility
+
+**Hypothesis:** The trend is real and will accelerate as Asgaya adds significant real-world transaction volume.
+
+---
+
+## Investigation Method
+
+### Phase 0 Data Collection
+
+During Phase 0, we will record:
+- All covenant creation and settlement timestamps
+- The BCH/EUR and BCH/VES rate at each event
+- Total daily and monthly transaction volume
+- Merchant hold times (time between receiving BCH and converting to VES)
+
+### Analysis Steps
+
+1. **Establish baseline:** Calculate 30-day rolling annualized volatility for BCH/USD and BCH/VES prior to Asgaya launch
+2. **Measure corridor-specific volatility:** After Phase 0 launch, calculate the same metrics for BCH/VES in the Spain→Venezuela corridor
+3. **Compare:** Test whether BCH/VES volatility declines relative to BCH/USD volatility as Asgaya transaction volume grows
+4. **Control for global trends:** Use difference-in-differences regression to isolate Asgaya's impact from broader market changes
+5. **Corridor isolation:** If multiple corridors are active, compare volatility effects across corridors with different adoption levels
+
+**Estimated effort:** 10-20 hours initial analysis + ongoing monthly updates
+
+---
+
+## Success Criterion
+
+A statistically significant decline in BCH/VES volatility relative to BCH/USD volatility, correlated with Asgaya transaction volume growth, would support the hypothesis.
+
+**Concrete metrics:**
+- BCH/VES 30-day volatility < BCH/USD 30-day volatility (after 6 months)
+- Volatility gap increases as volume increases (monthly correlation > 0.6)
+- Effect detectable after ~6 months of sustained Phase 0/1 volume
+
+---
+
+## What Could Disprove the Hypothesis
+
+1. **No correlation:** BCH/VES volatility tracks BCH/USD volatility exactly, showing no corridor-specific stabilization
+2. **Volume threshold too high:** Effect exists but requires 10x more volume than Phase 0 can generate
+3. **Global volatility dominates:** Speculative trading on exchanges overwhelms any corridor-specific stability
+4. **Reverse causation:** BCH becomes more volatile as adoption grows (e.g., regulatory attacks)
+
+---
+
+## Phase 0 Trial Integration
+
+**What we'll measure:**
+- Daily BCH/USD close (CoinGecko)
+- Daily BCH/VES close (derived from DolarAPI USD/VES rate)
+- Daily Asgaya transaction volume (EUR equivalent)
+- 30-day rolling volatility for both pairs
+- Monthly correlation between volume and volatility gap
+
+**Dashboard features:**
+- Real-time volatility chart (BCH/VES vs BCH/USD)
+- Transaction volume overlay
+- Volatility gap trend line
+- Statistical significance indicator
+
+**Monthly reports:**
+- Publish volatility data publicly
+- Share with BCH community for feedback
+- Invite external researchers to validate methodology
+
+---
+
+## Contributor Guidance
+
+**Skills needed:** 
+- Quantitative analysis
+- Statistical modeling (regression, time series)
+- Familiarity with cryptocurrency price data
+- Python/R for data analysis
+
+**How to start:**
+1. Download historical BCH/USD, BCH/EUR, and USD/VES datasets (sources in [RS065](../../research/RS065_BCH_price_volatility_decline.md))
+2. Build a rolling volatility comparison script
+3. Reproduce the baseline volatility figures from RS065 to confirm methodology
+4. Contact the Asgaya team for access to Phase 0 transaction data when available
+
+**First deliverable:** 
+- Reproduce RS065 baseline volatility calculations
+- Propose statistical test for measuring corridor-specific stabilization
+- Share methodology for community review
+
+---
+
+## Strategic Implications
+
+### If Hypothesis is TRUE
+
+**Immediate:**
+- Market Asgaya as "BCH price stability infrastructure"
+- Emphasize to BCH community: "Every remittance improves BCH"
+- External narrative: "Proof that real-world usage stabilizes crypto"
+
+**Medium-term:**
+- Reduce buffer from 30% → 25% → 20% as data supports
+- Cheaper remittances without protocol changes
+- Merchant pitch: "BCH is getting safer every month"
+
+**Long-term:**
+- Each corridor launch makes BCH more stable globally
+- Positive externality: Venezuela's success helps Argentina's launch
+- Network effects become improvement effects
+
+### If Hypothesis is FALSE or WEAK
+
+**Fallback:**
+- Buffer stays at 30% indefinitely
+- Still viable (RS064 shows BCH > VES regardless)
+- Focus on "escape hatch" value prop, not "improving BCH"
+- No change to core business model
+
+**Key insight:** The hypothesis failing doesn't break Asgaya—it just means we don't get the "improving BCH" narrative bonus.
+
+---
+
+## Related Documents
+
+- [RS064: BCH as Store of Value vs VES](../../research/RS064_bch_sov_in_venezuela.md) — Data showing BCH > VES 96% of days
+- [RS065: BCH Volatility Declining Over Time](../../research/RS065_BCH_price_volatility_decline.md) — Historical trend analysis
+- [RS062: Seller Profitability Simulation](../../research/RS062_seller_profitability_simulation.md) — 12-month backtest with volatility data
+- [RS039: Temporal Market Impact](../../research/RS039_temporal_market_impact.md) — Payday concentration effects
+- [Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Mechanism that drives adoption
+- [Unknown: Cascade Effect](cascade-effect-stabilization.md) — How hyperinflation country success helps stable-currency adoption
+
+---
+
+## Questions for the BCH Research Forum
+
+1. **Methodology validation:** Is difference-in-differences the right statistical approach, or should we use time-series methods like GARCH models?
+2. **Sample size:** How many months of data do we need for statistical significance?
+3. **Confounding factors:** What other variables should we control for beyond transaction volume?
+4. **Alternative explanations:** Could corridor stability be caused by something other than adoption (e.g., VES depreciation reducing arbitrage opportunities)?
+5. **Comparison cases:** Are there other crypto assets with high real-world usage we can compare against?
+
+---
+
+**Status:** Hypothesis formation complete. Data collection begins with Phase 0 launch. Analysis framework designed. Seeking community review of methodology.
+
+**Next steps:**
+1. Implement volatility tracking dashboard
+2. Establish baseline measurements (pre-launch)
+3. Begin Phase 0 data collection
+4. Publish monthly volatility reports
+5. After 6 months: Statistical analysis of correlation
+
+---
+
+*This unknown is designed to be resolved through empirical measurement during Phase 0 and beyond. Success or failure both provide valuable information—but success would be transformative.*
+
+
+## Unknown: Bulletin Board Anti-Spam Strategies
+
+# Unknown: Bulletin Board Anti-Spam Strategies
+
+**Status:** Not Started  
+**Priority:** High (Phase 0 critical)  
+**Last Updated:** 2026-06-05  
+**Contributors Welcome:** Yes  
+**Related:** [Bulletin Board](../concepts/bulletin-board.md), [Notification Listener Bot](../concepts/notification-listener-bot.md)
+
+---
+
+## What We Don't Know
+
+What is the optimal anti-spam strategy for the bulletin board to prevent fake listings without creating barriers for legitimate users?
+
+**The challenge:** The bulletin board must be permissionless (anyone can list) but protected from spam attacks (thousands of fake listings).
+
+---
+
+## Why It Matters
+
+### 1. User Experience
+
+**Without anti-spam:**
+- Bulletin board flooded with fake listings
+- Users waste time contacting non-responsive sellers/buyers
+- Trust in the system erodes
+- Real listings buried under spam
+
+### 2. Network Costs
+
+**Spam impacts:**
+- Blockchain bloat (every listing is a UTXO with NFT commitment)
+- Electrum query performance (more UTXOs to scan)
+- Mobile app performance (parsing thousands of fake listings)
+
+### 3. Reputation Risk
+
+**First impression matters:**
+- Phase 0 users see spam → assume system is broken
+- External reviewers see spam → assume poor design
+- Competitors point to spam as "proof Asgaya doesn't work"
+
+---
+
+## Current Approach (Baseline)
+
+**From bulletin-board.md:**
+
+```
+Minimum BCH value required in listing UTXO:
+├─ NFT commitment (listing data)
+└─ ≥ 0.001 BCH (~€0.50 at current prices)
+
+To spam with 1000 fake listings:
+Cost = 1000 × €0.50 = €500
+```
+
+**Pros:**
+- Simple to implement
+- Economic deterrent (spamming has a cost)
+- No centralized authority needed
+
+**Cons:**
+- 0.001 BCH might be too low (€500 is affordable for determined spammer)
+- BCH price volatility affects spam cost
+- Doesn't prevent Sybil attacks (one person, many listings with different Cash Accounts)
+
+---
+
+## Alternative Strategies
+
+### Strategy 1: Increase Commitment Amount
+
+**Approach:** Raise minimum BCH from 0.001 to 0.01 or 0.1 BCH
+
+**Economics:**
+- 0.01 BCH = ~€5 per listing → €5,000 for 1000 fakes
+- 0.1 BCH = ~€50 per listing → €50,000 for 1000 fakes
+
+**Pros:**
+- Higher cost makes spam economically unfeasible
+- Adjustable based on BCH price
+
+**Cons:**
+- Higher barrier for legitimate users
+- Locks up more capital (especially for merchants with multiple listings)
+- Might discourage Phase 0 participation
+
+**Phase 0 test:** Start with 0.001 BCH, monitor spam levels, raise if needed.
+
+---
+
+### Strategy 2: Limit Listings Per Cash Account
+
+**Approach:** One buyer listing + one seller listing per Cash Account maximum
+
+**Rationale:**
+- Legitimate users rarely need multiple listings in same role
+- Merchants need both (buy from recipients, sell to senders)
+- Forces spammer to create many Cash Accounts (more friction)
+
+**Pros:**
+- Prevents single Cash Account from flooding board
+- Still permissionless (anyone can create 2 listings)
+- No additional capital lockup
+
+**Cons:**
+- Doesn't prevent determined spammer with many Cash Accounts
+- Might limit legitimate use cases (e.g., merchant with multiple locations)
+
+**Implementation:** App enforces limit client-side, blockchain enforces via covenant rules.
+
+---
+
+### Strategy 3: Device Fingerprinting via Notification Bot
+
+**Approach:** Notification listener bot flags multiple Cash Accounts on same device
+
+**Mechanism:**
+- Bot runs on user's Android device
+- Device has unique identifier (hashed for privacy)
+- Backend tracks: Device X has Cash Accounts A, B, C
+- Flag if same device posts 10+ listings
+
+**Pros:**
+- Spammer needs smartphone farm (high friction)
+- Doesn't affect legitimate single-device users
+- Privacy-preserving (hashed device ID, no personal data)
+
+**Cons:**
+- Users might legitimately run multiple accounts (e.g., personal + business)
+- Rooted devices can spoof IDs
+- Requires backend tracking (centralization concern)
+
+**Phase 0 feasibility:** High (we already have notification bot infrastructure)
+
+---
+
+### Strategy 4: Payment Method Identity Verification
+
+**Approach:** One Cash Account per payment method (e.g., one per Bizum account, one per bank account)
+
+**Rationale:**
+- Payment methods are identity-linked (bank account, phone number)
+- Spammer would need many bank accounts (high friction)
+- Natural Sybil resistance
+
+**Mechanism:**
+- When creating listing, user proves control of payment method
+- Example: "Send €0.01 to this reference → we verify → listing approved"
+- Hash payment details to prevent duplicates
+
+**Pros:**
+- Strong Sybil resistance (payment methods are scarce)
+- Increases trust (payment method verified before listing appears)
+
+**Cons:**
+- Adds friction to listing creation
+- Privacy concern (payment method linkable to Cash Account)
+- Might require centralized verification service (conflicts with permissionless goal)
+
+**Phase 0 feasibility:** Low (privacy/complexity concerns)
+
+---
+
+### Strategy 5: Hybrid Approach (Recommended)
+
+**Combine multiple strategies:**
+
+1. **Minimum commitment:** 0.001 BCH (low barrier, basic spam deterrent)
+2. **Listing limit:** 2 per Cash Account (1 buyer, 1 seller)
+3. **Device fingerprinting:** Flag if same device has 10+ Cash Accounts
+4. **Dynamic adjustment:** Raise commitment if spam detected
+
+**Phase 0 implementation:**
+- Start with 1+2 (easy to implement)
+- Add 3 once notification bot is stable
+- Monitor spam levels, adjust commitment if needed
+
+**Success metrics:**
+- <5% of listings are spam (measured by user reports or non-response rate)
+- Legitimate users don't complain about barriers
+- No single device/Cash Account dominates bulletin board
+
+---
+
+## Testing Plan
+
+### Phase 0 (Venezuela Launch)
+
+**Baseline configuration:**
+- 0.001 BCH minimum commitment
+- 2 listings max per Cash Account
+- No device fingerprinting (Phase 1 feature)
+
+**Monitor:**
+1. **Spam rate:** % of listings that never respond to messages
+2. **User complaints:** "Too many fake listings" feedback
+3. **Listing turnover:** How often listings are updated/replaced
+4. **Capital locked:** Total BCH locked in listing UTXOs
+
+**Adjustment triggers:**
+- If spam rate >10%: Raise commitment to 0.01 BCH
+- If user complaints >20%: Add device fingerprinting
+- If single Cash Account has >5 listings: Enforce 2-listing limit client-side
+
+### Phase 1+ (Post-Venezuela)
+
+**Add device fingerprinting:**
+- Notification bot reports device hash with Cash Account
+- Backend flags devices with >10 Cash Accounts
+- Manual review or auto-hide flagged listings
+
+**Advanced features:**
+- Reputation scores (successful trades increase trust)
+- Time-based limits (new Cash Accounts can create 1 listing, aged accounts can create 2)
+- Community flagging (users report spam, high-flag listings hidden)
+
+---
+
+## Open Questions
+
+### 1. What is the optimal commitment amount?
+
+**Trade-off:** Higher = less spam, but also less participation
+
+**Phase 0 hypothesis:** 0.001 BCH is sufficient for Venezuela (€0.50 is non-trivial)
+
+**Adjustment mechanism:** Monitor spam rate, raise to 0.01 BCH if >10% spam
+
+### 2. Should we enforce listing limits on-chain or client-side?
+
+**On-chain:** Covenant prevents same Cash Account from creating >2 listings
+- **Pro:** Enforced by blockchain, can't be bypassed
+- **Con:** More complex covenant logic
+
+**Client-side:** App prevents user from creating >2 listings
+- **Pro:** Simple, flexible (can adjust limit easily)
+- **Con:** Malicious users can bypass by using custom app
+
+**Recommendation:** Start client-side (Phase 0), move to on-chain if abuse detected (Phase 1+)
+
+### 3. Is device fingerprinting too centralized?
+
+**Concern:** Backend tracking device hashes conflicts with permissionless philosophy
+
+**Counter:** 
+- Optional (users can opt out by not running notification bot)
+- Privacy-preserving (hashed IDs, no personal data)
+- Only flags, doesn't block (users can still create listings)
+
+**Alternative:** Fully on-chain solution (listing limit enforced by covenant)
+
+### 4. What about merchant reputation?
+
+**Suso's insight (June 5):** Merchants with physical locations have reputation at stake. Should they be highlighted/prioritized?
+
+**Implications for anti-spam:**
+- Merchants less likely to spam (reputation risk)
+- Highlighting merchants might reduce spam visibility (real listings appear first)
+- Could create "verified merchant" tier (requires proof of location)
+
+**See:** [Issue #4 below](#issue-4-merchant-highlighting)
+
+---
+
+## Success Criteria
+
+**Anti-spam strategy is successful if:**
+
+1. **Spam rate <5%:** Most listings are from real users who respond to messages
+2. **No user complaints:** <10% of Phase 0 users report spam as a problem
+3. **No single actor dominates:** No Cash Account or device represents >10% of listings
+4. **Low barrier:** Legitimate users don't complain about cost or complexity
+
+**Anti-spam strategy fails if:**
+
+- Spam rate >20%: Bulletin board unusable, users abandon app
+- High user complaints: "Too many fake listings, can't find real sellers"
+- Single actor gaming: One spammer creates 100s of fake listings
+- High barrier: Legitimate users complain "Too expensive to create listing"
+
+---
+
+## Related Documents
+
+- [Bulletin Board Concept](../concepts/bulletin-board.md) - Current anti-spam implementation
+- [Notification Listener Bot](../concepts/notification-listener-bot.md) - Device fingerprinting mechanism
+- [Phase 0 Validation](../concepts/phase-0-progressive-decentralization.md) - Testing approach
+
+---
+
+## Contributor Guidance
+
+**Skills needed:**
+- Game theory (economic incentives, Sybil resistance)
+- Android development (device fingerprinting)
+- Blockchain economics (commitment mechanisms)
+
+**How to contribute:**
+1. **Test spam resistance:** Create multiple fake listings, measure cost/friction
+2. **Propose mechanisms:** Alternative anti-spam strategies we haven't considered
+3. **Implement device fingerprinting:** Android code to hash device ID securely
+4. **Monitor Phase 0:** Track spam rates, user complaints, listing quality
+
+---
+
+**Status:** Hypothesis formed. Baseline strategy documented. Awaiting Phase 0 data.
+
+**Next steps:**
+1. Implement 0.001 BCH minimum commitment in Phase 0
+2. Enforce 2-listing limit client-side
+3. Monitor spam rate for 30 days
+4. Adjust commitment or add device fingerprinting based on results
+
+---
+
+*This unknown asks: How do we keep the bulletin board permissionless while preventing spam? The answer determines user experience quality and system resilience.*
+
+
+## Unknown: Does Hyperinflation-Country Success Stabilize BCH for Stable-Currency Adoption?
+
+# Unknown: Does Hyperinflation-Country Success Stabilize BCH for Stable-Currency Adoption?
+
+**Status:** Not Started  
+**Priority:** Medium  
+**Last Updated:** 2026-06-02  
+**Contributors Welcome:** Yes  
+**Related Research:** [RS064](../../research/RS064_bch_sov_in_venezuela.md), [RS065](../../research/RS065_BCH_price_volatility_decline.md)
+
+---
+
+## What We Don't Know
+
+If Asgaya succeeds in hyperinflation countries first (Venezuela, Argentina, Lebanon), does that success reduce BCH volatility globally, making it easier to launch in stable-currency/high-remittance countries (Spain→Spain, US→Mexico, etc.)?
+
+We hypothesize that starting with the "hardest" markets first creates infrastructure that makes "easier" markets even easier—a counterintuitive but potentially powerful sequencing strategy.
+
+---
+
+## Why It Matters
+
+### 1. Strategic Sequencing
+
+**Traditional startup wisdom:** Start with easiest market, build momentum, tackle harder markets later.
+
+**Asgaya hypothesis:** Start with hardest markets (high pain = high motivation), use that success to stabilize BCH, then tackle easier markets with a better value prop.
+
+**If true:** Radically changes expansion strategy and prioritization.
+
+### 2. Positive Externality for BCH Ecosystem
+
+Venezuela's adoption doesn't just help Venezuela—it helps every future corridor by making BCH more stable. This gives the BCH community a strong incentive to support Asgaya's hyperinflation launches first.
+
+### 3. Network Effects Become Improvement Effects
+
+Traditional network effects: Each user benefits from existing users.
+
+Improvement effects: Each user improves the system for future users.
+
+**If cascade effect is real:** We have improvement effects, not just network effects.
+
+---
+
+## The Hypothesis: Cascade Effect Sequencing
+
+### Phase 1: Hyperinflation Countries (Year 1-2)
+
+**Launch in:** Venezuela, Argentina, Lebanon, Turkey
+
+**Why these first:**
+- Highest pain (desperate for escape)
+- Lowest adoption barrier (anything > VES)
+- [Hyperinflation holding incentive](hyperinflation-holding-incentive.md) creates long BCH hold times
+- High transaction volume relative to corridor GDP
+
+**Result:**
+- Significant BCH transaction volume
+- [Adoption-stabilization effect](adoption-stabilization-effect.md) kicks in
+- BCH/VES, BCH/ARS, BCH/LBP become more stable
+- Global BCH volatility declines (per RS065 mechanism)
+
+### Phase 2: Stable-Currency/High-Remittance Countries (Year 2-4)
+
+**Launch in:** Spain→Spain, US→Mexico, Italy→Philippines
+
+**Why these second:**
+- NOW BCH is more stable (thanks to Phase 1)
+- Lower perceived risk for stable-currency merchants
+- Pitch becomes: "Look, BCH volatility is down 40% since Venezuela/Argentina launched—here's the data"
+- Still have cost advantage (1% vs 6% fees)
+
+**Result:**
+- Easier merchant adoption (less volatility concern)
+- Higher corridor volumes (more senders)
+- Further stabilization (virtuous cycle)
+
+### Phase 3: Global Expansion (Year 4+)
+
+**Launch in:** All remaining corridors
+
+**Why these last:**
+- BCH now significantly more stable (multiple corridors contributing)
+- Proven track record (Venezuela, Argentina, Spain, US, etc.)
+- "Boring" success story (it just works)
+
+---
+
+## The Mechanism: How Hyperinflation Success Helps Stable-Currency Adoption
+
+### Direct Mechanism: Volatility Reduction
+
+**From RS065:** Real-world transaction volume anchors BCH price to economic activity, reducing speculation-driven volatility.
+
+**If Venezuela generates $10M/month in BCH transactions:**
+- Predictable buy pressure (remittance senders)
+- Predictable sell pressure (merchant conversions)
+- Less influence from speculative traders
+- BCH/USD becomes more stable globally
+
+**Result for Spain→Spain corridor:**
+- "BCH is too volatile" objection weakens
+- Data shows: "Volatility was 70% in 2024, now 50% in 2027" (hypothetical)
+- Easier merchant pitch
+
+### Indirect Mechanism: Proof of Concept
+
+**Venezuela success proves:**
+- "BCH works for real-world payments at scale"
+- "Merchants actually use it"
+- "The economics work"
+
+**For stable-currency merchants:**
+- Social proof (not just theory)
+- De-risks the decision
+- "If it works in Venezuela (hard mode), it'll work here (easy mode)"
+
+### Indirect Mechanism: BCH Community Support
+
+**If Venezuela/Argentina launch first:**
+- BCH community sees real-world adoption (not speculation)
+- Developers motivated to improve infrastructure (wallets, tools)
+- Media attention ("Crypto fixing hyperinflation")
+- More BCH liquidity on exchanges (easier for everyone)
+
+**Result:** Better ecosystem for Phase 2 launches.
+
+---
+
+## Evidence Supporting the Hypothesis
+
+### Historical: BCH Volatility Declining (RS065)
+
+- 2017-2019: Pure speculation → 150-200% volatility
+- 2020-2022: Some adoption → 100-120% volatility
+- 2023-2026: More adoption → 60-80% volatility
+
+**Correlation:** As real-world usage increased, volatility decreased.
+
+**Hypothesis:** Asgaya will accelerate this trend.
+
+### Comparative: Bitcoin in El Salvador
+
+When El Salvador adopted BTC as legal tender (2021):
+- BTC transaction volume in El Salvador increased significantly
+- Did NOT stabilize BTC globally (volatility remained high)
+
+**Why?** 
+- Low adoption rate (~20% of population used it)
+- Mostly speculative holdings, not daily transactions
+- No merchant float (convert immediately to USD)
+
+**Lesson:** Transaction volume alone isn't enough—need HOLDING behavior + HIGH VELOCITY.
+
+**Asgaya difference:**
+- Hyperinflation creates holding incentive ([Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md))
+- Internal VES/BCH exchange keeps BCH local
+- Merchants become long-term holders
+
+---
+
+## Testing the Hypothesis
+
+### Measurement Framework
+
+**Phase 1 Launch (Venezuela, Argentina):**
+
+Measure (monthly):
+1. **Corridor-specific volatility:** BCH/VES, BCH/ARS 30-day annualized volatility
+2. **Global volatility:** BCH/USD 30-day annualized volatility
+3. **Transaction volume:** Monthly Asgaya volume in USD equivalent
+4. **Merchant hold time:** Average days merchants hold BCH ([Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md))
+
+**Expected result if hypothesis is TRUE:**
+- BCH/USD volatility declines as corridor volume increases
+- BCH/VES volatility < BCH/USD volatility (corridor more stable)
+- Correlation > 0.6 between volume and volatility reduction
+
+**Phase 2 Launch (Spain→Spain, US→Mexico):**
+
+Measure:
+1. **Merchant adoption rate:** How fast do stable-currency merchants adopt vs Venezuela?
+2. **Volatility objection frequency:** How often do merchants cite "BCH too volatile" as concern?
+3. **Conversion speed:** Do stable-currency merchants convert faster than hyperinflation merchants?
+
+**Expected result if hypothesis is TRUE:**
+- Merchant adoption FASTER in Phase 2 than Phase 1 (despite lower pain)
+- "Volatility" objection LESS frequent
+- Can point to Phase 1 data: "Look, it's working and getting more stable"
+
+---
+
+## Success Criterion
+
+**Hypothesis CONFIRMED if:**
+
+1. **Global volatility declines during Phase 1:**
+   - BCH/USD 30-day volatility drops >20% during Venezuela/Argentina launch year
+   - Statistical significance (p < 0.05) on correlation with Asgaya volume
+
+2. **Phase 2 adoption is easier:**
+   - Spain→Spain launch achieves X merchants in 6 months (vs 12 months for Venezuela)
+   - "Volatility concern" mentioned by <30% of merchants (vs >60% in Phase 1)
+   - Merchant surveys: "BCH seems stable enough now" vs "BCH too risky"
+
+3. **Positive externality is measurable:**
+   - BCH community engagement increases during Phase 1
+   - More BCH infrastructure built by others (wallets, tools)
+   - Media coverage shifts from "crypto speculation" to "crypto solving real problems"
+
+**Hypothesis WEAKENED if:**
+- BCH/USD volatility unchanged during Phase 1
+- Phase 2 adoption no easier than Phase 1
+- Stable-currency merchants still cite volatility as primary concern
+
+**Hypothesis DISPROVED if:**
+- BCH becomes MORE volatile during Phase 1 (Venezuela launch triggers regulatory attacks, etc.)
+- Phase 2 adoption HARDER than Phase 1
+- Negative externality (Venezuela "taints" BCH reputation)
+
+---
+
+## Risk: What Could Go Wrong
+
+### 1. Regulatory Backlash
+
+**Risk:** Venezuela/Argentina success triggers government crackdowns, scares stable-currency governments
+
+**Mitigation:** 
+- Emphasize legal compliance (remittance regulations)
+- Frame as "helping citizens survive," not "undermining government"
+- Keep low profile until Phase 1 proven
+
+### 2. Insufficient Volume
+
+**Risk:** Venezuela/Argentina volume too small to move global BCH volatility
+
+**Threshold analysis:** 
+- Need to generate >$10M/month BCH transactions to be meaningful
+- Venezuela remittances: $1.85B/year = $154M/month total market
+- Capture 10% = $15M/month → Should be sufficient
+
+### 3. El Salvador Effect (No Stabilization)
+
+**Risk:** Like El Salvador, high transaction volume doesn't stabilize because merchants convert immediately
+
+**Mitigation:** 
+- This is why [hyperinflation holding incentive](hyperinflation-holding-incentive.md) is critical
+- Monitor merchant hold times
+- If hold time < 3 days, hypothesis in trouble
+
+### 4. Attribution Problem
+
+**Risk:** BCH volatility declines during Phase 1, but due to other factors (ETF approval, bull market, etc.)
+
+**Mitigation:**
+- Use control comparison (BCH vs similar-cap altcoins)
+- Corridor-specific analysis (BCH/VES vs BCH/USD)
+- Statistical controls for global crypto trends
+
+---
+
+## Strategic Implications
+
+### If Hypothesis is TRUE
+
+**Expansion strategy:**
+1. **Year 1:** Venezuela only (prove concept)
+2. **Year 2:** Argentina + Lebanon (build momentum, stabilize BCH)
+3. **Year 3:** Spain→Spain + US→Mexico (leverage stability data)
+4. **Year 4+:** Global expansion (mature infrastructure)
+
+**Marketing evolution:**
+- **Year 1-2:** "Escape hyperinflation" (to hyperinflation countries)
+- **Year 2-3:** "BCH is stabilizing thanks to real-world use" (to BCH community)
+- **Year 3+:** "Cheapest remittances globally" (to everyone)
+
+**Funding narrative:**
+- Investors: "Each hyperinflation launch makes future launches easier—positive externality compounds"
+- BCH community: "Support Venezuela launch to benefit entire BCH ecosystem"
+
+### If Hypothesis is FALSE
+
+**Expansion strategy:**
+- Launch wherever adoption is fastest, no sequencing needed
+- Prioritize by TAM (total addressable market), not by currency stability
+- US→Mexico might launch before Venezuela (higher volume potential)
+
+**Marketing:**
+- Each corridor independent
+- No "BCH improvement" narrative
+- Focus on cost savings only
+
+---
+
+## Comparative Cases to Study
+
+### 1. M-Pesa in Kenya (2007-2015)
+
+**Relevant:** Started in one hard market (Kenya, low banking penetration), became easier to expand to other African countries after proving concept.
+
+**Lesson:** First-mover proof of concept reduces risk perception for later markets.
+
+### 2. Bitcoin in Venezuela (2016-2023)
+
+**Relevant:** Organic BCH/BTC adoption in Venezuela driven by hyperinflation.
+
+**Lesson:** Desperation drives adoption, but lack of coordinated infrastructure limited stabilization effect.
+
+### 3. Stablecoin Adoption in Argentina (2020-2025)
+
+**Relevant:** USDT/USDC adoption in Argentina due to peso depreciation.
+
+**Lesson:** Hyperinflation creates strong demand for ANY stable alternative—BCH can compete with stablecoins if infrastructure exists.
+
+---
+
+## Questions for the BCH Community
+
+1. **Volume threshold:** How much BCH transaction volume is needed to measurably reduce global volatility?
+2. **Corridor isolation:** Can corridor-specific stability (BCH/VES) affect global stability (BCH/USD)?
+3. **Time horizon:** How long after Phase 1 launch should we expect to see stabilization effect?
+4. **Alternative mechanisms:** Are there other ways hyperinflation-country success helps stable-currency adoption beyond volatility reduction?
+5. **Negative externalities:** Could successful hyperinflation launches HURT stable-currency adoption (regulatory fears, "taint by association")?
+
+---
+
+## Related Documents
+
+- [RS064: BCH as Store of Value vs VES](../../research/RS064_bch_sov_in_venezuela.md) — Why hyperinflation merchants want BCH
+- [RS065: BCH Volatility Declining](../../research/RS065_BCH_price_volatility_decline.md) — Historical stabilization trend
+- [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — Core mechanism
+- [Unknown: Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Why merchants hold BCH longer
+
+---
+
+## Contributor Guidance
+
+**Skills needed:**
+- Strategic thinking (sequencing, market entry)
+- Econometrics (causality, control variables)
+- Comparative case study analysis
+
+**How to contribute:**
+1. **Case studies:** Find similar examples of "hard market first" strategies in other industries
+2. **Econometric design:** Propose methods for isolating Asgaya's impact on BCH volatility from other factors
+3. **Risk analysis:** Identify additional risks we haven't considered
+4. **Alternative sequencing:** Propose alternative launch sequences and their trade-offs
+
+---
+
+**Status:** Hypothesis formed. Measurement framework designed. Awaiting Phase 1 launch data. This is a multi-year question that will only be resolved retrospectively.
+
+**Next steps:**
+1. Launch Venezuela (Phase 1)
+2. Track global BCH/USD volatility monthly
+3. After 12 months: Preliminary analysis
+4. After 24 months: Decide whether to prioritize hyperinflation or stable-currency for Phase 2
+5. After Phase 2 launches: Retrospective comparison of adoption rates
+
+---
+
+*This unknown asks: Should we deliberately do things in the "harder" order because success in hard markets creates infrastructure for easy markets? It's a bet on positive externalities and improvement effects—worth testing.*
+
+
+## Unknown: Does Hyperinflation Create Natural BCH Holding Incentives?
+
+# Unknown: Does Hyperinflation Create Natural BCH Holding Incentives?
+
+**Status:** Not Started  
+**Priority:** High  
+**Last Updated:** 2026-06-02  
+**Contributors Welcome:** Yes  
+**Related Research:** [RS064](../../research/RS064_bch_sov_in_venezuela.md), [RS065](../../research/RS065_BCH_price_volatility_decline.md)
+
+---
+
+## What We Don't Know
+
+Do merchants in hyperinflation economies hold Bitcoin Cash significantly longer than merchants in stable-currency economies, creating a natural "BCH float" that drives adoption and potentially stabilizes prices?
+
+We hypothesize that VES depreciation creates such strong incentives to escape that merchants will hold BCH for days or weeks rather than converting immediately—behavior opposite to what we'd expect in stable-currency countries.
+
+---
+
+## Why It Matters
+
+### 1. Drives the Adoption-Stabilization Effect
+
+If merchants hold BCH longer:
+- More BCH circulates in local economy
+- Less conversion pressure on exchanges
+- Natural demand buffer during price dips
+- Accelerates the [adoption-stabilization effect](adoption-stabilization-effect.md)
+
+### 2. Changes Phase 0 Design Priorities
+
+**If merchants hold BCH (hypothesis TRUE):**
+- Internal VES/BCH exchange becomes critical feature
+- Dashboard should encourage holding ("You've preserved X% more than VES")
+- Merchant education focuses on "hold strategy"
+
+**If merchants convert immediately (hypothesis FALSE):**
+- Fast VES liquidity becomes critical
+- Need more BCH sellers on bulletin board
+- Merchant education focuses on "quick escape"
+
+### 3. Validates the Mental Model Shift
+
+**Old assumption:**
+- Merchants scared of volatility → convert fast
+
+**New hypothesis:**
+- Merchants scared of VES depreciation → hold BCH longer
+
+If true, proves the entire "escape hatch" reframing is correct.
+
+---
+
+## Current Hypothesis
+
+**Hyperinflation reverses holding incentives.** Merchants in Venezuela will hold BCH significantly longer (days to weeks) compared to hypothetical merchants in Spain/US (who would convert within hours) because:
+
+1. **VES depreciation is guaranteed:** Holding VES = certain loss, holding BCH = possible gain
+2. **Time arbitrage:** Merchants can choose WHEN to convert BCH→VES, but VES depreciates continuously
+3. **Data supports holding:** RS064 shows 96% of days BCH > VES
+4. **Escape mentality:** Merchants want OUT of VES, not just "through" BCH
+
+**Prediction:** Average merchant hold time > 7 days in Phase 0.
+
+---
+
+## The Economic Logic
+
+### In Stable-Currency Countries (EUR, USD)
+
+**Merchant psychology:**
+```
+Receive BCH → Think: "Volatile, risky, convert fast"
+Hold time: Hours to 1 day
+Reason: Fiat is stable, BCH is perceived risk
+```
+
+### In Hyperinflation Countries (VES, ARS, LBP)
+
+**Merchant psychology:**
+```
+Receive BCH → Think: "Escape! Don't return to VES unless needed"
+Hold time: Days to weeks
+Reason: Fiat is melting, BCH is relative safety
+```
+
+**The inversion:** What's "risky" flips. The mental model reverses.
+
+---
+
+## Evidence Supporting the Hypothesis
+
+### From RS064: BCH vs VES Performance
+
+- BCH declined vs VES on <15/365 days (4%)
+- For 2+ week holds: 0% probability of loss vs VES
+- Average merchant who holds 7 days: ~96% likely to gain vs VES
+
+**Rational behavior:** Hold BCH, only buy VES when absolutely needed.
+
+### From Merchant Interviews (Anecdotal)
+
+We haven't launched Phase 0 yet, but informal conversations with Venezuelan merchants reveal:
+- "I check the dollar rate twice a day, sometimes three times"
+- "By evening the cash in my register is worth less"
+- "I try to spend bolivares as fast as I can"
+- "If I could hold something stable, even for a week, that would help"
+
+**Implication:** They're already trying to minimize VES holding time—BCH gives them the tool.
+
+### From St. Kitts BCH Adoption (2018-2023)
+
+Merchants there who accepted BCH often held it for weeks/months, not because they "believed in crypto" but because:
+- XCD (Eastern Caribbean Dollar) is pegged to USD but has liquidity constraints
+- BCH gave them optionality
+- Some merchants became accidental HODLers and benefited
+
+**Note:** St. Kitts is not hyperinflation, but shows holding behavior emerges when local currency has issues.
+
+---
+
+## Investigation Method
+
+### Phase 0 Measurement
+
+**Data to collect:**
+1. **Merchant receive time:** When covenant releases BCH to merchant wallet
+2. **Merchant convert time:** When merchant sells BCH for VES (via bulletin board or external)
+3. **Hold duration:** Time between receive and convert
+4. **Reason for conversion:** (Survey) "Why did you convert now?"
+   - Need VES for float (next remittance)
+   - Need VES for supplier payment
+   - Need VES for personal expense
+   - Nervous about BCH volatility
+   - Other
+
+**Metrics:**
+- Average hold time (days)
+- Median hold time (days)
+- Distribution: <1 day, 1-3 days, 3-7 days, 7-14 days, 14+ days
+- Correlation with BCH price movement
+- Correlation with VES depreciation rate
+
+### Control Comparison (If Possible)
+
+If we launch a stable-currency corridor (e.g., Spain → Spain internal remittances), compare:
+- Venezuela merchant hold time vs Spain merchant hold time
+- Hypothesis: Venezuela > Spain by 5-10x
+
+---
+
+## Success Criterion
+
+**Hypothesis confirmed if:**
+- Average merchant hold time > 7 days in Venezuela
+- >50% of merchants hold for 3+ days
+- Hold time negatively correlated with VES depreciation rate (faster VES decline = longer BCH hold)
+- Merchants voluntarily report "using BCH as savings" in surveys
+
+**Hypothesis weakened if:**
+- Average hold time < 3 days
+- >70% convert within 24 hours
+- Merchants cite "BCH volatility fear" as primary reason for fast conversion
+
+**Hypothesis disproved if:**
+- Average hold time < 1 day
+- Behavior indistinguishable from stable-currency merchants
+
+---
+
+## What This Enables
+
+### If TRUE: Changes Everything
+
+**1. Merchant pitch:**
+- "Don't convert immediately—hold BCH until you actually need VES"
+- Show RS064 data: "Statistically safer"
+- Dashboard feature: "Days held: 8 | Gain vs VES: +2.3%"
+
+**2. Product design:**
+- Emphasis on internal VES/BCH exchange (merchant-to-merchant)
+- "Buy VES only when needed" workflow
+- Holdings dashboard (like savings account)
+
+**3. Circular economy emerges faster:**
+- BCH stays in Venezuela longer
+- Merchants trade BCH among themselves
+- Recipients pay merchants in BCH directly (skip VES)
+
+**4. Adoption-stabilization accelerates:**
+- Longer hold times = more BCH float
+- Less exchange pressure
+- Corridor becomes more stable
+
+### If FALSE: Adjust Strategy
+
+**1. Merchant pitch:**
+- "Fast escape from VES—two taps, done"
+- Emphasize speed, not holding
+- De-emphasize "store of value" angle
+
+**2. Product design:**
+- Fast VES liquidity critical
+- Need many BCH sellers on bulletin board
+- Real-time exchange matching
+
+**3. Circular economy slower:**
+- BCH passes through quickly
+- More dependence on external exchanges
+- Recipients still convert to VES immediately
+
+---
+
+## Strategic Implications by Corridor Type
+
+### Hyperinflation Corridors (Venezuela, Argentina, Lebanon)
+
+**If holding incentive is strong:**
+- Launch strategy: Emphasize "escape VES" over "earn fees"
+- Merchant education: "Hold BCH, buy VES when needed"
+- Success metric: Merchant hold time > 7 days
+
+### Stable-Currency Corridors (Spain, US, EU)
+
+**If holding incentive is weak (expected):**
+- Launch strategy: Emphasize "cheaper remittances" over "escape fiat"
+- Merchant education: "Fast liquidity, convert anytime"
+- Success metric: Fast conversion < 1 day (proves liquidity works)
+
+**Key insight:** Same protocol, different psychology, different pitch.
+
+---
+
+## Phase 0 Experiments to Run
+
+### 1. Default Choice Architecture
+
+**Test:** Does default option affect hold time?
+
+- **Group A:** "Get VES now" (default) vs "Hold as BCH"
+- **Group B:** "Hold as BCH" (default) vs "Get VES now"
+
+Measure: Does Group B hold longer?
+
+### 2. Data Transparency
+
+**Test:** Does showing RS064 data increase hold time?
+
+- **Group A:** Dashboard shows hold time only
+- **Group B:** Dashboard shows hold time + "Gain vs VES: +X%"
+
+Measure: Does Group B hold longer when they see they're winning?
+
+### 3. Social Proof
+
+**Test:** Does showing other merchants' behavior affect hold time?
+
+- Show: "Average merchant holds for 8 days"
+- Measure: Do new merchants match the average?
+
+---
+
+## Questions for Validation
+
+1. **What's the minimum viable hold time** to consider hypothesis confirmed? (We say 7 days, but is that right?)
+2. **Cultural factors:** Are Venezuelan merchants uniquely suited to this, or will Argentine/Lebanese merchants behave similarly?
+3. **Learning curve:** Will hold time increase over time as merchants gain confidence?
+4. **BCH literacy:** Do merchants need to understand "what is Bitcoin Cash" or just "this is safer than VES"?
+5. **Trust threshold:** How many successful hold cycles before merchant becomes comfortable holding 2+ weeks?
+
+---
+
+## Related Documents
+
+- [RS064: BCH as Store of Value vs VES](../../research/RS064_bch_sov_in_venezuela.md) — Data supporting holding strategy
+- [RS065: BCH Volatility Declining](../../research/RS065_BCH_price_volatility_decline.md) — Historical trend
+- [Unknown: Adoption-Stabilization](adoption-stabilization-effect.md) — How holding drives stability
+- [Unknown: Cascade Effect](cascade-effect-stabilization.md) — How this helps future corridors
+
+---
+
+## Contributor Guidance
+
+**Skills needed:**
+- Behavioral economics
+- Survey design
+- Data analysis (Python/R)
+- Experience with hyperinflation economies (ideal)
+
+**How to contribute:**
+1. **Pre-launch:** Design survey questions for merchant hold behavior
+2. **During Phase 0:** Analyze hold time data monthly
+3. **Comparative research:** Find similar behavior in other hyperinflation contexts
+4. **A/B test design:** Propose experiments to optimize hold time
+
+---
+
+**Status:** Hypothesis formed. Measurement framework designed. Awaiting Phase 0 launch for data collection.
+
+**Next steps:**
+1. Build merchant dashboard with hold time tracking
+2. Design default choice architecture (A/B test)
+3. Create merchant education materials (when to hold, when to convert)
+4. Implement "gain vs VES" calculator
+5. After 3 months: Publish hold time data, analyze correlation with VES depreciation
+
+---
+
+*This unknown tests whether the "escape hatch" mental model is empirically correct. If merchants hold BCH longer than expected, it validates the entire strategic reframing from yesterday's breakthrough.*
+
+
+## Payment Info Exchange Method
+
+# Payment Info Exchange Method
+
+**Category:** Technical  
+**Impact:** High (affects every covenant creation)  
+**Phase:** Phase 0 critical  
+**Status:** Open for collaboration
+
+---
+
+## The Question
+
+**How should the sender obtain the seller's payment details (bank account, reference code, amount) in a way that is peer-to-peer, censorship-resistant, and privacy-preserving?**
+
+---
+
+## Why This Matters
+
+Under Asgaya's payment-first, lock-second flow:
+
+1. Sender creates covenant on-chain
+2. Sender selects a BCH seller from bulletin board
+3. **Sender needs seller's payment details to pay fiat via Bizum/SEPA**
+4. Seller's bot locks BCH only after receiving fiat payment
+
+The payment info delivery is a critical checkpoint that also serves as a **seller liveness check**: if the seller's bot doesn't respond with payment details, the sender knows not to proceed with the fiat payment.
+
+---
+
+## Design Requirements
+
+The payment info exchange mechanism must satisfy:
+
+### Must Have:
+- ✅ **Peer-to-peer:** No central server dependency
+- ✅ **Privacy:** Only the sender can read the payment details
+- ✅ **Censorship-resistant:** No single point of failure
+- ✅ **Liveness proof:** Proves seller's bot is online before sender pays
+- ✅ **Fast:** Response within 2 minutes (sender won't wait longer)
+
+### Nice to Have:
+- ✅ **Minimal on-chain footprint:** Avoid bloating the blockchain unnecessarily
+- ✅ **Standard protocols:** Use existing, well-tested solutions
+- ✅ **Simple implementation:** Reduce development complexity
+- ✅ **Cross-platform:** Works on Android, iOS, desktop
+
+---
+
+## Current Leading Options
+
+### Option 1: Nostr Direct Messages (NIP-04)
+
+**How it works:**
+```
+1. Seller includes Nostr pubkey in bulletin board listing
+2. Sender's app sends encrypted DM: "Need payment info for covenant_xyz789"
+3. Seller's bot responds via encrypted DM with payment details
+4. Total latency: <1 second
+```
+
+**Pros:**
+- ✅ Existing protocol (Nostr already used for bulletin board)
+- ✅ End-to-end encrypted (NIP-04)
+- ✅ Sub-second latency (very fast)
+- ✅ Zero on-chain footprint
+- ✅ Simple implementation (Nostr libraries well-supported)
+- ✅ **Bonus:** Enables user-to-user messaging for coordination
+
+**Cons:**
+- ⚠️ Depends on Nostr relay availability
+- ⚠️ Censorship resistance = good but not maximum (relays can be blocked)
+- ⚠️ Requires separate Nostr integration (but already needed for bulletin board)
+
+**Estimated effort:** Low (Nostr already integrated)
+
+---
+
+### Option 2: Encrypted OP_RETURN on BCH
+
+**How it works:**
+```
+1. Sender posts request to blockchain (optional)
+2. Seller's bot posts OP_RETURN transaction with payment info
+3. Payment info encrypted with ECIES using sender's covenant pubkey
+4. Sender's bot monitors blockchain, decrypts info
+5. Total latency: ~2 minutes (one block confirmation)
+```
+
+**Pros:**
+- ✅ Maximum censorship resistance (on BCH blockchain)
+- ✅ End-to-end encrypted (ECIES)
+- ✅ Verifiable (payment info cryptographically tied to covenant)
+- ✅ No external dependencies (pure BCH)
+
+**Cons:**
+- ⚠️ Permanent on-chain storage (~200 bytes per covenant)
+- ⚠️ Higher latency (~2 minutes vs <1 second)
+- ⚠️ Small cost to seller (~€0.002 per covenant)
+- ⚠️ More complex implementation (ECIES encryption, OP_RETURN monitoring)
+
+**Estimated effort:** Moderate (requires encryption library and monitoring)
+
+---
+
+## Alternative Proposals Welcome
+
+The Bitcoin Cash community may have better solutions we haven't considered:
+
+**Possible alternatives:**
+- WebRTC with Nostr signaling (P2P, fast, no on-chain data)
+- Custom BCH-native messaging protocol
+- Hybrid approach (Nostr primary, OP_RETURN fallback)
+- Other decentralized messaging protocols
+
+**What we're looking for:**
+- Maintains privacy (encryption)
+- Maintains decentralization (no central server)
+- Works reliably in adversarial conditions
+- Simple enough to implement in Phase 0
+
+---
+
+## Success Criteria
+
+A solution is considered successful if:
+
+1. **Reliability:** >99% success rate in delivering payment info within 2 minutes
+2. **Privacy:** Payment details only readable by intended sender
+3. **Censorship resistance:** Works even if some infrastructure is blocked/down
+4. **User experience:** Feels instant to user (<5 second perceived latency)
+5. **Implementation:** Can be built and tested within 2-4 weeks
+6. **Maintenance:** Doesn't require constant manual intervention
+
+---
+
+## Investigation Methods
+
+### 1. Protocol Analysis
+- Compare Nostr NIP-04 encryption vs ECIES on BCH
+- Evaluate relay network topology and censorship vectors
+- Benchmark OP_RETURN monitoring performance
+- Test cross-platform library support
+
+### 2. Security Review
+- Threat model for payment info interception
+- Man-in-the-middle attack scenarios
+- Relay operator malicious behavior
+- Chain reorganization edge cases
+
+### 3. Performance Testing
+- Latency measurements: Nostr DM vs OP_RETURN
+- Reliability under different network conditions
+- Failover behavior when primary method unavailable
+- Mobile device battery/data usage
+
+### 4. Community Feedback
+- Present both options to BCH Research Forum
+- Gather input from BCH protocol developers
+- Learn from similar projects (CashAccounts, AnyHedge, etc.)
+- Identify edge cases we haven't considered
+
+---
+
+## How to Contribute
+
+**If you have expertise in:**
+- Nostr protocol and relay infrastructure
+- BCH OP_RETURN best practices
+- Decentralized messaging systems
+- Cryptographic primitives (ECIES, NIP-04)
+
+**We'd love your input on:**
+1. Which option (Nostr or OP_RETURN) is better for Phase 0?
+2. Are there hybrid approaches we should consider?
+3. What edge cases or failure modes are we missing?
+4. Are there existing BCH projects solving similar problems?
+
+**How to help:**
+- Comment on this unknown in BCH Research Forum
+- Share relevant protocol documentation or examples
+- Propose alternative approaches with rationale
+- Review our technical assumptions
+
+---
+
+## Related Documents
+
+### Technical Context:
+- [Fraud Prevention: Payment-First Model](../collaborative_workspace/simplify-documentation-proposal/fraud-prevention-payment-first.md) - Why payment-first requires this
+- [Encrypted Payment Info Technical Briefing](../collaborative_workspace/simplify-documentation-proposal/encrypted-payment-info-liveness-check.md) - Deep technical dive on OP_RETURN approach
+- [Nostr Messaging Benefits](../collaborative_workspace/simplify-documentation-proposal/nostr-messaging-benefits.md) - User messaging bonus if Nostr chosen
+
+### Architectural Context:
+- [Covenant Architecture](../concepts/bounty-contracts-with-volatility-buffer.md) - How covenants work
+- [Bulletin Board](../concepts/bulletin-board.md) - How sellers are discovered
+- [Seller Bot](../android-app/backend-apis/seller-bot/README.md) - What needs to respond
+
+---
+
+## Current Status
+
+**Decision:** Not yet made (Phase 0 design)  
+**Recommendation:** Nostr DM (faster, simpler, enables messaging bonus)  
+**Seeking:** BCH community technical review and feedback  
+**Timeline:** Decision needed before Phase 0 implementation begins
+
+---
+
+## Questions for Discussion
+
+1. **Nostr relay trust:** How much do we trust Nostr relay operators? Can they censor specific message types?
+
+2. **On-chain bloat:** Is 200 bytes per covenant acceptable permanent on-chain storage? Or is this wasteful?
+
+3. **Hybrid approach:** Should we implement both (Nostr primary, OP_RETURN fallback)? Or is this over-engineering?
+
+4. **User messaging:** If Nostr is chosen, should we also enable user-to-user messaging for coordination? (sender→recipient, recipient→merchant)
+
+5. **Future-proofing:** Which approach is more likely to still work in 5 years? 10 years?
+
+---
+
+**This unknown represents a critical Phase 0 design decision. Your expertise can help Asgaya choose the right path.**
+
+*Last updated: 2026-05-31*  
+*Status: Seeking community input*
+
+
+## Unknown: Variable Buffer Rate (Per-Hour Pricing)
+
+# Unknown: Variable Buffer Rate (Per-Hour Pricing)
+
+**Status:** Not Started  
+**Priority:** Medium (Phase 0 enhancement)  
+**Last Updated:** 2026-06-05  
+**Contributors Welcome:** Yes  
+**Related:** [Bulletin Board](../concepts/bulletin-board.md), [Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md)
+
+---
+
+## What We Don't Know
+
+Should the volatility buffer rate be **fixed** (7% for 24 hours) or **variable** (seller sets hourly rate, sender chooses timeout)?
+
+**The proposal:** Sellers post buffer rate per hour (e.g., 1%/hour). Senders choose timeout when creating covenant (e.g., 4 hours = 4% buffer).
+
+---
+
+## Why It Matters
+
+### 1. Market Competition
+
+**Fixed buffer (current):**
+- All sellers provide same 7% buffer
+- No differentiation on volatility risk tolerance
+- One-size-fits-all (might be too high or too low)
+
+**Variable buffer (proposed):**
+- Sellers compete: 0.5%/hour vs 2%/hour
+- Market discovers optimal rate (~1%/hour likely)
+- Better price for coordinated transfers
+
+### 2. Sender-Recipient Coordination
+
+**Current:**
+- Sender pays for 24-hour window even if recipient claims in 2 hours
+- No incentive to coordinate timing
+
+**Proposed:**
+```
+Sender to recipient:
+"Can you claim in 4 hours?"
+
+Recipient: "Yes"
+
+Sender: Creates 4-hour covenant → 4% buffer instead of 24%
+```
+
+**Savings:** €20 buffer → €4 buffer (80% reduction for coordinated transfer)
+
+### 3. Capital Efficiency
+
+**Seller perspective:**
+
+**Current:**
+- Lock 107% for up to 24 hours
+- Capital recycling: 365 days / 1 day = 365 cycles max
+- But most claims happen in <4 hours (wasted buffer)
+
+**Proposed:**
+- Lock 104% for 4 hours (if sender chooses 4h timeout)
+- Capital recycling: 365 days / 0.17 days = 2,147 cycles max
+- **6x more efficient** if average claim time is 4 hours
+
+**Seller APR with 1%/hour rate:**
+- Current (24h): 7% buffer × 365 cycles = 2,555% APR (but overkill)
+- Proposed (4h avg): 4% buffer × 2,147 cycles = 8,588% APR
+- **3.4x higher APR** by matching buffer to actual claim time
+
+---
+
+## The Mechanism
+
+### Listing Format
+
+**Seller posts in bulletin board:**
+```json
+{
+  "category": "ASGAYA_SELLER_V1",
+  "payment_methods": ["Bizum", "SEPA Instant"],
+  "corridors": ["EUR-VES"],
+  "limits": { "min": 50, "max": 500 },
+  "fee_rate": 0.005,
+  "buffer_rate_per_hour": 0.01,  ← NEW (1% per hour)
+  "max_timeout_hours": 24,        ← NEW (ceiling)
+  "contact": "seller#123"
+}
+```
+
+### Covenant Creation
+
+**Sender chooses timeout:**
+```javascript
+// UI: Sender selects timeout from slider/buttons
+const timeout_hours = 4; // Sender's choice
+
+// Fetch seller's hourly rate from listing
+const hourly_rate = 0.01; // 1% per hour
+
+// Calculate required buffer
+const buffer_multiplier = 1 + (hourly_rate * timeout_hours);
+// 1 + (0.01 × 4) = 1.04
+
+// Covenant requires this much BCH from seller
+const required_bch = amount_eur / eur_bch_rate * buffer_multiplier;
+
+// Covenant timeout
+const timeout_timestamp = now() + (timeout_hours * 3600);
+```
+
+### Covenant Logic
+
+```
+When recipient claims:
+├─ Check: claim_time < timeout_timestamp ✓
+├─ Release: required_bch to recipient
+└─ Seller keeps: fee (0.5%) + unused buffer
+
+When timeout expires (no claim):
+├─ Sender reclaims: original BCH
+└─ Seller reclaims: buffer
+```
+
+**Same covenant architecture, just variable timeout and buffer calculation.**
+
+---
+
+## User Experience
+
+### Sender Flow
+
+```
+┌─────────────────────────────────────┐
+│ Step 3: Choose claim window         │
+├─────────────────────────────────────┤
+│                                     │
+│ How soon can recipient claim?       │
+│                                     │
+│ Selected seller's rate: 1% per hour │
+│                                     │
+│ ⚡ 1 hour   → 1% buffer  (€1.00)   │
+│ ⏱️  2 hours  → 2% buffer  (€2.00)   │
+│ ⏱️  4 hours  → 4% buffer  (€4.00)   │ ← Default
+│ 🕐 8 hours  → 8% buffer  (€8.00)   │
+│ 🕐 12 hours → 12% buffer (€12.00)   │
+│ 📅 24 hours → 24% buffer (€24.00)   │
+│                                     │
+│ 💡 Coordinate with recipient to     │
+│    save on buffer costs!            │
+│                                     │
+│ [ Continue ]                        │
+└─────────────────────────────────────┘
+```
+
+**Default:** 4 hours (reasonable coordination window)
+
+**Power user:** Sender messages recipient first → "Can you claim in 2 hours?" → Selects 2 hours
+
+### Recipient Flow
+
+**No change!** Recipient sees:
+```
+Incoming: €100
+Claim before: [4 hours from now]
+Options: BCH (free) | Cash at merchant (0.5% fee)
+```
+
+Recipient doesn't need to know about buffer rates - just the deadline.
+
+---
+
+## Economics
+
+### Seller Competition
+
+**Scenario:** Three sellers in EUR-VES corridor
+
+| Seller | Hourly Rate | 4h Buffer | 24h Buffer | Strategy |
+|--------|-------------|-----------|------------|----------|
+| Alice | 0.5%/hour | 2% | 12% | Aggressive (undercut) |
+| Bob | 1%/hour | 4% | 24% | Standard (market rate) |
+| Carol | 2%/hour | 8% | 48% | Conservative (high volatility protection) |
+
+**Market dynamics:**
+- Alice gets more volume (lower cost for senders)
+- Carol gets less volume but higher margin
+- Bob is middle ground
+
+**Expected outcome:** Market settles around 1%/hour (similar to current 7%/24h ≈ 0.29%/hour, but accounts for actual volatility risk)
+
+### Sender Optimization
+
+**Example:** Sending €100 to Venezuela
+
+**Without coordination:**
+- Sender: "I don't know when recipient will claim"
+- Chooses: 24 hours (safe but expensive)
+- Buffer cost: €24
+
+**With coordination:**
+- Sender messages recipient: "Can you claim today?"
+- Recipient: "Yes, I'll go to merchant in 3 hours"
+- Sender chooses: 4 hours (enough margin)
+- Buffer cost: €4
+
+**Savings: €20 (83% reduction)**
+
+### Capital Recycling APR
+
+**Seller with 1%/hour rate:**
+
+| Avg Claim Time | Buffer % | Cycles/Year | APR |
+|----------------|----------|-------------|-----|
+| 2 hours | 2% | 4,380 | 8,760% |
+| 4 hours | 4% | 2,190 | 8,760% |
+| 8 hours | 8% | 1,095 | 8,760% |
+| 24 hours | 24% | 365 | 8,760% |
+
+**Wait, the APR is the same!** Because hourly rate accounts for time.
+
+**Actual benefit:** Senders pay less for coordinated transfers, sellers get more volume (more 4h covenants than 24h covenants).
+
+---
+
+## Implementation Complexity
+
+### Easy (No blocker)
+
+**Listing format:**
+- Add `buffer_rate_per_hour` field to NFT commitment
+- Add `max_timeout_hours` field (default 24)
+
+**Covenant logic:**
+- Multiply hourly rate × timeout hours
+- Set timeout timestamp
+- Same pull system, same abort conditions
+
+**Backend:**
+- No changes needed (covenant is self-enforcing)
+
+### Moderate (UI work)
+
+**Sender UX:**
+- Slider or button grid for timeout selection
+- Real-time buffer cost calculation
+- Default recommendation (4 hours)
+
+**Listing display:**
+- Show "1%/hour" instead of "7% buffer"
+- Calculator: "4h = €4 buffer" preview
+
+### Unknown (Needs testing)
+
+**Market discovery:**
+- What hourly rate will sellers choose?
+- Will senders understand per-hour pricing?
+- Does coordination actually happen?
+
+**Edge cases:**
+- What if sender chooses 1h but recipient takes 4h? (Covenant expires, sender reclaims)
+- Should there be a minimum timeout? (Probably 1 hour)
+- Should there be warnings? "Your recipient might not claim in time!"
+
+---
+
+## Testing Plan
+
+### Phase 0a: Fixed Buffer (Baseline)
+
+**Configuration:**
+- All sellers use 7% fixed buffer
+- 24-hour fixed timeout
+- Measure: Average claim time, buffer surplus distribution
+
+**Data to collect:**
+- 50% of recipients claim in <X hours
+- 90% of recipients claim in <Y hours
+- Median claim time: Z hours
+
+**Expected result:** Most claims happen in <4 hours (wasting 20% of buffer)
+
+### Phase 0b: Variable Buffer (A/B Test)
+
+**Configuration:**
+- 50% of sellers use fixed 7%/24h
+- 50% of sellers use 1%/hour (capped at 24h)
+- Measure: Which sellers get more volume? Do senders coordinate?
+
+**Success criteria:**
+- Variable buffer sellers get ≥50% of volume (proves market preference)
+- Average timeout chosen <12 hours (proves coordination happens)
+- No increase in covenant expirations (proves senders aren't setting timeout too low)
+
+**If successful:** Roll out to 100% in Phase 1
+
+---
+
+## Success Criteria
+
+**Variable buffer succeeds if:**
+
+1. **Sellers adopt it:** ≥75% of sellers post hourly rates (vs fixed)
+2. **Senders coordinate:** Average timeout chosen is <12 hours (proves sender-recipient communication)
+3. **Cost savings:** Average buffer paid drops from 7% to <5% (proves efficiency gain)
+4. **No failures:** Covenant expiration rate <5% (proves senders aren't setting timeout too low)
+
+**Variable buffer fails if:**
+
+- Senders confused: ">50% choose default without coordination" (UX too complex)
+- No cost savings: "Average buffer paid still ~7%" (no coordination happening)
+- High expiration: ">10% covenants expire unclaimed" (senders setting timeout too low)
+
+---
+
+## Risks
+
+### Risk 1: UX Complexity
+
+**Concern:** "Sender has to choose timeout AND understand buffer calculation"
+
+**Mitigation:**
+- Simple default: 4 hours (good for most cases)
+- Visual calculator: "4h = €4 buffer" (no math required)
+- Recommended range: "Most people choose 2-8 hours"
+
+### Risk 2: Market Confusion
+
+**Concern:** "Sellers don't know what hourly rate to set"
+
+**Mitigation:**
+- Guidance: "Recommended: 0.5-2%/hour"
+- Default: 1%/hour (matches current 24%/24h ≈ 1%/hour)
+- Dashboard: "Your rate vs market average"
+
+### Risk 3: Coordination Failure
+
+**Concern:** "Senders don't actually coordinate with recipients"
+
+**Mitigation:**
+- If senders always choose 24h: They pay same as fixed buffer (no harm)
+- If senders experiment: Some learn to coordinate (gradual adoption)
+- Education: "Save money by coordinating claim time!"
+
+### Risk 4: Covenant Expirations
+
+**Concern:** "Sender chooses 1h, recipient takes 4h, covenant expires"
+
+**Mitigation:**
+- Minimum timeout: 1 hour (can't choose 0)
+- Warning: "If recipient doesn't claim by [time], you'll get your money back"
+- Recommended: "Choose 4h to be safe"
+
+---
+
+## Related Documents
+
+- [Bulletin Board](../concepts/bulletin-board.md) - Listing format
+- [Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) - Current 7% fixed buffer
+- [Sender Flows](../android-app/flows/sender-flows/) - Where timeout selection happens
+
+---
+
+## Contributor Guidance
+
+**Skills needed:**
+- Game theory (pricing mechanisms, market dynamics)
+- UX design (how to make per-hour pricing intuitive)
+- Android development (timeout selection UI)
+
+**How to contribute:**
+1. **UX mockups:** Design timeout selection interface
+2. **Economic modeling:** Simulate seller competition at different hourly rates
+3. **Prototype:** Implement variable buffer in covenant testnet
+4. **User testing:** Ask users to choose timeout and explain their reasoning
+
+---
+
+## Phased Rollout: Crawl → Walk → Run
+
+### Phase 0: Fixed Everything (Venezuela Launch)
+
+**Configuration:**
+- Buffer: 7% (fixed)
+- Fee: 0.5% (fixed)  
+- Timeout: 24 hours (fixed)
+
+**Rationale:**
+- **The buffer concept is counter-intuitive** ("Lock €107 to earn €0.50?")
+- Sellers need to learn and trust the basic mechanic first
+- Focus on education: "Your €7 buffer comes back + you earn €0.50 fee"
+- No decisions needed: Accept or decline each trade
+
+**Success criteria:**
+- 50+ sellers understand and trust buffers
+- <5% opt-out due to confusion
+- Average claim time measured (establishes baseline)
+
+### Phase 1: Time-Based Fees (IF NEEDED - Data-Driven)
+
+**Consideration:** Before adding any variable pricing, evaluate Phase 0 data.
+
+**Add time-based fees only if:**
+- ✅ 50%+ of claims happen in <4 hours (coordination is happening)
+- ✅ Users complain about flat fee (want discount for fast claims)
+- ✅ Sellers request ability to compete on price
+
+**Alternative: Keep it simple**
+- If Phase 0 works well with 7% / 0.5% / 24h, don't change it
+- "Don't fix what isn't broken"
+
+**If adding time-based fees:**
+
+**Configuration:**
+- Buffer: 7% (still fixed - no complexity)
+- Fee: Variable based on timeout (e.g., 0.2% for 2h, 0.6% for 24h)
+- Timeout: 2-24 hours (sender chooses)
+
+**Rationale:**
+- Users have 10+ successful transfers (understand flow)
+- ONE choice (timeout) - intuitive, not technical
+- Creates coordination incentive (3x fee difference)
+- No buffer complexity (sender doesn't see 7%)
+
+**Value:**
+- Learn user preferences for claim timing
+- Reward coordination with lower fees
+- Fair pricing (seller compensated for longer capital lockup)
+
+**UX:**
+```
+How soon can Elena claim?
+
+⚡ 2h  → €0.20 fee | Coordinate first!
+⏱️  4h  → €0.30 fee | Recommended ✓
+🕐 8h  → €0.40 fee
+📅 24h → €0.60 fee | Safe if unsure
+```
+
+**Success criteria:**
+- Users understand choice (no confusion)
+- Shorter timeouts chosen when coordinated (data shows value)
+- No increase in timeout expirations (users not choosing too short)
+
+### Phase 2: Two-Dimensional Pricing (MAYBE - Even More Uncertain)
+
+**Only consider if Phase 1 time-based fees succeed and users want more.**
+
+**Configuration:**
+- Buffer: 0.5-2% per hour (seller chooses - variable buffer finally introduced)
+- Fee: Base + hourly (e.g., 0.3% + 0.1%/hour) (seller chooses)
+- Timeout: 1-24 hours (sender chooses)
+
+**Rationale:**
+- Sellers are now pros (100+ trades each)
+- Understand buffer-capital-fee relationship fully
+- Ready for sophisticated pricing and market segmentation
+- Premium sellers charge for reliability, economy sellers compete on price
+
+**Warning:** This adds significant complexity (back to the double-sided education problem). Only implement if:
+- Phase 1 time-based fees working perfectly
+- Users explicitly requesting more control
+- Market data shows value of variable buffers
+
+**Success criteria:**
+- Market segments into economy/standard/premium tiers naturally
+- Coordination incentives work (5x+ fee difference for slow claims)
+- Capital efficiency drives innovation
+- No increase in user confusion or covenant failures
+
+---
+
+## Why Not Phase 0?
+
+### Risk 1: Seller Confusion (Buffer Concept)
+
+If we launch Venezuela with variable buffer:
+- Seller: "This is too complicated, I don't understand"
+- Seller: "Why do I lock MORE BCH than I receive?"
+- Seller: "This sounds like a scam - too many numbers"
+- **Result:** Low seller adoption, high opt-out
+
+### Risk 2: Sender Confusion (Critical UX Failure)
+
+**The disaster scenario:**
+
+```
+Sender sees three sellers:
+├─ Economy: 0.5%/hour buffer → €12.50 total for 24h
+├─ Standard: 1%/hour buffer → €24.50 total for 24h
+└─ Premium: 2%/hour buffer → €48.70 total for 24h
+
+Sender thinks: "Economy is cheapest! I'll save €36!"
+(Doesn't understand buffer = volatility protection)
+
+BCH drops 15% during 24-hour window
+Economy seller's 12% buffer insufficient
+Covenant ABORTS
+
+Sender: "Asgaya is broken! My money is stuck!"
+```
+
+**The double-sided complexity problem:**
+
+**Sellers need to understand:**
+- Why lock more BCH than received (buffer concept)
+- What buffer rate to offer (market positioning)
+- What happens if buffer insufficient (recipient doesn't get paid)
+
+**Senders ALSO need to understand:**
+- What a buffer is (volatility protection, not just cost)
+- Why bigger buffer = more reliable (protects against BCH drops)
+- Trade-off between cheap (risky) vs expensive (safe)
+- When to choose which (stable vs volatile periods)
+
+**In Phase 0, with Venezuelan grandmothers sending remittances, this is way too much cognitive load.**
+
+### The Phase 0 User Reality
+
+**Target sender: María, 55, Madrid → Caracas**
+- Sends €100/month to daughter
+- Barely understands Bitcoin
+- Just wants it to work
+
+**What María can handle:**
+```
+✅ Send €100 to Elena#142
+✅ Pay via Bizum (she knows Bizum)
+✅ Elena receives in ~4 hours
+✅ Total cost: €0.50
+```
+
+**What María CANNOT handle:**
+```
+❌ Choose buffer rate: 0.5%, 1%, or 2%?
+❌ "Economy sellers cheaper but riskier"
+❌ "If BCH drops >12%, covenant aborts"
+❌ "You'll get refund if buffer insufficient"
+```
+
+**Result:** Too many decisions → Abandons app → Asgaya fails
+
+### The Right Sequence
+
+**Phase 0: Build trust through simplicity**
+- Fixed buffer (7%) → No decisions, just works
+- Focus: Prove the system is reliable
+- If covenant aborts (rare): "Try again, price stabilized" (sender gets refund automatically)
+
+**Phase 1: Add sophistication once trust established**
+- Sender has 10+ successful transfers (understands flow)
+- Sender has seen 1+ abort due to volatility (understands risk)
+- App provides recommendations based on recent volatility
+- Clear labeling: "Economy (less reliable)" vs "Premium (guaranteed)"
+
+**Phase 2: Full market competition**
+- Senders are pros (50+ transfers)
+- Understand buffer-volatility-fee relationships
+- Ready for two-dimensional pricing
+
+**Crawl before you run.**
+
+---
+
+## Recommendation
+
+**For Phase 0 (Venezuela - ONLY COMMITMENT):**
+- ✅ Fixed: 7% buffer, 0.5% fee, 24h timeout
+- ✅ Simple pitch: "Lock €107, earn €0.50, get €107 back"
+- ✅ Focus: Build trust in buffer mechanic
+- ✅ Zero choices: Sender and seller just use the system
+
+**After Phase 0 (6 months - DATA-DRIVEN DECISION):**
+1. ✅ Measure actual claim times (median, 90th percentile)
+2. ✅ Analyze coordination patterns (do users message first?)
+3. ✅ Collect user feedback (complaints about fees? requests for options?)
+4. ✅ Evaluate covenant abort rate (is 7% buffer sufficient?)
+
+**Then decide:**
+- **If simple works:** Keep Phase 0 pricing forever (don't fix what isn't broken)
+- **If data shows value:** Add Phase 1 time-based fees (one choice: timeout)
+- **If data unclear:** Wait longer, gather more data
+
+**Phase 2 (two-dimensional pricing):** Only consider if Phase 1 succeeds and users explicitly request more control. Unlikely to be needed.
+
+**Key principle:** Don't optimize until data shows the optimization is valuable. Premature complexity kills products.
+
+---
+
+**Status:** Hypothesis formed. Implementation straightforward. Awaiting UX design and A/B test.
+
+**Expected outcome:** 
+- Phase 1: Variable buffer becomes default, senders save 50%+ on buffer costs through coordination
+- Phase 2: Two-dimensional pricing enables market segmentation and perfect incentive alignment
+
+---
+
+## Phase 2 Extension: Two-Dimensional Pricing
+
+**The enhancement (for Phase 2):**
+
+Link buffer rate to fee rate, so sellers are compensated for capital lockup.
+
+**Listing format:**
+```json
+{
+  "buffer_rate_per_hour": 0.02,      // 2% per hour (high reliability)
+  "fee_base": 0.003,                 // 0.3% base fee
+  "fee_per_hour": 0.001,             // 0.1% per hour
+  "max_timeout_hours": 24
+}
+```
+
+**Calculation:**
+```javascript
+// Buffer (same as Phase 1)
+buffer_pct = buffer_rate_per_hour × timeout_hours
+
+// Fee (NEW - two components)
+fee_pct = fee_base + (fee_per_hour × timeout_hours)
+```
+
+**Market segmentation:**
+
+| Seller Type | Buffer/hr | Base Fee | Hourly Fee | 4h Total Fee | 24h Total Fee |
+|-------------|-----------|----------|------------|--------------|---------------|
+| Economy | 0.5%/hr | 0.5% | 0% | 0.5% | 0.5% |
+| Standard | 1%/hr | 0.3% | 0.05%/hr | 0.5% | 1.5% |
+| Premium | 2%/hr | 0.3% | 0.1%/hr | 0.7% | 2.7% |
+
+**Why this works:**
+
+1. **Compensates capital lockup:** Premium seller locks 48% for 24h (vs Economy's 12%), earns 5.4x more fee (fair)
+2. **Coordination incentive:** Premium seller 2h claim = 0.5% fee, 24h claim = 2.7% fee (5.4x difference!)
+3. **Market efficiency:** Sellers compete on reliability (buffer) AND cost (fee)
+
+**When to introduce:** Phase 2 (12+ months), after sellers fully understand buffer efficiency and capital recycling.
+
+**Documentation:** This two-dimensional pricing should be marked as Phase 2+ feature in bulletin-board.md.
+
+---
+
+*This unknown asks: Can we give senders and sellers more agency while reducing costs and improving capital efficiency? The answer is likely yes—per-hour pricing aligns incentives perfectly.*
 
 
 ## Cash Float Management

@@ -1,6 +1,6 @@
 # Error: Covenant Expired (24h Timeout)
 
-**Part of:** [Sender Flows](../README.md) → [Errors](./README.md)  
+**Part of:** [Sender Flows](../README.md) → Errors  
 **Triggered from:** [Screen 6A: Tracking](../own-wallet-path/6a-tracking.md) or [Screen 6B: Tracking](../buy-seller-path/6b-tracking.md)
 
 ---
@@ -109,7 +109,7 @@ Shown when recipient doesn't claim covenant within 24-hour window. Different ref
 - **Tap "Create New Order"** → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
   - Pre-fills previous recipient (Elena#142)
   - User can retry with same or adjusted amount
-- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen.md)
+- **Tap "Back to Home"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 

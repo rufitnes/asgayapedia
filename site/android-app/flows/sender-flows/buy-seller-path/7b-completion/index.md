@@ -204,7 +204,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 - Tap "See detailed breakdown" → Show savings breakdown screen
 - Tap "Learn More" → Explain how to become seller/merchant
 - Tap "Send Another" → Return to [Screen 2: Recipient Selection](../covenant-setup/2-recipient-selection.md)
-- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen.md)
+- Tap "Back to Home" → Return to [Screen 1: Home](../../home-screen/)
 - Tap "Share on Twitter" → Open Twitter with pre-filled message
 - Tap "Tell a Friend" → Open WhatsApp/SMS with pre-filled message
 
@@ -225,7 +225,7 @@ It's a P2P network built on Bitcoin Cash. Want to try?
 
 - [Screen 6B: Tracking](./6b-tracking.md) - Previous screen
 - [Screen 7A: Completion (Own Wallet)](../own-wallet-path/7a-completion.md) - Alternative completion screen
-- [Screen 1: Home](../../home-screen.md) - Return to home
+- [Screen 1: Home](../../home-screen/) - Return to home
 - [Fee Splitting Model](../../../../decisions/fee-splitting-model.md) - How fees are distributed
 - [Pull System](../../../../concepts/pull-system.md) - Recipient-driven settlement
 

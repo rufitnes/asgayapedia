@@ -2,1666 +2,1730 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.asgaya.org/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/ROADMAP/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/glossary/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/risks-and-disclaimers/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/ai/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/bch-native-architecture/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/common-patterns/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/covenant-creation/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/multi-device-test-plan/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/pichan-regtest-setup/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/rate-apis/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/user-apis/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/archive/ENGINEERING_JOURNEY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/blockchain-scanner/nft-scanner/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/backend-apis/seller-bot/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/concepts/cash-accounts/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/concepts/corridors/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/REVIEW_NOTES/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/home-screen/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/merchant-flows/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/recipient-flows/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/trade-bch-screen/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/archive/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/archive/bch-payment-flows/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/archive/lp-flows/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/archive/remittance-merchant-cash-out/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/1-scan-merchant/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/2-enter-amount/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/3-confirm-send/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/4-complete/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/errors/insufficient-balance/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/direct-payment-flows/errors/network-errors/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/4.5-select-seller/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/5-payment-instructions/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/6b-tracking/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/buy-seller-path/7b-completion/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/covenant-setup/2-recipient-selection/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/covenant-setup/3-amount-entry/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/covenant-setup/4-payment-method/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/bizum-timeout/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/covenant-expiry/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/network-errors/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/pending-covenant/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/errors/seller-non-delivery/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/own-wallet-path/4a-confirm-send/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/own-wallet-path/6a-tracking/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/flows/sender-flows/own-wallet-path/7a-completion/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/bizum-android/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/opreturn-spv/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/pagomovil-android/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/security/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/android-app/notification-listener/testing/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/archive/ARCHIVE_settlement-apis_11052026/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bch-buyers/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bch-miners-as-escrows/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bch-sellers/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bounty-contracts-with-volatility-buffer/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bubble-prevention/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/bulletin-board/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/core-regulatory-constraints/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/dynamic-reward-modulation/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/fraud-proof-mechanism/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/freelance-payments/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/live-exchange-rates/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/market-making-partners/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/merchant-business-case/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/pull-system/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/rfid-card-recipients/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/risk-allocation-principle/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/seller-liveness-signal/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/time-extension-marketplace/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/concepts/universal-bot-fraud-prevention/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/2_2_exchange_rate_safeguard/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-bch-usage-incentive/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-cheaper-than-legacy/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-eliminate-volatility/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-market-rate-exchanges/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-minimal-hardware/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-no-kyc/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-permissionless/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-promote-adoption/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/core-architecture/why-self-custody/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/bizum-concept-field/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/cold-start-strategy/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/dispute-resolution/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/fee-splitting-model/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/how-exchange-rates-work/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/musd-integration-strategy/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/payment-timeout-window/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/phase-0-progressive-decentralization/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/phase-0-validation-checklist/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/two-step-settlement-timing/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/ui-language-regulatory-implications/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/decisions/unclaimed-transaction-expiry/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/experiments/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/experiments/bulletin-board/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/experiments/buyers-and-sellers/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/experiments/how-they-interact/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/experiments/nostr/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/experiments/notification-bot/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/experiments/universal-stability/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/experiments/wallet/</loc>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/accountability/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/ai-review-guide/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/ai-reviewer-invitation-template/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/contributing/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/deepseek-review-2026-05-04/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/phase-0-validation-checklist/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/meta/review-action-plan/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/%40sindresorhus/is/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/%40szmarczak/http-timer/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ansi-align/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ansi-align/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ansi-colors/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ansi-regex/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ansi-styles/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/anymatch/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/binary-extensions/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/boxen/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/boxen/node_modules/ansi-styles/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/boxen/node_modules/chalk/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/boxen/node_modules/color-convert/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/boxen/node_modules/color-convert/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/boxen/node_modules/color-name/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/boxen/node_modules/has-flag/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/boxen/node_modules/supports-color/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/braces/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/cacheable-request/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/cacheable-request/node_modules/get-stream/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/cacheable-request/node_modules/lowercase-keys/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/camelcase/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/chalk/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/chokidar/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ci-info/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ci-info/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/cli-boxes/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/cliui/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/cliui/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/clone-response/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/color-convert/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/color-convert/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/color-name/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/commander/Readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/configstore/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/connect/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/connect/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/connect/SECURITY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/connect-history-api-fallback/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/connect-history-api-fallback/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/connect-livereload/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/cp-file/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/crypto-random-string/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/debug/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/debug/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/decamelize/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/decompress-response/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/deep-extend/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/deep-extend/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/defer-to-connect/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/depd/History/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/depd/Readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/destroy/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify-cli/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify-cli/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify-server-renderer/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify-server-renderer/node_modules/debug/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify-server-renderer/node_modules/ms/license/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/docsify-server-renderer/node_modules/ms/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/dot-prop/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/duplexer3/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ee-first/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/emoji-regex/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/encodeurl/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/encodeurl/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/end-of-stream/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/enquirer/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/escape-goat/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/escape-html/Readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/escape-string-regexp/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/etag/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/etag/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/figlet/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/fill-range/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/finalhandler/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/finalhandler/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/find-up/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/fresh/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/fresh/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/fs-extra/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/fs-extra/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/get-caller-file/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/get-caller-file/LICENSE/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/get-port/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/get-stream/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/glob-parent/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/glob-parent/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/global-dirs/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/got/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/graceful-fs/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/has-ansi/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/has-ansi/node_modules/ansi-regex/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/has-flag/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/has-yarn/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/http-cache-semantics/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/http-errors/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/http-errors/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/http-errors/node_modules/statuses/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/http-errors/node_modules/statuses/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/import-lazy/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/imurmurhash/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/inherits/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ini/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-binary-path/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-ci/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-ci/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-extglob/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-fullwidth-code-point/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-glob/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-installed-globally/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-npm/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-number/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-obj/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-path-inside/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-typedarray/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-typedarray/LICENSE/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-wsl/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/is-yarn-global/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/json-buffer/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/jsonfile/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/jsonfile/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/keyv/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/latest-version/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/livereload/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/livereload-js/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/locate-path/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/lowercase-keys/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/lru-cache/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/make-dir/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/marked/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/marked/LICENSE/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/medium-zoom/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/medium-zoom/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/mime/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/mime/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/mimic-response/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/min-indent/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/minimist/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/minimist/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ms/license/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ms/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/nested-error-stacks/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/nested-error-stacks/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/node-fetch/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/node-fetch/LICENSE/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/normalize-path/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/normalize-url/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/on-finished/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/on-finished/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/once/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/open/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/opencollective-postinstall/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/opts/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/p-cancelable/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/p-event/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/p-finally/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/p-limit/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/p-locate/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/p-timeout/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/p-try/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/package-json/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/parent-require/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/parseurl/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/parseurl/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/path-exists/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/picomatch/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/prepend-http/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/prismjs/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/prismjs/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/pump/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/pump/SECURITY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/pupa/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/range-parser/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/range-parser/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/rc/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/readdirp/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/registry-auth-token/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/registry-auth-token/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/registry-url/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/require-directory/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/require-main-filename/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/require-main-filename/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/resolve-pathname/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/responselike/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/semver/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/semver-diff/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/SECURITY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/node_modules/encodeurl/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/node_modules/ms/license/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/node_modules/ms/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/node_modules/on-finished/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/node_modules/on-finished/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/node_modules/statuses/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/send/node_modules/statuses/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/serve-static/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/serve-static/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/serve-static/node_modules/encodeurl/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/set-blocking/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/set-blocking/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/setprototypeof/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/signal-exit/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/statuses/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/statuses/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/string-width/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/strip-ansi/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/strip-indent/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/strip-json-comments/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/supports-color/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/term-size/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/tinydate/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/to-readable-stream/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/to-regex-range/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/toidentifier/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/toidentifier/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/tweezer.js/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/type-fest/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/typedarray-to-buffer/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/unique-string/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/universalify/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/unpipe/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/unpipe/HISTORY/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/update-notifier/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/update-notifier/node_modules/ansi-styles/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/update-notifier/node_modules/chalk/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/update-notifier/node_modules/color-convert/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/update-notifier/node_modules/color-convert/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/update-notifier/node_modules/color-name/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/update-notifier/node_modules/has-flag/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/update-notifier/node_modules/supports-color/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/url-parse-lax/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/utils-merge/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/webidl-conversions/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/webidl-conversions/LICENSE/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/whatwg-url/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/which-module/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/widest-line/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/wrap-ansi/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/wrap-ansi/node_modules/ansi-styles/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/wrap-ansi/node_modules/color-convert/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/wrap-ansi/node_modules/color-convert/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/wrap-ansi/node_modules/color-name/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/wrappy/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/write-file-atomic/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/write-file-atomic/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/ws/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/xdg-basedir/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/y18n/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/y18n/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yallist/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargonaut/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargonaut/node_modules/ansi-regex/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargonaut/node_modules/ansi-styles/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargonaut/node_modules/chalk/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargonaut/node_modules/strip-ansi/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargonaut/node_modules/supports-color/readme/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargs/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargs/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargs-parser/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/node_modules/yargs-parser/CHANGELOG/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS010_Honduras/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS016_EUR_BCH_exchanges/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS017_kraken/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS018_kraken_setup/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS019_kraken_query/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS036_kraken_ticker_api/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS039_temporal_market_impact/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS041_cross_corridor_exchange_rates/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS042_bizum_concept_field_constraints/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS043_llm_txt_ai_native_web/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS044_kraken_trading_withdrawal/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS045_kraken_complete_fee_analysis/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS047_dolarapi_venezuela_rates/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS051_escrow_legal_framework/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS052_compliance_architecture/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS053_MUSD/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS054_cashtoken_swaps/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS060_online_income_communities/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS062_seller_profitability_simulation/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/RS063_bch_spv_libraries/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/research/RS064_bch_sov_in_venezuela/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/research/RS065_BCH_price_volatility_decline/</loc>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/intelligence/IR004_remittance_dependency_ranking/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/research/intelligence/IR005_sources_remittance_data/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/roadmap/phase-1-stability-layer/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/unknowns/adoption-stabilization-effect/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/unknowns/bulletin-board-anti-spam/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/unknowns/cascade-effect-stabilization/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/unknowns/hyperinflation-holding-incentive/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/unknowns/payment-info-exchange/</loc>
+         <lastmod>2026-06-15</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.asgaya.org/unknowns/variable-buffer-rate/</loc>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/behavioral/cash-float-management/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/behavioral/claim-timing/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/behavioral/merchant-bch-preference/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/economic/fiat-chargeback-risk/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/economic/merchant-spread-sufficiency/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/economic/overcollateralization-rate/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/economic/seller-fee-sufficiency/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/economic/volatility%20buffer-rate/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/market/corridor-demand-signals/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/market/recipient-smartphone-access/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/market/seller-capital-recycling/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/technical/bch-confirmation-reliability/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/technical/dolarapi-accuracy/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/technical/sms-delivery-venezuela/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
     <url>
          <loc>https://docs.asgaya.org/unknowns/technical/universal-bot-reliability/</loc>
-         <lastmod>2026-05-30</lastmod>
+         <lastmod>2026-06-15</lastmod>
     </url>
 </urlset>

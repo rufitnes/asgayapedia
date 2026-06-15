@@ -169,7 +169,7 @@ if (isCashAccount(qrData)) {
 
 - **[Screen 2: Enter Amount](2-enter-amount.md)** - Next step
 - **[Direct Payment Overview](README.md)** - Flow structure
-- **[Cash Accounts Concept](../../../concepts/cash-accounts.md)** - Technical details
+- **[Cash Accounts Concept](../../../concepts/cash-accounts/)** - Technical details
 
 ---
 

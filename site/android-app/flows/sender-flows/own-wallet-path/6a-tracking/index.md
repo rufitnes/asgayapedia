@@ -1,8 +1,8 @@
 # Screen 6A: Tracking (Own Wallet Path)
 
-**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send.md)  
-**Previous:** [4A: Confirm Send](./4a-confirm-send.md)  
-**Next:** [7A: Completion](./7a-completion.md)
+**Part of:** [Sender Flows](../README.md) → [Own Wallet Path](./4a-confirm-send/)  
+**Previous:** [4A: Confirm Send](./4a-confirm-send/)  
+**Next:** [7A: Completion](./7a-completion/)
 
 ---
 
@@ -198,7 +198,7 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 ```
 
 **Interactions:**
-- Tap "See details" → Go to [Screen 7A: Completion](./7a-completion.md)
+- Tap "See details" → Go to [Screen 7A: Completion](./7a-completion/)
 - Real-time updates (push notifications or polling)
 
 **Notes:**
@@ -224,8 +224,8 @@ Track covenant progress when sender uses their own BCH wallet balance. No Bizum 
 
 ## Related Documentation
 
-- [Screen 4A: Confirm Send](./4a-confirm-send.md) - Previous screen
-- [Screen 7A: Completion](./7a-completion.md) - Next screen
+- [Screen 4A: Confirm Send](./4a-confirm-send/) - Previous screen
+- [Screen 7A: Completion](./7a-completion/) - Next screen
 - [Screen 6B: Tracking (Buy from Seller)](../buy-seller-path/6b-tracking.md) - Alternative tracking screen
 - [Covenant Expiry Error](../errors/covenant-expiry.md) - If recipient doesn't claim
 - [With volatility buffer Bounty Contracts](../../../../concepts/bounty-contracts-with-volatility-buffer.md) - Covenant specification

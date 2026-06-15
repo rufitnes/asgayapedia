@@ -99,9 +99,10 @@ Both listing types support multiple payment methods as **attributes**, not separ
 | Payment Method | Description | Typical Use |
 |---------------|-------------|-------------|
 | **Bizum** | Spain instant bank transfer | Spanish senders |
-| **SEPA** | EU bank transfer (1-2 days) | European senders |
-| **Bank transfer** | Generic wire transfer | International senders |
+| **SEPA Instant** | EU instant bank transfer | European senders |
 | **Revolut** | Digital bank instant transfer | UK/EU senders |
+
+**Note:** All payment methods must support instant or near-instant settlement for the notification listener bot to work effectively. Traditional SEPA (1-2 days) is not suitable.
 
 ### For BCH Buyers (fiat output)
 | Payment Method | Description | Typical Use |
@@ -386,6 +387,10 @@ Cost = 1000 × €0.50 = €500
 
 **Reclaim on removal:** When spending listing UTXO, BCH value returns to creator (minus tx fee).
 
+**Phase 0 baseline:** This is the starting approach. Additional strategies (listing limits, device fingerprinting, payment method verification) are under consideration.
+
+**See:** [Unknown: Bulletin Board Anti-Spam Strategies](../unknowns/bulletin-board-anti-spam.md) for full analysis of alternatives and testing plan.
+
 ---
 
 ## Privacy Considerations
@@ -410,22 +415,27 @@ Cost = 1000 × €0.50 = €500
 
 **The bulletin board coordinates, covenants execute:**
 
-### BCH Seller Flow
+### BCH Seller Flow (Sender → Seller)
 ```
 1. Sender finds seller on bulletin board
-2. Sender pays fiat to seller (off-chain)
-3. Seller's bot creates covenant (on-chain)
-4. Covenant executes when conditions met
-5. Seller no longer directly involved (covenant is self-enforcing)
+2. Sender creates covenant with seller's details (on-chain)
+3. Sender pays fiat to seller (off-chain)
+4. Seller's bot detects payment, co-signs covenant
+5. BCH released to sender's designated recipient
 ```
 
-### BCH Buyer Flow
+**Key:** The sender (active user) creates the covenant, not the seller (listing owner).
+
+### BCH Buyer Flow (Recipient → Merchant)
 ```
-1. Merchant finds buyer on bulletin board
-2. Merchant creates covenant with their BCH (on-chain)
-3. Buyer pays fiat to merchant (off-chain)
-4. Buyer's bot detects payment, co-signs covenant
-5. BCH released to buyer
+1. Recipient finds merchant/buyer on bulletin board
+2. Recipient creates covenant with merchant's details (on-chain)
+3. Recipient receives fiat from merchant (off-chain)
+4. Merchant's bot detects receipt, co-signs covenant
+5. BCH released to merchant
+```
+
+**Key:** The recipient (active user) creates the covenant, not the merchant (listing owner).
 ```
 
 **Bulletin board = discovery layer**  
@@ -453,10 +463,28 @@ They're separate but complementary.
 - App calculates optimal corridor based on spread + forex
 - Cross-corridor arbitrage opportunities highlighted
 
-### V2: Reputation Graphs
+### V2: Reputation & Merchant Highlighting
+
+**Merchant Priority (Phase 0+):**
+
+Merchant listings should be highlighted/prioritized because:
+- **Physical location = reputation at stake** (can't disappear like online-only traders)
+- **Easy to audit** (visit shop, verify business license)
+- **Professional service** (ready documentation for accounting, regular hours)
+- **Adoption engine goal** (we want merchants to earn money and promote Asgaya)
+
+**Implementation:**
+- "Verified Merchant" badge (requires proof of physical location)
+- Sort order: Merchants first, then other traders
+- Map view: Show merchant locations prominently
+
+**Anti-spam benefit:** Merchants less likely to spam (reputation risk), so highlighting them reduces spam visibility.
+
+**General Reputation (Phase 1+):**
 - Web of trust (vouch for other participants)
 - Social graph integration (prefer friends' listings)
 - Dispute resolution history (how conflicts resolved)
+- Trade count & volume (established traders ranked higher)
 
 ---
 

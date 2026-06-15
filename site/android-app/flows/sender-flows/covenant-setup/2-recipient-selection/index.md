@@ -1,7 +1,7 @@
 # Screen 2: Recipient Selection
 
 **Part of:** [Sender Flows](../README.md) → [Covenant Setup](./)  
-**Previous:** [Screen 1: Home](../../home-screen.md)  
+**Previous:** [Screen 1: Home](../../home-screen/)  
 **Next:** [Screen 3: Amount Entry](3-amount-entry.md)  
 **Date:** 2026-05-16
 
@@ -63,7 +63,7 @@
 - Tap **"View Merchant Map"** → Preview merchants in recipient's country
 
 **Navigation:**
-- Tap **"◄ Back"** → Return to [Screen 1: Home](../../home-screen.md)
+- Tap **"◄ Back"** → Return to [Screen 1: Home](../../home-screen/)
 
 ---
 
@@ -145,10 +145,10 @@ Success → Continue to Screen 3
 
 ## Related Documentation
 
-- **[Screen 1: Home](../../home-screen.md)** - Entry point
+- **[Screen 1: Home](../../home-screen/)** - Entry point
 - **[Screen 3: Amount Entry](3-amount-entry.md)** - Next step
-- **[Cash Accounts Concept](../../../concepts/cash-accounts.md)** - Technical details
-- **[Corridor Availability](../../../concepts/corridors.md)** - Supported countries
+- **[Cash Accounts Concept](../../../../../concepts/cash-accounts/)** - Technical details
+- **[Corridor Availability](../../../../../concepts/corridors/)** - Supported countries
 
 ---
 

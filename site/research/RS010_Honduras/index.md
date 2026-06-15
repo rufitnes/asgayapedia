@@ -2,7 +2,7 @@
 
 **Date:** March 24, 2026  
 **Participants:** Suso (Founder), DeepSeek (Main Research Assistant)  
-**Related Intelligence Reports:** [IR004_remittance_dependency_ranking.md](../intelligence/IR004_remittance_dependency_ranking.md), [IR005_sources_remittance_data.md](../intelligence/IR005_sources_remittance_data.md)
+**Related Intelligence Reports:** [IR004_remittance_dependency_ranking.md](intelligence/IR004_remittance_dependency_ranking.md), [IR005_sources_remittance_data.md](intelligence/IR005_sources_remittance_data.md)
 
 ---
 

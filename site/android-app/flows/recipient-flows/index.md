@@ -1026,7 +1026,7 @@ pending → claimed → accepted → partially_signed → completed
 ## Related Documentation
 
 **Flows:**
-- [Sender Flows](sender-flows/) — How Iris creates covenant and sends
+- [Sender Flows](../sender-flows/) — How Iris creates covenant and sends
 - [Merchant Flows](merchant-flows.md) — How merchant sells VES for BCH (other side of co-signing)
 - [Trade BCH Screen](trade-bch-screen.md) — How BCH sellers post offers in bulletin
 

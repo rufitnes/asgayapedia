@@ -255,7 +255,7 @@ Every merchant that joins Asgaya becomes a BCH stakeholder who wants the network
 4. **Competitor response time?** How quickly do other stores adopt after first mover?
 5. **BCH holding behavior?** Do merchants recycle immediately or hold for price appreciation?
 
-**See:** [unknowns/behavioral/merchant-spending-patterns.md](../unknowns/behavioral/) for investigation methods
+**See:** [Merchant BCH Preference](../unknowns/behavioral/merchant-bch-preference/) for investigation methods
 
 ---
 

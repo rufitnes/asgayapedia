@@ -51,6 +51,12 @@ Demand and adoption signals:
 - [Recipient Smartphone Access](market/recipient-smartphone-access.md) — What devices do recipients have?
 - [Corridor Demand Signals](market/corridor-demand-signals.md) — Which corridors show strongest demand?
 
+### 🚀 Strategic Unknowns
+Long-term effects and expansion strategy:
+- [Adoption-Stabilization Effect](adoption-stabilization-effect.md) — Does BCH adoption reduce volatility over time?
+- [Hyperinflation Holding Incentive](hyperinflation-holding-incentive.md) — Do merchants in hyperinflation economies hold BCH longer?
+- [Cascade Effect](cascade-effect-stabilization.md) — Does hyperinflation-country success make stable-currency adoption easier?
+
 ---
 
 ## How to Use This Directory

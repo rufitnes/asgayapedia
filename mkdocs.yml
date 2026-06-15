@@ -166,6 +166,15 @@ nav:
     - MUSD Integration Strategy: decisions/musd-integration-strategy.md
     - Phase 0 Progressive Decentralization: decisions/phase-0-progressive-decentralization.md
     - Phase 0 Validation Checklist: decisions/phase-0-validation-checklist.md
+  - Experiments:
+    - Overview: experiments/index.md
+    - Buyers and Sellers: experiments/buyers-and-sellers.md
+    - How They Interact: experiments/how-they-interact.md
+    - Bulletin Board: experiments/bulletin-board.md
+    - Wallet: experiments/wallet.md
+    - Nostr: experiments/nostr.md
+    - Notification Bot: experiments/notification-bot.md
+    - Universal Stability: experiments/universal-stability.md
   - Unknowns:
     - Overview: unknowns/README.md
     - Economic:
