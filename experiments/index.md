@@ -75,6 +75,38 @@ and bank notifications. No manual intervention needed — scale without effort.
 
 ---
 
+## The Merchant Problem: Post‑Cashout Volatility
+
+**After Elena cashes out at a merchant, that merchant holds BCH.** If they need to convert to VES for rent in two weeks, they're exposed to ±20% monthly volatility. Lose 15% once, they quit.
+
+**Solution:** Optional stability tokens backed by pooled AnyHedge contracts.
+
+### Two Stability Options
+
+| Token | Pegged To | Why Merchants Choose It |
+|-------|-----------|------------------------|
+| **H€** (Heuro) | Euro | Familiar unit, easy mental math, quick conversion to VES |
+| **HAu** (How) | Gold (XAU) | Maximum protection, hedges ALL fiat inflation (EUR + VES), universal value |
+
+**Mechanism:**
+1. Merchant receives BCH from covenant cashout
+2. Wallet asks: "Stabilize as H€, HAu, or keep BCH?"
+3. If H€/HAu chosen and pool has capacity:
+   - Creates standard AnyHedge contract (merchant shorts BCH vs asset)
+   - Bull pool provides long side (leveraged BCH exposure)
+   - Mints stability tokens (30‑day auto‑renewing)
+4. Merchant holds stable value, trades it for VES when needed
+
+**If pool exhausted:** Falls back to BCH delivery. Existing tokens still tradeable. System degrades gracefully.
+
+**Why gold oracle is best:** 24/7 global trading (LBMA, CME, COMEX), centuries of price history, $12T market cap (manipulation‑resistant). More reliable than any fiat/BCH pair.
+
+**Phase 0 capital:** €3K unified pool (approved assets: H€, HAu). High merchant velocity (weekly VES conversion) means low capital lock. Supports ~80 merchants initially.
+
+**The hook:** Merchants come for remittances (0.5% spread). Stay for stability (hedge hyperinflation without trusting banks).
+
+---
+
 ## Why Bitcoin Cash?
 
 Low fees (~€0.002/tx), fast settlement, native covenant support (CashTokens),
@@ -86,14 +118,15 @@ respect.
 ## Status: Phase 0 (Pre‑Launch)
 
 **Launch corridor:** Spain → Venezuela (EUR → VES) — Q3 2026.  
-**Current:** Documentation complete; Android app in development.  
-**Validating:** Does the 7% buffer hold? Will merchants provide liquidity? Can bots handle volume?
+**Current:** Documentation in progress; stability tokens (H€/HAu) design validated.  
+**Validating:** Does the 7% buffer hold? Will merchants adopt stability tokens? Can bull pool scale?
 
 **Start here:** [Bulletin Board](bulletin-board.md) — the core innovation.  
 **Then:** [Buyers and Sellers](buyers-and-sellers.md) — the user perspective.  
+**New:** [Universal Stability](universal-stability.md) — post‑fiat asset backing.  
 **Deeper rationale:** [Why This Design](why-this-design/) — requirements, evidence, open questions.
 
 ---
 
 **Authors:** Suso + Claude Sonnet 4.5 + DeepSeek  
-**Updated:** 2026‑06‑05 · **Experimental structure — feedback welcomed**
+**Updated:** 2026‑06‑15 · **Experimental structure — feedback welcomed**

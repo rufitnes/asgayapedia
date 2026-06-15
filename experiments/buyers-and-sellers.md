@@ -50,13 +50,15 @@ That's it. Everything else is context.
 
 ### 1. Carlos the Merchant (Venezuela) — The Central Use Case
 
-Carlos runs a grocery store. VES loses 5 % per week. He needs BCH to preserve value and bolívars for daily operations.
+Carlos runs a grocery store. VES loses 5 % per week. He needs stable value to preserve purchasing power and bolívars for daily operations.
 
-**Passive mode (most of the month):** Posts as a BCH Buyer (cash at store, 0.5 % spread). Recipients visit, get cash, and Carlos accumulates BCH automatically—no effort, just foot traffic and grocery sales.
+**Passive mode (most of the month):** Posts as a BCH Buyer (cash at store, 0.5 % spread). Recipients visit, get cash, and Carlos accumulates BCH automatically—no effort, just foot traffic and grocery sales.
 
-**Active mode (end of month, rent due):** Opens the app, queries for BCH Buyers accepting PagoMóvil, picks the best rate, sells enough BCH to cover rent, and pays immediately. He avoids the 5 % weekly depreciation that would have eaten his reserves.
+**Stability option:** When Carlos cashes out a remittance covenant, his wallet offers: *Keep BCH or stabilice with H€ (Euro), or HAu (Gold)?* We thing he's going to pick **H€** (familiar unit, he's used to convert to VES) but we don't know that's why we want to offer a non fiat denominated option. The app mints H€ or HAu tokens backed by pooled AnyHedge contracts. Carlos now holds stable value, immune to BCH's ±20 % monthly swings.
 
-**Result:** Carlos earns spreads and sales while passive; he preserves capital by liquidating only when needed. The BCH he holds between times protects him from hyperinflation.
+**Active mode (end of month, rent due):** Opens the app, sells H€ to another merchant or customer for VES at current EUR/VES rate. Zero volatility exposure—what he earned is what he keeps.
+
+**Result:** Carlos earns spreads and sales while passive; he preserves capital via the stability tokens. No BCH volatility, no hyperinflation erosion. Triple win.
 
 ### 2. María (Sender) & Elena (Recipient) — Pure Active Users
 

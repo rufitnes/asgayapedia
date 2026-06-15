@@ -57,6 +57,24 @@ Elena then buys groceries worth 300,000 VES from Carlos’s store.
 - ~60,000 VES product margin (20 % on 300k)
 - 0.2564 BCH position (hedge against VES depreciation)
 
+### Step 7 — Stabilize (Optional)
+
+Carlos's wallet now asks: **"Stabilize this BCH?"**
+
+- **Keep BCH:** Accept volatility, potential upside
+- **H€ (Heuro):** Lock in €99.50 value (familiar unit, easy to convert to VES)
+- **HAu (Gold):** Lock in ~0.05 oz gold value (hedge ALL fiat inflation)
+
+Carlos chooses **H€** (he knows EUR/VES rates, easier mental math). The app:
+1. Checks H€ pool availability (founder's long capital for phase 0)
+2. Creates 30‑day AnyHedge contract (Carlos shorts BCH/EUR, pool goes long)
+3. Mints 99.50 H€ tokens to Carlos's wallet
+4. Auto‑renews monthly unless Carlos burns tokens for BCH
+
+**If pool exhausted:** Carlos keeps BCH (graceful degradation). Existing H€ holders unaffected.
+
+**Carlos now holds stable EUR value.** When he needs VES for rent next week, he sells H€ to another merchant or customer at current EUR/VES rate. Zero BCH volatility exposure.
+
 ---
 
 ## The Four Gears at Work
