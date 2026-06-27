@@ -1,0 +1,5666 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BCH covenant-based remittance protocol for Spain-Venezuela corridor">
+      
+      
+      
+        <link rel="canonical" href="https://docs.asgaya.org/implementation/android-app/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Android App: Implementation Architecture - Asgaya Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/bch-colors.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-app-implementation-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Asgaya Documentation" class="md-header__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Asgaya Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Android App: Implementation Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/README.md" class="md-tabs__link">
+          
+  
+  
+  Android App
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../android-app/backend-apis/bch-native-architecture.md" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/README.md" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../decisions/README.md" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../experiments/index.md" class="md-tabs__link">
+          
+  
+  
+  Experiments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../unknowns/" class="md-tabs__link">
+          
+  
+  
+  Unknowns
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../research/RS053_MUSD/" class="md-tabs__link">
+          
+  
+  
+  Research
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Asgaya Documentation" class="md-nav__button md-logo" aria-label="Asgaya Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Asgaya Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rufitnes/asgayapedia" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rufitnes/asgayapedia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android App
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android App
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/home-screen.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sender Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sender Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_2" id="__nav_2_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Covenant Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/2-recipient-selection.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/3-amount-entry.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amount Entry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/covenant-setup/4-payment-method.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_3" id="__nav_2_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Own Wallet Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Own Wallet Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/4a-confirm-send.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/6a-tracking.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/own-wallet-path/7a-completion.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_4" id="__nav_2_2_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buy Seller Path
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Buy Seller Path
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4b-confirm-purchase.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Purchase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/4.5-select-seller.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Select Seller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/5-payment-instructions.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Instructions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/6b-tracking.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/buy-seller-path/7b-completion.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3_5" id="__nav_2_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Screens
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Error Screens
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/pending-covenant.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Covenant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/seller-non-delivery.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Non-Delivery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/bizum-timeout.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Timeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/covenant-expiry.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/sender-flows/errors/network-errors.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/recipient-flows.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipient Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Direct Payment Flows
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/1-scan-merchant.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Merchant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/2-enter-amount.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enter Amount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/3-confirm-send.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Confirm Send
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/direct-payment-flows/4-complete.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/trade-bch-screen.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trade BCH Screen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/merchant-flows.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_8" id="__nav_2_2_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive (Pre-Covenant)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive (Pre-Covenant)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/bch-payment-flows.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Payment Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/lp-flows.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LP Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/flows/archive/remittance-merchant-cash-out.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Merchant Cash Out
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backend APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/rate-apis.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/user-apis.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/common-patterns.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/covenant-creation.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covenant Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_7" id="__nav_2_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blockchain Scanner
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blockchain Scanner
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/blockchain-scanner/nft-scanner.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NFT Scanner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_8" id="__nav_2_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seller Bot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Seller Bot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/seller-bot/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_9" id="__nav_2_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/pichan-regtest-setup.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pichan Regtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/multi-device-test-plan.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Device Test Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_10" id="__nav_2_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/archive/ENGINEERING_JOURNEY.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering Journey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notification Listener
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notification Listener
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/bizum-android.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Android
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/pagomovil-android.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PagoMóvil Android
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/opreturn-spv.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OP_RETURN SPV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/security.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/notification-listener/testing.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/backend-apis/bch-native-architecture.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Native Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-permissionless.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Permissionless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-self-custody.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Self-Custody
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-no-kyc.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why No KYC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-market-rate-exchanges.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Market Rates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-cheaper-than-legacy.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Cheaper Than Legacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-promote-adoption.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Promote Adoption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-bch-usage-incentive.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why BCH Usage Incentive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-architecture/why-minimal-hardware.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Minimal Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/risk-allocation-principle.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Risk Allocation Principle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/concepts/cash-accounts.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cash Accounts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../android-app/concepts/corridors.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Corridors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-sellers.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bch-buyers.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/bounty-contracts-with-volatility-buffer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bounty Contracts with Volatility Buffer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/rfid-card-recipients.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RFID Card Recipients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/dynamic-reward-modulation.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic Reward Modulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/README.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/fee-splitting-model.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fee Splitting Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/two-step-settlement-timing.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two-Step Settlement Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/dispute-resolution.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dispute Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/payment-timeout-window.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payment Timeout Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/unclaimed-transaction-expiry.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unclaimed Transaction Expiry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/bizum-concept-field.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bizum Concept Field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/how-exchange-rates-work.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Exchange Rates Work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/musd-integration-strategy.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MUSD Integration Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/phase-0-progressive-decentralization.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Progressive Decentralization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisions/phase-0-validation-checklist.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 0 Validation Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Experiments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/buyers-and-sellers.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buyers and Sellers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/how-they-interact.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How They Interact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/bulletin-board.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bulletin Board
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/wallet.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wallet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/nostr.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nostr
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/notification-bot.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notification Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/universal-stability.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Universal Stability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unknowns
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unknowns
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Economic
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Economic
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/economic/overcollateralization-rate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overcollateralization Rate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Behavioral
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Behavioral
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unknowns/behavioral/claim-timing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claim Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RS053_MUSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS053 MUSD Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/RS054_cashtoken_swaps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RS054 CashToken Swaps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-five-gears-code-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Five Gears → Code Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Five Gears → Code Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conceptual-layer-what-components-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptual Layer (What Components Do)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-layer-how-to-build-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Layer (How to Build Them)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-flow-how-the-gears-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Flow: How the Gears Connect
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Flow: How the Gears Connect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#active-mode-sender-maria-sends-100-to-elena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Active Mode (Sender - María sends €100 to Elena)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passive-mode-merchant-carlos-receives-remittance-cash-outs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passive Mode (Merchant - Carlos receives remittance cash-outs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Principles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Principles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-no-backend-fully-peer-to-peer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. No Backend (Fully Peer-to-Peer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-offline-first-venezuelan-connectivity-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Offline-First (Venezuelan Connectivity Reality)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Offline-First (Venezuelan Connectivity Reality)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-queue-operations-when-offline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. Queue Operations When Offline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-cache-bulletin-board-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. Cache Bulletin Board Queries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-handle-electrum-timeouts-gracefully" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. Handle Electrum Timeouts Gracefully
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d-sync-state-when-reconnecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        D. Sync State When Reconnecting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-state-management-whats-local-vs-blockchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. State Management (What's Local vs Blockchain)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. State Management (What&#39;s Local vs Blockchain)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whats-stored-locally-sqliteroom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Stored Locally (SQLite/Room)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whats-reconstructed-from-blockchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Reconstructed from Blockchain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#external-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External Dependencies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="External Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-electrum-servers-blockchain-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Electrum Servers (Blockchain Queries)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-nostr-relays-p2p-messaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Nostr Relays (P2P Messaging)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-bank-notification-parsing-platform-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Bank Notification Parsing (Platform-Specific)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-kraken-api-bch-buyingselling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Kraken API (BCH Buying/Selling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-cashtokens-sdk-hhau-stability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. CashTokens SDK (H€/HAu Stability)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-anyhedge-oracle-price-feeds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. AnyHedge Oracle (Price Feeds)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-components-build-these-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Components (Build These First)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-cutting-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Cutting Concerns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#future-phase-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future (Phase 1+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error Handling Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-timeout-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Timeout Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-retry-logic-with-exponential-backoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Retry Logic (with Exponential Backoff)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-fallback-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Fallback Strategies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-user-facing-error-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. User-Facing Error Messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-specific-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platform-Specific Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform-Specific Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#android" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Android
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webdesktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web/Desktop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-implementation-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Implementation Challenges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Implementation Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#challenge-1-notification-bot-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge 1: Notification Bot Reliability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#challenge-2-covenant-state-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge 2: Covenant State Synchronization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#challenge-3-cash-account-collisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge 3: Cash Account Collisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#challenge-4-offline-queue-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge 4: Offline Queue Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#challenge-5-key-recovery-ux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge 5: Key Recovery UX
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="android-app-implementation-architecture">Android App: Implementation Architecture<a class="headerlink" href="#android-app-implementation-architecture" title="Permanent link">&para;</a></h1>
+<p><strong>Purpose:</strong> Technical reference for developers building Asgaya clients (Android, iOS, web, desktop)</p>
+<p><strong>Approach:</strong> Protocol-agnostic architecture with platform-specific notes where needed</p>
+<p><strong>Status:</strong> Phase 0 - Architecture documentation (app development not started)</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The Asgaya app implements a peer-to-peer Bitcoin Cash remittance protocol with <strong>no backend servers</strong>. All coordination happens through:
+- <strong>Blockchain queries</strong> (Electrum servers)
+- <strong>Encrypted messaging</strong> (Nostr relays)
+- <strong>Local automation</strong> (notification bot on user's device)</p>
+<p><strong>Key principle:</strong> Any competent developer (not necessarily a blockchain expert) should be able to build an Asgaya client from these docs.</p>
+<hr />
+<h2 id="the-five-gears-code-components">The Five Gears → Code Components<a class="headerlink" href="#the-five-gears-code-components" title="Permanent link">&para;</a></h2>
+<h3 id="conceptual-layer-what-components-do">Conceptual Layer (What Components Do)<a class="headerlink" href="#conceptual-layer-what-components-do" title="Permanent link">&para;</a></h3>
+<p>See <a href="/the-mechanism/">The Mechanism</a> for how these work from a user perspective.</p>
+<h3 id="implementation-layer-how-to-build-them">Implementation Layer (How to Build Them)<a class="headerlink" href="#implementation-layer-how-to-build-them" title="Permanent link">&para;</a></h3>
+<p><strong>Gear 1: Wallet</strong>
+- BCH key management (HD wallets, seed phrases)
+- Cash Account registration/resolution (<code>Elena#142</code>)
+- Covenant creation (BCH script with buffer + expiry)
+- UTXO management (coin selection, change addresses)
+- <strong>See:</strong> <a href="wallet/">wallet.md</a></p>
+<p><strong>Gear 2: Bulletin Board</strong>
+- Electrum NFT UTXO queries (discover active listings)
+- Listing metadata parsing (JSON from NFT commitment)
+- Filtering/matching (payment method, corridor, amount)
+- Caching strategy (balance freshness vs query cost)
+- <strong>See:</strong> <a href="bulletin-board/">bulletin-board.md</a></p>
+<p><strong>Gear 3: Nostr</strong>
+- Relay connection management (WebSocket)
+- Encrypted messaging (NIP-04)
+- Payment instruction exchange (seller → sender)
+- Error handling (relay offline, message timeout)
+- <strong>See:</strong> <a href="nostr/">nostr.md</a></p>
+<p><strong>Gear 4: Notification Bot</strong>
+- Bank notification parsing (Bizum SMS, PagoMóvil, SEPA)
+- Cash Account extraction from payment reference
+- Covenant matching (Electrum query by recipient)
+- Auto-funding logic (lock BCH + broadcast)
+- <strong>See:</strong> <a href="notification-bot/">notification-bot.md</a></p>
+<p><strong>Optional Extensions (Not Core Safety):</strong>
+- Exchange integration (auto-replenish BCH for passive sellers)
+- Pluggable backends: User can configure their own exchange API (Kraken, Binance, etc.)
+- <strong>See:</strong> <a href="exchange-extensions.md">exchange-extensions.md</a> for Kraken example we tested</p>
+<p><strong>Gear 5: Stability Layer</strong>
+- H€/HAu token detection (CashTokens category IDs)
+- AnyHedge contract creation (short BCH vs EUR/XAU)
+- Minting/burning flows (merchant chooses stability)
+- Pool capacity checking (graceful degradation if exhausted)
+- <strong>See:</strong> <a href="stability-layer/">stability-layer.md</a></p>
+<hr />
+<h2 id="data-flow-how-the-gears-connect">Data Flow: How the Gears Connect<a class="headerlink" href="#data-flow-how-the-gears-connect" title="Permanent link">&para;</a></h2>
+<h3 id="active-mode-sender-maria-sends-100-to-elena">Active Mode (Sender - María sends €100 to Elena)<a class="headerlink" href="#active-mode-sender-maria-sends-100-to-elena" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>1. María opens Wallet
+   ↓ [User Input: Elena#142, €100]
+
+2. Wallet creates covenant template
+   ↓ [Covenant: recipient=Elena&#39;s address, amount=€100, buffer=7%, expiry=8h]
+
+3. Bulletin Board queries for BCH sellers
+   ↓ [Electrum: &quot;Find NFTs with currency=EUR, payment_method=Bizum&quot;]
+   💡 Note: Corridor (EUR→VES) irrelevant for seller - Isabel accepts EUR regardless of where María is sending
+
+4. User selects Isabel (passive seller)
+   ↓ [Selection: Isabel#256, rate=0.5%, amount_limit=€500]
+
+5. Nostr sends payment request to Isabel
+   ↓ [Encrypted DM: covenant_id, amount=€100.50, reference=Elena#142]
+
+6. Isabel&#39;s Nostr client receives, sends payment instructions
+   ↓ [Encrypted DM: full_name=&quot;Isabel García&quot;, phone_number=+34600123456, reference=Elena#142, expiry=1h]
+   💡 Full name critical: María&#39;s notification listener verifies &quot;Has enviado €100 a Isabel García&quot; matches to detect wrong-person payments
+
+7. María pays via Bizum
+   ↓ [Banking app: €100.50 to +34600123456, concept=Elena#142]
+
+8. Isabel&#39;s Notification Bot detects payment
+   ↓ [SMS parse: amount=€100.50, reference=Elena#142]
+
+9. Notification Bot matches to covenant
+   ↓ [Electrum query: &quot;Find covenant with recipient=Elena&#39;s address&quot;]
+
+10. Notification Bot auto-funds covenant
+    ↓ [Broadcast TX: lock €107 BCH into covenant]
+
+11. Elena&#39;s Wallet detects funded covenant (PRIMARY: Electrum monitoring)
+    ↓ [Electrum query: &quot;Monitor my address for new covenants&quot;]
+    ↓ [Covenant detected on-chain: funded, €100 BCH locked]
+
+12. Optional: Nostr notification prompts immediate query
+    ↓ [Nostr DM from María: &quot;Covenant funded&quot; - triggers immediate Electrum query]
+    ↓ [Benefit: Avoids waiting for next polling cycle, faster UX]
+    ↓ [Elena&#39;s app shows: &quot;€100 from María available, expires in 8h&quot;]
+
+💡 Electrum monitoring is canonical detection. Nostr DM is optional enhancement to reduce polling frequency.
+</code></pre></div>
+<p><strong>Key observations:</strong>
+- <strong>No backend server</strong> - all queries go to public Electrum servers or Nostr relays
+- <strong>Cash Account is the universal reference</strong> - appears in covenant, Bizum concept field, SMS notification
+- <strong>Passive seller automation</strong> - Isabel's bot handles steps 8-10 automatically</p>
+<hr />
+<h3 id="passive-mode-merchant-carlos-receives-remittance-cash-outs">Passive Mode (Merchant - Carlos receives remittance cash-outs)<a class="headerlink" href="#passive-mode-merchant-carlos-receives-remittance-cash-outs" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>1. Carlos posts listing once (setup)
+   ↓ [Bulletin Board: Create NFT with payment_method=cash, currency=VES, rate=0.5%]
+   💡 Note: Currency (VES) not corridor - Carlos handles remittances from Europe, US, Chile (any BCH source)
+
+2. Elena (recipient) queries bulletin board
+   ↓ [Electrum: &quot;Find BCH buyers accepting cash in Caracas&quot;]
+
+3. Elena selects Carlos
+   ↓ [Selection: Carlos#487, location=Caracas, hours=9am-8pm]
+
+4. Elena&#39;s Wallet sends payment request (same as sender step 5)
+   ↓ [Encrypted DM to Carlos: &quot;Cash-out request: €100 BCH, reference=Elena#142&quot;]
+
+5. Carlos&#39;s Nostr client auto-replies with merchant details
+   ↓ [Encrypted DM: full_name=&quot;Carlos Méndez&quot;, location=&quot;Bodega Carlos, Av. Bolívar 123, Caracas&quot;, hours=&quot;9am-8pm&quot;, bring_reference=&quot;Elena#142&quot;]
+
+6. Elena visits store (in-person)
+   ↓ [Physical: Elena shows Cash Account Elena#142 in wallet]
+
+7. Carlos types Elena#142 in app
+   ↓ [Wallet: &quot;Find covenant with recipient=Elena#142, type=remittance&quot;] 
+
+8. Carlos taps &quot;Accept cash-out&quot;
+   ↓ [Covenant state change: pending → accepted]
+
+9. Carlos hands Elena cash (2 million VES)
+   ↓ [Physical exchange]
+
+10. Both confirm transaction
+    ↓ [Co-sign covenant: Elena releases BCH → Carlos receives BCH]
+
+11. Carlos&#39;s Stability Layer prompts
+    ↓ [UI: &quot;Stabilize as H€, HAu, or keep BCH?&quot;]
+
+12. Carlos chooses H€
+    ↓ [AnyHedge contract created, H€ tokens minted to Carlos&#39;s wallet]
+</code></pre></div>
+<p><strong>Key observations:</strong>
+- <strong>Passive listing</strong> - Carlos posted once, handles all recipients automatically
+- <strong>In-person verification</strong> - Elena shows Cash Account, Carlos types it to find covenant
+- <strong>Stability prompt</strong> - Merchant can preserve purchasing power via H€/HAu</p>
+<hr />
+<h2 id="architecture-principles">Architecture Principles<a class="headerlink" href="#architecture-principles" title="Permanent link">&para;</a></h2>
+<h3 id="1-no-backend-fully-peer-to-peer">1. No Backend (Fully Peer-to-Peer)<a class="headerlink" href="#1-no-backend-fully-peer-to-peer" title="Permanent link">&para;</a></h3>
+<p><strong>What this means:</strong>
+- No central server
+- No database
+- No API endpoints
+- No user accounts</p>
+<p><strong>How it works:</strong>
+- <strong>Blockchain = database</strong> (covenants, listings, Cash Accounts stored on-chain)
+- <strong>Electrum servers = query layer</strong> (read blockchain state via JSON-RPC)
+- <strong>Nostr relays = messaging layer</strong> (encrypted P2P coordination)
+- <strong>User's device = backend</strong> (notification bot runs locally)</p>
+<p><strong>Why it matters:</strong>
+- No single point of failure
+- No custody risk (server can't steal funds)
+- No KYC/registration (permissionless)
+- Censorship-resistant (can't ban users)</p>
+<hr />
+<h3 id="2-offline-first-venezuelan-connectivity-reality">2. Offline-First (Venezuelan Connectivity Reality)<a class="headerlink" href="#2-offline-first-venezuelan-connectivity-reality" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Venezuelan internet is unreliable. App must work when network is intermittent.</p>
+<p><strong>Solutions:</strong></p>
+<h4 id="a-queue-operations-when-offline">A. Queue Operations When Offline<a class="headerlink" href="#a-queue-operations-when-offline" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>offline_queue = []
+
+function createCovenant(recipient, amount):
+  covenant = buildCovenantScript(recipient, amount)
+  if (network_available):
+    broadcast(covenant)
+  else:
+    offline_queue.push({type: &quot;covenant&quot;, data: covenant})
+
+function onNetworkReconnect():
+  for item in offline_queue:
+    if item.type == &quot;covenant&quot;:
+      broadcast(item.data)
+    else if item.type == &quot;nostr_message&quot;:
+      sendNostrMessage(item.data)
+  offline_queue.clear()
+</code></pre></div>
+<h4 id="b-cache-bulletin-board-queries">B. Cache Bulletin Board Queries<a class="headerlink" href="#b-cache-bulletin-board-queries" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>bulletin_board_cache = {
+  last_updated: null,
+  listings: []
+}
+
+function queryBulletinBoard():
+  if (network_available):
+    listings = electrumQuery(&quot;getNFTs&quot;, {...})
+    bulletin_board_cache.listings = listings
+    bulletin_board_cache.last_updated = now()
+    return listings
+  else:
+    return bulletin_board_cache.listings  // Use cached data
+</code></pre></div>
+<h4 id="c-handle-electrum-timeouts-gracefully">C. Handle Electrum Timeouts Gracefully<a class="headerlink" href="#c-handle-electrum-timeouts-gracefully" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>function electrumQuery(method, params, timeout=10000):
+  try:
+    result = await electrum.call(method, params, {timeout})
+    return result
+  catch (TimeoutError):
+    // Try backup server
+    result = await backup_electrum.call(method, params, {timeout})
+    return result
+  catch (NetworkError):
+    // Return cached data or queue for retry
+    return getCachedOrQueue(method, params)
+</code></pre></div>
+<h4 id="d-sync-state-when-reconnecting">D. Sync State When Reconnecting<a class="headerlink" href="#d-sync-state-when-reconnecting" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>function onNetworkReconnect():
+  // 1. Process offline queue
+  processOfflineQueue()
+
+  // 2. Sync covenant states
+  my_covenants = getLocalCovenants()
+  for covenant in my_covenants:
+    on_chain_state = electrumQuery(&quot;getCovenantState&quot;, covenant.id)
+    if (on_chain_state != covenant.local_state):
+      updateLocalState(covenant.id, on_chain_state)
+
+  // 3. Refresh bulletin board cache
+  refreshBulletinBoard()
+</code></pre></div>
+<p><strong>See:</strong> <a href="offline-first/">offline-first.md</a> for complete patterns</p>
+<hr />
+<h3 id="3-state-management-whats-local-vs-blockchain">3. State Management (What's Local vs Blockchain)<a class="headerlink" href="#3-state-management-whats-local-vs-blockchain" title="Permanent link">&para;</a></h3>
+<p><strong>Two sources of truth:</strong>
+1. <strong>Blockchain = canonical state</strong> (covenants, listings, Cash Accounts)
+2. <strong>Local database = performance cache</strong> (avoid repeated Electrum queries)</p>
+<h4 id="whats-stored-locally-sqliteroom">What's Stored Locally (SQLite/Room)<a class="headerlink" href="#whats-stored-locally-sqliteroom" title="Permanent link">&para;</a></h4>
+<p><strong>Table: covenants</strong>
+<div class="highlight"><pre><span></span><code>id              TEXT PRIMARY KEY    // Covenant transaction ID
+recipient       TEXT                // Elena#142 or BCH address
+amount          INTEGER             // Satoshis (€100 worth of BCH)
+buffer          INTEGER             // 7% buffer in satoshis
+expiry          INTEGER             // Block height or timestamp
+state           TEXT                // &quot;created&quot; | &quot;funded&quot; | &quot;claimed&quot; | &quot;expired&quot;
+created_at      INTEGER             // Local timestamp
+last_synced     INTEGER             // Last blockchain check
+</code></pre></div></p>
+<p><strong>Table: listings</strong> (bulletin board cache)
+<div class="highlight"><pre><span></span><code>nft_id          TEXT PRIMARY KEY    // NFT UTXO identifier
+cash_account    TEXT                // Isabel#256
+corridor        TEXT                // &quot;EUR→VES&quot;
+payment_method  TEXT                // &quot;Bizum&quot;
+rate            REAL                // 0.5%
+amount_limit    INTEGER             // €500
+active          BOOLEAN             // Still valid?
+cached_at       INTEGER             // When cached
+</code></pre></div></p>
+<p><strong>Table: cash_accounts</strong> (resolution cache)
+<div class="highlight"><pre><span></span><code>name            TEXT PRIMARY KEY    // &quot;Elena#142&quot;
+address         TEXT                // BCH address (P2PKH)
+registered_at   INTEGER             // Block height
+verified        BOOLEAN             // Confirmed on-chain?
+</code></pre></div></p>
+<h4 id="whats-reconstructed-from-blockchain">What's Reconstructed from Blockchain<a class="headerlink" href="#whats-reconstructed-from-blockchain" title="Permanent link">&para;</a></h4>
+<p><strong>Covenant lifecycle:</strong>
+- Query Electrum: "Has this covenant been funded?"
+- Query Electrum: "Has this covenant been claimed?"
+- Query Electrum: "Has this covenant expired (block height passed)?"</p>
+<p><strong>Bulletin board freshness:</strong>
+- Query Electrum: "Are these NFT UTXOs still unspent?" (listing still active)
+- Re-query every 10 minutes to detect new listings</p>
+<p><strong>Cash Account resolution:</strong>
+- Query Electrum: "Find OP_RETURN with Cash Account registration for Elena#142"
+- Cache result locally to avoid repeated queries</p>
+<p><strong>Trade-off:</strong> More local state = faster UX, less blockchain truth = potential drift. Solution: periodic sync (every 10 minutes or on user action).</p>
+<p><strong>See:</strong> <a href="state-management/">state-management.md</a> for complete patterns</p>
+<hr />
+<h2 id="external-dependencies">External Dependencies<a class="headerlink" href="#external-dependencies" title="Permanent link">&para;</a></h2>
+<h3 id="1-electrum-servers-blockchain-queries">1. Electrum Servers (Blockchain Queries)<a class="headerlink" href="#1-electrum-servers-blockchain-queries" title="Permanent link">&para;</a></h3>
+<p><strong>What:</strong> Public BCH Electrum servers for reading blockchain state</p>
+<p><strong>Why needed:</strong>
+- Query covenant state (funded? claimed? expired?)
+- Discover bulletin board listings (NFT UTXOs)
+- Resolve Cash Accounts (OP_RETURN lookups)
+- Monitor user's address for incoming covenants</p>
+<p><strong>Recommendation:</strong> Use existing ElectrumX client library, connect to <strong>3-5 public servers</strong> for redundancy</p>
+<p><strong>Alternatives:</strong>
+- Run own Electrum server (not recommended for Phase 0 - adds complexity)
+- Use blockchain explorers (APIs might have rate limits)</p>
+<p><strong>Protocol specs:</strong> Electrum JSON-RPC (see <a href="wallet/">wallet.md</a> and <a href="bulletin-board/">bulletin-board.md</a>)</p>
+<p><strong>Phase 0 testing:</strong> Run own Electrum server for controlled testing environment, then switch to public servers for production</p>
+<hr />
+<h3 id="2-nostr-relays-p2p-messaging">2. Nostr Relays (P2P Messaging)<a class="headerlink" href="#2-nostr-relays-p2p-messaging" title="Permanent link">&para;</a></h3>
+<p><strong>What:</strong> Public Nostr relays for encrypted P2P coordination</p>
+<p><strong>Why needed:</strong>
+- Send payment requests (sender → seller)
+- Receive payment instructions (seller → sender)
+- Coordinate in-person meetings (recipient → merchant)</p>
+<p><strong>Recommendation:</strong> Raw WebSocket implementation (simpler than full Nostr SDK for limited message types). Connect to <strong>3-5 public relays</strong> for redundancy.</p>
+<p><strong>Alternatives:</strong>
+- Use full Nostr SDK (heavier, more features than needed)
+- Build custom messaging layer (reinventing the wheel)</p>
+<p><strong>Protocol specs:</strong> Nostr NIP-04 (encrypted DMs) - see <a href="nostr/">nostr.md</a></p>
+<hr />
+<h3 id="3-bank-notification-parsing-platform-specific">3. Bank Notification Parsing (Platform-Specific)<a class="headerlink" href="#3-bank-notification-parsing-platform-specific" title="Permanent link">&para;</a></h3>
+<p><strong>What:</strong> Detect incoming fiat payments to trigger covenant funding</p>
+<p><strong>Android approach:</strong> 
+- <code>SmsMessage</code> API (read incoming SMS)
+- Regex patterns per payment method (Bizum, PagoMóvil, SEPA)</p>
+<p><strong>iOS limitation:</strong>
+- iOS doesn't allow SMS interception
+- Alternative: Manual confirmation or push notifications from bank app</p>
+<p><strong>Why needed:</strong>
+- Passive sellers need automatic payment detection
+- Manual checking doesn't scale (100+ transactions/day)</p>
+<p><strong>Recommendation:</strong> Android SmsMessage API for Phase 0. No library needed, just regex patterns.</p>
+<p><strong>Protocol specs:</strong> SMS parsing patterns per bank - see <a href="notification-bot/">notification-bot.md</a></p>
+<p><strong>Research completed:</strong> See <code>/knowledge/research/RS026_android_notifications.md</code> for Android notification architecture analysis</p>
+<hr />
+<h3 id="4-kraken-api-bch-buyingselling">4. Kraken API (BCH Buying/Selling)<a class="headerlink" href="#4-kraken-api-bch-buyingselling" title="Permanent link">&para;</a></h3>
+<p><strong>What:</strong> Exchange API for passive sellers to replenish BCH inventory</p>
+<p><strong>Why needed:</strong>
+- Passive seller receives €100.50 fiat → locks €107 BCH in covenant
+- Needs to buy €107 BCH from exchange to replenish inventory
+- Capital recycling enables high volume with small capital</p>
+<p><strong>Recommendation:</strong> Direct REST API via HTTP client (OkHttp or equivalent)</p>
+<p><strong>Alternatives:</strong>
+- Other exchanges (Binance, Coinbase)
+- Aggregator service (complicates offline-first)</p>
+<p><strong>Protocol specs:</strong> Kraken REST API v2 - see <a href="notification-bot/">notification-bot.md</a></p>
+<hr />
+<h3 id="5-cashtokens-sdk-hhau-stability">5. CashTokens SDK (H€/HAu Stability)<a class="headerlink" href="#5-cashtokens-sdk-hhau-stability" title="Permanent link">&para;</a></h3>
+<p><strong>What:</strong> BCH library for creating/managing fungible tokens</p>
+<p><strong>Why needed:</strong>
+- Detect H€/HAu tokens in wallet
+- Mint tokens after AnyHedge contract created
+- Burn tokens to redeem BCH</p>
+<p><strong>Recommendation:</strong> Use <code>bitcoincashj</code> or CashScript SDK (whichever has better CashTokens support)</p>
+<p><strong>Protocol specs:</strong> CashTokens category IDs, minting/burning transactions - see <a href="stability-layer/">stability-layer.md</a></p>
+<p><strong>Research completed:</strong> See <code>/knowledge/research/RS057_bitcoin_cash_laila.md</code> (BCH/Cash Accounts deep-dive) and related RS files for BCH implementation details</p>
+<hr />
+<h3 id="6-anyhedge-oracle-price-feeds">6. AnyHedge Oracle (Price Feeds)<a class="headerlink" href="#6-anyhedge-oracle-price-feeds" title="Permanent link">&para;</a></h3>
+<p><strong>What:</strong> Decentralized oracle for EUR/BCH and XAU/BCH price feeds</p>
+<p><strong>Why needed:</strong>
+- Create AnyHedge contracts (merchant shorts BCH vs EUR/XAU)
+- Settle contracts at maturity (30 days)
+- Auto-renewal</p>
+<p><strong>Recommendation:</strong> Use existing AnyHedge oracle (General Protocols or equivalent)</p>
+<p><strong>Protocol specs:</strong> AnyHedge contract structure - see <a href="stability-layer/">stability-layer.md</a></p>
+<hr />
+<h2 id="component-documentation">Component Documentation<a class="headerlink" href="#component-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="core-components-build-these-first">Core Components (Build These First)<a class="headerlink" href="#core-components-build-these-first" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong><a href="wallet/">wallet.md</a></strong> - Key management, Cash Accounts, covenant creation (~350 lines)</li>
+<li><strong><a href="bulletin-board/">bulletin-board.md</a></strong> - Electrum queries, listing discovery (~300 lines)</li>
+<li><strong><a href="nostr/">nostr.md</a></strong> - Relay management, encrypted messaging (~250 lines)</li>
+<li><strong><a href="notification-bot/">notification-bot.md</a></strong> - SMS parsing, auto-funding (~450 lines, most complex)</li>
+<li><strong><a href="stability-layer/">stability-layer.md</a></strong> - H€/HAu integration (~300 lines)</li>
+</ol>
+<h3 id="cross-cutting-concerns">Cross-Cutting Concerns<a class="headerlink" href="#cross-cutting-concerns" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong><a href="state-management/">state-management.md</a></strong> - Local persistence, covenant tracking (~250 lines)</li>
+<li><strong><a href="offline-first/">offline-first.md</a></strong> - Queue strategies, cache patterns (~300 lines)</li>
+</ol>
+<h3 id="future-phase-1">Future (Phase 1+)<a class="headerlink" href="#future-phase-1" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>testing.md</strong> - Unit tests, integration tests, mocks (defer until reference app exists)</li>
+</ol>
+<hr />
+<h2 id="error-handling-patterns">Error Handling Patterns<a class="headerlink" href="#error-handling-patterns" title="Permanent link">&para;</a></h2>
+<p><strong>Every component that touches the network needs:</strong></p>
+<h3 id="1-timeout-handling">1. Timeout Handling<a class="headerlink" href="#1-timeout-handling" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>function queryWithTimeout(server, query, timeout=10000):
+  try:
+    result = await server.call(query, {timeout})
+    return {success: true, data: result}
+  catch (TimeoutError):
+    return {success: false, error: &quot;timeout&quot;}
+</code></pre></div>
+<h3 id="2-retry-logic-with-exponential-backoff">2. Retry Logic (with Exponential Backoff)<a class="headerlink" href="#2-retry-logic-with-exponential-backoff" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>function retryWithBackoff(operation, max_retries=3):
+  for attempt in 1..max_retries:
+    result = operation()
+    if result.success:
+      return result
+
+    wait_time = (2 ^ attempt) * 1000  // 2s, 4s, 8s
+    sleep(wait_time)
+
+  return {success: false, error: &quot;max_retries_exceeded&quot;}
+</code></pre></div>
+<h3 id="3-fallback-strategies">3. Fallback Strategies<a class="headerlink" href="#3-fallback-strategies" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>function electrumQueryWithFallback(query):
+  // Try primary server
+  result = electrum_primary.call(query)
+  if result.success:
+    return result
+
+  // Try backup servers
+  for backup in electrum_backups:
+    result = backup.call(query)
+    if result.success:
+      return result
+
+  // All servers failed - use cached data or queue
+  return getCachedOrQueue(query)
+</code></pre></div>
+<h3 id="4-user-facing-error-messages">4. User-Facing Error Messages<a class="headerlink" href="#4-user-facing-error-messages" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>function handleError(error):
+  if error.type == &quot;timeout&quot;:
+    showMessage(&quot;Network slow. Retrying...&quot;)
+  else if error.type == &quot;offline&quot;:
+    showMessage(&quot;Offline. Transaction queued.&quot;)
+  else if error.type == &quot;covenant_expired&quot;:
+    showMessage(&quot;Payment window expired. Try again.&quot;)
+  else:
+    showMessage(&quot;Error: &quot; + error.message)
+</code></pre></div>
+<p><strong>See component docs for specific error scenarios.</strong></p>
+<hr />
+<h2 id="platform-specific-notes">Platform-Specific Notes<a class="headerlink" href="#platform-specific-notes" title="Permanent link">&para;</a></h2>
+<h3 id="android">Android<a class="headerlink" href="#android" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>SMS access:</strong> Requires <code>RECEIVE_SMS</code> permission (user must grant)</li>
+<li><strong>Notification listener:</strong> For bank app notifications (alternative to SMS)</li>
+<li><strong>Background service:</strong> Notification bot runs as foreground service</li>
+<li><strong>Battery optimization:</strong> Exclude app from battery saver to ensure 24/7 operation</li>
+<li><strong>SMS restrictions:</strong> Newer Android versions restrict SMS access - researched alternative: Notification Listener Service for bank app notifications (more reliable than SMS parsing) </li>
+</ul>
+<h3 id="ios">iOS<a class="headerlink" href="#ios" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>No SMS access:</strong> iOS doesn't allow SMS interception</li>
+<li><strong>Alternative:</strong> Manual payment confirmation or push notifications from bank app</li>
+<li><strong>Background limitations:</strong> iOS restricts background processing</li>
+<li><strong>Notification bot:</strong> Requires different implementation strategy (not covered in Phase 0 Android docs)</li>
+</ul>
+<h3 id="webdesktop">Web/Desktop<a class="headerlink" href="#webdesktop" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>No SMS access:</strong> Browser/desktop apps can't read SMS</li>
+<li><strong>Alternative:</strong> QR code showing payment instructions, manual confirmation</li>
+<li><strong>Notification bot:</strong> Runs as browser extension or desktop daemon</li>
+</ul>
+<p><strong>Phase 0 focus:</strong> Android implementation. iOS/web/desktop defer to Phase 1+.</p>
+<hr />
+<h2 id="key-implementation-challenges">Key Implementation Challenges<a class="headerlink" href="#key-implementation-challenges" title="Permanent link">&para;</a></h2>
+<h3 id="challenge-1-notification-bot-reliability">Challenge 1: Notification Bot Reliability<a class="headerlink" href="#challenge-1-notification-bot-reliability" title="Permanent link">&para;</a></h3>
+<p><strong>Why hard:</strong> Must not miss payments (passive seller loses money)</p>
+<p><strong>Mitigation:</strong>
+- Parse multiple notification sources (SMS + bank app notification)
+- Log all notifications for debugging
+- Provide manual override ("I received payment, fund covenant anyway")
+- Alert user if notification parsing fails</p>
+<p><strong>PoC validation:</strong> Tested with Raspberry Pi (early 2026) - <code>smsbridge_loop.py</code> was highly reliable at parsing SMS notifications. Android implementation should achieve similar reliability.</p>
+<h3 id="challenge-2-covenant-state-synchronization">Challenge 2: Covenant State Synchronization<a class="headerlink" href="#challenge-2-covenant-state-synchronization" title="Permanent link">&para;</a></h3>
+<p><strong>Why hard:</strong> Local state can drift from blockchain</p>
+<p><strong>Mitigation:</strong>
+- Query blockchain every 10 minutes for covenant updates
+- Reconcile differences (local says "created", blockchain says "funded")
+- Handle reorgs (block reorganizations)</p>
+<p><strong>Optimization:</strong> Event-driven queries (user opens covenant view → query blockchain) rather than constant polling. Nostr messages trigger blockchain verification (e.g., "covenant funded" message → query to confirm).</p>
+<h3 id="challenge-3-cash-account-collisions">Challenge 3: Cash Account Collisions<a class="headerlink" href="#challenge-3-cash-account-collisions" title="Permanent link">&para;</a></h3>
+<p><strong>Why hard:</strong> Multiple users might register same name</p>
+<p><strong>Mitigation:</strong>
+- Use <code>name#number</code> format (number disambiguates)
+- When resolving <code>Elena#142</code>, query blockchain for that specific combo
+- If collision, increment number (<code>Elena#143</code>)</p>
+<h3 id="challenge-4-offline-queue-management">Challenge 4: Offline Queue Management<a class="headerlink" href="#challenge-4-offline-queue-management" title="Permanent link">&para;</a></h3>
+<p><strong>Why hard:</strong> Queue can grow large, might have stale data</p>
+<p><strong>Mitigation:</strong>
+- Limit queue size (100 items max)
+- Expire old items (covenant creation &gt;24h old = invalid)
+- Prioritize urgent operations (covenant funding &gt; bulletin board refresh)</p>
+<h3 id="challenge-5-key-recovery-ux">Challenge 5: Key Recovery UX<a class="headerlink" href="#challenge-5-key-recovery-ux" title="Permanent link">&para;</a></h3>
+<p><strong>Why hard:</strong> Users lose phones, need to recover wallet + Cash Account</p>
+<p><strong>Mitigation:</strong>
+- 12-word recovery phrase (standard BIP39)
+- Prompt during setup (not skippable)
+- Verify user wrote it down (type back 3 random words)
+- Covenant signing requires password (additional security)</p>
+<p><strong>Smart pestering strategy:</strong>
+- Recipient with 0 BCH: Gentle reminder (dismissible)
+- Balance &gt;€10: Weekly reminder until backup verified
+- Balance &gt;€100: Daily reminder until backup verified
+- Trader/merchant mode enabled: Mandatory backup before first listing
+- Show backup reminder on every transaction &gt;€50 until verified</p>
+<hr />
+<h2 id="success-criteria">Success Criteria<a class="headerlink" href="#success-criteria" title="Permanent link">&para;</a></h2>
+<p><strong>Implementation docs are successful if:</strong></p>
+<ol>
+<li>✅ <strong>Clarity:</strong> A competent developer (not blockchain expert) can build an Asgaya client</li>
+<li>✅ <strong>Completeness:</strong> All five gears have implementation guidance</li>
+<li>✅ <strong>Protocols:</strong> Electrum queries, Nostr messages, SMS patterns are specified</li>
+<li>✅ <strong>Error handling:</strong> What to do when things fail is clear</li>
+<li>✅ <strong>Platform-agnostic:</strong> Any platform can implement (with platform notes where needed)</li>
+<li>✅ <strong>AI-readable:</strong> External AI can understand and summarize the architecture</li>
+</ol>
+<hr />
+<h2 id="related-documentation">Related Documentation<a class="headerlink" href="#related-documentation" title="Permanent link">&para;</a></h2>
+<p><strong>Conceptual (read these first):</strong>
+- <a href="/the-mechanism/">The Mechanism</a> - How the five gears work
+- <a href="/user-journeys/">User Journeys</a> - How users interact
+- <a href="/why-this-design/">Why This Design</a> - Architectural rationale</p>
+<p><strong>Implementation (this section):</strong>
+- <a href="wallet/">wallet.md</a> - Core component
+- <a href="bulletin-board/">bulletin-board.md</a> - Discovery layer
+- <a href="nostr/">nostr.md</a> - Coordination layer
+- <a href="notification-bot/">notification-bot.md</a> - Automation layer
+- <a href="stability-layer/">stability-layer.md</a> - Merchant retention layer
+- <a href="state-management/">state-management.md</a> - Persistence patterns
+- <a href="offline-first/">offline-first.md</a> - Connectivity handling</p>
+<p><strong>Research:</strong>
+- <code>/knowledge/research/RS070-android-app-development.md</code> - Design decisions, TightDS feedback</p>
+<hr />
+<p><strong>Status:</strong> Phase 0 - Architecture documentation complete, component docs in progress<br />
+<strong>Updated:</strong> 2026-06-25<br />
+<strong>Next:</strong> Draft component docs (wallet, bulletin-board, nostr, notification-bot, stability-layer)<br />
+<strong>Contributors:</strong> Coordination (architecture), TightDS (technical review), Suso (product vision)</p>
+        <div id="llms-copy-button" style="position: fixed; z-index: 1100; top: 80px; right: 20px;">
+            <button onclick="copyMarkdownToClipboard()" style="cursor: pointer; background: #007acc; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Copy Markdown</button>
+        </div>
+        <script>
+        async function copyMarkdownToClipboard() {
+            try {
+                const currentPath = window.location.pathname;
+                const mdPath = currentPath.endsWith('/') ? currentPath + 'index.md' : currentPath.replace(/\.html$/, '.md');
+
+                const response = await fetch(mdPath);
+                if (response.ok) {
+                    const markdown = await response.text();
+                    await navigator.clipboard.writeText(markdown);
+                    // Show feedback
+                    const button = document.querySelector('#llms-copy-button button');
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007acc';
+                    }, 2000);
+                } else {
+                    throw new Error('Markdown file not found');
+                }
+            } catch (err) {
+                console.error('Failed to copy markdown:', err);
+                alert('Failed to copy markdown content');
+            }
+        }
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.breadcrumbs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
