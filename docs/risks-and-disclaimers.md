@@ -1,6 +1,6 @@
 # Risks and Disclaimers
 
-**Last Updated:** May 17, 2026
+**Last Updated:** June 28, 2026
 
 ---
 
@@ -40,7 +40,7 @@ By participating in Asgaya (as a user, merchant, or BCH seller), **you are solel
 
 ### Technical Understanding
 - Learning how Bitcoin Cash transactions work
-- Understanding the two-step settlement mechanism
+- Understanding the payment-first covenant model
 - Knowing how to secure your private keys
 - Verifying the protocol's open-source code if desired
 
@@ -82,15 +82,15 @@ By participating in Asgaya (as a user, merchant, or BCH seller), **you are solel
 
 - **Total loss is possible:** Technical failures, smart contract bugs, counterparty default, lost keys, or user error can result in complete and permanent loss of all funds. This is not theoretical—it will happen to some users.
 
-- **Bitcoin Cash volatility:** BCH price can fluctuate 10-20% or more in a single day. The EUR amount a recipient receives in local currency may be significantly different from what the sender intended, even with volatility buffer buffers.
+- **Bitcoin Cash volatility:** BCH price can fluctuate 10-20% or more in a single day. The EUR amount a recipient receives in local currency may be significantly different from what the sender intended, even with volatility buffers and stability layer protection (H€/HAu tokens).
 
 - **No insurance:** Funds are not insured by any government deposit insurance scheme, private insurance company, or protocol guarantee fund. When funds are lost, they are gone forever.
 
 - **No refunds or chargebacks:** Blockchain transactions are irreversible. There is no customer service to call, no dispute resolution process, no way to reverse a mistaken transaction.
 
-- **Counterparty default:** Merchants may take cash and refuse to co-sign. BCH sellers may disappear after accepting bounties. Recipients may lose funds if they fail to claim within 24 hours. Smart contracts enforce rules, but cannot force humans to behave honestly.
+- **Counterparty default:** Merchants may take cash and refuse to co-sign. BCH sellers may disappear after receiving fiat. Recipients may lose access to funds if covenants abort due to price drops exceeding 7%. Smart contracts enforce rules, but cannot force humans to behave honestly.
 
-- **Smart contract risk:** Covenants are experimental technology. Bugs in CashScript code, unexpected edge cases in timeout cascades, or failures in the EUR-denomination logic could lock funds permanently or distribute them incorrectly.
+- **Smart contract risk:** Covenants are experimental technology. Bugs in CashScript code, unexpected edge cases in contract renewals, or failures in the H€/HAu stability layer could lock funds permanently or distribute them incorrectly.
 
 - **No one to sue:** As a permissionless protocol with no corporate entity, there is no one to hold liable for losses. Contributors have explicitly disclaimed all liability. Courts may have no jurisdiction even if you tried.
 
@@ -102,16 +102,17 @@ By participating in Asgaya (as a user, merchant, or BCH seller), **you are solel
 - **Software bugs:** The protocol is experimental and may contain errors
 - **Covenant vulnerabilities:** Smart contract code may have bugs despite review and testing
 - **CashScript limitations:** Covenant language is powerful but relatively new technology
-- **Timeout cascade failures:** 24-hour refund mechanism may behave unexpectedly
+- **Contract renewal failures:** 7-day auto-renewing contracts may behave unexpectedly
+- **Stability layer risks:** H€/HAu token minting via AnyHedge contracts is experimental
 - **Network failures:** Bitcoin Cash network or fiat payment systems may experience downtime
 - **User error:** Mistakes in addresses, amounts, or confirmations may be irreversible
-- **Notification system failures:** SMS parsing or OP_RETURN data may fail to sync properly
+- **Notification system failures:** Payment notification parsing may fail to sync properly
 - **Security vulnerabilities:** Despite best efforts, security flaws may exist
 
 ### Counterparty Risk
 - **Merchant default:** Merchants may fail to provide cash after co-signing covenant
-- **BCH seller default:** Sellers may fail to honor accepted bounties (mitigated by volatility buffer)
-- **Timeout cascade:** 24-hour claim window creates time pressure; unclaimed funds trigger refund split
+- **BCH seller default:** Sellers may fail to honor payment-first covenants after receiving fiat
+- **Covenant abort:** 7% price drop triggers automatic abort; BCH returns to seller as H€/HAu or raw BCH
 - **Covenant bugs:** Smart contract code may contain errors despite audit efforts
 - **Reputation systems:** Trust mechanisms are experimental and may fail
 
@@ -178,7 +179,7 @@ To the maximum extent permitted by law:
 
 ## Questions or Concerns?
 
-- **Technical questions:** See [Contributing Guide](meta/contributing.md)
+- **Technical questions:** [GitHub Issues](https://github.com/rufitnes/asgayapedia/issues) or see [unknowns/](unknowns/) for research questions
 - **Legal questions:** Consult your own legal counsel (we cannot provide legal advice)
 - **Regulatory questions:** Contact your local financial authority
 - **General discussion:** [GitHub Discussions](https://github.com/rufitnes/asgayapedia/discussions)
