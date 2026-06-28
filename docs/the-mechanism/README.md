@@ -2,7 +2,7 @@
 **📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
 
 **Send €100 to Venezuela for €0.50 instead of €5.**
-No company. No custody. No KYC. Just four components working together.
+No company. No custody. No KYC. Just five components working together.
 
 ---
 
@@ -19,7 +19,7 @@ becomes unnecessary. **Success means we disappear.**
 
 ---
 
-## The Four Gears
+## The Five Gears
 
 | Gear | What it does |
 |------|--------------|
@@ -27,6 +27,7 @@ becomes unnecessary. **Success means we disappear.**
 | ⚙️ **Bulletin Board** | Where buyers and sellers find each other (NFTs on the BCH blockchain — anyone can read) |
 | ⚙️ **Nostr** | How they coordinate payment details (encrypted P2P messaging) |
 | ⚙️ **Notification Bot** | How it runs automatically (the killer feature — set and forget) |
+| ⚙️ **Stability Layer** | How merchants protect against volatility (H€/HAu tokens backed by AnyHedge) |
 
 ---
 
@@ -122,12 +123,17 @@ respect.
 **Current:** Documentation in progress; stability tokens (H€/HAu) design validated.  
 **Validating:** Does the 7% buffer hold? Will merchants adopt stability tokens? Can bull pool scale?
 
-**Start here:** [Bulletin Board](bulletin-board.md) — the core innovation.  
-**Then:** [Buyers and Sellers](buyers-and-sellers.md) — the user perspective.  
-**New:** [Universal Stability](universal-stability.md) — post‑fiat asset backing.  
-**Deeper rationale:** [Why This Design](why-this-design/) — requirements, evidence, open questions.
+**Explore the gears:**
+- [Wallet](wallet/README.md) - Your BCH, your identity
+- [Bulletin Board](bulletin-board/README.md) - Discover buyers and sellers  
+- [Nostr Coordination](nostr-coordination/README.md) - Private payment coordination
+- [Notification Bot](notification-bot/README.md) - Automation engine
+- [Stability Layer](stability-layer/README.md) - H€/HAu volatility protection
+- [How They Interact](how-they-interact.md) - The complete picture
+
+**Deeper dive:** [Why This Design?](../why-this-design/README.md) - Design rationale and constraints
 
 ---
 
-**Authors:** Suso + Claude Sonnet 4.5 + DeepSeek  
-**Updated:** 2026‑06‑15 · **Experimental structure — feedback welcomed**
+**Authors:** Suso + Claude Sonnet 4.5 (Coordination) + TightDS (DeepSeek)  
+**Updated:** 2026‑06‑28
