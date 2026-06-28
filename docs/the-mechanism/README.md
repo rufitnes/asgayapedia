@@ -13,8 +13,9 @@ underserved by both banks (5‑8% remittance fees) and crypto exchanges (complex
 UX, KYC, unavailable in many countries).
 
 But the real goal is **Bitcoin Cash merchant adoption**. Every remittance creates
-demand for BCH‑accepting merchants, rewards them with a 0.5% spread, and offers
-an escape hatch from hyperinflation. When merchants accept BCH directly, Asgaya
+demand for BCH‑accepting merchants, rewards them with a 0.5% spread plus product 
+margin (~30% on the sale of products and services during the cash-out), and offers 
+an escape hatch from hyperinflation. When merchants accept BCH directly, Asgaya 
 becomes unnecessary. **Success means we disappear.**
 
 ---
