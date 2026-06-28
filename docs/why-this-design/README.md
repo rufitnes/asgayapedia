@@ -52,33 +52,6 @@ The trade-offs and limitations we can't avoid:
 
 ---
 
-### [Evidence](/why-this-design/evidence/README.md)
-**What research supports these decisions?**
-
-The data, analysis, and experiments that validate our approach:
-- Remittance market size: $589B global, $5-8% average fees
-- BCH volatility analysis: 7% buffer covers 99.45% of 4-hour windows (RS062, 12-month back-test)
-- AnyHedge stability: €3K pool allocated for Phase 0 H€/HAu deployment (first real-world test)
-
-**Read this if:** You want to see the numbers behind the design
-
----
-
-### [Open Questions](/why-this-design/open-questions/README.md)
-**What don't we know yet?**
-
-The unknowns, risks, and experiments we're validating in Phase 0:
-- Will 7% buffer hold in real-world usage?
-- Do merchants adopt stability tokens (H€/HAu) or prefer BCH volatility?
-- Merchant retention: Does triple-dip economics keep merchants active for 6+ months?
-- Can bulletin board scale to 10,000+ listings?
-- Is passive mode sticky (do traders stay active for 12+ months)?
-- What regulatory response will we face in Spain and Venezuela?
-
-**Read this if:** You want to contribute research or identify risks
-
----
-
 ## How to Use This Section
 
 ### If You're New
@@ -88,10 +61,10 @@ Start with [Requirements](/why-this-design/requirements/README.md) → understan
 Read [Constraints](/why-this-design/constraints/README.md) → understand the trade-offs
 
 ### If You're Skeptical
-Review [Evidence](/why-this-design/evidence/README.md) → see the data
+Review [Research Summaries](../research/summaries/README.md) → see the data (RS062, RS039, etc.)
 
 ### If You Want to Contribute
-Check [Open Questions](/why-this-design/open-questions/README.md) → find research gaps
+Check [Unknowns](../unknowns/README.md) → find research gaps and investigation briefs
 
 ---
 
@@ -121,7 +94,7 @@ Check [Open Questions](/why-this-design/open-questions/README.md) → find resea
 **How to contribute:**
 - Open issue on GitHub
 - Submit pull request with new evidence
-- Join discussion in [Open Questions](/why-this-design/open-questions/README.md)
+- Investigate unknowns in [Unknowns Directory](../unknowns/README.md)
 
 ---
 
