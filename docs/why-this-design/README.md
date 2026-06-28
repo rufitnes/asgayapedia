@@ -1,4 +1,5 @@
 # Why This Design: The Rationale Behind Asgaya
+**📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
 
 **Purpose:** This section explains WHY Asgaya works the way it does.
 

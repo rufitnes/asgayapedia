@@ -1,4 +1,5 @@
 # Trader Journey: Professional Liquidity Provider
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Role:** Both BCH Buyer AND BCH Seller (Passive Mode)  
 **Example:** Isabel in Madrid (Spain) providing liquidity on EUR/BCH corridor

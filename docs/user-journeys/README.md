@@ -1,4 +1,5 @@
 # Buyers and Sellers: There Are Only Two Roles
+**📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
 
 **Everything collapses into this:** Some people have BCH and want fiat. Some people have fiat and want BCH. The bulletin board connects them. Covenants execute the trades. Nostr coordinates. The app automates passive mode.
 

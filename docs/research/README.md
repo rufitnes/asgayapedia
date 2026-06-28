@@ -1,4 +1,5 @@
 # Research Documents
+**📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
 
 Research documents supporting Asgaya's design decisions.
 

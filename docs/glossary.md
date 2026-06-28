@@ -7,7 +7,7 @@
 ## Core Concepts
 
 ### Asgaya Protocol
-A permissionless peer‑to‑peer remittance protocol built on Bitcoin Cash. It uses a decentralised bulletin board and covenant smart contracts to connect BCH sellers with senders and merchants with recipients, without any central server or custodian.
+A permissionless peer-to-peer protocol built on Bitcoin Cash, delivered as a wallet designed to make remittances simple and affordable. Its mission is to promote merchant Bitcoin Cash adoption by turning every remittance into an opportunity for circular economy growth. It uses a decentralised bulletin board and covenant smart contracts to connect BCH sellers with senders and merchants with recipients, without any central server or custodian.
 
 ### Bulletin Board
 The decentralised marketplace where BCH sellers and buyers discover each other. All listings (offers to sell or buy BCH) are stored on the Bitcoin Cash blockchain as NFT UTXOs. Anyone can query the bulletin board via Electrum servers; anyone can post a listing by broadcasting a transaction.

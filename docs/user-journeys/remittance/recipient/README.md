@@ -1,4 +1,5 @@
 # Recipient Journey: The Active BCH Seller
+**📖 Unfamiliar terms?** See the [glossary](../../../glossary.md) for definitions.
 
 **Role:** BCH Seller (Active → Can become Passive)  
 **Example:** Elena in Caracas (Venezuela) receiving €100 from María in Madrid (Spain)

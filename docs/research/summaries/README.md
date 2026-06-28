@@ -1,4 +1,5 @@
 # Research Summaries
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Purpose:** Distilled findings from research sessions relevant to experimental documentation.
 

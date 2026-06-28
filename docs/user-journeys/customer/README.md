@@ -1,4 +1,5 @@
 # Customer Journey: Paying Merchants with Asgaya
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Role:** Active BCH Buyer  
 **Example:** Ana (customer) pays Carlos (merchant) for groceries

@@ -1,4 +1,5 @@
 # Nostr: How Buyers and Sellers Coordinate Privately
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Encrypted. Peer-to-peer. No server.** Payment details delivered in under a second.
 

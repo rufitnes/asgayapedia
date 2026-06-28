@@ -1,4 +1,5 @@
 # The Notification Bot: Automation That Makes Asgaya Scale
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Set it and forget it.** Post your listing once. The bot handles everything else—24/7.
 

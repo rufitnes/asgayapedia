@@ -1,4 +1,5 @@
 # The Wallet: Your BCH, Your Identity
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Non-custodial. Pseudonymous. Open source.** Your keys, your Cash Account, your control.
 

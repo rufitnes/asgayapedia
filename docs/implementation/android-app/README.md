@@ -1,4 +1,5 @@
 # Android App: Implementation Architecture
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Purpose:** Technical reference for developers building Asgaya clients (Android, iOS, web, desktop)
 

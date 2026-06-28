@@ -1,4 +1,5 @@
 # Implementation: Technical Details
+**📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
 
 **Purpose:** This section contains implementation details, API documentation, and technical specifications.
 

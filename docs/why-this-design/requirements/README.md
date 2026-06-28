@@ -1,4 +1,5 @@
 # Requirements: What Asgaya Must Achieve
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **The ultimate goal:** Bitcoin Cash merchant adoption
 

@@ -1,4 +1,5 @@
 # Merchant Journey: The Passive BCH Buyer (Triple-Dip Economics)
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Role:** BCH Buyer (Passive) + Product Seller  
 **Example:** Carlos in Caracas (Venezuela) running a grocery store

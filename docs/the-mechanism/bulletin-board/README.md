@@ -1,4 +1,5 @@
 # The Bulletin Board: Where Buyers and Sellers Find Each Other
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **The core innovation.** No company, no servers, no permission needed.
 

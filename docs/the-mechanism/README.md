@@ -1,4 +1,5 @@
 # Asgaya: A Bitcoin Cash Adoption Engine
+**📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
 
 **Send €100 to Venezuela for €0.50 instead of €5.**
 No company. No custody. No KYC. Just four components working together.

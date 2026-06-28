@@ -1,5 +1,7 @@
 # Unknowns Directory — Structured Ignorance, Permissionless Investigation
 
+**📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
+
 **What this is:** A collection of things we don't yet know about Asgaya's economic, behavioral, technical, and market viability—each with a clear investigation plan, success criteria, and contributor guidance.
 
 **Why it exists:** The [Phase 0 Validation Checklist](../decisions/phase-0-validation-checklist.md) tracks *what* needs validation. This directory explains *how* to investigate each unknown and invites anyone to contribute.

@@ -1,4 +1,5 @@
 # Sender Journey: The Active BCH Buyer
+**📖 Unfamiliar terms?** See the [glossary](../../../glossary.md) for definitions.
 
 **Role:** BCH Buyer (Active)  
 **Example:** María in Madrid (Spain) sending €100 to Elena in Caracas (Venezuela)

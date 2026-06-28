@@ -1,4 +1,5 @@
 # Constraints: The Design Trade-offs
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **This section will contain content moved from `/decisions/`**
 

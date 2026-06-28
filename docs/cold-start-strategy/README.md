@@ -1,4 +1,5 @@
 # Cold Start Strategy
+**📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
 
 **How to bootstrap the network from zero to sustainable growth**
 

@@ -1,4 +1,5 @@
 # Remittance Journeys
+**📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **Use case:** Sending money across borders (Spain → Venezuela, etc.)
 
