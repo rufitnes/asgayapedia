@@ -219,7 +219,7 @@ Capital efficiency: €100 locked 25 days = 83% of month
 1. Research Venezuelan small business cash flow (Google, forums, Reddit)
 2. Create simple survey asking holding duration preferences
 3. Model capital efficiency for different scenarios (spreadsheet)
-4. Document findings in GitHub issue or email jesgf@yahoo.es
+4. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick contribution:**
 Even basic scenarios help! Model just one velocity case and its capital implications.
@@ -274,3 +274,8 @@ Once we know holding duration, we can optimize:
 - Different contract periods for different assets?
 
 **Phase 0 will reveal if these optimizations are worth complexity.**
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

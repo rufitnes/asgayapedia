@@ -4,9 +4,9 @@
 
 **What this is:** A collection of things we don't yet know about Asgaya's economic, behavioral, technical, and market viability—each with a clear investigation plan, success criteria, and contributor guidance.
 
-**Why it exists:** The [Phase 0 Validation Checklist](../decisions/phase-0-validation-checklist.md) tracks *what* needs validation. This directory explains *how* to investigate each unknown and invites anyone to contribute.
+**Why it exists:** Phase 0 validation requires answering critical unknowns before launch. This directory explains *how* to investigate each unknown and invites anyone to contribute.
 
-**How to contribute:** Pick an unknown, follow the investigation method, document your findings, submit via GitHub issue/PR or email to jesgf@yahoo.es. No permission needed—this is permissionless contribution in action.
+**How to contribute:** Pick an unknown, follow the investigation method, document your findings, submit via GitHub issue/PR or email to rufitnes@proton.me. No permission needed—this is permissionless contribution in action.
 
 ---
 
@@ -74,7 +74,7 @@ Long-term effects and expansion strategy:
 **Follow the investigation method in the brief, document your findings, and submit:**
 - GitHub issue: Link to unknown, share findings, suggest next steps
 - GitHub PR: Update the unknown brief with your data
-- Email: jesgf@yahoo.es with subject "Unknown: [brief name]"
+- Email: rufitnes@proton.me with subject "Unknown: [brief name]"
 
 **No approval needed.** If your investigation is sound and your findings are documented, it's a contribution.
 
@@ -218,9 +218,8 @@ Every unknown follows this format:
 
 ## Related Concepts
 
-- [Phase 0 Validation Checklist](../decisions/phase-0-validation-checklist.md) — What needs validation (points here for how)
-- [Contributing Guide](../meta/contributing.md) — How to contribute to Asgaya docs
-- [AI Review Guide](../meta/ai-review-guide.md) — How AI assistants can help investigate unknowns
+- [Research](../research/README.md) — Formal research sessions answering unknowns
+- [Why This Design?](../why-this-design/README.md) — Design rationale and constraints
 
 ---
 
@@ -248,7 +247,7 @@ Every unknown follows this format:
 
 **Ready to contribute?** Pick an unknown from the directory above and start investigating. No permission needed.
 
-**Questions?** Email jesgf@yahoo.es or open a GitHub issue.
+**Questions?** Email rufitnes@proton.me or open a GitHub issue.
 
 **Let's turn unknowns into knowns—together.**
 

@@ -42,7 +42,9 @@ Log every rate fetch: timestamp, rate, source, any errors or stale data.
 **Estimated effort:** 2-3 hours  
 **How to start:** Monitor DolarAPI for 48-72 hours, log all responses
 
-## Related Documents
-
-- [How Exchange Rates Work](../../decisions/how-exchange-rates-work.md)
 - [Rate APIs](../../android-app/backend-apis/rate-apis.md)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

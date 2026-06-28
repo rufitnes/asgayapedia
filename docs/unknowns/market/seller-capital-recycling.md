@@ -40,5 +40,9 @@ Track seller capital deployment, transaction frequency, and time between transac
 
 ## Related Documents
 
-- [BCH Sellers](../../concepts/bch-sellers.md)
-- [Fee Splitting Model](../../decisions/fee-splitting-model.md)
+- [BCH Sellers](../../../glossary.md#bch-seller-passive)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

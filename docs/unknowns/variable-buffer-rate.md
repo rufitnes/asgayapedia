@@ -4,7 +4,7 @@
 **Priority:** Medium (Phase 0 enhancement)  
 **Last Updated:** 2026-06-05  
 **Contributors Welcome:** Yes  
-**Related:** [Bulletin Board](../concepts/bulletin-board.md), [Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md)
+**Related:** [Bulletin Board](../the-mechanism/bulletin-board/README.md), [Volatility Buffer](../glossary.md#payment-first-covenant)
 
 ---
 
@@ -354,8 +354,8 @@ Recipient doesn't need to know about buffer rates - just the deadline.
 
 ## Related Documents
 
-- [Bulletin Board](../concepts/bulletin-board.md) - Listing format
-- [Volatility Buffer](../concepts/bounty-contracts-with-volatility-buffer.md) - Current 7% fixed buffer
+- [Bulletin Board](../the-mechanism/bulletin-board/README.md) - Listing format
+- [Volatility Buffer](../glossary.md#payment-first-covenant) - Current 7% fixed buffer
 - [Sender Flows](../android-app/flows/sender-flows/) - Where timeout selection happens
 
 ---
@@ -640,3 +640,8 @@ fee_pct = fee_base + (fee_per_hour × timeout_hours)
 ---
 
 *This unknown asks: Can we give senders and sellers more agency while reducing costs and improving capital efficiency? The answer is likely yes—per-hour pricing aligns incentives perfectly.*
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[↑ Unknowns](README.md)** | **[📖 Glossary](../glossary.md)**

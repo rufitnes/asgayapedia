@@ -306,3 +306,8 @@ Measure: Does Group B hold longer when they see they're winning?
 ---
 
 *This unknown tests whether the "escape hatch" mental model is empirically correct. If merchants hold BCH longer than expected, it validates the entire strategic reframing from yesterday's breakthrough.*
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[↑ Unknowns](README.md)** | **[📖 Glossary](../glossary.md)**

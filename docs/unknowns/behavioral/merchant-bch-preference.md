@@ -44,5 +44,10 @@ Track merchant BCH accumulation vs conversion rates over time.
 
 ## Related Documents
 
-- [Merchant Business Case](../../concepts/merchant-business-case.md)
-- [BCH Buyers](../../concepts/bch-buyers.md)
+- [Merchant Business Case](../../../glossary.md#triple-dip)
+- [BCH Buyers](../../../glossary.md#bch-buyer-passive)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

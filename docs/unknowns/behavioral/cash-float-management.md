@@ -44,5 +44,9 @@ Track transaction sizes, merchant cash availability, and any "out of cash" incid
 
 ## Related Documents
 
-- [Merchant Business Case](../../concepts/merchant-business-case.md)
-- [Fee Splitting Model](../../decisions/fee-splitting-model.md)
+- [Merchant Business Case](../../../glossary.md#triple-dip)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

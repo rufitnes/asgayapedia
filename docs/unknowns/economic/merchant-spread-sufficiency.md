@@ -38,7 +38,9 @@ Track merchant earnings, transaction frequency, and retention rates.
 **Estimated effort:** 4-6 hours  
 **How to start:** Identify and survey remittance-adjacent merchants
 
-## Related Documents
+- [Merchant Business Case](../../../glossary.md#triple-dip)
+---
 
-- [Fee Splitting Model](../../decisions/fee-splitting-model.md)
-- [Merchant Business Case](../../concepts/merchant-business-case.md)
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

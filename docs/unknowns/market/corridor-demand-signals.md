@@ -43,7 +43,9 @@ Track sender geographic distribution and any spontaneous cross-corridor interest
 **Estimated effort:** 4-6 hours  
 **How to start:** Research World Bank remittance data by corridor
 
-## Related Documents
+- [Why This Corridor](../../../user-journeys/remittance/README.md)
+---
 
-- [Cold Start Strategy](../../decisions/cold-start-strategy.md)
-- [Why This Corridor](../../concepts/why-spain-venezuela.md)
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

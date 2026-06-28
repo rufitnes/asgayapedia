@@ -38,7 +38,9 @@ Track any chargeback incidents during trials and document resolution process.
 **Estimated effort:** 2-3 hours  
 **How to start:** Research Bizum terms of service and chargeback policies
 
-## Related Documents
+- [Risk Allocation Principle](../../../why-this-design/README.md)
+---
 
-- [Fee Splitting Model](../../decisions/fee-splitting-model.md)
-- [Risk Allocation Principle](../../concepts/risk-allocation-principle.md)
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

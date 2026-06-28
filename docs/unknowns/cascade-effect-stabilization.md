@@ -359,3 +359,8 @@ Measure:
 ---
 
 *This unknown asks: Should we deliberately do things in the "harder" order because success in hard markets creates infrastructure for easy markets? It's a bet on positive externalities and improvement effects—worth testing.*
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[↑ Unknowns](README.md)** | **[📖 Glossary](../glossary.md)**

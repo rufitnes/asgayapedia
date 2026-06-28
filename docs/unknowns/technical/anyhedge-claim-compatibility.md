@@ -192,7 +192,7 @@ If tests fail or documentation unclear:
 2. Search for "payout address" or "settlement address"
 3. Check [CashScript examples](https://cashscript.org) for AnyHedge integration
 4. Post question in BitcoinCashResearch forum
-5. Document findings in GitHub issue or email jesgf@yahoo.es
+5. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick win:** Even finding relevant documentation sections helps! Full testnet testing not required for initial contribution.
 
@@ -246,3 +246,8 @@ If tests fail or documentation unclear:
    - **Status:** Last resort - volatility protection is critical for adoption
 
 **This is why it's "Critical" priority - must answer before coding.**
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

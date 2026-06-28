@@ -173,7 +173,7 @@ If senders receive H€ when covenant aborts:
 1. Research: What stablecoins are popular in Venezuela?
 2. Check forums/Telegram: Venezuelan crypto groups discussing savings
 3. If you have Venezuelan contacts: Ask the survey questions
-4. Document findings in GitHub issue or email jesgf@yahoo.es
+4. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick contribution:** Even researching existing stablecoin usage helps! Full surveys not required for initial insight.
 
@@ -205,3 +205,8 @@ If senders receive H€ when covenant aborts:
 - Revisit stability layer in Phase 1
 
 **This unknown determines scope of Phase 0 development.**
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

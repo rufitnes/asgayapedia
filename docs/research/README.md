@@ -79,17 +79,17 @@ The following documents describe the **old escrow architecture** and are retaine
 
 1. **Check the date** — Documents from before May 9, 2026 may reference old architecture
 2. **Look for terminology** — "LP" = old, "BCH Seller" = current; "escrow" = old, "covenant" = current
-3. **Cross-reference decisions/** — Most research informed specific decisions documented in `/decisions/`
+3. **Cross-reference** — Most research informed design decisions documented in [Why This Design?](../why-this-design/README.md)
 
 ---
 
 ## Contributing Research
 
 New research documents should:
-1. Use next sequential number (RS055, RS056, etc.)
+1. Use next sequential number (RS066, RS067, etc.)
 2. Include date and author
-3. Reference current covenant architecture
-4. Link to relevant `/decisions/` docs if research informs a decision
+3. Reference current covenant architecture (payment-first, H€/HAu, 7-day contracts)
+4. Link to relevant documentation in [Why This Design?](../why-this-design/README.md) or [Unknowns](../unknowns/README.md)
 
 ---
 

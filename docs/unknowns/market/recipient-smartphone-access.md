@@ -43,7 +43,9 @@ Track recipient device types and OS versions during trials.
 **Estimated effort:** 2-3 hours  
 **How to start:** Research Venezuela smartphone penetration statistics
 
-## Related Documents
-
-- [Cold Start Strategy](../../decisions/cold-start-strategy.md)
 - [Recipient Flows](../../android-app/flows/recipient-flows.md)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

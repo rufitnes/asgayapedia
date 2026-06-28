@@ -192,7 +192,7 @@ Pool capital needed for sender aborts: €700
 1. Create simple survey with scenario questions
 2. Share in Spanish remittance communities (Facebook groups, forums)
 3. Analyze responses for opt-in patterns
-4. Document findings in GitHub issue or email jesgf@yahoo.es
+4. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick contribution:**
 Even informal interviews help! Ask 3-5 friends who might send remittances what they'd choose.
@@ -226,3 +226,8 @@ Even informal interviews help! Ask 3-5 friends who might send remittances what t
 - Decision has consequences but H€ path is reversible
 
 **These edge cases inform UX design.**
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

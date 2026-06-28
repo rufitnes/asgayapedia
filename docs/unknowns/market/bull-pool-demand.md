@@ -208,7 +208,7 @@ Risk: Symmetric (±2% weekly = ±104% annualized volatility)
 1. Post bull interest survey in r/btc
 2. Research MUSD and StableHedge bull pool structures
 3. Model bull economics (spreadsheet with scenarios)
-4. Document findings in GitHub issue or email jesgf@yahoo.es
+4. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick contribution:**
 Even posting a survey helps! Bull responses = valuable market validation data.
@@ -275,3 +275,8 @@ Even posting a survey helps! Bull responses = valuable market validation data.
 > "Earn yield by supporting BCH adoption. Your capital hedges merchants against volatility. Smart contract-backed, 1-week cycles, exit anytime. Help grow Bitcoin Cash usage while gaining BCH leverage exposure."
 
 **Framing = key to recruitment.**
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

@@ -4,7 +4,7 @@
 **Priority:** High (Phase 0 critical)  
 **Last Updated:** 2026-06-05  
 **Contributors Welcome:** Yes  
-**Related:** [Bulletin Board](../concepts/bulletin-board.md), [Notification Listener Bot](../concepts/notification-listener-bot.md)
+**Related:** [Bulletin Board](../the-mechanism/bulletin-board/README.md), [Notification Listener Bot](../the-mechanism/notification-bot/README.md)
 
 ---
 
@@ -284,9 +284,9 @@ Cost = 1000 × €0.50 = €500
 
 ## Related Documents
 
-- [Bulletin Board Concept](../concepts/bulletin-board.md) - Current anti-spam implementation
-- [Notification Listener Bot](../concepts/notification-listener-bot.md) - Device fingerprinting mechanism
-- [Phase 0 Validation](../concepts/phase-0-progressive-decentralization.md) - Testing approach
+- [Bulletin Board Concept](../the-mechanism/bulletin-board/README.md) - Current anti-spam implementation
+- [Notification Listener Bot](../the-mechanism/notification-bot/README.md) - Device fingerprinting mechanism
+- [Phase 0 Validation](../glossary.md#progressive-decentralisation) - Testing approach
 
 ---
 
@@ -316,3 +316,8 @@ Cost = 1000 × €0.50 = €500
 ---
 
 *This unknown asks: How do we keep the bulletin board permissionless while preventing spam? The answer determines user experience quality and system resilience.*
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[↑ Unknowns](README.md)** | **[📖 Glossary](../glossary.md)**

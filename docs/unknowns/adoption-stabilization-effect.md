@@ -232,3 +232,8 @@ A statistically significant decline in BCH/VES volatility relative to BCH/USD vo
 ---
 
 *This unknown is designed to be resolved through empirical measurement during Phase 0 and beyond. Success or failure both provide valuable information—but success would be transformative.*
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[↑ Unknowns](README.md)** | **[📖 Glossary](../glossary.md)**

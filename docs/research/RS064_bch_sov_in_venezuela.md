@@ -3,7 +3,7 @@
 **Research Type:** Quantitative Market Analysis  
 **Status:** ✅ Draft  
 **Date:** 2026‑05‑31  
-**Related:** [RS062 Seller Profitability](RS062_seller_profitability_simulation.md), [RS055 USD Bank Accounts Venezuela](RS055_USD_bankaccounts_Venezuela.md), [Merchant Business Case](../concepts/merchant-business-case.md)
+**Related:** [RS062 Seller Profitability](RS062_seller_profitability_simulation.md), [RS055 USD Bank Accounts Venezuela](RS055_USD_bankaccounts_Venezuela.md), [Merchant Business Case](../glossary.md#triple-dip)
 
 ---
 

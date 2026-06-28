@@ -315,7 +315,7 @@ If we launch during low volatility and hit high volatility later:
 5. **Document findings:**
    - Update this file with "Status: In Progress" → "Status: Answered"
    - Add "Findings" section with tables, charts, recommendations
-   - Submit via GitHub PR or email to jesgf@yahoo.es
+   - Submit via GitHub PR or email to rufitnes@proton.me
 
 **Step 2:** If findings suggest adjustments, run Monte Carlo validation (optional)
 
@@ -323,10 +323,6 @@ If we launch during low volatility and hit high volatility later:
 
 ---
 
-## Related Documents
-
-- [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
-- [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
 
 ---
 
@@ -364,3 +360,8 @@ If we launch during low volatility and hit high volatility later:
 ---
 
 **Want to investigate this unknown?** Follow the contributor guidance above and share your findings. Python + data analysis skills helpful but not required—even pointing to relevant historical volatility studies would help.
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

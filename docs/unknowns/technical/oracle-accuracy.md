@@ -196,7 +196,7 @@ Impact on H€ holders:
 3. Test oracle API: Query current EUR/BCH and XAU/USD prices
 4. Compare to Kraken (EUR/BCH) and Kitco (gold) real-time prices
 5. Calculate deviation percentage
-6. Document findings in GitHub issue or email jesgf@yahoo.es
+6. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick contribution:**
 Even basic API testing helps! If you can only compare current prices (not historical), that's a start.
@@ -248,3 +248,8 @@ print(f"Oracle deviation: {deviation:.2f}%")
 **These strategies add complexity but improve robustness.**
 
 **Phase 0:** Start simple (single oracle), add safeguards in Phase 1 if needed.
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

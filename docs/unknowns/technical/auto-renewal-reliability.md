@@ -228,7 +228,7 @@ Uptime: ~99.99% (all three fail simultaneously unlikely)
 3. Set up BCH testnet wallet
 4. Deploy simple AnyHedge contract on testnet
 5. Attempt manual renewal (understand process before automating)
-6. Document findings in GitHub issue or email jesgf@yahoo.es
+6. Document findings in GitHub issue or email rufitnes@proton.me
 
 **This is advanced contribution** - requires technical skills. But even partial research (Step 1-2) helps!
 
@@ -287,3 +287,8 @@ Token shows: "ERROR: Contract expired, no value"
 - Warning when pool approaching exhaustion
 
 **Continuous monitoring ensures problems caught early.**
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

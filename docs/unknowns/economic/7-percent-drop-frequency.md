@@ -181,7 +181,7 @@ Capital needed for aborts: 3 × €100 = €300
 2. Download BCH/EUR hourly price data (last 12 months)
 3. Calculate daily % change for each period
 4. Count how many exceed -7%
-5. Document findings in GitHub issue or email jesgf@yahoo.es
+5. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick contribution:**
 Even basic stats help! If you can only calculate 24h frequency, that's valuable.
@@ -228,3 +228,8 @@ Once we know base frequency, investigate:
 - Or: "Send now, low abort risk this week"
 
 **These are Phase 1+ optimizations, but good to understand patterns early.**
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

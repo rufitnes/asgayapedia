@@ -40,5 +40,10 @@ Track actual BCH price movements during trial covenants and measure buffer adequ
 
 ## Related Documents
 
-- [Risk Allocation Principle](../../concepts/risk-allocation-principle.md)
-- [Bounty Contracts with Volatility Buffer](../../concepts/bounty-contracts-with-volatility-buffer.md)
+- [Risk Allocation Principle](../../../why-this-design/README.md)
+- [Bounty Contracts with Volatility Buffer](../../../glossary.md#payment-first-covenant)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

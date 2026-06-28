@@ -221,7 +221,7 @@ Research other BCH/crypto stability mechanisms:
 2. Calculate: How often does BCH drop >7% in 24 hours, 7 days, 30 days?
 3. Model capital lock = (monthly volume) × (holding period in days) / 30
 4. Create spreadsheet with scenarios (vary velocity, contract period, # merchants)
-5. Document findings in GitHub issue or email jesgf@yahoo.es
+5. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick contribution:** Even partial modeling helps! If you can only estimate one scenario, that's valuable data.
 
@@ -259,3 +259,8 @@ Research other BCH/crypto stability mechanisms:
 - Impact: €3K supports fewer merchants than leveraged model, but easier to implement/audit
 
 **These unknowns compound - answering this requires answering related unknowns first.**
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

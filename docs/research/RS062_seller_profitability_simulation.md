@@ -3,7 +3,7 @@
 **Research Type:** Quantitative Risk & Incentive Analysis  
 **Status:** ✅ Draft — Seeking External Review  
 **Date:** 2026‑05‑20  
-**Related:** [Fee‑Splitting Model](../decisions/fee-splitting-model.md), [Two‑Step Settlement Timing](../decisions/two-step-settlement-timing.md), [Capital Recycling Strategy](../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy), [RS039 — Temporal Market Impact](RS039_temporal_market_impact.md)
+**Related:** [RS039 — Temporal Market Impact](RS039_temporal_market_impact.md)
 
 ---
 

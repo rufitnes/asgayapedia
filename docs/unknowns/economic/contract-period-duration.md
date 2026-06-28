@@ -165,7 +165,7 @@ Use intelligence from Venezuelan contact (from blog entry):
 1. Read [AnyHedge documentation](https://anyhedge.com)
 2. Get BCH/EUR price data from CoinGecko or Kraken API
 3. Calculate volatility statistics (7-day vs 30-day windows)
-4. Document findings in GitHub issue or email jesgf@yahoo.es
+4. Document findings in GitHub issue or email rufitnes@proton.me
 
 **Quick contribution:** Even partial research helps! If you can only answer Step 1 or Step 2, that's valuable.
 
@@ -188,3 +188,8 @@ Use intelligence from Venezuelan contact (from blog entry):
 **Reasoning:** User marks token for burn → next maturity they get BCH. Clean UX, no forced decisions.
 
 **Open question:** If user wants BCH immediately, can they force-settle before period ends, or must they wait?
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

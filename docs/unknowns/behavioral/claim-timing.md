@@ -253,15 +253,11 @@ The 24h expiry window is arbitrary:
 **Step 4:** Document findings:
 - Update this file with "Status: Answered"
 - Add "Findings" section with data
-- Submit findings via GitHub PR or email to jesgf@yahoo.es
+- Submit findings via GitHub PR or email to rufitnes@proton.me
 
 ---
 
-## Related Documents
-
-- [Two-Step Settlement Timing](../../decisions/two-step-settlement-timing.md)
-- [Phase 0 Validation Checklist](../../decisions/phase-0-validation-checklist.md)
-- [Capital Recycling Strategy](../../concepts/bounty-contracts-with-volatility-buffer.md#capital-recycling-strategy-the-sellers-business-model)
+- [Capital Recycling Strategy](../../../glossary.md#payment-first-covenant#capital-recycling-strategy-the-sellers-business-model)
 
 ---
 
@@ -292,3 +288,8 @@ The 24h expiry window is arbitrary:
 ---
 
 **Want to investigate this unknown?** Follow the contributor guidance above and share your findings. No approval needed—permissionless contribution in action.
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**

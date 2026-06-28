@@ -190,8 +190,8 @@ A solution is considered successful if:
 - [Nostr Messaging Benefits](../collaborative_workspace/simplify-documentation-proposal/nostr-messaging-benefits.md) - User messaging bonus if Nostr chosen
 
 ### Architectural Context:
-- [Covenant Architecture](../concepts/bounty-contracts-with-volatility-buffer.md) - How covenants work
-- [Bulletin Board](../concepts/bulletin-board.md) - How sellers are discovered
+- [Covenant Architecture](../glossary.md#payment-first-covenant) - How covenants work
+- [Bulletin Board](../the-mechanism/bulletin-board/README.md) - How sellers are discovered
 - [Seller Bot](../android-app/backend-apis/seller-bot/README.md) - What needs to respond
 
 ---
@@ -223,3 +223,8 @@ A solution is considered successful if:
 
 *Last updated: 2026-05-31*  
 *Status: Seeking community input*
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[↑ Unknowns](README.md)** | **[📖 Glossary](../glossary.md)**

@@ -43,3 +43,8 @@ Log all bot performance metrics: notification delays, missed notifications, batt
 
 - [Notification Listener](../../android-app/notification-listener/README.md)
 - [Multi-Device Test Plan](../../android-app/backend-apis/multi-device-test-plan.md)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Unknowns](../README.md)** | **[📖 Glossary](../../glossary.md)**
