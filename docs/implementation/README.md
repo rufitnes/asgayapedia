@@ -108,6 +108,11 @@ Read [Glossary](/glossary.md) → define terms (note: needs review/update)
 
 ---
 
-**Status:** Phase 0 (Pre-Launch) - Android app in active development  
-**Updated:** 2026-06-25  
-**Next:** Explore [Android App](/implementation/android-app/) for implementation details
+## Navigation
+
+**[🏠 Home](../index.md)** | **[📖 Glossary](../glossary.md)**
+
+**In this section:**
+- [Android App](android-app/README.md) - 7 technical components
+
+**Related sections:** [The Mechanism](../the-mechanism/README.md) · [User Journeys](../user-journeys/README.md) · [Why This Design?](../why-this-design/README.md)

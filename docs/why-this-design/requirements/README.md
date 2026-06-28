@@ -192,6 +192,8 @@ Each core requirement has specific implementation constraints:
 
 ---
 
-**Status:** Reflects current (June 2026) understanding after compliance revelation  
-**Source:** February 2026 forum post + iterative refinement + compliance discovery  
-**Next:** Document requirements history as separate file
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Why This Design?](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Constraints](../constraints/README.md)

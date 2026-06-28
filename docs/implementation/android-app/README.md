@@ -654,7 +654,6 @@ function handleError(error):
 
 ---
 
-**Status:** Phase 0 - Architecture documentation complete, component docs in progress  
-**Updated:** 2026-06-25  
-**Next:** Draft component docs (wallet, bulletin-board, nostr, notification-bot, stability-layer)  
-**Contributors:** Coordination (architecture), TightDS (technical review), Suso (product vision)
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Implementation](../README.md)** | **[📖 Glossary](../../glossary.md)**

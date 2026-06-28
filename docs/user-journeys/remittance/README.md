@@ -50,3 +50,15 @@ Remittances involve two parties in different locations:
 
 **Explore:** [Sender Journey](sender/) | [Recipient Journey](recipient/)  
 **Back:** [User Journeys](../)
+
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[📖 Glossary](../../glossary.md)**
+
+**In this section:**
+- [Sender](sender/README.md) - Active BCH buyer
+- [Recipient](recipient/README.md) - BCH seller
+
+**Related sections:** [Merchant Journey](../merchant/README.md) · [Trader Journey](../trader/README.md)

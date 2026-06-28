@@ -166,3 +166,11 @@ You can also use Asgaya merchants as a global ATM network:
 
 **Status:** Phase 1+ (after remittance infrastructure validated)  
 **Updated:** 2026-06-23
+
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ User Journeys](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Merchant](../merchant/README.md)

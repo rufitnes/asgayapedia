@@ -94,3 +94,14 @@ New research documents should:
 ---
 
 *Research is iterative. These documents show the path to the current design, including dead ends and pivots.*
+
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[📖 Glossary](../glossary.md)**
+
+**In this section:**
+- [Research Summaries](summaries/README.md) - Research Summaries
+
+**Related sections:** [Unknowns](../unknowns/README.md) · [Why This Design?](../why-this-design/README.md)

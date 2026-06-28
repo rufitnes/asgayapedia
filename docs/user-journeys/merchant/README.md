@@ -469,3 +469,11 @@ Carlos installs wallet → Creates Cash Account → Posts listing
 **Status:** Phase 0 (Pre-Launch) - Q3 2026 Spain → Venezuela corridor  
 **Updated:** 2026-06-24  
 **Key Insight:** Merchants are the retention layer. Triple-dip + stability = merchant evangelism.
+
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ User Journeys](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Remittance](../remittance/README.md) · [Trader](../trader/README.md)

@@ -87,3 +87,9 @@
 
 **Status:** Active - summaries added as experimental documentation needs them  
 **Maintained by:** Documentation contributors
+
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Research](../README.md)** | **[📖 Glossary](../../glossary.md)**

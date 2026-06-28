@@ -251,3 +251,11 @@ Every unknown follows this format:
 **Questions?** Email jesgf@yahoo.es or open a GitHub issue.
 
 **Let's turn unknowns into knowns—together.**
+
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[📖 Glossary](../glossary.md)**
+
+**Related sections:** [Research](../research/README.md) · [Why This Design?](../why-this-design/README.md) · [The Mechanism](../the-mechanism/README.md)

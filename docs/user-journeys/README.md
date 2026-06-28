@@ -132,6 +132,14 @@ When someone asks, *”What is Asgaya?”* — it’s a bulletin board where pas
 
 ---
 
-**Next:** [How They Interact](../the-mechanism/how-they-interact.md) — End‑to‑end walkthrough  
-**Explore:** [Sender](sender/), [Recipient](recipient/), [Merchant](merchant/), [Trader](trader/)  
-**Related:** [Bulletin Board](../the-mechanism/bulletin-board.md), [Notification Bot](../the-mechanism/notification-bot.md), [Wallet](../the-mechanism/wallet.md)
+## Navigation
+
+**[🏠 Home](../index.md)** | **[📖 Glossary](../glossary.md)**
+
+**In this section:**
+- [Remittance](remittance/README.md) - Sender and recipient flows
+- [Merchant](merchant/README.md) - Cash-out provider
+- [Trader](trader/README.md) - Professional liquidity
+- [Customer](customer/README.md) - Direct BCH payments
+
+**Related sections:** [The Mechanism](../the-mechanism/README.md) · [Implementation](../implementation/README.md) · [Why This Design?](../why-this-design/README.md)

@@ -125,6 +125,13 @@ Check [Open Questions](/why-this-design/open-questions/) → find research gaps
 
 ---
 
-**Status:** Phase 0 (Pre-Launch) - Rationale evolving based on testing  
-**Updated:** 2026-06-16  
-**Next:** Read [Requirements](/why-this-design/requirements/) to understand the problems Asgaya solves
+## Navigation
+
+**[🏠 Home](../index.md)** | **[📖 Glossary](../glossary.md)**
+
+**In this section:**
+- [Constraints](constraints/README.md) - Design constraints
+- [Requirements](requirements/README.md) - Core requirements
+- [Fraud Protection](fraud-protection.md) - How we prevent fraud
+
+**Related sections:** [The Mechanism](../the-mechanism/README.md) · [Unknowns](../unknowns/README.md) · [Research](../research/README.md)

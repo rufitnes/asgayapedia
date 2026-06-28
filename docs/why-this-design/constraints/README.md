@@ -61,3 +61,11 @@ After identifying requirements, we faced design constraints - trade-offs where n
 
 **Status:** Placeholder - content migration pending  
 **Source:** `/decisions/` (OLD structure)
+
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Why This Design?](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Requirements](../requirements/README.md)

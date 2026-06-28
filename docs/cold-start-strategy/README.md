@@ -28,3 +28,11 @@ Placeholder - to be documented
 
 **Status:** Placeholder  
 **Last Updated:** 2026-06-22
+
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[📖 Glossary](../glossary.md)**
+
+**Related sections:** [The Mechanism](../the-mechanism/README.md) · [User Journeys](../user-journeys/README.md) · [Unknowns](../unknowns/README.md)

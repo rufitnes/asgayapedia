@@ -351,3 +351,11 @@ If María sends money every month, Elena can optimize:
 
 **Status:** Phase 0 (Pre-Launch) - Q3 2026 Spain → Venezuela corridor  
 **Updated:** 2026-06-24
+
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Remittance](../README.md)** | **[📖 Glossary](../../../glossary.md)**
+
+**Related:** [Sender](../sender/README.md)
