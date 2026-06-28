@@ -132,7 +132,7 @@ Two users volunteer → become "pioneers" for that payment method.
 
 Two pioneers test notification parsing by sending small payments to each other (e.g., KES 100 via M-Pesa). The bot learns the notification format (SMS structure, field extraction, timestamp format), and the parsed data is reviewed on GitHub before code merge. The payment method launches as "experimental" with pioneers getting early access. After 50-100 organic transactions with >99% success rate and <1% disputes, the method graduates to "stable" and becomes available to all users in that country.
 
-**See [Payment Method Documentation Process](../../cold-start-strategy/payment-method-rollout.md) for the detailed pioneer guide.**
+**Note:** Detailed pioneer documentation is being developed in [Cold Start Strategy](../../cold-start-strategy/README.md) (contributions welcome!).
 
 ---
 
