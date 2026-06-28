@@ -899,3 +899,8 @@ function handlePaymentReceived(payment):
 **Updated:** 2026-06-25  
 **Complexity:** High (most complex component)  
 **Research:** See RS026 (Android notifications), smsbridge_loop.py (early prototype)
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**

@@ -494,3 +494,8 @@ catch ParseError:
 **Updated:** 2026-06-25  
 **Complexity:** Low (WebSocket + library for NIP-04)  
 **Research:** See RS070 (implementation documentation strategy)
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**

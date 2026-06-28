@@ -650,3 +650,8 @@ catch DatabaseError:
 **Updated:** 2026-06-25  
 **Complexity:** Medium (queue management + graceful degradation)  
 **Research:** See RS070 (implementation documentation strategy)
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**

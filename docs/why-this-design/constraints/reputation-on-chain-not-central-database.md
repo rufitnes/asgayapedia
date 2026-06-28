@@ -279,3 +279,8 @@ Central database reputation is free to update but requires trust. Nostr-only rep
 **Status:** Phase 0 Implementation  
 **Last Updated:** 2026-06-22  
 **Confidence:** High (minimal on-chain data proven in other P2P systems; fraud detection reuses blacklist mechanism)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Constraints](README.md)** | **[📖 Glossary](../../glossary.md)**

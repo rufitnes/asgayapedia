@@ -127,3 +127,8 @@ Perfect identity needs central registry (defeats permissionless), KYC (defeats p
 **Confidence:** High (proven technology since 2018, widely supported, aligned with requirements)
 
 **Credit:** Jonathan Silverblood for creating Cash Accounts (2018)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Constraints](README.md)** | **[📖 Glossary](../../glossary.md)**

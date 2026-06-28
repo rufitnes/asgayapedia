@@ -183,3 +183,8 @@ These terms have been deliberately replaced in the documentation to maintain reg
 ---
 
 *Last updated: 2026‑06‑27 – reflects the covenant architecture, five‑gear model, and stability layer as of Phase 0.*
+---
+
+## Navigation
+
+**[🏠 Home](index.md)**

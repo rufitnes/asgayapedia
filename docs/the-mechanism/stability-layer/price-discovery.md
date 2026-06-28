@@ -121,3 +121,8 @@ Document the oracle strategy for H€ and HAu token price discovery, including:
 ---
 
 **This is a placeholder.** Research needed before Phase 0 launch to validate oracle strategy and fallback mechanisms.
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Stability Layer](README.md)** | **[📖 Glossary](../../../glossary.md)**

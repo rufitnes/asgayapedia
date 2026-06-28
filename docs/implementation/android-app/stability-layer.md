@@ -737,3 +737,8 @@ catch SettlementError:
 **Updated:** 2026-06-25  
 **Complexity:** Medium (CashTokens + AnyHedge integration)  
 **Research:** See AnyHedge documentation, General Protocols API docs
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**

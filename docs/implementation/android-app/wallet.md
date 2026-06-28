@@ -489,3 +489,8 @@ if covenant.expiry - now() < 1_hour:
 **Updated:** 2026-06-25  
 **Complexity:** Medium (standard BCH operations + covenant building)  
 **Research:** See RS057 (BCH/Cash Accounts implementation details)
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**

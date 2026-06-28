@@ -408,3 +408,8 @@
 - [Trader User Journey](README.md) - How passive sellers use Asgaya day-to-day
 - [Constraint #2: 7% Volatility Buffer](../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md) - Why 7%?
 - [Stability Layer](../../the-mechanism/stability-layer/) - H€/HAu tokens for merchants
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Trader](README.md)** | **[📖 Glossary](../../../glossary.md)**

@@ -221,3 +221,8 @@ We could launch with 50 payment methods on day 1 and hope they work. Or we can l
 **Status:** Phase 0 Implementation  
 **Last Updated:** 2026-06-22  
 **Confidence:** High (crowdsourced documentation proven in open-source projects; progressive rollout reduces risk)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Constraints](README.md)** | **[📖 Glossary](../../glossary.md)**

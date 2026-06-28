@@ -506,3 +506,8 @@ if metadata.expires_at - now() < 1_DAY:
 **Updated:** 2026-06-25  
 **Complexity:** Low (simple Electrum queries + filtering)  
 **Research:** See RS070 (implementation documentation strategy)
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**

@@ -153,3 +153,8 @@ Sender → Pays Bizum → Seller receives fiat → Seller locks BCH → Covenant
 **Status:** Phase 0 Validation  
 **Last Updated:** 2026-06-21  
 **Confidence:** Medium (strong rationale, unproven in practice)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Constraints](README.md)** | **[📖 Glossary](../../glossary.md)**

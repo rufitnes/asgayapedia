@@ -188,3 +188,8 @@ Back-testing can't predict human behavior under real incentives. Payday concentr
 **Status:** Phase 0 Validation  
 **Last Updated:** 2026-06-21  
 **Confidence:** Medium (strong back-test data, unproven in production, sensitive to human behavior)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Constraints](README.md)** | **[📖 Glossary](../../glossary.md)**

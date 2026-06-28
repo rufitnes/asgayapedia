@@ -387,3 +387,8 @@ Some people are irrational. Some will attempt fraud anyway.
 ---
 
 *"The best fraud protection is making fraud stupid."* - Asgaya design philosophy
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[↑ Why This Design?](README.md)** | **[📖 Glossary](../glossary.md)**

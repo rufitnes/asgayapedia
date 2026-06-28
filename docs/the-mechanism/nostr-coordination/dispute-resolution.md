@@ -697,3 +697,8 @@ Traditional systems have central arbitrators who can enforce outcomes (ban accou
 **Status:** Phase 0 Implementation  
 **Last Updated:** 2026-06-22  
 **Confidence:** High (bank notifications proven as evidence, blacklist reuses Nostr infrastructure)
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Nostr Coordination](README.md)** | **[📖 Glossary](../../../glossary.md)**

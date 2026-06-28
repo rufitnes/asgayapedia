@@ -645,3 +645,8 @@ function syncMissingCovenants():
 **Updated:** 2026-06-25  
 **Complexity:** Medium (database design + sync logic)  
 **Research:** See RS070 (implementation documentation strategy)
+---
+
+## Navigation
+
+**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**

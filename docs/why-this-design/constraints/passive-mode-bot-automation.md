@@ -159,3 +159,8 @@ Asgaya's Nostr layer provides real-time presence. Active users see "5 passive se
 **Status:** Phase 0 Implementation  
 **Last Updated:** 2026-06-22  
 **Confidence:** High (proven pattern in P2P marketplaces, automation is table stakes for liquidity)
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Constraints](README.md)** | **[📖 Glossary](../../glossary.md)**
