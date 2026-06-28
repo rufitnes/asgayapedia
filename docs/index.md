@@ -8,7 +8,11 @@
 
 ## What is Asgaya?
 
-Asgaya is a **peer-to-peer remittance protocol** built on Bitcoin Cash. It uses a decentralized bulletin board and covenant smart contracts to connect BCH sellers with senders and merchants with recipients—without any central server or custodian.
+Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple and affordable—with <1% fees, no KYC, and full self-custody.
+
+**The mission:** Promote merchant Bitcoin Cash adoption by turning every remittance into an opportunity for circular economy growth.
+
+**How it works:** A peer-to-peer marketplace connects senders with BCH sellers and merchants, using covenant smart contracts and a decentralized bulletin board—without any central server or custodian.
 
 **The insight:** Every remittance creates a new BCH merchant. Use the $44.5 billion annually lost to fees to build circular economy infrastructure where it's needed most.
 
@@ -62,7 +66,7 @@ Structured investigation briefs (research entry point):
 
 ### 📚 Research
 Formal research sessions and summaries:
-- [research/](research/) - RS001-RS065 research sessions
+- [research/](research/) - Formal research sessions and findings
 - [research/summaries/](research/summaries/) - Research summaries
 
 ### 📖 Reference
@@ -101,7 +105,7 @@ Anyone can participate without KYC, using minimal hardware and knowledge. No cus
 Beat 6.49% average remittance costs through market-rate exchanges and decentralized covenant-based settlement.
 
 **3. Promote Adoption First**  
-Every transaction must create economic incentives for participants to join and grow the network. Merchants earn ~0.5% spread, BCH sellers earn ~0.5% fee + hedge position.
+Every transaction must create economic incentives for participants to join and grow the network. Merchants earn ~0.5% spread, BCH sellers earn ~0.5% fee + volatility protection via H€/HAu.
 
 ---
 
@@ -141,10 +145,10 @@ Asgaya builds on proven Bitcoin Cash innovations:
 - ✅ Glossary with H€/HAu/AnyHedge terms
 - ✅ User journey documentation
 - ✅ Design rationale and constraints
-- ✅ Research sessions (RS001-RS065)
+- ✅ Research sessions and findings
 - ✅ Unknown investigation framework
 
-**Next:** Fresh instance testing, Venezuelan law research, begin implementation
+**Status:** Research and development phase, preparing for Phase 0 validation
 
 ---
 
