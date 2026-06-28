@@ -150,8 +150,6 @@ Each core requirement has specific implementation constraints:
 
 ## History & Evolution
 
-> **Note:** The requirements journey (February 2026 forum post → methodical validation → compliance revelation → current framework) should be documented separately. See [Requirements History](requirements-history.md) for full story.
-
 **Key milestones:**
 - February 2026: Initial requirements identified (flawed, missing compliance)
 - April 2026: Compliance requirement added (everything clicked)
@@ -186,7 +184,7 @@ Each core requirement has specific implementation constraints:
 ## Related Documents
 
 - [Constraints](../constraints/) - What design decisions were forced by reality
-- [Evidence](../evidence/) - Research supporting these requirements
+- [Research Summaries](../../research/summaries/) - Research supporting these requirements
 - [Fraud Protection](../fraud-protection.md) - How payment-first covenants satisfy compliance
 - [Stability Layer](../../the-mechanism/stability-layer/) - How H€/HAu satisfy volatility protection
 
