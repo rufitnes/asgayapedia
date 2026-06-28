@@ -24,9 +24,11 @@
 
 ## Available Summaries
 
-- **[RS062: Seller Profitability Simulation](RS062-seller-profitability-summary.md)** — 7% buffer achieves 99.45% success rate; validates money velocity assumptions
+- **[RS026: Android Notifications Architecture](RS026-android-notifications-summary.md)** — NotificationListenerService validation; enables passive seller automation
 - **[RS039: Temporal Market Impact](RS039-temporal-market-impact-summary.md)** — Payday concentration analysis; BCH market dominance at scale
 - **[RS055: Cash Accounts](RS055-cash-accounts-summary.md)** — Identity layer implementation details
+- **[RS057: Bitcoin Cash Protocol (Laila)](RS057-bitcoin-cash-summary.md)** — Covenant + CashToken capabilities; technical foundation validation
+- **[RS062: Seller Profitability Simulation](RS062-seller-profitability-summary.md)** — 7% buffer achieves 99.45% success rate; validates money velocity assumptions
 
 ---
 
@@ -47,24 +49,6 @@
 - Full research sessions (link to main archive instead)
 - Exploratory research without conclusions
 - Superseded findings (archive, don't summarize)
-
----
-
-## TODO: Summaries Needed
-
-**Research referenced in implementation docs but not yet summarized here:**
-
-### RS026: Android Notifications Architecture
-**Referenced in:** `/implementation/android-app/README.md`
-**Why needed:** Validates Notification Listener Service approach (bank app notifications > SMS parsing)
-**Full research:** `/knowledge/research/RS026_android_notifications.md`
-
-### RS057: Bitcoin Cash & Cash Accounts (Laila)
-**Referenced in:** `/implementation/android-app/README.md`
-**Why needed:** Validates Cash Account implementation, BCH protocol details
-**Full research:** `/knowledge/research/RS057_bitcoin_cash_laila.md`
-
-**Action:** Create evidence summaries (extract key findings, relevance to implementation decisions)
 
 ---
 
