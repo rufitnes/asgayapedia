@@ -1,8 +1,6 @@
 # Constraints: The Design Trade-offs
 **📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
-**This section will contain content moved from `/decisions/`**
-
 ---
 
 ## Overview
@@ -49,18 +47,6 @@ After identifying requirements, we faced design constraints - trade-offs where n
 **Trade-off:** Speed vs safety, breadth vs depth  
 **Decision:** Start cash-in-person + Bizum (documented), add methods progressively via pioneer volunteers  
 **Why:** Payment infrastructure varies wildly; crowdsourced documentation scales better than dev-led; trust requires reliability
-
----
-
-## Content to be migrated from `/decisions/`
-
-- Design decisions
-- Trade-off analysis
-- Alternative approaches rejected
-- Rationale for choices
-
-**Status:** Placeholder - content migration pending  
-**Source:** `/decisions/` (OLD structure)
 
 ---
 
