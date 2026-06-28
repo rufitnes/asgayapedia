@@ -24,26 +24,9 @@
 
 ## Available Summaries
 
-### RS062: Seller Profitability Simulation
-**Key Finding:** 7% buffer achieves 99.45% success rate in 4-hour claim windows
-
-**Relevance:**
-- [7% Volatility Buffer](../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md) - Validates buffer adequacy
-- Money velocity assumptions (fast capital recycling)
-
-**Full Research:** [RS062_seller_profitability_simulation.md](../../../asgaya/knowledge/research/RS062_seller_profitability_simulation.md)
-
----
-
-### RS039: Temporal Market Impact
-**Key Finding:** Remittances concentrate on paydays; at €500K volume, Asgaya dominates BCH weekend markets
-
-**Relevance:**
-- [7% Volatility Buffer](../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md) - Payday stress test
-- Foreknowledge arbitrage strategy (Phase 1+)
-- Capital efficiency under concentration
-
-**Full Research:** [RS039_temporal_market_impact.md](../../../asgaya/knowledge/research/RS039_temporal_market_impact.md)
+- **[RS062: Seller Profitability Simulation](RS062-seller-profitability-summary.md)** — 7% buffer achieves 99.45% success rate; validates money velocity assumptions
+- **[RS039: Temporal Market Impact](RS039-temporal-market-impact-summary.md)** — Payday concentration analysis; BCH market dominance at scale
+- **[RS055: Cash Accounts](RS055-cash-accounts-summary.md)** — Identity layer implementation details
 
 ---
 

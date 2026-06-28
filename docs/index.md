@@ -37,8 +37,8 @@ Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple 
 ## Documentation Structure
 
 ### 📱 Implementation
-Technical specifications for building the Android app:
-- [implementation/android-app/](implementation/android-app/) - 7 components (wallet, bulletin-board, nostr, notification-bot, offline-first, stability-layer, state-management)
+Technical specifications for building Asgaya clients:
+- [implementation/](implementation/) - Android app reference implementation and technical details
 
 ### 🔧 The Mechanism
 How Asgaya actually works:
@@ -89,7 +89,7 @@ Formal research sessions and summaries:
 → Read [user-journeys/merchant/](user-journeys/merchant/)
 
 ### I'm a developer building a client
-→ Read [implementation/android-app/](implementation/android-app/)
+→ Read [implementation/](implementation/)
 
 ### I'm a researcher investigating the design
 → Read [why-this-design/](why-this-design/) and [unknowns/](unknowns/)
