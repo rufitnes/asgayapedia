@@ -53,16 +53,15 @@ Contains:
 
 ### ✅ Already Exists
 - Android app implementation (in `/android-app/`)
-- Glossary (at `/glossary.md` - needs review and update)
+- Glossary (at `/glossary.md`)
 
 ### 📝 To Be Created (Phase 1+)
 - Protocol specifications (formal spec)
 - Integration guides (how to add new payment rails)
 - iOS/web client implementations
 
-### 🔄 Needs Review
-- Glossary copied from old docs (May 2026) - terms may need updating for new architecture
-- Android app docs - verify accuracy for Phase 0
+### 🔄 Needs Review (Phase 0)
+- Android app docs - verify accuracy during trials
 
 ---
 
@@ -72,7 +71,7 @@ Contains:
 Start with [Android App](/implementation/android-app/) → see reference implementation and blockchain query patterns
 
 ### If You're Confused
-Read [Glossary](/glossary.md) → define terms (note: needs review/update)
+Read [Glossary](/glossary.md) → define terms
 
 ---
 
