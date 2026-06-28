@@ -124,16 +124,6 @@ respect.
 **Current:** Documentation in progress; stability tokens (H€/HAu) design validated.  
 **Validating:** Does the 7% buffer hold? Will merchants adopt stability tokens? Can bull pool scale?
 
-**Explore the gears:**
-- [Wallet](wallet/README.md) - Your BCH, your identity
-- [Bulletin Board](bulletin-board/README.md) - Discover buyers and sellers  
-- [Nostr Coordination](nostr-coordination/README.md) - Private payment coordination
-- [Notification Bot](notification-bot/README.md) - Automation engine
-- [Stability Layer](stability-layer/README.md) - H€/HAu volatility protection
-- [How They Interact](how-they-interact.md) - The complete picture
-
-**Deeper dive:** [Why This Design?](../why-this-design/README.md) - Design rationale and constraints
-
 ---
 
 **Authors:** Suso + Claude Sonnet 4.5 (Coordination) + TightDS (DeepSeek)  
@@ -152,3 +142,5 @@ respect.
 - [Notification Bot](notification-bot/README.md) - Automation engine
 - [Stability Layer](stability-layer/README.md) - H€/HAu volatility protection
 - [How They Interact](how-they-interact.md) - The complete picture
+
+**Related sections:** [Implementation](../implementation/README.md) · [User Journeys](../user-journeys/README.md) · [Why This Design?](../why-this-design/README.md) · [Unknowns](../unknowns/README.md)
