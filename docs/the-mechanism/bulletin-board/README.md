@@ -139,8 +139,10 @@ Phase 0 uses trusted participants only. Phase 1+ will add on-chain reputatio
 The bulletin board isn't a product. It's infrastructure. When regulators shut down LocalBitcoins, users lost their marketplace. When they come for Asgaya, there's nothing to shut down. The listings are already on the blockchain.
 
 That's the point.
-
 ---
 
-**Next:** [Wallet](wallet.md) — Where you hold BCH and establish identity  
-**Related:** [Buyers and Sellers](buyers-and-sellers.md) — The user perspective
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ The Mechanism](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Wallet](../wallet/README.md) · [Nostr](../nostr-coordination/README.md) · [Notification Bot](../notification-bot/README.md) · [Stability Layer](../stability-layer/README.md)

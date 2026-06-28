@@ -472,7 +472,10 @@ The bull pool approves which assets merchants can mint (H€, HAu) and dynamical
 6. **Remittances bootstrap adoption.** Merchants come for 0.5% spread, stay for H€/HAu stability, discover H-BASKET eventually.
 
 **The profound insight:** We can literally depeg the world from fiat currencies, without the downside of volatile crypto assets.
-
 ---
 
-**Related:** [Index](index.md), [How They Interact](how-they-interact.md), [Buyers and Sellers](buyers-and-sellers.md)
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ The Mechanism](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Wallet](../wallet/README.md) · [Bulletin Board](../bulletin-board/README.md) · [Nostr](../nostr-coordination/README.md) · [Notification Bot](../notification-bot/README.md)

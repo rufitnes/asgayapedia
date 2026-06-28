@@ -555,10 +555,10 @@ The seller doesn't manually respond to messages. **The bot automates everything:
 When regulators ask "where's the chat server we can subpoena?" there isn't one. It's just relays forwarding encrypted blobs. No company, no database, no records to seize.
 
 That's the point.
-
 ---
 
-**Next:** [Notification Bot](../notification-bot/) — How it runs automatically  
-**Related:** [Bulletin Board](../bulletin-board/) — Where sellers are discovered  
-**Related:** [Wallet](../wallet/) — Where Nostr keys are generated  
-**Related:** [Dispute Resolution](./dispute-resolution.md) — Accountability without arbitrators (unhappy path)
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ The Mechanism](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Wallet](../wallet/README.md) · [Bulletin Board](../bulletin-board/README.md) · [Nostr](../nostr-coordination/README.md) · [Notification Bot](../notification-bot/README.md) · [Stability Layer](../stability-layer/README.md)

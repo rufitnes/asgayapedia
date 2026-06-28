@@ -130,6 +130,8 @@ Asgaya is a specialised wallet for remittances. Your keys work in any BCH wallet
 
 ---
 
-**Next:** [Nostr](nostr.md) — Private coordination between buyers and sellers  
-**Related:** [Bulletin Board](bulletin-board.md) — Where listings are discovered  
-**Related:** [Notification Bot](notification-bot.md) — Automation that makes the system run
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ The Mechanism](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Bulletin Board](../bulletin-board/README.md) · [Nostr](../nostr-coordination/README.md) · [Notification Bot](../notification-bot/README.md) · [Stability Layer](../stability-layer/README.md)

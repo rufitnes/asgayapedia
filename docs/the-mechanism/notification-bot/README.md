@@ -132,10 +132,10 @@ Steps 2–5 are fully automated. The seller only touches steps 1 and 6.
 5. **10× reduction in required sellers.** The bot makes liquidity accessible to anyone with capital.
 
 The bot transforms Asgaya from a manual P2P trading platform into a passive income generator backed by real remittance demand. That's the point.
-
 ---
 
-**Next:** [Buyers and Sellers](buyers-and-sellers.md) — The user perspective  
-**Related:** [Bulletin Board](bulletin-board.md) — Where listings are posted  
-**Related:** [Nostr](nostr.md) — How coordination happens  
-**Related:** [Wallet](wallet.md) — Where keys are stored
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ The Mechanism](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**Related:** [Wallet](../wallet/README.md) · [Bulletin Board](../bulletin-board/README.md) · [Nostr](../nostr-coordination/README.md) · [Stability Layer](../stability-layer/README.md)

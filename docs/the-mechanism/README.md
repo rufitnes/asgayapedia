@@ -138,3 +138,17 @@ respect.
 
 **Authors:** Suso + Claude Sonnet 4.5 (Coordination) + TightDS (DeepSeek)  
 **Updated:** 2026‑06‑28
+
+---
+
+## Navigation
+
+**[🏠 Home](../index.md)** | **[📖 Glossary](../glossary.md)**
+
+**In this section:**
+- [Wallet](wallet/README.md) - Your BCH, your identity
+- [Bulletin Board](bulletin-board/README.md) - Discover buyers and sellers
+- [Nostr Coordination](nostr-coordination/README.md) - Private payment coordination
+- [Notification Bot](notification-bot/README.md) - Automation engine
+- [Stability Layer](stability-layer/README.md) - H€/HAu volatility protection
+- [How They Interact](how-they-interact.md) - The complete picture
