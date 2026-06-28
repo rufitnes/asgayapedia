@@ -156,11 +156,11 @@ You can also use Asgaya merchants as a global ATM network:
 
 **Why use covenant when buying BCH?** Not technically necessary, but provides better user experience. Alternative would be: customer buys BCH → BCH lands in wallet → customer manually sends to merchant (two steps instead of one).
 
-**For detailed covenant mechanics, see [Sender Journey](../remittance/sender/)** - same underlying mechanism, different context.
+**For detailed covenant mechanics, see [Sender Journey](../remittance/sender/README.md)** - same underlying mechanism, different context.
 
 ---
 
-**Related:** [Sender Journey](../remittance/sender/), [Merchant Journey](../merchant/), [Trader Journey](../trader/)
+**Related:** [Sender Journey](../remittance/sender/README.md), [Merchant Journey](../merchant/README.md), [Trader Journey](../trader/README.md)
 
 ---
 

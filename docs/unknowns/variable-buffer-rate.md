@@ -356,7 +356,7 @@ Recipient doesn't need to know about buffer rates - just the deadline.
 
 - [Bulletin Board](../the-mechanism/bulletin-board/README.md) - Listing format
 - [Volatility Buffer](../glossary.md#payment-first-covenant) - Current 7% fixed buffer
-- [Sender Flows](../android-app/flows/sender-flows/) - Where timeout selection happens
+- [Sender Flows](../android-app/flows/sender-flows/README.md) - Where timeout selection happens
 
 ---
 

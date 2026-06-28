@@ -24,11 +24,11 @@ Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple 
 
 | Gear | What it does | Documentation |
 |------|--------------|---------------|
-| **⚙️ Wallet** | Hold BCH + establish identity via Cash Accounts | [the-mechanism/wallet](the-mechanism/wallet/) |
-| **⚙️ Bulletin Board** | Discover buyers and sellers via on-chain NFTs | [the-mechanism/bulletin-board](the-mechanism/bulletin-board/) |
-| **⚙️ Nostr** | Coordinate payment details privately + blacklist warnings | [the-mechanism/nostr-coordination](the-mechanism/nostr-coordination/) |
-| **⚙️ Notification Bot** | Automate everything (passive income, 24/7 operation) | [the-mechanism/notification-bot](the-mechanism/notification-bot/) |
-| **⚙️ Stability Layer** | Protect from volatility via H€/HAu tokens | [the-mechanism/stability-layer](the-mechanism/stability-layer/) |
+| **⚙️ Wallet** | Hold BCH + establish identity via Cash Accounts | [the-mechanism/wallet](the-mechanism/wallet/README.md) |
+| **⚙️ Bulletin Board** | Discover buyers and sellers via on-chain NFTs | [the-mechanism/bulletin-board](the-mechanism/bulletin-board/README.md) |
+| **⚙️ Nostr** | Coordinate payment details privately + blacklist warnings | [the-mechanism/nostr-coordination](the-mechanism/nostr-coordination/README.md) |
+| **⚙️ Notification Bot** | Automate everything (passive income, 24/7 operation) | [the-mechanism/notification-bot](the-mechanism/notification-bot/README.md) |
+| **⚙️ Stability Layer** | Protect from volatility via H€/HAu tokens | [the-mechanism/stability-layer](the-mechanism/stability-layer/README.md) |
 
 **How they work together:** [the-mechanism/how-they-interact.md](the-mechanism/how-they-interact.md)
 
@@ -38,36 +38,36 @@ Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple 
 
 ### 📱 Implementation
 Technical specifications for building Asgaya clients:
-- [implementation/](implementation/) - Android app reference implementation and technical details
+- [implementation/](implementation/README.md) - Android app reference implementation and technical details
 
 ### 🔧 The Mechanism
 How Asgaya actually works:
-- [the-mechanism/](the-mechanism/) - The 5 gears and how they interact
+- [the-mechanism/](the-mechanism/README.md) - The 5 gears and how they interact
 
 ### 👥 User Journeys
 Experience from different perspectives:
-- [user-journeys/remittance/](user-journeys/remittance/) - Sender and recipient flows
-- [user-journeys/merchant/](user-journeys/merchant/) - Merchant perspective
-- [user-journeys/trader/](user-journeys/trader/) - Professional liquidity provider
-- [user-journeys/customer/](user-journeys/customer/) - Direct BCH payments
+- [user-journeys/remittance/](user-journeys/remittance/README.md) - Sender and recipient flows
+- [user-journeys/merchant/](user-journeys/merchant/README.md) - Merchant perspective
+- [user-journeys/trader/](user-journeys/trader/README.md) - Professional liquidity provider
+- [user-journeys/customer/](user-journeys/customer/README.md) - Direct BCH payments
 
 ### 🎯 Why This Design?
 Design rationale:
-- [why-this-design/constraints/](why-this-design/constraints/) - Design constraints
+- [why-this-design/constraints/](why-this-design/constraints/README.md) - Design constraints
 - [why-this-design/fraud-protection.md](why-this-design/fraud-protection.md) - How we prevent fraud
 
 ### 🚀 Cold Start Strategy
 How to bootstrap Phase 0:
-- [cold-start-strategy/](cold-start-strategy/) - Phase 0 rollout plan
+- [cold-start-strategy/](cold-start-strategy/README.md) - Phase 0 rollout plan
 
 ### ❓ Unknowns
 Structured investigation briefs (research entry point):
-- [unknowns/](unknowns/) - Open research questions by category
+- [unknowns/](unknowns/README.md) - Open research questions by category
 
 ### 📚 Research
 Formal research sessions and summaries:
-- [research/](research/) - Formal research sessions and findings
-- [research/summaries/](research/summaries/) - Research summaries
+- [research/](research/README.md) - Formal research sessions and findings
+- [research/summaries/](research/summaries/README.md) - Research summaries
 
 ### 📖 Reference
 - [glossary.md](glossary.md) - Complete terminology reference
@@ -80,19 +80,19 @@ Formal research sessions and summaries:
 **Choose your path:**
 
 ### I'm sending money to family
-→ Read [user-journeys/remittance/sender/](user-journeys/remittance/sender/)
+→ Read [user-journeys/remittance/sender/](user-journeys/remittance/sender/README.md)
 
 ### I'm receiving money from family
-→ Read [user-journeys/remittance/recipient/](user-journeys/remittance/recipient/)
+→ Read [user-journeys/remittance/recipient/](user-journeys/remittance/recipient/README.md)
 
 ### I'm a merchant wanting to provide cash-out
-→ Read [user-journeys/merchant/](user-journeys/merchant/)
+→ Read [user-journeys/merchant/](user-journeys/merchant/README.md)
 
 ### I'm a developer building a client
-→ Read [implementation/](implementation/)
+→ Read [implementation/](implementation/README.md)
 
 ### I'm a researcher investigating the design
-→ Read [why-this-design/](why-this-design/) and [unknowns/](unknowns/)
+→ Read [why-this-design/](why-this-design/README.md) and [unknowns/](unknowns/README.md)
 
 ---
 
@@ -127,9 +127,9 @@ On a €100 transfer:
 Asgaya builds on proven Bitcoin Cash innovations:
 
 - **[CashAccounts](https://gitlab.com/cash-accounts/specification)** - Human-readable addresses (`Elena#142`)
-- **[AnyHedge](https://anyhedge.com/)** - Volatility protection via hedge contracts
-- **[CashTokens](https://cashtokens.org/)** - H€ and HAu stable tokens
-- **[CashScript](https://cashscript.org/)** - Covenant (smart contract) language
+- **[AnyHedge](https://anyhedge.com/README.md)** - Volatility protection via hedge contracts
+- **[CashTokens](https://cashtokens.org/README.md)** - H€ and HAu stable tokens
+- **[CashScript](https://cashscript.org/README.md)** - Covenant (smart contract) language
 - **[Electrum/Fulcrum](https://github.com/cculianu/Fulcrum)** - SPV infrastructure for mobile wallets
 
 ---
@@ -156,7 +156,7 @@ Asgaya builds on proven Bitcoin Cash innovations:
 
 **Documentation:** This is a living document. Feedback welcome via GitHub issues.
 
-**Research:** See [unknowns/](unknowns/) for structured investigation briefs - no permission needed to turn unknowns into knowns.
+**Research:** See [unknowns/](unknowns/README.md) for structured investigation briefs - no permission needed to turn unknowns into knowns.
 
 **Implementation:** Code contributions will be accepted after Phase 0 implementation begins.
 

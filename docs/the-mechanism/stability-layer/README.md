@@ -3,7 +3,7 @@
 
 **The mechanism that powers H€ and HAu works for any measurable asset with a reliable oracle.** Gold and Euro are just the beginning.
 
-**Why these restrictions exist:** See [Requirements](../why-this-design/requirements/) for the compliance and price stability requirements that drive this design.
+**Why these restrictions exist:** See [Requirements](../why-this-design/requirements/README.md) for the compliance and price stability requirements that drive this design.
 
 ---
 

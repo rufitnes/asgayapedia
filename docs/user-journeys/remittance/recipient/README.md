@@ -83,7 +83,7 @@ A recipient is someone who receives cross-border money. In Asgaya's framework, t
 - Carlos has €100 worth of BCH
 - **Reputation auto-increments:** Carlos's transaction count increases (+1), rating info piggybacks the covenant
 
-**Merchant stability incentive:** Carlos can now stabilize the BCH into H€ (Euro-pegged) or HAu (gold-pegged) tokens, preserving its value against volatility. This is the core incentive that makes merchants want to accept Asgaya - they accumulate stable value, not volatile BCH. See [Merchant Journey](../../merchant/) for details on the triple-dip economics and stability layer.
+**Merchant stability incentive:** Carlos can now stabilize the BCH into H€ (Euro-pegged) or HAu (gold-pegged) tokens, preserving its value against volatility. This is the core incentive that makes merchants want to accept Asgaya - they accumulate stable value, not volatile BCH. See [Merchant Journey](../../merchant/README.md) for details on the triple-dip economics and stability layer.
 
 **Total time:** 5 minutes (notification to claim) + 30 min (travel to Carlos) = 35 minutes  
 **Total cost:** €0.50 (0.5% recipient fee) if cashing out, FREE if keeping BCH
@@ -319,10 +319,10 @@ If María sends money every month, Elena can optimize:
 ## Technical Details
 
 **For implementation details, see:**
-- [Wallet](../../../implementation/android-app/wallet/) - Claim covenant, create trade covenant
-- [Bulletin Board](../../../implementation/android-app/bulletin-board/) - Find local merchants
-- [Nostr](../../../implementation/android-app/nostr/) - Coordinate meeting
-- [Notification Bot](../../../implementation/android-app/notification-bot/) - Push notifications
+- [Wallet](../../../implementation/android-app/wallet/README.md) - Claim covenant, create trade covenant
+- [Bulletin Board](../../../implementation/android-app/bulletin-board/README.md) - Find local merchants
+- [Nostr](../../../implementation/android-app/nostr/README.md) - Coordinate meeting
+- [Notification Bot](../../../implementation/android-app/notification-bot/README.md) - Push notifications
 
 **For rationale, see:**
 - [Why Covenants?](../../../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design
@@ -342,10 +342,10 @@ If María sends money every month, Elena can optimize:
 **Intermediation pattern (highly likely):** Elena's neighbors also receive money from Spain. Elena offers to cash out their remittances at Carlos's store in exchange for a small fee. This effectively uses the customer payment flow and creates organic growth - one tech-savvy recipient enables 5-10 less tech-savvy neighbors to benefit from Asgaya.
 
 **Related journeys:**
-- [Sender Journey](../sender/) - María's perspective
-- [Merchant Journey](../../merchant/) - Carlos's business model
-- [Trader Journey](../../trader/) - Becoming a passive seller
-- [Customer Journey](../../customer/) - Similar flow, different context (paying merchant)
+- [Sender Journey](../sender/README.md) - María's perspective
+- [Merchant Journey](../../merchant/README.md) - Carlos's business model
+- [Trader Journey](../../trader/README.md) - Becoming a passive seller
+- [Customer Journey](../../customer/README.md) - Similar flow, different context (paying merchant)
 
 ---
 

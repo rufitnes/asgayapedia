@@ -133,10 +133,10 @@ For Phase 0 (MVP), pure BCH is fine. Merchants who want stability can convert ma
 
 ## Sources
 
-- [Moria Protocol Docs](https://docs.moria.money/)
+- [Moria Protocol Docs](https://docs.moria.money/README.md)
 - [MUSD on BULB](https://www.bulbapp.io/p/398b4486-caa2-425b-a014-78144c949861/musd-and-its-role-in-the-bitcoin-cash-ecosystem)
-- [Cauldron DEX](https://www.cauldron.quest/)
-- [Riften Labs](https://www.riftenlabs.com/)
+- [Cauldron DEX](https://www.cauldron.quest/README.md)
+- [Riften Labs](https://www.riftenlabs.com/README.md)
 - [Moria Whitepaper (PDF)](https://bitcoincashpodcast.com/assets/files/Moria-Whitepaper-3989c99303f69c8a282bfa9fa4d618a5.pdf)
 
 ---

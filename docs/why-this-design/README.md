@@ -3,7 +3,7 @@
 
 **Purpose:** This section explains WHY Asgaya works the way it does.
 
-After understanding [The Mechanism](/the-mechanism/) (what it IS) and [User Journeys](/user-journeys/) (what it LOOKS LIKE), you might wonder:
+After understanding [The Mechanism](/the-mechanism/README.md) (what it IS) and [User Journeys](/user-journeys/README.md) (what it LOOKS LIKE), you might wonder:
 
 - **Why** these specific components?
 - **Why** payment-first covenants instead of escrow?
@@ -17,7 +17,7 @@ This section provides the answers, organized into four categories:
 
 ## Navigation
 
-### [Requirements](/why-this-design/requirements/)
+### [Requirements](/why-this-design/requirements/README.md)
 **What constraints did we start with?**
 
 **The ultimate goal:** Bitcoin Cash merchant adoption
@@ -38,7 +38,7 @@ This section provides the answers, organized into four categories:
 
 ---
 
-### [Constraints](/why-this-design/constraints/)
+### [Constraints](/why-this-design/constraints/README.md)
 **What design decisions were forced by reality?**
 
 The trade-offs and limitations we can't avoid:
@@ -52,7 +52,7 @@ The trade-offs and limitations we can't avoid:
 
 ---
 
-### [Evidence](/why-this-design/evidence/)
+### [Evidence](/why-this-design/evidence/README.md)
 **What research supports these decisions?**
 
 The data, analysis, and experiments that validate our approach:
@@ -64,7 +64,7 @@ The data, analysis, and experiments that validate our approach:
 
 ---
 
-### [Open Questions](/why-this-design/open-questions/)
+### [Open Questions](/why-this-design/open-questions/README.md)
 **What don't we know yet?**
 
 The unknowns, risks, and experiments we're validating in Phase 0:
@@ -82,29 +82,29 @@ The unknowns, risks, and experiments we're validating in Phase 0:
 ## How to Use This Section
 
 ### If You're New
-Start with [Requirements](/why-this-design/requirements/) → understand the problems first
+Start with [Requirements](/why-this-design/requirements/README.md) → understand the problems first
 
 ### If You're Technical
-Read [Constraints](/why-this-design/constraints/) → understand the trade-offs
+Read [Constraints](/why-this-design/constraints/README.md) → understand the trade-offs
 
 ### If You're Skeptical
-Review [Evidence](/why-this-design/evidence/) → see the data
+Review [Evidence](/why-this-design/evidence/README.md) → see the data
 
 ### If You Want to Contribute
-Check [Open Questions](/why-this-design/open-questions/) → find research gaps
+Check [Open Questions](/why-this-design/open-questions/README.md) → find research gaps
 
 ---
 
 ## What's NOT in This Section
 
 ### Implementation Details
-**See:** [Reference](/reference/) - technical specs, code, APIs
+**See:** [Reference](/reference/README.md) - technical specs, code, APIs
 
 ### User Guides
-**See:** [User Journeys](/user-journeys/) - step-by-step flows
+**See:** [User Journeys](/user-journeys/README.md) - step-by-step flows
 
 ### Mechanism Explanations
-**See:** [The Mechanism](/the-mechanism/) - what components do
+**See:** [The Mechanism](/the-mechanism/README.md) - what components do
 
 **This section is purely about "why"** - the rationale, constraints, evidence, and open questions.
 
@@ -121,7 +121,7 @@ Check [Open Questions](/why-this-design/open-questions/) → find research gaps
 **How to contribute:**
 - Open issue on GitHub
 - Submit pull request with new evidence
-- Join discussion in [Open Questions](/why-this-design/open-questions/)
+- Join discussion in [Open Questions](/why-this-design/open-questions/README.md)
 
 ---
 

@@ -161,8 +161,8 @@ MUSD works because Moria has a clear incentive (fees + MEUR holders wanting liqu
 ## Sources
 
 - [CashTokens Specification (CHIP-2022-02)](https://github.com/bitjson/cashtokens)
-- [Moria Protocol Docs](https://docs.moria.money/)
-- [Cauldron DEX](https://www.cauldron.quest/)
+- [Moria Protocol Docs](https://docs.moria.money/README.md)
+- [Cauldron DEX](https://www.cauldron.quest/README.md)
 - [MUSD on BULB](https://www.bulbapp.io/p/398b4486-caa2-425b-a014-78144c949861/musd-and-its-role-in-the-bitcoin-cash-ecosystem)
 
 ---

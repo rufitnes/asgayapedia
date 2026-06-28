@@ -9,12 +9,12 @@
 
 Remittances involve two parties in different locations:
 
-### [Sender](sender/)
+### [Sender](sender/README.md)
 **Role:** Active BCH Buyer  
 **Example:** María in Madrid sends €100 to Elena in Caracas  
 **What they do:** Buy BCH via Asgaya, create covenant, send to recipient
 
-### [Recipient](recipient/)
+### [Recipient](recipient/README.md)
 **Role:** Active BCH Seller  
 **Example:** Elena in Caracas receives €100 from María  
 **What they do:** Claim BCH from covenant, cash out at local merchant
@@ -48,8 +48,8 @@ Remittances involve two parties in different locations:
 
 ---
 
-**Explore:** [Sender Journey](sender/) | [Recipient Journey](recipient/)  
-**Back:** [User Journeys](../)
+**Explore:** [Sender Journey](sender/README.md) | [Recipient Journey](recipient/README.md)  
+**Back:** [User Journeys](../README.md)
 
 ---
 

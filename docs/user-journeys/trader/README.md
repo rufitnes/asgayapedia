@@ -312,10 +312,10 @@ A trader is someone who operates as BOTH buyer and seller, earning fees by provi
 ## Technical Details
 
 **For implementation details, see:**
-- [Wallet](../../implementation/android-app/wallet/) - Manage capital, fund covenants
-- [Bulletin Board](../../implementation/android-app/bulletin-board/) - Post passive listings
-- [Nostr](../../implementation/android-app/nostr/) - Coordinate with senders/recipients
-- [Notification Bot](../../implementation/android-app/notification-bot/) - Bank payment detection, auto-matching
+- [Wallet](../../implementation/android-app/wallet/README.md) - Manage capital, fund covenants
+- [Bulletin Board](../../implementation/android-app/bulletin-board/README.md) - Post passive listings
+- [Nostr](../../implementation/android-app/nostr/README.md) - Coordinate with senders/recipients
+- [Notification Bot](../../implementation/android-app/notification-bot/README.md) - Bank payment detection, auto-matching
 
 **For rationale, see:**
 - [Why 7% Buffer?](../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md) - Constraint #2: Money Velocity Enabler
@@ -333,10 +333,10 @@ A trader is someone who operates as BOTH buyer and seller, earning fees by provi
 - Provide liquidity for stability tokens (H€/HAu bull pool, advanced)
 
 **Related journeys:**
-- [Sender Journey](../remittance/sender/) - Isabel's customers (María buying BCH)
-- [Recipient Journey](../remittance/recipient/) - Where BCH goes (Elena cashing out)
-- [Customer Journey](../customer/) - Similar flow, different context
-- [Merchant Journey](../merchant/) - Cash-out partners (buy BCH from recipients)
+- [Sender Journey](../remittance/sender/README.md) - Isabel's customers (María buying BCH)
+- [Recipient Journey](../remittance/recipient/README.md) - Where BCH goes (Elena cashing out)
+- [Customer Journey](../customer/README.md) - Similar flow, different context
+- [Merchant Journey](../merchant/README.md) - Cash-out partners (buy BCH from recipients)
 
 **Related docs:**
 - [Trader Economics](economics.md) - **Read this to understand profitability model**

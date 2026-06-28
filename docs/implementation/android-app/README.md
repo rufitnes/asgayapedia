@@ -23,7 +23,7 @@ The Asgaya app implements a peer-to-peer Bitcoin Cash remittance protocol with *
 ## The Five Gears → Code Components
 
 ### Conceptual Layer (What Components Do)
-See [The Mechanism](/the-mechanism/) for how these work from a user perspective.
+See [The Mechanism](/the-mechanism/README.md) for how these work from a user perspective.
 
 ### Implementation Layer (How to Build Them)
 
@@ -636,9 +636,9 @@ function handleError(error):
 ## Related Documentation
 
 **Conceptual (read these first):**
-- [The Mechanism](/the-mechanism/) - How the five gears work
-- [User Journeys](/user-journeys/) - How users interact
-- [Why This Design](/why-this-design/) - Architectural rationale
+- [The Mechanism](/the-mechanism/README.md) - How the five gears work
+- [User Journeys](/user-journeys/README.md) - How users interact
+- [Why This Design](/why-this-design/README.md) - Architectural rationale
 
 **Implementation (this section):**
 - [wallet.md](wallet.md) - Core component

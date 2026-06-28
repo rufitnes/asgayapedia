@@ -183,10 +183,10 @@ Each core requirement has specific implementation constraints:
 
 ## Related Documents
 
-- [Constraints](../constraints/) - What design decisions were forced by reality
-- [Research Summaries](../../research/summaries/) - Research supporting these requirements
+- [Constraints](../constraints/README.md) - What design decisions were forced by reality
+- [Research Summaries](../../research/summaries/README.md) - Research supporting these requirements
 - [Fraud Protection](../fraud-protection.md) - How payment-first covenants satisfy compliance
-- [Stability Layer](../../the-mechanism/stability-layer/) - How H€/HAu satisfy volatility protection
+- [Stability Layer](../../the-mechanism/stability-layer/README.md) - How H€/HAu satisfy volatility protection
 
 ---
 

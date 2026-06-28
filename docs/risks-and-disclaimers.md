@@ -179,7 +179,7 @@ To the maximum extent permitted by law:
 
 ## Questions or Concerns?
 
-- **Technical questions:** [GitHub Issues](https://github.com/rufitnes/asgayapedia/issues) or see [unknowns/](unknowns/) for research questions
+- **Technical questions:** [GitHub Issues](https://github.com/rufitnes/asgayapedia/issues) or see [unknowns/](unknowns/README.md) for research questions
 - **Legal questions:** Consult your own legal counsel (we cannot provide legal advice)
 - **Regulatory questions:** Contact your local financial authority
 - **General discussion:** [GitHub Discussions](https://github.com/rufitnes/asgayapedia/discussions)

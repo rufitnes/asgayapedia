@@ -331,10 +331,10 @@ When BCH drops 3%, both Elena and María get notifications with urgency based on
 ## Technical Details
 
 **For implementation details, see:**
-- [Wallet](../../../implementation/android-app/wallet/) - Covenant creation
-- [Bulletin Board](../../../implementation/android-app/bulletin-board/) - Seller discovery
-- [Nostr](../../../implementation/android-app/nostr/) - Message coordination
-- [Notification Bot](../../../implementation/android-app/notification-bot/) - Payment matching
+- [Wallet](../../../implementation/android-app/wallet/README.md) - Covenant creation
+- [Bulletin Board](../../../implementation/android-app/bulletin-board/README.md) - Seller discovery
+- [Nostr](../../../implementation/android-app/nostr/README.md) - Message coordination
+- [Notification Bot](../../../implementation/android-app/notification-bot/README.md) - Payment matching
 
 **For rationale, see:**
 - [Why Payment-First?](../../../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design
@@ -353,10 +353,10 @@ When BCH drops 3%, both Elena and María get notifications with urgency based on
 - Intermediate for less tech savvy users (this is very likely - earn small fee for helping neighbors/family)
 
 **Related journeys:**
-- [Recipient Journey](../recipient/) - Elena's perspective
-- [Merchant Journey](../../merchant/) - Carlos cashing out Elena
-- [Trader Journey](../../trader/) - Isabel's business model
-- [Customer Journey](../../customer/) - Similar flow, different context (paying merchant)
+- [Recipient Journey](../recipient/README.md) - Elena's perspective
+- [Merchant Journey](../../merchant/README.md) - Carlos cashing out Elena
+- [Trader Journey](../../trader/README.md) - Isabel's business model
+- [Customer Journey](../../customer/README.md) - Similar flow, different context (paying merchant)
 
 ---
 

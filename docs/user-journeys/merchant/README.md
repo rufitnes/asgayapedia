@@ -437,11 +437,11 @@ Carlos installs wallet → Creates Cash Account → Posts listing
 ## Technical Details
 
 **For implementation details, see:**
-- [Wallet](../implementation/android-app/wallet/) - Accept trades, manage stability tokens
-- [Bulletin Board](../implementation/android-app/bulletin-board/) - Post passive listings
-- [Nostr](../implementation/android-app/nostr/) - Coordinate with recipients
-- [Notification Bot](../implementation/android-app/notification-bot/) - Auto-match trades
-- [Stability Layer](../implementation/android-app/stability/) - H€/HAu conversion
+- [Wallet](../implementation/android-app/wallet/README.md) - Accept trades, manage stability tokens
+- [Bulletin Board](../implementation/android-app/bulletin-board/README.md) - Post passive listings
+- [Nostr](../implementation/android-app/nostr/README.md) - Coordinate with recipients
+- [Notification Bot](../implementation/android-app/notification-bot/README.md) - Auto-match trades
+- [Stability Layer](../implementation/android-app/stability/README.md) - H€/HAu conversion
 
 **For rationale, see:**
 - [Why Covenants?](../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design
@@ -459,10 +459,10 @@ Carlos installs wallet → Creates Cash Account → Posts listing
 - Teach family to use Asgaya (expand adoption)
 
 **Related journeys:**
-- [Sender Journey](../remittance/sender/) - Where remittances come from
-- [Recipient Journey](../remittance/recipient/) - Elena's perspective
-- [Customer Journey](../customer/) - Similar trade mechanics, different context
-- [Trader Journey](../trader/) - Scaling to Pro Seller
+- [Sender Journey](../remittance/sender/README.md) - Where remittances come from
+- [Recipient Journey](../remittance/recipient/README.md) - Elena's perspective
+- [Customer Journey](../customer/README.md) - Similar trade mechanics, different context
+- [Trader Journey](../trader/README.md) - Scaling to Pro Seller
 
 ---
 
