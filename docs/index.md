@@ -48,10 +48,8 @@ Experience from different perspectives:
 - [user-journeys/customer/](user-journeys/customer/) - Direct BCH payments
 
 ### 🎯 Why This Design?
-Design rationale and open questions:
+Design rationale:
 - [why-this-design/constraints/](why-this-design/constraints/) - Design constraints
-- [why-this-design/evidence/](why-this-design/evidence/) - Research summaries
-- [why-this-design/open-questions/](why-this-design/open-questions/) - Unanswered questions
 - [why-this-design/fraud-protection.md](why-this-design/fraud-protection.md) - How we prevent fraud
 
 ### 🚀 Cold Start Strategy
@@ -63,8 +61,9 @@ Structured investigation briefs (research entry point):
 - [unknowns/](unknowns/) - Open research questions by category
 
 ### 📚 Research
-Formal research sessions:
+Formal research sessions and summaries:
 - [research/](research/) - RS001-RS065 research sessions
+- [research/summaries/](research/summaries/) - Research summaries
 
 ### 📖 Reference
 - [glossary.md](glossary.md) - Complete terminology reference
