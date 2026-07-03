@@ -1,0 +1,67 @@
+[
+  {
+    "package": "com.rsi.nba",
+    "bankName": "Caja Rural",
+    "patterns": [
+      {
+        "name": "standard",
+        "regex": "Has recibido un Bizum de\\s*(\\d+(?:[.,]\\d{2})?)\\s*EUR\\s*de\\s*(.+?)\\s*con el concepto\\s*(.+)",
+        "amountGroup": 1,
+        "senderGroup": 2,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
+    "package": "com.bbva.bbvacontigo",
+    "bankName": "BBVA",
+    "patterns": [
+      {
+        "name": "title_text_split",
+        "regex": "Bizum recibido por importe de\\s*(\\d+(?:[.,]\\d{2})?)\\s*EUR",
+        "amountGroup": 1,
+        "senderInTitle": true,
+        "referenceRegex": "Concepto:\\s*(.+)"
+      }
+    ]
+  },
+  {
+    "package": "es.bancosantander.apps",
+    "bankName": "Santander",
+    "patterns": [
+      {
+        "name": "standard",
+        "regex": "Bizum:\\s*(.+?)\\s+te ha enviado\\s*(\\d+(?:[.,]\\d{2})?)\\s*[€€]\\.?\\s*Concepto:\\s*(.+)",
+        "amountGroup": 2,
+        "senderGroup": 1,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
+    "package": "es.bancsabadell.mobilebancohd",
+    "bankName": "Sabadell",
+    "patterns": [
+      {
+        "name": "standard",
+        "regex": "Has recibido un Bizum de\\s*(\\d+(?:[.,]\\d{2})?)\\s*[€€]\\s*de\\s*(.+?)\\.?\\s*Concepto:\\s*(.+)",
+        "amountGroup": 1,
+        "senderGroup": 2,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
+    "package": "es.ingdirect.ing",
+    "bankName": "ING",
+    "patterns": [
+      {
+        "name": "standard",
+        "regex": "¡Has recibido un Bizum!\\s*(.+?)\\s+te ha enviado\\s*(\\d+(?:[.,]\\d{2})?)\\s*[€€]\\.?\\s*Concepto:\\s*(.+)",
+        "amountGroup": 2,
+        "senderGroup": 1,
+        "referenceGroup": 3
+      }
+    ]
+  }
+]
