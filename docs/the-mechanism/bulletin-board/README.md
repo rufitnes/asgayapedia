@@ -77,7 +77,7 @@ Spend the old listing UTXO (reclaim your 0.001 BCH), create a new one with upd
 
 **This is an unknown.** We don't know if this simple economic barrier is sufficient, or if we need additional measures like listing limits per account, device fingerprinting, or payment method verification. Phase 0 will test whether the 0.001 BCH deposit alone deters spam effectively.
 
-**See:** [Bulletin Board Anti-Spam Strategies](../docs/unknowns/bulletin-board-anti-spam.md) for full analysis of alternatives and testing plan.
+**See:** [Bulletin Board Anti-Spam Strategies](../../unknowns/bulletin-board-anti-spam.md) for full analysis of alternatives and testing plan.
 
 ---
 
