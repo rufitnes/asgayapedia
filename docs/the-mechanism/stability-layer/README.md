@@ -193,29 +193,46 @@ Asgaya's real goal is to **bootstrap BCH adoption** through remittances. As BCH 
 
 **Why these first:** Oracle infrastructure exists, battle-tested, 24/7 availability. We just integrate existing feeds.
 
-### Tier 2: Commodity Oracles (Phase 2+ - Years to Ship)
+### Tier 2: Commodity Oracles + Composite Index (Phase 2+ - Years to Ship)
 
-**Feasible but not prioritized:**
+**Feasible if BCH volatility persists and demand exists:**
 
+**Single-asset tokens (require oracle adapters):**
 - **H-COPPER, H-OIL, H-IRON** - Commodity exchanges publish these (CME, LME, NYMEX)
 - **H-KWH (Energy)** - Regional electricity markets exist but fragmented
 
 **Challenge:** Integration complexity. These oracles exist but aren't crypto-native. Requires custom oracle adapters.
 
-### Tier 3: Custom Oracle Infrastructure (Research Project - Decade+)
+**Composite index token (natural evolution):**
+- **H-basket** - Weighted composite of all H-assets the bull pool supports
 
-**Thought experiment, not roadmap:**
+**How H-basket works:**
+```
+Bull pool allocates capital to multiple assets:
+- 50% H€ (Euro stability)
+- 30% HAu (Gold stability)  
+- 20% H-COPPER (Commodity exposure)
 
-- **H-basket (Purchasing Power)** - Requires building decentralized CPI measurement
-- **H-CPI (Consumer Price Index)** - Needs trustless data collection infrastructure
+H-basket = 50% H€ + 30% HAu + 20% H-COPPER
 
-**Why this is different:** No existing oracle. Would require:
-- Defining basket composition (governance)
-- Collecting price data (decentralized surveyors)
-- Preventing manipulation (cryptoeconomic incentives)
-- Regional variations (multiple baskets)
+Merchant mints H-basket → gets diversified exposure
+→ Uses existing H-asset oracles (no new infrastructure)
+→ Composition emerges from bull capital allocation
+→ No governance needed (market-driven)
+```
 
-**This is a separate research project.** We mention it to show the vision's scope, but it's not part of Asgaya's Phase 0-2 roadmap.
+**Why this is elegant:** Bulls vote with capital. If they won't long an asset, it doesn't get in the basket. Composition is market-discovered, not governance-decided.
+
+**Still conditional:** Only needed if BCH volatility persists AND merchants want diversification beyond H€/HAu.
+
+### Tier 3: Custom Oracle Infrastructure (Separate Research Project)
+
+**Not part of Asgaya roadmap:**
+
+- **H-CPI (Consumer Price Index)** - Would require decentralized price surveying
+- **Custom purchasing power baskets** - Would require trustless data collection
+
+If someone wants to build decentralized CPI measurement infrastructure and integrate it, H-CPI could theoretically join the bull pool's supported assets. But that's a separate project, not something Asgaya needs to solve.
 
 ---
 
@@ -236,35 +253,51 @@ Asgaya's real goal is to **bootstrap BCH adoption** through remittances. As BCH 
 
 ---
 
-### Examples of Future Assets (Tier 2 - Commodity Oracles)
+### Examples of Future Assets (If BCH Volatility Persists)
 
-**Commodity examples (existing oracles):**
+**Single-asset tokens (Tier 2 - existing oracles, need adapters):**
 - H-COPPER (copper spot price, CME/LME)
 - H-OIL (crude oil barrel, NYMEX/ICE)
 - H-KWH (electricity, regional markets)
 
-**Purchasing power examples (would need custom oracles):**
-- H-basket (essential goods basket: rice, beans, oil, chicken, etc.)
-- H-CPI (consumer price index tracking)
+**Composite index token (Tier 2 - natural evolution):**
+- **H-basket** - Market-weighted composite of all approved H-assets
+  - Example: 50% H€ + 30% HAu + 20% H-COPPER
+  - Composition emerges from bull pool capital allocation
+  - Diversified stability without picking winners
+  - No new oracles needed (composites existing H-assets)
 
-**Note:** Commodity tokens are feasible (oracles exist). Purchasing power tokens require building decentralized price measurement infrastructure - a research project in itself
+**Custom oracle tokens (Tier 3 - separate research project):**
+- H-CPI (consumer price index) - would require decentralized surveying
+
+**Remember:** All of this only matters if BCH stays volatile despite real-world adoption. If BCH stabilizes naturally, none of these are needed
 
 ---
 
-## Why This Is Post-Fiat (The Vision)
+## Why This Is Post-Fiat (The Fallback Vision)
+
+**This is all conditional on BCH staying volatile despite adoption.**
 
 **Traditional finance:** Store value in USD/EUR → central banks can inflate → savings eroded by policy
 
 **Crypto (current):** Store value in BCH/BTC → volatile (±15-20% monthly) → can't plan or save predictably
 
-**Universal stability vision:** Store value in real-world assets:
-- H€/HAu → Fiat/gold (proven, shipping Phase 0)
-- H-COPPER/H-OIL → Commodities (feasible with existing oracles)
-- H-basket → Purchasing power (requires custom oracle infrastructure)
+**Stability layer progression (if BCH doesn't stabilize naturally):**
+- **Phase 0:** H€/HAu → Fiat/gold stability (existing oracles, shipping now)
+- **Phase 2+:** H-COPPER/H-OIL → Commodities (feasible with oracle adapters)
+- **Phase 3+:** H-basket → Market-weighted composite of approved H-assets (natural evolution, no governance needed)
+
+**H-basket example (if we get there):**
+```
+Bulls allocate capital to multiple assets:
+→ Merchants can choose diversification over single-asset exposure
+→ Composition emerges from market (no central planning)
+→ Diversified stability across fiat, gold, commodities
+```
 
 **The paradigm shift:** From "stable vs fiat" to "stable vs real-world value."
 
-**Phase 0 reality:** We're testing H€ and HAu to prove the mechanism. The rest is long-term vision
+**But remember:** This entire progression assumes BCH fails to stabilize. If real-world commerce makes BCH stable enough, merchants will just hold BCH. **That's the preferred outcome.**
 
 ---
 
@@ -447,21 +480,29 @@ The bull pool approves which assets merchants can mint (H€, HAu) and dynamical
 
 ---
 
-## The Vision
+## The Vision (Conditional on BCH Volatility)
 
 **Phase 0 (what we're building):**
 - Prove H€/HAu mechanism works for remittances
 - Use existing financial oracles (EUR/BCH, XAU/USD)
 - Test if merchants prefer Euro-stability or gold-stability
+- **Hypothesis:** BCH will stabilize, making this unnecessary
 
-**Long-term vision (if this works):**
-- Same mechanism could work for other assets (commodities, energy)
-- Custom oracles could enable purchasing power baskets (H-basket, H-CPI)
-- **But:** Custom oracles = separate research project, not Asgaya's Phase 0-2 scope
+**Phase 2+ (if BCH stays volatile and demand exists):**
+- Add commodity tokens (H-COPPER, H-OIL) with oracle adapters
+- Introduce H-basket as market-weighted composite of approved H-assets
+- Bull pool decides composition organically through capital allocation
+- No governance, no custom oracles, just market discovery
 
-**The insight:** AnyHedge-based stability tokens can peg to any asset with a reliable oracle. We start with the oracles that already exist (EUR, gold). If demand proves, others can explore custom oracle infrastructure for purchasing power measurement.
+**The H-basket insight:**
+Don't build decentralized CPI infrastructure. Instead, let the bull pool's capital allocation decisions define the basket. If bulls support H€ (50%), HAu (30%), and H-COPPER (20%), that IS the basket. Market-driven, emergent, no central planning needed.
 
-**Asgaya's role:** Prove the mechanism. Not solve decentralized CPI measurement
+**Asgaya's role:** 
+- Prove the mechanism with existing oracles (H€/HAu)
+- Enable market-driven asset discovery (bulls choose what to support)
+- NOT: Solve decentralized price measurement or governance
+
+**Preferred outcome:** BCH stabilizes through real-world use. Stability layer becomes unnecessary. Merchants hold BCH directly
 
 ---
 
