@@ -191,7 +191,7 @@ Every unknown follows this format:
 | Market | 3 | 3 | 0 | 0 |
 | **Total** | **14** | **13** | **1** | **0** |
 
-**Phase -1 progress:** [Universal Bot Reliability](technical/universal-bot-reliability.md) moved to "In Progress" after 24-hour validation testing with five Spanish banks. See [RS072](../research/RS072-bizum-notification-patterns/) and [RS073](../research/RS073-notifyflow-comparison/) for details.
+**Phase -1 progress:** [Universal Bot Reliability](technical/universal-bot-reliability.md) moved to "In Progress" after 24-hour validation testing with five Spanish banks. See [RS072](../research/RS072_notification_listener/) and [RS073](../research/RS072_notification_listener/RS073_notifyflow_decompilation.md) for details.
 
 ---
 

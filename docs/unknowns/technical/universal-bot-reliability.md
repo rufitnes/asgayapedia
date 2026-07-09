@@ -12,7 +12,7 @@
 - ✅ Five Spanish banks tested (BBVA, Santander, CaixaBank, Sabadell, Caja Rural)
 - ✅ Production hardening: boot receiver, battery exemption, foreground service
 - ✅ Bizum notification parsing validated
-- ✅ Research published: [RS072: Bizum Notification Patterns](../../research/RS072-bizum-notification-patterns/), [RS073: NotifyFlow Comparison](../../research/RS073-notifyflow-comparison/)
+- ✅ Research published: [RS072: Bizum Notification Patterns](../../research/RS072_notification_listener/), [RS073: NotifyFlow Comparison](../../research/RS072_notification_listener/RS073_notifyflow_decompilation.md)
 
 **Still unknown:**
 - ❌ Multi-device testing (only one device tested)

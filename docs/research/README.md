@@ -47,8 +47,8 @@ Documents from May 2026 onward reflect the **current covenant architecture**:
 
 ### Payment Rails & Automation
 - **[RS042: Bizum Concept Field Constraints](RS042_bizum_concept_field_constraints.md)** — Testing that revealed Bizum concept field restrictions (critical for notification matching)
-- **[RS072: Bizum Notification Patterns](RS072-bizum-notification-patterns/)** — Notification parsing patterns for five Spanish banks (Phase -1 validation)
-- **[RS073: NotifyFlow Comparison](RS073-notifyflow-comparison/)** — Analysis of existing notification-based remittance app
+- **[RS072: Bizum Notification Patterns](RS072_notification_listener/)** — Notification parsing patterns for five Spanish banks (Phase -1 validation)
+- **[RS073: NotifyFlow Comparison](RS072_notification_listener/RS073_notifyflow_decompilation.md/)** — Analysis of existing notification-based remittance app
 
 ### Future Tech
 - **[RS053: MUSD](RS053_MUSD.md)** — Research on MUSD stablecoin for future integration
