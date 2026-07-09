@@ -152,7 +152,46 @@ Both H€ and HAu require redundant oracle sources for reliability:
 
 ---
 
-## Future: Beyond Fiat (Phase 2+)
+## Oracle Complexity Hierarchy
+
+**The AnyHedge mechanism works for any asset with a reliable oracle.** However, oracle availability determines what we can ship when.
+
+### Tier 1: Existing Financial Oracles (Phase 0 - Months to Ship)
+
+**What we're actually building:**
+
+- **H€ (Euro)** - BCH/EUR price feeds already exist (Kraken, CoinGecko, Binance)
+- **HAu (Gold)** - XAU/USD feeds are mature and reliable (LBMA, CME, COMEX)
+
+**Why these first:** Oracle infrastructure exists, battle-tested, 24/7 availability. We just integrate existing feeds.
+
+### Tier 2: Commodity Oracles (Phase 2+ - Years to Ship)
+
+**Feasible but not prioritized:**
+
+- **H-COPPER, H-OIL, H-IRON** - Commodity exchanges publish these (CME, LME, NYMEX)
+- **H-KWH (Energy)** - Regional electricity markets exist but fragmented
+
+**Challenge:** Integration complexity. These oracles exist but aren't crypto-native. Requires custom oracle adapters.
+
+### Tier 3: Custom Oracle Infrastructure (Research Project - Decade+)
+
+**Thought experiment, not roadmap:**
+
+- **H-basket (Purchasing Power)** - Requires building decentralized CPI measurement
+- **H-CPI (Consumer Price Index)** - Needs trustless data collection infrastructure
+
+**Why this is different:** No existing oracle. Would require:
+- Defining basket composition (governance)
+- Collecting price data (decentralized surveyors)
+- Preventing manipulation (cryptoeconomic incentives)
+- Regional variations (multiple baskets)
+
+**This is a separate research project.** We mention it to show the vision's scope, but it's not part of Asgaya's Phase 0-2 roadmap.
+
+---
+
+## Future: Beyond Fiat (Long-term Vision)
 
 **This is our fallback scenario, not our primary goal.**
 
@@ -160,127 +199,63 @@ Both H€ and HAu require redundant oracle sources for reliability:
 
 **However:** There's no evidence this will happen. BCH might remain volatile indefinitely. If so, we need a long-term stability solution that doesn't depend on fiat currencies or centralized stablecoins.
 
-**Post-fiat tokens are the contingency plan** if BCH never stabilizes. Instead of pegging to EUR/USD (government-controlled), we peg to real-world commodities, energy, and purchasing power baskets that governments cannot manipulate.
+**The long-term vision:** Instead of pegging to EUR/USD (government-controlled), peg to real-world commodities, energy, and purchasing power baskets that governments cannot manipulate.
 
-**Phase 0:** Test H€ and HAu (prove mechanism works)  
-**Phase 1:** Add more fiat-pegged options if demand exists  
-**Phase 2+:** Build post-fiat tokens if BCH volatility persists
-
----
-
-### Commodities (Raw Materials)
-
-**H-COPPER (Copper ore):**
-- 1 token = 1 ton copper spot price
-- Oracle: CME, LME (London Metal Exchange)
-- Use case: Mining regions, construction merchants
-
-**H-OIL (Crude oil):**
-- 1 token = 1 barrel WTI crude
-- Oracle: NYMEX, ICE
-- Use case: Energy economies, transport businesses
-
-**H-IRON (Iron ore):**
-- 1 token = 1 ton iron ore
-- Oracle: Platts, Metal Bulletin
-- Use case: Manufacturing regions
-
-### Energy (Physics-Based Value)
-
-**H-KWH (Kilowatt-hour):**
-- 1 token = 1 kWh electricity (regional spot price)
-- Oracle: Regional electricity markets
-- Use case: Universal (everyone needs energy)
-- Cannot be inflated (thermodynamics doesn't change)
-
-### Purchasing Power (Essential Goods)
-
-**H-BASKET (Venezuelan essentials):**
-```
-1 token = Cost of basket:
-├─ 1kg rice (spot price)
-├─ 1kg beans
-├─ 1L cooking oil
-├─ 1kg chicken
-├─ 500g sugar
-└─ 1L milk
-```
-- Oracle: Local market survey (weekly updates)
-- Use case: Direct purchasing power preservation
-- Immune to ALL currency manipulation
-
-**H-CPI (Consumer Price Index):**
-- 1 token = CPI-adjusted purchasing power
-- Oracle: National statistics offices
-- Use case: Long-term savings, inflation hedge
+**Phase 0:** Test H€ and HAu (prove mechanism works with existing oracles)  
+**Phase 1:** Add more fiat-pegged options if demand exists (still existing oracles)  
+**Phase 2+:** Explore commodity tokens if oracle integration becomes practical  
+**Research:** H-basket/H-CPI as separate decentralized oracle project (if someone wants to build it)
 
 ---
 
-## Why This Is Post-Fiat
+### Examples of Future Assets (Tier 2 - Commodity Oracles)
 
-**Traditional finance:**
-```
-Store value in USD → US Fed can inflate
-Store value in EUR → ECB can inflate
-Store value in VES → Venezuelan govt hyperinflates
-Result: Savings destroyed by policy
-```
+**Commodity examples (existing oracles):**
+- H-COPPER (copper spot price, CME/LME)
+- H-OIL (crude oil barrel, NYMEX/ICE)
+- H-KWH (electricity, regional markets)
 
-**Crypto (current):**
-```
-Store value in BCH → Volatile (±20% monthly)
-Store value in BTC → Volatile (±15% monthly)
-Result: Can't plan, can't save predictably
-```
+**Purchasing power examples (would need custom oracles):**
+- H-basket (essential goods basket: rice, beans, oil, chicken, etc.)
+- H-CPI (consumer price index tracking)
 
-**Universal stability:**
-```
-Store value in H-COPPER → Value = copper (govts can't print copper)
-Store value in H-BASKET → Value = food (measures real purchasing power)
-Store value in H-KWH → Value = energy (physics-based, not policy-based)
-Result: Stable value independent of govt or crypto volatility
-```
+**Note:** Commodity tokens are feasible (oracles exist). Purchasing power tokens require building decentralized price measurement infrastructure - a research project in itself
+
+---
+
+## Why This Is Post-Fiat (The Vision)
+
+**Traditional finance:** Store value in USD/EUR → central banks can inflate → savings eroded by policy
+
+**Crypto (current):** Store value in BCH/BTC → volatile (±15-20% monthly) → can't plan or save predictably
+
+**Universal stability vision:** Store value in real-world assets:
+- H€/HAu → Fiat/gold (proven, shipping Phase 0)
+- H-COPPER/H-OIL → Commodities (feasible with existing oracles)
+- H-basket → Purchasing power (requires custom oracle infrastructure)
 
 **The paradigm shift:** From "stable vs fiat" to "stable vs real-world value."
 
+**Phase 0 reality:** We're testing H€ and HAu to prove the mechanism. The rest is long-term vision
+
 ---
 
-## Oracle Requirements
+## Oracle Requirements for Phase 0
 
-### Easy Oracles (Existing Feeds)
+**What we need (existing infrastructure):**
 
-**Commodities:**
-- Gold, silver, copper (CME, COMEX, LME)
-- Oil, natural gas (NYMEX, ICE)
-- Agricultural (CBOT, ICE)
+**H€ (Euro):**
+- BCH/EUR feeds from Kraken, Coinbase, Binance
+- Fallback: BCH/USD + USD/EUR
 
-**Energy:**
-- Electricity spot prices (regional markets)
-- Natural gas, coal (global markets)
+**HAu (Gold):**
+- XAU/USD from LBMA, CME, COMEX
+- BCH/USD from exchanges
+- Combine for BCH/XAU rate
 
-**Fiat pairs:**
-- EUR/BCH, USD/BCH (crypto exchanges)
-- Forex rates (central banks, Bloomberg)
+**Why these work:** Oracle infrastructure already exists, battle-tested, 24/7 global markets.
 
-### Custom Oracles (Need to Build)
-
-**Essential goods baskets:**
-- Local market surveys (weekly/monthly)
-- Weighted average of staple prices
-- Regional variations (Caracas basket ≠ Maracaibo basket)
-
-**Regional indices:**
-- Cost of living (rent + utilities + food)
-- Industry-specific baskets (construction materials, restaurant inputs)
-
-**How to build:**
-1. Define basket composition (standardized quantities)
-2. Survey local prices (weekly web scraping or manual)
-3. Calculate weighted average
-4. Sign with oracle key
-5. Publish to AnyHedge-compatible feed
-
-**The beautiful thing:** Start with easy oracles (gold, oil, EUR), add custom as demand proves.
+**Future assets (not Phase 0):** Commodities (copper, oil) require oracle adapters. Purchasing power baskets (H-basket, H-CPI) would require building custom decentralized data collection - a research project separate from Asgaya.
 
 ---
 
@@ -446,32 +421,32 @@ The bull pool approves which assets merchants can mint (H€, HAu) and dynamical
 
 ## The Vision
 
-**Not:** Replace USD with BCH (too volatile)  
-**Not:** Replace USD with USDT (fiat-dependent not trustless)  
-**But:** Replace fiat with *real-world value units*
+**Phase 0 (what we're building):**
+- Prove H€/HAu mechanism works for remittances
+- Use existing financial oracles (EUR/BCH, XAU/USD)
+- Test if merchants prefer Euro-stability or gold-stability
 
-**The Asgaya user in the future:**
-- Earns via remittances (H€ for familiar unit)
-- Saves in gold (HAu for wealth preservation)
-- Merchants set inventory prieces based in purchasing power (H-BASKET for stability)
-- Pays energy bills in kilowatt-hours (H-KWH for operational costs)
+**Long-term vision (if this works):**
+- Same mechanism could work for other assets (commodities, energy)
+- Custom oracles could enable purchasing power baskets (H-basket, H-CPI)
+- **But:** Custom oracles = separate research project, not Asgaya's Phase 0-2 scope
 
-**No government can inflate copper supply. No central bank can print energy. No policy can devalue food baskets.**
+**The insight:** AnyHedge-based stability tokens can peg to any asset with a reliable oracle. We start with the oracles that already exist (EUR, gold). If demand proves, others can explore custom oracle infrastructure for purchasing power measurement.
 
-**This is post-fiat economy.** Universal stability is the mechanism. Asgaya is the bootstrap. Remittances are just the first use case.
+**Asgaya's role:** Prove the mechanism. Not solve decentralized CPI measurement
 
 ---
 
 ## Key Takeaways
 
-1. **Same mechanism, any asset.** H€, HAu, H-BASKET, H-KWH—all use pooled AnyHedge contracts.
-2. **Start simple, expand gradually.** Phase 0: EUR + Gold. Future: Baskets, commodities, energy.
+1. **Same mechanism, different oracles.** H€, HAu, (future: commodities)—all use pooled AnyHedge contracts.
+2. **Oracle availability determines roadmap.** Phase 0: EUR + Gold (existing feeds). Future: Commodities if demand proves. Baskets = separate research project.
 3. **Gold oracle most reliable.** 24/7 trading, centuries of history, $12T market cap.
-4. **Capital scales via velocity.** High merchant turnover = low pool lock. €3K supports 80 merchants initially.
-5. **Post-fiat is the vision.** Not "stable vs USD" but "stable vs real-world value."
-6. **Remittances bootstrap adoption.** Merchants come for 0.5% spread, stay for H€/HAu stability, discover H-BASKET eventually.
+4. **Capital scales via velocity.** High merchant turnover = low pool lock. €3K supports 80+ merchants initially.
+5. **Start with proven oracles.** We're building H€/HAu, not solving decentralized CPI measurement.
+6. **Remittances bootstrap adoption.** Merchants come for <1% fees, stay for H€/HAu stability.
 
-**The profound insight:** We can literally depeg the world from fiat currencies, without the downside of volatile crypto assets.
+**The vision:** Prove the mechanism with existing oracles (H€/HAu). If it works, others can explore custom oracles for purchasing power baskets.
 ---
 
 ## Navigation
