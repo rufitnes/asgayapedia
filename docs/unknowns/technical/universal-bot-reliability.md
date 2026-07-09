@@ -1,9 +1,26 @@
 # Universal Bot Reliability
 
-**Status:** Not Started  
+**Status:** In Progress  
 **Priority:** High  
-**Last Updated:** 2026-05-29  
+**Last Updated:** 2026-07-09  
 **Contributors Welcome:** Yes
+
+## Phase -1 Progress (July 2026)
+
+**Partial validation completed:**
+- ✅ 24-hour continuous operation test (Pixel 6a, Android 14)
+- ✅ Five Spanish banks tested (BBVA, Santander, CaixaBank, Sabadell, Caja Rural)
+- ✅ Production hardening: boot receiver, battery exemption, foreground service
+- ✅ Bizum notification parsing validated
+- ✅ Research published: [RS072: Bizum Notification Patterns](../../research/RS072-bizum-notification-patterns/), [RS073: NotifyFlow Comparison](../../research/RS073-notifyflow-comparison/)
+
+**Still unknown:**
+- ❌ Multi-device testing (only one device tested)
+- ❌ Various Android OS versions (only Android 14)
+- ❌ Poor network conditions
+- ❌ Formal 99%+ reliability metric
+
+**Next steps:** Phase 0 trials with multiple users/devices to validate across device range.
 
 ## What We Don't Know
 

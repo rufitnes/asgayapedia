@@ -10,6 +10,14 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import android.content.pm.ServiceInfo
 
 class NotificationListener : NotificationListenerService() {
 
@@ -20,6 +28,8 @@ class NotificationListener : NotificationListenerService() {
     companion object {
         private const val TAG = "NotificationListener"
         private val BIZUM_KEYWORDS = listOf("bizum", "recibido", "enviado")
+        private const val CHANNEL_ID = "bizum_parser_service"
+        private const val NOTIFICATION_ID = 1
     }
 
     data class BankConfig(
@@ -40,9 +50,58 @@ class NotificationListener : NotificationListenerService() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "🔥🔥🔥 SERVICE CREATED - NotificationListener.onCreate() 🔥🔥🔥")
+
+        // Start foreground service
+        createNotificationChannel()
+        val notification = createNotification()
+
+        // Use appropriate startForeground based on API level
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // API 29+ supports foreground service type parameter
+            startForeground(NOTIFICATION_ID, notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+        } else {
+            // API 24-28 use 2-parameter version
+            startForeground(NOTIFICATION_ID, notification)
+        }
+
         database = AppDatabase.getDatabase(this)
         loadBankPatterns()
         Log.d(TAG, "✅ Service initialized: loaded ${bankConfigs.size} bank configs")
+    }
+
+    private fun createNotificationChannel() {
+        // NotificationChannel only available on API 26+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "BizumParser Service",
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                description = "Keeps BizumParser monitoring Bizum notifications"
+                setShowBadge(false)
+            }
+
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun createNotification(): Notification {
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("BizumParser Active")
+            .setContentText("Monitoring Bizum notifications")
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setContentIntent(pendingIntent)
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .build()
     }
 
     override fun onListenerConnected() {

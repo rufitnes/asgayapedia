@@ -181,17 +181,17 @@ Every unknown follows this format:
 
 ---
 
-## Current Status (May 2026)
+## Current Status (July 2026)
 
 | Category | Total Unknowns | Not Started | In Progress | Answered |
 |----------|---------------|-------------|-------------|----------|
 | Economic | 4 | 4 | 0 | 0 |
 | Behavioral | 3 | 3 | 0 | 0 |
-| Technical | 4 | 4 | 0 | 0 |
+| Technical | 4 | 3 | 1 | 0 |
 | Market | 3 | 3 | 0 | 0 |
-| **Total** | **14** | **14** | **0** | **0** |
+| **Total** | **14** | **13** | **1** | **0** |
 
-**We're at the beginning.** This is honest status reporting. As investigations complete, this table updates.
+**Phase -1 progress:** [Universal Bot Reliability](technical/universal-bot-reliability.md) moved to "In Progress" after 24-hour validation testing with five Spanish banks. See [RS072](../research/RS072-bizum-notification-patterns/) and [RS073](../research/RS073-notifyflow-comparison/) for details.
 
 ---
 
