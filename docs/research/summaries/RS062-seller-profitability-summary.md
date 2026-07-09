@@ -63,4 +63,4 @@
 ---
 
 **Referenced in:**
-- [7% Volatility Buffer: Money Velocity Enabler](../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md)
+- [7% Volatility Buffer: Money Velocity Enabler](../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md)

@@ -115,7 +115,7 @@ Perfect identity needs central registry (defeats permissionless), KYC (defeats p
 
 ## Related Documents
 
-- [RS055: Cash Accounts Research](../../research/RS055-cash-accounts-summary.md) (technical details, wallet support)
+- [RS055: Cash Accounts Research](../../research/summaries/RS055-cash-accounts-summary.md) (technical details, wallet support)
 - [Requirements: Permissionless](../requirements/README.md#1-permissionless) (why no central registry)
 - [Requirements: Compliance](../requirements/README.md#2-compliance) (why bank compatibility matters)
 - Radio Asgaya Episode 9: Cash Accounts (why human-readable addresses matter)

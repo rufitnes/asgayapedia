@@ -178,8 +178,8 @@ Back-testing can't predict human behavior under real incentives. Payday concentr
 
 ## Related Documents
 
-- [RS062: Seller Profitability Simulation](../../research/RS062-seller-profitability-summary.md) (99.45% success rate, 4-hour windows)
-- [RS039: Temporal Market Impact](../../research/RS039-temporal-market-impact-summary.md) (payday concentration analysis)
+- [RS062: Seller Profitability Simulation](../../research/summaries/RS062-seller-profitability-summary.md) (99.45% success rate, 4-hour windows)
+- [RS039: Temporal Market Impact](../../research/summaries/RS039-temporal-market-impact-summary.md) (payday concentration analysis)
 - [Stability Layer: H€/HAu Tokens](../../the-mechanism/stability-layer/README.md) (sender protection on abort)
 - [Requirements: Price Stability](../requirements/README.md#3-price-stability)
 

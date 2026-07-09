@@ -138,4 +138,4 @@ Bizum/SEPA concept field:
 ---
 
 **Referenced in:**
-- [Cash Accounts: Permissionless Identity Layer](../why-this-design/constraints/cash-accounts-permissionless-identity-layer.md)
+- [Cash Accounts: Permissionless Identity Layer](../../why-this-design/constraints/cash-accounts-permissionless-identity-layer.md)
