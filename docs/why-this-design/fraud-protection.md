@@ -365,7 +365,7 @@ Some people are irrational. Some will attempt fraud anyway.
 ## Related Documents
 
 - [Payment-First Covenant Model](../the-mechanism/wallet/README.md)
-- [Sender Journey - Fraud Prevention](../user-journeys/sender/README.md#what-prevents-fraud)
+- [Sender Journey - Fraud Prevention](../user-journeys/remittance/sender/README.md#what-prevents-fraud)
 - [Notification Bot - Passive Seller](../the-mechanism/notification-bot/README.md)
 - [Risks & Disclaimers](/risks-and-disclaimers.md)
 
