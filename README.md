@@ -9,7 +9,7 @@ Bitcoin Cash remittances with <1% fees, no KYC, self-custody.
 ## 📖 Read the Documentation
 
 **For humans:** [docs.asgaya.org](https://docs.asgaya.org/)  
-**For AI:** [raw.githubusercontent.com/.../docs/](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/)
+**For AI:** [raw.githubusercontent.com/.../docs/index.md](https://raw.githubusercontent.com/rufitnes/asgayapedia/main/docs/index.md)
 
 ---
 
