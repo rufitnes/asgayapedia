@@ -2,9 +2,10 @@
 
 **Purpose:** Research validation app to prove NotificationListenerService can reliably parse bank notifications for automatic payment detection.
 
-**Status:** ✅ Validated (July 2026)  
-**Test Duration:** 24+ hours continuous operation + spontaneous reboot  
-**Parse Accuracy:** 100% (7/7 test transactions)
+**Status:** ✅ Production-ready (Phase -1 Complete)  
+**Test Duration:** 48+ hours continuous operation (July 7-9, 2026)  
+**Parse Accuracy:** 100% across 5 Spanish banks  
+**Banks Validated:** BBVA, Santander, CaixaBank, Sabadell, Caja Rural
 
 ---
 
@@ -13,34 +14,57 @@
 This app proves that Asgaya's core innovation - **automatic payment detection via notification parsing** - is technically feasible and production-ready.
 
 **Key validation points:**
-1. ✅ NotificationListenerService survives 24+ hours continuous operation
+1. ✅ NotificationListenerService survives 48+ hours continuous operation
 2. ✅ Service remains active when phone is locked (tested overnight)
 3. ✅ Service operates in background without UI interaction
-4. ✅ Service auto-restarts after phone reboot
+4. ✅ Service auto-restarts after phone reboot (BootReceiver implemented)
 5. ✅ Bizum payment notifications can be parsed with 100% accuracy
-6. ✅ Sabadell bank notification format is consistent and parseable
+6. ✅ Five Spanish banks tested and validated
+7. ✅ Foreground service prevents Android from killing service
+8. ✅ Battery optimization exemption implemented
+9. ✅ Production-hardened and ready for Phase 0 trials
 
 ---
 
 ## Test Results
 
-### 24-Hour Persistence Test (July 1-2, 2026)
+### Phase -1 Production Validation (July 7-9, 2026)
+
+**Test period:** July 7-9, 2026 (48+ hours continuous operation on production-hardened code)
+
+**Production hardening applied:**
+- ✅ BootReceiver with RECEIVE_BOOT_COMPLETED
+- ✅ Foreground service (FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+- ✅ Battery optimization exemption
+- ✅ POST_NOTIFICATIONS permission (Android 13+)
+
+**Results:**
+- Service uptime: 48+ hours continuous (Monday/Tuesday → Wednesday)
+- Banks tested: 5 (BBVA, Santander, CaixaBank, Sabadell, Caja Rural)
+- Parse success rate: 100% across all banks
+- Phone locked operation: ✅ Confirmed
+- Background operation: ✅ Confirmed
+- Boot persistence: ✅ Confirmed (BootReceiver working)
+- Service crashes: 0
+- Missed notifications: 0 (observed)
+- Manual intervention required: 0
+
+### Initial 24-Hour Persistence Test (July 1-2, 2026)
 
 **Test period:** July 1, 21:58 → July 2, 20:00+ (22+ hours)
 
 **Results:**
 - Service uptime: 22+ hours continuous
 - Notifications captured: 11 total
-- Test transactions parsed: 7/7 (100% accuracy)
+- Test transactions parsed: 7/7 (100% accuracy, Sabadell only)
 - Phone locked operation: ✅ Confirmed (8+ hours overnight)
 - Background operation: ✅ Confirmed (no app in foreground)
 - Service crashes: 0
-- Manual intervention required: 0
 
 **Spontaneous reboot test (July 3, 2026):**
 - Phone rebooted unexpectedly
-- Service auto-started within ~80 seconds of boot
-- Continued monitoring without manual intervention
+- Service auto-started (before explicit BootReceiver)
+- This informed the decision to add formal BootReceiver in production hardening
 
 ---
 
@@ -59,27 +83,37 @@ This implementation matches the production-proven architecture of **NotifyFlow**
 
 ## What It Does
 
-1. **Monitors notifications** from Sabadell banking app
-2. **Parses Bizum payment data:**
+1. **Monitors notifications** from five Spanish banking apps
+2. **Parses Bizum payment data** using regex patterns:
    - Sender name
    - Amount (EUR)
-   - Concept field
+   - Concept/reference field
    - Transaction reference
-3. **Logs parsed data** to local storage
-4. **Runs continuously** as background service
+3. **Stores parsed data** in local Room database
+4. **Runs continuously** as foreground service (24/7 operation)
+5. **Auto-starts** after phone reboot
+6. **Survives** battery optimization and Doze mode
 
 ---
 
 ## Technical Details
 
-**Platform:** Android (tested on Pixel 6a)  
-**Target SDK:** Android 13+  
+**Platform:** Android (tested on Pixel 6a, Android 14)  
+**Target SDK:** Android 13+ (API 24-34 compatible)  
 **Permissions required:**
 - `BIND_NOTIFICATION_LISTENER_SERVICE` (notification access)
+- `RECEIVE_BOOT_COMPLETED` (auto-start after reboot)
+- `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` (24/7 operation)
+- `FOREGROUND_SERVICE` + `FOREGROUND_SERVICE_SPECIAL_USE` (service protection)
+- `POST_NOTIFICATIONS` (Android 13+ notification display)
 
-**Bank tested:**
+**Banks validated:**
+- BBVA (Spain)
+- Banco Santander (Spain)
+- CaixaBank (Spain)
 - Banco Sabadell (Spain)
-- Bizum instant payments
+- Caja Rural (Spain)
+- All using Bizum instant payments
 
 ---
 
@@ -94,12 +128,12 @@ This implementation matches the production-proven architecture of **NotifyFlow**
 ✅ **Parse accuracy:** 100% success rate on Sabadell Bizum notifications  
 ✅ **Notification format consistency:** Sabadell format is stable and reliable
 
-### Production Hardening Needed
+### Production Hardening Completed (Phase -1)
 
-⚠️ **Boot receiver:** Explicit `RECEIVE_BOOT_COMPLETED` for guaranteed restart  
-⚠️ **Battery optimization exemption:** Prevent Android Doze from killing service  
-⚠️ **Foreground service:** System-level protection against probabilistic killer  
-⚠️ **Multi-bank support:** Test other Spanish banks (BBVA, CaixaBank, Santander)
+✅ **Boot receiver:** Explicit `RECEIVE_BOOT_COMPLETED` for guaranteed restart  
+✅ **Battery optimization exemption:** Prevent Android Doze from killing service  
+✅ **Foreground service:** System-level protection against probabilistic killer  
+✅ **Multi-bank support:** Five Spanish banks validated (BBVA, CaixaBank, Santander, Sabadell, Caja Rural)
 
 ---
 
@@ -132,12 +166,22 @@ These should be added for production deployment.
 
 ---
 
-## Next Steps (Production Hardening)
+## Next Steps (Phase 0 Trials)
 
-**Priority 1:** Boot receiver implementation  
-**Priority 2:** Battery optimization exemption  
-**Priority 3:** Foreground service with minimal notification  
-**Priority 4:** Multi-bank support (BBVA, CaixaBank, Santander)
+**Phase -1 complete ✅** - Production hardening validated on single device (Pixel 6a, Android 14)
+
+**Phase 0 objectives:**
+- Multi-device testing (various Android models)
+- OS version compatibility (Android 10-14)
+- Network resilience testing (poor connectivity)
+- Real-world user validation
+- Formal 99%+ reliability metric
+
+**What's still unknown:**
+- Performance on budget Android devices
+- Behavior across different Android OS versions
+- Reliability under poor network conditions
+- User experience in real-world scenarios
 
 ---
 
@@ -164,6 +208,7 @@ These should be added for production deployment.
 ---
 
 **Created:** July 2026  
-**Validated by:** 24-hour real-world test  
-**Status:** Research validated, production hardening in progress  
+**Phase -1 Complete:** July 9, 2026  
+**Validated by:** 48-hour production test across 5 Spanish banks  
+**Status:** Production-ready, Phase 0 trials next  
 **License:** MIT (assumed, check repo root)
