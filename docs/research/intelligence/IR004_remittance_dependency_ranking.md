@@ -34,7 +34,7 @@
 - Both files are located in `knowledge/intelligence/` folder.
 
 **Access:**
-- SEDLAC public portal: [https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/](https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/README.md)
+- SEDLAC public portal: [https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/](https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/)
 - World Bank LAC Equity Lab: [https://www.worldbank.org/en/topic/poverty/lac-equity-lab1/resources](https://www.worldbank.org/en/topic/poverty/lac-equity-lab1/resources)
 
 **Key data extracted:**

@@ -127,9 +127,9 @@ On a €100 transfer:
 Asgaya builds on proven Bitcoin Cash innovations:
 
 - **[CashAccounts](https://gitlab.com/cash-accounts/specification)** - Human-readable addresses (`Elena#142`)
-- **[AnyHedge](https://anyhedge.com/README.md)** - Volatility protection via hedge contracts
-- **[CashTokens](https://cashtokens.org/README.md)** - H€ and HAu stable tokens
-- **[CashScript](https://cashscript.org/README.md)** - Covenant (smart contract) language
+- **[AnyHedge](https://anyhedge.com/)** - Volatility protection via hedge contracts
+- **[CashTokens](https://cashtokens.org/)** - H€ and HAu stable tokens
+- **[CashScript](https://cashscript.org/)** - Covenant (smart contract) language
 - **[Electrum/Fulcrum](https://github.com/cculianu/Fulcrum)** - SPV infrastructure for mobile wallets
 
 ---

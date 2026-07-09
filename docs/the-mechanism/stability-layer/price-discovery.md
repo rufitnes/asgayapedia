@@ -116,7 +116,7 @@ Document the oracle strategy for H€ and HAu token price discovery, including:
 - [CoinGecko API](https://www.coingecko.com/en/api)
 - [LBMA Gold Price](https://www.lbma.org.uk/gold-price)
 - [CME Gold Futures](https://www.cmegroup.com/markets/metals/precious/gold.html)
-- [ECB Reference Rates](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/README.md)
+- [ECB Reference Rates](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/)
 
 ---
 

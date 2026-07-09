@@ -355,11 +355,11 @@ Kraken BCHUSD: 380 USD/BCH
 
 ## 11. Sources
 
-- [Dolarito.ar](https://www.dolarito.ar/README.md) - Argentine exchange rate aggregator
+- [Dolarito.ar](https://www.dolarito.ar/) - Argentine exchange rate aggregator
 - [DolarSi API](https://www.dolarsi.com/api/api.php?type=valoresprincipales) - Blue dollar rates
-- [CriptoYa](https://criptoya.com/README.md) - Crypto exchange aggregator (39 exchanges)
-- [Kraken API](https://docs.kraken.com/rest/README.md) - EURUSD, BCHEUR, BCHUSD pairs
-- [Binance](https://api.binance.com/README.md) - USDT/ARS pair (1,458 ARS)
+- [CriptoYa](https://criptoya.com/) - Crypto exchange aggregator (39 exchanges)
+- [Kraken API](https://docs.kraken.com/rest/) - EURUSD, BCHEUR, BCHUSD pairs
+- [Binance](https://api.binance.com/) - USDT/ARS pair (1,458 ARS)
 - Manual research: CoinGecko, CoinMarketCap, Google Finance comparisons
 
 ---
