@@ -144,7 +144,7 @@ When recipients spend BCH directly at merchants, Asgaya has succeeded.
 
 ---
 
-**Related:** [Index](index.md), [Buyers and Sellers](buyers-and-sellers.md), [Bulletin Board](bulletin-board.md), [Wallet](wallet.md), [Nostr](nostr.md), [Notification Bot](notification-bot.md)
+**Related:** [The Mechanism](README.md), [Bulletin Board](bulletin-board/), [Wallet](wallet/), [Nostr](nostr-coordination/), [Notification Bot](notification-bot/)
 ---
 
 ## Navigation
