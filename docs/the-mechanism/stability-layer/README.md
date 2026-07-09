@@ -152,6 +152,34 @@ Both H€ and HAu require redundant oracle sources for reliability:
 
 ---
 
+## Why Build This? (The Real Goal vs The Insurance Policy)
+
+**The primary hypothesis:**
+
+Asgaya's real goal is to **bootstrap BCH adoption** through remittances. As BCH becomes tied to real-world commerce (merchants accepting it, recipients using it), price volatility should **naturally decrease**.
+
+**If this hypothesis is correct:** Merchants won't need H€/HAu. They'll happily hold BCH because it's stable enough for business. The stability layer becomes unnecessary.
+
+**The stability layer is Plan B** - insurance for the scenario where:
+1. ✅ Asgaya succeeds (remittances work, merchants adopt BCH)
+2. ❌ BCH volatility persists (commerce doesn't stabilize it)
+
+**This is a CONDITIONAL feature.** It only matters if both conditions are true:
+
+| Outcome | Stability Layer Needed? | What This Means |
+|---------|------------------------|-----------------|
+| Asgaya fails | ❌ No users, irrelevant | Back to drawing board |
+| Asgaya succeeds + BCH stabilizes | ❌ Merchants hold BCH directly | **Mission accomplished!** |
+| Asgaya succeeds + BCH stays volatile | ✅ Merchants need H€/HAu | Stability layer activates |
+
+**Phase 0 tests both:** We build H€/HAu and observe merchant behavior. If merchants don't want stability tokens (because BCH is stable enough), that's **excellent news** - it means the primary hypothesis worked.
+
+**The vision:** BCH as stable money for the world (via real-world use).  
+**The insurance:** Stability layer if that doesn't happen.  
+**The long shot:** H-basket and post-fiat tokens if even H€/HAu isn't enough.
+
+---
+
 ## Oracle Complexity Hierarchy
 
 **The AnyHedge mechanism works for any asset with a reliable oracle.** However, oracle availability determines what we can ship when.
