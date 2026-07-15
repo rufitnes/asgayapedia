@@ -30,6 +30,14 @@ class NotificationListener : NotificationListenerService() {
         private val BIZUM_KEYWORDS = listOf("bizum", "recibido", "enviado")
         private const val CHANNEL_ID = "bizum_parser_service"
         private const val NOTIFICATION_ID = 1
+        private const val PREFS_NAME = "BizumParserPrefs"
+        private const val DEBUG_MODE_KEY = "debug_mode"
+        private const val SELECTED_BANK_KEY = "selected_bank"
+    }
+
+    private fun isDebugModeEnabled(): Boolean {
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return prefs.getBoolean(DEBUG_MODE_KEY, false)
     }
 
     data class BankConfig(
@@ -149,9 +157,41 @@ class NotificationListener : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         val packageName = sbn.packageName
+        val isDebugMode = isDebugModeEnabled()
 
         // Log EVERY notification to verify service is working
-        Log.d(TAG, "📬 NOTIFICATION RECEIVED from: $packageName")
+        Log.d(TAG, "📬 NOTIFICATION RECEIVED from: $packageName" + if (isDebugMode) " [DEBUG MODE]" else "")
+
+        val notification = sbn.notification
+        val extras = notification.extras
+        val title = extras.getString(Notification.EXTRA_TITLE, "")
+        val text = extras.getString(Notification.EXTRA_TEXT, "")
+        val timestamp = sbn.postTime
+
+        // In debug mode, log ALL notifications
+        if (isDebugMode) {
+            Log.d(TAG, "===== DEBUG: ALL NOTIFICATIONS =====")
+            Log.d(TAG, "Package: $packageName")
+            Log.d(TAG, "Title: $title")
+            Log.d(TAG, "Text: $text")
+            Log.d(TAG, "===================================")
+
+            // Store ALL notifications in debug mode (even non-bank)
+            val debugNotification = ParsedNotification(
+                bankApp = packageName,
+                timestamp = timestamp,
+                amount = 0.0,  // No amount for non-bank notifications
+                sender = "[DEBUG] $title",  // Store title in sender field
+                reference = "DEBUG MODE",
+                rawText = "Title: $title\nText: $text",  // Store full notification
+                parsedSuccessfully = false  // Mark as unparsed
+            )
+
+            serviceScope.launch {
+                database.notificationDao().insert(debugNotification)
+                Log.d(TAG, "✅ Debug notification stored")
+            }
+        }
 
         // Find bank config for this package
         val bankConfig = bankConfigs.find { it.packageName == packageName }
@@ -160,12 +200,16 @@ class NotificationListener : NotificationListenerService() {
             return  // Not a bank we're monitoring
         }
 
-        val notification = sbn.notification
-        val extras = notification.extras
+        // Check if this is the selected bank (unless in debug mode)
+        if (!isDebugMode) {
+            val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            val selectedBank = prefs.getString(SELECTED_BANK_KEY, "")
 
-        val title = extras.getString(Notification.EXTRA_TITLE, "")
-        val text = extras.getString(Notification.EXTRA_TEXT, "")
-        val timestamp = sbn.postTime
+            if (selectedBank != bankConfig.bankName) {
+                Log.d(TAG, "⏭️  Skipping ${bankConfig.bankName} (selected bank: $selectedBank)")
+                return
+            }
+        }
 
         Log.d(TAG, "===== BANK NOTIFICATION =====")
         Log.d(TAG, "Bank: ${bankConfig.bankName}")

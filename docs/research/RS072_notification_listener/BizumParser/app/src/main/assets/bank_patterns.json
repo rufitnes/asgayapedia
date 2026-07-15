@@ -52,6 +52,19 @@
     ]
   },
   {
+    "package": "net.inverline.bancosabadell.officelocator.android",
+    "bankName": "Sabadell (Office Locator)",
+    "patterns": [
+      {
+        "name": "por_format",
+        "regex": "Has recibido un Bizum de\\s*(\\d+(?:[.,]\\d{2})?)\\s*(?:EUR|€)\\s*de\\s*(.+?)\\s*por\\s*(.+)",
+        "amountGroup": 1,
+        "senderGroup": 2,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
     "package": "es.ingdirect.ing",
     "bankName": "ING",
     "patterns": [

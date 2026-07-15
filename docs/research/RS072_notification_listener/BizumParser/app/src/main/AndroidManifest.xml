@@ -8,6 +8,16 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Package visibility for Android 11+ to check bank app health -->
+    <queries>
+        <package android:name="com.rsi.nba" />
+        <package android:name="com.bbva.bbvacontigo" />
+        <package android:name="es.bancosantander.apps" />
+        <package android:name="es.bancsabadell.mobilebancohd" />
+        <package android:name="net.inverline.bancosabadell.officelocator.android" />
+        <package android:name="es.ingdirect.ing" />
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
