@@ -7,6 +7,8 @@
 
 ---
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. BCH/EUR price feed methodology remains relevant for current architecture. See [Research README](README.md#important-historical-context) for context.
+
 ## Objective
 
 Document how to get current BCH/EUR price from Kraken's public API for use in the escrow price feed. This fills a knowledge gap from RS017-019 which covered Balance/Trade/Withdraw but not price queries.

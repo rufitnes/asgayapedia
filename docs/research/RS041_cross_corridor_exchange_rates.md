@@ -6,6 +6,8 @@
 
 ---
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. Exchange rate calculation methodology remains valid for current architecture. See [Research README](README.md#important-historical-context) for context.
+
 ## 1. Objective
 
 Establish a reliable, simple, and replicable method for calculating local currency amounts across ALL Asgaya corridors (Argentina, Venezuela, Honduras, etc.) using market rates, not official government rates.

@@ -5,6 +5,8 @@
 **Participants:** Suso (Founder), DeepSeek (Main Research Assistant)  
 **Context:** After creating a Kraken API key with only `Query` permission (RS017), we wrote a Python script to call the `Balance` endpoint and successfully retrieved account balances. This session documents the script, the errors encountered, and the final working code – including the exact JSON output. The format is designed for atomic extraction (skills/concepts) by a local LLM archivist.
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. API testing methods remain relevant for current use. See [Research README](README.md#important-historical-context) for context.
+
 ---
 
 ## 1. Objective

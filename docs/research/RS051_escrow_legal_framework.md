@@ -6,6 +6,8 @@
 
 ---
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. References to 'escrow' and escrow-specific legal analysis reflect the old architecture. See [Research README](README.md#important-historical-context) for context.
+
 ## Research Question
 
 **Can Asgaya operate legally as a peer-to-peer remittance system with a natural person escrow under EU MiCA regulations and other jurisdictions?**

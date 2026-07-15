@@ -6,6 +6,8 @@
 
 ---
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. Market research findings remain relevant; implementation references reflect old architecture. See [Research README](README.md#important-historical-context) for context.
+
 ## 1. Why Honduras?
 
 Our initial hypothesis, based on Banco de España data, suggested that Paraguay had the highest per‑capita remittance flow from Spain. However, after calculating remittances as a percentage of household income (using SEDLAC data), **Honduras emerged as the most remittance‑dependent country** in Latin America. This led us to a deep dive into the Honduran market, focusing on:

@@ -59,11 +59,16 @@ A sender is someone who wants to send money to another Asgaya user. In Asgaya's 
 
 ### 4. Select Seller & Get Payment Instructions
 - María selects Isabel (0.5% fee, 98% reputation)
-- Via Nostr: Isabel sends encrypted payment instructions:
+- Via Nostr: Isabel sends encrypted payment instructions **with device health status**:
   - **Name:** Isabel Rodríguez (prevents false accusations, enables self-dealing detection)
   - **Phone:** 654321098
   - **Concepto:** Elena142 (app uses fuzzy match to parse Cash Account - no # symbol allowed in Bizum)
   - **Amount:** €100.50
+  - **Device health:** ✅ Bank app installed, enabled, battery 67% charging (seller ready)
+
+**Health check passed:** María sees "✅ Seller ready" - safe to proceed.
+
+If Isabel's device health shows issues (bank app disabled, battery dead), María sees warning and can pick a different seller before sending money. See [Device Health Checks](../../../the-mechanism/nostr-coordination/device-health.md) for details.
 
 If Isabel's payment info matches blacklist hashes (name/phone/IBAN from previous fraud), María's wallet shows warning before payment.
 

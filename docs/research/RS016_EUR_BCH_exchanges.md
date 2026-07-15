@@ -6,6 +6,8 @@
 
 ---
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. References to 'escrow liquidity' reflect the old architecture. See [Research README](README.md#important-historical-context) for context.
+
 ## 1. Objective
 
 Identify the exchange(s) that best serve as a backup liquidity source for the escrow, based on the following criteria in order of importance:

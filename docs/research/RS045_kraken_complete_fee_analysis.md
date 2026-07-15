@@ -4,6 +4,8 @@
 **Status:** Complete - Withdrawal Tested Successfully
 **Related:** RS044 (Trading), RS018 (API Setup), RS036 (Ticker)
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. References to "escrow," "LP" (Liquidity Provider), and operational flows reflect the old architecture. The fee analysis findings remain relevant for understanding exchange costs. See [Research README](README.md#important-historical-context) for context.
+
 ---
 
 ## Executive Summary

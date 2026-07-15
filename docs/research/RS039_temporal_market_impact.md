@@ -7,6 +7,8 @@
 
 ---
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. Market impact analysis and foreknowledge arbitrage strategy remain relevant. See [Research README](README.md#important-historical-context) for context.
+
 ## Problem Statement
 
 Initial design assumed "we become the market" at high average volume thresholds (~€5M/month, 5% of daily BCH volume).

@@ -6,6 +6,8 @@
 **Participants:** Suso (Founder), DeepSeek (Main Research Assistant)  
 **Context:** Following the decision to use Kraken as a backup liquidity source for the escrow (see RS016), we need a practical guide to create a Kraken account, obtain API credentials, and configure the minimal permissions required for automated monitoring (`Query`). This session documents the exact steps, including the API secret format and security considerations.
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. References to "escrow automation" reflect the old architecture. API setup steps remain relevant for Phase 0 capital recycling. See [Research README](README.md#important-historical-context) for context.
+
 ---
 
 ## 1. Kraken Account Creation

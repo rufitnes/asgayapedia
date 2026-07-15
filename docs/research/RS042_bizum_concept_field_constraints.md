@@ -7,6 +7,8 @@
 
 ---
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. Bizum concept field constraint findings remain valid regardless of architecture. See [Research README](README.md#important-historical-context) for context.
+
 ## **Research Question**
 
 What are the technical constraints of the Bizum concept field, and how should we design the Asgaya remittance identifier to work reliably across all Spanish banks?

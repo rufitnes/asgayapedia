@@ -4,6 +4,8 @@
 **Participants:** Suso (Founder), DeepSeek (Main Research Assistant)  
 **Context:** The escrow needs a reliable backup source of EUR/BCH liquidity in case a decentralised liquidity network is not available. This session investigates Kraken’s API, account requirements, and the practicalities of using it to buy BCH and forward it to merchants, while addressing the address whitelisting constraint.
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. References to "escrow" and centralized liquidity provision reflect the old architecture. See [Research README](README.md#important-historical-context) for context.
+
 ---
 
 ## 1. Objective

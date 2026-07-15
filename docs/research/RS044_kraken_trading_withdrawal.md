@@ -6,6 +6,8 @@
 
 **Status:** Live testing required - this is theoretical research based on Kraken API docs
 
+> ⚠️ **Historical Document (Pre-Pivot):** This research was conducted before the May 9, 2026 architecture pivot from escrow to covenant-based settlement. References to "escrow," "LP" (Liquidity Provider), and automated trading flows reflect the old architecture. The API documentation remains relevant for Phase 0 capital recycling. See [Research README](README.md#important-historical-context) for context.
+
 ---
 
 ## Objective
