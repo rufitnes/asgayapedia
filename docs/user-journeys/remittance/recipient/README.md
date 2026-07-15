@@ -327,7 +327,7 @@ If María sends money every month, Elena can optimize:
 **For rationale, see:**
 - [Why Covenants?](../../../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design
 - [Why Cash Accounts?](../../../why-this-design/constraints/cash-accounts-permissionless-identity-layer.md) - Constraint #3: Permissionless Identity
-- [Why Reputation?](../../../why-this-design/constraints/reputation-based-dispute-resolution-blacklist.md) - Constraint #5: Social Coordination
+- [Why Reputation On-Chain?](../../../why-this-design/constraints/reputation-on-chain-not-central-database.md) - Constraint #5: On-Chain Reputation
 
 ---
 
