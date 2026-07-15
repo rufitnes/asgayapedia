@@ -1,6 +1,6 @@
 # Fraud Protection: Payment-First + Legal Recourse
 
-**Last Updated:** 2026-06-18
+**Last Updated:** 2026-07-15
 
 ---
 
@@ -30,7 +30,77 @@ Result: Seller never has capital at risk
 
 ---
 
-## Why Seller Fraud is Deterred
+## Proactive Fraud Prevention: Device Health Checks
+
+**Before payment-first deterrence kicks in, Asgaya prevents fraud proactively.**
+
+When María requests payment details from Isabel's bot, she doesn't just get a bank account number—she also receives **device health metrics**:
+
+```json
+{
+  "payment_info_response": {
+    "account_number": "+34-612-345-678",
+    "reference": "Elena#142",
+    "amount_exact": "€100.50",
+    
+    "device_health": {
+      "bank_app_installed": true,
+      "bank_app_enabled": true,
+      "battery_optimized": false,
+      "battery_level": 67,
+      "is_charging": true
+    }
+  }
+}
+```
+
+**María's app evaluates health BEFORE she pays:**
+
+**Healthy device (green light):**
+```
+✅ Seller ready (67% battery, charging)
+[Open Bizum App] → Proceed with confidence
+```
+
+**Unhealthy device (warning):**
+```
+⚠️ SELLER DEVICE ISSUES
+• Bank app disabled
+• Battery at 8% (not charging)
+
+Seller may not receive your payment notification.
+[Pick Different Seller] ← Recommended
+[Continue Anyway]
+```
+
+**Critical issues (payment blocked):**
+```
+🛑 SELLER NOT READY
+• Bank app not installed
+
+This seller cannot receive payment notifications.
+DO NOT PAY.
+[Pick Different Seller] ← Only option
+```
+
+### Why This Matters
+
+**Without health checks:**
+- María pays → Seller's bank app is disabled → No notification → No covenant funding → María waits 48h for timeout
+- Fraud vector: Malicious seller disables app, collects payments, claims "never got notification"
+
+**With health checks:**
+- María sees "Bank app disabled" → Cancels covenant → Picks healthy seller → No money at risk
+- Malicious sellers can't hide (unhealthy status visible to all buyers)
+- Honest sellers maintain device health for good reputation
+
+**This is fraud prevention BEFORE payment happens.** No legal recourse needed because no money changes hands with bad actors.
+
+**See:** [Device Health Checks](../the-mechanism/nostr-coordination/device-health.md) for full technical documentation.
+
+---
+
+## Why Seller Fraud is Deterred (Payment-First Model)
 
 ### 1. Bank Transfer Traceability
 
@@ -199,29 +269,22 @@ Throughput unlimited (bot automation + no lock time)
 1. María pays Isabel, covenant funded
 2. Elena receives notification
 3. Elena doesn't claim (forgot, phone died, etc.)
-4. Covenant expires after 24 hours
-5. BCH locked in covenant, unusable
+4. Covenant expires after 8 hours (Phase 0 limit)
+5. BCH locked returns to María's wallet
 ```
 
-**Resolution:**
+**Resolution (Phase 0 design):**
+- Covenant expires → BCH locked returns to **María's wallet** (she owns the covenant)
+- **No H€ minting** - María receives BCH back, accepts volatility exposure
+- María can try again with different seller OR send BCH to Elena directly
+- **Isabel has zero liability** - she fulfilled her obligation (funded covenant after receiving payment)
 
-**Current design (needs refinement):**
-- If Elena doesn't claim: Isabel can reclaim BCH after timeout
-- María has legal recourse against Isabel (paid for service not delivered)
-- Isabel must either:
-  - Refund María's €100
-  - Or help Elena claim (contact her, resolve issue)
-
-**Why Isabel is still liable:**
-- María paid for remittance service
-- Service not completed (Elena didn't receive)
-- Isabel took payment, must deliver or refund
-
-**Current design (Phase 0):**
-- Covenant expires → BCH locked goes to María's wallet (she owns the covenant)
-- María's wallet auto-mints H€ or HAu (if settings enabled + bull pool has capacity)
-- María can try again with different seller OR send H€ to Elena
-- Isabel has **zero liability** on active covenant (payment-first approach - she already funded after receiving fiat)
+**Why Isabel has no liability:**
+- Isabel received payment via Bizum (traceable, verified)
+- Isabel funded the covenant with BCH (job complete)
+- María got what she paid for (€100 worth of BCH)
+- If Elena doesn't claim, that's between María and Elena
+- Payment-first model: Isabel's only obligation is to fund after receiving payment
 
 ---
 
@@ -364,6 +427,7 @@ Some people are irrational. Some will attempt fraud anyway.
 
 ## Related Documents
 
+- [Device Health Checks](../the-mechanism/nostr-coordination/device-health.md) - Proactive fraud prevention
 - [Payment-First Covenant Model](../the-mechanism/wallet/README.md)
 - [Sender Journey - Fraud Prevention](../user-journeys/remittance/sender/README.md#what-prevents-fraud)
 - [Notification Bot - Passive Seller](../the-mechanism/notification-bot/README.md)
@@ -375,6 +439,7 @@ Some people are irrational. Some will attempt fraud anyway.
 
 **Fraud protection in Asgaya:**
 
+✅ **Device health checks** - Prevent fraud BEFORE payment (proactive)  
 ✅ **Payment-first** - Seller receives fiat before locking BCH  
 ✅ **Bank traceability** - Bizum includes full identity  
 ✅ **Legal precedent** - Spanish courts prosecute (IR006 case)  

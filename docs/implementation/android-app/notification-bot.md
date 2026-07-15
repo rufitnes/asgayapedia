@@ -893,6 +893,9 @@ function handlePaymentReceived(payment):
 **Interacts with:**
 - [nostr.md](nostr.md) - Send "covenant funded" notification to sender
 
+**Related mechanism docs:**
+- [Device Health Checks](../../the-mechanism/nostr-coordination/device-health.md) - Proactive fraud prevention via seller device monitoring (bank app status, battery level, charging state)
+
 ---
 
 **Status:** Phase 0 - Core implementation priority  

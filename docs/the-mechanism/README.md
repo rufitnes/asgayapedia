@@ -68,7 +68,8 @@ only after payment is confirmed. Fraud is criminal, and personal payment informa
 is traceable.
 
 **Volatility Buffer.** Seller locks 107% (€107 for €100 trade). The 7% buffer absorbs
-typical daily swings. Unused buffer returns to the seller.
+typical daily swings. Unused buffer returns to the seller. Post-Phase 0, this evolves
+to a dynamic buffer that scales with 30-day downside volatility (see RS074).
 
 **On‑Chain Bulletin Board.** Listings are NFTs on the BCH blockchain. No central server
 to shut down. Anyone can read, anyone can post.
@@ -127,7 +128,7 @@ respect.
 ---
 
 **Authors:** Suso + Claude Sonnet 4.5 (Coordination) + TightDS (DeepSeek)  
-**Updated:** 2026‑06‑28
+**Updated:** 2026‑07‑15
 
 ---
 

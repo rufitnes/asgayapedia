@@ -561,4 +561,8 @@ That's the point.
 
 **[🏠 Home](../../index.md)** | **[↑ The Mechanism](../README.md)** | **[📖 Glossary](../../glossary.md)**
 
-**Related:** [Wallet](../wallet/README.md) · [Bulletin Board](../bulletin-board/README.md) · [Nostr](../nostr-coordination/README.md) · [Notification Bot](../notification-bot/README.md) · [Stability Layer](../stability-layer/README.md)
+**In this section:**
+- [Device Health Checks](device-health.md) - Proactive fraud prevention
+- [Dispute Resolution](dispute-resolution.md) - What happens when trades fail
+
+**Related:** [Wallet](../wallet/README.md) · [Bulletin Board](../bulletin-board/README.md) · [Notification Bot](../notification-bot/README.md) · [Stability Layer](../stability-layer/README.md)

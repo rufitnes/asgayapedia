@@ -22,9 +22,11 @@ María opens the app, enters `Elena#142`, specifies €100. The app resolves Ele
 
 The app then queries the bulletin board for BCH sellers accepting Bizum in the EUR→VES corridor. It finds three passive sellers. María chooses the cheapest: Isabel (0.4 %, good rating, Bizum).
 
-### Step 2 — Nostr & Bot
+### Step 2 — Nostr & Bot (with Device Health Check)
 
-María’s app sends an encrypted Nostr request (“Need payment details for covenant xyz789”) to Isabel’s bot. The bot validates the covenant, generates a unique reference (`Elena#142`), and replies with the bank details (Bizum phone number, concept, amount €100.40) in under a second.
+María’s app sends an encrypted Nostr request (“Need payment details for covenant xyz789”) to Isabel’s bot. The bot validates the covenant, checks its device health (bank app installed ✅, enabled ✅, battery 67% and charging ✅), generates a unique reference (`Elena#142`), and replies with the bank details (Bizum phone number, concept, amount €100.40) **plus health status** in under a second.
+
+María’s app shows: **”✅ Seller ready (67% battery, charging)”** — green light to proceed.
 
 María sees the payment instructions, taps “Open Bizum,” and pays €100.40 instantly.
 
@@ -110,7 +112,7 @@ Carlos chooses **H€** (he knows EUR/VES rates, easier mental math). The app:
 
 ## What Could Go Wrong (And Didn’t)
 
-- **Seller offline:** Nostr request times out after 2 min; María picks another seller.
+- **Seller offline or unhealthy:** Nostr request times out after 2 min OR device health check shows critical issues (bank app disabled, battery dead). María sees warning, picks another seller. **No money at risk** (caught before payment).
 - **BCH drops >7 %:** Covenant aborts to protect Isabel. Instead of sending BCH to María (exposing her to 7% loss she didn't sign up for), the covenant mints H€ tokens (if pool has capacity) and sends €100 H€ to María. She can still send to Elena using H€. If pool exhausted, María receives BCH (fallback). Isabel keeps the fiat and fee.
 - **Elena never claims:** Covenant expires; María gets the BCH back.
 
@@ -144,7 +146,7 @@ When recipients spend BCH directly at merchants, Asgaya has succeeded.
 
 ---
 
-**Related:** [The Mechanism](README.md), [Bulletin Board](bulletin-board/), [Wallet](wallet/), [Nostr](nostr-coordination/), [Notification Bot](notification-bot/)
+**Related:** [The Mechanism](README.md), [Bulletin Board](bulletin-board/), [Wallet](wallet/), [Nostr](nostr-coordination/), [Device Health](nostr-coordination/device-health.md), [Notification Bot](notification-bot/)
 ---
 
 ## Navigation
