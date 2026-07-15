@@ -29,7 +29,7 @@
 
 ### 📊 Economic Unknowns
 Parameters that determine protocol viability:
-- [Volatility buffer Rate](economic/volatility buffer-rate.md) — Is 7% sufficient?
+- [Volatility Buffer Rate](economic/volatility buffer-rate.md) — Is 7% sufficient?
 - [Seller Fee Sufficiency](economic/seller-fee-sufficiency.md) — Is 0.5% enough?
 - [Merchant Spread Sufficiency](economic/merchant-spread-sufficiency.md) — Is 0.5% enough?
 - [Fiat Chargeback Risk](economic/fiat-chargeback-risk.md) — How often do Bizum payments reverse?
@@ -157,7 +157,7 @@ Every unknown follows this format:
 
 ### Critical (Must Answer Before Phase 0 Launch)
 1. [Claim Timing](behavioral/claim-timing.md) — Drives time-based settlement design
-2. [Volatility buffer Rate](economic/volatility buffer-rate.md) — Core risk parameter
+2. [Volatility Buffer Rate](economic/volatility buffer-rate.md) — Core risk parameter
 
 ### High (Should Answer During Phase 0)
 3. [Seller Fee Sufficiency](economic/seller-fee-sufficiency.md) — Seller retention

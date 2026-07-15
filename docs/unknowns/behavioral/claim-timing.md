@@ -257,7 +257,11 @@ The 24h expiry window is arbitrary:
 
 ---
 
-- [Capital Recycling Strategy](../../../glossary.md#payment-first-covenant#capital-recycling-strategy-the-sellers-business-model)
+## Related Documents
+
+- [Payment-First Covenant](../../the-mechanism/README.md) (covenant expiry and settlement timing)
+- [Seller Economics](../../user-journeys/trader/README.md) (capital efficiency and turnover)
+- [Glossary: Covenant](../../glossary.md#covenant) (technical details)
 
 ---
 
