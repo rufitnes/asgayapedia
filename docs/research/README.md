@@ -50,6 +50,10 @@ Documents from May 2026 onward reflect the **current covenant architecture**:
 - **[RS072: Bizum Notification Patterns](RS072_notification_listener/)** — Notification parsing patterns for five Spanish banks (Phase -1 validation)
 - **[RS073: NotifyFlow Comparison](RS072_notification_listener/RS073_notifyflow_decompilation.md/)** — Analysis of existing notification-based remittance app
 
+### Volatility & Risk Management
+- **[RS074: Dynamic Volatility Buffer](RS074_dynamic_volatility_buffer.md)** — Downside volatility-based dynamic buffer algorithm (Phase 1+ improvement over fixed 7%)
+- **[RS039: Temporal Market Impact](RS039_temporal_market_impact.md)** — Remittance concentration on paydays and foreknowledge arbitrage strategy
+
 ### Future Tech
 - **[RS053: MUSD](RS053_MUSD.md)** — Research on MUSD stablecoin for future integration
 - **[RS054: CashToken Swaps](RS054_cashtoken_swaps.md)** — CashTokens as EUR commitment mechanism

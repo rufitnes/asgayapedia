@@ -155,6 +155,45 @@ Back-testing can't predict human behavior under real incentives. Payday concentr
 
 ---
 
+## Phase 1: Dynamic Buffer Evolution
+
+**Phase 0 uses fixed 7% buffer to establish baseline.**
+
+**Phase 1+ implements dynamic buffer based on recent volatility** ([RS074: Dynamic Volatility Buffer](../../research/RS074_dynamic_volatility_buffer.md))
+
+### The Concept
+
+As BCH stabilizes through real-world use, the buffer can shrink:
+
+```
+buffer = max(
+  7% × (downside_volatility_30d / historical_avg_volatility),
+  2%  // minimum safety margin
+)
+```
+
+**Example scenarios:**
+
+| Market Condition | Downside Vol | Buffer | Capital Locked (€100 tx) |
+|------------------|--------------|--------|-------------------------|
+| High volatility (Phase 0 start) | 5% | 7% | €107 |
+| Medium volatility (Year 1) | 3% | 4.2% | €104.20 |
+| Low volatility (Year 2+) | 1.5% | 2% (floor) | €102 |
+
+**Why this matters:**
+- ✅ **Capital efficiency improves** as BCH stabilizes (30-50% less locked)
+- ✅ **Sellers benefit** from adoption success (higher throughput)
+- ✅ **Measurable success** (buffer reduction = proof of BCH stabilization)
+- ✅ **Self-regulating** (no governance needed)
+
+**Why downside volatility?** Sellers don't care when price goes up—they only risk money on downward moves. Measuring only downside volatility (not total volatility) makes buffers 30-40% more capital efficient.
+
+**Dynamic warning threshold:** Warning also scales with buffer (buffer × 0.43) to maintain constant safety margin and reduce false alarms.
+
+**Phase 0 validates the 7% baseline. Phase 1 makes it adaptive.**
+
+---
+
 ## The Real Constraint
 
 **The 7% buffer isn't about protecting individual transactions. It's about enabling small capital to move large volume.**
@@ -178,6 +217,7 @@ Back-testing can't predict human behavior under real incentives. Payday concentr
 
 ## Related Documents
 
+- [RS074: Dynamic Volatility Buffer](../../research/RS074_dynamic_volatility_buffer.md) (Phase 1+ evolution: adaptive buffer based on downside volatility)
 - [RS062: Seller Profitability Simulation](../../research/summaries/RS062-seller-profitability-summary.md) (99.45% success rate, 4-hour windows)
 - [RS039: Temporal Market Impact](../../research/summaries/RS039-temporal-market-impact-summary.md) (payday concentration analysis)
 - [Stability Layer: H€/HAu Tokens](../../the-mechanism/stability-layer/README.md) (sender protection on abort)
@@ -185,8 +225,8 @@ Back-testing can't predict human behavior under real incentives. Payday concentr
 
 ---
 
-**Status:** Phase 0 Validation  
-**Last Updated:** 2026-06-21  
+**Status:** Phase 0 Validation (Phase 1 dynamic buffer designed)  
+**Last Updated:** 2026-07-13  
 **Confidence:** Medium (strong back-test data, unproven in production, sensitive to human behavior)
 ---
 

@@ -220,7 +220,7 @@ If Isabel's payment info matches blacklist hashes (name/phone/IBAN from previous
 **Case A: Covenant was funded (seller locked BCH)**
 - Covenant expires → BCH locked returns to **María's wallet** (not Isabel)
 - **No H€ minting** - María receives BCH back, accepts volatility exposure
-- María still has legal recourse against Isabel (she paid, delivery failed)
+- **Isabel has zero liability** - she fulfilled her obligation (funded covenant after payment received)
 
 **Case B: Covenant was never funded (seller ghosted)**
 - Covenant expires as **empty shell** - no BCH was ever locked
