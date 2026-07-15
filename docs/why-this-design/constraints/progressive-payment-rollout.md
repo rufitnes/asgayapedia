@@ -213,13 +213,13 @@ We could launch with 50 payment methods on day 1 and hope they work. Or we can l
 ## Related Documents
 
 - [Dispute Resolution via Nostr Blacklist](../../the-mechanism/nostr-coordination/dispute-resolution.md) (why payment method differences matter for evidence)
-- [Payment Method Documentation Process](../../the-mechanism/payment-method-documentation/README.md) (step-by-step guide for pioneers)
+- [Cold Start Strategy](../../cold-start-strategy/README.md) (pioneer program and payment method expansion details)
 - [Reputation On-Chain](./reputation-on-chain-not-central-database.md) (pioneer badges as reputation markers)
 
 ---
 
 **Status:** Phase 0 Implementation  
-**Last Updated:** 2026-06-22  
+**Last Updated:** 2026-07-15  
 **Confidence:** High (crowdsourced documentation proven in open-source projects; progressive rollout reduces risk)
 ---
 

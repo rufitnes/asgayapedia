@@ -251,7 +251,7 @@ Transaction proceeds
 | **Immutability** | Can't delete transaction history | Seller can create new Cash Account if needed; completion rate naturally improves over time | Same trade-off as blockchain transactions |
 | **Blockchain bloat** | ~180 bytes per seller (vs free Nostr) | Only essential filtering data on-chain; detailed metadata on Nostr | ~95% reduction vs putting all data on-chain |
 
-**Note on fraud prevention:** Payment detail matching prevents self-dealing by detecting when two Cash Accounts belong to the same person (same phone/IBAN/name). See [Fraud Prevention](../fraud-prevention.md) for technical implementation.
+**Note on fraud prevention:** Payment detail matching prevents self-dealing by detecting when two Cash Accounts belong to the same person (same phone/IBAN/name). See [Fraud Protection](../fraud-protection.md) for technical implementation.
 
 ---
 
@@ -269,15 +269,15 @@ Central database reputation is free to update but requires trust. Nostr-only rep
 
 ## Related Documents
 
-- [Permissionless Blacklist with Redemption](../fraud-prevention/blacklist.md) (dispute resolution, privacy-preserving hashes)
-- [Fraud Prevention Mechanisms](../fraud-prevention/README.md) (payment detail matching, self-dealing detection)
+- [Dispute Resolution via Nostr Blacklist](../../the-mechanism/nostr-coordination/dispute-resolution.md) (permissionless blacklist, privacy-preserving hashes)
+- [Fraud Protection](../fraud-protection.md) (device health checks, proactive fraud prevention)
 - [Bulletin Board Architecture](../../the-mechanism/bulletin-board/README.md) (Nostr integration, real-time queries)
 - [Cash Accounts: Permissionless Identity Layer](./cash-accounts-permissionless-identity-layer.md) (how identity works)
 
 ---
 
 **Status:** Phase 0 Implementation  
-**Last Updated:** 2026-06-22  
+**Last Updated:** 2026-07-15  
 **Confidence:** High (minimal on-chain data proven in other P2P systems; fraud detection reuses blacklist mechanism)
 ---
 
