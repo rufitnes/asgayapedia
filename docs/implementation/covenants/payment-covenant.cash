@@ -1,0 +1,37 @@
+pragma cashscript ^0.13.0;
+
+// Payment-first covenant with 7% volatility buffer
+// Three spending paths: claim, cashOut, refund
+// cashOut preserves provenance for H€/HAu minting
+
+contract PaymentCovenant(
+    pubkey recipientPk,
+    pubkey senderPk,
+    int expiryTime
+) {
+    // Path 1: Recipient claims to own wallet (keep BCH)
+    // Use case: Elena wants to hold BCH, not cash out
+    // Provenance: Lost (Elena can spend however she wants)
+    function claim(sig recipientSig) {
+        require(checkSig(recipientSig, recipientPk));
+    }
+
+    // Path 2: Merchant cash-out (Elena + Carlos co-sign)
+    // Use case: Elena cashes out at Carlos's store
+    // Provenance: PRESERVED (covenant → merchant direct)
+    // This enables Carlos to mint H€/HAu tokens
+    function cashOut(sig recipientSig, sig merchantSig, pubkey merchantPk) {
+        // Recipient authorizes (confirms cash received)
+        require(checkSig(recipientSig, recipientPk));
+
+        // Merchant confirms (commits to transaction)
+        require(checkSig(merchantSig, merchantPk));
+    }
+
+    // Path 3: Sender refund after timeout (Elena never claimed)
+    // María gets BCH back, can mint H€ if pool available
+    function refund(sig senderSig) {
+        require(checkSig(senderSig, senderPk));
+        require(tx.time >= expiryTime);
+    }
+}

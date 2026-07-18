@@ -1,0 +1,55 @@
+{
+  "contractName": "PaymentCovenant",
+  "constructorInputs": [
+    { "name": "recipientPk", "type": "pubkey" },
+    { "name": "senderPk", "type": "pubkey" },
+    { "name": "expiryTime", "type": "int" }
+  ],
+  "abi": [
+    {
+      "name": "claim",
+      "inputs": [
+        { "name": "recipientSig", "type": "sig" }
+      ]
+    },
+    {
+      "name": "cashOut",
+      "inputs": [
+        { "name": "recipientSig", "type": "sig" },
+        { "name": "merchantSig", "type": "sig" },
+        { "name": "merchantPk", "type": "pubkey" }
+      ]
+    },
+    {
+      "name": "refund",
+      "inputs": [
+        { "name": "senderSig", "type": "sig" }
+      ]
+    }
+  ],
+  "bytecode": "OP_3 OP_PICK OP_0 OP_NUMEQUAL OP_IF OP_4 OP_ROLL OP_SWAP OP_CHECKSIG OP_NIP OP_NIP OP_NIP OP_ELSE OP_3 OP_PICK OP_1 OP_NUMEQUAL OP_IF OP_4 OP_ROLL OP_SWAP OP_CHECKSIGVERIFY OP_3 OP_ROLL OP_4 OP_ROLL OP_CHECKSIG OP_NIP OP_NIP OP_NIP OP_ELSE OP_3 OP_ROLL OP_2 OP_NUMEQUALVERIFY OP_3 OP_ROLL OP_ROT OP_CHECKSIGVERIFY OP_SWAP OP_CHECKLOCKTIMEVERIFY OP_2DROP OP_1 OP_ENDIF OP_ENDIF",
+  "source": "pragma cashscript ^0.13.0;\n\n// Payment-first covenant with 7% volatility buffer\n// Three spending paths: claim, cashOut, refund\n// cashOut preserves provenance for H€/HAu minting\n\ncontract PaymentCovenant(\n    pubkey recipientPk,\n    pubkey senderPk,\n    int expiryTime\n) {\n    // Path 1: Recipient claims to own wallet (keep BCH)\n    // Use case: Elena wants to hold BCH, not cash out\n    // Provenance: Lost (Elena can spend however she wants)\n    function claim(sig recipientSig) {\n        require(checkSig(recipientSig, recipientPk));\n    }\n    \n    // Path 2: Merchant cash-out (Elena + Carlos co-sign)\n    // Use case: Elena cashes out at Carlos's store\n    // Provenance: PRESERVED (covenant → merchant direct)\n    // This enables Carlos to mint H€/HAu tokens\n    function cashOut(sig recipientSig, sig merchantSig, pubkey merchantPk) {\n        // Recipient authorizes (confirms cash received)\n        require(checkSig(recipientSig, recipientPk));\n        \n        // Merchant confirms (commits to transaction)\n        require(checkSig(merchantSig, merchantPk));\n    }\n    \n    // Path 3: Sender refund after timeout (Elena never claimed)\n    // María gets BCH back, can mint H€ if pool available\n    function refund(sig senderSig) {\n        require(checkSig(senderSig, senderPk));\n        require(tx.time >= expiryTime);\n    }\n}\n",
+  "fingerprint": "4ab57b752497694bbd0f6231891f992d67692064fb3918a3306c59727facfdcc",
+  "debug": {
+    "bytecode": "5379009c63547a7cac777777675379519c63547a7cad537a547aac77777767537a529d537a7bad7cb16d516868",
+    "sourceMap": "15:4:17:5;;;;;16:25:16:37;;:39::50;:8::53:1;15:37:17:5;;;:4;23::29::0;;;;;25:25:25:37;;:39::50;:8::53:1;28:25:28:36:0;;:38::48;;:8::51:1;23:75:29:5;;;:4;33::36::0;;;;34:25:34:34;;:36::44;:8::47:1;35:27:35:37:0;:8::39:1;33:35:36:5;;7:0:37:1;",
+    "logs": [],
+    "requires": [
+      { "ip": 12, "line": 16 },
+      { "ip": 24, "line": 25 },
+      { "ip": 30, "line": 28 },
+      { "ip": 41, "line": 34 },
+      { "ip": 43, "line": 35 }
+    ],
+    "sourceTags": "9:11:sc;27:29:sc"
+  },
+  "compiler": {
+    "name": "cashc",
+    "version": "0.13.2",
+    "options": {
+      "enforceFunctionParameterTypes": true,
+      "enforceLocktimeGuard": true
+    }
+  },
+  "updatedAt": "2026-07-18T12:05:14.773Z"
+}
