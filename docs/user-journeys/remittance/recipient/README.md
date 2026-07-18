@@ -19,15 +19,48 @@ A recipient is someone who receives cross-border money. In Asgaya's framework, t
 
 ---
 
+## Currency Denomination & Compliance
+
+**Critical architectural detail:** While María (sender in Spain) thinks in euros, Elena (recipient in Venezuela) sees the trade denominated in **BCH/VES**, not EUR/VES. This is essential for compliance in countries with capital controls.
+
+**Why this matters:**
+- **Venezuela has official EUR/VES and USD/VES exchange rates** set by the government
+- If the trade is denominated in EUR or USD, merchants must legally use the official rate (unfavorable, 2-3x worse than parallel market)
+- **By denominating the trade as BCH/VES** (commodity exchange, not forex), the transaction avoids official rate requirements
+- The covenant is currency-agnostic - it just holds BCH. The currency reference is only in the UX layer.
+
+**How it works:**
+- **Spain side (María):** "I'm sending €100 worth of BCH" → María's reference currency
+- **Covenant:** Contains 0.15 BCH (no currency denomination)
+- **Venezuela side (Elena):** "I'm receiving 0.15 BCH, selling for 45,000 VES" → Elena's reference currency
+- **Bulletin board:** Lists Carlos's rate as "300,000 VES per BCH" (BCH/VES pair, not EUR/VES)
+- **Nostr payment instructions:** Specifies "45,000 VES for 0.15 BCH" (local denomination)
+
+**Compliance benefit:** As long as BCH trading is legal in the destination country, Asgaya works. The architecture is inherently compliant because:
+1. Sender buys BCH (commodity purchase - legal)
+2. Covenant locks BCH (smart contract - permissionless)
+3. Recipient sells BCH for local currency (commodity sale - legal if BCH trading allowed)
+4. **No money transmission, no forex conversion, no official rate requirements**
+
+**The beauty:** Same BCH, different currency pegs depending on corridor:
+- Spain → Venezuela: EUR reference (sender) → BCH → VES reference (recipient)
+- Spain → Argentina: EUR reference (sender) → BCH → ARS reference (recipient)
+- USA → Venezuela: USD reference (sender) → BCH → VES reference (recipient)
+
+The covenant doesn't care. It's just BCH with programmable spending conditions.
+
+---
+
 ## Step-by-Step: Elena Receives €100 from María
 
 ### 1. Receive Notification
-- Elena gets push notification: "You have €100 worth of BCH from María"
+- Elena gets push notification: "You have 0.15 BCH from María (≈45,000 VES)"
 - Opens wallet to see pending covenant
 - Covenant shows:
   - Sender: María (Madrid)
-  - Amount: €100 worth of BCH (~0.15 BCH at current rate)
+  - Amount: 0.15 BCH (current market value: ≈45,000 VES)
   - Options: Claim to wallet (free) OR Cash out at merchant (0.5% fee)
+- **Note:** App shows BCH amount + local currency equivalent (VES), not EUR. Elena's app is configured for Venezuelan market (BCH/VES rates).
 
 ### 2. Decision Point: Keep BCH or Cash Out?
 
@@ -47,12 +80,14 @@ A recipient is someone who receives cross-border money. In Asgaya's framework, t
 ### 3. Find Merchant on Bulletin Board (If Cashing Out)
 - App filters by:
   - Location: Caracas, Venezuela
-  - Capacity: Can handle €100
+  - Capacity: Can handle 0.15 BCH
   - Payment method: VES cash
 - Shows Carlos's grocery store (4.5★, 150+ transactions)
-  - Rate: 0.5% fee (Elena gets €99.50 worth of VES)
+  - **Rate:** 300,000 VES per BCH (0.5% fee included)
+  - **You receive:** 44,775 VES for 0.15 BCH (after 0.5% fee)
   - Location: 2km away
   - Hours: Open now
+- **Currency denomination:** All rates shown in BCH/VES (not EUR/VES) for compliance
 
 ### 4. Receive Payment Instructions via Nostr
 - Elena selects Carlos from bulletin board
@@ -60,9 +95,12 @@ A recipient is someone who receives cross-border money. In Asgaya's framework, t
 - Carlos's app automatically sends encrypted payment instructions:
   - **Location:** Av. Libertador 123 (grocery store)
   - **Hours:** Open 8am-8pm
-  - **Amount:** 45,000 VES for €100 worth of BCH
+  - **BCH amount:** 0.15 BCH
+  - **VES amount:** 45,000 VES (BCH/VES rate: 300,000 VES per BCH)
+  - **Fee:** 0.5% included in rate
   - **Payment method:** VES cash in person
-- Elena sees: "Carlos will give you 45,000 VES. Visit store at Av. Libertador 123."
+- **Elena sees:** "You will receive 45,000 VES for 0.15 BCH. Visit Carlos at Av. Libertador 123."
+- **Note:** No mention of euros on Elena's side - trade is denominated in BCH/VES for compliance (see Currency Denomination section above)
 
 ### 5. Meet at Carlos's Store
 - Elena arrives at grocery store
@@ -79,14 +117,14 @@ A recipient is someone who receives cross-border money. In Asgaya's framework, t
 
 ### 7. Complete
 - Transaction complete
-- Elena has 45,000 VES cash (equivalent to €99.50)
-- Carlos has €100 worth of BCH
+- Elena has 44,775 VES cash (0.15 BCH × 300,000 VES/BCH × 99.5%)
+- Carlos has 0.15 BCH (from covenant, with remittance provenance)
 - **Reputation auto-increments:** Carlos's transaction count increases (+1), rating info piggybacks the covenant
 
 **Merchant stability incentive:** Carlos can now stabilize the BCH into H€ (Euro-pegged) or HAu (gold-pegged) tokens, preserving its value against volatility. This is the core incentive that makes merchants want to accept Asgaya - they accumulate stable value, not volatile BCH. See [Merchant Journey](../../merchant/README.md) for details on the triple-dip economics and stability layer.
 
 **Total time:** 5 minutes (notification to claim) + 30 min (travel to Carlos) = 35 minutes  
-**Total cost:** €0.50 (0.5% recipient fee) if cashing out, FREE if keeping BCH
+**Total cost:** 0.5% recipient fee (225 VES on 45,000 VES trade) if cashing out, FREE if keeping BCH
 
 ---
 
@@ -350,7 +388,7 @@ If María sends money every month, Elena can optimize:
 ---
 
 **Status:** Phase 0 (Pre-Launch) - Q3 2026 Spain → Venezuela corridor  
-**Updated:** 2026-06-24
+**Updated:** 2026-07-18 - Added currency denomination compliance section
 
 ---
 
