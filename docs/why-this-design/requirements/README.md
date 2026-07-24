@@ -36,10 +36,25 @@
 
 **Legal to operate without MSB licenses**
 
-**What this means:**
-- No custody = no CASP license (MiCA)
-- No intermediation = no Payment Institution license (PSD2)
+**Regulatory frameworks analyzed:**
+
+**EU (operational target - Spain/Venezuela corridor):**
+- No custody = no CASP license (MiCA Article 3)
+- No intermediation = no Payment Institution (PSD2)
+
+**US (reference framework - widely understood terminology):**
 - No money transmission = no MSB registration (FinCEN)
+- No intermediary role = no state licenses
+
+**Why both?**
+- **EU law governs** the Spain-Venezuela corridor (operational compliance)
+- **EU sets the higher bar** (if compliant in EU, likely compliant globally)
+- **US terminology** (MSB, money transmission) is more familiar in crypto
+- **Future expansion** requires understanding both frameworks
+
+**Design strategy:** Engineer for EU compliance first (strictest requirements), validate against US framework (most discussed in crypto space).
+
+**What this means:**
 - Clear transaction separation (remittance vs commerce)
 
 **Why it matters:**
@@ -54,7 +69,7 @@
 - H€/HAu restricted minting (utility tokens at covenant endpoints, not money substitutes)
 - ⚠️ **NO P2PKH proxy patterns** (custody + intermediation = licensing required)
 
-**This was the missing requirement** that, once identified, made everything click into place. Payment-first covenants, H€/HAu compliance framing, Nostr blacklist - all driven by compliance constraints.
+**Compliance is a constraint we wish didn't exist, but can't ignore.** May 9, 2026 was the day we discovered our elegant, simple escrow-based architecture was **illegal** under MiCA. The payment-first covenant design is harder to build, harder to explain, and requires more coordination—but it's the only path to permissionless operation within EU law. This requirement doesn't make the design better; it makes it **legally possible**.
 
 ---
 
@@ -90,6 +105,7 @@ Each core requirement has specific implementation constraints:
 - Minimal hardware (RFID cards for recipients, smartphones for merchants)
 - Minimal knowledge (simple UI, no crypto jargon)
 - Self-custody education (mandatory backup verification)
+- **Capital efficiency** (no permanently locked funds, all participants can recover capital)
 
 ### Compliance Sub-Requirements
 - No custody at any point (including temporary/intermediary)
@@ -106,6 +122,58 @@ Each core requirement has specific implementation constraints:
 - Automatic stabilization (merchant bot handles conversion)
 - Quick cash-out paths (merchant liquidity network)
 - Graceful degradation (BCH fallback if pool exhausted)
+
+---
+
+## Requirement #6: Seller Buffer Recovery
+
+**Discovered during Phase 1 implementation (July 2026)**
+
+**The edge case:**
+```
+t=0:     Covenant funded (0.0075 BCH total)
+         ├─ Payment: 0.007 BCH (sender's capital)
+         └─ Buffer: 0.00049 BCH (seller's capital)
+
+t=60:    ⏰ Covenant expires
+         ├─ Recipient can NO LONGER claim (past expiry)
+         └─ Sender device offline/lost/crashed
+         
+t=60+:   🔒 FUNDS LOCKED
+         ├─ Recipient blocked (expired)
+         ├─ Sender can't refund (offline)
+         └─ Seller STUCK (no recovery path)
+```
+
+**Without seller recovery:** Seller's buffer capital is permanently locked if sender goes offline after covenant expires.
+
+**What this means:**
+- Seller must have independent recovery path after expiry
+- Cannot depend on sender being online to recover own capital
+- Three recovery paths needed: recipient claim, sender refund, **seller split**
+
+**Why it matters:**
+- **Capital efficiency:** Sellers provide liquidity infrastructure - buffer can't be locked indefinitely
+- **System robustness:** Works even when devices fail/go offline (real-world failure modes)
+- **Economic sustainability:** Sellers need predictable capital turnover to operate
+
+**Design choices driven by this:**
+```cash
+function sellerRecoverBuffer(sig sellerSig, datasig oracleSig, bytes oracleMessage) {
+    // After expiry, seller can split covenant:
+    // - Payment → sender address (fair, even though sender offline)
+    // - Buffer → seller (recovers own capital)
+    require(oracleTimestamp >= expiryOracleTime);  // Only after expiry
+    // ... fair split logic ...
+}
+```
+
+**How it interacts with other requirements:**
+- **Permissionless:** No participant's capital can be permanently locked (even by device failure)
+- **Compliance:** Seller gets own capital back, sender's capital returned to sender (no seizure)
+- **Volatility Protection:** Seller buffer returned → can be used for next covenant → liquidity maintained
+
+**This requirement emerged from actual chipnet testing**, not initial design. Real-world testing revealed the edge case where sender device failure after expiry would lock seller's operational capital.
 
 ---
 
@@ -126,6 +194,11 @@ Each core requirement has specific implementation constraints:
 - **Permissionless:** No central authority controls blacklist (user bots post independently)
 - **Compliance:** Discourages fraud without becoming intermediary
 - **Result:** Distributed reputation without central database
+
+**Example 4: Three-Path Covenant Recovery**
+- **Permissionless:** All participants can recover capital (recipient claim, sender refund, seller split)
+- **Capital Efficiency:** Seller buffer can't be locked by sender device failure
+- **Result:** Robust covenant design that handles real-world failure modes
 
 ---
 
@@ -155,6 +228,7 @@ Each core requirement has specific implementation constraints:
 - April 2026: Compliance requirement added (everything clicked)
 - May-June 2026: Volatility protection elevated to core (H€/HAu development)
 - June 2026: 3-core framework finalized (Permissionless, Compliance, Volatility)
+- **July 2026: Seller buffer recovery requirement discovered** (Phase 1 chipnet testing revealed edge case)
 
 ---
 
