@@ -302,38 +302,7 @@ All three devices (sender, recipient, seller) subscribe to covenant-specific cha
 
 ---
 
-## Coordination Examples
-
-### Example 1: Happy Path (Claim Succeeds)
-
-```
-t=0:     Covenant funded by seller
-         All devices subscribe to:
-         - Oracle channels (Coinbase, Kraken, Bitstamp)
-         - Global price watch channel
-         - Covenant coordination channel
-
-t=0-300: Oracles broadcast stable prices €995-990/BCH
-         300 network devices contribute samples (200ms resolution)
-         María/Elena/Isabel devices contribute once per minute
-         No alerts needed
-
-t=300:   Recipient broadcasts CLAIM_BROADCAST to covenant channel
-         → Sender: "Payment claimed by Elena ✅"
-         → Seller: "Buffer will be returned ✅"
-
-t=310:   Sender detects confirmation, broadcasts CLAIM_CONFIRMED
-         All devices stop monitoring
-```
-
-**Total monitoring time:** 5 minutes  
-**Oracle broadcasts received:** ~15 (3 oracles × ~5 broadcasts)  
-**Price samples contributed:** 5 (1 per minute per device)  
-**Covenant coordination messages:** 2 (CLAIM_BROADCAST + CLAIM_CONFIRMED)
-
----
-
-### Example 2: Price Drop Abort
+## Coordination Example: Price Drop Abort
 
 ```
 t=0:     Covenant funded, initial price €1000/BCH
@@ -362,196 +331,25 @@ t=121.0: Elena's device detects confirmation, broadcasts REFUND_CONFIRMED
          All devices stop monitoring
 ```
 
-**Total monitoring time:** 2 minutes  
 **Detection latency:** 300ms (oracle broadcast → consensus → alert)  
 **Coordination:** Sub-second (oracle-over-Nostr push model)
 
 ---
 
-### Example 3: Timeout Expiry
-
-```
-t=0:     Covenant funded, expiry in 8 hours
-         Devices subscribe to oracle channels + price watch
-
-t=0-28740: Oracles broadcast prices every 20 seconds
-           Devices receive oracle broadcasts (push, no polling)
-           Devices contribute 1 sample/minute to price watch
-           Price stable, no alerts
-
-t=28740: Oracle broadcasts include timestamp >= expiry
-         Isabel's device detects expiry condition
-         Broadcasts TIMEOUT_ALERT to covenant channel
-         → María: "Covenant expired - refund available"
-         → Elena: "Payment expired - can't claim"
-
-t=28800: María's device broadcasts REFUND_BROADCAST
-         (includes BCH → H€ swap on bulletin board)
-
-t=28810: Isabel detects confirmation, broadcasts REFUND_CONFIRMED
-         All devices stop monitoring
-```
-
-**Total monitoring time:** 8 hours  
-**Oracle broadcasts received:** ~1,440 (3 oracles × 480 broadcasts)  
-**Price samples contributed:** ~480 (1 per minute)  
-**Cost per device:** Zero polling (pure Nostr subscription)
-
----
-
 ## Failure Modes
 
-### One Oracle Offline
+| Failure | What Happens | Result |
+|---------|-------------|--------|
+| **One oracle offline** | Median calculated from remaining 2 sources (Kraken + Bitstamp) | System continues working |
+| **Relay censorship** | Devices receive from backup relays (relay.damus.io, nostr.wine) | Uncensorable price feed |
+| **One device offline** | Network still has 299 devices contributing; resolution drops 0.3% | Barely affected |
+| **All covenant devices offline** | Refund executes when first device reconnects; covenant rejects claim anyway (price < floor) | Delayed but eventual |
 
-**Scenario:** Coinbase oracle goes offline
-
-**What happens:**
-```
-t=0:   Devices subscribe to 3 oracles (Coinbase, Kraken, Bitstamp)
-t=60:  Coinbase oracle stops broadcasting
-       Devices still receive Kraken + Bitstamp broadcasts
-       Median calculated from 2 sources instead of 3
-```
-
-**Result:** System continues working. Multi-oracle redundancy handles failure.
-
----
-
-### Relay Censorship Attempt
-
-**Scenario:** Centralized relay tries to block oracle broadcasts
-
-**What happens:**
-```
-Devices subscribe to multiple Nostr relays:
-- relay.asgaya.org (primary)
-- relay.damus.io (backup)
-- nostr.wine (backup)
-
-If primary relay blocks oracle:
-- Devices receive broadcasts from backup relays
-- Oracle continues broadcasting to all relays
-- Censorship attempt fails
-```
-
-**Result:** Uncensorable price feed. Can't block Nostr protocol.
-
----
-
-### One Device Offline
-
-**Scenario:** Sender device battery dies at t=60
-
-**What happens:**
-```
-t=60:  Sender offline (missed contribution to global price watch)
-       Network still has 299 other devices contributing
-       Resolution: 200ms (barely affected)
-
-t=120: Price drops >7% (oracle broadcasts show drop)
-       Recipient/Seller devices detect via oracle subscription
-       Recipient executes refund → broadcasts PRICE_DROP_ALERT
-
-t=200: Sender comes back online
-       Syncs Nostr messages
-       Updates UI: "Payment refunded while you were offline"
-```
-
-**Result:** Network effect + redundancy handled failure. Sender's absence didn't matter.
-
----
-
-### All Covenant Devices Offline
-
-**Scenario:** Price drops >7%, María/Elena/Isabel all offline
-
-**What happens:**
-```
-t=120: Price drops >7% (oracle broadcasts continue)
-       Network detects drop (299 other devices see it)
-       María's covenant devices offline (can't execute refund)
-
-t=300: María comes back online
-       Syncs oracle broadcasts → sees price dropped
-       Executes refund immediately
-       Broadcasts REFUND_BROADCAST
-
-t=310: Refund confirmed
-```
-
-**Result:** Delayed detection for this covenant, but refund still executes. Covenant won't allow claim anyway (price < floor).
-
-**Note:** Global price watch continued working (other devices monitored). María's devices just couldn't act until back online.
+**Note:** Oracle broadcasts are primary trigger. Global price watch is secondary confirmation layer and public good for network redundancy.
 
 ---
 
 ## Implementation Notes
-
-### Oracle Subscription
-
-Devices subscribe to multiple oracle channels (push, not pull):
-
-```javascript
-// Subscribe to multiple oracles for consensus
-const oracles = [
-    'asgaya:oracle:coinbase:bch-eur',
-    'asgaya:oracle:kraken:bch-eur',
-    'asgaya:oracle:bitstamp:bch-eur'
-];
-
-const oraclePrices = new Map();
-
-oracles.forEach(channel => {
-    nostr.sub(channel, (event) => {
-        const { price, timestamp, source } = JSON.parse(event.content);
-        oraclePrices.set(source, { price, timestamp });
-        
-        // Calculate median from all oracles
-        const prices = Array.from(oraclePrices.values()).map(p => p.price);
-        const consensusPrice = median(prices);
-        
-        // Check covenant thresholds
-        if (consensusPrice < covenant.priceFloor) {
-            handlePriceDrop(consensusPrice);
-        }
-    });
-});
-```
-
-**Censorship resistance:** Multiple oracles + Nostr relays = uncensorable price feed.
-
----
-
-### Global Price Watch Contribution
-
-Each device contributes samples to network (staggered by device ID):
-
-```javascript
-// Calculate staggered offset based on device ID (not role)
-const myOffset = hashDeviceId(deviceId) % 60000; // 0-60000ms
-
-// Subscribe to global price watch
-nostr.sub('asgaya:pricewatch', (event) => {
-    const { price, timestamp, deviceId } = JSON.parse(event.content);
-    updateNetworkPriceView(price, timestamp);
-});
-
-// Contribute once per minute (staggered)
-setTimeout(() => {
-    setInterval(() => {
-        const consensusPrice = median(Array.from(oraclePrices.values()));
-        nostr.publish('asgaya:pricewatch', {
-            price: consensusPrice,
-            timestamp: Date.now(),
-            deviceId: myDeviceId
-        });
-    }, 60000); // Every 60 seconds
-}, myOffset);
-```
-
-**Network effect:** More devices = better resolution for everyone.
-
----
 
 ### Multi-Channel Subscription
 
@@ -628,93 +426,7 @@ async function handlePriceDrop(consensusPrice) {
 
 ## Cost Analysis
 
-### Oracle Broadcasts (Push, Not Pull)
-
-**Traditional approach (HTTP polling):**
-- Each device polls API every 10-20 seconds
-- 100 covenants × 3 devices = 300 devices polling
-- 300 devices × 3 queries/min = 900 API calls/min
-- **Cost:** Expensive (battery, bandwidth, API rate limits)
-
-**Oracle-over-Nostr (push):**
-- Oracles broadcast every 10-30 seconds
-- 3 oracles × 2 broadcasts/min = 6 broadcasts/min
-- All 300 devices subscribe (receive, don't poll)
-- **Cost per device:** Zero (pure subscription, no outbound calls)
-
-**Savings:** 900 API calls/min → 6 broadcasts/min (150× reduction in network traffic)
-
----
-
-### Global Price Watch Contributions
-
-**Per device:**
-- 1 contribution per minute to global price watch
-- **Cost:** 1 Nostr publish/min (negligible bandwidth)
-
-**Network benefit:**
-- 300 devices × 1 sample/min = 5 samples/second
-- Resolution: 200ms (sub-second detection)
-
-**Individual cost stays constant.** Network resolution improves with scale.
-
----
-
-### Per-Covenant Coordination Messages
-
-**Happy path (claim succeeds):**
-- CLAIM_BROADCAST: 1
-- CLAIM_CONFIRMED: 1
-- **Total:** 2 messages
-
-**Price drop abort:**
-- PRICE_DROP_ALERT: 1-3
-- REFUND_BROADCAST: 1
-- REFUND_CONFIRMED: 1
-- **Total:** 3-5 messages
-
-**Nostr relay cost:** Free (public relays)
-
----
-
-## Benefits of This Pattern
-
-**1. Censorship-Resistant Oracle (Hardened Protocol)**
-- Oracles broadcast over Nostr (not HTTP API)
-- Can't block Nostr relays (decentralized protocol)
-- Multiple oracle sources (Coinbase, Kraken, Bitstamp)
-- Permissionless (anyone can run oracle, publish to Nostr)
-- **Result:** Uncensorable price feed
-
-**2. Sub-Second Detection (Network Effect)**
-- 100 covenants = 200ms resolution
-- 1,000 covenants = 20ms resolution
-- Auto-refund triggers before further loss
-- Example: Detect 8% drop within 200ms, mint H€ before 10% drop
-
-**3. Low Individual Cost (Push vs Pull)**
-- Oracle broadcasts (push) → devices subscribe (no polling)
-- Each device contributes 1 sample/minute to global price watch
-- Zero battery drain from constant polling
-- Zero API rate limit concerns
-
-**4. Massive Redundancy (Scales with Network)**
-- 100 covenants = 300 devices monitoring
-- Multiple oracles broadcasting
-- If sender offline → network still detects
-- If oracle offline → other oracles continue
-- If relay censors → backup relays work
-
-**5. Instant Coordination (Nostr Sub-Second)**
-- Price drop detected → all devices know within 1 second
-- Prevents confusion ("What happened to my payment?")
-- Enables responsive UI ("Payment cancelled - price drop")
-
-**6. Permissionless Oracle Network**
-- Anyone can run oracle (no permission needed)
-- Broadcast to Nostr channels (public protocol)
-- Devices calculate consensus (multi-source verification)
-- No trust bottleneck (verify, don't trust)
+**Traditional HTTP polling:** 300 devices × 3 queries/min = 900 API calls/min. **Oracle-over-Nostr:** 3 oracles × 2 broadcasts/min = 6 broadcasts/min (150× reduction). Devices contribute 1 sample/min to global price watch. Per-covenant coordination: 2–5 messages total (CLAIM_BROADCAST/CONFIRMED or PRICE_DROP_ALERT/REFUND_BROADCAST/CONFIRMED). **Total cost per device:** Negligible (pure Nostr subscription, no polling).
 
 ---
 
