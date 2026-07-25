@@ -35,11 +35,11 @@
 
 ---
 
-## How It Works
+## How It Works: Trade Lifecycle
 
-### Five-Layer Architecture
+**Each trade flows through five steps**, creating an on-chain price discovery mechanism:
 
-#### Layer 1: Decentralized Price Setting (Sellers Choose)
+### Step 1: Decentralized Price Setting (Sellers Choose)
 
 Passive sellers independently decide their BCH prices:
 
@@ -56,33 +56,15 @@ async function updateListingPrice() {
     volume_available: 500
   });
 }
-
-// Carlos's app (different seller)
-async function updateListingPrice() {
-  // Carlos chooses: Query Coinbase API
-  const coinbasePrice = await fetchCoinbase('BCH/EUR');
-  const myPrice = coinbasePrice * 1.008; // 0.8% markup
-  
-  await updateBulletinBoard({
-    price: myPrice,
-    volume_available: 300
-  });
-}
 ```
 
-**No coordination needed.** Market emerges from individual decisions.
-
-**Each seller chooses their own price source:**
-- Kraken API (most common)
-- Coinbase API
-- Bitstamp API
-- Or even Asgaya network VWAP (once mature)
+**No coordination needed.** Market emerges from individual decisions. Each seller chooses their own price source (Kraken, Coinbase, Bitstamp, or even Asgaya VWAP once mature).
 
 ---
 
-#### Layer 2: Private Payment Coordination (Nostr DM)
+### Step 2: Private Payment Coordination (Nostr DM)
 
-When María requests payment info, Isabel sends:
+When María requests payment info, Isabel sends the agreed price privately:
 
 ```javascript
 // Isabel → María (encrypted Nostr DM)
@@ -102,7 +84,7 @@ When María requests payment info, Isabel sends:
 
 ---
 
-#### Layer 3: On-Chain Trade Execution (Blockchain)
+### Step 3: On-Chain Trade Execution (Blockchain)
 
 María pays via Bizum. Isabel's app detects payment, funds covenant:
 
@@ -119,13 +101,11 @@ const covenantTx = await fundCovenant({
 // Price derivable: €100 / 0.0107 BCH = €934.58/BCH
 ```
 
-**Blockchain consensus** guarantees timestamp and trade occurred.
-
-**Cannot be faked** - requires real BCH + transaction fees.
+**Blockchain consensus** guarantees timestamp and trade occurred. **Cannot be faked** - requires real BCH + transaction fees.
 
 ---
 
-#### Layer 4: Public Price Broadcast (Nostr)
+### Step 4: Public Price Broadcast (Nostr)
 
 Isabel's app broadcasts trade signal to network:
 
@@ -141,13 +121,11 @@ nostr.publish('asgaya:market:bch-eur', {
 });
 ```
 
-**Real-time market transparency.** Every trade visible to network.
-
-**Reputation included** → Network knows whether to trust this price signal.
+**Real-time market transparency.** Every trade visible to network. **Reputation included** → Network knows whether to trust this price signal.
 
 ---
 
-#### Layer 5: Reputation-Filtered VWAP (Network Consensus)
+### Step 5: Reputation-Filtered VWAP (Network Consensus)
 
 All devices subscribe and calculate market price:
 
@@ -175,11 +153,9 @@ const vwap = trustedTrades.reduce((acc, t) =>
 // Result: €994.33 (Asgaya network market price)
 ```
 
-**Sybil-resistant:** Low-reputation sellers ignored. Can't manipulate without earning trust first.
+**Sybil-resistant:** Low-reputation sellers ignored. **Volume-weighted:** Big trades matter more. **Decentralized:** Every device calculates independently.
 
-**Volume-weighted:** Big trades matter more than small trades.
-
-**Decentralized:** Every device calculates independently, no central authority.
+**This five-step progression** transforms each trade into a trusted price signal, creating market-wide consensus from individual economic activity.
 
 ---
 
@@ -241,17 +217,7 @@ const marketPrice = (networkVWAP * weight) + (asgayaOracle * (1 - weight));
 
 ### Phase 2: Mature Network (100+ Sellers, 1000+ Trades/Day)
 
-**Network dominant, Asgaya oracle optional:**
-
-```javascript
-const userVWAP = calculateVWAP(userTrades);
-const asgayaOracle = getLatestOraclePrice('asgaya:oracle:asgaya');
-
-// Network VWAP dominant (95%), oracle as sanity check (5%)
-const marketPrice = (userVWAP * 0.95) + (asgayaOracle * 0.05);
-
-// Eventually: 100% user VWAP, Asgaya oracle can shut down
-```
+**Network dominant, Asgaya oracle optional:** At full maturity, user VWAP carries 95%+ weight; Asgaya oracle remains as a 5% sanity check or can shut down entirely.
 
 **Self-reliant:** Network no longer needs Asgaya's oracle. Fully decentralized price discovery.
 
@@ -614,7 +580,15 @@ setInterval(() => {
 - ❌ Elena's identity (recipient unknown)
 - ❌ Isabel's identity (seller reputation shown, but not linked to real identity)
 
-**Same privacy as Bitcoin transactions:** Aggregate data public, individuals pseudonymous.
+**Privacy characteristics across layers:**
+
+**Bulletin board (pre-trade listings):** Seller pseudonym and price are public, but not linked to real identity. Anyone can see "Seller_abc123 offers BCH at €995" but not who runs that account.
+
+**Covenant fundings (on-chain):** Blockchain shows BCH amount, EUR amount (OP_RETURN), recipient address, and expiry time. Same privacy as Bitcoin transactions - amounts visible, participants pseudonymous.
+
+**Nostr trade broadcasts (post-trade):** Reputation score is public (needed for VWAP filtering), but still not linked to seller's real identity. Network sees "98-rep seller traded €100 at €995" without knowing who.
+
+**Same privacy as Bitcoin transactions:** Aggregate data public, individuals pseudonymous. The blockchain itself is the oracle, so on-chain transparency is required for trustless price discovery.
 
 ---
 
@@ -624,11 +598,25 @@ setInterval(() => {
 |---------|-------------|--------|
 | **Thin market (<10 trades/hour)** | Fallback to Asgaya oracle (Kraken API) | System continues working |
 | **Asgaya oracle offline** | Use cached oracle price or user VWAP only | Graceful degradation |
+| **Both VWAP + oracle unavailable** | Use last known price for up to 1 hour, then alert user | Temporary degradation, safe fallback |
 | **Low-rep seller spam** | Trades ignored (reputation < 90 filtered out) | No impact on price |
 | **One device offline** | Other covenant devices monitor + execute refund | Redundancy works |
 | **Blockchain reorg** | Wait for 1-2 confirmations on covenant fundings | Delayed but safe |
 
 **Note:** On-chain covenant fundings are canonical. Nostr broadcasts are real-time index for UX but blockchain is source of truth.
+
+### Fallback Strategy for Simultaneous Outage
+
+**Scenario:** Network outage or extremely thin market during bootstrap - both user VWAP and Asgaya oracle unavailable.
+
+**Device behavior:**
+1. **Use last known price** (cached from last successful VWAP/oracle update)
+2. **Grace period:** Up to 1 hour maximum
+3. **Alert user** if stale price exceeds 1 hour: "Price monitoring degraded - last update 67 minutes ago"
+4. **Covenant monitoring continues** using stale price (better than halting)
+5. **Resume normal operation** once VWAP or oracle reconnects
+
+**Rationale:** Price rarely moves >7% in one hour. Stale price is acceptable short-term fallback. User alert ensures transparency if degradation persists.
 
 ---
 
@@ -646,11 +634,7 @@ setInterval(() => {
 - ⚠️ Nostr relays (can use backup relays or query blockchain directly)
 - ⚠️ Asgaya oracle (only matters during bootstrap, network takes over)
 
-**Comparison to external oracles:**
-- Coinbase API: Can be blocked, rate-limited, manipulated
-- Blockchain: Cannot be censored without 51% attack
-
-**The network becomes its own oracle** - most censorship-resistant design possible.
+**The network becomes its own oracle** - most censorship-resistant design possible. Cannot be censored without a 51% blockchain attack.
 
 ---
 
@@ -658,87 +642,7 @@ setInterval(() => {
 
 **The elegant property:** Market forces naturally resist price manipulation through rational economic behavior.
 
-### Attack 1: Inflate Price (Seller Wants More Fiat)
-
-**Attacker's goal:** Post high price to manipulate VWAP upward
-
-**Scenario:**
-```
-Honest sellers: €995/BCH
-Attacker: €1050/BCH (5% premium)
-```
-
-**What happens:**
-- Buyers choose cheapest sellers (rational behavior)
-- Attacker gets 0 volume (no trades)
-- No trades = no price signals = no VWAP impact
-
-**Attack fails:** High-price sellers get ignored by market.
-
----
-
-### Attack 2: Deflate Price (Manipulate Down)
-
-**Attacker's goal:** Sell BCH cheap to lower VWAP
-
-**Scenario:**
-```
-Honest sellers: €995/BCH
-Attacker: €900/BCH (10% discount)
-```
-
-**What happens:**
-```
-Buyers rush to attacker (best price!)
-├─ Attacker's BCH inventory drains fast
-├─ Attacker loses €95 per BCH sold (below market)
-├─ Arbitrageurs exploit (buy €900, sell €995, profit €95)
-└─ Merchants hold BCH (expect price normalization)
-```
-
-**Key insight (merchant behavior):**
-- Normal price: Merchant swaps BCH → H€ (wants stability)
-- Underpriced BCH: Merchant holds BCH (expects reversion)
-- This REDUCES selling pressure, counteracts manipulation
-
-**Attack fails:** 
-- Expensive (real losses on every trade)
-- Limited by inventory (need real BCH to sell)
-- Unsustainable (drains capital)
-- Market participants exploit mispricing
-
----
-
-### Attack 3: Wash Trading (Fake Volume)
-
-**Attacker's goal:** Create fake trades to manipulate VWAP
-
-**Method:** Self-deal (buy from own seller account)
-
-**Costs:**
-```
-Per fake trade:
-├─ Real BCH locked in covenant (capital cost)
-├─ Transaction fees (~€0.001)
-└─ Reputation requirement (need 90+ to affect VWAP)
-
-To move VWAP by 1%:
-├─ Need €1,000+ fake volume
-├─ Against €100,000 real daily volume
-└─ Effect: Minimal, expensive
-```
-
-**Defenses:**
-1. **Reputation filter** - Need 90+ rep (takes months to earn legitimately)
-2. **Volume-weighted** - Small fakes don't matter (€100 fake vs €10,000 real = 1% weight)
-3. **Expensive at scale** - Need real BCH + fees for every fake trade
-4. **Detectable patterns** - Same buyer-seller pairs, timing analysis
-
-**Attack fails:** Too expensive for minimal effect, requires high reputation.
-
----
-
-### Attack 4: Auto-Refund Disruption (Worst Case)
+### Attack 4: Auto-Refund Disruption (The Critical Threat)
 
 **Attacker's goal:** Trigger auto-refunds by crashing VWAP
 
@@ -797,6 +701,16 @@ Result:
 2. **Arbitrageurs profit** - Buy attacker's cheap BCH, sell at market, stabilize VWAP
 3. **Network recovers** - Attack stops when attacker runs out of capital
 4. **Outlier rejection** (optional) - Statistical filtering of extreme prices
+
+---
+
+### Other Attack Vectors (Less Severe)
+
+**Attack 1 (Inflate price):** High-price sellers get 0 volume because buyers choose cheapest offers. No trades = no VWAP impact. Attack fails.
+
+**Attack 2 (Deflate price):** Selling below market drains BCH inventory fast, costs real money per trade, and attracts arbitrageurs who profit while stabilizing VWAP. Merchants hold BCH when underpriced (expecting reversion), reducing sell pressure. Attack is expensive and unsustainable.
+
+**Attack 3 (Wash trading):** Requires 90+ reputation (months to earn), real BCH locked per fake trade, and significant volume to move VWAP. A €1,000 fake against €100,000 real daily volume = 1% weight. Too expensive for minimal effect, patterns detectable.
 
 ---
 
