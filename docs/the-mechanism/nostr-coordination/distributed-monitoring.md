@@ -160,9 +160,13 @@ All three devices (sender, recipient, seller) subscribe to covenant-specific cha
 
 ### Message Types
 
+**Context:** These messages are broadcast to **per-covenant channels** (only the 3 devices monitoring a specific covenant receive them). This is distinct from global price watch (all devices) and oracle broadcasts (all devices).
+
 #### 1. PRICE_DROP_ALERT
 
-**When:** Any device detects price drop >7%
+**When:** Any device monitoring this covenant detects price drop >7% for their specific covenant
+
+**Broadcast to:** Per-covenant channel (only the 3 devices monitoring this covenant see it)
 
 **Payload:**
 ```json
@@ -179,10 +183,12 @@ All three devices (sender, recipient, seller) subscribe to covenant-specific cha
 }
 ```
 
-**Effect:**
-- Other devices immediately know price dropped
-- All devices prepare for refund transaction
+**Effect (within this covenant's 3 devices):**
+- Other 2 devices immediately know price dropped for this covenant
+- All 3 devices prepare for refund transaction
 - Recipient knows payment will abort
+
+**Note:** All devices in network see same oracle broadcast (global). Each device monitors its own covenants. PRICE_DROP_ALERT only sent to covenant-specific channel.
 
 ---
 
@@ -313,14 +319,14 @@ t=0-120: Oracles broadcast stable prices €995-990/BCH
          No threshold crossed
 
 t=120.0: Coinbase oracle broadcasts €920/BCH (8% drop)
-         ALL 300 devices see oracle broadcast simultaneously
+         ALL 300 devices in network see oracle broadcast simultaneously
 
 t=120.2: Kraken oracle broadcasts €918/BCH
          Bitstamp oracle broadcasts €922/BCH
-         Consensus median: €920/BCH
+         All devices calculate consensus median: €920/BCH
 
-t=120.3: ALL devices detect >7% drop (consensus < €930 threshold)
-         María's device broadcasts PRICE_DROP_ALERT to covenant channel
+t=120.3: María's device detects consensus < €930 threshold (this covenant's 7% floor)
+         Broadcasts PRICE_DROP_ALERT to covenant channel (only María/Elena/Isabel subscribed)
          → Elena: "⚠️ Payment cancelled - price drop"
          → Isabel: "⚠️ Covenant aborting - buffer will return"
 
