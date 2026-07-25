@@ -288,31 +288,33 @@ Result: €100 value preserved
 
 **How auto-refund monitoring works:**
 
-### Oracle-over-Nostr Architecture
+### Blockchain-as-Oracle Architecture
 
-**Three layers of monitoring:**
+**How price monitoring works:**
 
-**Layer 1: Oracle Broadcasts (Primary Detection)**
-- Multiple oracles (Coinbase, Kraken, Bitstamp) broadcast BCH/EUR prices to Nostr channels
-- Devices subscribe to oracle channels (push, not HTTP polling)
-- Multi-oracle consensus (devices calculate median price)
+**Price Discovery from Real Trades**
+- Every covenant funding = trade signal (on-chain proof)
+- Sellers set their own prices (Isabel chooses Kraken, Carlos chooses Coinbase, etc.)
+- Network calculates reputation-filtered VWAP (only trust high-rep sellers)
+- Asgaya oracle bootstraps (Kraken API) until network matures
 
-**Layer 2: Global Price Watch (Network Effect)**
-- All devices with active covenants contribute price samples once per minute
-- 100 covenants = 300 devices = 200ms resolution
-- Network resolution improves as user base grows
+**Market Price Calculation**
+- María's device subscribes to Asgaya market channel (Nostr)
+- Receives trade broadcasts in real-time (price + volume + seller reputation)
+- Calculates VWAP from trusted trades (rep >= 90)
+- Hybrid weighting during bootstrap (user VWAP + Asgaya oracle)
 
-**Layer 3: Covenant Monitoring**
-- Each device monitors its covenants against consensus price
-- Detects >7% drops, triggers auto-refund
+**Covenant Monitoring**
+- Compares market price against covenant threshold (7% drop)
+- Detects crossing, triggers auto-refund
 - Broadcasts alerts to per-covenant channels
 
 **Benefits:**
-- 🔒 Censorship-resistant (oracle-over-Nostr, can't block relays)
-- ⚡ Sub-second detection (oracle broadcasts reach all devices simultaneously)
+- 🔒 Maximum censorship resistance (blockchain can't be shut down)
+- 📊 Real market prices (actual trades, not CEX speculation)
 - 💰 Zero cost per device (pure subscription, no HTTP polling)
-- 🛡️ Massive redundancy (multiple oracles, hundreds of monitors)
-- 🌐 Permissionless (anyone can run oracle, publish to Nostr)
+- 🛡️ Massive redundancy (hundreds of monitoring devices)
+- 🌐 Fully permissionless (anyone can be seller, contribute price signals)
 
 ### Nostr Coordination
 
