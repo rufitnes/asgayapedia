@@ -8,7 +8,9 @@
 
 ## Overview
 
-The Notification Bot is what makes passive selling possible:
+The Notification Bot has **two responsibilities:**
+
+### 1. Payment Detection (Passive Selling)
 - **Isabel (passive seller):** Has active listing, goes about her day
 - **María pays Isabel:** Bizum to +34612345678, reference "Elena#142"
 - **Isabel's phone:** Detects bank notification, extracts "Elena#142"
@@ -26,6 +28,18 @@ The Notification Bot is what makes passive selling possible:
 - Result: Most modern banking apps use push notifications only
 
 **Legacy SMS support:** Some users (grandfathered accounts) still receive SMS for Bizum payments. This is increasingly rare as banks phase out SMS to reduce costs. The `smsbridge_loop.py` prototype demonstrated SMS parsing works, but Notification Listener Service is the primary approach for Phase 0.
+
+### 2. Oracle Price Subscription (Auto-Refund Monitoring)
+
+The bot also maintains Nostr subscriptions to oracle price feeds for covenant monitoring:
+- **Subscribe to oracle channels:** Coinbase, Kraken, Bitstamp broadcasting BCH/EUR prices
+- **Calculate consensus:** Median price from multiple oracle sources
+- **Contribute to global price watch:** Device publishes consensus price once per minute
+- **Monitor covenant thresholds:** Detect >7% price drops, trigger auto-refund if needed
+
+**See:** [Distributed Monitoring](../../the-mechanism/nostr-coordination/distributed-monitoring.md) for oracle-over-Nostr architecture.
+
+**Cost:** Zero (pure Nostr subscription, no HTTP polling). 150× reduction vs traditional HTTP API polling.
 
 ---
 

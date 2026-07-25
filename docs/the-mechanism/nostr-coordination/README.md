@@ -393,6 +393,21 @@ The seller doesn't manually respond to messages. **The bot automates everything:
 
 ---
 
+## Nostr Message Types in Asgaya
+
+**Payment coordination (Phase 0):**
+- `payment_info_request` — Sender → Seller (covenant ID, amount, payment method)
+- `payment_info_response` — Seller → Sender (bank details, reference code, expiry)
+
+**Oracle price feeds (Phase 1.5):**
+- **Oracle broadcasts** — Coinbase/Kraken/Bitstamp → All devices (BCH/EUR prices)
+- **Global price watch** — All devices contribute samples (network effect scaling)
+- **Covenant alerts** — Per-covenant channels (PRICE_DROP_ALERT, REFUND_BROADCAST, CLAIM_BROADCAST)
+
+**See:** [Distributed Monitoring](distributed-monitoring.md) for oracle-over-Nostr architecture and censorship-resistant price feeds.
+
+---
+
 ## Nostr Features in Phase 0
 
 **What's ready:**
@@ -403,6 +418,7 @@ The seller doesn't manually respond to messages. **The bot automates everything:
 - ✅ Liveness check (2-minute timeout)
 
 **What's coming (Phase 1+):**
+- Oracle price feeds (Phase 1.5) — Already designed, implementation planned
 - User-to-user messaging (ask seller questions before committing)
 - Group chat (community coordination)
 - Dispute resolution chat (mediation if payment fails)
@@ -564,5 +580,6 @@ That's the point.
 **In this section:**
 - [Device Health Checks](device-health.md) - Proactive fraud prevention
 - [Dispute Resolution](dispute-resolution.md) - What happens when trades fail
+- [Distributed Monitoring](distributed-monitoring.md) - Oracle-over-Nostr price feeds for auto-refund protection
 
 **Related:** [Wallet](../wallet/README.md) · [Bulletin Board](../bulletin-board/README.md) · [Notification Bot](../notification-bot/README.md) · [Stability Layer](../stability-layer/README.md)

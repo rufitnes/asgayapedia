@@ -65,8 +65,9 @@ After María pays Isabel via Bizum, she sees:
 ```
 
 **What's happening in background:**
-- María's app checks price every 60 seconds (staggered with recipient/seller devices for 20s resolution)
-- Monitors time remaining
+- María's app subscribes to oracle price broadcasts over Nostr (push, not polling)
+- Contributes consensus price to global price watch once per minute
+- Monitors covenant against multi-oracle consensus price
 - Watches for claim transaction
 - **Requires zero user interaction**
 
@@ -287,19 +288,31 @@ Result: €100 value preserved
 
 **How auto-refund monitoring works:**
 
-### Distributed Monitoring (3 Devices)
+### Oracle-over-Nostr Architecture
 
-- **Sender device:** Checks price every 60s (offset: 0s)
-- **Recipient device:** Checks price every 60s (offset: 20s)
-- **Seller device:** Checks price every 60s (offset: 40s)
+**Three layers of monitoring:**
 
-**Result:** Effective 20-second resolution (60s / 3 devices), but each device only queries once per minute.
+**Layer 1: Oracle Broadcasts (Primary Detection)**
+- Multiple oracles (Coinbase, Kraken, Bitstamp) broadcast BCH/EUR prices to Nostr channels
+- Devices subscribe to oracle channels (push, not HTTP polling)
+- Multi-oracle consensus (devices calculate median price)
+
+**Layer 2: Global Price Watch (Network Effect)**
+- All devices with active covenants contribute price samples once per minute
+- 100 covenants = 300 devices = 200ms resolution
+- Network resolution improves as user base grows
+
+**Layer 3: Covenant Monitoring**
+- Each device monitors its covenants against consensus price
+- Detects >7% drops, triggers auto-refund
+- Broadcasts alerts to per-covenant channels
 
 **Benefits:**
-- ⚡ Fast detection (20s vs 60s)
-- 💰 Low cost (1 query/min per device)
-- 🛡️ Redundancy (if one offline, others monitor)
-- 🔔 Instant notification via Nostr (all parties know immediately)
+- 🔒 Censorship-resistant (oracle-over-Nostr, can't block relays)
+- ⚡ Sub-second detection (oracle broadcasts reach all devices simultaneously)
+- 💰 Zero cost per device (pure subscription, no HTTP polling)
+- 🛡️ Massive redundancy (multiple oracles, hundreds of monitors)
+- 🌐 Permissionless (anyone can run oracle, publish to Nostr)
 
 ### Nostr Coordination
 

@@ -440,18 +440,29 @@ verified        BOOLEAN             // Confirmed on-chain?
 
 ---
 
-### 6. AnyHedge Oracle (Price Feeds)
+### 6. Price Oracles (Oracle-over-Nostr)
 
-**What:** Decentralized oracle for EUR/BCH and XAU/BCH price feeds
+**What:** Multiple independent oracles broadcasting BCH/EUR and BCH/XAU prices to Nostr channels
 
 **Why needed:**
+- Auto-refund protection (detect >7% price drops for covenant monitoring)
 - Create AnyHedge contracts (merchant shorts BCH vs EUR/XAU)
 - Settle contracts at maturity (30 days)
-- Auto-renewal
 
-**Recommendation:** Use existing AnyHedge oracle (General Protocols or equivalent)
+**Architecture:**
+- **Multiple oracles** (Coinbase, Kraken, Bitstamp) broadcast to Nostr channels
+- **Devices subscribe** (push, not HTTP polling) - censorship-resistant
+- **Multi-oracle consensus** - devices calculate median from multiple sources
+- **Permissionless** - anyone can run oracle, publish to Nostr
+- **Global price watch** - devices contribute samples, network effect scaling
 
-**Protocol specs:** AnyHedge contract structure - see [stability-layer.md](stability-layer.md)
+**Recommendation:** Subscribe to 3+ oracle channels via Nostr WebSocket. Calculate median price from multiple sources. Contribute device's consensus price to global price watch channel once per minute.
+
+**Protocol specs:** 
+- Oracle broadcast schema - see [distributed-monitoring.md](../../the-mechanism/nostr-coordination/distributed-monitoring.md)
+- AnyHedge contract structure - see [stability-layer.md](stability-layer.md)
+
+**Cost:** Zero per device (pure subscription, no HTTP API calls). 150× reduction vs traditional HTTP polling.
 
 ---
 
