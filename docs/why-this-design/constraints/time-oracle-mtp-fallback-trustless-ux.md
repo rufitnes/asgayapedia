@@ -222,7 +222,7 @@ Oracle refuses to sign any price updates
 
 **Mitigation:** Use multiple oracle providers (future enhancement)
 
-**Phase 1.5 evolution:** [Distributed Monitoring](../../the-mechanism/nostr-coordination/distributed-monitoring.md) implements multi-oracle consensus where devices subscribe to multiple independent oracles (Coinbase, Kraken, Bitstamp) broadcasting over Nostr. Censorship-resistant, permissionless oracle network eliminates single-oracle failure mode.
+**Phase 1.5 evolution:** [Distributed Monitoring](../../the-mechanism/nostr-coordination/distributed-monitoring.md) implements blockchain-as-oracle architecture where every covenant funding becomes a trade signal. Price discovery emerges from reputation-filtered VWAP of real Asgaya trades (on-chain), bootstrapped by Asgaya oracle until network matures. Censorship-resistant (blockchain can't be shut down), permissionless (anyone can be seller), eliminates single-oracle failure mode.
 
 **Scenario 4: Oracle colludes with recipient**
 
