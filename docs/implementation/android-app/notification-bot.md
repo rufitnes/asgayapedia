@@ -29,15 +29,16 @@ The Notification Bot has **two responsibilities:**
 
 **Legacy SMS support:** Some users (grandfathered accounts) still receive SMS for Bizum payments. This is increasingly rare as banks phase out SMS to reduce costs. The `smsbridge_loop.py` prototype demonstrated SMS parsing works, but Notification Listener Service is the primary approach for Phase 0.
 
-### 2. Oracle Price Subscription (Auto-Refund Monitoring)
+### 2. Market Price Subscription (Auto-Refund Monitoring)
 
-The bot also maintains Nostr subscriptions to oracle price feeds for covenant monitoring:
-- **Subscribe to oracle channels:** Coinbase, Kraken, Bitstamp broadcasting BCH/EUR prices
-- **Calculate consensus:** Median price from multiple oracle sources
-- **Contribute to global price watch:** Device publishes consensus price once per minute
+The bot also maintains Nostr subscriptions to market price feeds for covenant monitoring:
+- **Subscribe to market channel:** `asgaya:market:bch-eur` (trade broadcasts from sellers)
+- **Subscribe to Asgaya oracle:** `asgaya:oracle:asgaya` (Kraken API bootstrap)
+- **Calculate reputation-filtered VWAP:** Only trust high-rep sellers (>= 90)
+- **Hybrid weighting:** User VWAP + Asgaya oracle during bootstrap
 - **Monitor covenant thresholds:** Detect >7% price drops, trigger auto-refund if needed
 
-**See:** [Distributed Monitoring](../../the-mechanism/nostr-coordination/distributed-monitoring.md) for oracle-over-Nostr architecture.
+**See:** [Distributed Monitoring](../../the-mechanism/nostr-coordination/distributed-monitoring.md) for blockchain-as-oracle architecture.
 
 **Cost:** Zero (pure Nostr subscription, no HTTP polling). 150× reduction vs traditional HTTP API polling.
 

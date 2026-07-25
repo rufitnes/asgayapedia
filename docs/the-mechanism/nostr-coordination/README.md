@@ -399,12 +399,12 @@ The seller doesn't manually respond to messages. **The bot automates everything:
 - `payment_info_request` — Sender → Seller (covenant ID, amount, payment method)
 - `payment_info_response` — Seller → Sender (bank details, reference code, expiry)
 
-**Oracle price feeds (Phase 1.5):**
-- **Oracle broadcasts** — Coinbase/Kraken/Bitstamp → All devices (BCH/EUR prices)
-- **Global price watch** — All devices contribute samples (network effect scaling)
+**Market price feeds (Phase 1.5):**
+- **Trade broadcasts** — Sellers → Market channel (price + volume + reputation from covenant fundings)
+- **Asgaya oracle** — Asgaya → All devices (Kraken API bootstrap until network matures)
 - **Covenant alerts** — Per-covenant channels (PRICE_DROP_ALERT, REFUND_BROADCAST, CLAIM_BROADCAST)
 
-**See:** [Distributed Monitoring](distributed-monitoring.md) for oracle-over-Nostr architecture and censorship-resistant price feeds.
+**See:** [Distributed Monitoring](distributed-monitoring.md) for blockchain-as-oracle architecture and on-chain price discovery.
 
 ---
 

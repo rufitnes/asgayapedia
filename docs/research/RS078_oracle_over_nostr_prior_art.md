@@ -152,21 +152,20 @@ MTP fallback: Guarantees trustless refund
 
 ## Asgaya's Novel Contributions
 
-### 1. Push-Based Multi-Oracle Consensus
+### 1. Blockchain-as-Oracle Price Discovery
 
-- Devices subscribe to multiple oracle channels (Coinbase, Kraken, Bitstamp)
-- Calculate median from all sources in real-time
-- No single oracle controls detection
-- Censorship-resistant (can't block all oracles + all Nostr relays)
+- Every covenant funding = trade signal (on-chain, unfakeable)
+- Reputation-filtered VWAP from real Asgaya trades (not CEX speculation)
+- User sovereignty: Sellers choose own price sources (Kraken, Coinbase, Bitstamp, etc.)
+- Maximum censorship resistance (blockchain can't be shut down)
+- Network effect: More trades = better price discovery
 
-### 2. Global Price Watch Channel
+### 2. Bootstrap Strategy (Asgaya as Training Wheels)
 
-- All devices with active covenants contribute price samples once per minute
-- Network effect: More users = better resolution for everyone
-  - 100 covenants (300 devices) = 200ms resolution
-  - 1,000 covenants (3,000 devices) = 20ms resolution
-- Individual cost stays constant (1 sample/minute)
-- Network benefit scales with adoption
+- Phase 0: Asgaya acts as first seller + oracle (Kraken API)
+- Phase 1-2: Hybrid weighting as network grows (user VWAP gains weight)
+- Phase 3: Network self-reliant (95%+ user VWAP, Asgaya optional)
+- Gradual decentralization from centralized bootstrap to permissionless market
 
 ### 3. Oracle-for-UX, MTP-for-Security Separation
 
@@ -175,11 +174,12 @@ MTP fallback: Guarantees trustless refund
 - Oracle failure degrades UX, never security
 - Unique trust model: monitoring vs enforcement
 
-### 4. Three-Layer Architecture
+### 4. Market Self-Balancing Security
 
-- **Layer 1:** Oracle broadcasts (censorship-resistant price feed)
-- **Layer 2:** Global price watch (network-wide samples, network effect)
-- **Layer 3:** Per-covenant monitoring (threshold detection, auto-refund)
+- Four natural defense mechanisms (rational buyers, inventory limits, merchant reactions, arbitrage)
+- Reputation filter prevents Sybil attacks (90+ required for VWAP influence)
+- Auto-refund attack catch-22 (maintain rep = losses OR reject = rep drops)
+- Economic incentives resist manipulation without central authority
 
 ---
 

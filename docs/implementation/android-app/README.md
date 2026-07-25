@@ -450,13 +450,14 @@ verified        BOOLEAN             // Confirmed on-chain?
 - Settle contracts at maturity (30 days)
 
 **Architecture:**
-- **Multiple oracles** (Coinbase, Kraken, Bitstamp) broadcast to Nostr channels
-- **Devices subscribe** (push, not HTTP polling) - censorship-resistant
-- **Multi-oracle consensus** - devices calculate median from multiple sources
-- **Permissionless** - anyone can run oracle, publish to Nostr
-- **Global price watch** - devices contribute samples, network effect scaling
+- **Blockchain-as-oracle** - covenant fundings are trade signals (on-chain proof)
+- **Trade broadcasts** - sellers publish price + volume + reputation to Nostr market channel
+- **Reputation-filtered VWAP** - devices calculate from trusted sellers only (rep >= 90)
+- **Asgaya oracle bootstrap** - Kraken API supplements until network matures
+- **Hybrid weighting** - user VWAP gains weight as trade volume grows
+- **Permissionless** - anyone can be seller, contribute trade signals
 
-**Recommendation:** Subscribe to 3+ oracle channels via Nostr WebSocket. Calculate median price from multiple sources. Contribute device's consensus price to global price watch channel once per minute.
+**Recommendation:** Subscribe to `asgaya:market:bch-eur` and `asgaya:oracle:asgaya` Nostr channels. Calculate reputation-filtered VWAP from trade broadcasts. Use hybrid weighting (user VWAP + Asgaya oracle) during bootstrap phase.
 
 **Protocol specs:** 
 - Oracle broadcast schema - see [distributed-monitoring.md](../../the-mechanism/nostr-coordination/distributed-monitoring.md)
