@@ -654,6 +654,202 @@ setInterval(() => {
 
 ---
 
+## Market Self-Balancing (Security Analysis)
+
+**The elegant property:** Market forces naturally resist price manipulation through rational economic behavior.
+
+### Attack 1: Inflate Price (Seller Wants More Fiat)
+
+**Attacker's goal:** Post high price to manipulate VWAP upward
+
+**Scenario:**
+```
+Honest sellers: €995/BCH
+Attacker: €1050/BCH (5% premium)
+```
+
+**What happens:**
+- Buyers choose cheapest sellers (rational behavior)
+- Attacker gets 0 volume (no trades)
+- No trades = no price signals = no VWAP impact
+
+**Attack fails:** High-price sellers get ignored by market.
+
+---
+
+### Attack 2: Deflate Price (Manipulate Down)
+
+**Attacker's goal:** Sell BCH cheap to lower VWAP
+
+**Scenario:**
+```
+Honest sellers: €995/BCH
+Attacker: €900/BCH (10% discount)
+```
+
+**What happens:**
+```
+Buyers rush to attacker (best price!)
+├─ Attacker's BCH inventory drains fast
+├─ Attacker loses €95 per BCH sold (below market)
+├─ Arbitrageurs exploit (buy €900, sell €995, profit €95)
+└─ Merchants hold BCH (expect price normalization)
+```
+
+**Key insight (merchant behavior):**
+- Normal price: Merchant swaps BCH → H€ (wants stability)
+- Underpriced BCH: Merchant holds BCH (expects reversion)
+- This REDUCES selling pressure, counteracts manipulation
+
+**Attack fails:** 
+- Expensive (real losses on every trade)
+- Limited by inventory (need real BCH to sell)
+- Unsustainable (drains capital)
+- Market participants exploit mispricing
+
+---
+
+### Attack 3: Wash Trading (Fake Volume)
+
+**Attacker's goal:** Create fake trades to manipulate VWAP
+
+**Method:** Self-deal (buy from own seller account)
+
+**Costs:**
+```
+Per fake trade:
+├─ Real BCH locked in covenant (capital cost)
+├─ Transaction fees (~€0.001)
+└─ Reputation requirement (need 90+ to affect VWAP)
+
+To move VWAP by 1%:
+├─ Need €1,000+ fake volume
+├─ Against €100,000 real daily volume
+└─ Effect: Minimal, expensive
+```
+
+**Defenses:**
+1. **Reputation filter** - Need 90+ rep (takes months to earn legitimately)
+2. **Volume-weighted** - Small fakes don't matter (€100 fake vs €10,000 real = 1% weight)
+3. **Expensive at scale** - Need real BCH + fees for every fake trade
+4. **Detectable patterns** - Same buyer-seller pairs, timing analysis
+
+**Attack fails:** Too expensive for minimal effect, requires high reputation.
+
+---
+
+### Attack 4: Auto-Refund Disruption (Worst Case)
+
+**Attacker's goal:** Trigger auto-refunds by crashing VWAP
+
+**Method:** Sell BCH far below market to drop VWAP below covenant thresholds
+
+**Scenario:**
+```
+Market price: €1000/BCH
+Attacker: €850/BCH (15% below market)
+→ VWAP drops
+→ Triggers 7% auto-refund thresholds
+→ Network disruption
+```
+
+**But attacker faces a dilemma:**
+
+#### Option A: Actually Fund Covenants (Honest Attack)
+
+```
+1. Attacker posts €850/BCH listing
+2. Buyers pay via Bizum
+3. Attacker MUST fund covenants (to maintain reputation)
+
+Result:
+├─ Attacker loses €150 per BCH sold (15% below market)
+├─ Reputation stays high (90+)
+├─ VWAP manipulation works
+└─ But: Extremely expensive
+    Example: €10,000 volume = €1,500 loss
+```
+
+**Unsustainable:** Real financial losses, limited by capital.
+
+#### Option B: Reject Covenants (Dishonest Attack)
+
+```
+1. Attacker posts €850/BCH listing
+2. Buyers pay via Bizum
+3. Attacker DOESN'T fund covenant (avoids loss)
+
+Result:
+├─ Reputation drops rapidly (failed trades)
+├─ Falls below 90 threshold within days
+├─ Price signals ignored (reputation filter)
+└─ Attack fails (no VWAP impact)
+```
+
+**Attack fails:** Can't maintain 90+ reputation while rejecting covenants.
+
+**The catch:** Attacker can't have it both ways!
+- **Maintain reputation** → Must sell at real loss (expensive, unsustainable)
+- **Avoid losses** → Reputation drops → Signals ignored (attack fails)
+
+**Additional defenses:**
+1. **Limited impact** - Only affects covenants near 7% threshold, most have headroom
+2. **Arbitrageurs profit** - Buy attacker's cheap BCH, sell at market, stabilize VWAP
+3. **Network recovers** - Attack stops when attacker runs out of capital
+4. **Outlier rejection** (optional) - Statistical filtering of extreme prices
+
+---
+
+### Why Market Self-Balances
+
+**Four natural defense mechanisms:**
+
+**1. Rational Buyer Behavior**
+```
+Buyers choose cheapest price
+→ High-price manipulators get 0 volume
+→ Can't inflate VWAP
+```
+
+**2. Inventory Limits**
+```
+Low-price manipulators drain BCH inventory
+→ Limited by capital + holdings
+→ Expensive, unsustainable
+```
+
+**3. Merchant Reactions**
+```
+BCH underpriced:
+└─ Merchants hold (expect normalization)
+   └─ Reduces sell pressure
+      └─ Stabilizes market
+
+BCH overpriced:
+└─ Merchants swap to H€ immediately
+   └─ Increases sell pressure
+      └─ Brings price down
+```
+
+**4. Arbitrage Opportunities**
+```
+Price deviates from market:
+└─ Arbitrageurs exploit mispricing
+   └─ Profit while stabilizing
+      └─ Attack becomes profit opportunity
+```
+
+**Defense layers:**
+1. **Reputation filter** (90+ required to affect VWAP)
+2. **Volume weighting** (big trades matter more, fakes need scale)
+3. **Market forces** (buyers choose cheap, merchants react rationally)
+4. **Economic limits** (inventory, capital, reputation costs)
+5. **Arbitrage** (professionals exploit mispricing for profit)
+
+**Result:** Manipulation is either ineffective (ignored by market) or expensive (real financial losses). The market naturally resists attacks through rational economic behavior.
+
+---
+
 ## Cost Analysis
 
 **Traditional HTTP polling:**
