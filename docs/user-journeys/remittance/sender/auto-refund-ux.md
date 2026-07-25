@@ -109,87 +109,88 @@ When price drops 3% (early warning), María sees:
 
 ### Auto-Refund Triggered (Price Drop >7%)
 
-When price drops below €930 (7% threshold), **system automatically refunds** and mints one of the stability tokens, H€ in the example, the this all happens in the back ground, the user just needs to know that the remittance is still going to arrive if Elena cashes before time out.
+When price drops below €930 (7% threshold), **system automatically refunds and protects the value** by default.
 
 ```
 ┌─────────────────────────────────────┐
-│                                     │
+│  ✅ Refund Protected                │
 │                                      │
-│  Price dropped 7% (€930/BCH)        │
-│  Below floor: €930/BCH              │
+│  Price dropped >7% (€930/BCH)       │
 │                                      │
-│                                     │
-│     ✅ minted 100 H€                 │
-│  ⏰ Expires in: 2h 38min            │
-│ No action needed - monitoring.      │
-│                                     │
+│  ✅ Protected: 100 H€                │
+│  (equivalent to €100)               │
+│                                      │
+│  Remittance can still complete.     │
+│  Elena can cash out H€.             │
+│                                      │
+│  [Send H€ to Elena]                 │
 └─────────────────────────────────────┘
 ```
 
+*Note: H€ minting uses bull pool capacity. If pool exhausted, you'll receive BCH instead.*
 
-
-**What happened:**
+**What happened automatically (default setting):**
 1. Price crossed 7% threshold
 2. María's app detected drop (60s check cycle)
-3. **App automatically broadcast refund transaction**
-4. María gets notification (non-blocking)
-5. BCH returned to wallet
+3. App automatically broadcast refund transaction
+4. **App immediately minted 100 H€** (stability layer protection)
+5. María gets notification (non-blocking)
 
 **María did nothing.** System protected her automatically.
 
-**Why refund:** Covenant would reject Elena's claim anyway (price < floor). Better to return BCH to María immediately than wait for timeout.
-**stability layer** saved the remittance and now can be completed technically without a time limit but we don't want to overwelm the user.
+**Why automatic protection:**
+- ⚠️ **Volatility window** - Can't wait for user input when price is dropping
+- ✅ **Preserves remittance** - Elena can still cash out H€ at merchant
+- ✅ **Zero friction** - Most users want stability, not BCH exposure
+- ⚙️ **Configurable** - Advanced users can disable in Settings (see below)
+
+**Technical note:** Covenant would reject Elena's claim anyway (price < floor). Auto-refund + H€ minting preserves the remittance value.
 
 ---
 
 ### Auto-Refund Triggered (Timeout - 8 Hours)
 
-When Elena doesn't claim within 8 hours:
+When Elena doesn't claim within 8 hours, **system automatically refunds and protects the value** by default.
 
 ```
 ┌─────────────────────────────────────┐
-│  ✅ Payment Refunded                │
+│  ✅ Refund Protected                │
 │                                      │
 │  Timeout: Not claimed in 8 hours    │
 │                                      │
-│  Refunded: 0.0107 BCH               │
-│  (~€106.65 at current price)        │
+│  ✅ Protected: 100 H€                │
+│  (swapped from 0.0107 BCH)          │
 │                                      │
-│  Your BCH is back in your wallet.   │
+│  Your €100 value preserved.         │
+│  Elena can still cash out.          │
 │                                      │
-│  Contact Elena to try again?        │
-│                                      │
-│  [Send Again]  [View Transaction]   │
+│  [Send H€ to Elena]  [View Swap]    │
 └─────────────────────────────────────┘
 ```
 
-🗨 we can't mint H tokens at this point because it could be easily abused and exhaust the bull pool but we can trade the BCH automatically for H tokens in the bulleting board. H tokens being native can be swapped in seconds an the user doesn't have to know anything. If they want they can check the settings but with the basic set up we can do this as long as there is a H token seller in the bulletin board willing to trade.
+*Note: BCH → H€ swap requires H€ seller on bulletin board. If no liquidity, you'll receive BCH instead.*
 
-**What happened:**
+**What happened automatically (default setting):**
 1. 8 hours passed, Elena didn't claim
 2. Oracle timestamp confirmed expiry
-3. **App automatically broadcast refund**
-4. María notified (she might not have been watching)
-5. BCH returned
+3. App automatically broadcast refund transaction
+4. **App immediately swapped BCH → H€** on bulletin board
+5. María notified (she might not have been watching)
 
-**Edge case handled:** If María's device was offline, seller or recipient device would trigger refund. If all offline, María's device refunds when back online.
+**Why automatic swap:**
+- ⚠️ **Can't mint on timeout** - Would allow abuse (deliberately timeout to drain bull pool)
+- ✅ **Bulletin board swap** - H€ seller provides liquidity (permissionless!)
+- ✅ **Preserves remittance** - María can still send H€ to Elena
+- ✅ **Native tokens** - Swap happens in seconds, user doesn't need to know
+- ⚙️ **Configurable** - Advanced users can receive BCH instead (Settings)
+
+**Technical note:** H€ tokens are native BCH tokens (CashTokens). Anyone can be an H€ seller on the bulletin board - completely permissionless role. Phase 0: Asgaya bootstraps liquidity.
+
+**Edge case handled:** If María's device was offline, seller or recipient device would trigger refund. If all offline, María's device refunds when back online. Auto-swap happens when device reconnects.
 
 ---
 
 ## What Senders NEVER See
-
-### ❌ No "Refund" Button During Active Payment
-
-**Why not:**
-- Reduces UI clutter
-- Prevents confusion ("Should I click this?")
-- Eliminates impulsive refunds
-- Forces intentional design (auto-refund only when appropriate)
-
-**Emergency manual refund still possible:**
-- Advanced users can broadcast refund transaction manually
-- Requires technical knowledge (signing, broadcasting)
-- Not exposed in UI (permissionless at protocol layer, opinionated at app layer)
 
 ### ❌ No Complex Decision Screens
 
@@ -204,6 +205,81 @@ Refund anyway? This may be unfair to recipient.
 ```
 
 **Asgaya doesn't show this.** System decides based on pre-agreed conditions. No decision fatigue.
+
+---
+
+## Settings: Auto-Refund Protection (Advanced Users)
+
+**Default behavior (90% of users):**
+- ✅ Automatic H€ minting/swapping on refund
+- ✅ Instant protection from volatility
+- ✅ Zero friction (never see this menu)
+
+**Advanced users can configure:**
+
+```
+┌─────────────────────────────────────┐
+│  ⚙️ Auto-Refund Protection          │
+│                                      │
+│  ● Automatic (Recommended)          │
+│    Protect refunds from volatility  │
+│    • Price drop: Mint H€            │
+│    • Timeout: Swap BCH → H€         │
+│                                      │
+│  ○ Manual Control                   │
+│    You decide after each refund     │
+│    ⚠️ Exposed to volatility         │
+│                                      │
+│  ○ Always BCH                       │
+│    Never auto-convert               │
+│    ⚠️ Maximum volatility exposure   │
+│                                      │
+│  [Save Settings]                    │
+└─────────────────────────────────────┘
+```
+
+### Why Default is Automatic
+
+**For most senders:**
+- Sending remittance (€100 to Elena), not trading BCH
+- Want stability, not volatility exposure
+- Can't wait for manual input (price drops fast!)
+- Remittance should "just work"
+
+**Example scenario without auto-protect:**
+```
+t=0:   Price drops >7% → refund triggered
+t=5:   María sees notification: "Convert to H€?"
+t=10:  María clicks "Yes" → price dropped another 3%
+Result: Lost €3 waiting for user input
+```
+
+**With auto-protect (default):**
+```
+t=0:   Price drops >7% → refund + mint H€ (instant)
+t=5:   María sees notification: "✅ Protected: 100 H€"
+Result: €100 value preserved
+```
+
+### When to Disable Auto-Protect
+
+**Disable if:** You're bullish on BCH, trading rather than sending remittances, or accept full volatility risk. **For everyone else:** Leave it on (automatic protection).
+
+### Edge Cases (Fallback to BCH)
+
+**When auto-protect can't execute:**
+
+**Price drop abort:**
+- If bull pool exhausted → You receive BCH instead of H€
+- Notification: "⚠️ Bull pool at capacity - received BCH instead"
+- Can manually swap BCH → H€ later (when pool refills)
+
+**Timeout:**
+- If no H€ seller on bulletin board → You receive BCH instead
+- Notification: "⚠️ No H€ liquidity - received BCH instead"
+- Can manually swap later (when H€ seller appears)
+
+**Phase 0 note:** Asgaya bootstraps both bull pool and H€ bulletin board liquidity. Edge cases unlikely but possible during high volatility.
 
 ---
 
@@ -246,41 +322,43 @@ nostr.publish('asgaya:covenant:abc123', {
 
 **Everyone informed instantly.** No coordination failures.
 
+**Nostr message types used:**
+- `PRICE_DROP_ALERT` - Any device detects >7% drop
+- `REFUND_BROADCAST` - Sender broadcasted refund tx
+- `REFUND_CONFIRMED` - Refund tx confirmed (seller gets buffer)
+- `CLAIM_BROADCAST` - Recipient broadcasted claim tx
+- `CLAIM_CONFIRMED` - Claim tx confirmed (seller gets buffer)
+
+*Full Nostr message schema documented in [Distributed Monitoring](../../../the-mechanism/nostr-coordination/distributed-monitoring.md)*
+
 ---
 
 ## Why This Design?
 
-### User Sovereignty Over Safety Theater
+**Core philosophy:** It's the user's money. Covenants should enable, not imprison.
 
-**Quote from covenant design:**
-> "It's the user's money. Covenants should enable, not imprison."
+**Asgaya's approach:**
+- **Covenant:** Allows sender to refund anytime (sender owns it)
+- **App:** Auto-refunds only when appropriate (timeout or price drop >7%)
+- **Stability layer:** Protects value automatically (but configurable in Settings)
 
-**Traditional approach:** Lock funds until all safety conditions met (time expired AND price dropped AND oracle signed AND...).
+**Why automatic protection by default:**
 
-**Result:** Funds stuck in "protection theater" - trying to protect user by trapping their money.
+**Manual prompt approach:**
+```
+⚠️ Price dropped >7%. Convert to H€?
+[Yes] [No]
+```
 
-**Asgaya approach:** 
-- **Covenant:** Allows sender to refund anytime (sender owns the covenant)
-- **App:** Enforces fairness (only auto-refunds when appropriate)
+**Automatic approach (Asgaya):**
+```
+✅ Refund Protected
+Protected: 100 H€ (equivalent to €100)
+```
 
-**Tagline:** *The app enforces fairness. The covenant enforces ownership.*
+The difference: **Volatility doesn't wait for user input.** In 30 seconds, price could drop another 2%. Automatic protection (configurable in Settings) serves 90% of users who want stability, not volatility exposure.
 
-### Why No Manual Refund Button
-
-**Prevents abuse:**
-- Sender can't impulsively refund (ruins recipient trust)
-- Forces system to solve edge cases properly (not push decisions to user)
-- Reduces support burden ("When should I refund?")
-
-**Preserves emergency escape:**
-- Advanced users can manually broadcast refund if needed
-- Covenant allows it (permissionless)
-- App just doesn't expose it (opinionated UX)
-
-**Same pattern as Bitcoin:**
-- Bitcoin protocol: CAN send to typo'd address
-- Wallet: "⚠️ This address looks invalid. Proceed?"
-- User: Protected by UX, not protocol restriction
+**Full rationale:** See [Covenant Simplicity Principle](../../../why-this-design/constraints/covenant-simplicity-principle.md) for the complete design philosophy and Bitcoin protocol analogy.
 
 ---
 
@@ -335,26 +413,10 @@ nostr.publish('asgaya:covenant:abc123', {
 ## Success Criteria
 
 **This UX succeeds when:**
-
-✅ **Senders never need to monitor actively**
-- Set conditions once → system handles it
-- Get notification when done
-- No "check status" every 30 minutes
-
-✅ **Zero decision fatigue**
-- No "Should I refund?" prompts
-- Conditions pre-agreed at covenant creation
-- App decides, user informed
-
-✅ **Emergency escape preserved**
-- Advanced users CAN refund manually
-- Covenant is permissionless (protocol layer)
-- App is opinionated (application layer)
-
-✅ **Failure modes handled gracefully**
-- Devices offline → others monitor
-- All offline → refunds when reconnected
-- Edge cases don't trap funds
+- ✅ **Senders never monitor actively** - Set once, system handles it
+- ✅ **Zero decision fatigue** - No prompts, automatic protection by default
+- ✅ **Emergency escape preserved** - Advanced users can override in Settings
+- ✅ **Failure modes handled gracefully** - Devices offline, edge cases don't trap funds
 
 ---
 
@@ -365,7 +427,9 @@ nostr.publish('asgaya:covenant:abc123', {
 | User must check status manually | **Automatic monitoring** |
 | "Refund" button always visible | **No button (auto-refunds)** |
 | User decides when to refund | **App decides (pre-agreed conditions)** |
+| User decides if/when to stabilize | **Auto-protect by default (configurable)** |
 | Funds stuck if user forgets to refund | **Impossible - auto-refund guaranteed** |
+| Volatility exposure on refunds | **Automatic H€ minting/swap (default)** |
 | Complex UI with many options | **Simple - just status display** |
 | Decision fatigue ("Should I refund?") | **Zero decisions - just notifications** |
 | Emergency escape requires manual refund | **Same (advanced users can broadcast)** |
