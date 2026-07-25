@@ -203,7 +203,7 @@ marketPrice = €995/BCH (100% Asgaya oracle)
 
 ---
 
-### ⏳ T3.2: Phase 1 - Hybrid Weighting (30% Asgaya, 70% User)
+### ⏳ T3.2: Phase 1 - Hybrid Weighting (40% Asgaya, 60% User)
 
 **Scenario:** Growing network, €1,200 user volume/day
 
@@ -214,55 +214,38 @@ marketPrice = €995/BCH (100% Asgaya oracle)
 
 **Expected:**
 ```
-userWeight = min(1200 / 5000, 0.95) = 0.24
-Wait, this should be higher. Let me recalculate...
-
-Actually, based on distributed-monitoring.md line 230:
-"€1,200 user volume/day → 70% user VWAP + 30% Asgaya oracle"
-
-So the formula should give userWeight = 0.70
-Let me check the code at line 572:
-userWeight = Math.min(userVolume24h / 5000, 0.95)
-
-€1,200 / €5,000 = 0.24 (24%)
-
-Hmm, there's a discrepancy. The example says 70% but the formula gives 24%.
-Let me use the formula as written in the doc:
-
-userWeight = min(1200 / 5000, 0.95) = 0.24
-marketPrice = (997 × 0.24) + (995 × 0.76)
-marketPrice = 239.28 + 756.20 = €995.48/BCH
+userWeight = min(1200 / 2000, 0.95) = 0.60
+marketPrice = (997 × 0.60) + (995 × 0.40)
+marketPrice = 598.20 + 398.00 = €996.20/BCH
 ```
 
 **Verify:**
-- ✅ User VWAP gains weight as volume grows
-- ✅ Asgaya oracle provides stability
+- ✅ User VWAP gains weight as volume grows (60%)
+- ✅ Asgaya oracle provides stability (40%)
 - ✅ Smooth transition from bootstrap to user-driven
-
-**Note:** Document has example saying "€1,200 volume = 70% user" but formula gives 24%. Need to clarify formula or update example.
 
 ---
 
 ### ⏳ T3.3: Phase 2 - User VWAP Dominant (95% User, 5% Asgaya)
 
-**Scenario:** Mature network, €10,000+ user volume/day
+**Scenario:** Mature network, €2,000+ user volume/day
 
 **Setup:**
-- User trades last 24h: €10,000 (100 trades)
+- User trades last 24h: €2,500 (100 trades)
 - User VWAP: €998/BCH
 - Asgaya oracle: €995/BCH
 
 **Expected:**
 ```
-userWeight = min(10000 / 5000, 0.95) = 0.95 (capped)
+userWeight = min(2500 / 2000, 0.95) = 0.95 (capped)
 marketPrice = (998 × 0.95) + (995 × 0.05)
 marketPrice = 948.10 + 49.75 = €997.85/BCH
 ```
 
 **Verify:**
-- ✅ User VWAP carries 95% weight (maximum)
+- ✅ User VWAP carries 95% weight (maximum cap reached)
 - ✅ Asgaya oracle as 5% sanity check
-- ✅ Network self-reliant
+- ✅ Network self-reliant at €2,000+ volume
 
 ---
 
@@ -895,15 +878,7 @@ Recovery: €930→€1000 (crosses threshold)
 
 ## Notes & Issues
 
-### Issue 1: Hybrid Weighting Formula Discrepancy
-
-**Problem:** Document example (line 230) says "€1,200 volume = 70% user VWAP" but formula (line 572) gives 24%
-
-**Formula:** `userWeight = min(userVolume24h / 5000, 0.95)`
-
-**Example calculation:** €1,200 / €5,000 = 0.24 (24%, not 70%)
-
-**Action:** Clarify formula or update example in distributed-monitoring.md
+No outstanding issues.
 
 ---
 

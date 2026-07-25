@@ -204,11 +204,11 @@ const asgayaOracle = getLatestOraclePrice('asgaya:oracle:asgaya');
 
 // Weight based on user trade volume
 const userTradeVolume = sum(userTrades.map(t => t.volume));
-const weight = Math.min(userTradeVolume / 1000, 0.9); // Cap at 90%
+const weight = Math.min(userTradeVolume / 2000, 0.95); // Cap at 95%
 
 const marketPrice = (networkVWAP * weight) + (asgayaOracle * (1 - weight));
 
-// Example: €1,200 user volume/day → 70% user VWAP + 30% Asgaya oracle
+// Example: €1,200 user volume/day → 60% user VWAP + 40% Asgaya oracle
 ```
 
 **Gradual transition:** As user volume grows, network VWAP gains weight.
@@ -535,7 +535,7 @@ function calculateMarketPrice() {
   const userVolume24h = sum(userTrades.map(t => t.volume));
   
   // Weight increases as user volume grows
-  const userWeight = Math.min(userVolume24h / 5000, 0.95); // Cap at 95%
+  const userWeight = Math.min(userVolume24h / 2000, 0.95); // Cap at 95%
   const oracleWeight = 1 - userWeight;
   
   return (userVWAP * userWeight) + (asgayaOracle * oracleWeight);

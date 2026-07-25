@@ -13,6 +13,7 @@ After identifying requirements, we faced design constraints - trade-offs where n
 4. **Scaling:** Automation vs control (passive mode)
 5. **Trust:** Reputation on-chain vs central database
 6. **Expansion:** Speed vs safety (progressive payment rollout)
+7. **Covenant Time:** Oracle precision vs MTP trustlessness (dual enforcement)
 
 ---
 
@@ -47,6 +48,11 @@ After identifying requirements, we faced design constraints - trade-offs where n
 **Trade-off:** Speed vs safety, breadth vs depth  
 **Decision:** Start cash-in-person + Bizum (documented), add methods progressively via pioneer volunteers  
 **Why:** Payment infrastructure varies wildly; crowdsourced documentation scales better than dev-led; trust requires reliability
+
+### 7. [Time Oracle + MTP Fallback: Trustless UX Design](./time-oracle-mtp-fallback-trustless-ux.md)
+**Trade-off:** UX precision vs trustlessness  
+**Decision:** Dual time enforcement (oracle for UX, MTP for security)  
+**Why:** MTP-only creates timing uncertainty and merchant fraud risk; oracle-only requires trust; combined approach provides precise UX with trustless fallback
 
 ---
 

@@ -19,12 +19,8 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
-data class BankHealth(
-    val isInstalled: Boolean,
-    val isEnabled: Boolean,
-    val isBatteryOptimized: Boolean,
-    val hasIssues: Boolean
-)
+// BankHealth moved to DeviceHealthMonitor.kt
+// Now using CompleteHealth which includes both device and bank app health
 
 class MainActivity : AppCompatActivity() {
 
@@ -160,67 +156,47 @@ class MainActivity : AppCompatActivity() {
     private fun checkAndDisplayBankHealth(bankName: String) {
         val packageName = bankPackageMap[bankName] ?: return
 
-        val health = checkBankHealth(packageName)
+        val completeHealth = DeviceHealthMonitor.checkCompleteHealth(this, packageName)
 
-        if (health.hasIssues) {
-            binding.bankHealthStatus.visibility = android.view.View.VISIBLE
-            binding.bankHealthStatus.setTextColor(getColor(android.R.color.holo_orange_dark))
+        // Display combined health status
+        binding.bankHealthStatus.visibility = android.view.View.VISIBLE
 
-            val issues = buildList {
-                if (!health.isInstalled) add("not installed")
-                if (!health.isEnabled) add("disabled")
-                if (health.isBatteryOptimized) add("battery optimized")
+        when {
+            // Critical: Device battery critical OR bank app has issues
+            completeHealth.deviceHealth.hasCriticalBattery || completeHealth.bankAppHealth.hasIssues -> {
+                binding.bankHealthStatus.setTextColor(getColor(android.R.color.holo_red_dark))
+                val issues = buildList {
+                    if (completeHealth.deviceHealth.hasCriticalBattery) {
+                        add("${completeHealth.deviceHealth.batteryLevel}% battery (CRITICAL)")
+                    }
+                    addAll(completeHealth.bankAppHealth.getIssuesList())
+                }
+                binding.bankHealthStatus.text = "🔴 CRITICAL: ${issues.joinToString(", ")}"
             }
 
-            binding.bankHealthStatus.text = "⚠️ $bankName app ${issues.joinToString(", ")}"
-        } else {
-            binding.bankHealthStatus.visibility = android.view.View.VISIBLE
-            binding.bankHealthStatus.setTextColor(getColor(android.R.color.holo_green_dark))
-            binding.bankHealthStatus.text = "✅ $bankName app is healthy"
+            // Warning: Low battery (not critical) OR other warnings
+            completeHealth.hasWarnings -> {
+                binding.bankHealthStatus.setTextColor(getColor(android.R.color.holo_orange_dark))
+                val warnings = buildList {
+                    if (completeHealth.deviceHealth.hasLowBattery && !completeHealth.deviceHealth.hasCriticalBattery) {
+                        add("${completeHealth.deviceHealth.batteryLevel}% battery")
+                    }
+                    if (!completeHealth.deviceHealth.isCharging && completeHealth.deviceHealth.hasLowBattery) {
+                        add("not charging")
+                    }
+                }
+                binding.bankHealthStatus.text = "⚠️ ${warnings.joinToString(", ")}"
+            }
+
+            // Healthy
+            else -> {
+                binding.bankHealthStatus.setTextColor(getColor(android.R.color.holo_green_dark))
+                binding.bankHealthStatus.text = "✅ Healthy (${completeHealth.deviceHealth.batteryLevel}%${if (completeHealth.deviceHealth.isCharging) " charging" else ""})"
+            }
         }
     }
 
-    private fun checkBankHealth(packageName: String): BankHealth {
-        android.util.Log.d("BizumParser", "Checking health for: $packageName")
-
-        val isInstalled = try {
-            packageManager.getApplicationInfo(packageName, 0)
-            android.util.Log.d("BizumParser", "$packageName: isInstalled=true")
-            true
-        } catch (e: PackageManager.NameNotFoundException) {
-            android.util.Log.d("BizumParser", "$packageName: isInstalled=false (${e.message})")
-            false
-        }
-
-        val isEnabled = if (isInstalled) {
-            val state = packageManager.getApplicationEnabledSetting(packageName)
-            val enabled = state != PackageManager.COMPONENT_ENABLED_STATE_DISABLED &&
-                         state != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER
-            android.util.Log.d("BizumParser", "$packageName: state=$state, isEnabled=$enabled")
-            enabled
-        } else {
-            false
-        }
-
-        val isBatteryOptimized = if (isInstalled) {
-            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-            val isIgnoring = powerManager.isIgnoringBatteryOptimizations(packageName)
-            android.util.Log.d("BizumParser", "$packageName: isIgnoring=$isIgnoring, isBatteryOptimized=${!isIgnoring}")
-            !isIgnoring
-        } else {
-            false
-        }
-
-        val health = BankHealth(
-            isInstalled = isInstalled,
-            isEnabled = isEnabled,
-            isBatteryOptimized = isBatteryOptimized,
-            hasIssues = !isInstalled || !isEnabled || isBatteryOptimized
-        )
-
-        android.util.Log.d("BizumParser", "$packageName: health=$health")
-        return health
-    }
+    // checkBankHealth removed - now using DeviceHealthMonitor.checkCompleteHealth()
 
     override fun onResume() {
         super.onResume()
