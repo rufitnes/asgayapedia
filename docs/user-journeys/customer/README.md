@@ -129,6 +129,32 @@ You can also use Asgaya merchants as a global ATM network:
 **Phase 0 focus:** Remittances  
 **Phase 1+ expansion:** Commerce flows
 
+---
+
+## ⚠️ Technical Note: Covenant Confirmation Delay (2026-07-26)
+
+**Issue discovered:** The covenant-based customer flow (Flow 2) assumes near-instant covenant activation, but blockchain confirmation takes ~10-15 minutes.
+
+**Impact on Flow 2 timing:**
+- **Original estimate:** 1-3 minutes (seller bot + coordination)
+- **Actual with confirmation:** 15-18 minutes (unacceptable for point-of-sale)
+
+**Implications:**
+- **0-conf approach:** Seller funds covenant (0-conf), merchant claims (0-conf) → maintains 1-3 min UX but requires accepting unconfirmed transactions
+- **1-conf approach:** Wait for confirmation → 15+ min (breaks point-of-sale UX)
+
+**Resolution strategy:**
+1. **Phase 0:** Focus on remittance flow (recipient willing to wait for confirmation)
+2. **Phase 1+:** Revisit customer flow with either:
+   - App logic + Nostr coordination (without covenant, or simpler covenant)
+   - 0-conf acceptance model (merchant risk tolerance)
+   - Pre-funded covenant mechanisms
+   - Customer buys BCH in advance (not at point of sale)
+
+**For now:** Customer flow design is DEFERRED pending remittance flow validation.
+
+**Status:** Needs revision after Phase 0 remittance completion
+
 **Why remittances first:** Building the remittance flow creates the infrastructure for all other use cases. By serving remittance users, we automatically enable:
 - Customer payments (same merchant network, simpler flow - direct BCH instead of covenant)
 - ATM network (merchants provide cash-in/cash-out for travelers)
