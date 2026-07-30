@@ -4,17 +4,28 @@
 
 **Complexity:** Medium - Standard BCH wallet operations + Cash Account + covenant script building
 
+**Implementation Status:**  
+✅ Manual covenant construction (July 29)  
+✅ Electrum balance queries (July 28)  
+✅ WIF private key import (July 28)  
+⏳ Transaction construction (in progress)  
+⏳ ECDSA signing (planned)  
+📋 HD wallet / BIP39 (Phase 1)  
+📋 Cash Account registration (Phase 1)  
+
 ---
 
 ## Overview
 
 The Wallet component handles all BCH operations:
-- **Key management:** HD wallets, seed phrases (BIP39/BIP44)
-- **Cash Accounts:** Register `name#number` on-chain, resolve to BCH address
-- **Covenant creation:** Build BCH scripts with buffer + expiry
-- **UTXO management:** Coin selection, change addresses, fee estimation
+- **Key management:** ✅ WIF import (done) | 📋 HD wallets, seed phrases (Phase 1)
+- **Cash Accounts:** 📋 Register `name#number` on-chain, resolve to BCH address (Phase 1)
+- **Covenant creation:** ✅ Manual construction (done) | ⏳ Transaction building (in progress)
+- **UTXO management:** ✅ Electrum queries (done) | ⏳ Coin selection (in progress)
 
 **No custody:** User controls their own keys. No backend server holds funds.
+
+**Reference:** [Asgaya Trinity](./asgaya-trinity.md) - The 3-part wallet architecture (create, send, claim)
 
 ---
 
@@ -176,6 +187,10 @@ function resolveCashAccount(cash_account):
 
 ## Covenant Creation
 
+> **Implementation Status:** ✅ Manual construction working (v2.5, July 29, 2026)  
+> **Production Covenant:** v2.5 with 4 functions (claim, merchantCashout, refund, sellerRecoverBuffer)  
+> **Reference:** [Manual Construction](./manual-construction.md) | [Version History](../covenants/version-history.md)
+
 ### What Is a Covenant?
 
 **Definition:** BCH script that locks funds until specific conditions met
@@ -192,7 +207,7 @@ function resolveCashAccount(cash_account):
 
 ---
 
-### Covenant Script Structure
+### Covenant Script Structure (Conceptual)
 
 **Pseudocode:**
 ```
@@ -232,7 +247,7 @@ function createCovenant(recipient_address, amount_satoshis, buffer_percent, expi
   }
 ```
 
-**BCH Script (simplified):**
+**BCH Script (simplified for illustration):**
 ```
 OP_IF
   // Recipient claim path
@@ -244,26 +259,40 @@ OP_ELSE
 OP_ENDIF
 ```
 
-**Actual implementation:** More complex - includes price oracle checks, buffer return logic, abort conditions. See RS057 for full covenant specification.
+> **⚠️ This is a conceptual illustration only.**  
+> The production v2.5 covenant uses:
+> - **Oracle price verification** (`checkDataSig` for price+timestamp)
+> - **4 functions** (claim, merchantCashout, refund, sellerRecoverBuffer)
+> - **P2SH32 format** (32-byte script hash, CashAddr encoding)
+> - **517-byte redeemScript** (150 bytes params + 367 bytes bytecode)
+> 
+> **See:** [Manual Construction](./manual-construction.md) for actual implementation  
+> **See:** [Version History](../covenants/version-history.md) for v2.5 specification
 
 ---
 
-### Covenant Lifecycle
+### Covenant Lifecycle (v2.5)
 
 **States:**
-1. **Created:** María creates template, broadcasts to bulletin board
-2. **Funded:** Isabel locks €107 BCH, broadcasts to blockchain
-3. **Claimed:** Elena receives €100 BCH (or Carlos if cashing out)
-4. **Expired:** 8 hours passed, María can reclaim funds
-5. **Aborted:** BCH dropped >7%, funds return to María
+1. **Created:** María creates covenant parameters, generates P2SH32 address
+2. **Funded:** Covenant address receives BCH on blockchain
+3. **Claimed:** Elena (or merchant) claims funds with oracle signature
+4. **Refunded:** María reclaims funds (can happen anytime, permissionless)
 
 **State transitions:**
 ```
-Created → Funded (Isabel detects payment, locks BCH)
-Funded → Claimed (Elena claims, or Carlos co-signs)
-Funded → Expired (8 hours, no claim)
-Funded → Aborted (Price drop >7%)
+Created → Funded (transaction broadcasts covenant funding)
+Funded → Claimed (recipient/merchant claims with oracle signature)
+Funded → Refunded (sender refunds - no restrictions in v2.5)
 ```
+
+**Why refund is permissionless:**
+- v2.5 covenant allows sender to refund anytime (no time/price checks on-chain)
+- Client enforces fairness (auto-refunds only on expiry or price drop)
+- "Expired" and "price drop" are *reasons* for auto-refund, not separate covenant states
+- Social layer (Nostr) monitors refunds, reputation system tracks abuse
+
+**See:** [Two-Layer Architecture](./two-layer-architecture.md) for covenant vs client separation
 
 **Monitoring covenant state:**
 ```
@@ -485,10 +514,10 @@ if covenant.expiry - now() < 1_hour:
 
 ---
 
-**Status:** Phase 0 - Implementation pending  
-**Updated:** 2026-06-25  
+**Status:** Phase 0 - Partial implementation (covenant construction ✅, transaction construction ⏳)  
+**Updated:** 2026-07-30  
 **Complexity:** Medium (standard BCH operations + covenant building)  
-**Research:** See RS057 (BCH/Cash Accounts implementation details)
+**References:** [Manual Construction](./manual-construction.md) | [Version History](../covenants/version-history.md) | [Asgaya Trinity](./asgaya-trinity.md)
 ---
 
 ## Navigation
