@@ -362,7 +362,7 @@ function sellerRecoverBuffer(sig sellerSig, datasig oracleSig, bytes oracleMessa
 5. Merchant claims covenant funds (BCH payment + seller buffer)
 
 **Why this is killer:**
-- **Zero onboarding:** Recipient doesn't need wallet/exchange account
+- **Minimal onboarding:** Recipient needs lightweight wallet to sign (both recipient + merchant cosign when cash is handed over), but doesn't need exchange account or BCH balance
 - **Instant liquidity:** Merchant converts BCH → fiat (they have infrastructure)
 - **Network effects:** More merchants = more convenient = more users
 - **Compliance friendly:** Merchant handles KYC/AML (not sender/recipient)
@@ -422,7 +422,11 @@ function merchantCashout(
 
 **The implication:** Recipients don't need to understand Bitcoin Cash. They just know "I can pick up €100 at the corner store." The covenant guarantees the merchant gets paid.
 
-**Merchant incentive:** Keep buffer (profit) + convert BCH to fiat (liquidity). No risk if they verify covenant before giving cash.
+**Merchant incentive:** 
+- **Direct:** 0.5% cash-out fee on the transaction
+- **Indirect:** Attracting customers with fresh money in their pocket (30% margin on any sales they make in-store)
+- **Liquidity:** Merchant gets BCH at market rate, can convert to fiat or hold
+- **No risk:** Verify covenant before giving cash
 
 ### Testing Results (Chipnet)
 
@@ -451,8 +455,10 @@ function merchantCashout(
 
 **What changed:** Removed ALL restrictions from refund path.
 
-**v2.4 refund:**
+**The problem with v2.4 refund:** Still had conditions that trapped sender's capital
+
 ```cash
+// v2.4 approach (restrictive - this is what we moved away from)
 function refund(sig senderSig, datasig oracleSig, bytes oracleMessage) {
     require(checkSig(senderSig, sender));
     
@@ -463,13 +469,15 @@ function refund(sig senderSig, datasig oracleSig, bytes oracleMessage) {
     bool oracleExpired = oracleTimestamp >= expiryOracleTime;
     bool priceDropped = currentPriceInCents < floorPrice;
     
-    require(oracleExpired || priceDropped);  // ← Still restricting!
+    require(oracleExpired || priceDropped);  // ← Still restricting! Sender can't refund at t=5 if neither condition met
     
     // Refund outputs...
 }
 ```
 
-**v2.5 refund:**
+**Why this was bad:** If covenant expires in future but hasn't expired yet, sender's capital is locked even though claim is impossible. v2.5 fixes this by trusting the client layer instead.
+
+**v2.5 refund (permissionless):**
 ```cash
 function refund(sig senderSig) {
     require(checkSig(senderSig, sender));
@@ -605,34 +613,88 @@ The covenant doesn't change between phases—only the oracle infrastructure evol
 
 **Lesson:** Edge cases matter. Real-world devices fail. Capital efficiency requires all participants to have recovery paths.
 
+### 3. Funder Parameter Semantics (Discovered August 2, 2026)
+
+**Naming confusion:** The `seller` parameter in the covenant constructor is semantically a `funder` parameter.
+
+**Why this matters:**
+- The parameter name suggests "seller" is always a BCH seller
+- Reality: It's whoever provides the BCH to fund the covenant (the funder)
+- In remittance flows: funder = BCH seller (correct usage of "seller" name)
+- In merchant flows: funder = sender themselves (misleading "seller" name)
+
+**Buffer ownership semantics:**
+- Buffer always goes to `seller` parameter (the funder)
+- If BCH seller funded covenant → BCH seller gets buffer back (their liquidity reward)
+- If sender funded covenant → sender gets buffer back (their own capital returned)
+
+**Why the parameter is named "seller":**
+- v2.5 covenant was designed during remittance-first development (July 2026)
+- In remittance flows, funder is always the BCH seller
+- When merchant flows were validated (August 2026), discovered sender can also be funder
+- Parameter name reflects original use case, not general semantics
+
+**Production implications:**
+- **All 4 spending paths work correctly** - buffer goes to `seller` parameter regardless of who that represents
+- **WebView integration handles both cases** - client passes correct pubkey as `sellerPubkey` parameter
+- **No covenant changes needed** - it's a naming clarity issue, not a functional bug
+
+**Example flows:**
+
+**Remittance (seller is BCH seller):**
+```
+Sender buys BCH from seller → Seller funds covenant
+├─ Claim: Payment to recipient, buffer to seller ✅
+└─ Refund: Payment to sender, buffer to seller ✅
+```
+
+**Merchant payment (seller is sender):**
+```
+Sender already owns BCH → Sender funds own covenant
+├─ Claim: Payment to merchant, buffer to sender ✅
+└─ Refund: Payment to sender, buffer to sender ✅
+```
+
+**Discovered during:** August 1-2, 2026 testnet3 validation (7 successful transactions)
+
+**Documentation status:** 
+- ✅ Clarified in this version history (August 3, 2026)
+- ⏳ Funder principle document planned ([/why-this-design/constraints/funder-principle.md](../../why-this-design/constraints/funder-principle.md))
+- ✅ WebView bridge correctly handles both semantics
+
+**Future consideration:** If v3.0 is needed, consider renaming `seller` → `funder` for clarity. For v2.5, parameter name is frozen (covenant deployed), but semantic understanding is now documented.
+
 ---
 
 ## Testing Methodology
 
-### Chipnet vs Regtest Trade-offs
+### Testnet3 vs Regtest Trade-offs
 
-**Chipnet (testnet4):**
-- ✅ Real network conditions
+**Testnet3 (current production testing):**
+- ✅ Real network conditions (mirrors mainnet)
 - ✅ Tests Electrum integration
 - ✅ Validates oracle signatures
-- ❌ Slow (MTP can take hours)
-- ❌ Requires testnet BCH from faucets
+- ✅ Reliable enough for iterative development
+- ✅ Active faucets available
+- ❌ Slower than regtest (but acceptable)
 
-**Regtest:**
+**Regtest (early development):**
 - ✅ Fast iteration (instant blocks)
 - ✅ Unlimited coins (generate as needed)
 - ✅ Full control (can simulate any scenario)
 - ❌ No Electrum (CashScript limitation)
 - ❌ Doesn't test real network conditions
 
-**Strategy:**
-- **Fast iteration:** Use regtest for development/debugging
-- **Integration testing:** Use chipnet for final validation
-- **Phase 1 used chipnet** because we needed to test oracle + Electrum integration
+**Evolution:**
+- **Phase 1 (July 2026):** Developed on regtest for fast iteration
+- **Phase 0 (August 2026):** Testing exclusively on testnet3 (reliable, mirrors mainnet)
+- **Future:** Mainnet deployment when covenant proven stable
+
+**Why testnet3:** Reliable enough for continuous testing, real network conditions, proven stable during August 1-2 validation (7 successful transactions)
 
 ### Test Parameters Used
 
-**Chipnet covenant params:**
+**Example covenant params (historical chipnet testing, July 2026):**
 ```json
 {
   "actors": {
@@ -734,7 +796,7 @@ The covenant doesn't change between phases—only the oracle infrastructure evol
 ### Technical Lessons
 
 1. **Byte order matters** - Always verify wire format (3 hours of debugging saved future devs)
-2. **Chipnet MTP is slow** - Need fast paths for testing (oracle-based refund)
+2. **Test network selection matters** - Testnet3 mirrors mainnet well enough for iterative testing (switched from chipnet in August 2026)
 3. **Edge cases are real** - Devices crash, users go offline (plan for failure)
 4. **Simple covenants > complex** - Moving logic to client solved multiple problems at once
 
@@ -747,7 +809,7 @@ The covenant doesn't change between phases—only the oracle infrastructure evol
 
 ### Process Lessons
 
-1. **Test on real network** - Chipnet revealed MTP slowness (regtest wouldn't show this)
+1. **Test on real network** - Real testnet revealed MTP behavior and network conditions (regtest wouldn't show this)
 2. **Iterate quickly** - v2.0 → v2.1 → v2.2 in one day (fast feedback loop)
 3. **Archive old versions** - ARCHIVE_*_YYYYMMDD.* for reference
 4. **Document as you go** - This version history prevents knowledge loss
@@ -796,5 +858,5 @@ The covenant doesn't change between phases—only the oracle infrastructure evol
 
 ---
 
-**Status:** ✅ Production - v2.5 complete, all 4 paths tested, manual construction working  
-**Updated:** 2026-07-30
+**Status:** ✅ Production - v2.5 complete, all 4 paths tested, WebView integration validated  
+**Updated:** 2026-08-03

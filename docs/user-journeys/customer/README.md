@@ -91,34 +91,24 @@ With covenant:
 
 ## Use Cases
 
-**Tourist commerce:** Spanish tourist pays Venezuelan merchant (card doesn't work abroad)
+As the Asgaya merchant network grows, several commerce use cases emerge beyond basic remittances:
 
-**Avoiding fees:** Customer pays merchant with Asgaya instead of card (merchant saves 2-3% fees)
+### Core Commerce Scenarios
 
-**Cross-border e-commerce:** Customer abroad pays online merchant
+- **[Tourist Payments](tourist-payments.md)** - International travelers paying local merchants when cards don't work abroad
+- **[Cross-Border Living](cross-border-living.md)** - Retirees, digital nomads, and remote workers earning in one currency, spending in another country without conversion
+- **[Merchant as ATM](merchant-as-atm.md)** - Using merchant network for global cash access (cash in/out anywhere)
+- **[Informal Economy Access](informal-economy-access.md)** - Cash-based commerce for those without banking access
+
+### Future Scenarios
+
+More use cases will emerge as merchant network density increases. Each scenario leverages the same infrastructure - **the merchant network is the innovation**, mechanisms adapt to context.
+
+**Traditional e-commerce:** Customer abroad pays online merchant (same as tourist, different medium)
+
+**Fee avoidance:** Customer pays merchant with Asgaya instead of card (merchant saves 2-3% processing fees)
 
 ---
-
-## Value Proposition
-
-**"Your bank account works anywhere, even where it doesn't."**
-
-Traditional problem:
-- Spanish card doesn't work in Venezuela
-- No local currency
-- Can't pay merchant
-
-Asgaya solution:
-- Buy BCH via Asgaya (using Spanish bank account)
-- Pay merchant with BCH
-- Merchant converts to local currency
-
-**Merchant network as ATM network:**
-
-You can also use Asgaya merchants as a global ATM network:
-- **Get local cash:** Buy BCH with your preferred payment method (Bizum, card, etc.) → cash out at any merchant → receive local currency
-- **Convert leftover cash:** When leaving a country, sell leftover local cash to a merchant → receive BCH or your home currency
-- **No traditional ATM needed:** Merchants provide liquidity in both directions
 
 ---
 
@@ -128,6 +118,14 @@ You can also use Asgaya merchants as a global ATM network:
 
 **Phase 0 focus:** Remittances  
 **Phase 1+ expansion:** Commerce flows
+
+**Why remittances first:** Building the remittance flow creates the infrastructure for all other use cases. By serving remittance users, we automatically enable:
+- Customer payments (same merchant network, simpler flow - direct BCH instead of covenant)
+- ATM network (merchants provide cash-in/cash-out for travelers)
+- Cross-border commerce (tourist pays local merchant)
+- All intermediate flows (same infrastructure, adapted mechanisms)
+
+**Remittances bootstrap the entire ecosystem.** Once merchants exist to serve recipients, customers can use those same merchants for commerce and currency exchange. Customer flows are actually simpler (direct BCH transfer) than remittances (covenant-based).
 
 ---
 
@@ -153,36 +151,26 @@ You can also use Asgaya merchants as a global ATM network:
 
 **For now:** Customer flow design is DEFERRED pending remittance flow validation.
 
-**Status:** Needs revision after Phase 0 remittance completion
-
-**Why remittances first:** Building the remittance flow creates the infrastructure for all other use cases. By serving remittance users, we automatically enable:
-- Customer payments (same merchant network, simpler flow - direct BCH instead of covenant)
-- ATM network (merchants provide cash-in/cash-out for travelers)
-- Cross-border commerce (tourist pays local merchant)
-- All intermediate flows (same infrastructure, adapted mechanisms)
-
-**Remittances bootstrap the entire ecosystem.** Once merchants exist to serve recipients, customers can use those same merchants for commerce and currency exchange. Customer flows are actually simpler (direct BCH transfer) than remittances (covenant-based).
-
 ---
 
-## Technical Details
+## ✅ Update: 0-Conf Validation (2026-08-02)
 
-**Two mechanisms available, each optimized for its use case:**
+**Testing results:** 0-conf covenant transactions proven working on testnet3
 
-### Direct Payment (When Customer Has BCH)
-- Standard BCH wallet-to-wallet transaction
-- One transaction, 0-conf, instant
-- Simplest possible flow
+**What was tested:**
+- 3 successful covenant refunds with 0-conf (unconfirmed funding transactions)
+- Transactions worked for small amounts (€7 equivalent)
+- User experience: instant (no 10-minute wait)
 
-### Covenant-Based (When Customer Needs to Buy BCH)
-- Customer creates covenant (merchant as recipient)
-- Passive seller funds covenant after detecting payment
-- Merchant claims from covenant
-- **UX benefit:** Customer takes one action (pay seller), protocol coordinates the rest
+**Implications for customer flow:**
+- **0-conf is viable** for point-of-sale customer payments (€5-50 range)
+- Merchant risk is minimal for small transaction amounts
+- Maintains 1-3 minute UX target (acceptable for commerce)
+- Larger amounts can require confirmation if merchant prefers
 
-**Why use covenant when buying BCH?** Not technically necessary, but provides better user experience. Alternative would be: customer buys BCH → BCH lands in wallet → customer manually sends to merchant (two steps instead of one).
+**Recommendation:** Phase 1+ customer flow should use 0-conf for small amounts, with merchant-configurable confirmation thresholds for larger transactions.
 
-**For detailed covenant mechanics, see [Sender Journey](../remittance/sender/README.md)** - same underlying mechanism, different context.
+**For detailed covenant mechanics:** See [Sender Journey](../remittance/sender/README.md) - same underlying mechanism, different context.
 
 ---
 
@@ -190,8 +178,8 @@ You can also use Asgaya merchants as a global ATM network:
 
 ---
 
-**Status:** Phase 1+ (after remittance infrastructure validated)  
-**Updated:** 2026-06-23
+**Status:** Phase 1+ (customer flow designed, 0-conf validated, deferred pending remittance validation)  
+**Updated:** 2026-08-03
 
 ---
 

@@ -1,8 +1,8 @@
 # Manual Covenant Construction
 
-**Status:** ✅ Implemented (AsgayaHusk v0.1, July 29 2026)  
+**Status:** ⚠️ Implemented but not validated - moved to WebView approach (August 2026)  
 **Platform:** Android (Kotlin)  
-**Validates Against:** CashScript v0.13+ (P2SH32 format)
+**Originally Targeted:** CashScript v0.13+ (P2SH32 format)
 
 ---
 
@@ -148,6 +148,8 @@ val result = builder.buildCovenant(params)
 // - result.redeemScript: [517 bytes]
 ```
 
+**⚠️ Note:** This API exists in the codebase but was not validated to produce correct covenant addresses. Production covenant creation currently uses the [WebView Covenant Bridge](../android-app/webview-covenant-bridge.md).
+
 ### Validation
 
 **Cross-platform verification:**
@@ -166,6 +168,10 @@ If script hashes match, construction is correct. Address format differences (And
 ---
 
 ## Why Not Use CashScript Directly?
+
+*The arguments below describe why manual construction remains the long-term goal. For Phase 0, we chose WebView + CashScript for speed of validation—see [Reality Check](#️-reality-check-what-actually-happened-august-2026).*
+
+---
 
 **We could** embed a JavaScript runtime (WebView) and call CashScript. But:
 
@@ -242,8 +248,56 @@ Use this to verify you have the correct v2.5 bytecode.
 
 ---
 
+## ⚠️ Reality Check: What Actually Happened (August 2026)
+
+**The honest assessment:** We implemented manual covenant construction in Kotlin, but we **failed to validate** that it produces addresses matching CashScript's output.
+
+**What we tried:**
+- Implemented parameter encoding according to Bitcoin Script rules
+- Implemented P2SH32 hashing and CashAddr encoding
+- Created test harness to compare against CashScript
+- Spent multiple sessions debugging byte-level differences
+
+**What didn't work:**
+- Address output never matched CashScript reference implementation
+- Debugging revealed subtle encoding differences we couldn't resolve
+- Attempting to validate became a time sink without clear progress
+- **First rule:** If you're in a hole, stop digging
+
+**What we did instead (August 1-2, 2026):**
+- Pivoted to **WebView + CashScript SDK** approach
+- Bundled official CashScript library (webpack + polyfills)
+- Built JavaScript ↔ Kotlin bridge for covenant operations
+- **Result:** 4 successful covenant claims and 3 successful refunds on testnet3 within 48 hours
+
+**Why the pivot was right:**
+1. **Proof over perfection:** WebView approach is validated and working
+2. **Time value:** 2 days of WebView work > 2 weeks of manual construction debugging
+3. **Maintenance:** Official SDK updates automatically, manual code would need constant sync
+4. **Risk reduction:** Using battle-tested library vs. maintaining custom Bitcoin Script encoder
+
+**Is manual construction abandoned?**
+
+No, just **deferred**. The architectural vision is still sound:
+- Portable covenant construction without JavaScript runtime
+- User sovereignty (entirely on-device)
+- Auditability (~800 lines of readable code)
+- Future hardware wallet integration
+
+But **pragmatism won**: We need proven covenant infrastructure for Phase 0. Manual construction can be revisited later if:
+- WebView performance becomes a bottleneck
+- Hardware wallet integration requires it
+- We find time to debug the encoding differences properly
+
+**Documentation principle:** Own what didn't work. This document describes the ideal, but production uses WebView. Both approaches are documented honestly.
+
+**See also:** [WebView Covenant Bridge](../android-app/webview-covenant-bridge.md) - what's actually running in production
+
+---
+
 ## Further Reading
 
+- **[WebView Covenant Bridge](../android-app/webview-covenant-bridge.md)** - What's actually running in production (current implementation)
 - [Covenant Version History](./version-history.md) - Evolution from v1.0 to v2.5
 - [Covenant Simplicity Principle](../../why-this-design/constraints/covenant-simplicity-principle.md) - Why static bytecode matters
 - [Two-Layer Architecture](../android-app/two-layer-architecture.md) - Covenant vs client separation
@@ -251,6 +305,6 @@ Use this to verify you have the correct v2.5 bytecode.
 
 ---
 
-**Last updated:** July 30, 2026  
+**Last updated:** August 3, 2026 (Reality Check added)  
 **Implemented in:** AsgayaHusk v0.1 (Android)  
 **Validates against:** CashScript v0.13.2, price-oracle-v2.5.json

@@ -5,6 +5,29 @@
 
 ---
 
+## Current Status
+
+**Phase:** Phase 0 - Active Execution  
+**Last Update:** August 3, 2026
+
+**Implementation Progress:**
+- ✅ **Covenant v2.5** - Production-ready, all 4 spending paths tested on testnet3
+- ✅ **WebView Integration** - Proven working (4 successful claims + 3 successful refunds, Aug 1-2)
+- ✅ **Multi-Wallet Management** - Complete (sender/recipient/merchant wallet switching)
+- ✅ **Send Flow MVP** - 3-step wizard (Address → Amount → Confirm) ~80% complete
+- ⏳ **Android Wallet UI** - Tab 1 (Wallet) nearly complete, Tab 2 (Remittances) next
+- ⏳ **Receive Screen** - QR code + address display (planned)
+- ⏳ **Transaction History** - Query + display (planned)
+
+**Key Achievements (July 31 - Aug 3):**
+- WebView + CashScript SDK pivot successful (48 hours from pivot to 7 validated transactions)
+- Multi-wallet architecture enables covenant testing on single device
+- 0-conf transactions proven viable for small amounts (€5-50 range)
+
+**Next Milestone:** Complete Tab 1 (Wallet) functionality, begin Tab 2 (Remittances) UI
+
+---
+
 ## Overview
 
 After understanding [The Mechanism](/the-mechanism/README.md), [User Journeys](/user-journeys/README.md), and [Why This Design](/why-this-design/README.md), you might want to:

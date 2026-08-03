@@ -6,10 +6,11 @@
 2. **Send** - Notify recipient (Telegram/Nostr)
 3. **Claim** - Recipient unlocks covenant
 
-**Status:**  
-✅ **Create** - Manual construction working (July 29)  
+**Status (August 2026):**  
+✅ **Create** - WebView + CashScript SDK proven (4 covenants created, Aug 1-2)  
 ✅ **Send** - Telegram coordination proven (July 28)  
-⏳ **Claim** - Transaction construction in progress (July 30)
+✅ **Claim** - Working (4 successful claims on testnet3, Aug 1-2)  
+✅ **Refund** - Working (3 successful 0-conf refunds, Aug 2)
 
 ---
 
@@ -61,11 +62,11 @@ Step 1: Resolve Parameters
 
       ↓
 
-Step 2: Build Covenant (Manual Construction)
-├─ Encode parameters (150 bytes)
-├─ Append bytecode template (367 bytes)
-├─ Hash with SHA256 (32-byte script hash)
-└─ Encode as CashAddr P2SH32 (bchtest:v...)
+Step 2: Build Covenant (WebView + CashScript SDK)
+├─ Pass parameters to WebView JavaScript bridge
+├─ CashScript SDK constructs covenant contract
+├─ SDK generates P2SH32 address automatically
+└─ Return address to Kotlin (bchtest:v...)
 
       ↓
 
@@ -94,20 +95,25 @@ Result:
 val recipientAccount = cashAccountLookup("alice#123")
 val recipientPubkey = recipientAccount.pubkey
 
-// Step 2: Build covenant
-val params = CovenantParams(
+// Step 2: Build covenant (WebView approach)
+val covenantWebView = CovenantWebView(context)
+
+covenantWebView.createCovenant(
     senderPubkey = myWallet.pubkey,
     recipientPubkey = recipientPubkey,
     sellerPubkey = seller.pubkey,
     oraclePubkey = CovenantConstants.ORACLE_PUBKEY,
     eurCents = 10000,
-    expiryOracleTime = now + 8.hours,
-    initialBchPriceInCents = oracle.getCurrentPrice(),
-    minPricePercent = 93
+    expiryTime = now + 8.hours,
+    initialPrice = oracle.getCurrentPrice(),
+    minPricePercent = 93,
+    callback = object : CovenantCallback {
+        override fun onSuccess(address: String, scriptHash: String) {
+            // covenant.address = "bchtest:v..."
+            fundCovenant(address)
+        }
+    }
 )
-
-val covenant = CovenantBuilder().buildCovenant(params)
-// covenant.address = "bchtest:v..."
 
 // Step 3: Fund covenant
 val utxos = electrum.getUtxos(myWallet.scriptHash)
@@ -123,9 +129,11 @@ val signedTx = signTransaction(fundingTx, myWallet.wif)
 val txid = electrum.broadcast(signedTx)
 ```
 
-**Status:** ✅ Manual construction works. Transaction construction next.
+**Status:** ✅ WebView + CashScript SDK proven on testnet3 (August 1-2, 2026). Manual construction attempted but not validated - deferred to Phase 1+.
 
-**Reference:** [Manual Construction](../covenants/manual-construction.md)
+**Reference:** 
+- [WebView Covenant Bridge](./webview-covenant-bridge.md) - Current production implementation
+- [Manual Construction](../covenants/manual-construction.md) - Long-term ideal (deferred)
 
 ---
 
@@ -212,9 +220,7 @@ class CovenantNotificationListener : NotificationListenerService() {
 }
 ```
 
-**Status:** ✅ Working end-to-end (July 28)
-
-**Reference:** [Coordination Layer Integration](../../blog/2026-07-28_coordination-layer-proven-telegram-bizumparser-integration.md)
+**Status:** ✅ Working end-to-end (Telegram fallback proven, July 2026)
 
 ### Nostr Coordination (Phase 1)
 
@@ -258,8 +264,6 @@ nostrClient.subscribe(
 ```
 
 **Status:** ⏳ Planned for Phase 1
-
-**Reference:** [Nostr Deep Dive](../../knowledge/toolkit/suso/nostr-crash-course-audio.txt)
 
 ---
 
@@ -362,15 +366,11 @@ claimTx.inputs[0].witness = witness
 val txid = electrum.broadcast(claimTx)
 ```
 
-**Status:** ⏳ In progress (transaction construction, signing, oracle integration)
+**Status:** ✅ Working (August 1-2, 2026). WebView + CashScript SDK handles transaction construction, signing, and witness scripts. Oracle integration proven with 4 successful claims on testnet3.
 
-**Blockers:**
-- Transaction serialization (Bitcoin wire format)
-- ECDSA signing with WIF keys
-- Witness script construction (claim function)
-- Oracle API integration
+**Implementation:** CashScript SDK's `contract.functions.claim()` handles all complexity - transaction building, witness construction, ECDSA signing, and broadcast.
 
-**Reference:** [Transaction Construction Guide](./transaction-construction.md) *(to be created)*
+**Reference:** [WebView Covenant Bridge](./webview-covenant-bridge.md)
 
 ---
 
@@ -482,19 +482,19 @@ claimCovenant(
 
 ---
 
-## Production Readiness Checklist
+## Production Readiness Checklist (Updated August 2026)
 
-### Part 1: Create (80% complete)
+### Part 1: Create (100% complete ✅)
 
-✅ Manual covenant construction  
+✅ WebView + CashScript SDK integration  
 ✅ P2SH32 address generation  
-✅ Parameter encoding  
-✅ Script hash validation  
-⏳ Transaction construction (in progress)  
-⏳ UTXO selection  
-⏳ Fee estimation  
-⏳ Transaction signing  
-⏳ Broadcast to Electrum  
+✅ Covenant construction via JavaScript bridge  
+✅ Testnet3 validation (4 covenants created)  
+✅ Transaction construction (CashScript SDK)  
+✅ UTXO selection  
+✅ Fee calculation  
+✅ Transaction signing  
+✅ Broadcast to Electrum  
 
 ### Part 2: Send (90% complete)
 
@@ -505,33 +505,37 @@ claimCovenant(
 ✅ UI display ("Money Waiting" card)  
 ⏳ Nostr coordination (Phase 1)  
 
-### Part 3: Claim (20% complete)
+### Part 3: Claim (100% complete ✅)
 
-⏳ Transaction construction  
-⏳ Witness script building  
-⏳ Oracle API integration  
-⏳ ECDSA signing  
-⏳ Broadcast to Electrum  
-⏳ Confirmation monitoring  
+✅ Transaction construction (CashScript SDK)  
+✅ Witness script building (claim function)  
+✅ Oracle signature integration  
+✅ ECDSA signing  
+✅ Broadcast to Electrum  
+✅ Testnet3 validation (4 successful claims)  
 
-**Overall MVP progress: 63% complete**
+### Part 4: Refund (100% complete ✅)
 
-**Blockers:**
-- Transaction construction (Part 1 & 3)
-- ECDSA signing library integration
-- Oracle API endpoint setup
+✅ Refund transaction construction  
+✅ 0-conf refund proven (3 successful)  
+✅ Sender can reclaim anytime  
 
-**Timeline:**
-- July 31: Complete transaction construction
-- August 1-2: Testing and bug fixes
-- August 5: Phase 0 launch (MVP ready)
+**Overall MVP progress: ~95% complete** (Nostr coordination deferred to Phase 1)
+
+**Blockers removed:** All technical blockers resolved via WebView + CashScript SDK pivot (August 1-2).
+
+**Timeline achieved:**
+- August 1-2: Pivot to WebView, 7 successful testnet3 transactions
+- August 3: Tab 1 (Wallet) ~80% complete with multi-wallet + Send flow
+- Phase 0: Covenant infrastructure proven, ready for production testing
 
 ---
 
 ## Related Documentation
 
 **Implementation:**
-- [Manual Construction](../covenants/manual-construction.md) - Part 1 details
+- **[WebView Covenant Bridge](./webview-covenant-bridge.md)** - Current production implementation (Part 1 & 3)
+- [Manual Construction](../covenants/manual-construction.md) - Long-term ideal (deferred)
 - [Covenant Version History](../covenants/version-history.md) - v2.5 specification
 - [Two-Layer Architecture](./two-layer-architecture.md) - Covenant vs client separation
 
@@ -547,22 +551,24 @@ claimCovenant(
 
 ## TL;DR
 
-**The Trinity:** Create → Send → Claim
+**The Trinity:** Create → Send → Claim (+ Refund)
 
-**Create:** Build P2SH32 covenant, fund with BCH (80% done)  
-**Send:** Notify recipient via Telegram/Nostr (90% done)  
-**Claim:** Unlock covenant to wallet (20% done)  
+**Create:** Build P2SH32 covenant via WebView + CashScript SDK (✅ 100% done)  
+**Send:** Notify recipient via Telegram/Nostr (90% done - Nostr Phase 1)  
+**Claim:** Unlock covenant to wallet (✅ 100% done - 4 successful claims)  
+**Refund:** Sender reclaims anytime (✅ 100% done - 3 successful 0-conf refunds)
 
 **What's external:** Bulletin board, bull pool, merchants, oracle, Nostr relays
 
 **Why Trinity?** Focus. AsgayaHusk does three things well. Everything else is infrastructure.
 
-**MVP test tomorrow:** Pixel 6a → Moto G06 end-to-end flow.
+**Achievement:** 7 successful testnet3 transactions (August 1-2, 2026) - covenant infrastructure proven.
 
-**Production target:** August 5, Phase 0 launch.
+**Current focus:** Tab 1 (Wallet) completion with multi-wallet + Send flow (~80% done).
 
 ---
 
-**Last updated:** July 30, 2026  
-**Status:** Part 1 (80%), Part 2 (90%), Part 3 (20%) — 63% overall  
-**Next milestone:** Complete transaction construction (July 31)
+**Last updated:** August 3, 2026  
+**Status:** Part 1 (100%), Part 2 (90%), Part 3 (100%), Part 4 Refund (100%) — ~95% overall  
+**Achievement:** WebView + CashScript SDK pivot successful - 7 testnet3 transactions validated (Aug 1-2)  
+**Next milestone:** Multi-wallet Tab 1 completion, then Tab 2 (Remittances UI)
