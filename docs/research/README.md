@@ -58,6 +58,13 @@ Documents from May 2026 onward reflect the **current covenant architecture**:
 - **[RS053: MUSD](RS053_MUSD.md)** — Research on MUSD stablecoin for future integration
 - **[RS054: CashToken Swaps](RS054_cashtoken_swaps.md)** — CashTokens as EUR commitment mechanism
 
+### UX & Implementation
+- **[RS081: Multi-Wallet Management Patterns](RS081_multi_wallet_management_patterns.md)** — Research on multi-wallet UX patterns from production BCH wallets (MetaMask, Trust Wallet, Bitcoin.com). Informed Asgaya's hybrid HD + imported key approach. Implemented August 2-3, 2026.
+- **[RS075: Android App Health Detection](RS075_android_app_health_detection.md)** — Detecting when wallet app is killed/frozen on Android
+
+### Oracle & Data Feeds
+- **[RS078: Oracle Over Nostr Prior Art](RS078_oracle_over_nostr_prior_art.md)** — Research on DLC oracles and Nostr-based oracle implementations
+
 ---
 
 ## Historical Documents (Pre-Pivot)
