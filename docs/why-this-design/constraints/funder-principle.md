@@ -69,8 +69,8 @@ MERCHANT PAYMENT FLOW (sender creates and funds):
 ## The Covenant Parameter
 
 **Covenant v2.5 parameter:**
-```solidity
-bytes20 seller;  // Actually means: funder's public key hash
+```javascript
+pubkey seller;  // Actually means: funder's public key (CashScript)
 ```
 
 **Why "seller" instead of "funder"?**
@@ -174,7 +174,7 @@ The covenant was designed during remittance-first development (July 2026), where
 - Documented parameter semantics (seller = funder)
 - Validated 2 successful refunds with correct buffer distribution
 
-**See:** [Version History - Funder Parameter Semantics](../../implementation/covenants/version-history.md#funder-parameter-semantics)
+**See:** [Version History - Funder Parameter Semantics](../../implementation/covenants/version-history.md#3-funder-parameter-semantics-discovered-august-2-2026)
 
 ---
 
@@ -216,8 +216,8 @@ const covenantParams = {
 
 ### Buffer Distribution Logic
 
-**Covenant v2.5 refund function:**
-```solidity
+**Covenant v2.5 refund function (CashScript):**
+```javascript
 function refund(
     sig senderSig,
     datasig oracleSig,
