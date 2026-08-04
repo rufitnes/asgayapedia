@@ -14,6 +14,7 @@ After identifying requirements, we faced design constraints - trade-offs where n
 5. **Trust:** Reputation on-chain vs central database
 6. **Expansion:** Speed vs safety (progressive payment rollout)
 7. **Covenant Time:** Oracle precision vs MTP trustlessness (dual enforcement)
+8. **Buffer Ownership:** Role-based logic vs capital-risk principle (funder gets buffer)
 
 ---
 
@@ -53,6 +54,11 @@ After identifying requirements, we faced design constraints - trade-offs where n
 **Trade-off:** UX precision vs trustlessness  
 **Decision:** Dual time enforcement (oracle for UX, MTP for security)  
 **Why:** MTP-only creates timing uncertainty and merchant fraud risk; oracle-only requires trust; combined approach provides precise UX with trustless fallback
+
+### 8. [Funder Principle: Buffer Ownership Follows Funding](./funder-principle.md)
+**Trade-off:** Role-based logic vs capital-risk principle  
+**Decision:** Buffer always goes to whoever funded the covenant (regardless of role)  
+**Why:** Financial fairness - funder recovers capital. One rule for all flows (remittances + merchant payments). No special cases.
 
 ---
 
