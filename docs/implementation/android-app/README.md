@@ -32,7 +32,7 @@ See [The Mechanism](/the-mechanism/README.md) for how these work from a user per
 - Cash Account registration/resolution (`Elena#142`)
 - Covenant creation (BCH script with buffer + expiry)
 - UTXO management (coin selection, change addresses)
-- **See:** [wallet.md](wallet.md)
+- **See:** [wallet.md](wallet.md) | **Constraint:** [funder-principle.md](../../why-this-design/constraints/funder-principle.md)
 
 **Gear 2: Bulletin Board**
 - Electrum NFT UTXO queries (discover active listings)
@@ -116,6 +116,8 @@ See [The Mechanism](/the-mechanism/README.md) for how these work from a user per
     ↓ [Elena's app shows: "€100 from María available, expires in 8h"]
     
 💡 Electrum monitoring is canonical detection. Nostr DM is optional enhancement to reduce polling frequency.
+
+💡 **0-conf safety:** Covenant funding is detected immediately (0-conf) without waiting for block confirmations. This is safe for remittances (€5-200) because attack costs (€500-5000) far exceed transaction values. For freelance payments >€500, app may prompt user to wait for 1-conf. See RS082 for economic analysis.
 ```
 
 **Key observations:**
@@ -663,6 +665,7 @@ function handleError(error):
 
 **Research:**
 - `/knowledge/research/RS070-android-app-development.md` - Design decisions, TightDS feedback
+- `/knowledge/research/RS082_bch_0conf_security_economics.md` - 0-conf safety analysis for remittances
 
 ---
 
