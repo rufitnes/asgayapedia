@@ -4,6 +4,29 @@
 
 **Complexity:** Medium - Queue management + graceful degradation strategies
 
+> **⚠️ Phase 0 Critical Infrastructure - Foundational Design Principle**
+> 
+> Offline-first architecture is **essential** for Venezuelan users and must inform ALL design decisions:
+> 
+> **Why Phase 0 (Critical Priority):**
+> 1. **Venezuelan reality** - Power outages 4-8 hours/day, intermittent 3G, shared WiFi
+> 2. **User experience** - App must function despite unreliable connectivity or it's unusable
+> 3. **Queue system** - Covenant creation, payments, Nostr messages must queue when offline
+> 4. **Graceful degradation** - Show 5-minute-old cached data vs blocking with "No internet" errors
+> 
+> **Core Design Principle (applies to ALL features):**
+> > *"Never block user with 'No internet' error. Queue, cache, degrade gracefully."*
+> 
+> **Impact on architecture:**
+> - Every feature must answer: "What happens offline?"
+> - Blockchain operations → Queue for retry
+> - Data queries → Use cached data with staleness warning
+> - User actions → Accept locally, sync when online
+> 
+> **Without this:** Asgaya unusable for Venezuelan users (primary target market).
+> 
+> **Remember:** When designing new features, ask "Does this work offline?" FIRST.
+
 ---
 
 ## Overview
@@ -646,10 +669,11 @@ catch DatabaseError:
 
 ---
 
-**Status:** Phase 0 - Critical infrastructure  
-**Updated:** 2026-06-25  
-**Complexity:** Medium (queue management + graceful degradation)  
-**Research:** See RS070 (implementation documentation strategy)
+**Status:** Phase 0 - Design complete, implementation TODO (CRITICAL - app unusable without this)  
+**Updated:** 2026-08-04  
+**Complexity:** Medium (queue management + graceful degradation + multi-layer caching)  
+**Priority:** Essential for Venezuelan conditions (power outages 4-8 hrs/day, spotty internet)  
+**Design Principle:** "Never block user. Queue, cache, degrade gracefully." - Applies to ALL features
 ---
 
 ## Navigation

@@ -4,6 +4,19 @@
 
 **Complexity:** Low - Simple Electrum queries + JSON parsing
 
+> **⚠️ Phase 0 Priority - Essential for Mainnet Launch**
+> 
+> The bulletin board is a **fundamental gear** of Asgaya and critical to our compliance strategy:
+> 
+> **Why Phase 0 (High Priority):**
+> 1. **Sender discovery** - Senders find BCH sellers to fund covenants (no bulletin board = no way to create remittances)
+> 2. **Recipient cashout** - Recipients find nearby merchants to cash out BCH (essential for completing remittance flow)
+> 3. **Compliance requirement** - Asgaya **helps users discover each other**, not intermediates transactions. Bulletin board proves we're a discovery tool, not a money transmitter.
+> 
+> **Without this component:** Mainnet launch impossible. Users can't find counterparties.
+> 
+> **Status:** Design complete, ready for implementation when covenant flows are validated.
+
 ---
 
 ## Overview
@@ -502,10 +515,11 @@ if metadata.expires_at - now() < 1_DAY:
 
 ---
 
-**Status:** Phase 0 - Implementation pending  
-**Updated:** 2026-06-25  
+**Status:** Phase 0 - Design complete, implementation TODO (HIGH PRIORITY - blocking mainnet)  
+**Updated:** 2026-08-04  
 **Complexity:** Low (simple Electrum queries + filtering)  
-**Research:** See RS070 (implementation documentation strategy)
+**Priority:** Essential for discovery layer (sender → seller, recipient → merchant)  
+**Compliance:** Proves Asgaya is discovery tool, not intermediary
 ---
 
 ## Navigation

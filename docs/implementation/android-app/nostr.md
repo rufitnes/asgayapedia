@@ -4,6 +4,24 @@
 
 **Complexity:** Low - WebSocket connections + NIP-04 encryption
 
+> **⚠️ Phase 0 Priority - Required for Mainnet Launch**
+> 
+> Nostr is the **coordination layer** for payment instructions between sender and BCH seller:
+> 
+> **Why Phase 0 (High Priority):**
+> 1. **Seamless UX** - Integrated directly into Asgaya client, no separate app needed
+> 2. **One-time setup** - User installs Asgaya, permissions granted, coordination works
+> 3. **Privacy by default** - End-to-end encrypted, censorship-resistant, no phone numbers
+> 4. **No external dependencies** - Users don't need Telegram/WhatsApp accounts
+> 
+> **Current status:** 
+> - **Design:** Complete and documented below
+> - **Testing:** Telegram bot serves this function (development only)
+> - **Production:** Nostr required for mainnet (Telegram = fallback/emergency only)
+> 
+> **Telegram drawbacks:** Users may not have it, requires separate download/setup, not privacy-focused.
+> **Nostr advantage:** Built into Asgaya = zero friction for users.
+
 ---
 
 ## Overview
@@ -490,10 +508,11 @@ catch ParseError:
 
 ---
 
-**Status:** Phase 0 - Implementation pending  
-**Updated:** 2026-06-25  
+**Status:** Phase 0 - Design complete, implementation TODO (HIGH PRIORITY - blocking mainnet)  
+**Updated:** 2026-08-04  
 **Complexity:** Low (WebSocket + library for NIP-04)  
-**Research:** See RS070 (implementation documentation strategy)
+**Priority:** Essential coordination layer (sender ↔ seller payment instructions)  
+**Current:** Telegram bot (testing/fallback only) | **Production:** Nostr required (integrated UX)
 ---
 
 ## Navigation

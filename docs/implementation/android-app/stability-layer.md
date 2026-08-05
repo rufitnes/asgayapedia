@@ -4,6 +4,23 @@
 
 **Complexity:** Medium - CashTokens integration + AnyHedge oracle interaction
 
+> **Phase 0+ - Launch First, Add Based on Observed Need**
+> 
+> **Phasing strategy:**
+> 1. **Phase 0 launch** - BCH only, no stability layer
+> 2. **Observe merchant behavior** - Do they cash out immediately? Hold BCH? Ask for stability?
+> 3. **Phase 0+ implementation** - Add H€/HAu if merchants demonstrate need
+> 
+> **Why this approach:**
+> - **Learn from reality** - Watch actual merchant behavior, not assumptions
+> - **Avoid premature optimization** - Don't build features that may not be needed
+> - **Resource allocation** - Focus Phase 0 on core flows (remittances working)
+> - **Data-driven decision** - Real usage patterns inform feature priority
+> 
+> **Hypothesis to test:** "Venezuelan merchants want stable value vs BCH volatility speculation"
+> 
+> **Status:** Design complete, implementation deferred until merchant behavior observed.
+
 ---
 
 ## Overview
@@ -13,9 +30,9 @@ The Stability Layer enables users to hold EUR/Gold-pegged tokens instead of vola
 - **HAu (Hedged Gold):** 1 HAu = 1 gram gold (always)
 - **Mechanism:** AnyHedge contracts (on-chain, non-custodial)
 
-**Phase 0+:** Optional feature (users choose BCH or H€/HAu)
+**Phase 0+:** Optional enhancement after launch (add if merchant behavior demonstrates need)
 
-**Why?** Venezuelan merchants want stable value, not BCH volatility speculation.
+**Hypothesis:** Venezuelan merchants want stable value, not BCH volatility speculation.
 
 ---
 
@@ -733,10 +750,11 @@ catch SettlementError:
 
 ---
 
-**Status:** Phase 0+ (optional feature)  
-**Updated:** 2026-06-25  
+**Status:** Phase 0+ - Design complete, implementation deferred (add based on observed merchant behavior)  
+**Updated:** 2026-08-04  
 **Complexity:** Medium (CashTokens + AnyHedge integration)  
-**Research:** See AnyHedge documentation, General Protocols API docs
+**Strategy:** Launch without this, watch merchant behavior, add if they demonstrate need for stability  
+**Hypothesis to test:** Do Venezuelan merchants want stable tokens vs immediate cashout?
 ---
 
 ## Navigation

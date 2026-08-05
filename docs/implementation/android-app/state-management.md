@@ -4,6 +4,23 @@
 
 **Complexity:** Medium - Database design + blockchain state reconciliation
 
+> **⚠️ Phase 0 Core Infrastructure - Foundation for All Features**
+> 
+> State Management is the **data persistence layer** for Asgaya:
+> 
+> **Why Phase 0 (Core Infrastructure):**
+> 1. **Every feature needs it** - Covenants, listings, wallet all require local storage
+> 2. **Offline-first depends on it** - Cached data enables offline functionality
+> 3. **Fast UI depends on it** - No Electrum queries on every screen load
+> 4. **Multi-component dependency** - Wallet, bulletin board, Nostr, notification bot all use it
+> 
+> **Key Design Principle:**
+> > "Blockchain is always right. Local state is cache + UI optimizations."
+> 
+> **Sync Strategy:** Event-driven reconciliation (Electrum notifications → local DB updates)
+> 
+> **Without this:** No offline capability, slow UI, no persistent state between app sessions.
+
 ---
 
 ## Overview
@@ -641,10 +658,11 @@ function syncMissingCovenants():
 
 ---
 
-**Status:** Phase 0 - Core infrastructure  
-**Updated:** 2026-06-25  
-**Complexity:** Medium (database design + sync logic)  
-**Research:** See RS070 (implementation documentation strategy)
+**Status:** Phase 0 - Design complete, implementation TODO (CRITICAL - foundation for all features)  
+**Updated:** 2026-08-04  
+**Complexity:** Medium (database design + sync logic + event-driven reconciliation)  
+**Priority:** Core infrastructure (covenants, listings, wallet, caching all depend on this)  
+**Design Principle:** "Blockchain is always right. Local state is cache + UI optimizations."
 ---
 
 ## Navigation
