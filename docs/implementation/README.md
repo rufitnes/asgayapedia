@@ -7,24 +7,42 @@
 
 ## Current Status
 
-**Phase:** Phase 0 - Active Execution  
-**Last Update:** August 3, 2026
+**Phase:** Phase 0 - Production Core Flow Ready 🏆  
+**Last Update:** August 10, 2026  
+**Historic Milestone:** First inter-device covenant claim successful!
 
-**Implementation Progress:**
-- ✅ **Covenant v2.5** - Production-ready, all 4 spending paths tested on testnet3
-- ✅ **WebView Integration** - Proven working (4 successful claims + 3 successful refunds, Aug 1-2)
-- ✅ **Multi-Wallet Management** - Complete (sender/recipient/merchant wallet switching)
-- ✅ **Send Flow MVP** - 3-step wizard (Address → Amount → Confirm) ~80% complete
-- ⏳ **Android Wallet UI** - Tab 1 (Wallet) nearly complete, Tab 2 (Remittances) next
-- ⏳ **Receive Screen** - QR code + address display (planned)
-- ⏳ **Transaction History** - Query + display (planned)
+**Production-Proven Capabilities:**
+- ✅ **Covenant v2.5** - Production-proven on-chain (TXID: `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`)
+  - All 4 spending paths implemented (claim, merchantCashout, refund, sellerRecoverBuffer)
+  - Claim path proven with real devices (Aug 10, 2026)
+  - Refund path tested and reliable (Aug 8, 2026)
+  - Smart contract validation working (rejected incorrect claim attempt)
+- ✅ **End-to-End Claim Flow** - Cross-device payment proven
+  - Sender device (Moto G06) → Recipient device (Pixel 6a)
+  - Telegram parameter transport ([COVENANT_V25] format)
+  - NotificationListener auto-parsing
+  - Manual balance check + claim execution
+  - On-chain verification (€5 payment + 7% buffer distribution confirmed)
+- ✅ **Self-Funding Sender Flow** - Production-ready
+  - Create covenant → Fund → Share parameters → Refund safety net
+  - Copy-to-share mechanism (Telegram/Nostr pattern)
+  - Connection management (5-second TCP cooldown, WebSocket cleanup)
+- ✅ **Multi-Wallet Management** - Complete (sender/recipient/seller wallet matching)
+- ✅ **WebView Integration** - Battle-tested (Kotlin ↔ JavaScript bridge working)
 
-**Key Achievements (July 31 - Aug 3):**
-- WebView + CashScript SDK pivot successful (48 hours from pivot to 7 validated transactions)
-- Multi-wallet architecture enables covenant testing on single device
-- 0-conf transactions proven viable for small amounts (€5-50 range)
+**In Progress:**
+- ⏳ **Merchant Cash-Out Flow** - UI placeholder exists, bulletin board integration next
+- ⏳ **Oracle Price Feed** - Currently hardcoded €650/BCH, real-time feed needed
+- ⏳ **Multi-Covenant Batching** - Claim multiple covenants in one transaction
 
-**Next Milestone:** Complete Tab 1 (Wallet) functionality, begin Tab 2 (Remittances) UI
+**Key Achievements (August 8-10, 2026):**
+- 🏆 **First guaranteed-value BCH transfer using native covenants between two devices**
+- Covenant lifecycle complete (create → fund → claim/refund → verified on-chain)
+- Critical bug discovered and fixed (seller address must match funder - documented)
+- Connection management patterns discovered (TCP cooldown prevents WebSocket hangs)
+- Complete documentation (funder principle, claim flow, version history)
+
+**Next Milestone:** Merchant cash-out flow (cosign path) + seller/funder liquidity provision
 
 ---
 
@@ -41,7 +59,7 @@ This section provides the technical details you need.
 
 ---
 
-## Navigation
+## Key References
 
 ### [Android App](/implementation/android-app/README.md)
 **What:** Reference implementation of Asgaya client
