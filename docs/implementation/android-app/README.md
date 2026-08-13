@@ -5,7 +5,7 @@
 
 **Approach:** Protocol-agnostic architecture with platform-specific notes where needed
 
-**Status:** Phase 0 - Architecture documentation (app development not started)
+**Status:** Development Milestones In Progress (Current: First Successful Covenant Claim - August 10, 2026)
 
 ---
 
@@ -17,6 +17,115 @@ The Asgaya app implements a peer-to-peer Bitcoin Cash remittance protocol with *
 - **Local automation** (notification bot on user's device)
 
 **Key principle:** Any competent developer (not necessarily a blockchain expert) should be able to build an Asgaya client from these docs.
+
+---
+
+## Development Status & Milestones
+
+### Phase 0 (MVP) Definition
+
+**Full value proposition working:**
+- ✅ **Fiat onramp:** Sender → Seller (Bizum payment) → Covenant funded → Recipient claims
+- ✅ **Merchant off-ramp:** Recipient → Merchant (cash exchange) → BCH received
+
+**This is what "Phase 0" means in this documentation** - the complete MVP with all five gears integrated.
+
+---
+
+### Development Timeline (June - August 2026)
+
+**Completed Milestones:**
+
+**Notification Parser Infrastructure** (Jun 29 - Jul 2, 2026)
+- BizumParser foundation established
+- **Key learning:** Study existing apps first, learn from working code, implement based on proven solutions
+- **Philosophy:** Stay humble, small incremental changes, save strength for integration challenges
+
+**Oracle & Covenant Research** (Jul 13-25, 2026)
+- Debug mode & fraud prevention breakthrough
+- MTP research & time oracle decision
+- Blockchain-as-oracle architecture complete
+
+**Covenant Logic Development** (Jul 26-28, 2026)
+- Covenant v2.3: Claim and recovery tested
+- Covenant v2.4: Merchant cashout (killer feature)
+- Covenant v2.5: Refund anytime (all paths tested)
+- Coordination layer proven (Telegram + BizumParser integration)
+
+**Android App Integration** (Jul 29 - Aug 3, 2026)
+- AsgayaHusk wallet UI foundation
+- Transaction infrastructure complete
+- Auto-funding flow working
+- End-to-end covenant flow working
+- WebView breakthrough (CashScript bundle)
+- Refund path tested (funder bug fixed)
+
+**Production Hardening** (Aug 8-10, 2026)
+- Covenant lifecycle complete
+- Self-funding flow hardened
+- **First successful covenant claim** (Aug 10) ← **Current Position**
+
+---
+
+### Current Implementation (As of August 10, 2026)
+
+**What's working now:**
+
+1. **Multi-Wallet Management**
+   - Sender/Recipient/Merchant wallet switching
+   - Room database persistence
+   - WalletManager with reactive updates
+
+2. **CovenantWebView (Kotlin ↔ JavaScript Bridge)**
+   - CashScript SDK integration
+   - Covenant creation, funding, claiming, refunding
+   - P2SH32 address generation
+
+3. **ElectrumClient Integration**
+   - Balance queries via Electrum protocol
+   - Transaction broadcasting
+   - UTXO management
+
+4. **NotificationListener (Telegram Parameter Parsing)**
+   - NotificationListenerService for Telegram app
+   - Parse [COVENANT_V25] blocks from notifications
+   - Auto-populate covenant parameters in claim UI
+
+5. **Connection Management Patterns**
+   - TCP cooldown (5-second delay after balance queries)
+   - WebSocket cleanup (finally blocks)
+   - Port configuration (60001 TCP, 60003 WS)
+   - Manual updates vs subscriptions strategy
+
+**See:** [claim-flow-end-to-end.md](claim-flow-end-to-end.md) for complete architecture and [connection-management-patterns.md](connection-management-patterns.md) for production-proven patterns.
+
+---
+
+### Next Milestones (Toward MVP Completion)
+
+**Building on BizumParser foundation:**
+
+1. **Bulletin Board Discovery** - Sender finds BCH sellers, recipient finds merchants
+2. **Nostr Coordination** - Integrated encrypted messaging (replaces Telegram copy-paste)
+3. **Seller Auto-Funding** - NotificationListener for bank apps (Bizum, PagoMóvil)
+4. **Merchant Cosign Path** - Two-party covenant claim for cash-out flow
+
+**→ MVP Complete (Phase 0):** All five gears integrated, full value proposition working
+
+**→ Phase 1+:** Post-MVP enhancements (stability layer, offline-first, advanced features)
+
+---
+
+### Development Philosophy
+
+**Learned from notification parser work (June-July 2026):**
+
+1. **Study existing apps first** - Learn from working code
+2. **Implement based on proven solutions** - Don't reinvent the wheel
+3. **Stay humble** - Small incremental changes
+4. **Save strength** - The real challenge is integration (reliability + ease of use)
+5. **Choose our battles** - During MVP testing, identify blockers → decide: redesign vs restart
+6. **Incremental validation** - Each milestone proves next step is possible
 
 ---
 
@@ -49,10 +158,15 @@ See [The Mechanism](/the-mechanism/README.md) for how these work from a user per
 - **See:** [nostr.md](nostr.md)
 
 **Gear 4: Notification Bot**
-- Bank notification parsing (Bizum SMS, PagoMóvil, SEPA)
-- Cash Account extraction from payment reference
-- Covenant matching (Electrum query by recipient)
-- Auto-funding logic (lock BCH + broadcast)
+- **Current Milestone (Jul 28, 2026):** Telegram parameter parsing (NotificationListenerService) ✅
+  - Parse [COVENANT_V25] blocks from Telegram notifications
+  - Extract covenant parameters for claim UI
+  - Built on BizumParser foundation (Jun 30 - Jul 2)
+- **Future Milestone (Toward MVP):** Bank notification parsing
+  - Bizum SMS, PagoMóvil, SEPA payment detection
+  - Cash Account extraction from payment reference
+  - Covenant matching (Electrum query by recipient)
+  - Auto-funding logic (lock BCH + broadcast)
 - **See:** [notification-bot.md](notification-bot.md)
 
 **Optional Extensions (Not Core Safety):**
