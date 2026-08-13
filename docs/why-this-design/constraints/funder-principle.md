@@ -178,6 +178,214 @@ The covenant was designed during remittance-first development (July 2026), where
 
 ---
 
+## 🔥 CRITICAL: Production-Blocking Bug (August 10, 2026)
+
+**Status:** Show-stopper bug discovered during first end-to-end claim test  
+**Impact:** NO covenant could be claimed successfully  
+**Resolution:** Fixed after 2 hours of debugging  
+**Evidence:** First successful claim TXID: `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`
+
+---
+
+### The Bug: Seller Address vs Seller Pubkey
+
+**Context:** Implementing recipient claim flow for first production-ready end-to-end covenant test between two Android devices (Moto G06 → Pixel 6a).
+
+**The critical confusion:**
+- ✅ **August 2:** Discovered `sellerPubkey` parameter semantics (seller = funder)
+- ✅ **Fixed:** Put correct pubkey in `sellerPubkey` field
+- ❌ **August 10:** Forgot to use seller's **ADDRESS** for buffer output!
+
+**What went wrong:**
+
+```kotlin
+// ❌ WRONG - Initial claim implementation (CovenantWebView.kt)
+val params = JSONObject().apply {
+    put("recipientAddress", recipientWallet.address)  // ✅ Correct
+    put("sellerAddress", recipientAddress)  // ❌ WRONG! Buffer to recipient!
+}
+```
+
+**Why this was catastrophic:**
+- We correctly populated `sellerPubkey` in covenant parameters (August 2 lesson learned)
+- But when building the CLAIM transaction, we sent buffer output to **recipient's address**
+- The covenant validates that buffer output goes to the address matching `sellerPubkey`
+- **Result:** Every claim attempt rejected by covenant validation!
+
+---
+
+### Covenant Rejection (Working as Designed!)
+
+**Error message:**
+```
+Error: PriceOracle.cash Error in transaction at input 0
+Reason: Unsuccessful evaluation: completed with a non-truthy value 
+on top of the stack. Top stack item: ""
+```
+
+**What the covenant was checking:**
+
+```cash
+// Simplified claim path validation (CashScript)
+require(recipientOutput.value == eurPayment);              // ✅ Passed
+require(hash160(recipientOutput.lockingBytecode) == recipient);  // ✅ Passed
+
+require(bufferOutput.value == buffer);                     // ✅ Passed
+require(hash160(bufferOutput.lockingBytecode) == seller);  // ❌ FAILED!
+// Expected: seller (sender's) address
+// Got: recipient's address
+// Transaction rejected!
+```
+
+**The covenant saved us!** It enforced the funder principle on-chain, preventing incorrect buffer distribution.
+
+---
+
+### Why This Bug Was Hard to Find
+
+1. **Cryptic error:** "Unsuccessful evaluation" doesn't say WHICH output failed
+2. **Multiple possibilities:** 
+   - Oracle signature? ✅ (checked, was correct)
+   - Price calculation? ✅ (checked, was correct)
+   - UTXO state? ✅ (checked, covenant funded)
+   - Port configuration? ✅ (checked, WebSocket working)
+   - **Output addresses?** ← Found it after ~2 hours!
+
+3. **Semantic confusion:** We fixed `sellerPubkey` parameter but forgot about `sellerAddress` in transaction building
+
+4. **Self-funded covenant context:** 
+   - In self-funded: sender = seller = funder
+   - We had THREE wallets: sender, recipient, seller
+   - But seller IS sender (same wallet!)
+   - Easy to confuse which address to use
+
+---
+
+### The Fix
+
+```kotlin
+// ✅ CORRECT - After debugging (RemittanceActivity.kt + CovenantWebView.kt)
+
+// 1. Find the SELLER wallet (funder) by pubkey
+val sellerPubkey = remittance.sellerPubkey
+val sellerWallet = walletManager.findWalletByPubkey(sellerPubkey)
+    ?: throw Exception("Seller wallet not found")
+
+// 2. Pass SELLER's ADDRESS for buffer output
+val txid = covenantWebView.claimCovenant(
+    covenantParams = covenantParams,
+    oracleSig = oracleSig,
+    recipientWIF = recipientWIF,
+    recipientAddress = recipientWallet.address,  // Payment to recipient
+    sellerAddress = sellerWallet.address,         // ✅ Buffer to seller (funder)!
+    fulcrumHost = "192.168.1.100",
+    fulcrumPort = 60003
+)
+```
+
+**Key insight:** Just like we match `recipientPubkey` to find recipient wallet, we must match `sellerPubkey` to find seller wallet and use its address!
+
+---
+
+### On-Chain Verification (First Successful Claim)
+
+**Date:** August 10, 2026  
+**TXID:** `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`  
+**Verification:** Pi-chan testnet node (bitcoin-cli)
+
+**Transaction breakdown:**
+```
+Covenant funded:    827,129 sats (€5 + 7% buffer at €650/BCH)
+
+Output 0 (Recipient - Isabel):
+  Amount: 0.00769230 BCH (769,230 sats)
+  Address: bchtest:qq2uxg4cu9axyzd9gjnhxwrvealt44mcwunp7gzd0k
+  Calculation: €5 ÷ €650 per BCH = 769,230 sats ✅
+
+Output 1 (Seller/Sender - Volatility buffer):
+  Amount: 0.00056899 BCH (56,899 sats)  
+  Address: bchtest:qrw5nukh5jqend8922tf8zhxwyku6wfpxu9nl79hxf ← SENDER!
+  Calculation: 827,129 - 769,230 - 1,000 (fee) = 56,899 sats ✅
+
+Buffer percentage: 56,899 ÷ 769,230 ≈ 7.4% ✅
+```
+
+**Verification command:**
+```bash
+# On Pi-chan
+bitcoin-cli -testnet -rpcwallet=sender gettransaction 193c3c9e5287...
+# Shows BOTH outputs received by sender wallet ✅
+
+bitcoin-cli -testnet -rpcwallet=recipient gettransaction 193c3c9e5287...
+# Shows payment output received by recipient wallet ✅
+```
+
+**Result:** First guaranteed-value BCH transfer using native covenants between two Android devices! 🎉
+
+---
+
+### Lessons Learned
+
+1. **Parameter vs Address:** Understanding `sellerPubkey` semantics ≠ using seller's address in transaction
+   - August 2: Fixed parameter population (which pubkey goes where)
+   - August 10: Fixed transaction building (which address gets buffer output)
+   - **Both are critical!**
+
+2. **Covenant as Safety Net:** The smart contract **prevented** shipping broken code
+   - We couldn't "accidentally" send buffer to wrong address
+   - Covenant validation forced us to debug and fix
+   - **Design constraints enforced on-chain = production insurance**
+
+3. **End-to-End Testing is Essential:** Unit tests wouldn't have caught this
+   - Transaction built successfully (no syntax errors)
+   - Only covenant validation (on-chain) caught the semantic error
+   - **Always verify transactions on actual blockchain**
+
+4. **Documentation Prevents Regression:** This bug WILL be reintroduced if not documented
+   - Semantic confusion is easy (seller = funder, but which address?)
+   - New developers won't know to match sellerPubkey → sellerWallet → sellerAddress
+   - **This document is production insurance**
+
+---
+
+### Implementation Checklist (Updated)
+
+When implementing covenant claiming or refunding:
+
+- [ ] ✅ **Identify the funder:** Who provided BCH capital?
+- [ ] ✅ **Check `sellerPubkey` parameter:** Whose pubkey is in the covenant?
+- [ ] ✅ **Find seller wallet:** `walletManager.findWalletByPubkey(sellerPubkey)`
+- [ ] ✅ **Get seller ADDRESS:** `sellerWallet.address` (not sender's, not recipient's!)
+- [ ] ✅ **Pass seller address for buffer output:** `sellerAddress = sellerWallet.address`
+- [ ] ✅ **Verify on-chain:** Check both outputs after transaction confirms
+
+**Red flags:**
+- ❌ Hardcoding sender address for buffer (wrong if BCH seller funded!)
+- ❌ Sending buffer to recipient (violates funder principle!)
+- ❌ Using active wallet instead of matching sellerPubkey (wrong wallet!)
+
+---
+
+### Why August 2 Fix Wasn't Enough
+
+**August 2 fix:** Put correct pubkey in `sellerPubkey` parameter
+- ✅ Covenant parameters populated correctly
+- ✅ Covenant created with right pubkey hash
+- ✅ Refund tests worked (refund path uses sender, not seller)
+
+**What we missed:** Claim transaction building uses SELLER, not sender!
+- ❌ Claim flow needs seller's ADDRESS (not just pubkey)
+- ❌ Must look up wallet by sellerPubkey
+- ❌ Extract address from that specific wallet
+
+**Why refund worked but claim didn't:**
+- Refund path: Sender refunds, so we used sender's wallet (obvious)
+- Claim path: Recipient claims, buffer to seller (not obvious which wallet!)
+
+**Takeaway:** Parameter semantics understanding must extend to **transaction building**, not just **parameter population**.
+
+---
+
 ## Implementation Notes
 
 ### Correct Parameter Population
@@ -416,7 +624,8 @@ If future covenants involve multiple funders (e.g., 50/50 split funding):
 
 ---
 
-**Status:** Design validated (August 2-3, 2026)  
+**Status:** Production-proven (August 2-10, 2026)  
 **Implementation:** Covenant v2.5  
-**Testing:** 2 successful testnet3 refunds with correct buffer distribution  
-**Documentation:** Complete
+**Testing:** 2 successful testnet3 refunds + 1 successful claim with correct buffer distribution (August 10)  
+**First Claim TXID:** `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`  
+**Documentation:** Complete - includes production bug discovery and resolution
