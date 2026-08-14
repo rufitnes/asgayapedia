@@ -336,6 +336,65 @@
 
 **Important:** Isabel still keeps the €0.50 fee even on aborted covenants.
 
+### Post-Abort Position (Volatility Hedge Explained)
+
+**Understanding what happened to the buffer:**
+
+Many assume "buffer returns to seller" means Isabel gets €7 extra profit. **This is not correct.**
+
+**What actually happens on abort (>7% price drop):**
+- Isabel locked €107 (€100 face + €7 buffer) at €1,000/BCH = 0.107 BCH
+- Price dropped to €920/BCH (-8%)
+- Covenant aborts automatically
+- **All 0.107 BCH returns to sender María** (sender protected)
+- Isabel gets: **NOTHING from the covenant** (BCH went to sender)
+- **Buffer consumed:** The €7 buffer was absorbed protecting María
+
+**But Isabel doesn't lose money:**
+- Isabel keeps: €100.50 fiat (already received from María via Bizum)
+- **That's it. No BCH from the covenant.**
+
+**The buy-the-dip opportunity (mental experiment):**
+- Isabel has €100.50 fiat
+- BCH now at €920/BCH (vs €1,000 when she locked it)
+- €100.50 ÷ €920 = **0.109 BCH** (if she buys now)
+- That's MORE than the 0.107 BCH she originally locked
+- **Isabel is BCH-neutral or better** (sold high, can buy low)
+
+**Compare to "just holding" (didn't fund covenant):**
+- Would have: 0.107 BCH worth €98.44 at new price
+- **Lost to volatility:** €8.56 (€107 → €98.44)
+
+**By funding covenant (volatility hedge):**
+- Has: €100.50 fiat (locked in pre-drop value)
+- Can buy: 0.109 BCH at new price (more than she locked!)
+- **Net gain vs holding:** €100.50 fiat vs €98.44 BCH value = **€2.06 hedge benefit**
+- **Plus fee:** €0.50 guaranteed
+- **Total benefit:** €2.56 better than just holding through the crash
+
+**The mechanism:**
+- Funding remittances = Selling BCH at current price (effectively sold at €1,000)
+- Covenant abort = Sender gets BCH back, seller keeps fiat
+- Buy-the-dip = Buying BCH at new lower price (€920)
+- **Difference = Volatility hedge benefit** (sold high, can buy low)
+- Fee = Pure profit on top
+
+**Why sellers might prefer volatility:**
+- Each abort = Opportunity to sell high (via funding), buy low (after abort)
+- €0.50 fee guaranteed (even on aborts)
+- Volatility hedge protects against drops (fiat locked in pre-drop value)
+- Can accumulate BCH during dips (buy more BCH for same fiat)
+
+**The seller's real capital model:**
+- Small BCH buffer (e.g., €500) replenished by buying BCH with each fiat receipt
+- Buffer facilitates thousands of € of volume
+- **Only the buffer is exposed to volatility**
+- Price rises → Buffer grows (more BCH returned than needed for €100)
+- Price drops <7% → Buffer shrinks but survives
+- Price drops >7% → Buffer consumed, seller keeps fiat only
+
+**Behavioral unknown:** Will sellers actually buy the dip after aborts? Phase 0 will reveal actual behavior. See `unknowns/behavioral/seller-buy-the-dip.md` for research question.
+
 ---
 
 ## Phase 0 vs Phase 1+ Economics

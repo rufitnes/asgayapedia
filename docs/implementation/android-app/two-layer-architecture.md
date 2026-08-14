@@ -4,6 +4,13 @@
 
 **Why this matters:** Separating "what's possible" (covenant) from "what's recommended" (client) gives users maximum sovereignty while maintaining good UX.
 
+**Status (August 14, 2026):**
+- ✅ **Covenant Layer:** Accurate (v2.5 specification with 4 functions: claim, merchantCashout, refund, sellerRecoverBuffer)
+- ⚠️ **Client Layer:** Code examples are illustrative/future (Nostr monitoring not in Phase 0)
+- ✅ **Core Principle:** Validated in production (refund anytime works, auto-refund logic tested)
+
+**Note:** This document explains the architectural principle. Client layer code examples show future patterns (Nostr, auto-refund monitoring). Phase 0 implements manual refund only.
+
 ---
 
 ## The Two Layers

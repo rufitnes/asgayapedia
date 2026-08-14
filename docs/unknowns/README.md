@@ -39,6 +39,10 @@ Human behavior that affects protocol operation:
 - [Claim Timing](behavioral/claim-timing.md) — How fast do recipients claim remittances?
 - [Merchant BCH Preference](behavioral/merchant-bch-preference.md) — Hold or convert?
 - [Cash Float Management](behavioral/cash-float-management.md) — How do merchants manage cash inventory?
+- [Seller Buy-the-Dip](behavioral/seller-buy-the-dip.md) — Do sellers accumulate BCH after covenant aborts?
+- [Merchant Asset Preference](behavioral/merchant-asset-preference.md) — Do merchants prefer BCH or stable assets?
+- [Sender H€ Opt-In](behavioral/sender-he-optin.md) — Will senders choose H€ protection?
+- [Token Holding Duration](behavioral/token-holding-duration.md) — How long do users hold H€/HAu?
 
 ### ⚙️ Technical Unknowns
 Infrastructure assumptions that need validation:
@@ -168,6 +172,7 @@ Every unknown follows this format:
 6. [Merchant BCH Preference](behavioral/merchant-bch-preference.md) — Liquidity design
 7. [DolarAPI Accuracy](technical/dolarapi-accuracy.md) — Rate feed quality
 8. [Seller Capital Recycling](market/seller-capital-recycling.md) — Seller economics
+9. [Seller Buy-the-Dip](behavioral/seller-buy-the-dip.md) — Seller economics & BCH stabilization hypothesis
 
 ### Low (Can Answer in Phase 1)
 9. [Fiat Chargeback Risk](economic/fiat-chargeback-risk.md) — Rare edge case
@@ -186,10 +191,10 @@ Every unknown follows this format:
 | Category | Total Unknowns | Not Started | In Progress | Answered |
 |----------|---------------|-------------|-------------|----------|
 | Economic | 4 | 4 | 0 | 0 |
-| Behavioral | 3 | 3 | 0 | 0 |
+| Behavioral | 7 | 7 | 0 | 0 |
 | Technical | 4 | 3 | 1 | 0 |
 | Market | 3 | 3 | 0 | 0 |
-| **Total** | **14** | **13** | **1** | **0** |
+| **Total** | **18** | **17** | **1** | **0** |
 
 **Phase -1 progress:** [Universal Bot Reliability](technical/universal-bot-reliability.md) moved to "In Progress" after 24-hour validation testing with five Spanish banks. See [RS072](../research/RS072_notification_listener/) and [RS073](../research/RS072_notification_listener/RS073_notifyflow_decompilation.md) for details.
 

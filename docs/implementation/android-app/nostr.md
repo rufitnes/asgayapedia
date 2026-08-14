@@ -2,7 +2,7 @@
 
 **Purpose:** Encrypted peer-to-peer messaging for payment instructions between buyer and seller
 
-**Complexity:** Low - WebSocket connections + NIP-04 encryption
+**Complexity:** Low - WebSocket connections + NIP-44 encryption (ChaCha20-Poly1305, authenticated, forward-secure)
 
 > **⚠️ Phase 0 Priority - Required for Mainnet Launch**
 > 
@@ -16,6 +16,7 @@
 > 
 > **Current status:** 
 > - **Design:** Complete and documented below
+> - **Implementation (August 14, 2026):** 🔨 Phase 0 target — encrypted DM transport needed for sender→seller→recipient coordination (replaces Telegram copy-paste)
 > - **Testing:** Telegram bot serves this function (development only)
 > - **Production:** Nostr required for mainnet (Telegram = fallback/emergency only)
 > 
@@ -32,7 +33,7 @@ Nostr enables María and Isabel to coordinate payment details privately:
 - **No phone numbers exchanged** → Privacy preserved
 
 **Key features:**
-- End-to-end encrypted (NIP-04)
+- End-to-end encrypted (NIP-44 - ChaCha20-Poly1305, current standard)
 - No central server (connect to public relays)
 - Censorship-resistant (multiple relay redundancy)
 
@@ -166,7 +167,9 @@ function subscribeToMessages(relay_connection):
 
 ---
 
-## Encrypted Messaging (NIP-04)
+## Encrypted Messaging (NIP-44)
+
+**Why NIP-44?** Current standard (ChaCha20-Poly1305, authenticated, forward-secure). NIP-04 is legacy (AES-256-CBC, deprecated by ecosystem). Recommended by `nostr-tools`, `nostr-sdk`, and most clients.
 
 ### Sending a Message
 
@@ -177,8 +180,8 @@ function subscribeToMessages(relay_connection):
 function sendNostrDM(recipient_pubkey, message_text):
   my_keys = getNostrKeys()
   
-  // Encrypt with NIP-04 (ECDH + AES-256-CBC)
-  encrypted_content = nip04_encrypt(
+  // Encrypt with NIP-44 (ChaCha20-Poly1305, authenticated)
+  encrypted_content = nip44_encrypt(
     sender_private_key: my_keys.private_key,
     recipient_public_key: recipient_pubkey,
     plaintext: message_text
@@ -186,7 +189,7 @@ function sendNostrDM(recipient_pubkey, message_text):
   
   // Build Nostr event
   event = {
-    kind: 4,  // Encrypted DM
+    kind: 4,  // Encrypted DM (same as NIP-04 for compatibility)
     pubkey: my_keys.public_key,
     created_at: now(),
     tags: [
@@ -206,14 +209,17 @@ function sendNostrDM(recipient_pubkey, message_text):
   return event.id
 ```
 
-**NIP-04 encryption (simplified):**
+**NIP-44 encryption (simplified):**
 ```
 shared_secret = ECDH(my_private_key, recipient_public_key)
-encrypted = AES256_CBC_encrypt(plaintext, key=shared_secret)
-content = base64(encrypted)
+// Derive encryption key using HKDF
+encryption_key = HKDF(shared_secret, salt, info)
+// ChaCha20-Poly1305 (authenticated encryption)
+encrypted = ChaCha20_Poly1305_encrypt(plaintext, key=encryption_key, nonce)
+content = base64(nonce + encrypted + auth_tag)
 ```
 
-**Actual implementation:** Use Nostr library (handles NIP-04 complexity)
+**Actual implementation:** Use Nostr library (handles NIP-44 complexity - HKDF, nonce generation, authenticated encryption)
 
 ---
 
@@ -233,7 +239,7 @@ function handleIncomingMessage(nostr_event):
   my_keys = getNostrKeys()
   sender_pubkey = nostr_event.pubkey
   
-  plaintext = nip04_decrypt(
+  plaintext = nip44_decrypt(
     recipient_private_key: my_keys.private_key,
     sender_public_key: sender_pubkey,
     ciphertext: nostr_event.content
@@ -396,7 +402,7 @@ function sendWithRetry(recipient, message):
 
 ```
 try:
-  plaintext = nip04_decrypt(ciphertext)
+  plaintext = nip44_decrypt(ciphertext)
 catch DecryptionError:
   // Message not for me, or corrupted
   log_warning("Failed to decrypt message from " + sender)
@@ -438,18 +444,18 @@ catch ParseError:
 ## Nostr Libraries (Recommendations)
 
 ### Android
-- **nostr-kt** (Kotlin): Full NIP-04 support, relay management
-- **Alternative:** Raw WebSocket + manual NIP-04 (simpler, fewer dependencies)
+- **nostr-kt** (Kotlin): Full NIP-44 support, relay management
+- **Alternative:** Raw WebSocket + manual NIP-44 (simpler, fewer dependencies but complex crypto)
 
 ### iOS
-- **nostr-swift**: Full NIP-04 support
-- **Alternative:** Raw WebSocket + manual NIP-04
+- **nostr-swift**: Full NIP-44 support
+- **Alternative:** Raw WebSocket + manual NIP-44
 
 ### Web
-- **nostr-tools** (JavaScript): Most popular, full NIP support
-- **Alternative:** Raw WebSocket (NIP-04 crypto via SubtleCrypto API)
+- **nostr-tools** (JavaScript): Most popular, full NIP support including NIP-44
+- **Alternative:** Raw WebSocket (NIP-44 crypto via SubtleCrypto API + HKDF implementation)
 
-**Recommendation:** Use library for NIP-04 encryption (complex crypto). Raw WebSocket is fine for relay management.
+**Recommendation:** Use library for NIP-44 encryption (complex crypto: HKDF key derivation + ChaCha20-Poly1305 authenticated encryption). Raw WebSocket is fine for relay management.
 
 ---
 
@@ -475,7 +481,7 @@ catch ParseError:
 ## Testing Strategy
 
 ### Unit Tests
-- NIP-04 encryption/decryption (test vectors)
+- NIP-44 encryption/decryption (test vectors from NIP-44 spec)
 - Message serialization (JSON encoding)
 - Signature verification
 - Schema validation
@@ -509,10 +515,13 @@ catch ParseError:
 ---
 
 **Status:** Phase 0 - Design complete, implementation TODO (HIGH PRIORITY - blocking mainnet)  
-**Updated:** 2026-08-04  
-**Complexity:** Low (WebSocket + library for NIP-04)  
+**Updated:** 2026-08-14 (NIP-04 → NIP-44 migration)  
+**Originally written:** 2026-08-04  
+**Complexity:** Low (WebSocket + library for NIP-44)  
 **Priority:** Essential coordination layer (sender ↔ seller payment instructions)  
 **Current:** Telegram bot (testing/fallback only) | **Production:** Nostr required (integrated UX)
+
+**Note:** Updated to NIP-44 (current standard: ChaCha20-Poly1305, authenticated, forward-secure). NIP-04 is legacy (AES-256-CBC, deprecated). Libraries: `nostr-tools`, `nostr-sdk`, `nostr-kt` all support NIP-44.
 ---
 
 ## Navigation

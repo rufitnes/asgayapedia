@@ -470,6 +470,69 @@ if (fundingModel == FundingModel.SELLER_FUNDED) {
 }
 ```
 
+**The SECOND exception - Seller resolution notification:**
+
+```
+1. Seller funds covenant (locks BCH)
+2. ⏳ COVENANT RESOLVES (claim, refund, or abort - timing unknown)
+3. 🔔 SELLER NEEDS NOTIFICATION ← Electrum subscription fits here!
+   - Blockchain is source of truth (UTXO spent = resolved)
+   - Seller needs to reconcile capital (BCH released, buffer settled)
+   - Seller can re-deploy capital immediately
+   - Abort scenario: Seller can buy the dip with received fiat
+4. Seller updates accounting, re-enters market
+```
+
+**Why Electrum subscription for covenant resolution:**
+- Resolution timing unknown (recipient might claim in 2 hours or 7 hours)
+- Abort conditions unpredictable (price volatility)
+- Seller needs to reconcile capital immediately (enable fast recycling)
+- Blockchain state is authoritative (which spending path was used)
+
+**Implementation approach:**
+```kotlin
+// Seller bot monitoring (after funding covenant)
+subscribeToCovenantResolution(covenant.address) { resolution ->
+    when (resolution.spendingPath) {
+        "claim" -> {
+            // Recipient claimed successfully
+            // Buffer returned to seller (funder principle)
+            log("✅ Covenant claimed - buffer returned")
+            recycleCapital(covenant.bufferAmount)
+        }
+        "refund" -> {
+            // Payment returned to sender; buffer returned to seller (funder principle)
+            // Seller gets buffer back (same BCH amount, possibly different value)
+            log("⚠️ Covenant refunded - buffer returned")
+            recycleCapital(covenant.bufferAmount)
+        }
+        "abort" -> {
+            // Buffer consumed by price drop; BCH returned to sender; seller keeps fiat
+            // Seller gets NOTHING from covenant (all BCH → sender)
+            // But seller keeps fiat already received via Bizum
+            log("⚠️ Covenant aborted - buffer consumed, keeping fiat only")
+            
+            // Optional: Buy-the-dip opportunity
+            // Seller has fiat, can buy BCH at new (lower) price
+            if (autoBuyEnabled) {
+                considerBuyingDip(covenant.fiatReceived)
+            }
+        }
+    }
+}
+```
+
+**Note on buy-the-dip behavior (abort scenario only):**
+- On abort: Seller gets NOTHING from covenant (all BCH → sender)
+- Seller keeps fiat (already received via Bizum)
+- BCH price dropped (e.g., €1,000 → €920)
+- Seller can buy BCH at new lower price with fiat
+- Example: €100.50 ÷ €920 = 0.109 BCH (more than 0.107 locked!)
+- **Seller is BCH-neutral or better** (sold high, can buy low)
+- Fiat locked in pre-drop value = volatility hedge
+- This is behavioral economics - Phase 0 will reveal actual seller behavior
+- See `trader/economics.md` for detailed economics of abort scenarios
+
 ### Recommendation: Manual First, Automate Strategically
 
 **Phase 0 (Current):**

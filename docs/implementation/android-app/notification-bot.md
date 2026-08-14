@@ -4,6 +4,21 @@
 
 **Complexity:** High - Android notification interception, regex parsing, payment matching, auto-funding
 
+**Status (August 14, 2026):**
+
+**Phase 0 ✅ Implemented:**
+- Telegram parameter parsing (NotificationListenerService for Telegram app)
+- Parse [COVENANT_V25] blocks from Telegram notifications
+- Auto-populate ClaimActivity UI with covenant parameters
+
+**Phase 1+ 🔨 Future (This Document's Main Focus):**
+- Bank app notification parsing (Bizum, PagoMóvil, SEPA)
+- Seller auto-funding (detect payment → match covenant → fund with BCH)
+- Market price subscription (Nostr oracle feeds, auto-refund monitoring)
+- Exchange integration (auto-buy BCH when wallet low)
+
+**Important:** Most of this document describes Phase 1+ seller auto-funding patterns. Phase 0 implemented only Telegram parameter parsing (simpler, recipient-side use case). The comprehensive bank notification parsing described below is future work.
+
 ---
 
 ## Overview
@@ -17,10 +32,10 @@ The Notification Bot has **two responsibilities:**
 - **Auto-match:** Finds María's covenant for Elena#142
 - **Auto-fund:** Locks BCH from Isabel's wallet
 
-**Phase 0:** Auto-fund only if wallet has sufficient BCH (show notification if insufficient)
-**Phase 1+ extension:** Auto-buy from exchange if wallet balance low (see Optional Extensions section)
+**Phase 1+ approach:** Auto-fund only if wallet has sufficient BCH (show notification if insufficient)
+**Phase 1++ extension:** Auto-buy from exchange if wallet balance low (see Optional Extensions section)
 
-**Phase 0 approach:** Android Notification Listener Service (intercepts bank app notifications)
+**Implementation approach:** Android Notification Listener Service (intercepts bank app notifications)
 
 **Why push notifications, not SMS?** Banks are migrating from SMS to push notifications because:
 - SMS costs banks ~€0.01-0.05 per message (telecom fees)
@@ -119,7 +134,7 @@ class NotificationListener extends NotificationListenerService {
 }
 ```
 
-**Supported bank apps (Phase 0):**
+**Supported bank apps (Phase 1+ - Planned):**
 - `com.bbva.bbvacontigo` (BBVA - Bizum)
 - `es.lacaixa.mobile.android.newwapicon` (CaixaBank - Bizum)
 - `es.openbank.mobile` (Openbank - Bizum)
@@ -291,16 +306,16 @@ function extractCashAccount(reference):
 **Pattern breakdown:**
 - `[a-zA-Z]` - Must start with letter
 - `[a-zA-Z0-9\-\s]*?` - Followed by letters, numbers, hyphens, or spaces (non-greedy)
-- `\s*#\s*` - Hash separator (required in Phase 0 for safety)
+- `\s*#\s*` - Hash separator (required for safety)
 - `(\d+)` - Number
 
 **Edge cases:**
-- "elena142" (no # separator) → Rejected (Phase 0 strict mode)
+- "elena142" (no # separator) → Rejected (strict mode)
 - "Elena" (no number) → Rejected (need both name and number)
 - "Bodega Rosa#487" → Accepted (multi-word name)
 - "Farmacia-Caracas#1200" → Accepted (hyphenated name)
 
-**Phase 0 approach:** Require # separator (strict), reject ambiguous references. Phase 1+ can relax to support legacy formats.
+**Initial approach:** Require # separator (strict), reject ambiguous references. Later can relax to support legacy formats if needed.
 
 ---
 
@@ -913,10 +928,14 @@ function handlePaymentReceived(payment):
 
 ---
 
-**Status:** Phase 0 - Core implementation priority  
-**Updated:** 2026-06-25  
-**Complexity:** High (most complex component)  
-**Research:** See RS026 (Android notifications), smsbridge_loop.py (early prototype)
+**Status:** Phase 0 ✅ Telegram parsing implemented | Phase 1+ 🔨 Bank auto-funding (this doc's focus)  
+**Updated:** 2026-08-14 (status clarified - most of this doc is Phase 1+ design)  
+**Originally written:** 2026-06-25 (pre-production, focused on seller auto-funding vision)  
+**Complexity:** High (most complex component when fully implemented)  
+**Research:** See RS026 (Android notifications), smsbridge_loop.py (early SMS prototype)
+
+**Phase 0 implementation:** Telegram parameter parsing only (NotificationListenerService for Telegram app)  
+**Phase 1+ scope:** Bank notification parsing, seller auto-funding, market price subscription, exchange integration
 ---
 
 ## Navigation

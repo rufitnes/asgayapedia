@@ -15,6 +15,8 @@
 > 
 > **Without this component:** Mainnet launch impossible. Users can't find counterparties.
 > 
+> **Implementation Status (August 14, 2026):** 🔨 Planned — design complete, not yet implemented. Phase 0 MVP target for merchant/seller discoverability.
+> 
 > **Status:** Design complete, ready for implementation when covenant flows are validated.
 
 ---

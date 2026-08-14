@@ -1,788 +1,239 @@
 # Android App: Implementation Architecture
+
 **📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
-**Purpose:** Technical reference for developers building Asgaya clients (Android, iOS, web, desktop)
+**Purpose:** Index of Asgaya client implementation docs (Android-first, platform-agnostic architecture)
 
-**Approach:** Protocol-agnostic architecture with platform-specific notes where needed
-
-**Status:** Development Milestones In Progress (Current: First Successful Covenant Claim - August 10, 2026)
+**Status:** Phase 0 in progress — Core covenant flow production-proven (all paths validated on Pi-chan July-Aug 2026; first inter-device claim August 10, 2026)
 
 ---
 
 ## Overview
 
-The Asgaya app implements a peer-to-peer Bitcoin Cash remittance protocol with **no backend servers**. All coordination happens through:
-- **Blockchain queries** (Electrum servers)
-- **Encrypted messaging** (Nostr relays)
-- **Local automation** (notification bot on user's device)
+Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend servers**:
+- **Blockchain** = database (covenants stored on-chain)
+- **Electrum servers** = query layer (balance, broadcast, UTXO)
+- **Nostr relays** = coordination layer (encrypted parameter exchange)
+- **User's device** = execution (covenant creation, claiming, auto-funding)
 
-**Key principle:** Any competent developer (not necessarily a blockchain expert) should be able to build an Asgaya client from these docs.
+**Core thesis:** Remittances are the funnel to merchants. The covenant's `merchantCashout` path enables cash pickup, making Asgaya a permissionless merchant acquisition system.
 
----
-
-## Development Status & Milestones
-
-### Phase 0 (MVP) Definition
-
-**Full value proposition working:**
-- ✅ **Fiat onramp:** Sender → Seller (Bizum payment) → Covenant funded → Recipient claims
-- ✅ **Merchant off-ramp:** Recipient → Merchant (cash exchange) → BCH received
-
-**This is what "Phase 0" means in this documentation** - the complete MVP with all five gears integrated.
+**Key principle:** Any competent developer (not blockchain expert) can build an Asgaya client from these docs.
 
 ---
 
-### Development Timeline (June - August 2026)
+## Development Philosophy
 
-**Completed Milestones:**
+**Pragmatic approach (Jun-Aug 2026):**
 
-**Notification Parser Infrastructure** (Jun 29 - Jul 2, 2026)
-- BizumParser foundation established
-- **Key learning:** Study existing apps first, learn from working code, implement based on proven solutions
-- **Philosophy:** Stay humble, small incremental changes, save strength for integration challenges
+1. **Study existing apps first** - Learn from working code, don't reinvent
+2. **Small incremental changes** - Save strength for integration (reliability + UX)
+3. **Choose our battles** - Identify blockers → decide: redesign vs restart vs defer
+4. **Incremental validation** - Each milestone proves next step is possible
 
-**Oracle & Covenant Research** (Jul 13-25, 2026)
-- Debug mode & fraud prevention breakthrough
-- MTP research & time oracle decision
-- Blockchain-as-oracle architecture complete
-
-**Covenant Logic Development** (Jul 26-28, 2026)
-- Covenant v2.3: Claim and recovery tested
-- Covenant v2.4: Merchant cashout (killer feature)
-- Covenant v2.5: Refund anytime (all paths tested)
-- Coordination layer proven (Telegram + BizumParser integration)
-
-**Android App Integration** (Jul 29 - Aug 3, 2026)
-- AsgayaHusk wallet UI foundation
-- Transaction infrastructure complete
-- Auto-funding flow working
-- End-to-end covenant flow working
-- WebView breakthrough (CashScript bundle)
-- Refund path tested (funder bug fixed)
-
-**Production Hardening** (Aug 8-10, 2026)
-- Covenant lifecycle complete
-- Self-funding flow hardened
-- **First successful covenant claim** (Aug 10) ← **Current Position**
+**Note:** This philosophy emerged from BizumParser work and WebView pivot. Future contributors (or AI in fresh context) benefit from understanding the pragmatic, incremental approach that got us to production.
 
 ---
 
-### Current Implementation (As of August 10, 2026)
+## Phase Model (Canonical)
 
-**What's working now:**
+| Phase | Definition | Status |
+|-------|------------|--------|
+| **Phase 0** | MVP in development (covenant flow working, integration ongoing) | 🔴 In progress |
+| **Phase 0+** | Features added *during* testing (cheap UX/reliability wins) | 🔵 Opportunistic |
+| **Phase 1+** | Post-MVP enhancements based on observed behavior | 🟢 Future |
 
-1. **Multi-Wallet Management**
-   - Sender/Recipient/Merchant wallet switching
-   - Room database persistence
-   - WalletManager with reactive updates
-
-2. **CovenantWebView (Kotlin ↔ JavaScript Bridge)**
-   - CashScript SDK integration
-   - Covenant creation, funding, claiming, refunding
-   - P2SH32 address generation
-
-3. **ElectrumClient Integration**
-   - Balance queries via Electrum protocol
-   - Transaction broadcasting
-   - UTXO management
-
-4. **NotificationListener (Telegram Parameter Parsing)**
-   - NotificationListenerService for Telegram app
-   - Parse [COVENANT_V25] blocks from notifications
-   - Auto-populate covenant parameters in claim UI
-
-5. **Connection Management Patterns**
-   - TCP cooldown (5-second delay after balance queries)
-   - WebSocket cleanup (finally blocks)
-   - Port configuration (60001 TCP, 60003 WS)
-   - Manual updates vs subscriptions strategy
-
-**See:** [claim-flow-end-to-end.md](claim-flow-end-to-end.md) for complete architecture and [connection-management-patterns.md](connection-management-patterns.md) for production-proven patterns.
+**Phase 0 MVP Definition:** Full value proposition working end-to-end:
+- **Fiat onramp:** Sender → Seller (Bizum/cash) → Covenant funded → Recipient notified
+- **Merchant off-ramp:** Recipient → Merchant (cash exchange) → BCH received via `merchantCashout`
 
 ---
 
-### Next Milestones (Toward MVP Completion)
+## Current Implementation (Phase 0 — August 2026)
 
-**Building on BizumParser foundation:**
+**Production-proven components:**
 
-1. **Bulletin Board Discovery** - Sender finds BCH sellers, recipient finds merchants
-2. **Nostr Coordination** - Integrated encrypted messaging (replaces Telegram copy-paste)
-3. **Seller Auto-Funding** - NotificationListener for bank apps (Bizum, PagoMóvil)
-4. **Merchant Cosign Path** - Two-party covenant claim for cash-out flow
+| Component | What It Does | Status | Doc |
+|-----------|-------------|--------|-----|
+| **Multi-Wallet** | Sender/recipient/merchant wallet switching, Room persistence | ✅ Working | [wallet.md](wallet.md) |
+| **CovenantWebView** | Kotlin ↔ JS bridge, CashScript SDK integration, P2SH32 address generation | ✅ Working | [webview-covenant-bridge.md](webview-covenant-bridge.md) |
+| **ElectrumClient** | Balance queries, transaction broadcast, UTXO management | ✅ Working | [connection-management-patterns.md](connection-management-patterns.md) |
+| **NotificationListener** | Telegram parameter parsing (testing tool + fallback; Nostr is Phase 0 target) | ✅ Working | [notification-bot.md](notification-bot.md) |
+| **Connection Management** | TCP cooldown (5s after balance query), WebSocket cleanup, manual updates | ✅ Working | [connection-management-patterns.md](connection-management-patterns.md) |
 
-**→ MVP Complete (Phase 0):** All five gears integrated, full value proposition working
+**Covenant v2.5:** All 4 spending paths tested (claim, merchantCashout, refund, sellerRecoverBuffer)
 
-**→ Phase 1+:** Post-MVP enhancements (stability layer, offline-first, advanced features)
+**Evidence:** First inter-device claim August 10, 2026 ([TXID](https://github.com/bitcoin-cash-node/bitcoin-cash-node): 193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96)
 
----
-
-### Development Philosophy
-
-**Learned from notification parser work (June-July 2026):**
-
-1. **Study existing apps first** - Learn from working code
-2. **Implement based on proven solutions** - Don't reinvent the wheel
-3. **Stay humble** - Small incremental changes
-4. **Save strength** - The real challenge is integration (reliability + ease of use)
-5. **Choose our battles** - During MVP testing, identify blockers → decide: redesign vs restart
-6. **Incremental validation** - Each milestone proves next step is possible
+**See complete flow:** [claim-flow-end-to-end.md](claim-flow-end-to-end.md)
 
 ---
 
-## The Five Gears → Code Components
-
-### Conceptual Layer (What Components Do)
-See [The Mechanism](/the-mechanism/README.md) for how these work from a user perspective.
-
-### Implementation Layer (How to Build Them)
-
-**Gear 1: Wallet**
-- BCH key management (HD wallets, seed phrases)
-- Cash Account registration/resolution (`Elena#142`)
-- Covenant creation (BCH script with buffer + expiry)
-- UTXO management (coin selection, change addresses)
-- **See:** [wallet.md](wallet.md) | **Constraint:** [funder-principle.md](../../why-this-design/constraints/funder-principle.md)
-
-**Gear 2: Bulletin Board**
-- Electrum NFT UTXO queries (discover active listings)
-- Listing metadata parsing (JSON from NFT commitment)
-- Filtering/matching (payment method, corridor, amount)
-- Caching strategy (balance freshness vs query cost)
-- **See:** [bulletin-board.md](bulletin-board.md)
-
-**Gear 3: Nostr**
-- Relay connection management (WebSocket)
-- Encrypted messaging (NIP-04)
-- Payment instruction exchange (seller → sender)
-- Error handling (relay offline, message timeout)
-- **See:** [nostr.md](nostr.md)
-
-**Gear 4: Notification Bot**
-- **Current Milestone (Jul 28, 2026):** Telegram parameter parsing (NotificationListenerService) ✅
-  - Parse [COVENANT_V25] blocks from Telegram notifications
-  - Extract covenant parameters for claim UI
-  - Built on BizumParser foundation (Jun 30 - Jul 2)
-- **Future Milestone (Toward MVP):** Bank notification parsing
-  - Bizum SMS, PagoMóvil, SEPA payment detection
-  - Cash Account extraction from payment reference
-  - Covenant matching (Electrum query by recipient)
-  - Auto-funding logic (lock BCH + broadcast)
-- **See:** [notification-bot.md](notification-bot.md)
-
-**Optional Extensions (Not Core Safety):**
-- Exchange integration (auto-replenish BCH for passive sellers)
-- Pluggable backends: User can configure their own exchange API (Kraken, Binance, etc.)
-- **See:** [exchange-extensions.md](exchange-extensions.md) for Kraken example we tested
-
-**Gear 5: Stability Layer**
-- H€/HAu token detection (CashTokens category IDs)
-- AnyHedge contract creation (short BCH vs EUR/XAU)
-- Minting/burning flows (merchant chooses stability)
-- Pool capacity checking (graceful degradation if exhausted)
-- **See:** [stability-layer.md](stability-layer.md)
-
----
-
-## Data Flow: How the Gears Connect
-
-### Active Mode (Sender - María sends €100 to Elena)
-
-```
-1. María opens Wallet
-   ↓ [User Input: Elena#142, €100]
-   
-2. Wallet creates covenant template
-   ↓ [Covenant: recipient=Elena's address, amount=€100, buffer=7%, expiry=8h]
-   
-3. Bulletin Board queries for BCH sellers
-   ↓ [Electrum: "Find NFTs with currency=EUR, payment_method=Bizum"]
-   💡 Note: Corridor (EUR→VES) irrelevant for seller - Isabel accepts EUR regardless of where María is sending
-   
-4. User selects Isabel (passive seller)
-   ↓ [Selection: Isabel#256, rate=0.5%, amount_limit=€500]
-   
-5. Nostr sends payment request to Isabel
-   ↓ [Encrypted DM: covenant_id, amount=€100.50, reference=Elena#142]
-   
-6. Isabel's Nostr client receives, sends payment instructions
-   ↓ [Encrypted DM: full_name="Isabel García", phone_number=+34600123456, reference=Elena#142, expiry=1h]
-   💡 Full name critical: María's notification listener verifies "Has enviado €100 a Isabel García" matches to detect wrong-person payments
-   
-7. María pays via Bizum
-   ↓ [Banking app: €100.50 to +34600123456, concept=Elena#142]
-   
-8. Isabel's Notification Bot detects payment
-   ↓ [SMS parse: amount=€100.50, reference=Elena#142]
-   
-9. Notification Bot matches to covenant
-   ↓ [Electrum query: "Find covenant with recipient=Elena's address"]
-   
-10. Notification Bot auto-funds covenant
-    ↓ [Broadcast TX: lock €107 BCH into covenant]
-    
-11. Elena's Wallet detects funded covenant (PRIMARY: Electrum monitoring)
-    ↓ [Electrum query: "Monitor my address for new covenants"]
-    ↓ [Covenant detected on-chain: funded, €100 BCH locked]
-    
-12. Optional: Nostr notification prompts immediate query
-    ↓ [Nostr DM from María: "Covenant funded" - triggers immediate Electrum query]
-    ↓ [Benefit: Avoids waiting for next polling cycle, faster UX]
-    ↓ [Elena's app shows: "€100 from María available, expires in 8h"]
-    
-💡 Electrum monitoring is canonical detection. Nostr DM is optional enhancement to reduce polling frequency.
-
-💡 **0-conf safety:** Covenant funding is detected immediately (0-conf) without waiting for block confirmations. This is safe for remittances (€5-200) because attack costs (€500-5000) far exceed transaction values. For freelance payments >€500, app may prompt user to wait for 1-conf. See RS082 for economic analysis.
-```
-
-**Key observations:**
-- **No backend server** - all queries go to public Electrum servers or Nostr relays
-- **Cash Account is the universal reference** - appears in covenant, Bizum concept field, SMS notification
-- **Passive seller automation** - Isabel's bot handles steps 8-10 automatically
-
----
-
-### Passive Mode (Merchant - Carlos receives remittance cash-outs)
-
-```
-1. Carlos posts listing once (setup)
-   ↓ [Bulletin Board: Create NFT with payment_method=cash, currency=VES, rate=0.5%]
-   💡 Note: Currency (VES) not corridor - Carlos handles remittances from Europe, US, Chile (any BCH source)
-   
-2. Elena (recipient) queries bulletin board
-   ↓ [Electrum: "Find BCH buyers accepting cash in Caracas"]
-   
-3. Elena selects Carlos
-   ↓ [Selection: Carlos#487, location=Caracas, hours=9am-8pm]
-   
-4. Elena's Wallet sends payment request (same as sender step 5)
-   ↓ [Encrypted DM to Carlos: "Cash-out request: €100 BCH, reference=Elena#142"]
-   
-5. Carlos's Nostr client auto-replies with merchant details
-   ↓ [Encrypted DM: full_name="Carlos Méndez", location="Bodega Carlos, Av. Bolívar 123, Caracas", hours="9am-8pm", bring_reference="Elena#142"]
-   
-6. Elena visits store (in-person)
-   ↓ [Physical: Elena shows Cash Account Elena#142 in wallet]
-   
-7. Carlos types Elena#142 in app
-   ↓ [Wallet: "Find covenant with recipient=Elena#142, type=remittance"] 
-   
-8. Carlos taps "Accept cash-out"
-   ↓ [Covenant state change: pending → accepted]
-   
-9. Carlos hands Elena cash (2 million VES)
-   ↓ [Physical exchange]
-   
-10. Both confirm transaction
-    ↓ [Co-sign covenant: Elena releases BCH → Carlos receives BCH]
-    
-11. Carlos's Stability Layer prompts
-    ↓ [UI: "Stabilize as H€, HAu, or keep BCH?"]
-    
-12. Carlos chooses H€
-    ↓ [AnyHedge contract created, H€ tokens minted to Carlos's wallet]
-```
-
-**Key observations:**
-- **Passive listing** - Carlos posted once, handles all recipients automatically
-- **In-person verification** - Elena shows Cash Account, Carlos types it to find covenant
-- **Stability prompt** - Merchant can preserve purchasing power via H€/HAu
-
----
-
-## Architecture Principles
-
-### 1. No Backend (Fully Peer-to-Peer)
-
-**What this means:**
-- No central server
-- No database
-- No API endpoints
-- No user accounts
-
-**How it works:**
-- **Blockchain = database** (covenants, listings, Cash Accounts stored on-chain)
-- **Electrum servers = query layer** (read blockchain state via JSON-RPC)
-- **Nostr relays = messaging layer** (encrypted P2P coordination)
-- **User's device = backend** (notification bot runs locally)
-
-**Why it matters:**
-- No single point of failure
-- No custody risk (server can't steal funds)
-- No KYC/registration (permissionless)
-- Censorship-resistant (can't ban users)
-
----
-
-### 2. Offline-First (Venezuelan Connectivity Reality)
-
-**Problem:** Venezuelan internet is unreliable. App must work when network is intermittent.
-
-**Solutions:**
-
-#### A. Queue Operations When Offline
-```
-offline_queue = []
-
-function createCovenant(recipient, amount):
-  covenant = buildCovenantScript(recipient, amount)
-  if (network_available):
-    broadcast(covenant)
-  else:
-    offline_queue.push({type: "covenant", data: covenant})
-  
-function onNetworkReconnect():
-  for item in offline_queue:
-    if item.type == "covenant":
-      broadcast(item.data)
-    else if item.type == "nostr_message":
-      sendNostrMessage(item.data)
-  offline_queue.clear()
-```
-
-#### B. Cache Bulletin Board Queries
-```
-bulletin_board_cache = {
-  last_updated: null,
-  listings: []
-}
-
-function queryBulletinBoard():
-  if (network_available):
-    listings = electrumQuery("getNFTs", {...})
-    bulletin_board_cache.listings = listings
-    bulletin_board_cache.last_updated = now()
-    return listings
-  else:
-    return bulletin_board_cache.listings  // Use cached data
-```
-
-#### C. Handle Electrum Timeouts Gracefully
-```
-function electrumQuery(method, params, timeout=10000):
-  try:
-    result = await electrum.call(method, params, {timeout})
-    return result
-  catch (TimeoutError):
-    // Try backup server
-    result = await backup_electrum.call(method, params, {timeout})
-    return result
-  catch (NetworkError):
-    // Return cached data or queue for retry
-    return getCachedOrQueue(method, params)
-```
-
-#### D. Sync State When Reconnecting
-```
-function onNetworkReconnect():
-  // 1. Process offline queue
-  processOfflineQueue()
-  
-  // 2. Sync covenant states
-  my_covenants = getLocalCovenants()
-  for covenant in my_covenants:
-    on_chain_state = electrumQuery("getCovenantState", covenant.id)
-    if (on_chain_state != covenant.local_state):
-      updateLocalState(covenant.id, on_chain_state)
-  
-  // 3. Refresh bulletin board cache
-  refreshBulletinBoard()
-```
-
-**See:** [offline-first.md](offline-first.md) for complete patterns
-
----
-
-### 3. State Management (What's Local vs Blockchain)
-
-**Two sources of truth:**
-1. **Blockchain = canonical state** (covenants, listings, Cash Accounts)
-2. **Local database = performance cache** (avoid repeated Electrum queries)
-
-#### What's Stored Locally (SQLite/Room)
-
-**Table: covenants**
-```
-id              TEXT PRIMARY KEY    // Covenant transaction ID
-recipient       TEXT                // Elena#142 or BCH address
-amount          INTEGER             // Satoshis (€100 worth of BCH)
-buffer          INTEGER             // 7% buffer in satoshis
-expiry          INTEGER             // Block height or timestamp
-state           TEXT                // "created" | "funded" | "claimed" | "expired"
-created_at      INTEGER             // Local timestamp
-last_synced     INTEGER             // Last blockchain check
-```
-
-**Table: listings** (bulletin board cache)
-```
-nft_id          TEXT PRIMARY KEY    // NFT UTXO identifier
-cash_account    TEXT                // Isabel#256
-corridor        TEXT                // "EUR→VES"
-payment_method  TEXT                // "Bizum"
-rate            REAL                // 0.5%
-amount_limit    INTEGER             // €500
-active          BOOLEAN             // Still valid?
-cached_at       INTEGER             // When cached
-```
-
-**Table: cash_accounts** (resolution cache)
-```
-name            TEXT PRIMARY KEY    // "Elena#142"
-address         TEXT                // BCH address (P2PKH)
-registered_at   INTEGER             // Block height
-verified        BOOLEAN             // Confirmed on-chain?
-```
-
-#### What's Reconstructed from Blockchain
-
-**Covenant lifecycle:**
-- Query Electrum: "Has this covenant been funded?"
-- Query Electrum: "Has this covenant been claimed?"
-- Query Electrum: "Has this covenant expired (block height passed)?"
-
-**Bulletin board freshness:**
-- Query Electrum: "Are these NFT UTXOs still unspent?" (listing still active)
-- Re-query every 10 minutes to detect new listings
-
-**Cash Account resolution:**
-- Query Electrum: "Find OP_RETURN with Cash Account registration for Elena#142"
-- Cache result locally to avoid repeated queries
-
-**Trade-off:** More local state = faster UX, less blockchain truth = potential drift. Solution: periodic sync (every 10 minutes or on user action).
-
-**See:** [state-management.md](state-management.md) for complete patterns
-
----
-
-## External Dependencies
-
-### 1. Electrum Servers (Blockchain Queries)
-
-**What:** Public BCH Electrum servers for reading blockchain state
-
-**Why needed:**
-- Query covenant state (funded? claimed? expired?)
-- Discover bulletin board listings (NFT UTXOs)
-- Resolve Cash Accounts (OP_RETURN lookups)
-- Monitor user's address for incoming covenants
-
-**Recommendation:** Use existing ElectrumX client library, connect to **3-5 public servers** for redundancy
-
-**Alternatives:**
-- Run own Electrum server (not recommended for Phase 0 - adds complexity)
-- Use blockchain explorers (APIs might have rate limits)
-
-**Protocol specs:** Electrum JSON-RPC (see [wallet.md](wallet.md) and [bulletin-board.md](bulletin-board.md))
-
-**Phase 0 testing:** Run own Electrum server for controlled testing environment, then switch to public servers for production
-
----
-
-### 2. Nostr Relays (P2P Messaging)
-
-**What:** Public Nostr relays for encrypted P2P coordination
-
-**Why needed:**
-- Send payment requests (sender → seller)
-- Receive payment instructions (seller → sender)
-- Coordinate in-person meetings (recipient → merchant)
-
-**Recommendation:** Raw WebSocket implementation (simpler than full Nostr SDK for limited message types). Connect to **3-5 public relays** for redundancy.
-
-**Alternatives:**
-- Use full Nostr SDK (heavier, more features than needed)
-- Build custom messaging layer (reinventing the wheel)
-
-**Protocol specs:** Nostr NIP-04 (encrypted DMs) - see [nostr.md](nostr.md)
-
----
-
-### 3. Bank Notification Parsing (Platform-Specific)
-
-**What:** Detect incoming fiat payments to trigger covenant funding
-
-**Android approach:** 
-- `SmsMessage` API (read incoming SMS)
-- Regex patterns per payment method (Bizum, PagoMóvil, SEPA)
-
-**iOS limitation:**
-- iOS doesn't allow SMS interception
-- Alternative: Manual confirmation or push notifications from bank app
-
-**Why needed:**
-- Passive sellers need automatic payment detection
-- Manual checking doesn't scale (100+ transactions/day)
-
-**Recommendation:** Android SmsMessage API for Phase 0. No library needed, just regex patterns.
-
-**Protocol specs:** SMS parsing patterns per bank - see [notification-bot.md](notification-bot.md)
-
-**Research completed:** See `/knowledge/research/RS026_android_notifications.md` for Android notification architecture analysis
-
----
-
-### 4. Kraken API (BCH Buying/Selling)
-
-**What:** Exchange API for passive sellers to replenish BCH inventory
-
-**Why needed:**
-- Passive seller receives €100.50 fiat → locks €107 BCH in covenant
-- Needs to buy €107 BCH from exchange to replenish inventory
-- Capital recycling enables high volume with small capital
-
-**Recommendation:** Direct REST API via HTTP client (OkHttp or equivalent)
-
-**Alternatives:**
-- Other exchanges (Binance, Coinbase)
-- Aggregator service (complicates offline-first)
-
-**Protocol specs:** Kraken REST API v2 - see [notification-bot.md](notification-bot.md)
-
----
-
-### 5. CashTokens SDK (H€/HAu Stability)
-
-**What:** BCH library for creating/managing fungible tokens
-
-**Why needed:**
-- Detect H€/HAu tokens in wallet
-- Mint tokens after AnyHedge contract created
-- Burn tokens to redeem BCH
-
-**Recommendation:** Use `bitcoincashj` or CashScript SDK (whichever has better CashTokens support)
-
-**Protocol specs:** CashTokens category IDs, minting/burning transactions - see [stability-layer.md](stability-layer.md)
-
-**Research completed:** See `/knowledge/research/RS057_bitcoin_cash_laila.md` (BCH/Cash Accounts deep-dive) and related RS files for BCH implementation details
-
----
-
-### 6. Price Oracles (Oracle-over-Nostr)
-
-**What:** Multiple independent oracles broadcasting BCH/EUR and BCH/XAU prices to Nostr channels
-
-**Why needed:**
-- Auto-refund protection (detect >7% price drops for covenant monitoring)
-- Create AnyHedge contracts (merchant shorts BCH vs EUR/XAU)
-- Settle contracts at maturity (30 days)
-
-**Architecture:**
-- **Blockchain-as-oracle** - covenant fundings are trade signals (on-chain proof)
-- **Trade broadcasts** - sellers publish price + volume + reputation to Nostr market channel
-- **Reputation-filtered VWAP** - devices calculate from trusted sellers only (rep >= 90)
-- **Asgaya oracle bootstrap** - Kraken API supplements until network matures
-- **Hybrid weighting** - user VWAP gains weight as trade volume grows
-- **Permissionless** - anyone can be seller, contribute trade signals
-
-**Recommendation:** Subscribe to `asgaya:market:bch-eur` and `asgaya:oracle:asgaya` Nostr channels. Calculate reputation-filtered VWAP from trade broadcasts. Use hybrid weighting (user VWAP + Asgaya oracle) during bootstrap phase.
-
-**Protocol specs:** 
-- Oracle broadcast schema - see [distributed-monitoring.md](../../the-mechanism/nostr-coordination/distributed-monitoring.md)
-- AnyHedge contract structure - see [stability-layer.md](stability-layer.md)
-
-**Cost:** Zero per device (pure subscription, no HTTP API calls). 150× reduction vs traditional HTTP polling.
+## Phase-Ranked Feature Map
+
+### Phase 0 (In Development)
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Multi-wallet management | ✅ Done | Room database, WalletManager, reactive UI |
+| Covenant v2.5 (4 paths) | ✅ Done | All paths validated on Pi-chan + inter-device |
+| WebView + CashScript SDK | ✅ Done | Production-proven Aug 1-10 |
+| ElectrumClient (balance/broadcast) | ✅ Done | TCP + WebSocket support |
+| Telegram parameter parsing | ✅ Done | Testing tool + fallback (Nostr is target) |
+| Connection management patterns | ✅ Done | TCP cooldown, cleanup, manual updates |
+| Self-funded sender flow | ✅ Done | Also a real future use case (BCH stable, B2B, CEX savings) |
+| **Nostr coordination (DM)** | 🔨 In progress | Phase 0 target (automation needed for real covenants) |
+| **Bulletin board** | 🔨 Planned | Merchant/seller discoverability (MVP needs it) |
+| **Merchant cash-out flow** | 🔨 Planned | Covenant path tested; needs UI integration |
+| **First BCH seller (Suso)** | 🔨 Needed | MVP validation requires real seller |
+
+### Phase 0+ (During Testing — Opportunistic)
+
+| Feature | Why 0+ | Notes |
+|---------|--------|-------|
+| **Cash Accounts** | Cheap UX win | `Elena#142` instead of `bchtest:qq...` |
+| **Seed phrase backup** | Cheap UX win | BIP39 HD wallets, 12-word recovery |
+| **Seller device health** | Already built! | RS072/RS075 DeviceHealthMonitor.kt exists; needs integration + bulletin board ranking |
+| **Stability layer (H€/HAu)** | Retention incentive | Launch-first per `stability-layer.md`; merchant hook |
+| **Kraken API** | Volume dependent | Manual/mining covers Phase 0; automate when needed |
+
+### Phase 1+ (Post-MVP)
+
+| Feature | Why defer | Notes |
+|---------|-----------|-------|
+| Offline-first | Can wait | Online-only acceptable for MVP |
+| Own Nostr relay | Operational burden | Public relays sufficient; revisit if reliability issues |
+| Cross-border expansion | Progressive rollout | Spain→Venezuela first, then PagoMóvil/M-Pesa |
+| Multi-covenant batching | Optimization | Not needed at MVP scale |
 
 ---
 
 ## Component Documentation
 
-### Core Components (Build These First)
+### Phase 0 (Implemented / In Progress)
 
-1. **[wallet.md](wallet.md)** - Key management, Cash Accounts, covenant creation (~350 lines)
-2. **[bulletin-board.md](bulletin-board.md)** - Electrum queries, listing discovery (~300 lines)
-3. **[nostr.md](nostr.md)** - Relay management, encrypted messaging (~250 lines)
-4. **[notification-bot.md](notification-bot.md)** - SMS parsing, auto-funding (~450 lines, most complex)
-5. **[stability-layer.md](stability-layer.md)** - H€/HAu integration (~300 lines)
+1. **[claim-flow-end-to-end.md](claim-flow-end-to-end.md)** ✅  
+   Complete August 10 flow, architecture decisions, production evidence
 
-### Cross-Cutting Concerns
+2. **[connection-management-patterns.md](connection-management-patterns.md)** ✅  
+   TCP cooldown, WebSocket cleanup, manual updates, seller resolution notifications (production-proven Aug 8-10)
 
-6. **[state-management.md](state-management.md)** - Local persistence, covenant tracking (~250 lines)
-7. **[offline-first.md](offline-first.md)** - Queue strategies, cache patterns (~300 lines)
+3. **[webview-covenant-bridge.md](webview-covenant-bridge.md)** ✅  
+   Kotlin ↔ JavaScript bridge, CashScript SDK bundling, Webpack config (4 claims + 3 refunds validated)
 
-### Future (Phase 1+)
+4. **[asgaya-trinity.md](asgaya-trinity.md)** ✅  
+   Create → Send → Claim architecture, scope boundary (wallet not infrastructure)
 
-8. **testing.md** - Unit tests, integration tests, mocks (defer until reference app exists)
+5. **[two-layer-architecture.md](two-layer-architecture.md)** ✅  
+   Covenant (permissionless) vs Client (opinionated) separation principle
 
----
+6. **[wallet.md](wallet.md)** 🔨  
+   Multi-wallet ✅, HD derivation (Phase 0+), Cash Account registration (Phase 0+)
 
-## Error Handling Patterns
+7. **[notification-bot.md](notification-bot.md)** 🔨  
+   Telegram parsing ✅, bank notification parsing (Phase 0+), market price subscription (Phase 0+)
 
-**Every component that touches the network needs:**
+8. **[state-management.md](state-management.md)** 🔨  
+   Wallet storage ✅ (Room + WalletEntity), covenant tracking (Phase 0+), bulletin board cache (Phase 0+)
 
-### 1. Timeout Handling
-```pseudocode
-function queryWithTimeout(server, query, timeout=10000):
-  try:
-    result = await server.call(query, {timeout})
-    return {success: true, data: result}
-  catch (TimeoutError):
-    return {success: false, error: "timeout"}
-```
+### Phase 0+ / Phase 1+ (Future)
 
-### 2. Retry Logic (with Exponential Backoff)
-```pseudocode
-function retryWithBackoff(operation, max_retries=3):
-  for attempt in 1..max_retries:
-    result = operation()
-    if result.success:
-      return result
-    
-    wait_time = (2 ^ attempt) * 1000  // 2s, 4s, 8s
-    sleep(wait_time)
-  
-  return {success: false, error: "max_retries_exceeded"}
-```
+9. **[bulletin-board.md](bulletin-board.md)** — Electrum NFT queries, listing discovery, seller/merchant matching
+10. **[nostr.md](nostr.md)** — Relay management, NIP-44 encrypted DMs, payment coordination
+11. **[stability-layer.md](stability-layer.md)** — H€/HAu token detection, AnyHedge integration, merchant retention hook
+12. **[offline-first.md](offline-first.md)** — Offline queue, cache strategies, sync patterns
 
-### 3. Fallback Strategies
-```pseudocode
-function electrumQueryWithFallback(query):
-  // Try primary server
-  result = electrum_primary.call(query)
-  if result.success:
-    return result
-  
-  // Try backup servers
-  for backup in electrum_backups:
-    result = backup.call(query)
-    if result.success:
-      return result
-  
-  // All servers failed - use cached data or queue
-  return getCachedOrQueue(query)
-```
-
-### 4. User-Facing Error Messages
-```pseudocode
-function handleError(error):
-  if error.type == "timeout":
-    showMessage("Network slow. Retrying...")
-  else if error.type == "offline":
-    showMessage("Offline. Transaction queued.")
-  else if error.type == "covenant_expired":
-    showMessage("Payment window expired. Try again.")
-  else:
-    showMessage("Error: " + error.message)
-```
-
-**See component docs for specific error scenarios.**
-
----
-
-## Platform-Specific Notes
-
-### Android
-- **SMS access:** Requires `RECEIVE_SMS` permission (user must grant)
-- **Notification listener:** For bank app notifications (alternative to SMS)
-- **Background service:** Notification bot runs as foreground service
-- **Battery optimization:** Exclude app from battery saver to ensure 24/7 operation
-- **SMS restrictions:** Newer Android versions restrict SMS access - researched alternative: Notification Listener Service for bank app notifications (more reliable than SMS parsing) 
-
-### iOS
-- **No SMS access:** iOS doesn't allow SMS interception
-- **Alternative:** Manual payment confirmation or push notifications from bank app
-- **Background limitations:** iOS restricts background processing
-- **Notification bot:** Requires different implementation strategy (not covered in Phase 0 Android docs)
-
-### Web/Desktop
-- **No SMS access:** Browser/desktop apps can't read SMS
-- **Alternative:** QR code showing payment instructions, manual confirmation
-- **Notification bot:** Runs as browser extension or desktop daemon
-
-**Phase 0 focus:** Android implementation. iOS/web/desktop defer to Phase 1+.
+**Legend:**
+- ✅ Production-proven
+- 🔨 Partially implemented or in progress
+- No icon = Phase 1+ (design complete, not implemented)
 
 ---
 
 ## Key Implementation Challenges
 
-### Challenge 1: Notification Bot Reliability
-**Why hard:** Must not miss payments (passive seller loses money)
+**Phase 0 challenges (learned during Aug 2026 work):**
+- **Connection management:** TCP cooldown prevents throttling; `finally` blocks prevent leaks
+- **Covenant state sync:** Manual "Update Status" button works; background polling is Phase 0+
+- **WebView bridge:** CashScript SDK integration solved manual encoding bugs; 10MB bundle acceptable
 
-**Mitigation:**
-- Parse multiple notification sources (SMS + bank app notification)
-- Log all notifications for debugging
-- Provide manual override ("I received payment, fund covenant anyway")
-- Alert user if notification parsing fails
+**Phase 0+ challenges (deferred):**
+- **Notification bot reliability:** Must not miss payments (seller loses money); RS072 DeviceHealthMonitor addresses this
+- **Cash Account collisions:** `name#number` format disambiguates (Phase 0+ implementation)
+- **Offline queue management:** Queue size limits, stale item expiry (Phase 1+ when offline-first implemented)
+- **Key recovery UX:** Manual WIF import works; BIP39 seed phrase is Phase 0+ UX win
 
-**PoC validation:** Tested with Raspberry Pi (early 2026) - `smsbridge_loop.py` was highly reliable at parsing SMS notifications. Android implementation should achieve similar reliability.
-
-### Challenge 2: Covenant State Synchronization
-**Why hard:** Local state can drift from blockchain
-
-**Mitigation:**
-- Query blockchain every 10 minutes for covenant updates
-- Reconcile differences (local says "created", blockchain says "funded")
-- Handle reorgs (block reorganizations)
-
-**Optimization:** Event-driven queries (user opens covenant view → query blockchain) rather than constant polling. Nostr messages trigger blockchain verification (e.g., "covenant funded" message → query to confirm).
-
-### Challenge 3: Cash Account Collisions
-**Why hard:** Multiple users might register same name
-
-**Mitigation:**
-- Use `name#number` format (number disambiguates)
-- When resolving `Elena#142`, query blockchain for that specific combo
-- If collision, increment number (`Elena#143`)
-
-### Challenge 4: Offline Queue Management
-**Why hard:** Queue can grow large, might have stale data
-
-**Mitigation:**
-- Limit queue size (100 items max)
-- Expire old items (covenant creation >24h old = invalid)
-- Prioritize urgent operations (covenant funding > bulletin board refresh)
-
-### Challenge 5: Key Recovery UX
-**Why hard:** Users lose phones, need to recover wallet + Cash Account
-
-**Mitigation:**
-- 12-word recovery phrase (standard BIP39)
-- Prompt during setup (not skippable)
-- Verify user wrote it down (type back 3 random words)
-- Covenant signing requires password (additional security)
-
-**Smart pestering strategy:**
-- Recipient with 0 BCH: Gentle reminder (dismissible)
-- Balance >€10: Weekly reminder until backup verified
-- Balance >€100: Daily reminder until backup verified
-- Trader/merchant mode enabled: Mandatory backup before first listing
-- Show backup reminder on every transaction >€50 until verified
+**See component docs for detailed solutions.**
 
 ---
 
-## Success Criteria
+## External Dependencies
 
-**Implementation docs are successful if:**
+**Phase 0 (in use):**
+- **Electrum servers** - Chipnet.imaginary.cash (60001 TCP, 60003 WS); Phase 0+ adds redundancy (3-5 servers)
+- **Telegram app** - Testing tool + fallback for parameter coordination
 
-1. ✅ **Clarity:** A competent developer (not blockchain expert) can build an Asgaya client
-2. ✅ **Completeness:** All five gears have implementation guidance
-3. ✅ **Protocols:** Electrum queries, Nostr messages, SMS patterns are specified
-4. ✅ **Error handling:** What to do when things fail is clear
-5. ✅ **Platform-agnostic:** Any platform can implement (with platform notes where needed)
-6. ✅ **AI-readable:** External AI can understand and summarize the architecture
+**Phase 0+ (planned):**
+- **Nostr relays** - NIP-44 encrypted DMs (target coordination layer); public relays sufficient
+- **Bank apps** - NotificationListener for seller auto-funding (Bizum, PagoMóvil)
+- **Kraken API** - Optional BCH replenishment when manual/mining insufficient
+
+**See component docs for integration details.**
 
 ---
 
 ## Related Documentation
 
-**Conceptual (read these first):**
-- [The Mechanism](/the-mechanism/README.md) - How the five gears work
-- [User Journeys](/user-journeys/README.md) - How users interact
-- [Why This Design](/why-this-design/README.md) - Architectural rationale
+**Conceptual (read first):**
+- [The Mechanism](../../the-mechanism/README.md) - How covenants, bulletin board, Nostr work from user perspective
+- [User Journeys](../../user-journeys/README.md) - Sender, recipient, merchant, trader flows
+- [Why This Design](../../why-this-design/README.md) - Architectural constraints & rationale
 
-**Implementation (this section):**
-- [wallet.md](wallet.md) - Core component
-- [bulletin-board.md](bulletin-board.md) - Discovery layer
-- [nostr.md](nostr.md) - Coordination layer
-- [notification-bot.md](notification-bot.md) - Automation layer
-- [stability-layer.md](stability-layer.md) - Merchant retention layer
-- [state-management.md](state-management.md) - Persistence patterns
-- [offline-first.md](offline-first.md) - Connectivity handling
+**Implementation (covenants):**
+- [Covenant Version History](../covenants/version-history.md) - v2.5 specification, all 4 spending paths
+- [Manual Construction](../covenants/manual-construction.md) - Future: pure Kotlin covenant building (Phase 1+ migration from WebView)
 
 **Research:**
-- `/knowledge/research/RS070-android-app-development.md` - Design decisions, TightDS feedback
-- `/knowledge/research/RS082_bch_0conf_security_economics.md` - 0-conf safety analysis for remittances
+- RS070 - Android app development decisions
+- RS072 - Notification listener + device health monitoring (DeviceHealthMonitor.kt exists!)
+- RS075 - Android app health detection (battery, app status, permissions)
+- RS082 - 0-conf security economics for remittances
+
+**Media (Phase 0+ content refresh needed):**
+- **Radio Asgaya** 📻 - 105 podcast episodes, workflow proven; content needs re-audit against covenant v2.5 + funder principle before public use  
+  Location: `knowledge/meta/radio_asgaya/`
+
+---
+
+## Success Criteria
+
+**Phase 0 success (August 10, 2026):** ✅ Achieved
+- Core flow working (covenant creation → funding → claiming)
+- Production evidence (inter-device claim, all paths validated)
+- Architecture decisions proven (WebView, connection patterns, Telegram coordination)
+
+**Full MVP success (Phase 0 ongoing):** 🔨 In Progress
+- Nostr coordination working (replace Telegram copy-paste)
+- Bulletin board functional (merchant/seller discovery)
+- Merchant cash-out integrated (covenant path tested, needs UI)
+- First real seller (Suso) + first real merchant
+
+**Documentation success:** ✅
+- Contributors know what exists (don't search for non-existent code)
+- Future vision preserved (don't lose the architecture)
+- AI-readable (knowledge base tested Aug 14)
 
 ---
 
 ## Navigation
 
 **[🏠 Home](../../index.md)** | **[↑ Implementation](../README.md)** | **[📖 Glossary](../../glossary.md)**
+
+**This section:** [Android App](README.md)  
+**Related:** [Covenants](../covenants/version-history.md) | [The Mechanism](../../the-mechanism/README.md)
+
+---
+
+**Last updated:** 2026-08-14 (converted to index format per TightDS feedback)  
+**Status:** Phase 0 in progress (covenant flow proven, integration ongoing)  
+**Evidence:** First inter-device claim TXID 193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96

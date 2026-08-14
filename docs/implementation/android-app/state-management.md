@@ -4,22 +4,33 @@
 
 **Complexity:** Medium - Database design + blockchain state reconciliation
 
-> **⚠️ Phase 0 Core Infrastructure - Foundation for All Features**
+**Status Update (August 14, 2026):**
+- **Phase 0 ✅ Implemented:** Multi-wallet storage (WalletEntity, Room database, WalletManager)
+- **Phase 1+ 🔨 Future:** Comprehensive schema (covenants tracking, bulletin board cache, sync strategies)
+
+**What this document describes:** Full state management architecture for MVP (all five gears integrated)
+
+**What Phase 0 implemented:** Simplified wallet storage only (wallets table, no covenant tracking yet)
+
+---
+
+> **⚠️ Originally Planned for Phase 0 - Implemented Partially**
 > 
-> State Management is the **data persistence layer** for Asgaya:
+> State Management was envisioned as **complete data persistence layer** for Asgaya:
 > 
-> **Why Phase 0 (Core Infrastructure):**
-> 1. **Every feature needs it** - Covenants, listings, wallet all require local storage
-> 2. **Offline-first depends on it** - Cached data enables offline functionality
-> 3. **Fast UI depends on it** - No Electrum queries on every screen load
-> 4. **Multi-component dependency** - Wallet, bulletin board, Nostr, notification bot all use it
+> **Phase 0 Reality:**
+> 1. ✅ **Wallet storage** - Room database with WalletEntity (name, WIF, address, balance, type)
+> 2. ✅ **WalletManager** - Reactive updates via LiveData/Flow
+> 3. ❌ **Covenant tracking** - Not needed yet (self-funded sender, no seller coordination)
+> 4. ❌ **Bulletin board cache** - No bulletin board in Phase 0
+> 5. ❌ **Sync strategies** - Manual updates only (no background sync)
 > 
-> **Key Design Principle:**
+> **Key Design Principle (Still Valid):**
 > > "Blockchain is always right. Local state is cache + UI optimizations."
 > 
-> **Sync Strategy:** Event-driven reconciliation (Electrum notifications → local DB updates)
+> **Phase 1+ Sync Strategy:** Event-driven reconciliation (Electrum notifications → local DB updates)
 > 
-> **Without this:** No offline capability, slow UI, no persistent state between app sessions.
+> **This document:** Full MVP design. Phase 0 implemented minimal subset (wallets only).
 
 ---
 
@@ -658,11 +669,17 @@ function syncMissingCovenants():
 
 ---
 
-**Status:** Phase 0 - Design complete, implementation TODO (CRITICAL - foundation for all features)  
-**Updated:** 2026-08-04  
+**Status:** Phase 0 ✅ Partially Implemented (wallet storage working), Phase 1+ 🔨 Full design (covenant tracking, cache, sync)  
+**Updated:** 2026-08-14 (status header added to clarify Phase 0 vs MVP scope)  
+**Originally written:** 2026-08-04 (pre-production, described full MVP architecture)  
 **Complexity:** Medium (database design + sync logic + event-driven reconciliation)  
 **Priority:** Core infrastructure (covenants, listings, wallet, caching all depend on this)  
 **Design Principle:** "Blockchain is always right. Local state is cache + UI optimizations."
+
+**Phase 0 Implementation (AsgayaHusk):**
+- Room database with WalletEntity (name, WIF, address, balance, type)
+- WalletManager for reactive updates
+- No covenant tracking, bulletin board cache, or sync strategies yet
 ---
 
 ## Navigation
