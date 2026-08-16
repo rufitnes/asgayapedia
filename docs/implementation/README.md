@@ -12,8 +12,8 @@
 **Historic Milestone:** First inter-device covenant claim successful!
 
 **Production-Proven Capabilities:**
-- ✅ **Covenant v2.5** - Production-proven on-chain (TXID: `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`)
-  - All 4 spending paths implemented (claim, merchantCashout, refund, sellerRecoverBuffer)
+- ✅ **Covenant v2.6** - Production-proven on testnet3 (abort path validated Aug 15, 2026)
+  - All 5 spending paths implemented (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
   - Claim path proven with real devices (Aug 10, 2026)
   - Refund path tested and reliable (Aug 8, 2026)
   - Smart contract validation working (rejected incorrect claim attempt)

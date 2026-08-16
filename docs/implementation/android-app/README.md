@@ -76,7 +76,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | Feature | Status | Notes |
 |---------|--------|-------|
 | Multi-wallet management | ✅ Done | Room database, WalletManager, reactive UI |
-| Covenant v2.5 (4 paths) | ✅ Done | All paths validated on Pi-chan + inter-device |
+| Covenant v2.6 (5 paths) | ✅ Done | All paths validated (v2.5 on chipnet, abort on testnet3) |
 | WebView + CashScript SDK | ✅ Done | Production-proven Aug 1-10 |
 | ElectrumClient (balance/broadcast) | ✅ Done | TCP + WebSocket support |
 | Telegram parameter parsing | ✅ Done | Testing tool + fallback (Nostr is target) |

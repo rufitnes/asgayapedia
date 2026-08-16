@@ -36,6 +36,63 @@ The Stability Layer enables users to hold EUR/Gold-pegged tokens instead of vola
 
 ---
 
+## Phase 0 H€ Minting Policy (Compliance)
+
+**Regulatory constraint:** H€ must remain a **utility token**, not a money substitute.
+
+**Design implication:** Limit H€ minting to specific, justifiable use cases where hedging is legitimate:
+
+### Minting Triggers (Phase 0)
+
+| Covenant Path | Minting? | Justification |
+|---------------|----------|---------------|
+| **merchantCashout()** | ✅ Yes | Merchant has EUR fiat, needs BCH hedge |
+| **abort()** | ✅ Yes | Sender loses BCH exposure, needs EUR hedge |
+| **claim()** | ❌ No | Recipient gets BCH (no hedge needed) |
+| **refund()** | ❌ No | Sender gets BCH back (no hedge needed) |
+| **sellerRecoverBuffer()** | ❌ No | Seller gets BCH back (no hedge needed) |
+
+### On-Chain Detection
+
+**How to distinguish minting-eligible paths:**
+
+```javascript
+function shouldMintH€(transaction) {
+    const outputCount = transaction.outputs.length;
+    
+    if (outputCount === 1) {
+        // abort() path - single output to sender
+        return {
+            mint: true,
+            recipient: transaction.outputs[0].address,
+            reason: 'abort - emergency price protection'
+        };
+    }
+    
+    if (outputCount === 2) {
+        // Check signatures to distinguish paths
+        if (hasMerchantSignature(transaction)) {
+            // merchantCashout() path
+            return {
+                mint: true,
+                recipient: getMerchantAddress(transaction),
+                reason: 'merchantCashout - fiat hedge conversion'
+            };
+        }
+        // claim/refund/sellerRecoverBuffer - no minting
+        return { mint: false };
+    }
+}
+```
+
+**Critical insight:** Output count (1 vs 2) + signature analysis provides on-chain proof for minting eligibility.
+
+**Compliance proof:** If BCH price stabilizes, H€ minting stops (proves utility nature, not money substitute).
+
+**Reference:** [Covenant v2.6 - abort() design](../covenants/version-history.md#v26-emergency-abort--overlap-zone-fund-locking-fix)
+
+---
+
 ## What Is AnyHedge?
 
 ### Non-Custodial Hedging

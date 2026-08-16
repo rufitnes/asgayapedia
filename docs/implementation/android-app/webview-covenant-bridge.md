@@ -365,6 +365,7 @@ if (BuildConfig.DEBUG) {
 **Common issues:**
 - **"Buffer is not defined"** → Webpack polyfill missing
 - **"crypto.createHash is not a function"** → crypto-browserify not configured
+- **"window.ElectrumWebSocket is not a constructor"** / **"window.ElectrumClient is not a constructor"** → Missing `CashScriptSDK.` namespace prefix (all CashScriptSDK classes must use the full namespace in covenant-bridge.html; discovered Aug 15 in executeAbort)
 - **Covenant address mismatch** → Check parameter order (reverse order for stack!)
 - **Transaction broadcast fails** → Check Electrum server connectivity
 

@@ -32,6 +32,18 @@ Statistical analysis showing 7% buffer covers 95%+ of 24-hour price movements wi
 
 Track actual BCH price movements during trial covenants and measure buffer adequacy.
 
+## Dynamic Buffer (Design Note, August 2026)
+
+The buffer is intended to be **dynamic** — sized from recent **downward** BCH price volatility, not a fixed 7% forever. The v2.6 covenant already supports this:
+
+- The abort threshold and claim floor are computed from `initialBchPriceInCents * minPricePercent` at funding time
+- A dynamic `minPricePercent` (e.g., derived from recent downward volatility) slots straight into the existing covenant without contract changes
+- The v2.6 abort()/overlap design was deliberately built to be compatible with a variable buffer
+
+**Design intent (Suso, Aug 15):** 7% is Phase 0's fixed default. Dynamic sizing based on recent downward volatility is the target, and the covenant architecture accommodates it.
+
+**Note:** A related but distinct idea (per-hour buffer pricing by sellers) is in [variable-buffer-rate](../variable-buffer-rate.md).
+
 ## Contributor Guidance
 
 **Skills needed:** Data analysis, statistical modeling  

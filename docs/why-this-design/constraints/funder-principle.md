@@ -587,14 +587,15 @@ When explaining covenant parameters:
 
 ## Future Considerations
 
-### Phase 1+: Parameter Naming
+### Parameter Naming: RESOLVED in v2.6.1
 
-If covenant is redeployed for Phase 1+:
-- Consider renaming `seller` → `funder` for clarity
-- Or add inline comment: `bytes20 seller; // funder's pubkey hash`
-- Maintain backward compatibility with existing understanding
+**Status:** ✅ Done (August 15, 2026)
 
-**Trade-off:** Bytecode changes require redeployment and re-auditing. Current naming is not broken enough to justify the cost.
+The `seller` → `funder` rename was applied in `price-oracle-v2.6.1.cash` at **zero cost** — constructor parameter names live in the artifact ABI, not the spending bytecode, so the compiled output is byte-identical to v2.6 (same address, no redeployment).
+
+**Decision:** The version stays v2.6 (same address); `price-oracle-v2.6.1.json` is the production artifact with the correct `funder` parameter name.
+
+**What this resolves:** The naming confusion that caused the Aug 2 (parameter population) and Aug 10 (seller address) bugs. Future developers see `funder`, which matches the semantics.
 
 ---
 

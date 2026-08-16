@@ -560,7 +560,7 @@ function resolveCashAccount(cash_account):
 ## Covenant Integration
 
 > **Implementation Status:** ✅ WebView + CashScript bridge (August 1-2, 2026)  
-> **Production Covenant:** v2.5 with 4 functions (claim, merchantCashout, refund, sellerRecoverBuffer)  
+> **Production Covenant:** v2.6 with 5 functions (claim, merchantCashout, refund, abort, sellerRecoverBuffer)  
 > **Validation:** 7 successful testnet3 transactions (4 claims, 3 refunds)  
 > **Reference:** [WebView Covenant Bridge](./webview-covenant-bridge.md) | [Version History](../covenants/version-history.md)
 

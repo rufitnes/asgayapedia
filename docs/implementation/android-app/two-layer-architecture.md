@@ -5,7 +5,7 @@
 **Why this matters:** Separating "what's possible" (covenant) from "what's recommended" (client) gives users maximum sovereignty while maintaining good UX.
 
 **Status (August 14, 2026):**
-- ✅ **Covenant Layer:** Accurate (v2.5 specification with 4 functions: claim, merchantCashout, refund, sellerRecoverBuffer)
+- ✅ **Covenant Layer:** Accurate (v2.6 specification with 5 functions: claim, merchantCashout, refund, abort, sellerRecoverBuffer)
 - ⚠️ **Client Layer:** Code examples are illustrative/future (Nostr monitoring not in Phase 0)
 - ✅ **Core Principle:** Validated in production (refund anytime works, auto-refund logic tested)
 
@@ -135,18 +135,21 @@ function refund(sig senderSig) {
 
 ## Asgaya's Implementation
 
-### Covenant Layer (v2.5)
+### Covenant Layer (v2.6)
 
-**4 functions, 4 actors, permissionless:**
+**5 functions, 4 actors, permissionless:**
 
 | Function | Restrictions | Purpose |
 |----------|-------------|---------|
 | `claim` | Oracle + time + price | Normal recipient flow |
 | `merchantCashout` | Oracle + time + price + merchant sig | Cash pickup option |
 | `refund` | **None** | Emergency sender escape |
+| `abort` | Oracle + price (≤93.5%) | Emergency exit when buffer exhausted |
 | `sellerRecoverBuffer` | Oracle + time (post-expiry) | Seller capital recovery |
 
-**Key insight:** Only `claim` and `merchantCashout` have restrictions (they move funds to new parties). `refund` and `sellerRecoverBuffer` return funds to original funders—should be permissionless.
+**Key insight:** Only `claim` and `merchantCashout` have restrictions (they move funds to new parties). `refund`, `abort`, and `sellerRecoverBuffer` return funds to original funders—should be permissionless.
+
+**v2.6 addition:** `abort` fixes fund locking when price drops below buffer capacity. The overlap zone (93.5% threshold) ensures both `abort` and `refund` work at critical prices, preventing lock scenarios.
 
 ### Client Layer (AsgayaHusk)
 
