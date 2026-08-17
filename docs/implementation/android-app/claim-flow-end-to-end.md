@@ -74,7 +74,7 @@ The covenant claim flow enables a recipient to receive a guaranteed EUR-denomina
 │     └─ Extract seller ADDRESS (for buffer output)                   │
 │                                                                      │
 │  7. Oracle Signature Generation                                     │
-│     ├─ Get current BCH/EUR price (hardcoded €650 for now)           │
+│     ├─ Get current BCH/EUR price (Pi-chan oracle /oracle/price)     │
 │     ├─ Generate timestamp (Unix epoch)                              │
 │     ├─ CovenantWebView.generateOracleSignature()                    │
 │     └─ Returns { message, signature, price, timestamp }             │
@@ -160,6 +160,8 @@ initialBchPriceInCents=65000
 minPricePercent=93
 fundingTxid=9b98c94cf4c755b3e8d2b18ad8095451f959b6cb39ddef657bdc841b08c700bb
 [/COVENANT_V25]
+
+> **Note:** This example shows the Aug 10 milestone covenant with the *original* oracle pubkey. Since Aug 16, the app fetches the oracle pubkey dynamically from the Pi-chan oracle (`ORACLE_URL` + `fetchOraclePubkey()`) — no pubkey is hardcoded in the app. See [Asgaya Oracle Husk](../../the-mechanism/nostr-coordination/oracle-husk.md).
 
 ⏰ Expires: 2026-08-10 00:10:04 UTC
 💰 You will receive 5,00 € worth of BCH at claim time
@@ -470,7 +472,7 @@ private fun executeClaim(remittance: Remittance) {
         Log.d(TAG, "Seller address (for buffer): ${sellerWallet.address}")
         
         // 3. Generate oracle signature
-        val currentBchPriceInCents = 65000  // €650/BCH (TODO: real price feed)
+        val currentBchPriceInCents = fetchOraclePrice()  // From Pi-chan oracle /oracle/price
         val oracleSig = covenantWebView.generateOracleSignature(currentBchPriceInCents)
         
         // 4. Call claim with BOTH wallet addresses
@@ -793,8 +795,9 @@ bitcoin-cli -testnet -rpcwallet=recipient gettransaction <TXID>
 
 ### 1. Real Oracle Price Feed
 
-**Current:** Hardcoded €650/BCH  
-**Future:** Query real-time price from oracle service  
+**Current (Aug 16):** Pi-chan oracle husk running — `/oracle/price` serves signed prices, `/oracle/set-price` enables test price drops. Price source is still test-controlled.  
+**Future:** Real-time market feed (mainnet), then progressive decentralization to network VWAP.  
+**See:** [Asgaya Oracle Husk](../../the-mechanism/nostr-coordination/oracle-husk.md)  
 **Priority:** High (before mainnet)
 
 ---

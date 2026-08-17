@@ -581,5 +581,6 @@ That's the point.
 - [Device Health Checks](device-health.md) - Proactive fraud prevention
 - [Dispute Resolution](dispute-resolution.md) - What happens when trades fail
 - [Distributed Monitoring](distributed-monitoring.md) - Oracle-over-Nostr price feeds for auto-refund protection
+- [Asgaya Oracle Husk](oracle-husk.md) - Trusted bootstrap oracle, progressive decentralization
 
 **Related:** [Wallet](../wallet/README.md) · [Bulletin Board](../bulletin-board/README.md) · [Notification Bot](../notification-bot/README.md) · [Stability Layer](../stability-layer/README.md)

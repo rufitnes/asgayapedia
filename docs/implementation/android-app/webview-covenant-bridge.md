@@ -393,11 +393,13 @@ app/src/main/
 val covenantWebView = CovenantWebView(this)
 
 // Create covenant
+// NOTE: Since Aug 16, 2026 the oracle pubkey is fetched dynamically
+// (fetchOraclePubkey() → GET {ORACLE_URL}/oracle/info), never hardcoded.
 covenantWebView.createCovenant(
     senderPubkey = "02abc123...",
     recipientPubkey = "03def456...",
     sellerPubkey = "02ghi789...",
-    oraclePubkey = CovenantConstants.ORACLE_PUBKEY,
+    oraclePubkey = fetchedOraclePubkey,  // From Pi-chan oracle API (no hardcoded keys)
     eurCents = 700,  // €7
     expiryTime = System.currentTimeMillis() / 1000 + 8 * 3600,
     initialPrice = 35000,  // €350/BCH

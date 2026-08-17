@@ -53,7 +53,7 @@ User Input:
 Step 1: Resolve Parameters
 ├─ recipientPubkey ← lookup CashAccount on blockchain
 ├─ sellerPubkey ← query bulletin board (or use own key)
-├─ oraclePubkey ← hardcoded (CovenantConstants.ORACLE_PUBKEY)
+├─ oraclePubkey ← fetched from Pi-chan oracle (fetchOraclePubkey, no hardcoded keys)
 ├─ senderPubkey ← derive from WIF key
 ├─ eurCents ← 10000 (€100.00)
 ├─ expiryOracleTime ← now + 8 hours
@@ -102,7 +102,7 @@ covenantWebView.createCovenant(
     senderPubkey = myWallet.pubkey,
     recipientPubkey = recipientPubkey,
     sellerPubkey = seller.pubkey,
-    oraclePubkey = CovenantConstants.ORACLE_PUBKEY,
+    oraclePubkey = fetchOraclePubkey(),  // From Pi-chan oracle /oracle/info (no hardcoded keys)
     eurCents = 10000,
     expiryTime = now + 8.hours,
     initialPrice = oracle.getCurrentPrice(),

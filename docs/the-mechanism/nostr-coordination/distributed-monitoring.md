@@ -161,6 +161,8 @@ const vwap = trustedTrades.reduce((acc, t) =>
 
 ## Bootstrap Strategy (Asgaya as Training Wheels)
 
+**The Asgaya-owned oracle that powers this bootstrap is documented in [Asgaya Oracle Husk](oracle-husk.md)** — it starts as development infrastructure (full control over price + time for testing) and graduates to the production bootstrap oracle at mainnet. Blockchain-as-oracle (this document) is the aspirational end state that lets the trusted signer retire.
+
 ### Phase 0: Day 1 Launch
 
 **Asgaya is the only passive seller:**

@@ -29,10 +29,11 @@
   - Connection management (5-second TCP cooldown, WebSocket cleanup)
 - ✅ **Multi-Wallet Management** - Complete (sender/recipient/seller wallet matching)
 - ✅ **WebView Integration** - Battle-tested (Kotlin ↔ JavaScript bridge working)
+- ✅ **Oracle Husk (Pi-chan)** - Running at `192.168.1.100:3001`, dynamic pubkey fetching, zero hardcoded keys (Aug 16)
 
 **In Progress:**
 - ⏳ **Merchant Cash-Out Flow** - UI placeholder exists, bulletin board integration next
-- ⏳ **Oracle Price Feed** - Currently hardcoded €650/BCH, real-time feed needed
+- ⏳ **UI Feedback Bug** - `sendBch()` returns `{}`; transactions succeed but UI stays at "sending..."
 - ⏳ **Multi-Covenant Batching** - Claim multiple covenants in one transaction
 
 **Key Achievements (August 8-10, 2026):**
