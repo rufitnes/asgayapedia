@@ -8,7 +8,7 @@
 ## Current Status
 
 **Phase:** Phase 0 - Production Core Flow Ready 🏆  
-**Last Update:** August 10, 2026  
+**Last Update:** August 21, 2026  
 **Historic Milestone:** First inter-device covenant claim successful!
 
 **Production-Proven Capabilities:**
@@ -28,16 +28,22 @@
   - Copy-to-share mechanism (Telegram/Nostr pattern)
   - Connection management (5-second TCP cooldown, WebSocket cleanup)
 - ✅ **Multi-Wallet Management** - Complete (sender/recipient/seller wallet matching)
-- ✅ **WebView Integration** - Battle-tested (Kotlin ↔ JavaScript bridge working)
+- ✅ **v0.2 Hybrid Architecture** - Kotlin owns network, WebView does compute (Aug 20-21)
+  - CREATE/REFUND/CLAIM/ABORT all on hybrid (build() + Kotlin broadcast)
+  - CREATE ~100ms, covenant ops ~200ms, zero WebSocket connections on critical path
+  - Multi-device bug (WebSocket connection accumulation) eliminated at the root
+- ✅ **WebView Integration** - Compute-only (CashScript build/sign); broadcast moved to Kotlin (Aug 20)
 - ✅ **Oracle Husk (Pi-chan)** - Running at `192.168.1.100:3001`, dynamic pubkey fetching, zero hardcoded keys (Aug 16)
+- ✅ **Timeout & Lifecycle Handling** - `withTimeout()` + ViewModel migration (RS083); stuck "Sending..." bug resolved (Aug 17-20)
 
 **In Progress:**
 - ⏳ **Merchant Cash-Out Flow** - UI placeholder exists, bulletin board integration next
-- ⏳ **UI Feedback Bug** - `sendBch()` returns `{}`; transactions succeed but UI stays at "sending..."
 - ⏳ **Multi-Covenant Batching** - Claim multiple covenants in one transaction
+- ⏳ **Move covenant UTXO fetch to Kotlin** - REFUND/CLAIM/ABORT still use brief WebSocket for `contract.getUtxos()`; moving to Kotlin makes WebView 100% network-free (Phase 1 enhancement)
 
-**Key Achievements (August 8-10, 2026):**
-- 🏆 **First guaranteed-value BCH transfer using native covenants between two devices**
+**Key Achievements (August 8-21, 2026):**
+- 🏆 **First guaranteed-value BCH transfer using native covenants between two devices** (Aug 10)
+- 🏆 **v0.2 hybrid architecture** — eliminated the WebView connection bug class at the root (Aug 20-21)
 - Covenant lifecycle complete (create → fund → claim/refund → verified on-chain)
 - Critical bug discovered and fixed (seller address must match funder - documented)
 - Connection management patterns discovered (TCP cooldown prevents WebSocket hangs)

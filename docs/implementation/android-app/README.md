@@ -56,12 +56,16 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | Component | What It Does | Status | Doc |
 |-----------|-------------|--------|-----|
 | **Multi-Wallet** | Sender/recipient/merchant wallet switching, Room persistence | ✅ Working | [wallet.md](wallet.md) |
-| **CovenantWebView** | Kotlin ↔ JS bridge, CashScript SDK integration, P2SH32 address generation | ✅ Working | [webview-covenant-bridge.md](webview-covenant-bridge.md) |
+| **CovenantWebView** | Kotlin ↔ JS bridge, CashScript SDK integration, P2SH32 address generation | ✅ Working (v0.2 hybrid: compute-only) | [webview-covenant-bridge.md](webview-covenant-bridge.md) |
+| **CovenantBuildService** | v0.2: Kotlin network ops (UTXO fetch + broadcast, native TCP) | ✅ Working | [webview-covenant-bridge.md](webview-covenant-bridge.md) |
 | **ElectrumClient** | Balance queries, transaction broadcast, UTXO management | ✅ Working | [connection-management-patterns.md](connection-management-patterns.md) |
 | **NotificationListener** | Telegram parameter parsing (testing tool + fallback; Nostr is Phase 0 target) | ✅ Working | [notification-bot.md](notification-bot.md) |
-| **Connection Management** | TCP cooldown (5s after balance query), WebSocket cleanup, manual updates | ✅ Working | [connection-management-patterns.md](connection-management-patterns.md) |
+| **Connection Management** | TCP cooldown (5s after balance query), WebSocket cleanup, manual updates | ✅ Working (v0.2: WebSocket only for brief UTXO fetch) | [connection-management-patterns.md](connection-management-patterns.md) |
+| **SendViewModel** | v0.2: viewModelScope transaction state, pending_transactions DB, rebroadcast, background confirmation (RS083) | ✅ Working | [state-management.md](state-management.md) |
 
 **Covenant v2.5:** All 4 spending paths tested (claim, merchantCashout, refund, sellerRecoverBuffer)
+
+**v0.2 hybrid architecture (Aug 20-21):** All 4 covenant operations (CREATE/REFUND/CLAIM/ABORT) now build in the WebView and broadcast from Kotlin. WebView is compute-only. Multi-device reliability restored (the WebSocket connection-accumulation bug is eliminated at the root).
 
 **Evidence:** First inter-device claim August 10, 2026 ([TXID](https://github.com/bitcoin-cash-node/bitcoin-cash-node): 193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96)
 
@@ -77,11 +81,12 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 |---------|--------|-------|
 | Multi-wallet management | ✅ Done | Room database, WalletManager, reactive UI |
 | Covenant v2.6 (5 paths) | ✅ Done | All paths validated (v2.5 on chipnet, abort on testnet3) |
-| WebView + CashScript SDK | ✅ Done | Production-proven Aug 1-10 |
+| WebView + CashScript SDK | ✅ Done | v0.2 hybrid: compute-only (build/sign), broadcast in Kotlin |
 | ElectrumClient (balance/broadcast) | ✅ Done | TCP + WebSocket support |
 | Telegram parameter parsing | ✅ Done | Testing tool + fallback (Nostr is target) |
 | Connection management patterns | ✅ Done | TCP cooldown, cleanup, manual updates |
 | Self-funded sender flow | ✅ Done | Also a real future use case (BCH stable, B2B, CEX savings) |
+| **v0.2 hybrid (build + Kotlin broadcast)** | ✅ Done | CREATE/REFUND/CLAIM/ABORT all hybrid (Aug 20-21) |
 | **Nostr coordination (DM)** | 🔨 In progress | Phase 0 target (automation needed for real covenants) |
 | **Bulletin board** | 🔨 Planned | Merchant/seller discoverability (MVP needs it) |
 | **Merchant cash-out flow** | 🔨 Planned | Covenant path tested; needs UI integration |
@@ -154,6 +159,9 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 
 **Phase 0 challenges (learned during Aug 2026 work):**
 - **Connection management:** TCP cooldown prevents throttling; `finally` blocks prevent leaks
+- **WebView broadcast instability:** WebView JS timers pause on screen-off → WebSocket hangs + connection accumulation. **Solved Aug 20 via v0.2 hybrid** — Kotlin owns the network, WebView does compute only
+- **`send()` vs `build()`:** CashScript's `send()` polls for confirmation up to 10 min; `build()` returns signed hex locally. Always `build()` + Kotlin broadcast
+- **UTXO field conventions:** libauth uses `tx_hash`/`tx_pos`; CashScript SDK uses `txid`/`vout`. Mixing them crashes with "reading 'length'" (Aug 21)
 - **Covenant state sync:** Manual "Update Status" button works; background polling is Phase 0+
 - **WebView bridge:** CashScript SDK integration solved manual encoding bugs; 10MB bundle acceptable
 
@@ -198,6 +206,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 - RS072 - Notification listener + device health monitoring (DeviceHealthMonitor.kt exists!)
 - RS075 - Android app health detection (battery, app status, permissions)
 - RS082 - 0-conf security economics for remittances
+- RS083 - Transaction broadcast UI patterns (ViewModel, navigate-on-success, rebroadcast; hybrid architecture validation)
 
 **Media (Phase 0+ content refresh needed):**
 - **Radio Asgaya** 📻 - 105 podcast episodes, workflow proven; content needs re-audit against covenant v2.5 + funder principle before public use  
@@ -234,6 +243,6 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 
 ---
 
-**Last updated:** 2026-08-14 (converted to index format per TightDS feedback)  
+**Last updated:** 2026-08-21 (v0.2 hybrid architecture update)  
 **Status:** Phase 0 in progress (covenant flow proven, integration ongoing)  
 **Evidence:** First inter-device claim TXID 193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96

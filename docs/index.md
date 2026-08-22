@@ -136,11 +136,15 @@ Asgaya builds on proven Bitcoin Cash innovations:
 
 ## Status
 
-**Phase:** Phase 0 Preparation (Documentation Complete, Implementation Pending)  
+**Phase:** Phase 0 — Active Implementation & Testnet3 Validation  
 **Version:** 2.0 (Covenant Architecture)  
-**Last Major Update:** June 27, 2026
+**Last Major Update:** August 21, 2026
 
-**What's complete:**
+**Implementation progress:**
+- ✅ **Covenant v2.6** — All 5 spending paths validated on testnet3 (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
+- ✅ **First inter-device claim** — Guaranteed-value transfer between two Android devices (Aug 10, 2026)
+- ✅ **v0.2 hybrid architecture** — Kotlin owns network, WebView does compute. Eliminated the WebView connection-hang bug class; multi-device reliable (Aug 20-21)
+- ✅ **Oracle integration** — Dynamic pubkey fetching, zero hardcoded keys (Aug 16)
 - ✅ 7 implementation components (TightDS reviewed)
 - ✅ Glossary with H€/HAu/AnyHedge terms
 - ✅ User journey documentation
@@ -148,7 +152,7 @@ Asgaya builds on proven Bitcoin Cash innovations:
 - ✅ Research sessions and findings
 - ✅ Unknown investigation framework
 
-**Status:** Research and development phase, preparing for Phase 0 validation
+**Status:** Android reference implementation under active development, validated on testnet3 with real devices. Preparing for Phase 0 pilot.
 
 ---
 

@@ -1,8 +1,45 @@
 # WebView Covenant Bridge
 
-**Status:** ✅ Production (August 2026)  
+**Status:** ✅ Production (August 2026) — **v0.2 Hybrid Architecture (Aug 20-21)**  
 **Platform:** Android (Kotlin + JavaScript)  
-**Validation:** 4 successful claims + 3 successful refunds on testnet3 (Aug 1-2, 2026)
+**Validation:** 4 successful claims + 3 successful refunds on testnet3 (Aug 1-2, 2026); all 4 covenant operations on hybrid (Aug 20-21)
+
+---
+
+> ## ⚠️ MAJOR UPDATE (Aug 20-21, 2026): v0.2 Hybrid Architecture
+>
+> **The WebView no longer broadcasts transactions.** This is the single biggest change since this document was written.
+>
+> **Old (v0.1):** WebView did everything — build + sign + connect to Fulcrum via WebSocket + broadcast.
+> **New (v0.2 hybrid):** WebView does **compute only** (build + sign). Kotlin owns **all network** (UTXO fetch + broadcast).
+>
+> ```
+> v0.1 (broken at scale):  WebView: build → WebSocket → broadcast
+> v0.2 (hybrid):           WebView: build+sign → return hex → Kotlin: broadcast (TCP)
+> ```
+>
+> **Why:** WebView JavaScript timers pause when the screen is off / app is backgrounded. WebSocket connections from the WebView would hang indefinitely and accumulate (4+ ESTABLISHED observed), breaking multi-device use after 1-2 operations.
+>
+> **What changed:**
+> - `TransactionBuilder.build()` instead of `.send()` — returns signed hex, fully local, no network
+> - Kotlin `ElectrumClient.broadcast(txHex)` handles the broadcast (native TCP, 10s OS-level timeouts that actually fire)
+> - New `CovenantBuildService.kt` wraps the Kotlin network operations
+> - Results: CREATE ~100ms, REFUND/ABORT ~200ms, **zero WebSocket connections** on the critical path
+>
+> **Status of all 4 covenant operations:**
+>
+> | Operation | v0.2 Hybrid | Network Pattern |
+> |-----------|------------|-----------------|
+> | CREATE | ✅ Working | Kotlin TCP only (libauth, fully network-free WebView) |
+> | REFUND | ✅ Working | Brief WebSocket for UTXO fetch + `build()` |
+> | CLAIM | ✅ Working | Brief WebSocket for UTXO fetch + `build()` |
+> | ABORT | ✅ Working | Brief WebSocket for UTXO fetch + `build()` |
+>
+> **The `build()` vs `send()` discovery (Aug 20):** CashScript's `send()` is actually `build + broadcast + wait_for_confirmation`. The `getTxDetails()` step polls `getRawTransaction()` for up to 10 minutes. We only wanted `build()`. See [connection-management-patterns.md](connection-management-patterns.md) Issue 4.
+>
+> **UTXO field naming (Aug 21):** Kotlin↔SDK conversion must use `txid`/`vout` (CashScript SDK convention), NOT `tx_hash`/`tx_pos` (libauth convention). CREATE uses libauth (needs `tx_hash`/`tx_pos`); covenant spend ops use CashScript SDK (needs `txid`/`vout`). Mixing them causes `hexToBin(undefined)` → "reading 'length'" crash.
+>
+> **This document below documents the v0.1 architecture.** Treat the WebSocket broadcast sections as historical. The hybrid pattern above is current.
 
 ---
 
@@ -26,7 +63,45 @@
 
 ---
 
-## Architecture Overview
+## Architecture Overview (v0.2 Hybrid)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Android App (Kotlin)                          │
+│                                                                  │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │ CovenantBuildService.kt      ← NETWORK OWNER (v0.2)        │ │
+│  │  • fetchUTXOs(address)       → ElectrumClient (TCP 60001)  │ │
+│  │  • broadcastTransaction(hex) → ElectrumClient (TCP 60001)  │ │
+│  └──────────────┬─────────────────────────────────────────────┘ │
+│                 │                                               │
+│  ┌──────────────▼─────────────────────────────────────────────┐ │
+│  │ CovenantWebView.kt                                         │ │
+│  │  • Build request → evaluateJavascript("buildXTransaction") │ │
+│  │  • Receives hex via onTransactionBuilt() callback          │ │
+│  │  • Hands hex to CovenantBuildService.broadcastTransaction()│ │
+│  └──────────────┬─────────────────────────────────────────────┘ │
+│                 │                                               │
+│                 ▼                                               │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │ WebView (JavaScript) — COMPUTE ONLY (build+sign)           │ │
+│  │  • covenant-bridge.html                                    │ │
+│  │  • buildTransactionFromUTXOs() (CREATE, libauth)           │ │
+│  │  • buildClaimTransaction() / buildRefundTransaction()      │ │
+│  │  • buildAbortTransactionFromUTXOs() (CashScript SDK)       │ │
+│  │  • Returns { txHex } via Android.onTransactionBuilt()      │ │
+│  │  • NO broadcast, NO long-lived connections                 │ │
+│  └────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Key principle:** *WebView = compute (build/sign). Kotlin = network (broadcast/confirm).* This is the pattern mature apps (Selene, Paytaca) use — validated via RS083 addendum research.
+
+**Note on UTXO fetch:** CREATE passes UTXOs from Kotlin (fully network-free WebView). REFUND/CLAIM/ABORT briefly connect to Fulcrum to fetch covenant UTXOs via `contract.getUtxos()` (needed for CashScript's `TransactionBuilder`), then disconnect. A future enhancement moves that fetch to Kotlin too.
+
+---
+
+## Architecture Overview (v0.1 — Historical)
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -60,49 +135,30 @@
 
 ## Components
 
-### 1. Kotlin Side: `CovenantWebView.kt`
+### 1. Kotlin Side: `CovenantWebView.kt` (v0.2 hybrid)
 
 **Responsibilities:**
 - Load `covenant-bridge.html` from assets
 - Expose JavaScript interface for Kotlin → JS calls
-- Handle callbacks from JavaScript (success/error)
+- Handle `onTransactionBuilt()` callback (hex from JS)
+- **Hand the hex to `CovenantBuildService.broadcastTransaction()` for native broadcast**
 - Manage WebView lifecycle
 
-**Key methods:**
+**Key methods (v0.2 hybrid):**
 ```kotlin
 class CovenantWebView(context: Context) {
-    // Create covenant (returns P2SH32 address)
-    fun createCovenant(
-        senderPubkey: String,
-        recipientPubkey: String,
-        sellerPubkey: String,
-        oraclePubkey: String,
-        eurCents: Int,
-        expiryTime: Long,
-        initialPrice: Int,
-        minPricePercent: Int,
-        callback: CovenantCallback
-    )
+    // Create covenant (returns P2SH32 address — pure computation)
+    fun createCovenant(...): String
     
-    // Claim covenant (build + broadcast transaction)
-    fun claimCovenant(
-        covenantParams: CovenantParams,
-        recipientWIF: String,
-        recipientAddress: String,
-        callback: TransactionCallback
-    )
-    
-    // Refund covenant
-    fun refundCovenant(
-        covenantParams: CovenantParams,
-        senderWIF: String,
-        senderAddress: String,
-        callback: TransactionCallback
-    )
+    // v0.2 HYBRID: Kotlin fetches UTXOs, JS builds, Kotlin broadcasts
+    suspend fun sendBchHybrid(...)   // CREATE — fully network-free WebView (libauth)
+    suspend fun claimCovenantHybrid(...)   // CLAIM — brief UTXO fetch + build()
+    suspend fun refundCovenantHybrid(...)  // REFUND — brief UTXO fetch + build()
+    suspend fun executeAbortHybrid(...)    // ABORT — brief UTXO fetch + build()
 }
 ```
 
-**JavaScript Interface:**
+**JavaScript Interface (v0.2 hybrid):**
 ```kotlin
 @JavascriptInterface
 fun onCovenantCreated(address: String, scriptHash: String, redeemScript: String) {
@@ -110,19 +166,24 @@ fun onCovenantCreated(address: String, scriptHash: String, redeemScript: String)
 }
 
 @JavascriptInterface
-fun onTransactionBroadcast(txid: String) {
-    // Callback with transaction ID
+fun onTransactionBuilt(resultJson: String) {
+    // v0.2: JS returns { txHex }, Kotlin broadcasts natively
+    val result = Json.decode(resultJson)
+    viewModelScope.launch {
+        val txid = CovenantBuildService.broadcastTransaction(result.txHex)
+        _txState.value = TxState.Success(txid)
+    }
 }
 
 @JavascriptInterface
-fun onError(error: String) {
-    // Error handling
+fun onTransactionBuildError(error: String) {
+    // Error handling (build failed, not broadcast)
 }
 ```
 
-**Bridge mechanism:**
-- Kotlin → JavaScript: `webView.evaluateJavascript("createCovenant(...)", null)`
-- JavaScript → Kotlin: `Android.onCovenantCreated(...)` where `Android` is the Kotlin-side interface injected via `webView.addJavascriptInterface(this, "Android")`
+**Bridge mechanism (unchanged):**
+- Kotlin → JavaScript: `webView.evaluateJavascript("buildClaimTransaction('...')", null)`
+- JavaScript → Kotlin: `Android.onTransactionBuilt(...)` where `Android` is the Kotlin-side interface injected via `webView.addJavascriptInterface(this, "Android")`
 - The `@JavascriptInterface` annotation exposes annotated methods to the JavaScript context
 
 ---
@@ -155,69 +216,46 @@ fun onError(error: String) {
 
 ---
 
-### 3. Covenant Operations: `covenant-operations.js`
+### 3. Covenant Operations: `covenant-bridge.html` (v0.2 hybrid)
 
-**Key functions:**
+**Key functions (v0.2 — build-only, no broadcast):**
+
 ```javascript
-// Create covenant address
-async function createCovenant(params) {
-    const contract = new Contract(
-        COVENANT_ARTIFACT,
-        [
-            params.senderPubkey,
-            params.recipientPubkey,
-            params.sellerPubkey,
-            params.oraclePubkey,
-            params.eurCents,
-            params.expiryTime,
-            params.initialPrice,
-            params.minPricePercent
-        ],
-        { provider: 'testnet' }
-    );
-    
-    const address = contract.address;
-    const scriptHash = contract.redeemScript.hash();
-    
-    // Send back to Kotlin
-    Android.onCovenantCreated(
-        address, 
-        scriptHash.toString('hex'),
-        contract.redeemScript.toString('hex')
-    );
+// CREATE (funding) — uses libauth directly, fully network-free (UTXOs from Kotlin)
+window.buildTransactionFromUTXOs = async function(paramsJson) {
+    const { senderWIF, senderAddress, recipientAddress, amountSats, utxos } = JSON.parse(paramsJson);
+    // ... libauth UTXO selection + build + sign ...
+    const txHex = libauth.binToHex(encodedTx);
+    Android.onTransactionBuilt(JSON.stringify({ txHex }));  // Kotlin broadcasts
 }
 
-// Claim covenant
-async function claimCovenant(params, recipientWIF, oracleSignature) {
-    const contract = loadContract(params);
-    const recipientKey = new PrivateKey(recipientWIF);
-    
-    const tx = await contract.functions
-        .claim(recipientKey.publicKey, oracleSignature)
-        .from(contract.address)
-        .to(recipientAddress, contractBalance)
-        .withHardcodedFee(250)
-        .send();
-    
-    // Send txid back to Kotlin
-    Android.onTransactionBroadcast(tx.txid);
+// CLAIM — CashScript SDK, brief UTXO fetch + build()
+window.buildClaimTransaction = async function(paramsJson) {
+    // ... connect briefly, contract.getUtxos(), build unlocker ...
+    const txHex = txBuilder.build();      // ← build(), NOT send()!
+    Android.onTransactionBuilt(JSON.stringify({ txHex }));
 }
 
-// Refund covenant
-async function refundCovenant(params, senderWIF) {
-    const contract = loadContract(params);
-    const senderKey = new PrivateKey(senderWIF);
-    
-    const tx = await contract.functions
-        .refund()
-        .from(contract.address)
-        .to(senderAddress, contractBalance)
-        .withHardcodedFee(250)
-        .send();
-    
-    Android.onTransactionBroadcast(tx.txid);
-}
+// REFUND — same pattern as claim
+window.buildRefundTransaction = async function(paramsJson) { ... }
+
+// ABORT — same pattern as claim
+window.buildAbortTransactionFromUTXOs = async function(paramsJson) { ... }
 ```
+
+**⚠️ CRITICAL — the two API conventions (Aug 21 discovery):**
+
+| Library | UTXO field names | Used for |
+|---------|-----------------|----------|
+| **libauth** | `tx_hash` / `tx_pos` | CREATE (P2PKH funding tx) |
+| **CashScript SDK** | `txid` / `vout` | CLAIM / REFUND / ABORT (covenant spends) |
+
+When converting Kotlin UTXOs for the CashScript SDK, use `txid`/`vout`. Wrong names → `hexToBin(undefined)` → "Cannot read properties of undefined (reading 'length')". (See Issue 4 in connection-management-patterns.md.)
+
+**⚠️ CRITICAL — `build()` vs `send()` (Aug 20 discovery):**
+- `txBuilder.build()` → returns signed hex, fully local, no network, no broadcast
+- `txBuilder.send()` → build + `sendRawTransaction` + **polls `getRawTransaction` up to 10 minutes**
+- ALWAYS use `build()` and let Kotlin broadcast. Never `send()` in the WebView.
 
 ---
 
@@ -366,21 +404,25 @@ if (BuildConfig.DEBUG) {
 - **"Buffer is not defined"** → Webpack polyfill missing
 - **"crypto.createHash is not a function"** → crypto-browserify not configured
 - **"window.ElectrumWebSocket is not a constructor"** / **"window.ElectrumClient is not a constructor"** → Missing `CashScriptSDK.` namespace prefix (all CashScriptSDK classes must use the full namespace in covenant-bridge.html; discovered Aug 15 in executeAbort)
+- **`evaluateJavascript()` returns `{}` for async functions** → Async JS functions return Promises, which serialize to an empty object. Real results arrive via the Android `@JavascriptInterface` callbacks, not the return value. (Discovered Aug 17 — this was the root of the stuck "Sending..." UI bug.)
 - **Covenant address mismatch** → Check parameter order (reverse order for stack!)
 - **Transaction broadcast fails** → Check Electrum server connectivity
 
 ---
 
-## File Locations
+## File Locations (v0.2)
 
 ```
 app/src/main/
 ├── assets/
-│   ├── covenant-bridge.html        # HTML wrapper
+│   ├── covenant-bridge.html        # HTML wrapper (build functions, no broadcast)
 │   └── cashscript-bundle.js        # Webpack output (~10MB)
 ├── java/com/asgaya/husk/
 │   ├── covenant/
-│   │   └── CovenantWebView.kt      # Kotlin bridge
+│   │   ├── CovenantBuildService.kt  # v0.2: Kotlin network ops (fetchUTXOs, broadcast)
+│   │   └── CovenantWebView.kt       # Kotlin ↔ JS bridge
+│   ├── viewmodel/
+│   │   └── SendViewModel.kt         # v0.2: viewModelScope, DB persistence (RS083)
 │   └── MainActivity.kt              # Usage example
 ```
 
@@ -435,17 +477,17 @@ covenantWebView.claimCovenant(
 
 ---
 
-## Migration Path (Phase 1+)
+## Migration Path
 
-**When manual construction is validated:**
+**Current state (Aug 2026):** v0.2 hybrid — WebView does compute (build/sign), Kotlin owns the network. This is the production architecture and matches the mature-app pattern (Selene, Paytaca).
 
-1. **Implement pure Kotlin alternative** - CovenantBuilder returns same interface
-2. **A/B testing period** - Run both implementations in parallel, verify matching output
-3. **Gradual rollout** - New installs get Kotlin version, existing users opt-in
-4. **Sunset WebView** - After 3 months of validation, deprecate JavaScript approach
-5. **Maintain WebView as fallback** - For platforms where manual construction isn't ported
+**Potential future paths (Phase 1+, not blocking):**
 
-**Compatibility guarantee:** Covenant addresses/scripts are identical between implementations. Users can switch seamlessly.
+1. **Move covenant UTXO fetch to Kotlin too** — REFUND/CLAIM/ABORT currently connect to Fulcrum briefly for `contract.getUtxos()`. Moving this to Kotlin (`ElectrumClient.getUTXOs()`) would make the WebView 100% network-free for all operations (matching CREATE). See [connection-management-patterns.md](connection-management-patterns.md).
+2. **Pure Kotlin covenant construction (long-term ideal)** — replace the WebView entirely once manual construction is validated. A/B test in parallel, verify identical output, then sunset the WebView.
+3. **Maintain WebView as fallback** — for platforms where manual construction isn't ported.
+
+**Compatibility guarantee:** Covenant addresses/scripts are identical regardless of which construction path runs. Users can switch seamlessly.
 
 ---
 
@@ -458,6 +500,6 @@ covenantWebView.claimCovenant(
 
 ---
 
-**Last updated:** August 3, 2026  
+**Last updated:** August 21, 2026 (v0.2 hybrid architecture update)  
 **Production since:** August 1, 2026  
-**Validation status:** ✅ Proven on testnet3 (7 successful transactions)
+**Validation status:** ✅ Proven on testnet3 (7 transactions v0.1; all 4 operations on v0.2 hybrid Aug 20-21)

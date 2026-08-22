@@ -2,8 +2,34 @@
 
 **Purpose:** Document battle-tested patterns for managing Electrum/Fulcrum connections on Android.
 
-**Status:** Production-proven (August 9-10, 2026)  
+**Status:** Production-proven (August 9-21, 2026)  
 **Context:** These patterns were discovered through debugging production hangs and are critical for reliability.
+
+---
+
+> ## ⚠️ MAJOR UPDATE (Aug 20-21, 2026): v0.2 Hybrid Architecture
+>
+> **The WebSocket connection problem was solved architecturally, not with more workarounds.**
+>
+> **Old (v0.1):** Covenant operations (claim/refund/abort) ran entirely in the WebView — including the Fulcrum WebSocket connection (port 60003) and broadcast. WebView JS timers pause when the screen is off, so timeouts never fired → connections hung and accumulated (4+ ESTABLISHED).
+>
+> **New (v0.2 hybrid):** Kotlin owns ALL network operations. The WebView does compute only (build + sign) and returns hex via `onTransactionBuilt()`. Kotlin broadcasts over native TCP (port 60001) with OS-level timeouts.
+>
+> **What this means for THIS document:**
+> - The patterns below (TCP cooldown, finally blocks, withTimeout) were the correct v0.1 workarounds. **They remain useful for balance queries and the brief WebSocket UTXO fetch.**
+> - **Issue 4 (withTimeout) and Issue 5 (lifecycleScope) are now superseded** — the hybrid + ViewModel migration are the real fixes. See the reframed Issues below.
+> - WebSocket (60003) is now used only for the **brief UTXO fetch** in REFUND/CLAIM/ABORT, not for broadcast.
+>
+> **Current connection usage (v0.2):**
+>
+> | Operation | Port | Protocol | Purpose |
+> |-----------|------|----------|---------|
+> | Balance query | 60001 | TCP | `ElectrumClient.getBalance()` |
+> | UTXO fetch (CREATE) | 60001 | TCP | `ElectrumClient.getUTXOsForAddress()` |
+> | UTXO fetch (REFUND/CLAIM/ABORT) | 60003 | WebSocket | `contract.getUtxos()` (brief) |
+> | Broadcast (all ops) | 60001 | TCP | `ElectrumClient.broadcast()` |
+>
+> **This is why multi-device works now:** no long-lived WebSocket in the WebView, no JS-timer dependency, connections open/close per operation in Kotlin.
 
 ---
 
@@ -11,8 +37,8 @@
 
 Asgaya uses two types of connections to Fulcrum (Electrum server):
 
-1. **TCP connections** (port 60001) - ElectrumClient for balance queries
-2. **WebSocket connections** (port 60003/60004) - Covenant operations (fund, claim, refund)
+1. **TCP connections** (port 60001) - ElectrumClient for balance queries, UTXO fetches, and **all broadcasts (v0.2)**
+2. **WebSocket connections** (port 60003/60004) - Only the brief covenant UTXO fetch in REFUND/CLAIM/ABORT (v0.2); was broadcast in v0.1
 
 **The challenge:** Android doesn't release connections instantly. Poor connection management causes:
 - WebSocket operations hanging after TCP queries
@@ -257,13 +283,14 @@ val balance = electrumClient.getBalance(
 
 **CovenantWebView (JavaScript - Covenant Operations):**
 ```javascript
-// Uses WebSocket (port 60003, no SSL)
+// v0.2 HYBRID: WebSocket is used ONLY for the brief UTXO fetch
+// (contract.getUtxos() in REFUND/CLAIM/ABORT). Broadcast happens in Kotlin (TCP 60001).
 const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
 // Port 60003 → useSSL = false ✅
 
 const socket = new ElectrumWebSocket(
     "192.168.1.100",
-    60003,  // WebSocket port
+    60003,  // WebSocket port — UTXO fetch only
     false   // No SSL
 );
 ```
@@ -301,8 +328,8 @@ Port configuration errors have been the source of multiple production hangs. Whe
 
 | Port | Protocol | Used By | SSL | Purpose |
 |------|----------|---------|-----|---------|
-| 60001 | TCP | ElectrumClient | No | Balance queries |
-| 60003 | WebSocket | CovenantWebView | No | Covenant operations (claim/refund/fund) |
+| 60001 | TCP | ElectrumClient | No | Balance queries, UTXO fetches, **all broadcasts (v0.2)** |
+| 60003 | WebSocket | CovenantWebView | No | Brief covenant UTXO fetch (REFUND/CLAIM/ABORT) |
 | 60004 | WebSocket Secure | Reserved | Yes | Future encrypted operations |
 
 ### Common Configuration Errors
@@ -717,9 +744,64 @@ const connectWithTimeout = Promise.race([
 
 ---
 
+### Issue 4: WebSocket Connections Hang Silently (No Exception)
+
+**Discovered:** August 17, 2026 (stuck "Sending..." UI bug)  
+**Status:** ✅ RESOLVED architecturally Aug 20 (v0.2 hybrid) — see below
+
+**Problem:** A WebSocket connection can hang indefinitely *without throwing an exception*. No timeout, no error, just an infinite wait — the UI stays in "Sending..." forever even though the transaction eventually succeeds on-chain.
+
+**Root cause:** WebView JavaScript timers **pause when the screen turns off or the app is backgrounded**. The JS timeout wrappers never fire, so a hung connection stays hung. Connections accumulated (4+ ESTABLISHED observed), which also explained why the *second* covenant always failed.
+
+**v0.1 workaround (Aug 17):** Wrap all async operations in `withTimeout()` (Kotlin):
+
+```kotlin
+// Fetch oracle pubkey: 10-second timeout
+suspend fun fetchOraclePubkey() = withTimeout(10_000) { ... }
+
+// Create covenant: 10-second timeout
+suspend fun createCovenant() = withTimeout(10_000) { ... }
+
+// Send/broadcast: 30-second timeout (longest operation)
+suspend fun sendBch() = withTimeout(30_000) { ... }
+```
+
+**Key detail:** distinguish `TimeoutCancellationException` (a real error — show the user) from `CancellationException` (expected when the user navigates away — handle silently).
+
+**✅ REAL FIX (Aug 20):** `withTimeout` was a band-aid. The actual fix was the **v0.2 hybrid architecture** — move broadcast out of the WebView entirely. Now:
+- The WebView only builds+signs transactions (`build()` not `send()`)
+- Kotlin broadcasts over native TCP with OS-level timeouts (which do NOT pause)
+- There is no long-lived WebSocket in the WebView to hang
+- Multi-device testing now works (CREATE ~100ms, covenant ops ~200ms, zero WebSocket connections on the critical path)
+
+**Why `send()` was the trap (Aug 20 discovery):** CashScript's `TransactionBuilder.send()` does `build → sendRawTransaction → getTxDetails()`, and `getTxDetails()` polls `getRawTransaction()` for **up to 10 minutes** with a dummy/empty txid. This is why a mock provider approach hung forever. The correct API is `build()` — returns signed hex, fully local, no network. **Never call `.send()` in the WebView.**
+
+**Still relevant:** `withTimeout()` remains good practice for the brief WebSocket UTXO fetch and for Kotlin network calls (defense in depth). But it is no longer the primary reliability mechanism.
+
+---
+
+### Issue 5: `lifecycleScope` Cancels Transactions Mid-Broadcast
+
+**Discovered:** August 17, 2026  
+**Status:** ✅ RESOLVED Aug 17-20 via ViewModel migration (RS083)
+
+**Problem:** `lifecycleScope` cancels all coroutines when the activity is destroyed (navigation, screen rotation, background kill). A transaction broadcasting on-chain when the activity dies succeeds on-chain but the UI never updates and the database never records it.
+
+**v0.1 workaround (Aug 17):** Faster timeouts reduce the cancellation window; `onResume()` detects and resets a stuck "Sending..." button; silent cancellation handling.
+
+**✅ REAL FIX (Aug 17-18, RS083):** Migrated transaction logic to a **`SendViewModel`** using `viewModelScope` — survives activity destruction. Combined with:
+- **`pending_transactions` table** (Room DB) — persist transaction state (BROADCAST → MEMPOOL → CONFIRMED) so it restores after recreation
+- **Rebroadcast on resume** — `onResume()` checks for pending transactions and rebroadcasts if needed
+- **Background confirmation monitoring** — a `viewModelScope` coroutine polls Electrum (60s) and updates status
+- **Navigate-on-success** — don't reset the "sending" flag; navigate away (Selene pattern)
+
+**Key insight:** Android kills apps aggressively in the background (PID observed changing 12286 → 14057 mid-transaction). Transaction state must persist to the database, not just memory. See [state-management.md](state-management.md) for the schema and RS083 research for the full pattern study.
+
+---
+
 ## Summary
 
-**Battle-tested patterns (August 9-10, 2026):**
+**Battle-tested patterns (August 9-21, 2026):**
 
 1. **5-second TCP cooldown** after balance queries (prevents WebSocket hangs)
 2. **Finally blocks** for WebSocket cleanup (prevents zombie connections)
@@ -727,13 +809,20 @@ const connectWithTimeout = Promise.race([
 4. **Manual updates** in Phase 0 (subscriptions are future enhancement)
 5. **Short-lived connections** (create → use → disconnect in finally)
 
-**Key insight:** Connection management is architecture, not implementation detail. These patterns prevent production hangs and are critical for reliability.
+**v0.2 architecture (Aug 20-21) supersedes the WebSocket-centric model:**
+- ✅ Broadcast moved to Kotlin native TCP (`build()` + `ElectrumClient.broadcast()`)
+- ✅ WebView is compute-only (build + sign, returns hex)
+- ✅ WebSocket (60003) only for brief covenant UTXO fetch in REFUND/CLAIM/ABORT
+- ✅ Multi-device reliability restored (0 hangs, ~100-200ms operations)
+- ✅ ViewModel migration (RS083) fixed lifecycle cancellation + added rebroadcast
+
+**Key insight:** Connection management is architecture, not implementation detail. The v0.2 hybrid (Kotlin owns the network) eliminated the entire class of WebView-connection bugs rather than patching symptoms.
 
 ---
 
 **Status:** Production-proven  
-**Last Updated:** 2026-08-10  
-**Evidence:** Successful covenant operations with 0% hangs after implementing these patterns
+**Last Updated:** 2026-08-21 (v0.2 hybrid architecture reframe)  
+**Evidence:** Successful covenant operations with 0% hangs after implementing these patterns; multi-device stress test passed with hybrid (Aug 20-21)
 
 ---
 

@@ -60,6 +60,7 @@ Documents from May 2026 onward reflect the **current covenant architecture**:
 
 ### UX & Implementation
 - **[RS081: Multi-Wallet Management Patterns](RS081_multi_wallet_management_patterns.md)** — Research on multi-wallet UX patterns from production BCH wallets (MetaMask, Trust Wallet, Bitcoin.com). Informed Asgaya's hybrid HD + imported key approach. Implemented August 2-3, 2026.
+- **[RS083: Transaction Broadcast UI Patterns](RS083_transaction_broadcast_ui_patterns.md)** — Research from Selene/Paytaca on transaction state: navigate-on-success, DB persistence, rebroadcast on resume, `viewModelScope`. Implemented Aug 17-18; foundation of the v0.2 hybrid architecture (Aug 20-21).
 - **[RS075: Android App Health Detection](RS075_android_app_health_detection.md)** — Detecting when wallet app is killed/frozen on Android
 
 ### Oracle & Data Feeds

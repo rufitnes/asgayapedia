@@ -24,6 +24,8 @@ The covenant claim flow enables a recipient to receive a guaranteed EUR-denomina
 
 ## Architecture Diagram
 
+> **Note (Aug 20-21, 2026):** This diagram documents the v0.1 flow. In the **v0.2 hybrid**, the WebView no longer broadcasts — it builds+signs and returns hex; Kotlin broadcasts via `ElectrumClient` (TCP 60001). The flow steps below are unchanged in spirit; only the network layer moved. See [webview-covenant-bridge.md](webview-covenant-bridge.md).
+
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │ SENDER DEVICE (Moto G06)                                            │
@@ -33,9 +35,9 @@ The covenant claim flow enables a recipient to receive a guaranteed EUR-denomina
 │     ├─ CovenantWebView.createCovenant()                             │
 │     └─ Returns covenant address                                     │
 │                                                                      │
-│  2. Fund Covenant                                                   │
-│     ├─ CovenantWebView.sendBch()                                    │
-│     ├─ Broadcast funding transaction                                │
+│  2. Fund Covenant  (v0.2: sendBchHybrid — WebView builds, Kotlin broadcasts)│
+│     ├─ CovenantWebView.sendBchHybrid()                              │
+│     ├─ WebView builds+signs (libauth), Kotlin broadcasts (TCP)      │
 │     └─ Returns funding TXID                                         │
 │                                                                      │
 │  3. Share Parameters                                                │
@@ -91,25 +93,25 @@ The covenant claim flow enables a recipient to receive a guaranteed EUR-denomina
 │     │     fulcrumHost: "192.168.1.100",                             │
 │     │     fulcrumPort: 60003                                        │
 │     │   }                                                            │
-│     └─ Calls CovenantWebView.claimCovenant(params)                  │
+│     └─ Calls CovenantWebView.claimCovenantHybrid(params)  (v0.2)    │
 │                                                                      │
 │  9. JavaScript Execution (covenant-bridge.html)                     │
-│     ├─ Connect to Fulcrum (WebSocket port 60003)                    │
+│     ├─ Connect to Fulcrum briefly (WebSocket 60003, UTXO fetch)     │
 │     ├─ Recreate covenant contract from params                       │
-│     ├─ Fetch covenant UTXO                                          │
+│     ├─ Fetch covenant UTXO (contract.getUtxos())                    │
 │     ├─ Calculate payment amounts:                                   │
 │     │   ├─ eurPayment = eurCents ÷ oraclePrice × 100000000          │
 │     │   └─ buffer = utxoSats - eurPayment - feeSats                 │
-│     ├─ Build transaction:                                           │
+│     ├─ Build transaction (build(), NOT send()):                     │
 │     │   ├─ Input: Covenant UTXO + unlock script                     │
 │     │   ├─ Output 0: eurPayment sats → recipientAddress             │
 │     │   └─ Output 1: buffer sats → sellerAddress                    │
 │     ├─ Sign with recipientWIF                                       │
-│     ├─ Broadcast transaction                                        │
+│     ├─ Return { txHex } via Android.onTransactionBuilt()            │
 │     └─ Disconnect from Fulcrum (finally block)                      │
 │                                                                      │
-│ 10. Success Callback                                                │
-│     ├─ JavaScript → Kotlin bridge: onClaimSuccess(txid)             │
+│ 10. Kotlin Broadcast (v0.2 hybrid)                                  │
+│     ├─ CovenantBuildService.broadcastTransaction(txHex) (TCP 60001) │
 │     ├─ Show toast: "✅ Claim successful! TXID: ..."                 │
 │     └─ Reload remittance history                                    │
 └─────────────────────────────────────────────────────────────────────┘
@@ -850,6 +852,6 @@ bitcoin-cli -testnet -rpcwallet=recipient gettransaction <TXID>
 
 ---
 
-**Last Updated:** 2026-08-10  
-**Status:** Production-ready  
+**Last Updated:** 2026-08-21 (v0.2 hybrid notes: build() + Kotlin broadcast)  
+**Status:** Production-ready (v0.2 hybrid architecture Aug 20-21)
 **Evidence:** TXID `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`

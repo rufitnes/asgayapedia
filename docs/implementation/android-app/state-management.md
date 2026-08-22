@@ -4,13 +4,13 @@
 
 **Complexity:** Medium - Database design + blockchain state reconciliation
 
-**Status Update (August 14, 2026):**
-- **Phase 0 ✅ Implemented:** Multi-wallet storage (WalletEntity, Room database, WalletManager)
+**Status Update (August 21, 2026):**
+- **Phase 0 ✅ Implemented:** Multi-wallet storage (WalletEntity, Room database, WalletManager) + **`pending_transactions` table + SendViewModel** (RS083, Aug 17-18)
 - **Phase 1+ 🔨 Future:** Comprehensive schema (covenants tracking, bulletin board cache, sync strategies)
 
 **What this document describes:** Full state management architecture for MVP (all five gears integrated)
 
-**What Phase 0 implemented:** Simplified wallet storage only (wallets table, no covenant tracking yet)
+**What Phase 0 implemented:** Wallet storage + pending transaction persistence (see [Pending Transactions (Phase 0)](#-pending-transactions-phase-0-rs083) below)
 
 ---
 
@@ -21,16 +21,17 @@
 > **Phase 0 Reality:**
 > 1. ✅ **Wallet storage** - Room database with WalletEntity (name, WIF, address, balance, type)
 > 2. ✅ **WalletManager** - Reactive updates via LiveData/Flow
-> 3. ❌ **Covenant tracking** - Not needed yet (self-funded sender, no seller coordination)
-> 4. ❌ **Bulletin board cache** - No bulletin board in Phase 0
-> 5. ❌ **Sync strategies** - Manual updates only (no background sync)
+> 3. ✅ **Pending transaction persistence (RS083, Aug 17-18)** - `pending_transactions` table + SendViewModel so transactions survive activity death (BROADCAST → MEMPOOL → CONFIRMED)
+> 4. ❌ **Covenant tracking** - Not needed yet (self-funded sender, no seller coordination)
+> 5. ❌ **Bulletin board cache** - No bulletin board in Phase 0
+> 6. ❌ **Sync strategies** - Manual updates only (no background sync)
 > 
 > **Key Design Principle (Still Valid):**
 > > "Blockchain is always right. Local state is cache + UI optimizations."
 > 
 > **Phase 1+ Sync Strategy:** Event-driven reconciliation (Electrum notifications → local DB updates)
 > 
-> **This document:** Full MVP design. Phase 0 implemented minimal subset (wallets only).
+> **This document:** Full MVP design. Phase 0 implemented wallet storage + pending transaction persistence (RS083).
 
 ---
 
@@ -159,6 +160,52 @@ Table: notification_history
 - **Complete UTXO set** (reconstruct from Electrum)
 
 **Why?** Security (keys), privacy (other users), performance (too much data)
+
+---
+
+## Pending Transactions (Phase 0, RS083)
+
+**Implemented:** Aug 17-18, 2026 (RS083 transaction broadcast patterns, studied from Selene/Paytaca)
+
+**Purpose:** Persist in-flight transactions so they survive activity death, app backgrounding, and device restarts. Combined with `SendViewModel` (uses `viewModelScope`, not `lifecycleScope`), this solved the "transaction broadcast but UI stuck on Sending" class of bugs.
+
+### Schema
+
+```
+Table: pending_transactions
+- id (INTEGER, PRIMARY KEY AUTOINCREMENT)
+- txid (TEXT, UNIQUE)
+- tx_hex (TEXT)
+- status (TEXT: BROADCAST / MEMPOOL / CONFIRMED / REFUNDED / ABORTED / CLAIMED)
+- covenant_address (TEXT)
+- remittance_id (INTEGER, nullable — FK to remittances table)
+- created_at (INTEGER, timestamp)
+- confirmed_at (INTEGER, nullable)
+- block_height (INTEGER, nullable)
+- confirmations (INTEGER, nullable)
+```
+
+### Status Lifecycle
+
+```
+BROADCAST → MEMPOOL → CONFIRMED
+    └── (dropped from mempool → rebroadcast on resume)
+```
+
+### How It Works (SendViewModel, `viewModelScope`)
+
+1. **Broadcast** → insert row with status `BROADCAST`
+2. **Background confirmation monitoring** — a `viewModelScope` coroutine polls Electrum every 60s (up to 1 hour), updating `MEMPOOL` then `CONFIRMED` with block height/confirmations
+3. **Rebroadcast on resume** — `onResume()` checks for non-confirmed pending transactions and rebroadcasts if dropped
+4. **Navigate-on-success** — on success, navigate away WITHOUT resetting the "sending" flag (Selene pattern); transaction state is DB-backed, not UI-backed
+
+### Key Insight (RS083)
+
+Android kills apps aggressively in the background (PID observed changing 12286 → 14057 mid-transaction). Transaction state must persist to the **database**, not just memory. `viewModelScope` survives activity destruction where `lifecycleScope` does not.
+
+### Full Pattern Study
+
+See the research doc: `docs/research/RS083_transaction_broadcast_ui_patterns.md` (mirrored from `knowledge/research/`).
 
 ---
 
@@ -669,8 +716,8 @@ function syncMissingCovenants():
 
 ---
 
-**Status:** Phase 0 ✅ Partially Implemented (wallet storage working), Phase 1+ 🔨 Full design (covenant tracking, cache, sync)  
-**Updated:** 2026-08-14 (status header added to clarify Phase 0 vs MVP scope)  
+**Status:** Phase 0 ✅ Partially Implemented (wallet storage + pending_transactions working), Phase 1+ 🔨 Full design (covenant tracking, cache, sync)  
+**Updated:** 2026-08-21 (added pending_transactions schema + SendViewModel RS083 status)  
 **Originally written:** 2026-08-04 (pre-production, described full MVP architecture)  
 **Complexity:** Medium (database design + sync logic + event-driven reconciliation)  
 **Priority:** Core infrastructure (covenants, listings, wallet, caching all depend on this)  
@@ -679,7 +726,9 @@ function syncMissingCovenants():
 **Phase 0 Implementation (AsgayaHusk):**
 - Room database with WalletEntity (name, WIF, address, balance, type)
 - WalletManager for reactive updates
+- `pending_transactions` table + SendViewModel (RS083, Aug 17-18) — BROADCAST → MEMPOOL → CONFIRMED + rebroadcast on resume
 - No covenant tracking, bulletin board cache, or sync strategies yet
+- `tx_hex` populated by the v0.2 hybrid WebView build (Aug 20) — hex now available for rebroadcast
 ---
 
 ## Navigation

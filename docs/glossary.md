@@ -160,7 +160,61 @@ A BCH‑native overcollateralised stablecoin created by the Moria Protocol. MUSD
 A method for lightweight clients to verify transactions without downloading the full blockchain. Asgaya’s mobile wallet can operate in SPV mode, though it primarily relies on Electrum servers for convenience.
 
 ### 0‑conf (Zero‑Confirmation)
-Accepting a Bitcoin Cash transaction as valid before it is included in a block. Safe for the small amounts involved in Asgaya remittances due to BCH’s low double‑spend risk. Enables the sub‑minute settlement experience.
+Accepting a Bitcoin Cash transaction as valid before it is included in a block. Safe for the small amounts involved in Asgaya remittances due to BCH's low double‑spend risk. Enables the sub‑minute settlement experience.
+
+---
+
+## Implementation / Android (as of Aug 2026)
+
+Terms from the reference Android implementation (`AsgayaHusk`). These appear in `docs/implementation/`.
+
+### P2SH32 (Pay‑to‑Script‑Hash, 32‑byte)
+A Bitcoin Cash script address type where the covenant's redeem script is hashed with SHA‑256 (32‑byte hash). Covenant addresses in Asgaya are P2SH32 (`bchtest:...`). Contrast with P2SH20 (20‑byte RIPEMD‑160 hash, used for standard script addresses).
+
+### Covenant Address
+The P2SH32 address that locks BCH into a covenant. Funding is sent to this address; claiming/refunding/aborting spends from it.
+
+### Scripthash
+The Electrum‑protocol index key for an address: the SHA‑256 of the locking script, byte‑reversed. Electrum servers don't work with addresses directly — clients convert addresses to scripthashes before querying balance, UTXOs, or history.
+
+### UTXO (Unspent Transaction Output)
+An output of a transaction that has not yet been spent. In Asgaya, covenant operations are "spending" a specific covenant UTXO. UTXO selection (which unspent outputs to use as inputs) is part of transaction building.
+
+### WIF (Wallet Import Format)
+A Base58‑encoded format for a private key, prefixed to indicate network (mainnet `K`/`L`, testnet `c`). In the app, `SignatureTemplate(senderWIF)` signs a covenant transaction with the sender's private key. **Never log or share WIFs.**
+
+### SIGHASH
+A flag in a Bitcoin signature indicating which parts of the transaction are signed (and thus bound) by the signature. Covenant spends use specific SIGHASH types to enforce that outputs match the contract's rules.
+
+### Mempool
+The pool of unconfirmed transactions a node has received but not yet included in a block. A broadcast transaction first enters the mempool, then a block, gaining confirmations over time. Asgaya tracks BROADCAST → MEMPOOL → CONFIRMED.
+
+### Broadcast
+Sending a signed raw transaction (hex) to the network via an Electrum server. In the v0.2 hybrid, this happens in Kotlin (`ElectrumClient.broadcast()`), not in the WebView.
+
+### Rebroadcast
+Re‑sending a transaction that was dropped from the mempool (e.g., after a network issue). Asgaya checks for unconfirmed pending transactions on app resume and rebroadcasts if needed.
+
+### WebView
+An embedded browser component in an Android app that can run JavaScript. Asgaya uses a WebView to run the CashScript SDK (JavaScript‑only) for covenant transaction building. In the v0.2 hybrid, the WebView does **compute only** (build + sign); all network operations happen in Kotlin.
+
+### Hybrid Architecture (v0.2)
+The architectural pivot (Aug 20‑21, 2026): **WebView = compute (build/sign transactions); Kotlin = network (UTXO fetch + broadcast).** Solves the WebView connection‑hang bug (JavaScript timers pause on screen‑off, leaving WebSocket connections hanging). Uses `TransactionBuilder.build()` instead of `.send()`.
+
+### ViewModel
+An Android architecture component that survives activity destruction (screen rotation, navigation). Asgaya's `SendViewModel` uses `viewModelScope` so transaction broadcasts aren't cancelled when the user navigates away. Part of the RS083 patterns.
+
+### TransactionBuilder
+The CashScript SDK class that assembles a signed transaction from inputs (UTXOs), outputs, and unlockers. **`build()`** returns the signed hex locally; **`send()`** broadcasts AND polls for confirmation (up to 10 minutes) — never use `send()` in the WebView.
+
+### Fulcrum
+The Electrum server implementation Asgaya runs on Pi‑chan (testnet). Ports: 60001 TCP (balance/UTXO/broadcast), 60003 WebSocket (brief covenant UTXO fetch), 60004 WebSocket‑Secure (reserved).
+
+### Oracle (Asgaya context)
+The price‑feed component that signs exchange‑rate messages (CHECKDATASIG‑verifiable). Asgaya fetches the oracle pubkey dynamically from the Pi‑chan oracle API (`/oracle/info`) — zero hardcoded keys. Oracle signatures are inputs to claim/refund/abort covenant spends.
+
+### Testnet3 (testnet)
+A parallel Bitcoin Cash blockchain with worthless coins, used for safe development and validation. All Phase 0 covenant testing happens on testnet3 before mainnet. (Chipnet is a separate testnet used for covenant‑upgrade testing.)
 
 ---
 
@@ -182,7 +236,7 @@ These terms have been deliberately replaced in the documentation to maintain reg
 
 ---
 
-*Last updated: 2026‑06‑27 – reflects the covenant architecture, five‑gear model, and stability layer as of Phase 0.*
+*Last updated: 2026‑08‑21 – reflects the covenant architecture, five‑gear model, stability layer, and v0.2 hybrid implementation terms (Aug 2026).*
 ---
 
 ## Navigation

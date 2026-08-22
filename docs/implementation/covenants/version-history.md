@@ -1418,4 +1418,26 @@ val txid = covenantWebView.claimCovenant(
 **Status:** 🏆 **Production-Proven** - v2.5 complete, all 4 paths tested, first inter-device claim successful  
 **Last Milestone:** August 10, 2026 - First guaranteed-value covenant claim between two devices  
 **Evidence:** TXID `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`  
-**Updated:** 2026-08-10
+**Updated:** 2026-08-21
+
+---
+
+### August 20-21, 2026: v0.2 Hybrid Architecture (Client Layer)
+
+**Milestone:** All 4 covenant operations (CREATE/REFUND/CLAIM/ABORT) migrated to the v0.2 hybrid — WebView builds+signs, Kotlin broadcasts. The covenant itself is **unchanged** (v2.5/v2.6 bytecode identical); this is a client-architecture change.
+
+**What changed:**
+- `TransactionBuilder.build()` instead of `.send()` — signed hex, fully local, no WebSocket broadcast
+- Kotlin `ElectrumClient.broadcast()` (native TCP, OS-level timeouts) owns all broadcast
+- New `CovenantBuildService.kt` wraps Kotlin network ops
+- WebView is compute-only; CREATE is fully network-free (libauth + Kotlin-passed UTXOs)
+
+**Why:** WebView JS timers pause on screen-off → WebSocket hangs + connection accumulation (4+ ESTABLISHED) broke multi-device use. The hybrid eliminates this at the root.
+
+**Key discoveries (see [webview-covenant-bridge.md](../android-app/webview-covenant-bridge.md)):**
+- `send()` polls `getRawTransaction()` up to 10 min — never use it; `build()` returns hex locally
+- UTXO field conventions: libauth `tx_hash`/`tx_pos` vs CashScript SDK `txid`/`vout` — mixing crashes with "reading 'length'"
+
+**Results:** CREATE ~100ms, covenant ops ~200ms, zero WebSocket connections on the critical path, multi-device stress test passing.
+
+**Status:** Covenant specification unchanged (v2.6). Client implementation upgraded to hybrid.
