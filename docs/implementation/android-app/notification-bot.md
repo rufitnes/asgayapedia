@@ -21,6 +21,20 @@
 
 ---
 
+## ⚠️ Telegram's Role (Phase 0): Test + Emergency Fallback Only
+
+**Telegram is NOT the product's coordination transport.** It is:
+1. **Testing tool** — used during Phase 0 development (copy-paste `[COVENANT_V25]` blocks)
+2. **Emergency fallback** — if Nostr fails, Telegram still works
+
+**The production coordination layer is Nostr** (encrypted DMs, parameter transport). See [nostr.md](nostr.md).
+
+**Phase 1+ broader transport:** the parameter-sharing/notification flow should work across multiple messengers — **WhatsApp, LINE, Signal, SMS, etc.** This is a low-priority enhancement, but the design should not assume Telegram specifically. The pattern that makes this easy: parameters are always a structured text block (`[COVENANT_V25]` / `[CASH_IN_PERSON]`) that any transport can carry, and the NotificationListener parses by tag, not by app.
+
+**Implication for implementation:** keep the "copy to clipboard → paste anywhere" pattern (transport-agnostic), and keep the parser tag-based. Don't hardcode Telegram-specific behavior beyond the Phase 0 listener.
+
+---
+
 ## Overview
 
 The Notification Bot has **two responsibilities:**

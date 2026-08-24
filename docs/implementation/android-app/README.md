@@ -63,7 +63,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | **Connection Management** | TCP cooldown (5s after balance query), WebSocket cleanup, manual updates | ✅ Working (v0.2: WebSocket only for brief UTXO fetch) | [connection-management-patterns.md](connection-management-patterns.md) |
 | **SendViewModel** | v0.2: viewModelScope transaction state, pending_transactions DB, rebroadcast, background confirmation (RS083) | ✅ Working | [state-management.md](state-management.md) |
 
-**Covenant v2.5:** All 4 spending paths tested (claim, merchantCashout, refund, sellerRecoverBuffer)
+**Covenant v2.6:** All 5 spending paths implemented (claim, merchantCashout, refund, abort, sellerRecoverBuffer); v2.5 validated on chipnet, abort on testnet3 (Aug 15)
 
 **v0.2 hybrid architecture (Aug 20-21):** All 4 covenant operations (CREATE/REFUND/CLAIM/ABORT) now build in the WebView and broadcast from Kotlin. WebView is compute-only. Multi-device reliability restored (the WebSocket connection-accumulation bug is eliminated at the root).
 
@@ -198,7 +198,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 - [Why This Design](../../why-this-design/README.md) - Architectural constraints & rationale
 
 **Implementation (covenants):**
-- [Covenant Version History](../covenants/version-history.md) - v2.5 specification, all 4 spending paths
+- [Covenant Version History](../covenants/version-history.md) - v2.6 specification, all 5 spending paths
 - [Manual Construction](../covenants/manual-construction.md) - Future: pure Kotlin covenant building (Phase 1+ migration from WebView)
 
 **Research:**
@@ -209,7 +209,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 - RS083 - Transaction broadcast UI patterns (ViewModel, navigate-on-success, rebroadcast; hybrid architecture validation)
 
 **Media (Phase 0+ content refresh needed):**
-- **Radio Asgaya** 📻 - 105 podcast episodes, workflow proven; content needs re-audit against covenant v2.5 + funder principle before public use  
+- **Radio Asgaya** 📻 - 105 podcast episodes, workflow proven; content needs re-audit against covenant v2.6 + funder principle before public use  
   Location: `knowledge/meta/radio_asgaya/`
 
 ---
@@ -243,6 +243,6 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 
 ---
 
-**Last updated:** 2026-08-21 (v0.2 hybrid architecture update)  
+**Last updated:** 2026-08-24 (v0.2 hybrid + covenant v2.6 path count)  
 **Status:** Phase 0 in progress (covenant flow proven, integration ongoing)  
 **Evidence:** First inter-device claim TXID 193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96

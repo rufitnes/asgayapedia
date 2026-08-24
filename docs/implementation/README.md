@@ -8,7 +8,7 @@
 ## Current Status
 
 **Phase:** Phase 0 - Production Core Flow Ready 🏆  
-**Last Update:** August 21, 2026  
+**Last Update:** August 24, 2026  
 **Historic Milestone:** First inter-device covenant claim successful!
 
 **Production-Proven Capabilities:**
@@ -37,19 +37,20 @@
 - ✅ **Timeout & Lifecycle Handling** - `withTimeout()` + ViewModel migration (RS083); stuck "Sending..." bug resolved (Aug 17-20)
 
 **In Progress:**
-- ⏳ **Merchant Cash-Out Flow** - UI placeholder exists, bulletin board integration next
+- ⏳ **Merchant Cash-Out Flow** - **Designed** (Aug 22, see collaborative workspace `merchant-cashout/`); UI placeholder exists, bulletin board integration next
 - ⏳ **Multi-Covenant Batching** - Claim multiple covenants in one transaction
 - ⏳ **Move covenant UTXO fetch to Kotlin** - REFUND/CLAIM/ABORT still use brief WebSocket for `contract.getUtxos()`; moving to Kotlin makes WebView 100% network-free (Phase 1 enhancement)
 
-**Key Achievements (August 8-21, 2026):**
+**Key Achievements (August 8-23, 2026):**
 - 🏆 **First guaranteed-value BCH transfer using native covenants between two devices** (Aug 10)
 - 🏆 **v0.2 hybrid architecture** — eliminated the WebView connection bug class at the root (Aug 20-21)
+- 🏆 **3-device testing milestone** — Pixel 6a (sender) + Moto G06 (recipient) + 3rd device (merchant), all running AsgayaHusk v0.2 (Aug 23)
 - Covenant lifecycle complete (create → fund → claim/refund → verified on-chain)
 - Critical bug discovered and fixed (seller address must match funder - documented)
 - Connection management patterns discovered (TCP cooldown prevents WebSocket hangs)
 - Complete documentation (funder principle, claim flow, version history)
 
-**Next Milestone:** Merchant cash-out flow (cosign path) + seller/funder liquidity provision
+**Next Milestone:** Merchant cash-out flow (cosign path) implementation + seller/funder liquidity provision
 
 ---
 
