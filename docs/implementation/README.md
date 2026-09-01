@@ -8,11 +8,11 @@
 ## Current Status
 
 **Phase:** Phase 0 - Production Core Flow Ready 🏆  
-**Last Update:** August 24, 2026  
+**Last Update:** September 1, 2026  
 **Historic Milestone:** First inter-device covenant claim successful!
 
 **Production-Proven Capabilities:**
-- ✅ **Covenant v2.6** - Production-proven on testnet3 (abort path validated Aug 15, 2026)
+- ✅ **Covenant v2.6.1** - Production-proven on testnet3 (abort path validated Aug 15, 2026)
   - All 5 spending paths implemented (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
   - Claim path proven with real devices (Aug 10, 2026)
   - Refund path tested and reliable (Aug 8, 2026)
@@ -35,22 +35,31 @@
 - ✅ **WebView Integration** - Compute-only (CashScript build/sign); broadcast moved to Kotlin (Aug 20)
 - ✅ **Oracle Husk (Pi-chan)** - Running at `192.168.1.100:3001`, dynamic pubkey fetching, zero hardcoded keys (Aug 16)
 - ✅ **Timeout & Lifecycle Handling** - `withTimeout()` + ViewModel migration (RS083); stuck "Sending..." bug resolved (Aug 17-20)
+- ✅ **Merchant Cashout (Merchant-First)** - **Production-proven on-chain** (Sep 1, 2026)
+  - Merchant pre-signs first (fresh oracle at counter → protects 0.5% margin)
+  - Recipient verifies (8 checks) + co-signs
+  - QR transport (face-to-face, offline recipient) + broadcast via Kotlin TCP
+  - First on-chain transaction: `05301369c518a8be60a3453cf6b09f048cdeae1a5925755c828c4f866a69f22`
+  - See [merchant-cashout-flow.md](android-app/merchant-cashout-flow.md)
 
 **In Progress:**
-- ⏳ **Merchant Cash-Out Flow** - **Designed** (Aug 22, see collaborative workspace `merchant-cashout/`); UI placeholder exists, bulletin board integration next
+- ⏳ **BCH Seller Auto-Funding** - Sender creates unfunded covenant (funderPubkey = seller); seller auto-funds on matched Bizum payment. The last core Phase-0 feature.
 - ⏳ **Multi-Covenant Batching** - Claim multiple covenants in one transaction
 - ⏳ **Move covenant UTXO fetch to Kotlin** - REFUND/CLAIM/ABORT still use brief WebSocket for `contract.getUtxos()`; moving to Kotlin makes WebView 100% network-free (Phase 1 enhancement)
 
-**Key Achievements (August 8-23, 2026):**
+**Key Achievements (August 8 - September 1, 2026):**
 - 🏆 **First guaranteed-value BCH transfer using native covenants between two devices** (Aug 10)
 - 🏆 **v0.2 hybrid architecture** — eliminated the WebView connection bug class at the root (Aug 20-21)
-- 🏆 **3-device testing milestone** — Pixel 6a (sender) + Moto G06 (recipient) + 3rd device (merchant), all running AsgayaHusk v0.2 (Aug 23)
+- 🏆 **3-device testing milestone** — Pixel 6a + Moto G06 + 3rd device, all running AsgayaHusk v0.2 (Aug 23)
+- 🏆 **First merchant cashout on-chain (manual paste)** — dual-signature co-signing proven (Aug 27)
+- 🏆 **QR merchant cashout production-ready** (Aug 28)
+- 🏆 **Merchant-first flow reversal + first merchant-first transaction on-chain** (Aug 31 - Sep 1)
 - Covenant lifecycle complete (create → fund → claim/refund → verified on-chain)
 - Critical bug discovered and fixed (seller address must match funder - documented)
 - Connection management patterns discovered (TCP cooldown prevents WebSocket hangs)
-- Complete documentation (funder principle, claim flow, version history)
+- Complete documentation (funder principle, claim flow, version history, merchant cashout flow)
 
-**Next Milestone:** Merchant cash-out flow (cosign path) implementation + seller/funder liquidity provision
+**Next Milestone:** BCH seller auto-funding (completes the sender side) → bulletin board + Nostr → full Phase-0 E2E starting from a Bizum notification
 
 ---
 

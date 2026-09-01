@@ -126,6 +126,9 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 3. **[webview-covenant-bridge.md](webview-covenant-bridge.md)** ✅  
    Kotlin ↔ JavaScript bridge, CashScript SDK bundling, Webpack config (4 claims + 3 refunds validated)
 
+3b. **[merchant-cashout-flow.md](merchant-cashout-flow.md)** ✅  
+   Merchant-first cashout (merchant pre-signs, recipient co-signs); first on-chain transaction Sep 1, 2026
+
 4. **[asgaya-trinity.md](asgaya-trinity.md)** ✅  
    Create → Send → Claim architecture, scope boundary (wallet not infrastructure)
 

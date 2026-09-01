@@ -141,8 +141,10 @@ BCH volatility is the price we pay for censorship resistance and zero intermedia
 
 **What we don't know:**
 - Will production behavior match back-test? (Senders may claim faster when real money)
-- Will payday concentration create correlated volatility? (High demand → price spike → aborts?)
+- Will payday concentration create correlated volatility? (High demand → price spike)
 - Will 8-hour windows improve or degrade performance vs 4-hour? (Longer exposure to volatility)
+
+**Note on price spikes:** A price *spike* does **not** cause an abort — abort only triggers on a drop past the buffer. If the price rises, the covenant settles normally and the **funder gets a larger buffer back** (less BCH is needed to cover the fiat payment, so more remains as buffer). Spikes are friendly to the funder; only sustained drops are the risk. The payday concern is therefore about *downward* pressure, not spikes.
 
 **The bet:**
 - 7% feels appropriate given RS062 data

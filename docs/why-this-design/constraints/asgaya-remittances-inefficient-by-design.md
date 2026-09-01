@@ -144,9 +144,10 @@ Sender → Pays Bizum → Seller receives fiat → Seller locks BCH → Covenant
 
 - [Requirements: Compliance](../requirements/README.md#2-compliance)
 - [Stability Layer: H€/HAu Tokens](../../the-mechanism/stability-layer/README.md) (sender protection on abort)
-- Two-Step Settlement Timing (documentation pending migration)
-- Payment Timeout Window (documentation pending migration)
-- Why Self-Custody (documentation pending migration)
+- [Pull System: Two-Step Settlement](../../the-mechanism/README.md) (why payment-first avoids custody)
+- [7% Volatility Buffer](./7%-volatility-buffer-money-velocity-enabler.md) (the buffer economics behind the 8-hour window)
+- [Time Oracle + MTP Fallback](./time-oracle-mtp-fallback-trustless-ux.md) (refund timing, MTP fallback)
+- [Funder Principle](./funder-principle.md) (buffer goes to the funder, not the sender)
 
 ---
 

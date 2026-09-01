@@ -109,9 +109,7 @@ The covenant was designed during remittance-first development (July 2026), where
 
 **Scenario:** María creates a €100 remittance covenant. Isabel (BCH seller) funds it with €107 BCH.
 
-**Question:** If the covenant expires unclaimed, who should get the €107?
-
-**Answer:** Isabel. She provided the capital. María never risked her own BCH.
+If the covenant expires unclaimed, who gets the €107? **Isabel.** She provided the capital; María never risked her own BCH.
 
 **Principle:** Buffer ownership follows capital risk, not transaction initiation.
 
@@ -138,20 +136,13 @@ The covenant was designed during remittance-first development (July 2026), where
 **Core principle:** Users control funds they provide.
 
 **If buffer went to sender (always):**
-- ❌ Remittances: BCH seller (Isabel) loses €7 if unclaimed
-- ❌ Violates capital risk principle
-- ❌ Disincentivizes BCH sellers
+- ❌ BCH seller loses €7 if unclaimed → disincentivizes sellers
 
 **If buffer went to recipient (always):**
-- ❌ Merchant payments: Tourist loses €3.50 if rejected
-- ❌ Violates "your BCH, your buffer" principle
-- ❌ Recipient could grieft sender by not claiming
+- ❌ Merchant-payment sender loses €3.50 if rejected → recipient could grief by not claiming
 
 **If buffer goes to funder (current design):**
-- ✅ Remittances: BCH seller gets €107 back if unclaimed
-- ✅ Merchant payments: Tourist gets €53.50 back if rejected
-- ✅ Funder always made whole
-- ✅ No special cases
+- ✅ Funder always made whole, no special cases
 
 ---
 
@@ -626,7 +617,13 @@ If future covenants involve multiple funders (e.g., 50/50 split funding):
 ---
 
 **Status:** Production-proven (August 2-10, 2026)  
-**Implementation:** Covenant v2.5  
+**Implementation:** Covenant v2.5 (renamed `funder` in v2.6.1)  
 **Testing:** 2 successful testnet3 refunds + 1 successful claim with correct buffer distribution (August 10)  
 **First Claim TXID:** `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`  
 **Documentation:** Complete - includes production bug discovery and resolution
+
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Constraints](README.md)** | **[📖 Glossary](../../glossary.md)**

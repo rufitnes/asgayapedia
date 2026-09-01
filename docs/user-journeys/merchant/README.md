@@ -89,14 +89,13 @@ A merchant is the **secret weapon** of Asgaya's adoption strategy. Carlos is not
    - Elena picks groceries: rice, beans, oil (30,000 VES worth)
    - Brings items to checkout
 
-2. **Combined Settlement**
-   - Elena shows wallet: €100 BCH in covenant
-   - Carlos verifies on his wallet
-   - Elena taps "Release to Carlos#487"
-   - Carlos taps "Confirm receipt and pay Elena"
-   - BCH moves to Carlos's wallet
-   - Carlos calculates: 45,000 VES (cash-out) - 30,000 VES (groceries) = 15,000 VES cash
-   - Carlos hands Elena 15,000 VES cash
+2. **Combined Settlement (Merchant-First)**
+   - Elena shows her cashout request QR (just covenant params)
+   - Carlos scans it → his app fetches a **fresh oracle price at the counter** (this is what protects his 0.5% margin — the price is seconds old, not minutes)
+   - Carlos's app pre-signs the transaction with his wallet, showing a response QR
+   - Elena scans Carlos's QR → verifies the 8 checks (fresh price, covenant match, correct outputs) → co-signs → shows the fully-signed tx QR
+   - Carlos scans the signed tx → broadcasts immediately (BCH-first) → hands Elena the cash
+   - **Merchant controls the timing and the price freshness** — that's the point of merchant-first
 
 3. **Why This Works** (Triple-dip shines)
    - Elena came to buy groceries anyway (essential goods)

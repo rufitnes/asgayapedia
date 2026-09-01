@@ -31,7 +31,7 @@ Two modes for marketplace participants:
 
 **How passive mode works:**
 1. Seller posts listing: "Sell BCH for EUR via Bizum, 0.5% fee"
-2. Bot monitors bulletin board for matching requests
+2. Bot monitors **Nostr** for matching requests
 3. Sender selects seller, pays via Bizum
 4. Bot detects payment, locks BCH into covenant automatically
 5. Seller earns fee without manual intervention
@@ -151,8 +151,8 @@ Asgaya's Nostr layer provides real-time presence. Active users see "5 passive se
 
 - [Buyers and Sellers: Two Roles, Two Modes](../../the-mechanism/bulletin-board/README.md) (active vs passive framework)
 - [Notification Bot Architecture](../../the-mechanism/notification-bot/README.md) (how bots detect payments and post covenants)
-- Radio Asgaya Episode 6: BCH Sellers (passive income for liquidity providers)
-- Radio Asgaya Episode 16: BCH Buyers (capital recycling via passive listings)
+- Radio Asgaya Episode 6: BCH Sellers (passive income for liquidity providers) — **priority: core to the passive-mode story**
+- Radio Asgaya Episode 16: BCH Buyers (capital recycling via passive listings) — **priority: core to the passive-mode story**
 
 ---
 

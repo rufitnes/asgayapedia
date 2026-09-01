@@ -389,6 +389,38 @@ function refund(sig senderSig) {
 
 ---
 
+## Key Insight: Refund() Can Happen Anytime
+
+**Correction to the naive reading of the refund path:** `refund()` is not gated by the oracle at all. It's the sender's money — the sender should always control it. `refund()` requires only:
+- The **sender's signature** (proves ownership)
+- A **price oracle** (to split the UTXO fairly between sender and funder)
+
+**There is no oracle-time requirement for refund** — only the price to compute the split. The MTP timelock is an *additional* safety net that guarantees the refund even if the sender's device or the oracle is unavailable.
+
+**Why this matters for the funder (the user who needs it most):**
+> "The user that really needs this feature is the funder. If the oracle fails and the sender is offline, the volatility buffer is locked. MTP + fallback price oracle prevents the buffer from being locked until the oracle is back online." — Suso
+
+**Scenario:**
+- Oracle fails, sender is offline
+- Funder's 7% buffer is locked in the covenant — can't recover it
+- **MTP advances past expiry** → sender's refund path opens regardless of oracle
+- Buffer returns to funder (funder principle)
+
+**MTP's real value is as the fallback that prevents fund-locking** — not as the primary refund mechanism. It's the escape hatch when the oracle is down.
+
+**Also note:** seller/funder bots watch the covenant with a timer, ready to recover the buffer as soon as the MTP refund path opens. The MTP fallback is what makes their capital recoverable.
+
+**Fallback hierarchy (what "fallback" really means):**
+> "If the Asgaya oracle failed, our fallback oracle provides price; MTP provides time. Not ideal but better than nothing." — Suso
+
+| Component | Provides | Fails? |
+|-----------|----------|--------|
+| Asgaya price oracle | Price + timestamp (fresh, precise) | Price fallback oracle takes over |
+| Fallback price oracle | Price (stale but valid) | MTP still covers time |
+| MTP timelock | Time (guaranteed by consensus) | Cannot fail |
+
+---
+
 ## Design Principles
 
 ### 1. **Oracle for UX, MTP for Security**
@@ -554,5 +586,11 @@ Should covenant accept 30-minute-old oracle data?
 ---
 
 **Document Status:** Living document, updated as implementation progresses  
-**Last Updated:** 2026-07-21 (Phase 2 complete, Phase 1 pending)  
+**Last Updated:** 2026-09-01 (refund() insight, funder perspective added)  
 **Maintained By:** Suso + Coordination (Claude)
+
+---
+
+## Navigation
+
+**[🏠 Home](../../index.md)** | **[↑ Constraints](README.md)** | **[📖 Glossary](../../glossary.md)**

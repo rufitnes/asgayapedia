@@ -152,7 +152,7 @@ if (payment_details_match(Alice, Bob)) {
 - Need different IBAN (new bank account each time)
 - **Even if they do all this, statistical pattern still flags suspicious**
 
-**Note:** Detailed fraud prevention mechanism documented separately (see Related Documents).
+**Note:** Detailed fraud prevention mechanism documented separately — see [Fraud Protection](../fraud-protection.md) and [Dispute Resolution via Nostr Blacklist](../../the-mechanism/nostr-coordination/dispute-resolution.md).
 
 ---
 

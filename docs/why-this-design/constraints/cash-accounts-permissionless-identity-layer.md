@@ -41,7 +41,7 @@ A human-readable name permanently registered on the BCH blockchain:
 | Gain | Loss |
 |------|------|
 | No central registry (on-chain) | Name publicly visible |
-| Permissionless registration | `#` not allowed in Bizum (use `-`) |
+| Permissionless registration | `#` not allowed in Bizum; `-` also rejected — use a space: `Elena 123` |
 | Human-readable, memorable | Name squatting possible |
 | Verifiable (weak identity) | No revocation (lost wallet = dead name) |
 | Typo-resistant (fails safe) | BCH-only |
@@ -53,7 +53,7 @@ A human-readable name permanently registered on the BCH blockchain:
 
 **Bank statement compatibility, not just human readability.**
 
-When sending via Bizum/SEPA, the "concept" field shows `Elena-142` — looks like an order number. Raw BCH address (`bitcoincash:qp3wjpa3tjlj042...`) screams "cryptocurrency," raises flags, doesn't fit bank fields. Cash Accounts blend in.
+When sending via Bizum/SEPA, the "concept" field shows `Elena 123` — looks like an order number. Raw BCH address (`bitcoincash:qp3wjpa3tjlj042...`) screams "cryptocurrency," raises flags, doesn't fit bank fields. Cash Accounts blend in.
 
 **Why not phone numbers?** Need central database (defeats permissionless), privacy nightmare, numbers change/port, regional variations. We'd be reinventing Cash Accounts with worse UX.
 
@@ -77,7 +77,7 @@ When sending via Bizum/SEPA, the "concept" field shows `Elena-142` — looks lik
 
 | Limitation | Impact | Mitigation | Why We Accept |
 |------------|--------|------------|---------------|
-| **`#` not allowed in Bizum** | Concept field compatibility | Use `-` instead: `Elena-142` (REQUIRED for bot parsing; separator distinguishes `Elena#142` from `Elena1#42`) | Name remains human-readable and bank-compatible |
+| **`#`/`-` not allowed in Bizum** | Concept field compatibility | Use a **space**: `Elena 123` (Bizum rejects both `#` and `-`; the space separator is the realistic option for bot parsing) | Name remains human-readable and bank-compatible |
 | **Name Squatting** | Anyone can register `FarmaciaCaracas#1200` | Bulletin board shows reputation + transaction history; users verify like Twitter blue checks | Cash Accounts replace addresses, not trust. Reputation layers on top |
 | **No Revocation** | Lost wallet = name points to old address forever | Merchants register new name, old becomes tombstone; users verify recent activity | Immutability is the cost of decentralization |
 | **Lookup Server** | Centralized convenience (`cashaccounts.bchdata.cash`) | Trustless fallback: scan blockchain for OP_RETURN; sender verifies resolved address | Server failure = inconvenience, not security breach |
@@ -89,13 +89,13 @@ When sending via Bizum/SEPA, the "concept" field shows `Elena-142` — looks lik
 | Area | Question | Hypothesis |
 |------|----------|------------|
 | **Usability** | Do senders find Cash Accounts easier than raw addresses? | Yes, dramatically |
-| | Is the `#` → `-` workaround confusing? | Slightly, but acceptable |
+| | Is the `#` → space workaround confusing? | Slightly, but acceptable |
 | **Adoption** | % of Phase 0 users who register Cash Accounts? | >80% |
 | | % of transactions using names vs raw addresses? | >60% |
 | **Technical** | Lookup server uptime? | >99.9% |
 | | Trustless fallback needed? | Rarely (<1% of lookups) |
 | **Friction** | Does bank flag Cash Accounts in concept field? | No |
-| | Bizum concept field accepts `-` format? | Yes |
+| | Bizum concept field accepts space format? | Yes |
 
 **Success criteria:** >80% users register Cash Accounts; >60% transactions use names; zero bank/Bizum rejections; users report Cash Accounts as "much easier" than addresses
 
