@@ -1,6 +1,6 @@
 # Wallet Component
 
-**Purpose:** Multi-wallet management, BCH key management, balance queries, transaction building, Cash Account integration (Phase 1+)
+**Purpose:** Multi-wallet management, BCH key management, balance queries, transaction building, Cash Account integration (Phase 0 - MVP REQUIRED)
 
 **Complexity:** Medium - Multi-wallet architecture + standard BCH operations + covenant integration
 
@@ -17,7 +17,7 @@
 ⏳ Transaction history list  
 ⏳ HD wallet / BIP39 seed phrases (Phase 0 - needed for production)  
 📋 RFID tag private key storage (Phase 1+)  
-📋 Cash Account registration (Phase 1+)  
+📋 Cash Account registration (Phase 0 - MVP REQUIRED: match key for seller auto-funding Bizum concept field; interface to legacy payment system)
 
 ---
 
@@ -30,7 +30,7 @@ The Wallet component is the foundation of Asgaya's 3-tab architecture (Wallet, R
 - **Balance tracking:** ✅ Per-wallet balance queries via Electrum scripthash protocol
 - **Transaction building:** ⏳ Send flow (in progress) | ⏳ Receive screen (planned)
 - **Covenant integration:** ✅ WebView bridge for covenant claim/refund operations
-- **Cash Accounts:** 📋 Register `name#number` on-chain, resolve to BCH address (Phase 1+)
+- **Cash Accounts:** 📋 Register `name#number` on-chain, resolve to BCH address (Phase 0 - MVP REQUIRED). Purpose: interface to the legacy payment system (Bizum concept field is the seller auto-funding match key). Human readability (`Elena#142` vs `bchtest:qq...`) is a bonus, not the reason.
 
 **Architecture principle:** User controls their own keys. No custody, no backend server holds funds.
 

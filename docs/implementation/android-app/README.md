@@ -89,14 +89,14 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | **v0.2 hybrid (build + Kotlin broadcast)** | ✅ Done | CREATE/REFUND/CLAIM/ABORT all hybrid (Aug 20-21) |
 | **Nostr coordination (DM)** | 🔨 In progress | Phase 0 target (automation needed for real covenants) |
 | **Bulletin board** | 🔨 Planned | Merchant/seller discoverability (MVP needs it) |
-| **Merchant cash-out flow** | 🔨 Planned | Covenant path tested; needs UI integration |
+| **Cash Accounts** | 🔨 MVP REQUIRED | Register/resolve `Elena#142`; match key for seller auto-funding Bizum concept field (interface to legacy payment system) |
+| **Merchant cash-out flow** | ✅ DONE on-chain | Merchant-first, TXID `05301369...` (Sep 1, 2026) |
 | **First BCH seller (Suso)** | 🔨 Needed | MVP validation requires real seller |
 
 ### Phase 0+ (During Testing — Opportunistic)
 
 | Feature | Why 0+ | Notes |
 |---------|--------|-------|
-| **Cash Accounts** | Cheap UX win | `Elena#142` instead of `bchtest:qq...` |
 | **Seed phrase backup** | Cheap UX win | BIP39 HD wallets, 12-word recovery |
 | **Seller device health** | Already built! | RS072/RS075 DeviceHealthMonitor.kt exists; needs integration + bulletin board ranking |
 | **Stability layer (H€/HAu)** | Retention incentive | Launch-first per `stability-layer.md`; merchant hook |
@@ -181,7 +181,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 ## External Dependencies
 
 **Phase 0 (in use):**
-- **Electrum servers** - Chipnet.imaginary.cash (60001 TCP, 60003 WS); Phase 0+ adds redundancy (3-5 servers)
+- **Electrum/Fulcrum server** - Pi-chan `192.168.1.100` (60001 TCP, 60003 WS), **testnet3**; Phase 0+ adds redundancy (3-5 servers)
 - **Telegram app** - Testing tool + fallback for parameter coordination
 
 **Phase 0+ (planned):**

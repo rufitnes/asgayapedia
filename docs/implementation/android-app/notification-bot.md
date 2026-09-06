@@ -11,13 +11,16 @@
 - Parse [COVENANT_V25] blocks from Telegram notifications
 - Auto-populate ClaimActivity UI with covenant parameters
 
-**Phase 1+ 🔨 Future (This Document's Main Focus):**
-- Bank app notification parsing (Bizum, PagoMóvil, SEPA)
-- Seller auto-funding (detect payment → match covenant → fund with BCH)
+**Phase 0 🔨 In progress (seller auto-funding — see seller-auto-funding workspace):**
+- Bank app notification parsing (Bizum) → seller auto-funding (detect payment → match covenant → fund with BCH)
+- Cash-in-person on-ramp is the MVP hardening target first (manual "cash received" trigger shares the same construct+fund core); Bizum auto-fund is the Phase 0 second milestone
+
+**Phase 1+ 🔨 Future:**
+- PagoMóvil / SEPA / broader bank parsing
 - Market price subscription (Nostr oracle feeds, auto-refund monitoring)
 - Exchange integration (auto-buy BCH when wallet low)
 
-**Important:** Most of this document describes Phase 1+ seller auto-funding patterns. Phase 0 implemented only Telegram parameter parsing (simpler, recipient-side use case). The comprehensive bank notification parsing described below is future work.
+**Important:** This document's comprehensive bank-notification parsing describes seller auto-funding. Per the seller-auto-funding decision (Sep 2026), the MVP on-ramp is **cash-in-person first** (same construct+fund core, manual trigger); Bizum auto-funding builds on it as the Phase 0 second milestone. Phase 0 currently implements Telegram parameter parsing (recipient-side).
 
 ---
 

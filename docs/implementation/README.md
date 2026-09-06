@@ -3,6 +3,8 @@
 
 **Purpose:** This section contains implementation details, API documentation, and technical specifications.
 
+> **Roadmap:** see [../roadmap.md](../roadmap.md) for what ships in each phase (MVP/Phase 0, 0+, 1, 1+).
+
 ---
 
 ## Current Status
