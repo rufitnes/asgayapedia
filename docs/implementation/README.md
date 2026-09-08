@@ -9,8 +9,8 @@
 
 ## Current Status
 
-**Phase:** Phase 0 - Production Core Flow Ready 🏆  
-**Last Update:** September 1, 2026  
+**Phase:** Phase 0 - Seller Auto-Funding + 4-Device E2E Complete 🏆  
+**Last Update:** September 8, 2026  
 **Historic Milestone:** First inter-device covenant claim successful!
 
 **Production-Proven Capabilities:**
@@ -45,23 +45,28 @@
   - See [merchant-cashout-flow.md](android-app/merchant-cashout-flow.md)
 
 **In Progress:**
-- ⏳ **BCH Seller Auto-Funding** - Sender creates unfunded covenant (funderPubkey = seller); seller auto-funds on matched Bizum payment. The last core Phase-0 feature.
+- ⏳ **Nostr coordination** - Encrypted DM transport to replace Telegram copy-paste (next milestone; see [nostr.md](android-app/nostr.md))
+- ⏳ **On-chain bulletin board** - NFT listings via Electrum (discovery layer; Phase-0 beta)
 - ⏳ **Multi-Covenant Batching** - Claim multiple covenants in one transaction
 - ⏳ **Move covenant UTXO fetch to Kotlin** - REFUND/CLAIM/ABORT still use brief WebSocket for `contract.getUtxos()`; moving to Kotlin makes WebView 100% network-free (Phase 1 enhancement)
 
-**Key Achievements (August 8 - September 1, 2026):**
+**Key Achievements (August 8 - September 8, 2026):**
 - 🏆 **First guaranteed-value BCH transfer using native covenants between two devices** (Aug 10)
 - 🏆 **v0.2 hybrid architecture** — eliminated the WebView connection bug class at the root (Aug 20-21)
 - 🏆 **3-device testing milestone** — Pixel 6a + Moto G06 + 3rd device, all running AsgayaHusk v0.2 (Aug 23)
 - 🏆 **First merchant cashout on-chain (manual paste)** — dual-signature co-signing proven (Aug 27)
 - 🏆 **QR merchant cashout production-ready** (Aug 28)
 - 🏆 **Merchant-first flow reversal + first merchant-first transaction on-chain** (Aug 31 - Sep 1)
+- 🏆 **BCH seller auto-funding E2E-proven (Sep 7-8)** — sender creates unfunded covenant → seller verifies funderPubkey → confirms cash → funds (TXID `9d7d94...`) → recipient claims (TXID `731bdd2a...`)
+- 🏆 **4-device E2E (Sep 8)** — sender → BCH seller → recipient → **merchant on a tablet** (QR/paste only, no Telegram on merchant). Full chain to merchant cashout working.
+- 🏆 **Refund of seller-funded covenant proven (Sep 8)** — sender refunded a funder-funded covenant (TXID `b02f4fa6...`), buffer returned to seller automatically
 - Covenant lifecycle complete (create → fund → claim/refund → verified on-chain)
 - Critical bug discovered and fixed (seller address must match funder - documented)
 - Connection management patterns discovered (TCP cooldown prevents WebSocket hangs)
+- Wallet balance fixes: connect timeout for unreachable servers; stale-result guard; refresh on resume
 - Complete documentation (funder principle, claim flow, version history, merchant cashout flow)
 
-**Next Milestone:** BCH seller auto-funding (completes the sender side) → bulletin board + Nostr → full Phase-0 E2E starting from a Bizum notification
+**Next Milestone:** Nostr coordination (replaces Telegram) → bulletin board (on-chain NFT listings) → real oracle price feed (Kraken).
 
 ---
 

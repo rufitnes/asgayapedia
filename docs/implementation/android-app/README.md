@@ -87,10 +87,12 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | Connection management patterns | ✅ Done | TCP cooldown, cleanup, manual updates |
 | Self-funded sender flow | ✅ Done | Also a real future use case (BCH stable, B2B, CEX savings) |
 | **v0.2 hybrid (build + Kotlin broadcast)** | ✅ Done | CREATE/REFUND/CLAIM/ABORT all hybrid (Aug 20-21) |
-| **Nostr coordination (DM)** | 🔨 In progress | Phase 0 target (automation needed for real covenants) |
-| **Bulletin board** | 🔨 Planned | Merchant/seller discoverability (MVP needs it) |
+| **Seller auto-funding (cash-in-person)** | ✅ **E2E-proven** | Sender creates unfunded (funderPubkey=seller) → seller verifies funderPubkey → confirms cash in Trade tab → funds. 4-device E2E Sep 8 |
+| **Refund (funder≠sender)** | ✅ **E2E-proven** | Sender refunds seller-funded covenant; buffer → seller automatically (Sep 8) |
+| **Nostr coordination (DM)** | 🎯 NEXT | Replace Telegram; minimal client via OkHttp + NIP-44 (works on cell data) |
+| **Bulletin board** | 🔨 Planned | On-chain NFT discovery; not load-bearing until multiple real counterparties (Phase-0 beta) |
 | **Cash Accounts** | 🔨 MVP REQUIRED | Register/resolve `Elena#142`; match key for seller auto-funding Bizum concept field (interface to legacy payment system) |
-| **Merchant cash-out flow** | ✅ DONE on-chain | Merchant-first, TXID `05301369...` (Sep 1, 2026) |
+| **Merchant cash-out flow** | ✅ DONE on-chain | Merchant-first, TXID `05301369...` (Sep 1, 2026); merchant role needs no Telegram (QR/paste, tablet-tested) |
 | **First BCH seller (Suso)** | 🔨 Needed | MVP validation requires real seller |
 
 ### Phase 0+ (During Testing — Opportunistic)
@@ -225,9 +227,10 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 - Architecture decisions proven (WebView, connection patterns, Telegram coordination)
 
 **Full MVP success (Phase 0 ongoing):** 🔨 In Progress
-- Nostr coordination working (replace Telegram copy-paste)
-- Bulletin board functional (merchant/seller discovery)
-- Merchant cash-out integrated (covenant path tested, needs UI)
+- Seller auto-funding + refund (funder≠sender) E2E-proven ✅ (Sep 7-8)
+- Merchant cash-out integrated + tablet-tested ✅ (Sep 8)
+- Nostr coordination working (replace Telegram copy-paste) — NEXT
+- Bulletin board functional (merchant/seller discovery) — later (Phase-0 beta)
 - First real seller (Suso) + first real merchant
 
 **Documentation success:** ✅
@@ -246,6 +249,6 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 
 ---
 
-**Last updated:** 2026-08-24 (v0.2 hybrid + covenant v2.6 path count)  
+**Last updated:** 2026-09-08 (seller auto-funding E2E + 4-device flow)  
 **Status:** Phase 0 in progress (covenant flow proven, integration ongoing)  
 **Evidence:** First inter-device claim TXID 193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96

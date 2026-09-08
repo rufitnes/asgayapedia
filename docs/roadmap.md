@@ -15,7 +15,7 @@
 | **Phase 1** | Post-MVP enhancements driven by observed Phase 0 behavior | After MVP confidence |
 | **Phase 1+** | Later, larger enhancements / geographic expansion | Future |
 
-**Current status:** Phase 0 MVP validation on **testnet3** (Sep 1, 2026: first merchant-first transaction on-chain). Phase 0 mainnet beta not yet started — gated on MVP confidence.
+**Current status:** Phase 0 MVP validation on **testnet3**. **Seller auto-funding E2E-proven across 4 devices (Sep 7-8):** sender → seller funds (TXID `9d7d94...`) → recipient claims (`731bdd2a...`) → merchant cashout on tablet. Refund of seller-funded covenant proven (`b02f4fa6...`). Phase 0 mainnet beta not yet started — gated on MVP confidence.
 
 ---
 
@@ -28,11 +28,11 @@
 | # | Feature | Status | Source | Notes |
 |---|---------|--------|--------|-------|
 |  | **Cash Accounts (register + resolve)** | 🎯 REQUIRED | wallet.md, cash-accounts…md | Match key for seller auto-funding Bizum concept field; interface to legacy payment system (human readability = bonus). MVP = Phase 0. |
-|  | Cash-in-person seller construct + fund (manual "cash received" trigger) | 🎯 Target | seller-auto-funding/06 | Price lock = seller constructs at payment receipt; forward-sale narrative |
-|  | `[SELLER_REQUEST]` from sender device (all covenant params) | 🎯 Target | seller-auto-funding/06 | Even in person; sender is the contracting buyer |
-|  | Seller verifies covenant is genuine (funderPubkey = seller) before funding | 🎯 Target | seller-auto-funding/06 | Sale due-diligence; buffer return depends on it |
-|  | Bizum auto-funding (NotificationListener parse → fund) | 📅 Planned | implementation/README | Second milestone; shares the construct+fund core |
-|  | Sender creates covenant with seller (funder≠sender) unfunded | ✅ Plumbing | SendViewModel | Needs create-only split (currently atomic self-fund) |
+|  | Cash-in-person seller construct + fund (manual "cash received" trigger) | ✅ **E2E-proven** | seller-auto-funding/17 | Trade tab "Confirm Cash Received & Fund"; tested 4-device Sep 8 |
+|  | `[SELLER_REQUEST]` from sender device (all covenant params) | ✅ **Proven** | seller-auto-funding/17 | Includes 4 pubkeys + price; seller verifies funderPubkey before funding |
+|  | Seller verifies covenant is genuine (funderPubkey = seller) before funding | ✅ **Proven** | seller-auto-funding/17 | Security rejection on mismatch |
+|  | Bizum auto-funding (NotificationListener parse → fund) | 📅 Planned | implementation/README | Shares the construct+fund core (manual trigger proven first) |
+|  | Sender creates covenant with seller (funder≠sender) unfunded | ✅ **Proven** | seller-auto-funding/17 | createCovenantOnly + AWAITING_FUNDING status |
 
 ### Customer flow (merchant accepts BCH) — raised priority
 
@@ -46,14 +46,15 @@
 
 | # | Feature | Status | Source | Notes |
 |---|---------|--------|--------|-------|
-|  | Merchant cashout (merchant-first) | ✅ Done on-chain | implementation/README | TXID 05301369… Sep 1 2026 |
+|  | Merchant cashout (merchant-first) | ✅ Done on-chain | implementation/README | TXID 05301369… Sep 1 2026; **4-device E2E on tablet merchant Sep 8** |
+|  | Refund of seller-funded (funder≠sender) covenant | ✅ **Proven** | seller-auto-funding/17 | Sender refunds, buffer → seller (TXID `b02f4fa6...`) |
 
 ### Discovery / coordination
 
 | # | Feature | Status | Source | Notes |
 |---|---------|--------|--------|-------|
-|  | Bulletin board (on-chain NFT listings) | 🔨 Planned | android-app/README, bulletin-board.md | Electrum NFT queries; design complete |
-|  | Nostr coordination (encrypted DMs) | 🔨 In progress | android-app/README, nostr.md | Replace Telegram copy-paste |
+|  | Bulletin board (on-chain NFT listings) | 🔨 Planned | android-app/README, bulletin-board.md | Electrum NFT queries; design complete; not load-bearing until multiple real counterparties |
+|  | Nostr coordination (encrypted DMs) | 🎯 **NEXT** | android-app/README, nostr.md | Replace Telegram; public relays work on cell data; minimal client via OkHttp + NIP-44 (no offline-dep blocker) |
 |  | Hardcoded test seller / merchant (no bulletin board yet) | ✅ | seller-auto-funding | Phase 0 test pattern |
 
 ### Core infra (done or nearly)

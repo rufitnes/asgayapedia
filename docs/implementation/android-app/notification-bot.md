@@ -4,16 +4,17 @@
 
 **Complexity:** High - Android notification interception, regex parsing, payment matching, auto-funding
 
-**Status (August 14, 2026):**
+**Status (September 8, 2026):**
 
 **Phase 0 ✅ Implemented:**
 - Telegram parameter parsing (NotificationListenerService for Telegram app)
-- Parse [COVENANT_V25] blocks from Telegram notifications
+- Parse [COVENANT_V25], [FUND_COVENANT], [CASH_IN_PERSON] blocks from Telegram notifications
 - Auto-populate ClaimActivity UI with covenant parameters
+- Cash-in-person seller auto-funding (manual "cash received" trigger in Trade tab) — **E2E-proven Sep 7-8**
 
-**Phase 0 🔨 In progress (seller auto-funding — see seller-auto-funding workspace):**
+**Phase 0 🔨 In progress (Bizum auto-funding — see seller-auto-funding workspace):**
 - Bank app notification parsing (Bizum) → seller auto-funding (detect payment → match covenant → fund with BCH)
-- Cash-in-person on-ramp is the MVP hardening target first (manual "cash received" trigger shares the same construct+fund core); Bizum auto-fund is the Phase 0 second milestone
+- Cash-in-person on-ramp proven first (manual trigger shares the same construct+fund core); Bizum auto-fund is the Phase 0 second milestone
 
 **Phase 1+ 🔨 Future:**
 - PagoMóvil / SEPA / broader bank parsing
