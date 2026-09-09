@@ -54,7 +54,7 @@
 | # | Feature | Status | Source | Notes |
 |---|---------|--------|--------|-------|
 |  | Bulletin board (on-chain NFT listings) | 🔨 Planned | android-app/README, bulletin-board.md | Electrum NFT queries; design complete; not load-bearing until multiple real counterparties |
-|  | Nostr coordination (encrypted DMs) | 🎯 **NEXT** | android-app/README, nostr.md | Replace Telegram; public relays work on cell data; minimal client via OkHttp + NIP-44 (no offline-dep blocker) |
+|  | Nostr coordination (NIP-17 encrypted DMs) | 🎯 **NEXT** | android-app/README, nostr.md | Replace Telegram; public relays work on cell data; minimal client via OkHttp + NIP-44 + NIP-17 gift-wrap (no offline-dep blocker) |
 |  | Hardcoded test seller / merchant (no bulletin board yet) | ✅ | seller-auto-funding | Phase 0 test pattern |
 
 ### Core infra (done or nearly)

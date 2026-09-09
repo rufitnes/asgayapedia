@@ -68,26 +68,28 @@ Nostr messages are sent to **relays**—simple servers that receive and forward 
 
 ---
 
-### Encrypted Direct Messages (NIP-04)
+### Encrypted Direct Messages (NIP-17 gift-wrap)
 
 When María sends a message to the seller:
 
 ```
-1. María's app encrypts message with seller's public key
-2. App sends encrypted message to 3-5 Nostr relays
-3. Relays forward to anyone subscribed to seller's public key
-4. Seller's bot decrypts message with seller's private key
-5. Seller's bot encrypts response with María's public key
+1. María's app wraps the message in a NIP-17 gift-wrap (kind-14 rumor → kind-13 seal → kind-1059 gift-wrap)
+2. App sends the kind-1059 gift-wrap to 3-5 Nostr relays
+3. Relays forward to anyone subscribed to the recipient's public key
+4. Seller's bot unwraps: verifies signatures → decrypts seal → decrypts rumor → recovers payload
+5. Seller's bot responds the same way (gift-wrapped to María)
 6. Response delivered to María's app via relays
-7. María's app decrypts response
+7. María's app unwraps and decrypts the response
 
 Total time: <1 second
 ```
 
-**The relays never see the content.** They only see:
-- Sender's public key (npub1...)
-- Recipient's public key (npub1...)
-- Encrypted blob of data
+**The relays never see the content — or the participants.** NIP-17 gift-wrap is signed by a random ephemeral key, so relays only see:
+- A random one-time public key (unlinkable to sender)
+- Recipient's public key (in the `p` tag)
+- An encrypted blob
+
+Metadata privacy: relays cannot correlate sender ↔ recipient or link messages to the same conversation. The seal layer is signed by the sender's real key, giving recipients verifiable sender authentication. (Updated 2026-09-09: kind-4/NIP-04 → NIP-17; NIP-04 is deprecated.)
 - Timestamp
 
 They can't read the payment details, the bank account, or any sensitive information.
@@ -412,7 +414,7 @@ The seller doesn't manually respond to messages. **The bot automates everything:
 
 **What's ready:**
 - ✅ Nostr key generation and management
-- ✅ Encrypted direct messages (NIP-04)
+- ✅ Encrypted direct messages (NIP-17 gift-wrap; NIP-04 deprecated — updated 2026-09-09)
 - ✅ Payment info request/response flow
 - ✅ Multi-relay support (automatic failover)
 - ✅ Liveness check (2-minute timeout)

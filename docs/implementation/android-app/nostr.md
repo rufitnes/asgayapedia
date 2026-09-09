@@ -2,7 +2,7 @@
 
 **Purpose:** Encrypted peer-to-peer messaging for payment instructions between buyer and seller
 
-**Complexity:** Low - WebSocket connections + NIP-44 encryption (ChaCha20-Poly1305, authenticated, forward-secure)
+**Complexity:** Low-Medium - WebSocket connections + NIP-17 gift-wrapped DMs (NIP-44 encryption, ChaCha20-Poly1305)
 
 > **⚠️ Phase 0 Priority - Required for Mainnet Launch**
 > 
@@ -14,11 +14,18 @@
 > 3. **Privacy by default** - End-to-end encrypted, censorship-resistant, no phone numbers
 > 4. **No external dependencies** - Users don't need Telegram/WhatsApp accounts
 > 
-> **Current status:** 
-> - **Design:** Complete and documented below
-> - **Implementation (August 14, 2026):** 🔨 Phase 0 target — encrypted DM transport needed for sender→seller→recipient coordination (replaces Telegram copy-paste)
+> **Current status:**
+> - **Design:** ✅ **NIP-17 decided (Sep 9, 2026)** — see update note below; authoritative implementation design lives in `collaborative_workspace/nostr-transport/` (files 00, 03, 09, 10, 12)
+> - **Implementation (September 9, 2026):** 🔨 Task 2 in progress — NostrKeyManager (random per-wallet keys, Option A approved)
 > - **Testing:** Telegram bot serves this function (development only)
 > - **Production:** Nostr required for mainnet (Telegram = fallback/emergency only)
+> 
+> **⚠️ UPDATE (2026-09-09) — NIP-17 replaces kind-4:**
+> This doc originally specified kind-4 DMs. The design has moved to **NIP-17 gift-wrapped DMs** (kind-14 rumor → kind-13 seal → kind-1059 gift-wrap):
+> - **Why:** NIP-04 (kind-4) is officially deprecated; kind-4+NIP-44 would be a custom format, not a standard. NIP-17 is what other BCH wallets (Paytaca, OPTN) already speak → zero-change interop, strengthens the "Asgaya is an open-protocol client, not an intermediary" compliance case.
+> - **Subscription filter:** `kinds: [1059]` (gift-wraps addressed to me), not kind-4.
+> - **Crypto:** NIP-44 unchanged (ChaCha20-Poly1305). The seal (kind-13) is **signed by the sender's real key**; the gift-wrap (kind-1059) is signed by a random ephemeral key; the rumor (kind-14) carries the payload and is unsigned.
+> - **Payload format:** the JSON message examples further down (`payment_request`, etc.) predate the current tag-block format — the implemented design ships `[FUND_COVENANT]`-style blocks as the rumor content (see Receiving note).
 > 
 > **Telegram drawbacks:** Users may not have it, requires separate download/setup, not privacy-focused.
 > **Nostr advantage:** Built into Asgaya = zero friction for users.
@@ -145,7 +152,7 @@ function subscribeToMessages(relay_connection):
     subscription_id: "asgaya_messages",
     filters: [
       {
-        kinds: [4],  // Kind 4 = encrypted DM
+        kinds: [1059],  // NIP-17 gift-wraps addressed to me (was kind-4 — see update note)
         "#p": [my_public_key]  // Recipient is me
       }
     ]
@@ -160,7 +167,7 @@ function subscribeToMessages(relay_connection):
 
 **WebSocket message format:**
 ```json
-["REQ", "asgaya_messages", {"kinds": [4], "#p": ["npub1..."]}]
+["REQ", "asgaya_messages", {"kinds": [1059], "#p": ["npub1..."]}]
 ```
 
 **Relay response:** Sends all past encrypted DMs + streams new ones
@@ -169,95 +176,125 @@ function subscribeToMessages(relay_connection):
 
 ## Encrypted Messaging (NIP-44)
 
-**Why NIP-44?** Current standard (ChaCha20-Poly1305, authenticated, forward-secure). NIP-04 is legacy (AES-256-CBC, deprecated by ecosystem). Recommended by `nostr-tools`, `nostr-sdk`, and most clients.
+**Why NIP-44?** Current standard (ChaCha20-Poly1305, authenticated). NIP-04 is legacy (AES-256-CBC, deprecated by ecosystem). Recommended by `nostr-tools`, `nostr-sdk`, and most clients. In our design NIP-44 is used **within NIP-17** (seal + gift-wrap encryption).
 
 ### Sending a Message
 
 **What:** Encrypt payment instructions, send to Isabel
+
+**NIP-17 three-layer structure (authoritative — see workspace files 00/03):**
+```
+1. rumor (kind-14):    plain-text payload (e.g. [FUND_COVENANT] block), has id, NO sig
+2. seal (kind-13):     rumor NIP-44-encrypted to recipient, SIGNED by sender's real key, no tags
+3. gift-wrap (kind-1059): seal NIP-44-encrypted to recipient, signed by a RANDOM ephemeral key,
+                       single ["p", recipient] tag, obfuscated created_at (≤2 days past)
+```
 
 **Pseudocode:**
 ```
 function sendNostrDM(recipient_pubkey, message_text):
   my_keys = getNostrKeys()
   
-  // Encrypt with NIP-44 (ChaCha20-Poly1305, authenticated)
-  encrypted_content = nip44_encrypt(
-    sender_private_key: my_keys.private_key,
-    recipient_public_key: recipient_pubkey,
-    plaintext: message_text
-  )
-  
-  // Build Nostr event
-  event = {
-    kind: 4,  // Encrypted DM (same as NIP-04 for compatibility)
+  // Layer 1: build rumor (unsigned)
+  rumor = {
+    kind: 14,
     pubkey: my_keys.public_key,
-    created_at: now(),
-    tags: [
-      ["p", recipient_pubkey]  // Recipient
-    ],
-    content: encrypted_content
+    created_at: now(),                    // real time (canonical)
+    tags: [["p", recipient_pubkey]],
+    content: message_text                 // plain text payload
   }
+  rumor.id = sha256(serialize(rumor))     // has id, no sig
   
-  // Sign event
-  event.id = hash(event)
-  event.sig = sign(event.id, my_keys.private_key)
+  // Layer 2: seal — rumor NIP-44-encrypted, signed by sender's real key
+  seal = {
+    kind: 13,
+    pubkey: my_keys.public_key,
+    created_at: randomNow(),              // obfuscated ≤2 days past
+    tags: [],
+    content: nip44_encrypt(rumor, my_keys.private_key, recipient_pubkey)
+  }
+  seal.id = hash(seal)
+  seal.sig = schnorr_sign(seal.id, my_keys.private_key)   // BIP-340, sender auth
+  
+  // Layer 3: gift-wrap — seal NIP-44-encrypted, signed by ephemeral key
+  ephemeral_keys = generate_keypair()     // random, disposable per message
+  gift_wrap = {
+    kind: 1059,
+    pubkey: ephemeral_keys.public_key,
+    created_at: randomNow(),              // obfuscated ≤2 days past
+    tags: [["p", recipient_pubkey]],
+    content: nip44_encrypt(seal, ephemeral_keys.private_key, recipient_pubkey)
+  }
+  gift_wrap.id = hash(gift_wrap)
+  gift_wrap.sig = schnorr_sign(gift_wrap.id, ephemeral_keys.private_key)
   
   // Send to all connected relays
   for relay in active_relays:
-    relay.send(json_encode(["EVENT", event]))
+    relay.send(json_encode(["EVENT", gift_wrap]))
   
-  return event.id
+  return gift_wrap.id
 ```
 
 **NIP-44 encryption (simplified):**
 ```
 shared_secret = ECDH(my_private_key, recipient_public_key)
-// Derive encryption key using HKDF
-encryption_key = HKDF(shared_secret, salt, info)
-// ChaCha20-Poly1305 (authenticated encryption)
-encrypted = ChaCha20_Poly1305_encrypt(plaintext, key=encryption_key, nonce)
-content = base64(nonce + encrypted + auth_tag)
+// Derive conversation key using HKDF
+conversation_key = HKDF_extract(shared_secret, salt="nip44-v2")
+message_keys = HKDF_expand(conversation_key, info=nonce)   // per-message keys
+// ChaCha20-Poly1305-style AEAD (ChaCha20 + HMAC-SHA256 per NIP-44 v2)
+encrypted = ...                                             // per NIP-44 spec
+content = base64(version + nonce + ciphertext + mac)
 ```
 
-**Actual implementation:** Use Nostr library (handles NIP-44 complexity - HKDF, nonce generation, authenticated encryption)
+**Actual implementation:** Hand-rolled NIP-44 on BouncyCastle + NIP-17 gift-wrap (no nostr library — offline-build constraint). Authoritative spec: NIP-44 + NIP-59 + workspace file 03.
 
 ---
 
 ### Receiving a Message
 
-**What:** Decrypt incoming DM from relay
+**What:** Unwrap + decrypt incoming gift-wrap from relay (NIP-17)
 
 **Pseudocode:**
 ```
-function handleIncomingMessage(nostr_event):
-  // Verify signature
-  if not verify_signature(nostr_event):
-    log_warning("Invalid signature, ignoring")
+function handleIncomingMessage(gift_wrap):       // kind-1059
+  // 1. Verify gift-wrap signature (ephemeral key) — NIP-44: MUST validate before decrypt
+  if not verify_signature(gift_wrap):
+    log_warning("Invalid gift-wrap signature, ignoring")
     return
-  
-  // Decrypt content
+
+  // 2. Decrypt gift-wrap content → recover seal (kind-13)
   my_keys = getNostrKeys()
-  sender_pubkey = nostr_event.pubkey
-  
-  plaintext = nip44_decrypt(
+  seal = nip44_decrypt(
     recipient_private_key: my_keys.private_key,
-    sender_public_key: sender_pubkey,
-    ciphertext: nostr_event.content
+    sender_public_key: gift_wrap.pubkey,          // ephemeral key
+    ciphertext: gift_wrap.content
   )
-  
-  // Parse message (JSON payload)
-  message = json_decode(plaintext)
-  
-  // Handle based on type
-  if message.type == "payment_request":
-    handlePaymentRequest(message)  // Isabel receives this, responds with payment_instruction
-  else if message.type == "payment_instruction":
-    handlePaymentInstruction(message)  // María receives this, uses it to pay Isabel
-  else if message.type == "covenant_funded":
-    handleCovenantFunded(message)  // María receives this (optional notification)
+
+  // 3. Verify seal signature — authenticates the REAL sender (anti-impersonation)
+  if not verify_signature(seal):
+    log_warning("Invalid seal signature, ignoring")
+    return
+
+  // 4. Decrypt seal content → recover rumor (kind-14)
+  rumor = nip44_decrypt(
+    recipient_private_key: my_keys.private_key,
+    sender_public_key: seal.pubkey,               // real sender key
+    ciphertext: seal.content
+  )
+
+  // 5. Verify rumor.pubkey == seal.pubkey (NIP-17 anti-impersonation)
+  if rumor.pubkey != seal.pubkey:
+    log_warning("Sender identity mismatch, ignoring")
+    return
+
+  // 6. Handle payload (see payment-format note below)
+  if rumor.content contains "[FUND_COVENANT]":
+    handleFundCovenant(rumor.content)   // existing parseFundCovenant — unchanged
   else:
-    log_warning("Unknown message type: " + message.type)
+    log_warning("Unknown message type: " + rumor.content)
 ```
+
+> **⚠️ Payload note:** the JSON message types below (`payment_request`, `payment_instruction`, `covenant_funded`) predate the current **transport-agnostic tag-block format** (`[FUND_COVENANT]`, `[CASH_IN_PERSON]`, `[COVENANT_V25]`). The implemented design ships the tag-block text as the rumor content; `NotificationListener.parseFundCovenant()` parses it unchanged. Treat the JSON examples below as historical.
 
 ---
 
@@ -514,14 +551,14 @@ catch ParseError:
 
 ---
 
-**Status:** Phase 0 - Design complete, implementation TODO (HIGH PRIORITY - blocking mainnet)  
-**Updated:** 2026-08-14 (NIP-04 → NIP-44 migration)  
+**Status:** Phase 0 - Design decided (NIP-17), implementation in progress  
+**Updated:** 2026-09-09 (kind-4 → NIP-17 migration)  
 **Originally written:** 2026-08-04  
-**Complexity:** Low (WebSocket + library for NIP-44)  
+**Complexity:** Low-Medium (WebSocket + NIP-17 gift-wrap + NIP-44)  
 **Priority:** Essential coordination layer (sender ↔ seller payment instructions)  
 **Current:** Telegram bot (testing/fallback only) | **Production:** Nostr required (integrated UX)
 
-**Note:** Updated to NIP-44 (current standard: ChaCha20-Poly1305, authenticated, forward-secure). NIP-04 is legacy (AES-256-CBC, deprecated). Libraries: `nostr-tools`, `nostr-sdk`, `nostr-kt` all support NIP-44.
+**Note:** Updated to NIP-44 (current standard: ChaCha20-Poly1305). NIP-04 (kind-4) is legacy (AES-256-CBC, deprecated). DMs use **NIP-17 gift-wrap** (kind-14 → kind-13 seal → kind-1059). Authoritative implementation design: `collaborative_workspace/nostr-transport/` (files 00, 03, 09, 10, 12).
 ---
 
 ## Navigation
