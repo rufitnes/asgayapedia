@@ -167,9 +167,9 @@ Notification Payload (JSON):
       ↓
 
 Delivery Method:
-├─ Phase 0: Telegram fallback ✅
-├─ Phase 1: Nostr coordination (planned)
-└─ Future: Bulletin board queries (permissionless)
+├─ Nostr coordination ✅ (NIP-17 gift-wrap — primary)
+├─ Telegram fallback (testing / async)
+└─ QR (offline, face-to-face)
 
       ↓
 
@@ -180,7 +180,7 @@ Recipient Receives:
 └─ MainActivity observes Flow, shows "📥 Money Waiting" card
 ```
 
-### Telegram Fallback (Phase 0)
+### Telegram Fallback (testing)
 
 **Why Telegram first?**
 - ✅ Works today (no infrastructure needed)
@@ -222,7 +222,9 @@ class CovenantNotificationListener : NotificationListenerService() {
 
 **Status:** ✅ Working end-to-end (Telegram fallback proven, July 2026)
 
-### Nostr Coordination (Phase 1)
+### Nostr Coordination (✅ implemented — NIP-17)
+
+> **Update (2026-09-16):** the implemented design uses **NIP-17 gift-wrapped DMs** (`kind-14 → kind-13 → kind-1059`) carrying **transport-agnostic tag blocks** (`[FUND_COVENANT]`, `[COVENANT_V25]`, `[BCH_FOR_SALE]`, `[BCH_PURCHASE_COSIGN]`, `[SIGNED_TX]`). The **NIP-78 event (kind 30078) below is historical** — it was considered and not shipped. See [nostr.md](./nostr.md).
 
 **Why Nostr next?**
 - Decentralized (no Telegram dependency)
@@ -263,7 +265,7 @@ nostrClient.subscribe(
 }
 ```
 
-**Status:** ⏳ Planned for Phase 1
+**Status:** ✅ Working end-to-end (NIP-17 gift-wrap; tag-block payloads).
 
 ---
 
@@ -503,7 +505,7 @@ claimCovenant(
 ✅ BankPatternMatcher extraction  
 ✅ Room database storage  
 ✅ UI display ("Money Waiting" card)  
-⏳ Nostr coordination (Phase 1)  
+✅ Nostr coordination (NIP-17)  
 
 ### Part 3: Claim (100% complete ✅)
 
@@ -520,7 +522,7 @@ claimCovenant(
 ✅ 0-conf refund proven (3 successful)  
 ✅ Sender can reclaim anytime  
 
-**Overall MVP progress: ~95% complete** (Nostr coordination deferred to Phase 1)
+**Overall MVP progress: ~99% complete** (Nostr coordination working — NIP-17; cash-out over Nostr working)
 
 **Blockers removed:** All technical blockers resolved via WebView + CashScript SDK pivot (August 1-2).
 
@@ -554,7 +556,7 @@ claimCovenant(
 **The Trinity:** Create → Send → Claim (+ Refund)
 
 **Create:** Build P2SH32 covenant via WebView + CashScript SDK (✅ 100% done)  
-**Send:** Notify recipient via Telegram/Nostr (90% done - Nostr Phase 1)  
+**Send:** Notify recipient via Nostr (✅ NIP-17)  
 **Claim:** Unlock covenant to wallet (✅ 100% done - 4 successful claims)  
 **Refund:** Sender reclaims anytime (✅ 100% done - 3 successful 0-conf refunds)
 

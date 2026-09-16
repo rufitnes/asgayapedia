@@ -13,6 +13,8 @@ Not WhatsApp. Not Telegram. Not email. Just **encrypted direct messages sent ove
 
 When María selects a BCH seller from the bulletin board, she sends an encrypted message: "I need payment details for covenant xyz789." The seller's bot responds instantly with bank account info. **Total latency: under 1 second.** María never sees a phone number, email, or centralized chat interface—just payment instructions delivered directly to her app.
 
+> **Second use — cash-out.** The same encrypted channel carries the **recipient → merchant** sale when cashing out: the request (`[BCH_FOR_SALE]`), the merchant's pre-signed quote (`[BCH_PURCHASE_COSIGN]`), and the co-signed transaction (`[SIGNED_TX]`). Nostr is the **primary transport** for cash-out; a face-to-face QR is the offline fallback. See [the cash-out flow](../../implementation/android-app/merchant-cashout-flow.md).
+
 ---
 
 ## The Coordination Problem

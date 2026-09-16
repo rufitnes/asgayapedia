@@ -5,6 +5,8 @@
 **Phase:** Phase 0 critical  
 **Status:** Open for collaboration
 
+> **Update (2026-09-09):** decided — coordination uses **Nostr NIP-17 gift-wrapped DMs** (NIP-44 encryption), not NIP-04. This document is the exploration that led there; see [nostr.md](../implementation/android-app/nostr.md).
+
 ---
 
 ## The Question

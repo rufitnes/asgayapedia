@@ -14,11 +14,11 @@
 > 3. **Privacy by default** - End-to-end encrypted, censorship-resistant, no phone numbers
 > 4. **No external dependencies** - Users don't need Telegram/WhatsApp accounts
 > 
-> **Current status:**
-> - **Design:** ✅ **NIP-17 decided (Sep 9, 2026)** — see update note below; authoritative implementation design lives in `collaborative_workspace/nostr-transport/` (files 00, 03, 09, 10, 12)
-> - **Implementation (September 9, 2026):** 🔨 Task 2 in progress — NostrKeyManager (random per-wallet keys, Option A approved)
-> - **Testing:** Telegram bot serves this function (development only)
-> - **Production:** Nostr required for mainnet (Telegram = fallback/emergency only)
+> **Current status (2026-09-16):**
+> - **Design:** ✅ NIP-17 decided; authoritative design in `collaborative_workspace/nostr-transport/` (now **closed** — see its `67` closure note).
+> - **Implementation:** ✅ **Working end-to-end** — sender→seller funding (`[FUND_COVENANT]`), sender→recipient claim (`[COVENANT_V25]`), and recipient→merchant cash-out (`[BCH_FOR_SALE]` / `[BCH_PURCHASE_COSIGN]` / `[SIGNED_TX]`) — all proven on real devices.
+> - **Testing:** Telegram serves as a development / async fallback.
+> - **Production:** Nostr is the coordination layer for mainnet.
 > 
 > **⚠️ UPDATE (2026-09-09) — NIP-17 replaces kind-4:**
 > This doc originally specified kind-4 DMs. The design has moved to **NIP-17 gift-wrapped DMs** (kind-14 rumor → kind-13 seal → kind-1059 gift-wrap):
@@ -94,6 +94,8 @@ function getNostrKeys():
 **Encoding:**
 - Private key: `nsec1...` (bech32 format)
 - Public key: `npub1...` (bech32 format)
+
+> **Phase 0 note:** today the app generates one **Nostr key per wallet** (stored alongside it). Deriving it from the wallet seed (path `m/44'/1237'/0'/0/0`) is the planned direction so a single seed phrase backs up BCH + Nostr.
 
 ---
 
@@ -287,14 +289,33 @@ function handleIncomingMessage(gift_wrap):       // kind-1059
     log_warning("Sender identity mismatch, ignoring")
     return
 
-  // 6. Handle payload (see payment-format note below)
-  if rumor.content contains "[FUND_COVENANT]":
-    handleFundCovenant(rumor.content)   // existing parseFundCovenant — unchanged
+  // 6. Route by the payload tag (transport-agnostic tag blocks)
+  if rumor.content contains "[FUND_COVENANT]":             handleFundCovenant(rumor.content)     // funding request
+  else if rumor.content contains "[COVENANT_V25]":         handleReceivedCovenant(rumor.content) // recipient claim
+  else if rumor.content contains "[BCH_FOR_SALE]":         handleBchForSale(rumor.content)       // cash-out request
+  else if rumor.content contains "[BCH_PURCHASE_COSIGN]":  handleCashoutQuote(rumor.content)     // merchant's pre-signed quote
+  else if rumor.content contains "[SIGNED_TX]":            handleSignedTx(rumor.content)         // co-signed transaction
   else:
     log_warning("Unknown message type: " + rumor.content)
 ```
 
-> **⚠️ Payload note:** the JSON message types below (`payment_request`, `payment_instruction`, `covenant_funded`) predate the current **transport-agnostic tag-block format** (`[FUND_COVENANT]`, `[CASH_IN_PERSON]`, `[COVENANT_V25]`). The implemented design ships the tag-block text as the rumor content; `NotificationListener.parseFundCovenant()` parses it unchanged. Treat the JSON examples below as historical.
+> **⚠️ Payload note:** the JSON message types below (`payment_request`, `payment_instruction`, `covenant_funded`) predate the current **transport-agnostic tag-block format**. The implemented design ships the tag-block text as the rumor content; the parser handles it unchanged. Treat the JSON examples below as historical.
+
+### Message Tag Blocks (implemented)
+
+The payload is plain text. The implemented set:
+
+| Tag | Direction | Purpose |
+|---|---|---|
+| `[FUND_COVENANT]` | sender → seller | request the seller to fund the covenant (seller sells BCH) |
+| `[COVENANT_V25]` | sender → recipient | deliver a funded covenant to claim |
+| `[BCH_FOR_SALE]` | recipient → merchant | "I want to sell BCH" (cash-out request) |
+| `[BCH_PURCHASE_COSIGN]` | merchant → recipient | pre-signed offer — fresh oracle + `quoteId` + expiry |
+| `[SIGNED_TX]` | recipient → merchant | the co-signed transaction |
+
+`[CASH_IN_PERSON]` / `[CASHOUT_REQUEST]` are legacy formats from the earlier recipient-first flow, kept only for backward compatibility.
+
+**Liveness = response.** There is no heartbeat or presence system: a reply inside the timeout *is* the proof the other side is online. The cash-out leg finalises in seconds — a single, short-lived quote.
 
 ---
 
@@ -551,8 +572,8 @@ catch ParseError:
 
 ---
 
-**Status:** Phase 0 - Design decided (NIP-17), implementation in progress  
-**Updated:** 2026-09-09 (kind-4 → NIP-17 migration)  
+**Status:** ✅ Working end-to-end (NIP-17) — funding, recipient claim, and cash-out  
+**Updated:** 2026-09-16 (implementation shipped: recipient claim + cash-out over Nostr)  
 **Originally written:** 2026-08-04  
 **Complexity:** Low-Medium (WebSocket + NIP-17 gift-wrap + NIP-44)  
 **Priority:** Essential coordination layer (sender ↔ seller payment instructions)  

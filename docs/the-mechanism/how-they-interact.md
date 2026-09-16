@@ -46,11 +46,11 @@ Elena’s phone buzzed four hours ago; she now opens Asgaya and taps “Claim BC
 
 ### Step 5 — Decide & Discover
 
-Elena chooses “Cash Out” (she needs bolívars today). The app queries the bulletin board for BCH buyers near Caracas. It finds Carlos’s Grocery (0.8 km, 0.5 % spread, open). Elena selects it.
+Elena chooses “Cash Out” (she needs bolívars today). The app queries the bulletin board for **BCH buyers** near Caracas (the picker shows **buyer ads**). It finds Carlos’s Grocery (0.8 km, 0.5 % spread, open). Elena selects it.
 
 ### Step 6 — Walk, Exchange, Shop
 
-Elena walks to the store. Carlos’s bot has already detected her sell covenant and pre‑filled a cash‑out screen. Carlos counts 398,000 VES (400k VES less 0.5 %), hands it to Elena. Both sign on their phones. The covenant executes, sending Elena’s BCH to Carlos.
+Elena walks to the store. She sends her **BCH-for-sale request** to Carlos (over Nostr — or shows a QR if she has no data). Carlos's app fetches a **fresh price**, pre-signs an offer and returns it; Elena reviews and co-signs; Carlos's app **broadcasts (BCH moves first)**, then hands her 398,000 VES (400k VES less 0.5 %). The sale appears in Carlos's **Buy BCH** tab.
 
 Elena then buys groceries worth 300,000 VES from Carlos’s store.
 
@@ -83,7 +83,7 @@ Carlos chooses **H€** (he knows EUR/VES rates, easier mental math). The app:
 
 - **Wallet:** María creates covenant, Elena claims, Carlos receives. Cash Accounts provide identity.
 - **Bulletin Board:** María queries sellers; Elena queries merchants. Passive listings discovered on‑chain.
-- **Nostr:** María’s app requests payment details from Isabel’s bot. Encrypted, sub‑second, no phone number.
+- **Nostr:** María’s app requests payment details from Isabel’s bot, and Elena coordinates the sale with Carlos (request → quote → co-sign → signed tx). Encrypted, sub‑second, no phone number.
 - **Bot:** Isabel’s bot detects the bank notification and funds the covenant automatically. Carlos’s bot notifies him of the claim.
 
 ---

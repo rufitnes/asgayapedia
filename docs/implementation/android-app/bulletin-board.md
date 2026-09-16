@@ -15,18 +15,20 @@
 > 
 > **Without this component:** Mainnet launch impossible. Users can't find counterparties.
 > 
-> **Implementation Status (August 14, 2026):** 🔨 Planned — design complete, not yet implemented. Phase 0 MVP target for merchant/seller discoverability.
+> **Implementation status (2026-09-16):** 🟡 **Mock board in use; on-chain board pending.** The app ships a **mock bulletin board** that drives discovery end-to-end for both legs (sender→seller and recipient→merchant) while the on-chain NFT board is built. The real board drops in by changing only the **listing source**.
 > 
-> **Status:** Design complete, ready for implementation when covenant flows are validated.
+> **Status:** Design complete; mock validated in the app. On-chain implementation pending (Phase 0 target).
 
 ---
 
 ## Overview
 
-The Bulletin Board is how users discover buy/sell opportunities:
-- **Isabel (seller):** Creates NFT listing: "I sell €100-500 EUR for BCH"
-- **María (buyer):** Queries bulletin board: "Who's selling EUR?"
-- **Matching:** Client-side filtering by currency, amount, rating
+The Bulletin Board is how users discover counterparties:
+- **Sellers (people with BCH)** post an ad: *"I sell BCH for fiat."* This is the **sender's** counterparty.
+- **Buyers / merchants (people with fiat)** post an ad: *"I buy BCH with fiat."* This is the **recipient's** counterparty when cashing out.
+- **Matching:** client-side filtering by currency, amount, payment method, and location.
+
+Every listing also carries the poster's **Nostr public key (`nostr_pubkey`)** — the coordination address — so a counterparty can open the encrypted channel ([Nostr](nostr.md)) without any other contact information.
 
 **No centralized server:** All listings stored as NFT UTXOs on BCH blockchain, queried via Electrum.
 
@@ -73,6 +75,7 @@ UTXO {
   "amount_max": 500,
   "payment_methods": ["bizum", "sepa"],
   "cash_account": "Isabel#142",
+  "nostr_pubkey": "npub1...",  // Coordination key — where to send DMs
   "location": "Madrid",  // Optional, required for cash-in-person
   "expires_at": 1735689600  // Unix timestamp
 }
@@ -81,13 +84,30 @@ UTXO {
 **Size limit:** 128 bytes (BCH NFT commitment max, post-P2S upgrade May 15, 2026)
 
 **Required fields:**
-- `version`, `type`, `currency`, `amount_min`, `amount_max`, `payment_methods`, `cash_account`
+- `version`, `type`, `currency`, `amount_min`, `amount_max`, `payment_methods`, `cash_account`, `nostr_pubkey`
 - `location` (required only if payment_methods includes "cash")
 
 **Optional fields:**
 - `expires_at` (default: 30 days from creation)
 
 **Note on reputation:** Seller rating and completed trades are stored in a separate on-chain reputation UTXO (see `reputation-on-chain.md`), not in the listing NFT. The app queries reputation separately when displaying seller options.
+
+---
+
+## Two Ad Types
+
+| Ad | Posted by | Meaning | Used by |
+|---|---|---|---|
+| **Seller ad** (`SELLER`) | someone with BCH | "I sell BCH for fiat" | the **sender** (buying BCH for a remittance) |
+| **Buyer ad** (`BUYER`) | a merchant with fiat | "I buy BCH with fiat" | the **recipient** (cashing out) |
+
+The recipient's cash-out picker shows **buyer ads**; the sender's picker shows **seller ads**. Both carry `nostr_pubkey`.
+
+---
+
+## You Can't Trade With Yourself
+
+Your own ad is on the board like anyone else's. The app therefore **never offers your own ad as a counterparty** — it matches the acting wallet against the listing's wallet (BCH key or `nostr_pubkey`). This prevents user mistakes **and** self-dealing, which would fake trade volume and **poison reputation data**.
 
 ---
 
@@ -517,8 +537,8 @@ if metadata.expires_at - now() < 1_DAY:
 
 ---
 
-**Status:** Phase 0 - Design complete, implementation TODO (HIGH PRIORITY - blocking mainnet)  
-**Updated:** 2026-08-04  
+**Status:** Design complete; mock board validated in-app; on-chain implementation pending (Phase 0)  
+**Updated:** 2026-09-16  
 **Complexity:** Low (simple Electrum queries + filtering)  
 **Priority:** Essential for discovery layer (sender → seller, recipient → merchant)  
 **Compliance:** Proves Asgaya is discovery tool, not intermediary

@@ -95,13 +95,32 @@ The non‑custodial BCH wallet where users hold BCH, register Cash Accounts, cre
 (see Core Concepts)
 
 ### Nostr
-The encrypted peer‑to‑peer messaging layer used to coordinate payment details between buyers and sellers. Messages are sent over public relays, but content is end‑to‑end encrypted (NIP‑04). Nostr also carries blacklist warnings and optional covenant‑funded notifications.
+The encrypted peer‑to‑peer messaging layer used to coordinate between counterparties — payment details (sender ↔ seller), the recipient claim, and the cash‑out sale (recipient ↔ merchant). Messages are sent over public relays but are end‑to‑end encrypted using **NIP‑17 gift‑wrap** (NIP‑44 encryption); it also carries blacklist warnings and covenant‑funded notifications.
 
 ### Notification Bot
 The automation engine running on a passive seller’s device. It intercepts bank/payment notifications, extracts Cash Account references, matches them to unfunded covenants via Electrum, and automatically locks the seller’s BCH into the covenant.
 
 ### Stability Layer
 (see Core Concepts)
+
+---
+
+## Coordination (Nostr)
+
+### npub / nsec
+A user's Nostr public key (`npub…`) and private key (`nsec…`). The `npub` is the coordination address others message; in Asgaya it is carried in the bulletin‑board listing as `nostr_pubkey`.
+
+### NIP‑17 (gift‑wrapped DMs)
+The private‑messaging standard Asgaya uses. Each message is wrapped in three layers: a kind‑14 **rumor** (the payload, unsigned), a kind‑13 **seal** (encrypted, signed by the sender's real key), and a kind‑1059 **gift‑wrap** (encrypted, signed by a random one‑time key). Replaces the deprecated NIP‑04; NIP‑44 provides the encryption.
+
+### Quote & TTL
+In cash‑out, the merchant answers a sale request with a pre‑signed **quote** carrying a short **time‑to‑live** (e.g. 60 s) and a unique id. The recipient must co‑sign inside the TTL, and the merchant broadcasts only the live quote — so a stale price can never be used.
+
+### Liveness = response
+Asgaya has no heartbeat or presence system: a prompt reply *is* the proof the other side is online (the request proves the sender, the reply proves the responder). The cash‑out exchange finalises in seconds.
+
+### Confirm‑then‑pay
+The merchant broadcasts the cash‑out transaction (BCH moves first) and only then hands over the fiat. Until the transaction is confirmed a competing spend could still win, so remote or larger trades wait for a confirmation.
 
 ---
 

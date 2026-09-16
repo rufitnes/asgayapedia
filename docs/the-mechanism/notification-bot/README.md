@@ -107,7 +107,7 @@ Steps 2–5 are fully automated. The seller only touches steps 1 and 6.
 
 **Android:** Foreground service with a persistent notification, partial wake lock, WiFi‑preferred with mobile data fallback. Battery impact: ~5–10 % per day.
 
-**Nostr:** rust‑nostr via JNI, 3–5 public relays with exponential backoff reconnection. Messages use NIP‑04 encryption. A 30‑second keepalive detects dead connections.
+**Nostr:** 3–5 public relays with exponential backoff reconnection. Messages use **NIP-17 gift-wrap** (NIP-44 encryption). A 30‑second keepalive detects dead connections.
 
 **Bank parsing:** Pattern matching on notification text (e.g., "Has recibido 100,00 € de María García. Concepto: Elena#142"). Extracts amount and reference. Multiple regex patterns per bank handle format variations. If all patterns fail, the bot alerts the seller for manual verification.
 

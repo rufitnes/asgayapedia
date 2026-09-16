@@ -74,7 +74,7 @@ A merchant is the **secret weapon** of Asgaya's adoption strategy. Carlos is not
 - App shows Carlos's listing (4.5★, bodega, 2km away)
 - Elena decides to go to Carlos's store
 
-**No automated notification to Carlos** - Elena just walks to the store (or calls/messages via Nostr if she wants reassurance first). Phase 0+ enhancement: Asgaya direct messages for active coordination.
+**Elena can coordinate before arriving.** She sends her BCH-for-sale request over **Nostr** (encrypted, no phone number) — or simply walks to the store, since the merchant can also quote face-to-face via QR. Carlos sees the pending sale in his **Buy BCH** tab.
 
 #### Elena Arrives at Store
 
@@ -90,11 +90,11 @@ A merchant is the **secret weapon** of Asgaya's adoption strategy. Carlos is not
    - Brings items to checkout
 
 2. **Combined Settlement (Merchant-First)**
-   - Elena shows her cashout request QR (just covenant params)
-   - Carlos scans it → his app fetches a **fresh oracle price at the counter** (this is what protects his 0.5% margin — the price is seconds old, not minutes)
-   - Carlos's app pre-signs the transaction with his wallet, showing a response QR
-   - Elena scans Carlos's QR → verifies the 8 checks (fresh price, covenant match, correct outputs) → co-signs → shows the fully-signed tx QR
-   - Carlos scans the signed tx → broadcasts immediately (BCH-first) → hands Elena the cash
+   - Elena sends her **BCH-for-sale request** (over **Nostr**; or shows a QR if she has no data) — just covenant params
+   - Carlos's app fetches a **fresh oracle price** (this protects his 0.5% margin — the price is seconds old, not minutes)
+   - Carlos's app pre-signs the transaction with his wallet and returns the **quote**
+   - Elena reviews it → verifies the checks (fresh price, covenant match, correct outputs) → co-signs → sends the **signed transaction**
+   - Carlos **broadcasts immediately (BCH-first)** → hands Elena the cash
    - **Merchant controls the timing and the price freshness** — that's the point of merchant-first
 
 3. **Why This Works** (Triple-dip shines)
