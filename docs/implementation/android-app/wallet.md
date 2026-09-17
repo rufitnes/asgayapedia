@@ -1264,9 +1264,9 @@ if covenant.expiry - now() < 1_hour:
 
 **Used by:**
 - [Asgaya Trinity](./asgaya-trinity.md) - 3-part covenant architecture (create, send, claim)
-- [bulletin-board.md](bulletin-board.md) - Create listing NFTs (Phase 1+)
+- [bulletin-board.md](bulletin-board.md) - Listing discovery for seller/merchant matching (Phase 0 — in progress; discovery mechanism under review)
 - [nostr.md](nostr.md) - Coordinated delivery over Nostr (NIP-17; Phase 0 — implemented)
-- [notification-bot.md](notification-bot.md) - Auto-fund covenants (Phase 1+)
+- [notification-bot.md](notification-bot.md) - Auto-fund covenants (Phase 0 — implemented)
 
 ---
 
