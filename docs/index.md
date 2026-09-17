@@ -116,7 +116,7 @@ Every transaction must create economic incentives for participants to join and g
 
 On a €100 transfer:
 - Sender pays: €100.50 (includes 0.5% seller fee)
-- Recipient receives: €99 cash (merchant keeps 0.5% spread)
+- Recipient receives: €99.50 cash (merchant keeps 0.5% spread)
 - **Total cost: ~€1 (1%) vs €5-€6.50 (5-6.5%) via traditional remittances**
 
 **Zero custody:** No company holds your funds at any point. BCH covenants enforce settlement automatically.
@@ -125,35 +125,32 @@ On a €100 transfer:
 
 ## Technology Stack
 
-Asgaya builds on proven Bitcoin Cash innovations:
+Asgaya builds on proven open standards and Bitcoin Cash innovations:
 
-- **[CashAccounts](https://gitlab.com/cash-accounts/specification)** - Human-readable addresses (`Elena#142`)
-- **[AnyHedge](https://anyhedge.com/)** - Volatility protection via hedge contracts
-- **[CashTokens](https://cashtokens.org/)** - H€ and HAu stable tokens
-- **[CashScript](https://cashscript.org/)** - Covenant (smart contract) language
-- **[Electrum/Fulcrum](https://github.com/cculianu/Fulcrum)** - SPV infrastructure for mobile wallets
+- **[CashAccounts](https://gitlab.com/cash-accounts/specification)** — Human-readable addresses (`Elena#142`)
+- **[CashScript](https://cashscript.org/)** — Covenant (smart-contract) language for automated settlement
+- **[CashTokens](https://cashtokens.org/)** — On-chain tokens (e.g. H€/HAu stable tokens)
+- **[AnyHedge](https://anyhedge.com/)** — Volatility protection via hedge contracts
+- **[Nostr](https://nostr.com/)** — Decentralized coordination: encrypted (NIP-17) messages between participants, with no company server
+- **[Electrum/Fulcrum](https://github.com/cculianu/Fulcrum)** — SPV infrastructure for mobile wallets
 
 ---
 
 ## Status
 
-**Phase:** Phase 0 — Active Implementation & Testnet3 Validation  
-**Version:** 2.0 (Covenant Architecture)  
-**Last Major Update:** August 21, 2026
+Asgaya is at **Phase 0**: a working Android reference implementation, validated on testnet3 with real devices, preparing for a first pilot.
 
-**Implementation progress:**
-- ✅ **Covenant v2.6** — All 5 spending paths validated on testnet3 (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
-- ✅ **First inter-device claim** — Guaranteed-value transfer between two Android devices (Aug 10, 2026)
-- ✅ **v0.2 hybrid architecture** — Kotlin owns network, WebView does compute. Eliminated the WebView connection-hang bug class; multi-device reliable (Aug 20-21)
-- ✅ **Oracle integration** — Dynamic pubkey fetching, zero hardcoded keys (Aug 16)
-- ✅ 7 implementation components (TightDS reviewed)
-- ✅ Glossary with H€/HAu/AnyHedge terms
-- ✅ User journey documentation
-- ✅ Design rationale and constraints
-- ✅ Research sessions and findings
-- ✅ Unknown investigation framework
+**Working today**
+- **Transfers between Android devices** — a sender funds an on-chain covenant, the recipient claims it, and settlement is automatic. No company ever holds the funds.
+- **Merchant cash-out** — a recipient can sell BCH to a merchant and receive fiat (in person or via a payment method).
+- **Coordination over Nostr** — encrypted, serverless messages replace the earlier copy-paste/manual steps, with offline QR as a fallback.
+- **Bulletin board** (in progress) — sellers and buyers advertise their terms; discovery is moving onto a Nostr index with an on-chain trust anchor.
 
-**Status:** Android reference implementation under active development, validated on testnet3 with real devices. Preparing for Phase 0 pilot.
+**Next**
+- Bring this documentation in line with what has been validated.
+- Run a small pilot with real users.
+
+*This page describes what has been built. Older design notes and research are kept for transparency; where they differ, this page reflects the current state.*
 
 ---
 

@@ -3,6 +3,8 @@
 
 **The core innovation.** No company, no servers, no permission needed.
 
+> **⚠️ Known limitation (2026-09-16) — discovery under review.** The "query all listings on-chain" step assumed below is **not supported** by our Electrum/Fulcrum server (no category enumeration; only scripthash-scoped queries). The on-chain listing **format and trust model** still stand as the target, but **how clients *find* listings is being reworked** (a Nostr index + on-chain trust anchor is one candidate — under active development).
+
 ---
 
 ## What It Is

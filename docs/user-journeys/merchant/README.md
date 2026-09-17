@@ -444,7 +444,7 @@ Carlos installs wallet → Creates Cash Account → Posts listing
 
 **For rationale, see:**
 - [Why Covenants?](../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design
-- [Why 7% Buffer?](../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md) - Constraint #2: Money Velocity Enabler
+- [Why 7% Buffer?](../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md) - Constraint #2: Value-Guaranteed Delivery
 - [Why Reputation?](../why-this-design/constraints/reputation-based-dispute-resolution-blacklist.md) - Constraint #5: Social Coordination
 
 ---

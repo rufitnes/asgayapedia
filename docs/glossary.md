@@ -10,7 +10,7 @@
 A permissionless peer-to-peer protocol built on Bitcoin Cash, delivered as a wallet designed to make remittances simple and affordable. Its mission is to promote merchant Bitcoin Cash adoption by turning every remittance into an opportunity for circular economy growth. It uses a decentralised bulletin board and covenant smart contracts to connect BCH sellers with senders and merchants with recipients, without any central server or custodian.
 
 ### Bulletin Board
-The decentralised marketplace where BCH sellers and buyers discover each other. All listings (offers to sell or buy BCH) are stored on the Bitcoin Cash blockchain as NFT UTXOs. Anyone can query the bulletin board via Electrum servers; anyone can post a listing by broadcasting a transaction.
+The decentralised marketplace where BCH sellers and buyers discover each other. Listings (offers to sell or buy BCH) are anchored on the Bitcoin Cash blockchain and indexed for discovery; anyone can post a listing without permission. *(How clients enumerate listings is under review — an on-chain category query is not supported by current Electrum servers; a Nostr index with an on-chain trust anchor is one candidate.)*
 
 ### Covenant
 A Bitcoin Cash smart contract that locks BCH and releases it only when specific conditions are met. In Asgaya, covenants are used to coordinate multi‑party remittances: a seller funds a covenant after receiving fiat, and the BCH is released when the recipient (and optionally a merchant) co‑signs.
@@ -133,7 +133,7 @@ The 1 % total system fee is split equally: 0.5 % goes to the BCH seller who 
 The ability of a passive seller to immediately reuse fiat received from a sender to replenish their BCH inventory (via exchange), while the original BCH is still locked in the covenant. Enables small capital to process high transaction volumes.
 
 ### Money Velocity
-The number of times the same capital is turned over per day. High money velocity (enabled by automation and capital recycling) allows a small capital base to serve a large remittance market.
+The number of times the same capital is turned over per day. **Payment-first** enables high money velocity — the seller is paid before funding, so the fiat can replenish BCH immediately — letting a small capital base serve a large remittance market.
 
 ### Progressive Decentralisation
 The phased approach from a curated Phase 0 (trusted sellers, coordinator‑vetted merchants) to a fully permissionless Phase 3 (bonded, reputation‑based, on‑chain enforcement). Decentralisation is delayed until the model is proven.

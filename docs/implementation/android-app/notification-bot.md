@@ -343,6 +343,8 @@ function extractCashAccount(reference):
 
 **What:** Find unfunded covenant where recipient = Elena#142
 
+> **⚠️ Illustrative pseudocode:** the `electrumQuery(...)` method names below are **placeholders**, not real Electrum RPC methods (there is no `blockchain.covenant.list_by_recipient`; covenants cannot be enumerated that way). *(2026-09-16 — same class as the bulletin-board limitation.)*
+
 **Pseudocode:**
 ```
 function findCovenantByRecipient(cash_account):

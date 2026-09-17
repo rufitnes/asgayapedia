@@ -82,12 +82,12 @@
 **7% Volatility Buffer:**
 - Payday concentration tests the limit (1.7 tx/hour per seller during peak)
 - Buffer must hold during high-volume volatility spikes
-- 7% enables fast capital recycling even during stress
+- Payment-first enables the recycling; the 7% buffer keeps it safe even during stress
 
-**Money Velocity:**
+**Money Velocity (enabled by payment-first):**
 - €500K monthly = €300K first weekend (60% concentration)
 - 10 sellers × €500 = €5K must handle €30K weekend
-- Requires fast recycling (buffer returns quickly on settle/abort)
+- Requires payment-first + fast recycling (buffer returns quickly on settle/abort)
 
 ---
 
@@ -122,4 +122,4 @@
 ---
 
 **Referenced in:**
-- [7% Volatility Buffer: Money Velocity Enabler](../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md)
+- [7% Volatility Buffer: Value-Guaranteed Delivery](../../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md)

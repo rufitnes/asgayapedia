@@ -318,7 +318,7 @@ A trader is someone who operates as BOTH buyer and seller, earning fees by provi
 - [Notification Bot](../../implementation/android-app/notification-bot/README.md) - Bank payment detection, auto-matching
 
 **For rationale, see:**
-- [Why 7% Buffer?](../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md) - Constraint #2: Money Velocity Enabler
+- [Why 7% Buffer?](../../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md) - Constraint #2: Value-Guaranteed Delivery
 - [Why Payment-First?](../../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design (seller gets fiat before locking BCH)
 - [Why Cash Accounts?](../../why-this-design/constraints/cash-accounts-permissionless-identity-layer.md) - Constraint #3: Permissionless Identity
 

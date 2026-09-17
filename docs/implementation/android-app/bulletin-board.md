@@ -1,6 +1,6 @@
 # Bulletin Board Component
 
-**Purpose:** Query Electrum for NFT listings, parse metadata, filter by currency/amount, cache results
+**Purpose:** Discover listings, parse metadata, filter by currency/amount, cache results *(discovery mechanism under review — see the limitation note below)*
 
 **Complexity:** Low - Simple Electrum queries + JSON parsing
 
@@ -18,6 +18,8 @@
 > **Implementation status (2026-09-16):** 🟡 **Mock board in use; on-chain board pending.** The app ships a **mock bulletin board** that drives discovery end-to-end for both legs (sender→seller and recipient→merchant) while the on-chain NFT board is built. The real board drops in by changing only the **listing source**.
 > 
 > **Status:** Design complete; mock validated in the app. On-chain implementation pending (Phase 0 target).
+> 
+> **⚠️ Known limitation (2026-09-16) — discovery under review:** our Electrum/Fulcrum server **cannot enumerate listings by token category** — there is no `blockchain.nft.list_category` (verified: unsupported); only scripthash-scoped queries work. So the "query all Asgaya listings" step below **cannot be built as written**. Discovery is being reworked (a **Nostr index + on-chain trust anchor** is one candidate — under active development). Treat the query mechanics below as the **intended** design, not the shipped one.
 
 ---
 

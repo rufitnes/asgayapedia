@@ -53,8 +53,8 @@
 
 | # | Feature | Status | Source | Notes |
 |---|---------|--------|--------|-------|
-|  | Bulletin board (on-chain NFT listings) | 🔨 Planned | android-app/README, bulletin-board.md | Electrum NFT queries; design complete; not load-bearing until multiple real counterparties |
-|  | Nostr coordination (NIP-17 encrypted DMs) | 🎯 **NEXT** | android-app/README, nostr.md | Replace Telegram; public relays work on cell data; minimal client via OkHttp + NIP-44 + NIP-17 gift-wrap (no offline-dep blocker) |
+|  | Bulletin board (listing discovery) | 🔨 Planned | android-app/README, bulletin-board.md | Design complete; **discovery mechanism under review** — on-chain category query not supported by current Fulcrum; Nostr index + on-chain anchor is a candidate |
+|  | Nostr coordination (NIP-17 encrypted DMs) | ✅ **Working** | android-app/README, nostr.md | Primary coordination transport; NIP-44 + NIP-17 gift-wrap; E2E on real devices (Telegram = test, QR = offline fallback) |
 |  | Hardcoded test seller / merchant (no bulletin board yet) | ✅ | seller-auto-funding | Phase 0 test pattern |
 
 ### Core infra (done or nearly)

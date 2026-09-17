@@ -32,10 +32,10 @@
 - 8-hour Phase 0 window likely: 0.8-1.2% abort rate (between 4h and 24h)
 - Trade-off: Longer windows = better UX but higher abort risk
 
-**Money Velocity:**
-- Fast capital recycling requires short windows
-- 99.45% success means buffer rarely consumed
-- Failed transactions return capital quickly (abort within hours)
+**Money Velocity (enabled by payment-first):**
+- The seller is paid before funding → fiat replenishes BCH and funds the next covenant right away
+- The buffer matters indirectly: 99.45% success and quick aborts (within hours) mean recycling isn't blocked
+- Shorter claim windows speed recycling but raise abort risk (trade-off)
 
 ---
 
@@ -63,4 +63,4 @@
 ---
 
 **Referenced in:**
-- [7% Volatility Buffer: Money Velocity Enabler](../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md)
+- [7% Volatility Buffer: Value-Guaranteed Delivery](../../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md)

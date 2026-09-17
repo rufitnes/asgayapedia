@@ -45,8 +45,8 @@
   - See [merchant-cashout-flow.md](android-app/merchant-cashout-flow.md)
 
 **In Progress:**
-- ⏳ **Nostr coordination** - Encrypted DM transport to replace Telegram copy-paste (next milestone; see [nostr.md](android-app/nostr.md))
-- ⏳ **On-chain bulletin board** - NFT listings via Electrum (discovery layer; Phase-0 beta)
+- ✅ **Nostr coordination** - Encrypted DM transport (NIP-17) is now the **primary** coordination channel (Telegram = test, QR = offline fallback); implemented — see [nostr.md](android-app/nostr.md)
+- ⏳ **Bulletin board** - listing discovery; design complete, **discovery mechanism under review** (on-chain category query is not supported by current Fulcrum)
 - ⏳ **Multi-Covenant Batching** - Claim multiple covenants in one transaction
 - ⏳ **Move covenant UTXO fetch to Kotlin** - REFUND/CLAIM/ABORT still use brief WebSocket for `contract.getUtxos()`; moving to Kotlin makes WebView 100% network-free (Phase 1 enhancement)
 
@@ -66,7 +66,7 @@
 - Wallet balance fixes: connect timeout for unreachable servers; stale-result guard; refresh on resume
 - Complete documentation (funder principle, claim flow, version history, merchant cashout flow)
 
-**Next Milestone:** Nostr coordination (replaces Telegram) → bulletin board (on-chain NFT listings) → real oracle price feed (Kraken).
+**Next Milestone:** Bulletin board (listing discovery — mechanism under review) → real oracle price feed (Kraken).
 
 ---
 

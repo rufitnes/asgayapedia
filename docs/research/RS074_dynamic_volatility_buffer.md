@@ -452,7 +452,7 @@ Daily volume: €235/day (+9%)
 
 ## Related Documents
 
-- [7% Volatility Buffer: Money Velocity Enabler](../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md)
+- [7% Volatility Buffer: Value-Guaranteed Delivery](../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md)
 - [Covenant Wallet Mechanism](../the-mechanism/wallet/README.md)
 - [RS039: Temporal Market Impact](RS039_temporal_market_impact.md) - Related volatility analysis
 

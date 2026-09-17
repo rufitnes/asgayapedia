@@ -512,6 +512,8 @@ function resolveCashAccount(cash_account):
     return cached.address
   
   // Query blockchain
+  // ⚠️ Illustrative: `blockchain.transaction.get_cash_account` is a placeholder, not a real Electrum method.
+  //    (Note: `blockchain.utxo.get_info`, used later, IS a real Fulcrum method — it takes [txid, vout].)
   name, number = parseCashAccount(cash_account)  // "Elena#142" → "Elena", 142
   
   tx = electrumQuery("blockchain.transaction.get_cash_account", {
@@ -671,6 +673,7 @@ Funded → Spent via refund (sender refunds - permissionless, anytime)
 ```kotlin
 fun getCovenantClientState(covenant_id, created_at, expiry_time, initial_price):
   // Query blockchain for covenant UTXO
+  // ⚠️ `blockchain.utxo.get_info` is a real Fulcrum method; the real call takes [txid, vout] (simplified here).
   utxo = electrumQuery("blockchain.utxo.get_info", covenant_id)
   
   if not utxo:
@@ -1262,7 +1265,7 @@ if covenant.expiry - now() < 1_hour:
 **Used by:**
 - [Asgaya Trinity](./asgaya-trinity.md) - 3-part covenant architecture (create, send, claim)
 - [bulletin-board.md](bulletin-board.md) - Create listing NFTs (Phase 1+)
-- [nostr.md](nostr.md) - Sign messages with wallet keys (Phase 1+)
+- [nostr.md](nostr.md) - Coordinated delivery over Nostr (NIP-17; Phase 0 — implemented)
 - [notification-bot.md](notification-bot.md) - Auto-fund covenants (Phase 1+)
 
 ---

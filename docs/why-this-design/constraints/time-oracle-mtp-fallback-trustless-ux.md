@@ -562,7 +562,7 @@ Should covenant accept 30-minute-old oracle data?
 - [Phase 2 Covenant Testing (2026-07-21)](../../../knowledge/meta/project_blog/2026-07-21_phase0-phase2-covenant-testing.md) - MTP time lock validation
 
 **Design Context:**
-- [7% Volatility Buffer](7%-volatility-buffer-money-velocity-enabler.md) - Why 7% buffer exists
+- [7% Volatility Buffer](7%-volatility-buffer-value-guaranteed-delivery.md) - Why 7% buffer exists
 - [Progressive Payment Rollout](progressive-payment-rollout.md) - How covenant parameters evolve over phases
 
 **Research:**

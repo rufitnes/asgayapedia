@@ -465,7 +465,7 @@ Many assume "buffer returns to seller" means Isabel gets €7 extra profit. **Th
 
 **Related:**
 - [Trader User Journey](README.md) - How passive sellers use Asgaya day-to-day
-- [Constraint #2: 7% Volatility Buffer](../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md) - Why 7%?
+- [Constraint #2: 7% Volatility Buffer](../../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md) - Why 7%?
 - [Stability Layer](../../the-mechanism/stability-layer/README.md) - H€/HAu tokens for merchants
 ---
 

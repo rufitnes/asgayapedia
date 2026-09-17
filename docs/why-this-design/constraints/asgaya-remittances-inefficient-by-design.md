@@ -35,6 +35,17 @@ Traditional escrow held client fiat → triggered custody regulation (MiCA/PSD2)
 
 ---
 
+## Money Velocity: Payment-First Pays Off Beyond Compliance
+
+Payment-first is not only what avoids custody — it is the **capital-velocity** enabler. Because the seller is paid **before** funding, the fiat is already in hand when the covenant is created, so the capital to fund the **next** covenant is available **right away**. A small BCH inventory can therefore serve many remittances in a single day — the property that makes the model viable at scale (the full capacity math lives with the [7% buffer](./7%-volatility-buffer-value-guaranteed-delivery.md#the-money-velocity-insight)).
+
+The **two-step settlement** (recipient + merchant co-sign) does two jobs at once:
+
+1. it lets the **recipient and the merchant** transact safely (in-person verification), and
+2. it **settles the sender ↔ BCH-seller transaction** — the seller has been paid and the covenant is funded; only the BCH price is left, and that is fixed later by the recipient (see the [7% buffer](./7%-volatility-buffer-value-guaranteed-delivery.md)).
+
+---
+
 ## Why This Choice
 
 This inefficiency is **intentional.** We're betting recipients accept the friction because:
@@ -145,7 +156,7 @@ Sender → Pays Bizum → Seller receives fiat → Seller locks BCH → Covenant
 - [Requirements: Compliance](../requirements/README.md#2-compliance)
 - [Stability Layer: H€/HAu Tokens](../../the-mechanism/stability-layer/README.md) (sender protection on abort)
 - [Pull System: Two-Step Settlement](../../the-mechanism/README.md) (why payment-first avoids custody)
-- [7% Volatility Buffer](./7%-volatility-buffer-money-velocity-enabler.md) (the buffer economics behind the 8-hour window)
+- [7% Volatility Buffer](./7%-volatility-buffer-value-guaranteed-delivery.md) (the buffer economics behind the 8-hour window)
 - [Time Oracle + MTP Fallback](./time-oracle-mtp-fallback-trustless-ux.md) (refund timing, MTP fallback)
 - [Funder Principle](./funder-principle.md) (buffer goes to the funder, not the sender)
 

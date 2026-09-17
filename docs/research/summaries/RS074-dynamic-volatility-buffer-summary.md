@@ -225,6 +225,6 @@ warning = buffer × 0.43
 ---
 
 **Referenced in:**
-- [7% Volatility Buffer Constraint](../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md)
+- [7% Volatility Buffer Constraint](../../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md)
 - [Covenant Wallet](../../the-mechanism/wallet/README.md)
 - [RS039: Temporal Market Impact](RS039-temporal-market-impact-summary.md)

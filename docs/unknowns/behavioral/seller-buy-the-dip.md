@@ -45,7 +45,7 @@ We have no empirical data on:
 
 ### 2. **BCH Price Stabilization Hypothesis**
 
-**The hypothesis (from `7%-volatility-buffer-money-velocity-enabler.md`):**
+**The hypothesis (from `7%-volatility-buffer-value-guaranteed-delivery.md`):**
 
 At scale (€500K monthly volume), Asgaya becomes 40-60% of weekend BCH market. If sellers systematically buy dips:
 - Price drops → Covenant aborts → Sellers buy BCH → Price stabilizes

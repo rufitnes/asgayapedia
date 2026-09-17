@@ -560,8 +560,10 @@ All scoring data must be on-chain (trustless verification):
 
 **The app calculates scores locally** (not on-chain):
 
+> **⚠️ Discovery mechanism under review (2026-09-16):** `electrum.querySellers(...)` below is **illustrative** — no such on-chain enumeration exists on our stack (see the limitation note in the [bulletin board README](README.md)). The filtering and scoring logic is correct; only the *source* of the seller list is being reworked.
+
 ```javascript
-// 1. Query on-chain bulletin board (Electrum)
+// 1. Query the bulletin board index for candidate sellers (mechanism under review)
 const sellers = await electrum.querySellers({ 
   payment_methods: ["bizum"],
   mode: ["seller"]

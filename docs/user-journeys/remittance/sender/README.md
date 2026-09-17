@@ -344,7 +344,7 @@ When BCH drops 3%, both Elena and María get notifications with urgency based on
 **For rationale, see:**
 - [Why Payment-First?](../../../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design
 - [Why Cash Accounts?](../../../why-this-design/constraints/cash-accounts-permissionless-identity-layer.md) - Constraint #3: Permissionless Identity
-- [Why 7% Buffer?](../../../why-this-design/constraints/7%-volatility-buffer-money-velocity-enabler.md) - Constraint #2: Money Velocity Enabler
+- [Why 7% Buffer?](../../../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md) - Constraint #2: Value-Guaranteed Delivery
 - [Dispute Resolution](../../../the-mechanism/nostr-coordination/dispute-resolution.md) - Payment-first risk model explained
 
 ---

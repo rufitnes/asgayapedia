@@ -286,6 +286,8 @@ Created → Funded → Claimed (success path)
 
 ### State Transitions
 
+> **⚠️ Illustrative pseudocode (2026-09-16):** the `electrumQuery(...)` method names in this document are **placeholders**, not real Electrum RPC methods (e.g. there is no `blockchain.covenant.get_status`).
+
 **Pseudocode:**
 ```
 function trackCovenantState(covenant_id):

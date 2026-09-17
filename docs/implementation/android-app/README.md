@@ -148,8 +148,8 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 
 ### Phase 0+ / Phase 1+ (Future)
 
-9. **[bulletin-board.md](bulletin-board.md)** — Electrum NFT queries, listing discovery, seller/merchant matching
-10. **[nostr.md](nostr.md)** — Relay management, NIP-44 encrypted DMs, payment coordination
+9. **[bulletin-board.md](bulletin-board.md)** — listing discovery & seller/merchant matching *(on-chain query mechanism under review — see the doc's limitation note)*
+10. **[nostr.md](nostr.md)** — ✅ **Implemented (Phase 0):** relay management, NIP-17 gift-wrapped DMs, payment coordination
 11. **[stability-layer.md](stability-layer.md)** — H€/HAu token detection, AnyHedge integration, merchant retention hook
 12. **[offline-first.md](offline-first.md)** — Offline queue, cache strategies, sync patterns
 

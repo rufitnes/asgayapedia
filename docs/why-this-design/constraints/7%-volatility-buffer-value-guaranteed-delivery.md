@@ -1,8 +1,10 @@
-# The 7% Volatility Buffer: Money Velocity Enabler
+# The 7% Volatility Buffer: Value-Guaranteed Delivery
 
 **The Constraint:** Capital efficiency vs risk coverage
 
-**The Real Question:** Not just "how do we protect individual transactions?" but "how much volume can small capital move?"
+**The Real Question:** How do we fix the **value** delivered — without fixing the BCH price up front?
+
+> **What the buffer enables is value-guaranteed delivery.** By **deferring price discovery** to when the recipient claims (or the covenant expires or refunds), the fiat value is guaranteed while the BCH price is settled later. Money **velocity** comes from **payment-first** ([constraint 1](./asgaya-remittances-inefficient-by-design.md)); the two are intimately related.
 
 ---
 
@@ -41,9 +43,9 @@ BCH volatility is the price we pay for censorship resistance and zero intermedia
 
 ---
 
-## The Money Velocity Insight
+## Money Velocity: A Consequence of Payment-First
 
-**This isn't just about protecting transactions. It's about enabling capacity.**
+**This section is about capacity — but the enabler is payment-first, not the buffer** ([constraint 1](./asgaya-remittances-inefficient-by-design.md)). The buffer's own job is **value-guaranteed delivery** (below).
 
 ### The Math: How €5K Moves €450K
 
@@ -52,7 +54,7 @@ BCH volatility is the price we pay for censorship resistance and zero intermedia
 
 **Payment-first enables this:** Seller receives fiat before funding, locks €107 BCH (€100 face + €7 buffer), recipient claims within 8 hours. Merchant gets €100 of BCH; €7 buffer returns to seller. Seller recycles €100 fiat → next transaction. Minutes between payment and funding; hours until claim (median 2-4h). Buffer rarely consumed (99.45% success). Failed transactions return capital quickly.
 
-**Without fast recycling, this math doesn't work.** 7% protects transactions while preserving velocity.
+**Without payment-first — and the fast recycling it enables — this math doesn't work.** The buffer protects each transaction while the capital recycles.
 
 **Note:** If median claim time is shorter (2-4 hours as Phase 0 hypothesizes), cycles increase to 4-6 per day, improving capacity to €600K-€900K monthly. The 8-hour window is conservative.
 
@@ -106,7 +108,7 @@ BCH volatility is the price we pay for censorship resistance and zero intermedia
 1. **Sellers profit** - Buy low liquidity, sell high demand, replenish low
 2. **BCH stabilizes** - No weekend demand shock, smooth price action
 
-**The 7% buffer enables this:** Fast capital recycling allows sellers to accumulate reserves during low-demand periods and deploy during peaks without breaking.
+**Payment-first enables this:** Fast capital recycling allows sellers to accumulate reserves during low-demand periods and deploy during peaks without breaking.
 
 ---
 
@@ -198,20 +200,19 @@ buffer = max(
 
 ## The Real Constraint
 
-**The 7% buffer isn't about protecting individual transactions. It's about enabling small capital to move large volume.**
+**The buffer isn't about moving volume — it's about guaranteeing value.** Capacity (money velocity) comes from payment-first; the buffer is what makes **deferred settlement** safe.
 
-**Without fast capital recycling:**
-- Need 10x more sellers OR 10x more capital per seller
-- €5K can't move €450K
-- Can't handle payday concentration
+By **deferring price discovery** — to the recipient's `claim()` (at some point in the future), to `expiry()` (~8 hours), or to `refund()` — Asgaya guarantees the **fiat value** without fixing the BCH price up front:
 
-**With 7% buffer:**
-- Small capital moves large volume (90x leverage)
-- Payday surges handled without breaking
-- At scale, we control BCH weekend markets
-- Sellers profit from foreknowledge arbitrage while stabilizing prices
+- the funder (the BCH seller) has **already been paid**;
+- when the covenant UTXO is split, the funder gets back **whatever is left of the buffer**;
+- the 7% is what makes funding that deferred settlement safe — the price risk sits in the buffer, not in the delivered value.
 
-**The constraint we're optimizing:** Not "how do we protect against volatility?" but "how do we transform volatility into opportunity while preserving capacity?"
+**Without the buffer:** a price drop between funding and claim would leave the delivered value short — the value guarantee would break.
+
+**With the 7% buffer:** value-guaranteed delivery holds through ordinary volatility, and the residual buffer returns to the funder.
+
+**The constraint we're optimizing:** not "how do we move the most volume?" (payment-first's job) but "how large must the buffer be to guarantee value while keeping capital free?"
 
 **7% is the answer. Probably.**
 

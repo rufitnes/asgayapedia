@@ -621,14 +621,14 @@ delay(5000) // TCP cooldown - documented workaround
 
 **Different use cases may need different UX!**
 
-### With Nostr Integration (Phase 1+)
+### With Nostr Coordination (Phase 0 — implemented)
 
-**Nostr coordination layer enables:**
-- Notifications when recipient claims (Nostr event, not blockchain polling)
-- Parameter sharing via DM (still user-initiated, but smoother than copy-paste)
-- Discovery (find sellers/recipients without bulletin board)
+**The Nostr coordination layer enables:**
+- Notifications when the counterparty claims or quotes (a Nostr message, not blockchain polling)
+- Parameter sharing via DM (encrypted, no copy-paste)
+- Discovery of counterparties without a central server
 
-**Still manual-first:** User initiates Nostr DM, not automatic background syncing.
+**Still manual-first:** the user initiates the action; Nostr carries the message, it doesn't silently sync in the background.
 
 ### Mobile-First Constraints
 

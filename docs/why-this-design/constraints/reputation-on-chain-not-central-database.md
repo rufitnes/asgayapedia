@@ -165,8 +165,11 @@ if (payment_details_match(Alice, Bob)) {
 Carlos opens the app and enters €200. In the background, the app queries the blockchain: "Show sellers accepting Bizum, in Caracas, with capacity ≥€200, fee ≤1%, completion rate ≥90%, active in the last 24 hours." Results load by the time Carlos taps "Find sellers."
 
 **The query in detail:**
+
+> **⚠️ Illustrative pseudocode (2026-09-16):** there is no on-chain `querySellers` / category enumeration on our stack — this shows the *intended* discovery query. The reputation fields it filters on are real and verified on-chain (see below).
+
 ```javascript
-// Carlos's app queries blockchain in the background
+// Carlos's app queries the listing index in the background
 // (payment method from settings, location auto-detected, amount typed: €200)
 const sellers = await blockchain.querySellers({
   mode: ["seller"],
@@ -185,7 +188,7 @@ const sellers = await blockchain.querySellers({
 
 **UX note:** The query happens seamlessly while Carlos types the amount. By the time he taps "Find sellers," results are already loaded. If he changes payment method in settings, the app re-queries instantly.
 
-**Phase 1+ optimization:** Nostr relays may cache the bulletin board (updated hourly) for faster queries, falling back to blockchain for trustless verification.
+**Discovery vs trust:** listings are *found* via an index (Nostr is the leading candidate) while **reputation is verified on-chain** — the trust anchor stays trustless even if the index is not. *(Discovery mechanism under review, 2026-09-16.)*
 
 **Step 2: Check Nostr for real-time details**
 ```javascript
