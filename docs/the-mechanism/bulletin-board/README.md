@@ -3,7 +3,7 @@
 
 **The core innovation.** No company, no servers, no permission needed.
 
-> **⚠️ Known limitation (2026-09-16) — discovery under review.** The "query all listings on-chain" step assumed below is **not supported** by our Electrum/Fulcrum server (no category enumeration; only scripthash-scoped queries). The on-chain listing **format and trust model** still stand as the target, but **how clients *find* listings is being reworked** (a Nostr index + on-chain trust anchor is one candidate — under active development).
+> **✅ Updated (2026-09-21) — Phase-0 discovery is Nostr.** The "query all listings on-chain" step assumed below is **not supported** by our Electrum/Fulcrum server (no category enumeration). So Phase 0 finds listings via **Nostr (NIP-99 — signed events, cached locally)**. The on-chain anchor is **planned (Phase 0+)**: it makes listings censorship-resistant and enumerable on-chain, but is **not required** to discover them today.
 
 ---
 
@@ -17,7 +17,7 @@ Anyone can post. Anyone can read. No one can censor it.
 
 ## Two Listing Types (Only Two)
 
-Every participant is either a **BCH Seller** (has BCH, wants fiat) or a **BCH Buyer** (has fiat, wants BCH). Everything else is just payment method variations.
+Every participant is either a **BCH Seller** (has BCH, wants fiat) or a **BCH Buyer** (has an asset, wants BCH). Everything else — the asset, the payment rail — is a field. *(The buyer side generalizes over time: fiat today, then H€/HAu and other assets, Phase 0+.)*
 
 ### BCH Sellers: "I Have BCH, I'll Lock It for Your Remittance"
 
@@ -39,8 +39,8 @@ When a recipient visits the merchant, they hand over the claim, receive cash, an
 
 | Feature | LocalBitcoins / Binance P2P | Asgaya Bulletin Board |
 |---------|----------------------------|----------------------|
-| **Storage** | Central database (company servers) | On-chain NFTs (blockchain) |
-| **Discovery** | Website API (single point of failure) | Electrum queries (any node) |
+| **Storage** | Central database (company servers) | Signed Nostr listings — no server; on-chain anchor (Phase 0+) |
+| **Discovery** | Website API (single point of failure) | Any client reads the same open listings (any relay/index) |
 | **Censorship** | Platform can ban you | Permissionless |
 | **Trust** | Platform escrow (custody risk) | Covenants (non-custodial) |
 | **Regulation** | Platform liable (KYC required) | No intermediary (MiCA compliant) |
@@ -54,30 +54,27 @@ There's no company to shut down. LocalBitcoins was ordered to close. The bulleti
 
 ### Posting a Listing
 
-The app creates a Bitcoin Cash transaction with an NFT UTXO:
+The app publishes a **signed Nostr event** (NIP-99, `kind:30402`) — an addressable listing carrying the offer (ad type, asset, payment methods, fee, buffer, limits, location) and the poster's BCH pubkey + `npub`. It is **replaceable**: republishing with the same id updates it.
 
-- **Category:** `ASGAYA_SELLER_V1` or `ASGAYA_BUYER_V1`
-- **Commitment:** Listing details (payment methods, fee, contact)
-- **Value:** 0.001 BCH (~€0.50) anti-spam deposit (reclaimed when you remove the listing)
-- **Covenant:** Rules for updating or removing
-
-Broadcast it. Confirmed in ~10 minutes. Now it's live.
+No transaction, no fee — live in seconds.
 
 ### Finding a Listing
 
-The app queries an Electrum node for UTXOs with the relevant NFT category, filtered by payment method and corridor. No API. No website. Just standard blockchain queries that any Bitcoin Cash wallet can do.
+Each device keeps a **local cache** of the listings it sees on its relays (one subscription, filtered by the `asgaya-board` tag), then **filters and ranks client-side**. No API, no website — any client can read the same open events.
 
 ### Updating or Removing
 
-Spend the old listing UTXO (reclaim your 0.001 BCH), create a new one with updated details. Old listing vanishes, new one appears. To pause, spend the UTXO and don't recreate it.
+Republish the same listing id with new details → relays replace the old version. Set the listing's status to *paused* to hide it; delete to remove it.
+
+> **On-chain anchor (planned, Phase 0+):** the *discovery-critical* fields (identity, asset, payment method) will also live in a per-seller BCH NFT, so a listing survives relay censorship and can one day be enumerated directly on-chain. Until then, **Nostr is the Phase-0 discovery layer**.
 
 ---
 
 ## Anti-Spam: An Unknown We're Testing
 
-**Phase 0 baseline:** Every listing UTXO must contain ≥ 0.001 BCH (~€0.50). To spam with 1,000 fake listings costs €500. You reclaim the deposit when you remove the listing (minus ~€0.002 transaction fee).
+**Phase 0 (Nostr):** listings are free to publish, so spam is handled **client-side** (validity checks + pruning) and by relay policy. The **on-chain 0.001 BCH deposit** (~€0.50) returns with the **Phase-0+ anchor**, where faking a listing at scale gets expensive.
 
-**This is an unknown.** We don't know if this simple economic barrier is sufficient, or if we need additional measures like listing limits per account, device fingerprinting, or payment method verification. Phase 0 will test whether the 0.001 BCH deposit alone deters spam effectively.
+**This is an unknown.** We don't yet know whether the deposit (or relay policy / listing limits) is enough. Phase 0/0+ will test it.
 
 **See:** [Bulletin Board Anti-Spam Strategies](../../unknowns/bulletin-board-anti-spam.md) for full analysis of alternatives and testing plan.
 
@@ -115,16 +112,16 @@ You receive income in multiple currencies. Post as a BCH Buyer accepting all you
 
 ## Privacy
 
-**Visible on-chain:** Listing type, payment methods, corridor, fee, contact info.  
-**Not on-chain:** Real identity (unless you put it in the contact field), transaction volume, customer details.
+**Published (Phase 0, on Nostr):** listing type, asset, payment methods, fee, and the poster's BCH pubkey + `npub`.  
+**Not published:** real identity (unless you put it in the listing), transaction volume, customer details.
 
-Pseudonymous by default. Merchants reveal location because cash pickup requires it. Online traders need only a CashAccount nickname.
+Pseudonymous by default. Merchants reveal location because cash pickup requires it. Online traders need only a nickname.
 
 ---
 
-## Reputation (Phase 1+)
+## Reputation
 
-Phase 0 uses trusted participants only. Phase 1+ will add on-chain reputation linked to your CashAccount: transaction count, success rate, response time, total volume. Physical merchants get priority because location is reputation at stake—they can't disappear overnight.
+Reputation is **derived from the identity's settlement history** on-chain — the **settled covenants** that touch the identity address: number of trades, completion, average value, recency. It is a **continuity** signal (not self-reported truth). Phase 0 runs on **trusted participants** (weak signal); the full model and **local ranking** arrive with the anchor (Phase 0+). Physical merchants get priority because their location is reputation at stake—they can't disappear overnight.
 
 ---
 

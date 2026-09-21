@@ -117,7 +117,7 @@ function refund(sig senderSig) {
 
 ## The Bitcoin Analogy
 
-**Bitcoin protocol (Layer 1):**
+**Bitcoin (BTC) protocol (Layer 1):**
 - Allows sending to **any address** (valid or not)
 - Allows **any fee** (even 0 sats/byte)
 - Allows **RBF** (replace-by-fee, even to yourself)
@@ -130,6 +130,8 @@ function refund(sig senderSig) {
 **Same pattern:** Protocol is permissionless, wallet is opinionated.
 
 **Result:** Power users can do anything. Normal users get guided UX.
+
+> **⚠️ BCH differs — no RBF (2026-09-21).** Bitcoin Cash has **no Replace-By-Fee**: node policy is **first-seen / no replacement**, deliberately, to keep **0-conf** reliable (backed by **Double-Spend Proofs**, May 2021). A fee-bump on BCH is **CPFP**, not replacement. So the *"hide RBF"* example above is **BTC-specific and does not apply here** — Asgaya's advanced action is the **manual refund** (plus relay/node config), never an RBF button.
 
 ---
 

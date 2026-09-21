@@ -4,6 +4,14 @@
 
 **The Question:** How do users evaluate sellers without a centralized rating database?
 
+> **Update (2026-09-21) — the record is *derived*, not a stats object.** The design moved on from the ~180-byte on-chain stats UTXO shown below:
+> - **Counts, completion, average value and recency are *derived* from the identity's settlement history** (the settled covenants that touch the identity address) — there is **no stats UTXO**, so nothing is written per trade and the "piggyback" burden is gone.
+> - **Trade value is the covenant's *face*** (`eurCents`, revealed when the covenant settles) — not a BCH amount valued at today's price.
+> - A trade is **completed** when the seller was able to **fund** the covenant; **refunds/aborts are not the seller's fault**.
+> - The only per-seller on-chain object (Phase 0+, planned) is a small **listing/anchor NFT** for the *declared* fields (asset, payment methods, fee). The fraud/ranking signals stay **derived**.
+>
+> The trade-off framing and the fraud discussion below still apply — read them with this note.
+
 ---
 
 ## What Constrains Us

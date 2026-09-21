@@ -53,7 +53,7 @@
 
 | # | Feature | Status | Source | Notes |
 |---|---------|--------|--------|-------|
-|  | Bulletin board (listing discovery) | 🔨 Planned | android-app/README, bulletin-board.md | Design complete; **discovery mechanism under review** — on-chain category query not supported by current Fulcrum; Nostr index + on-chain anchor is a candidate |
+|  | Bulletin board (listing discovery) | ✅ **Working** (Phase 0) | android-app/README, bulletin-board.md | **Nostr (NIP-99) discovery shipped** — signed listings cached locally; on-chain anchor = Phase 0+ (category query not supported by current Fulcrum) |
 |  | Nostr coordination (NIP-17 encrypted DMs) | ✅ **Working** | android-app/README, nostr.md | Primary coordination transport; NIP-44 + NIP-17 gift-wrap; E2E on real devices (Telegram = test, QR = offline fallback) |
 |  | Hardcoded test seller / merchant (no bulletin board yet) | ✅ | seller-auto-funding | Phase 0 test pattern |
 
@@ -92,7 +92,7 @@
 |  | Merchant/seller-focused Asgaya client (auto-claim + auto-fund) | Refund-window fix; passive income | (workspace decision) |
 |  | Auto-claim via notification listener (customer flow) | Close refund window in seconds | (workspace decision) |
 |  | Stability layer H€/HAu activation | Merchant need (0+ launch-first per stability-layer.md) | stability-layer.md |
-|  | Reputation system (on-chain reputation UTXO) | Trust for untrusted sellers | reputation-on-chain…md |
+|  | Reputation system (derived from settlement history) | Trust for untrusted sellers | reputation-on-chain…md |
 |  | Seller ranking algorithm | Discovery UX | seller-ranking-algorithm.md |
 |  | Passive mode bot automation | 24/7 liquidity | passive-mode-bot-automation.md |
 |  | Multi-covenant batching | Optimization | android-app/README |

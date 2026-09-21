@@ -10,7 +10,7 @@
 A permissionless peer-to-peer protocol built on Bitcoin Cash, delivered as a wallet designed to make remittances simple and affordable. Its mission is to promote merchant Bitcoin Cash adoption by turning every remittance into an opportunity for circular economy growth. It uses a decentralised bulletin board and covenant smart contracts to connect BCH sellers with senders and merchants with recipients, without any central server or custodian.
 
 ### Bulletin Board
-The decentralised marketplace where BCH sellers and buyers discover each other. Listings (offers to sell or buy BCH) are anchored on the Bitcoin Cash blockchain and indexed for discovery; anyone can post a listing without permission. *(How clients enumerate listings is under review — an on-chain category query is not supported by current Electrum servers; a Nostr index with an on-chain trust anchor is one candidate.)*
+The decentralised marketplace where BCH sellers and buyers discover each other. In Phase 0, listings are **signed Nostr events** (NIP-99) that any client can read and cache; anyone can post without permission. A small **on-chain anchor** (a per-seller NFT carrying the essential fields) is **planned for Phase 0+** — it makes listings censorship-resistant and enumerable on-chain, still with no central server.
 
 ### Covenant
 A Bitcoin Cash smart contract that locks BCH and releases it only when specific conditions are met. In Asgaya, covenants are used to coordinate multi‑party remittances: a seller funds a covenant after receiving fiat, and the BCH is released when the recipient (and optionally a merchant) co‑signs.
@@ -108,7 +108,7 @@ The automation engine running on a passive seller’s device. It intercepts bank
 ## Coordination (Nostr)
 
 ### npub / nsec
-A user's Nostr public key (`npub…`) and private key (`nsec…`). The `npub` is the coordination address others message; in Asgaya it is carried in the bulletin‑board listing as `nostr_pubkey`.
+A user's Nostr public key (`npub…`) and private key (`nsec…`). The `npub` is the coordination address others message; on the bulletin board the listing is **signed by** the poster's `npub`, which is also what verifies the poster's identity.
 
 ### NIP‑17 (gift‑wrapped DMs)
 The private‑messaging standard Asgaya uses. Each message is wrapped in three layers: a kind‑14 **rumor** (the payload, unsigned), a kind‑13 **seal** (encrypted, signed by the sender's real key), and a kind‑1059 **gift‑wrap** (encrypted, signed by a random one‑time key). Replaces the deprecated NIP‑04; NIP‑44 provides the encryption.
@@ -158,16 +158,16 @@ The mechanism by which permissionless access accelerates adoption: anyone can jo
 ## Bitcoin Cash / Technical
 
 ### Electrum Server
-A lightweight Bitcoin Cash server that provides blockchain data (UTXOs, transaction history, covenant state) via a JSON‑RPC interface. Asgaya apps use public Electrum servers to query the bulletin board, monitor covenants, and verify on‑chain state.
+A lightweight Bitcoin Cash server that provides blockchain data (UTXOs, transaction history, covenant state) via a JSON‑RPC interface. Asgaya apps use public Electrum servers to monitor covenants and verify on‑chain state; bulletin-board discovery is **Nostr** in Phase 0.
 
 ### NFT UTXO
-A Bitcoin Cash unspent transaction output that carries a non‑fungible token (CashTokens NFT). In Asgaya, bulletin board listings are NFT UTXOs whose commitment field contains the listing metadata (payment methods, limits, fee, contact info).
+A Bitcoin Cash unspent transaction output that carries a non‑fungible token (CashTokens NFT). In Asgaya, the planned **Phase-0+ on-chain anchor** is an NFT UTXO whose commitment holds the listing's essential fields (identity, asset, payment methods, fee); covenants also use NFTs.
 
 ### OP_RETURN
 A Bitcoin Cash script opcode that allows embedding arbitrary data (up to 223 bytes) in a transaction. Used for Cash Account registrations, payment‑info exchange (encrypted), and on‑chain fallback for Nostr messages.
 
 ### CashTokens
-The native token standard on Bitcoin Cash, enabling both fungible tokens (like H€ and HAu) and non‑fungible tokens (like bulletin board listings and reputation credentials).
+The native token standard on Bitcoin Cash, enabling both fungible tokens (like H€ and HAu) and non‑fungible tokens (like the Phase-0+ listing anchor and covenant credentials).
 
 ### AnyHedge
 A mature (since 2020) Bitcoin Cash protocol for non‑custodial bilateral hedge contracts. Asgaya’s stability layer uses pooled AnyHedge contracts to back H€ and HAu tokens.

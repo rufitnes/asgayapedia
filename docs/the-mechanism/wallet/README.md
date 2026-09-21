@@ -52,7 +52,7 @@ All from **ONE on-chain** identifier. This is why it works without a central coo
 
 The wallet is the foundation for the other three Asgaya components.
 
-- **Bulletin Board:** Your Cash Account is your contact info on listings. Sellers and buyers are found and contacted via Cash Accounts, all on‑chain.
+- **Bulletin Board:** Your Cash Account is your contact info on listings. Sellers and buyers publish signed listings (NIP-99) and are contacted over Nostr; a small on‑chain anchor (Phase 0+) adds censorship-resistance.
 - **Nostr:** Your wallet generates a Nostr key pair. When you select a counterparty, you message them over Nostr—encrypted, peer‑to‑peer, no server.
 - **Notification Bot:** You grant the bot limited wallet access (read‑only balance, sign‑only for specific covenants). It watches for incoming payments and auto‑signs covenants when conditions are met.
 

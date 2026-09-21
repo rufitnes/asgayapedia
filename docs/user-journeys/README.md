@@ -109,7 +109,7 @@ Roberto mines BCH. He sets up the app to sell his mined coins directly to sender
 
 **The Five Gears:**
 1. **Wallet** - Key management, transaction signing
-2. **Bulletin Board** - Discovering counterparties (on-chain NFTs)
+2. **Bulletin Board** - Discovering counterparties (signed Nostr listings; on-chain anchor Phase 0+)
 3. **Nostr** - Private coordination (payment instructions, notifications)
 4. **Covenants** - Trustless settlement (locked BCH, automated execution)
 5. **Stability Layer** - H€/HAu tokens (merchants preserve purchasing power)

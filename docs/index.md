@@ -25,7 +25,7 @@ Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple 
 | Gear | What it does | Documentation |
 |------|--------------|---------------|
 | **⚙️ Wallet** | Hold BCH + establish identity via Cash Accounts | [the-mechanism/wallet](the-mechanism/wallet/README.md) |
-| **⚙️ Bulletin Board** | Discover buyers and sellers via on-chain NFTs | [the-mechanism/bulletin-board](the-mechanism/bulletin-board/README.md) |
+| **⚙️ Bulletin Board** | Discover buyers and sellers (signed Nostr listings; on-chain anchor Phase 0+) | [the-mechanism/bulletin-board](the-mechanism/bulletin-board/README.md) |
 | **⚙️ Nostr** | Coordinate payment details privately + blacklist warnings | [the-mechanism/nostr-coordination](the-mechanism/nostr-coordination/README.md) |
 | **⚙️ Notification Bot** | Automate everything (passive income, 24/7 operation) | [the-mechanism/notification-bot](the-mechanism/notification-bot/README.md) |
 | **⚙️ Stability Layer** | Protect from volatility via H€/HAu tokens | [the-mechanism/stability-layer](the-mechanism/stability-layer/README.md) |
@@ -144,7 +144,7 @@ Asgaya is at **Phase 0**: a working Android reference implementation, validated 
 - **Transfers between Android devices** — a sender funds an on-chain covenant, the recipient claims it, and settlement is automatic. No company ever holds the funds.
 - **Merchant cash-out** — a recipient can sell BCH to a merchant and receive fiat (in person or via a payment method).
 - **Coordination over Nostr** — encrypted, serverless messages replace the earlier copy-paste/manual steps, with offline QR as a fallback.
-- **Bulletin board** (in progress) — sellers and buyers advertise their terms; discovery is moving onto a Nostr index with an on-chain trust anchor.
+- **Bulletin board** — sellers and buyers publish signed listings (NIP-99) that clients cache and filter; the on-chain anchor (censorship-resistance) is planned for Phase 0+.
 
 **Next**
 - Bring this documentation in line with what has been validated.

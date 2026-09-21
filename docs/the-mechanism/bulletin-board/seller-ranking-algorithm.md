@@ -7,6 +7,12 @@
 
 ---
 
+> **Update (2026-09-21) — fee, value & filtering (supersedes parts below).**
+> - **Fee:** the ranking divides by the seller's **declared *current* fee** (carried on the listing), **not** `fee_actual_last_tx`. The **sender enforces** it — before paying, the client blocks a quote that exceeds the listing's fee. *(An on-chain copy of the fee arrives with the Phase-0+ anchor.)*
+> - **Trade value (`avg_value_eur`):** read from the **covenant's face** (`eurCents`, revealed when the covenant settles) — **not** a BCH amount valued at today's price (that would inflate old trades; "the pizza problem").
+> - **Payment method is the filter:** a recipient who picks *"Cash in person"* sees only the ads that buy BCH for cash.
+> - **Completion filter:** see the note under Step 1 — a *completed* trade is one the seller was able to **fund**; **refunds/aborts are not the seller's fault**.
+
 ## The Problem
 
 When María wants to send €100 to Elena, the bulletin board returns 50+ sellers who accept Bizum. How do we rank them so the best seller appears first?
@@ -41,7 +47,7 @@ const qualified = sellers.filter(s =>
 
 **Why these filters:**
 - **50+ transactions:** Prevents newcomers from gaming ranking with self-dealing
-- **85%+ completion:** Filters out scammers and unreliable sellers
+- **85%+ completion:** Intended to filter scammers and unreliable sellers — **⚠️ redefined (2026-09-21):** on-chain, every *settled* covenant means the seller **funded and honored** their side, so a raw `completed/total` rate is **vacuous** (and penalizes honest sellers for **refunds/aborts** they don't control). Rank the seller on **volume / distinct counterparties / longevity**; treat the **outcome mix** (`refund`/`abort` vs `claim`) as a fraud *signal*, not a quality gate.
 - **0.3-2.0% fee range:** Prevents race-to-bottom gaming AND predatory pricing
 - **24h activity:** Ensures seller is actually online and monitoring their bot
 - **Transaction bracket:** Don't show sellers who can't handle this amount

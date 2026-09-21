@@ -90,7 +90,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | **Seller auto-funding (cash-in-person)** | ✅ **E2E-proven** | Sender creates unfunded (funderPubkey=seller) → seller verifies funderPubkey → confirms cash in Trade tab → funds. 4-device E2E Sep 8 |
 | **Refund (funder≠sender)** | ✅ **E2E-proven** | Sender refunds seller-funded covenant; buffer → seller automatically (Sep 8) |
 | **Nostr coordination (DM)** | 🎯 NEXT | Replace Telegram; minimal client via OkHttp + NIP-44 (works on cell data) |
-| **Bulletin board** | 🔨 Planned | On-chain NFT discovery; not load-bearing until multiple real counterparties (Phase-0 beta) |
+| **Bulletin board** | ✅ Working (Phase 0) | Nostr (NIP-99) discovery — signed listings cached locally; on-chain anchor = Phase 0+ |
 | **Cash Accounts** | 🔨 MVP REQUIRED | Register/resolve `Elena#142`; match key for seller auto-funding Bizum concept field (interface to legacy payment system) |
 | **Merchant cash-out flow** | ✅ DONE on-chain | Merchant-first, TXID `05301369...` (Sep 1, 2026); merchant role needs no Telegram (QR/paste, tablet-tested) |
 | **First BCH seller (Suso)** | 🔨 Needed | MVP validation requires real seller |
