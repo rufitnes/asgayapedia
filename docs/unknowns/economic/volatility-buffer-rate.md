@@ -5,6 +5,8 @@
 **Last Updated:** 2026-05-29  
 **Contributors Welcome:** Yes
 
+> **Note (2026-10-01):** the current **Phase-0 covenant window is 8 h**, not 24 h (as some text below assumes). See the **Dynamic Buffer** note below for the downward-only direction.
+
 ## What We Don't Know
 
 Is the 7% volatility buffer rate sufficient to protect BCH sellers from price volatility during the covenant settlement window?

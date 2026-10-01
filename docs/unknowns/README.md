@@ -50,6 +50,7 @@ Infrastructure assumptions that need validation:
 - [SMS Delivery (Venezuela)](technical/sms-delivery-venezuela.md) — Latency and reliability
 - [BCH Confirmation Reliability](technical/bch-confirmation-reliability.md) — 0-conf success rate
 - [DolarAPI Accuracy](technical/dolarapi-accuracy.md) — Rate feed accuracy and uptime
+- [Payment Timing (per method)](technical/payment-timing-per-method.md) — Sender pay time + bank notification latency, per method (the fund-request pay-by window)
 
 ### 🌍 Market Unknowns
 Demand and adoption signals:

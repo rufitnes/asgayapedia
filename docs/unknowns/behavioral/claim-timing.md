@@ -7,6 +7,8 @@
 
 ---
 
+> **Note (2026-10-01):** the current **Phase-0 covenant window is 8 h** (`expiryOracleTime = oracle_ts + 8h`), **not 24 h** — the 24 h figures below are the *original hypothesis*; the window is a **parameter** to be re-set from this data.
+
 ## What We Don't Know
 
 **How quickly do remittance recipients claim their funds after being notified?**
@@ -18,7 +20,7 @@ We have no empirical data on:
 - Difference between first-time vs. repeat users
 - Geographic/cultural variations (Spain→Venezuela vs. other corridors)
 
-**Current design assumes:** Recipients will claim within 24 hours (covenant expiry window).
+**Current design assumes:** Recipients will claim within **8 hours** (the Phase-0 covenant window — a parameter, set from this data).
 
 **Reality unknown:** Do recipients claim in 30 minutes? 3 hours? 18 hours? Is the distribution bimodal (urgent vs. casual)?
 

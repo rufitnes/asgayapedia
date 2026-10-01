@@ -8,6 +8,8 @@
 
 ---
 
+> **Note (2026-10-01):** the current **Phase-0 covenant window is 8 h**; the "24 h" baselines below are the original proposal's assumptions.
+
 ## What We Don't Know
 
 Should the volatility buffer rate be **fixed** (7% for 24 hours) or **variable** (seller sets hourly rate, sender chooses timeout)?

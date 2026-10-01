@@ -7,6 +7,8 @@
 
 ---
 
+> **Note (2026-10-01):** this is the **stability-layer `H€`/`HAu` AnyHedge contract** renewal period — **not** the remittance covenant claim window (which is **8 h**). Keep the two distinct.
+
 ## What We Don't Know
 
 **How long should AnyHedge contracts for H€/HAu tokens last before renewal?**

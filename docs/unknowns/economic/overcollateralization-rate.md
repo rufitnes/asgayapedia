@@ -7,6 +7,8 @@
 
 ---
 
+> **Note (2026-10-01):** the current **Phase-0 covenant window is 8 h**; the 2 h / 6 h / 12 h / 24 h table below is exploratory — the **8 h** case is the live one.
+
 ## What We Don't Know
 
 **What volatility buffer ratio protects merchants from volatility while remaining attractive to sellers?**
