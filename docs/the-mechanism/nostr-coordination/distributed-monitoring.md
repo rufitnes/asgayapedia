@@ -169,6 +169,8 @@ const vwap = trustedTrades.reduce((acc, t) =>
 - **The spend reveals the EUR half** (`eurCents`) **and the oracle message** (`timestamp ‖ price`).
 - **Together they price the trade — for free.** No OP_RETURN, no extra output, no extra fee. *(This supersedes the `eur_amount // OP_RETURN` sketch in §Step 3 — v2.6 carries no such output. The spend is what unlocks the meaning of the funding.)*
 
+**The split is the clean number — no math.** Funding is the *unreliable* half: the seller locks ~**107 %** of the face (the buffer is baked in), so the funding amount can't be read as a price. The **settlement separates the trade from the buffer**: `output[0]` = the BCH actually delivered for the EUR face, `output[1]` = the buffer/remainder back to the funder. And `eurCents` (revealed in the script) is the **fee-excluded** EUR notional — the seller's fee lives **off-chain** (in the fiat payment), so it never muddies the on-chain number. The effective price is then simply **`eurCents / output[0]`** — the covenant computes it for us. The revealed script also carries **`initialBchPriceInCents`** (the quote the parties agreed at creation), so a settlement records **both the agreed quote and the delivered amount**.
+
 **Any outcome is a valid signal.** The gate to a price is a real fiat↔BCH settlement, and every path is one:
 
 | Path | What actually happened | How to read it |
@@ -181,7 +183,7 @@ const vwap = trustedTrades.reduce((acc, t) =>
 **Weight *voluntary delivery*, not "number of witnesses".** A `claim`/`cashout` is worth more because someone **chose the price** — not because more parties signed (they all sign the *same covenant terms*, so they cannot attest a different number). Treat `claim`/`merchantCashout` as first-class signals; `refund`/`abort` as second-class (real, but forced).
 
 **Two caveats for whoever builds it:**
-- **Circularity:** on the oracle paths the price in the witness is the **trusted oracle's own** price, so reading it back does not *replace* the oracle. The non-circular signal is the trade priced **without** the oracle: `eurCents` against the BCH the seller actually locked/delivered.
+- **Circularity:** on the oracle paths the witness price — and therefore `eurCents / output[0]` — is the **trusted oracle's own** price, so the settlement **confirms** a trade *at that price* (real volume) rather than *discovering* a different one. The independent signal is the **seller's own quote** (the `initialBchPriceInCents` in the revealed script, i.e. their listing) — that is where decoupling ultimately comes from.
 - **Indexing:** you must watch **covenant spends by address** (the stack can't enumerate P2SH32 by script), and the spend publishes `eurCents` (amount disclosure — consistent with the §Privacy Model).
 
 ---
