@@ -4,6 +4,8 @@
 **Platform:** Android (Kotlin)  
 **Originally Targeted:** CashScript v0.13+ (P2SH32 format)
 
+> **⚠️ Version (2026-10-03):** the shipped covenant is **v2.6.1** (5 paths — added `abort`; funder rename). The `payment-covenant.cash`/`.json` artifacts in this folder are **pre-v2.6**. Byte counts below are the **v2.5** measurement — re-verify against v2.6.1.
+
 ---
 
 ## Why This Matters
@@ -57,15 +59,16 @@ A Bitcoin Cash covenant is a P2SH32 script with this structure:
 
 ### Step 2: Append Bytecode Template
 
-The v2.5 bytecode template is 367 bytes of Bitcoin Script opcodes compiled from the [PriceOracle contract](./payment-covenant.cash).
+The v2.6 bytecode template is 367 bytes of Bitcoin Script opcodes compiled from the [PriceOracle contract](./payment-covenant.cash).
 
-**Source:** `price-oracle-v2.5.json` artifact (compiled July 27, 2026)
+**Source:** `price-oracle-v2.6.1.json` artifact
 
-This bytecode is **static and shared** across all v2.5 covenants. It implements:
+This bytecode is **static and shared** across all v2.6 covenants. It implements:
 - Claim path (recipient + oracle signature)
 - Merchant cashout path (recipient + merchant + oracle)
 - Refund path (sender, anytime)
-- Seller recovery path (seller + oracle, after expiry)
+- Abort path (sender, on >7% price drop → H€ mint)
+- Seller recovery path (funder + oracle, after expiry)
 
 **Complete script:** 150 bytes (params) + 367 bytes (bytecode) = **517 bytes**
 
@@ -169,7 +172,7 @@ If script hashes match, construction is correct. Address format differences (And
 
 ## Why Not Use CashScript Directly?
 
-*The arguments below describe why manual construction remains the long-term goal. For Phase 0, we chose WebView + CashScript for speed of validation—see [Reality Check](#️-reality-check-what-actually-happened-august-2026).*
+*The arguments below describe why manual construction remains the long-term goal. For Phase 0, we chose WebView + CashScript for speed of validation—see [Reality Check](#reality-check-what-actually-happened-august-2026).*
 
 ---
 
@@ -202,7 +205,7 @@ If script hashes match, construction is correct. Address format differences (And
 
 ⚠️ **Private key storage:** WIF keys stored in SharedPreferences (plaintext for testing)  
 ⚠️ **Parameter validation:** Malformed params produce invalid covenants  
-⚠️ **Oracle pubkey:** Hardcoded in CovenantConstants (must match Pi-chan's oracle)  
+⚠️ **Oracle pubkey:** fetched dynamically from the oracle (`/oracle/info`) — no hardcoded keys (since Aug 16)  
 ⚠️ **Network flag:** IS_TESTNET toggle—double-check before mainnet  
 
 **Production TODO:**
@@ -222,7 +225,7 @@ If script hashes match, construction is correct. Address format differences (And
 
 3. **Parameter negotiation:** This assumes you already know recipient's pubkey, seller's pubkey, current BCH price, and agreed EUR amount. Coordination is separate (Telegram, Nostr, or bulletin board).
 
-4. **Bytecode compilation:** We use pre-compiled v2.5 bytecode. If covenant logic changes (v3.0), we need a new artifact.
+4. **Bytecode compilation:** We use pre-compiled v2.6.1 bytecode. If covenant logic changes (v3.0), we need a new artifact.
 
 **Scope boundary:** This module does ONE thing—turn covenant parameters into a P2SH32 address. Everything before (parameter negotiation) and after (transaction construction) is handled elsewhere.
 
@@ -230,12 +233,12 @@ If script hashes match, construction is correct. Address format differences (And
 
 ## Versioning
 
-**Current:** v2.5 (July 27, 2026)
+**Current:** v2.6.1
 
 If covenant logic changes:
 1. RaspberryPi compiles new CashScript contract
 2. Extract bytecode hex from artifact
-3. Update `CovenantConstants.BYTECODE_V25_HEX`
+3. Update `CovenantConstants.BYTECODE_V26_HEX`
 4. Run validation tests against CashScript
 5. Bump version constant
 
@@ -248,7 +251,7 @@ Use this to verify you have the correct v2.5 bytecode.
 
 ---
 
-## ⚠️ Reality Check: What Actually Happened (August 2026)
+## Reality Check: What Actually Happened (August 2026)
 
 **The honest assessment:** We implemented manual covenant construction in Kotlin, but we **failed to validate** that it produces addresses matching CashScript's output.
 

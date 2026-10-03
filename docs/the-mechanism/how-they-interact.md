@@ -10,7 +10,7 @@
 **Isabel** (Barcelona) provides BCH passively. **Carlos** (Maracaibo) cashes Elena out.
 
 **Total elapsed:** ~4 h (most is Elena’s decision delay)  
-**Total cost:** €0.90 (0.4 % seller + 0.5 % merchant) vs. €5 (Western Union)
+**Total cost:** €1.00 (0.5 % seller + 0.5 % merchant — the fee is set by the counterparties; here the Phase-0 bootstrap default) vs. €5 (Western Union)
 
 ---
 
@@ -18,17 +18,17 @@
 
 ### Step 1 — Wallet & Bulletin Board
 
-María opens the app, enters `Elena#142`, specifies €100. The app resolves Elena’s Cash Account on‑chain and creates a covenant template (€100 worth of BCH, 7 % buffer, 24‑h timeout).
+María opens the app, enters `Elena#142`, specifies €100. The app resolves Elena’s Cash Account on‑chain and creates a covenant template (€100 worth of BCH, 7 % buffer, 8‑h timeout).
 
-The app then queries the bulletin board for BCH sellers accepting Bizum in the EUR→VES corridor. It finds three passive sellers. María chooses the cheapest: Isabel (0.4 %, good rating, Bizum).
+The app then queries the bulletin board for BCH sellers accepting Bizum in the EUR→VES corridor. It finds three passive sellers. María chooses on fee and rating: Isabel (0.5 %, good rating, Bizum).
 
 ### Step 2 — Nostr & Bot (with Device Health Check)
 
-María’s app sends an encrypted Nostr request (“Need payment details for covenant xyz789”) to Isabel’s bot. The bot validates the covenant, checks its device health (bank app installed ✅, enabled ✅, battery 67% and charging ✅), generates a unique reference (`Elena#142`), and replies with the bank details (Bizum phone number, concept, amount €100.40) **plus health status** in under a second.
+María’s app sends an encrypted Nostr request (“Need payment details for covenant xyz789”) to Isabel’s bot. The bot validates the covenant, checks its device health (bank app installed ✅, enabled ✅, battery 67% and charging ✅), generates a unique reference (`Elena#142`), and replies with the bank details (Bizum phone number, concept, amount €100.50) **plus health status** in under a second.
 
 María’s app shows: **”✅ Seller ready (67% battery, charging)”** — green light to proceed.
 
-María sees the payment instructions, taps “Open Bizum,” and pays €100.40 instantly.
+María sees the payment instructions, taps “Open Bizum,” and pays €100.50 instantly.
 
 ### Step 3 — Bot Funds Covenant
 
@@ -82,7 +82,7 @@ Carlos chooses **H€** (he knows EUR/VES rates, easier mental math). The app:
 ## The Four Gears at Work
 
 - **Wallet:** María creates covenant, Elena claims, Carlos receives. Cash Accounts provide identity.
-- **Bulletin Board:** María queries sellers; Elena queries merchants. Passive listings discovered on‑chain.
+- **Bulletin Board:** María queries sellers; Elena queries merchants. Passive listings discovered via **Nostr (NIP‑99)**.
 - **Nostr:** María’s app requests payment details from Isabel’s bot, and Elena coordinates the sale with Carlos (request → quote → co-sign → signed tx). Encrypted, sub‑second, no phone number.
 - **Bot:** Isabel’s bot detects the bank notification and funds the covenant automatically. Carlos’s bot notifies him of the claim.
 
@@ -114,7 +114,7 @@ Carlos chooses **H€** (he knows EUR/VES rates, easier mental math). The app:
 
 - **Seller offline or unhealthy:** Nostr request times out after 2 min OR device health check shows critical issues (bank app disabled, battery dead). María sees warning, picks another seller. **No money at risk** (caught before payment).
 - **BCH drops >7 %:** Covenant aborts to protect Isabel. Instead of sending BCH to María (exposing her to 7% loss she didn't sign up for), the covenant mints H€ tokens (if pool has capacity) and sends €100 H€ to María. She can still send to Elena using H€. If pool exhausted, María receives BCH (fallback). Isabel keeps the fiat and fee.
-- **Elena never claims:** Covenant expires; María gets the BCH back.
+- **Elena never claims:** the covenant expires; the **funder recovers its buffer** and María can **refund the BCH (manual)**.
 
 ---
 
@@ -122,13 +122,13 @@ Carlos chooses **H€** (he knows EUR/VES rates, easier mental math). The app:
 
 | Party | Out | In | Net |
 |-------|-----|-----|-----|
-| María | €100.40 | (remittance delivered) | –€100.40 |
-| Isabel | €107 BCH locked | €100.40 fiat + €0.40 fee | +€0.40 |
+| María | €100.50 | (remittance delivered) | –€100.50 |
+| Isabel | €107 BCH locked | €100.50 fiat + €0.50 fee | +€0.50 |
 | Elena | 2k VES spread | €100 worth of BCH → 398k VES | +€99.50 equiv |
 | Carlos | 398k VES cash | 0.2564 BCH + 2k spread + 60k sales | +€12.4 equiv |
 
-**Total fee:** 0.9 % vs. Western Union’s 5 %.  
-If Elena had spent BCH directly at the store (Option B), total fee would have been **0.4 %** (Isabel’s seller fee only).
+**Total fee:** 1 % vs. Western Union’s 5 %.
+If Elena had spent BCH directly at the store (Option B), total fee would have been **0.5 %** (Isabel’s seller fee only).
 
 ---
 
@@ -151,4 +151,4 @@ When recipients spend BCH directly at merchants, Asgaya has succeeded.
 
 ## Navigation
 
-**[🏠 Home](../../index.md)** | **[↑ The Mechanism](../README.md)** | **[📖 Glossary](../../glossary.md)**
+**[🏠 Home](../index.md)** | **[↑ The Mechanism](README.md)** | **[📖 Glossary](../glossary.md)**

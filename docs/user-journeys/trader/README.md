@@ -312,10 +312,10 @@ A trader is someone who operates as BOTH buyer and seller, earning fees by provi
 ## Technical Details
 
 **For implementation details, see:**
-- [Wallet](../../implementation/android-app/wallet/README.md) - Manage capital, fund covenants
-- [Bulletin Board](../../implementation/android-app/bulletin-board/README.md) - Post passive listings
-- [Nostr](../../implementation/android-app/nostr/README.md) - Coordinate with senders/recipients
-- [Notification Bot](../../implementation/android-app/notification-bot/README.md) - Bank payment detection, auto-matching
+- [Wallet](../../implementation/android-app/wallet.md) - Manage capital, fund covenants
+- [Bulletin Board](../../implementation/android-app/bulletin-board.md) - Post passive listings
+- [Nostr](../../implementation/android-app/nostr.md) - Coordinate with senders/recipients
+- [Notification Bot](../../implementation/android-app/notification-bot.md) - Bank payment detection, auto-matching
 
 **For rationale, see:**
 - [Why 7% Buffer?](../../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md) - Constraint #2: Value-Guaranteed Delivery

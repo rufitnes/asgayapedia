@@ -106,4 +106,4 @@ The same husk graduates to production when Asgaya starts testing on mainnet.
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Nostr Coordination](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Nostr Coordination](README.md)** | **[📖 Glossary](../../glossary.md)**

@@ -43,7 +43,7 @@ Track recipient device types and OS versions during trials.
 **Estimated effort:** 2-3 hours  
 **How to start:** Research Venezuela smartphone penetration statistics
 
-- [Recipient Flows](../../android-app/flows/recipient-flows.md)
+- Recipient Flows
 ---
 
 ## Navigation

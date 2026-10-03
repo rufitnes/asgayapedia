@@ -37,7 +37,7 @@ Traditional escrow held client fiat → triggered custody regulation (MiCA/PSD2)
 
 ## Money Velocity: Payment-First Pays Off Beyond Compliance
 
-Payment-first is not only what avoids custody — it is the **capital-velocity** enabler. Because the seller is paid **before** funding, the fiat is already in hand when the covenant is created, so the capital to fund the **next** covenant is available **right away**. A small BCH inventory can therefore serve many remittances in a single day — the property that makes the model viable at scale (the full capacity math lives with the [7% buffer](./7%-volatility-buffer-value-guaranteed-delivery.md#the-money-velocity-insight)).
+Payment-first is not only what avoids custody — it is the **capital-velocity** enabler. Because the seller is paid **before** funding, the fiat is already in hand when the covenant is created, so the capital to fund the **next** covenant is available **right away**. A small BCH inventory can therefore serve many remittances in a single day — the property that makes the model viable at scale (the full capacity math lives with the [7% buffer](./7%-volatility-buffer-value-guaranteed-delivery.md#money-velocity-a-consequence-of-payment-first)).
 
 The **two-step settlement** (recipient + merchant co-sign) does two jobs at once:
 

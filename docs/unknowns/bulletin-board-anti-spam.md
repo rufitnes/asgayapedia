@@ -260,7 +260,7 @@ Cost = 1000 × €0.50 = €500
 - Highlighting merchants might reduce spam visibility (real listings appear first)
 - Could create "verified merchant" tier (requires proof of location)
 
-**See:** [Issue #4 below](#issue-4-merchant-highlighting)
+**See:** [Issue #4 below](#4-what-about-merchant-reputation)
 
 ---
 

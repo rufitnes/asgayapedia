@@ -270,8 +270,10 @@ function claim(...) {
 
 ## Implementation Status
 
-**Current version: v2.2** (simplified refund)  
-**Planned: v2.3** (adds seller buffer recovery for sender-offline edge case)
+> **Update (2026-10-03):** current is **v2.6** — **5 paths** (`claim`, `merchantCashout`, `refund`, `abort`, `sellerRecoverBuffer`); **v2.6.1** = funder naming. The v2.2→v2.3 narrative below is the *evolution*; both shipped long ago.
+
+**Current version: v2.6** (5 paths; v2.6.1 = funder naming)  
+**Historical:** v2.2 (simplified refund) → v2.3 (seller buffer recovery).
 
 **v2.2 Covenant code:**
 ```cash
@@ -317,7 +319,7 @@ function sellerRecoverBuffer(sig sellerSig, datasig oracleSig, bytes oracleMessa
 **This principle succeeds when:**
 
 1. ✅ **Covenant stays simple**
-   - 3 functions (claim, refund, sellerRecoverBuffer)
+   - 5 functions (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
    - <100 lines of CashScript
    - Auditable in 30 minutes
 
@@ -339,7 +341,7 @@ function sellerRecoverBuffer(sig sellerSig, datasig oracleSig, bytes oracleMessa
 
 - [Requirements](../requirements/README.md) - Why capital efficiency matters (Requirement #6)
 - [Time Oracle Decision](./time-oracle-mtp-fallback-trustless-ux.md) - Oracle vs MTP trade-offs
-- [Auto-Refund UX](../../user-journeys/sender/auto-refund-ux.md) - How senders experience this principle
+- [Auto-Refund UX](../../user-journeys/remittance/sender/auto-refund-ux.md) - How senders experience this principle
 - [Covenant Version History](../../implementation/covenants/version-history.md) - v2.0 → v2.2 evolution
 
 ---

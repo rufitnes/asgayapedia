@@ -118,39 +118,37 @@ The seller's **Nostr public key** is their contact info. No phone number, no ema
 
 ### Step 2: Payment Info Request
 
-María's app sends an encrypted Nostr message:
+María's app sends a **NIP-17 gift-wrapped DM** (NIP-44 encrypted) carrying a **tag block**:
 
-```json
-{
-  "type": "payment_info_request",
-  "covenant_id": "covenant_xyz789",
-  "amount_eur": 100,
-  "payment_method": "Bizum",
-  "sender_pubkey": "npub1maria..."
-}
+```
+[PAY_INSTRUCTIONS_REQUEST]
+reference: <recipient's CashAccount>
+amount_eur: 100
+method: Bizum
+[/PAY_INSTRUCTIONS_REQUEST]
 ```
 
-**Encrypted with seller's public key.** Only the seller's bot can decrypt it.
+**Gift-wrapped to the seller's public key.** Only the seller's bot can decrypt it.
 
 ---
 
 ### Step 3: Seller Bot Response
 
-The seller's bot (running on their phone or VPS) receives the request and responds:
+The seller's bot (running on their phone or VPS) receives the request and replies with a **tag block** carrying the **private** rail details:
 
-```json
-{
-  "type": "payment_info_response",
-  "covenant_id": "covenant_xyz789",
-  "payment_method": "Bizum",
-  "account_number": "+34-612-345-678",
-  "reference": "ASGAYA-XYZ789",
-  "amount_exact": "€100.00",
-  "expires_at": "2026-06-10T15:30:00Z"
-}
+```
+[PAY_INSTRUCTIONS]
+method: Bizum
+name: <account holder>
+phone: +34-612-345-678
+amount_exact: 100.00
+reference: ASGAYA-XYZ789
+[/PAY_INSTRUCTIONS]
 ```
 
-**Encrypted with María's public key.** Only María's app can decrypt it.
+**Gift-wrapped to María's key.** Only María's app can decrypt it.
+
+**Private by design:** name · phone · IBAN travel **DM-only**. The **public** ad (`notes` + cash info) never carries private rail details.
 
 **Delivered in under 1 second.** María sees payment instructions immediately.
 
@@ -284,7 +282,7 @@ Your Asgaya wallet contains:
 2. María pays seller via Bizum
 3. Seller's bot is offline (phone died, server crashed)
 4. María waits... seller never locks BCH
-5. María stuck (paid fiat, covenant expires, funds returned after 48h)
+5. María stuck (paid fiat, covenant expires, funds returned after 8h)
 ```
 
 **With Nostr liveness check:**

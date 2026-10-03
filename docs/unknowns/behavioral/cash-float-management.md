@@ -44,7 +44,7 @@ Track transaction sizes, merchant cash availability, and any "out of cash" incid
 
 ## Related Documents
 
-- [Merchant Business Case](../../../glossary.md#triple-dip)
+- [Merchant Business Case](../../glossary.md#triple-dip)
 ---
 
 ## Navigation

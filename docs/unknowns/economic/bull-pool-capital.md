@@ -231,7 +231,7 @@ Research other BCH/crypto stability mechanisms:
 
 - [Stability Layer Overview](../../the-mechanism/stability-layer/README.md)
 - [Contract Period Duration Unknown](contract-period-duration.md)
-- [Merchant Velocity Unknown](merchant-velocity.md)
+- Merchant Velocity Unknown
 - [7% Drop Frequency Unknown](7-percent-drop-frequency.md)
 
 ---
@@ -254,7 +254,7 @@ Research other BCH/crypto stability mechanisms:
 
 **Design trade-off note:**
 - Asgaya uses simple 1:1 pool (merchant shorts, pool longs)
-- Alternative: StableHedge's 50/50 split + 2x leverage = 2x more capital efficient ([RS069](../../../knowledge/research/RS069_stablehedge_analysis.md))
+- Alternative: StableHedge's 50/50 split + 2x leverage = 2x more capital efficient (RS069)
 - Trade-off: We chose **simplicity** over capital efficiency (easier to understand, fewer failure modes)
 - Impact: €3K supports fewer merchants than leveraged model, but easier to implement/audit
 

@@ -10,7 +10,7 @@
 
 **What this document describes:** Full state management architecture for MVP (all five gears integrated)
 
-**What Phase 0 implemented:** Wallet storage + pending transaction persistence (see [Pending Transactions (Phase 0)](#-pending-transactions-phase-0-rs083) below)
+**What Phase 0 implemented:** Wallet storage + pending transaction persistence (see [Pending Transactions (Phase 0)](#pending-transactions-phase-0-rs083) below)
 
 ---
 
@@ -735,4 +735,4 @@ function syncMissingCovenants():
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../glossary.md)**

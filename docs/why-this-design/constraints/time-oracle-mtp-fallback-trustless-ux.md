@@ -4,6 +4,8 @@
 **Category:** Covenant Design Constraint  
 **Trust Model:** Oracle for UX, MTP for Security
 
+> **⚠️ Reconcile (2026-10-03) — shipped v2.6.1.** In the shipped covenant, **`refund()` is sender-signed and available *anytime*** (no oracle-time or MTP gate), and the **funder's** expiry path is **`sellerRecoverBuffer`**. MTP is therefore **not** the operative fallback in the normal flow — it remains the design's last-resort *time* guarantee. Read the MTP-fallback framing below as **design rationale**, not shipped control flow (see *Key Insight: Refund() Can Happen Anytime*).
+
 ---
 
 ## TL;DR
@@ -12,7 +14,7 @@
 
 **Solution:** Dual time enforcement system:
 - **Time Oracle** (primary): Provides real-time clock for UX and fast covenant execution
-- **MTP Timelock** (fallback): Guarantees trustless refund if oracle fails or sender disappears
+- **MTP Timelock** (fallback): last-resort trustless *time* guarantee (in v2.6.1 `refund()` is any time; this is not the operative path)
 
 **Key Insight:** The oracle doesn't need to be trusted because MTP provides an unbreakable safety net. Oracle failure only degrades UX, never security.
 
@@ -558,8 +560,8 @@ Should covenant accept 30-minute-old oracle data?
 ## Related Documentation
 
 **Implementation:**
-- [Phase 0 Covenant Testing (2026-07-20)](../../../knowledge/meta/project_blog/2026-07-20_time-oracle-decision-phase0-covenant.md) - Initial covenant architecture
-- [Phase 2 Covenant Testing (2026-07-21)](../../../knowledge/meta/project_blog/2026-07-21_phase0-phase2-covenant-testing.md) - MTP time lock validation
+- Phase 0 Covenant Testing (2026-07-20) - Initial covenant architecture
+- Phase 2 Covenant Testing (2026-07-21) - MTP time lock validation
 
 **Design Context:**
 - [7% Volatility Buffer](7%-volatility-buffer-value-guaranteed-delivery.md) - Why 7% buffer exists

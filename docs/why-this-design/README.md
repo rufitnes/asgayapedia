@@ -71,7 +71,7 @@ Check [Unknowns](../unknowns/README.md) → find research gaps and investigation
 ## What's NOT in This Section
 
 ### Implementation Details
-**See:** [Reference](/reference/README.md) - technical specs, code, APIs
+**See:** [Reference](../implementation/README.md) - technical specs, code, APIs
 
 ### User Guides
 **See:** [User Journeys](/user-journeys/README.md) - step-by-step flows

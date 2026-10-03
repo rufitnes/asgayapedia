@@ -28,7 +28,7 @@ When María requests payment details from a seller, she doesn't just get a bank 
 2. María sends €100 via Bizum
 3. Seller's bank app is disabled (no notifications received)
 4. Seller never locks BCH (doesn't know payment arrived)
-5. María waits 48 hours, covenant expires, funds returned
+5. María waits 8 hours, covenant expires, funds returned
 6. María lost time, seller reputation damaged (maybe innocent)
 ```
 
@@ -370,7 +370,7 @@ fun getBatteryInfo(): Pair<Int, Boolean> {
 1. Buyer sends fiat payment based on fake health report
 2. Seller's bank app is actually disabled → no notification received
 3. Seller doesn't lock BCH (can't, didn't get notification)
-4. Covenant expires, funds returned to buyer after 48 hours
+4. Covenant expires, funds returned to buyer after 8 hours
 5. Seller gains nothing, loses reputation (buyers mark as unreliable)
 
 **Lying about health is self-sabotage.** Honest sellers report accurate health to **complete trades and earn fees**.
@@ -408,7 +408,7 @@ fun getBatteryInfo(): Pair<Int, Boolean> {
 ```
 
 **Mitigation:**
-- Covenant timelock: 48-hour expiration
+- Covenant timelock: 8-hour expiration
 - María's funds automatically returned if seller doesn't lock BCH
 - Seller's reputation takes a hit (failed to complete trade)
 
@@ -428,8 +428,8 @@ fun getBatteryInfo(): Pair<Int, Boolean> {
 **Outcome:**
 - Seller doesn't receive notification (app is actually disabled)
 - Seller doesn't lock BCH
-- Covenant expires after 48 hours, María gets BCH refund
-- María wasted 48 hours of time (but no money lost)
+- Covenant expires after 8 hours, María gets BCH refund
+- María wasted 8 hours of time (but no money lost)
 
 **Mitigation:**
 - App emphasizes warning severity ("DO NOT PAY" for critical issues)

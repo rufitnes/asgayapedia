@@ -192,7 +192,7 @@ Result:
 María hands €100 cash to seller at café
 Seller counts money, takes it
 Seller ghosts (doesn't lock BCH in covenant)
-Covenant expires after 24 hours as empty shell
+Covenant expires after 8 hours as empty shell
 María has no automatic refund (covenant never had BCH)
 Seller has her €100, María must pursue manual refund
 ```
@@ -656,7 +656,7 @@ When a blacklist event is posted:
 | **Social enforcement only** | Blacklisted user can still attempt transactions | Active users check reputation before sending fiat; low completion rate = no business | Technical enforcement (account bans) requires central authority (unacceptable) |
 | **Validator trust** | Must trust validators to honestly assess evidence | Phase 0: trusted community; Phase 1+: reputation-weighted voting | Zero-knowledge proofs (Phase 2+) could eliminate validator trust |
 | **Evidence required** | Active user must keep bank notifications | Standard practice for financial transactions; most users screenshot automatically | Without evidence, blacklist system is vulnerable to false accusations |
-| **24-hour grace period** | Passive user has 24 hours before covenant expires (can ghost for 24h) | Acceptable capital lockup for active users; prevents instant blacklisting without waiting | Shorter timeout = higher false positive rate (bot delays, bank delays) |
+| **8-hour grace period** | Passive user has 8 hours before covenant expires (can ghost for 8h) | Acceptable capital lockup for active users; prevents instant blacklisting without waiting | Shorter timeout = higher false positive rate (bot delays, bank delays) |
 | **No refund guarantee** | Blacklisted user may never refund | Active user gets automatic covenant refund only if BCH was locked (funded covenants); for unfunded covenants, blacklist is the only recourse | Permissionless system can't force refunds (no company to enforce) |
 
 ---
@@ -688,7 +688,7 @@ Traditional systems have central arbitrators who can enforce outcomes (ban accou
 
 ## Related Documents
 
-- [Permissionless Blacklist with Redemption](../../../asgaya/knowledge/concepts/C007_permissionless_blacklist_with_redemption.md) (original blacklist concept)
+- Permissionless blacklist with redemption (internal concept doc C007 — not in the public repo)
 - [Reputation On-Chain (Not Central Database)](../../why-this-design/constraints/reputation-on-chain-not-central-database.md) (reputation constraint)
 - [Nostr: How Buyers and Sellers Coordinate Privately](./README.md) (happy path coordination)
 
@@ -701,4 +701,4 @@ Traditional systems have central arbitrators who can enforce outcomes (ban accou
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Nostr Coordination](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Nostr Coordination](README.md)** | **[📖 Glossary](../../glossary.md)**

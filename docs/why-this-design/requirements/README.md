@@ -27,7 +27,7 @@
 **Design choices driven by this:**
 - Payment-first covenants (no funds locked by intermediary)
 - Nostr for coordination (encrypted P2P messaging)
-- NFTs on BCH blockchain as bulletin board (no central database)
+- Signed Nostr listings as bulletin board (no central database; on-chain anchor planned)
 - Cash Accounts as universal identifier (no phone number registry)
 
 ---

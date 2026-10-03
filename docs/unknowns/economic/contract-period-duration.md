@@ -177,7 +177,7 @@ Use intelligence from Venezuelan contact (from blog entry):
 
 - [Stability Layer Overview](../../the-mechanism/stability-layer/README.md)
 - [Merchant Journey](../../user-journeys/merchant/README.md)
-- [Sender Journey](../../user-journeys/sender/README.md)
+- [Sender Journey](../../user-journeys/remittance/sender/README.md)
 - [Bull Pool Capital Unknown](bull-pool-capital.md)
 
 ---

@@ -3,7 +3,7 @@
 **Research Type:** API Discovery
 **Status:** ✅ Confirmed
 **Date:** 2026-04-27
-**Related:** [RS041 Cross-Corridor Exchange Rates](RS041_cross_corridor_exchange_rates.md), [1_rate_apis.md](../android-app/backend-apis/rate-apis.md)
+**Related:** [RS041 Cross-Corridor Exchange Rates](RS041_cross_corridor_exchange_rates.md), 1_rate_apis.md
 
 ---
 
@@ -234,8 +234,8 @@ def get_eur_ves_rate() -> float:
 ## Related Documents
 
 - **Argentina rates:** [RS041 Cross-Corridor Exchange Rates](RS041_cross_corridor_exchange_rates.md)
-- **Rate APIs:** [1_rate_apis.md](../android-app/backend-apis/rate-apis.md)
-- **Exchange Rate Safeguard:** [Exchange Rate Safeguard](../core-architecture/2_2_exchange_rate_safeguard.md)
+- **Rate APIs:** 1_rate_apis.md
+- **Exchange Rate Safeguard:** Exchange Rate Safeguard
 
 ---
 

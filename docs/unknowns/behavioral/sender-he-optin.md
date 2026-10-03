@@ -201,7 +201,7 @@ Even informal interviews help! Ask 3-5 friends who might send remittances what t
 
 ## Related Documents
 
-- [Sender Journey - Covenant Abort](../../user-journeys/sender/README.md#what-if-bch-price-crashes-during-transaction)
+- [Sender Journey - Covenant Abort](../../user-journeys/remittance/sender/README.md#what-if-bch-price-crashes-during-transaction)
 - [Stability Layer Overview](../../the-mechanism/stability-layer/README.md)
 - [Bull Pool Capital Unknown](../economic/bull-pool-capital.md)
 - [7% Drop Frequency Unknown](../economic/7-percent-drop-frequency.md)

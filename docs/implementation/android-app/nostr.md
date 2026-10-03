@@ -584,4 +584,4 @@ catch ParseError:
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../glossary.md)**

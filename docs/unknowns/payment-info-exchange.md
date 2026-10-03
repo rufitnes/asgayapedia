@@ -47,9 +47,9 @@ The payment info exchange mechanism must satisfy:
 
 ---
 
-## Current Leading Options
+## Options Considered (historical)
 
-### Option 1: Nostr Direct Messages (NIP-04)
+### Option 1: Nostr Direct Messages — **NIP-04 → superseded by NIP-17**
 
 **How it works:**
 ```
@@ -187,23 +187,21 @@ A solution is considered successful if:
 ## Related Documents
 
 ### Technical Context:
-- [Fraud Prevention: Payment-First Model](../collaborative_workspace/simplify-documentation-proposal/fraud-prevention-payment-first.md) - Why payment-first requires this
-- [Encrypted Payment Info Technical Briefing](../collaborative_workspace/simplify-documentation-proposal/encrypted-payment-info-liveness-check.md) - Deep technical dive on OP_RETURN approach
-- [Nostr Messaging Benefits](../collaborative_workspace/simplify-documentation-proposal/nostr-messaging-benefits.md) - User messaging bonus if Nostr chosen
+- [Fraud Prevention: Payment-First Model](../why-this-design/fraud-protection.md) - Why payment-first requires this
+- [Encrypted Payment Info Technical Briefing](../implementation/android-app/nostr.md) - Deep technical dive on OP_RETURN approach
+- [Nostr Messaging Benefits](../the-mechanism/nostr-coordination/README.md) - User messaging bonus if Nostr chosen
 
 ### Architectural Context:
 - [Covenant Architecture](../glossary.md#payment-first-covenant) - How covenants work
 - [Bulletin Board](../the-mechanism/bulletin-board/README.md) - How sellers are discovered
-- [Seller Bot](../android-app/backend-apis/seller-bot/README.md) - What needs to respond
+- [Seller Bot](../implementation/android-app/notification-bot.md) - What needs to respond
 
 ---
 
 ## Current Status
 
-**Decision:** Not yet made (Phase 0 design)  
-**Recommendation:** Nostr DM (faster, simpler, enables messaging bonus)  
-**Seeking:** BCH community technical review and feedback  
-**Timeline:** Decision needed before Phase 0 implementation begins
+**Decision:** ✅ **Made — Nostr NIP-17 gift-wrapped DMs** (NIP-44 encryption), **not NIP-04**. See [nostr.md](../implementation/android-app/nostr.md).  
+**This page is the exploration that led there** (kept for the decision trail); the "Options" and "Questions for Discussion" below are **historical**.
 
 ---
 

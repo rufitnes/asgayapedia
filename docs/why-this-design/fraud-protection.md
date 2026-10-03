@@ -228,7 +228,7 @@ Throughput unlimited (bot automation + no lock time)
 1. María pays Isabel €100.50 via Bizum
 2. Isabel's bank confirms receipt
 3. Isabel stops her bot (malicious)
-4. Covenant times out (24 hours)
+4. Covenant times out (8 hours)
 5. María receives notification: "Seller did not fund covenant"
 ```
 
@@ -444,7 +444,7 @@ Some people are irrational. Some will attempt fraud anyway.
 ✅ **Bank traceability** - Bizum includes full identity  
 ✅ **Legal precedent** - Spanish courts prosecute (IR006 case)  
 ✅ **Economic deterrence** - Fraud EV < -€1,900  
-✅ **No reputation system** - Legal system provides trust  
+✅ **No central reputation database** - reputation is *derived* from settled covenants; the legal system provides the ultimate trust backstop  
 ✅ **Enables passive sellers** - No capital lock = scale
 
 **We don't need to build a parallel justice system. We use the one that already works.**

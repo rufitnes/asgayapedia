@@ -6,9 +6,11 @@
 **Status:** Production-ready (testnet3 validated Aug 15, 2026)
 
 **Files:**
-- `price-oracle-v2.6.cash` - CashScript source code (307 lines)
-- `price-oracle-v2.6.json` - Compiled artifact
-- `version-history.md` - Complete evolution from Phase 1 → v2.6
+- `price-oracle-v2.6.1.cash` - CashScript source code
+- `price-oracle-v2.6.1.json` - Compiled artifact
+- `version-history.md` - Complete evolution from Phase 1 → v2.6.1
+
+> **Note (2026-10-03):** the `payment-covenant.cash`/`.json` files in this folder are **pre-v2.6** (kept as-is).
 
 ---
 
@@ -55,7 +57,7 @@ const signature = oracleKey.sign(messageHash);  // Wrong format
 ```
 
 **Discovered:** August 15, 2026 during testnet3 validation (3 hours of debugging)  
-**Reference:** [Version History - v2.6](./version-history.md#oracle-signature-library)
+**Reference:** [Version History - v2.6](./version-history.md#critical-technical-detail-oracle-signature-library)
 
 ---
 
@@ -66,7 +68,7 @@ const signature = oracleKey.sign(messageHash);  // Wrong format
 npm install -g cashc
 
 # Compile
-cashc payment-covenant.cash -o payment-covenant.json
+cashc price-oracle-v2.6.1.cash -o price-oracle-v2.6.1.json
 ```
 
 ---
@@ -75,15 +77,15 @@ cashc payment-covenant.cash -o payment-covenant.json
 
 ```javascript
 import { Contract, ElectrumNetworkProvider } from 'cashscript';
-import artifact from './payment-covenant.json';
+import artifact from './price-oracle-v2.6.1.json';
 
-// Connect to network
-const provider = new ElectrumNetworkProvider('chipnet');
+// Connect to network (Phase 0 = testnet3)
+const provider = new ElectrumNetworkProvider('testnet3');
 
-// Create covenant instance
+// Create covenant instance (v2.6: 8 constructor args)
 const contract = new Contract(
     artifact,
-    [recipientPubkey, senderPubkey, expiryTime],
+    [senderPubkey, recipientPubkey, funderPubkey, oraclePubkey, eurCents, expiryOracleTime, initialBchPriceInCents, minPricePercent],
     provider
 );
 

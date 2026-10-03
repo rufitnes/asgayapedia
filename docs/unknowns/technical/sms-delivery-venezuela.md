@@ -41,7 +41,7 @@ Log SMS delivery times and failures for all notifications sent.
 
 ## Related Documents
 
-- [Notification Listener](../../android-app/notification-listener/README.md)
+- Notification Listener
 ---
 
 ## Navigation

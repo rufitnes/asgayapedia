@@ -3,7 +3,7 @@
 **Research Type:** Quantitative Market Analysis  
 **Status:** ✅ Draft  
 **Date:** 2026‑05‑31  
-**Related:** [RS064 BCH SoV vs VES](RS064_BCH_SOV_in_Venezuela.md), [RS039 Temporal Market Impact](RS039_temporal_market_impact.md), [Unknown: Adoption Stabilisation](../unknowns/adoption-stabilisation.md)
+**Related:** [RS064 BCH SoV vs VES](RS064_bch_sov_in_venezuela.md), [RS039 Temporal Market Impact](RS039_temporal_market_impact.md), [Unknown: Adoption Stabilisation](../unknowns/adoption-stabilization-effect.md)
 
 ---
 

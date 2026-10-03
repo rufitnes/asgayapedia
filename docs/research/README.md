@@ -33,7 +33,7 @@ Documents from May 2026 onward reflect the **current covenant architecture**:
 - BCH Sellers (not LPs)
 - Covenant + volatility buffers (107%)
 - EUR-denominated cash buy orders, BCH settlement
-- 24-hour timeout cascade
+- 8-hour payment window (covenant expiry)
 - 2-way fee split
 
 ---
@@ -48,7 +48,7 @@ Documents from May 2026 onward reflect the **current covenant architecture**:
 ### Payment Rails & Automation
 - **[RS042: Bizum Concept Field Constraints](RS042_bizum_concept_field_constraints.md)** — Testing that revealed Bizum concept field restrictions (critical for notification matching)
 - **[RS072: Bizum Notification Patterns](RS072_notification_listener/)** — Notification parsing patterns for five Spanish banks (Phase -1 validation)
-- **[RS073: NotifyFlow Comparison](RS072_notification_listener/RS073_notifyflow_decompilation.md/)** — Analysis of existing notification-based remittance app
+- **[RS073: NotifyFlow Comparison](RS072_notification_listener/RS073_notifyflow_decompilation.md)** — Analysis of existing notification-based remittance app
 
 ### Volatility & Risk Management
 - **[RS074: Dynamic Volatility Buffer](RS074_dynamic_volatility_buffer.md)** — Downside volatility-based dynamic buffer algorithm (Phase 1+ improvement over fixed 7%)
@@ -100,9 +100,9 @@ The following documents describe the **old escrow architecture** and are retaine
 ## Contributing Research
 
 New research documents should:
-1. Use next sequential number (RS066, RS067, etc.)
+1. Use next sequential number (RS087, RS088, etc.)
 2. Include date and author
-3. Reference current covenant architecture (payment-first, H€/HAu, 7-day contracts)
+3. Reference current covenant architecture (payment-first, H€/HAu, variable contract period)
 4. Link to relevant documentation in [Why This Design?](../why-this-design/README.md) or [Unknowns](../unknowns/README.md)
 
 ---

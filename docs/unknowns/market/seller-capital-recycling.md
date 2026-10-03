@@ -40,7 +40,7 @@ Track seller capital deployment, transaction frequency, and time between transac
 
 ## Related Documents
 
-- [BCH Sellers](../../../glossary.md#bch-seller-passive)
+- [BCH Sellers](../../glossary.md#bch-seller-passive)
 ---
 
 ## Navigation

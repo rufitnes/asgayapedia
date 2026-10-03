@@ -38,7 +38,7 @@ Track seller retention, capital deployed, and recycling frequency.
 **Estimated effort:** 3-5 hours  
 **How to start:** Build seller economics spreadsheet model
 
-- [BCH Sellers](../../../glossary.md#bch-seller-passive)
+- [BCH Sellers](../../glossary.md#bch-seller-passive)
 ---
 
 ## Navigation

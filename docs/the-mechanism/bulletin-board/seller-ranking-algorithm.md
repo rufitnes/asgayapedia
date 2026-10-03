@@ -57,7 +57,7 @@ const qualified = sellers.filter(s =>
 **Score formula:**
 
 ```javascript
-score = (total_transactions + avg_value_eur) / fee_actual_last_tx
+score = (total_transactions + avg_value_eur) / fee_percent   // fee_percent = declared current listing fee
 ```
 
 **Sort descending (highest score first).**
@@ -68,13 +68,13 @@ score = (total_transactions + avg_value_eur) / fee_actual_last_tx
 3. **Balanced trade-off:** 2x volume can overcome 50% higher fee
 4. **Penalizes predators:** 10% fee gets crushed even with huge volume
 
-**Critical detail:** Uses `fee_actual_last_tx` (actual fee charged in most recent transaction), NOT `fee_percent` (seller's claimed fee in listing). See "On-Chain Fee Tracking" below.
+**Critical detail:** Uses the seller's **declared *current* fee** (carried on the listing). The **sender enforces** it — before paying, the client blocks any quote that exceeds the listing's fee. *(An on-chain copy of the exact fee arrives with the Phase-0+ anchor; see "Fee Enforcement" below.)*
 
 ### Step 3: Display Top 5, Auto-Select #1
 
 ```javascript
 const topSellers = qualified
-  .map(s => ({ ...s, score: (s.total_transactions + s.avg_value_eur) / s.fee_actual_last_tx }))
+  .map(s => ({ ...s, score: (s.total_transactions + s.avg_value_eur) / s.fee_percent }))
   .sort((a, b) => b.score - a.score)
   .slice(0, 5);
 
@@ -86,9 +86,13 @@ return {
 
 ---
 
-## On-Chain Fee Tracking (Anti-Gaming Architecture)
+## Fee Enforcement (Sender-Side)
 
-**Key insight:** The formula uses `fee_actual_last_tx` (actual fee charged), not `fee_percent` (claimed fee in listing).
+**Key insight:** there is **no on-chain reputation UTXO** — reputation is **derived** ([Reputation On-Chain](../../why-this-design/constraints/reputation-on-chain-not-central-database.md)), and the ranking divides by the seller's **declared *current* fee**, carried on the listing.
+
+**Why it can't be gamed — the sender enforces it:** the client checks the fee *before* the sender pays fiat. A quote that exceeds the listing's fee is blocked, so the declared fee is what actually binds (a seller cannot advertise 0.3 % and charge 0.8 %).
+
+> **⚠️ Historical (superseded 2026-09-21).** The subsections below (*How It Works* → *Optional Safeguard*) describe the **earlier** on-chain-UTXO design — a reputation UTXO spent-and-recreated in the funding tx, tracking `fee_actual_last_tx`. That mechanism was **dropped**; it is kept here for the decision trail. The anti-gaming reasoning (why enforcing the *declared* fee is hard to game) still holds — via **sender enforcement**, not an on-chain UTXO.
 
 ### How It Works
 
@@ -513,7 +517,7 @@ Established: (1000 + 150) / 0.5 = 2300
 
 **Possible formula:**
 ```javascript
-score = (total_transactions + avg_value_eur) / (fee_actual_last_tx × avg_response_minutes)
+score = (total_transactions + avg_value_eur) / (fee_percent × avg_response_minutes)
 ```
 
 **Problem:** Overcomplicates. Response time already shown in UI ("⏱️ <2 min"). Does it need to affect ranking?
@@ -541,32 +545,28 @@ score = (total_transactions + avg_value_eur) / (fee_actual_last_tx × avg_respon
 
 ## Implementation Notes
 
-### On-Chain Data Required
+### Data Used for Scoring
 
-All scoring data must be on-chain (trustless verification):
+The scoring inputs are **derived**, not stored as an on-chain stats UTXO:
 
 ```javascript
 {
-  total_transactions: 1234,
-  completed_transactions: 1209,
-  avg_value_eur: 145.80,
-  fee_percent: 0.5,              // Claimed fee (manual update, NOT used for ranking)
-  fee_actual_last_tx: 0.5,       // Actual fee charged in most recent tx (USED for ranking)
-  last_activity: unix_timestamp
+  total_transactions: 1234,   // derived from settled covenants
+  avg_value_eur: 145.80,      // average covenant face (eurCents), not a BCH amount
+  fee_percent: 0.5,           // declared current fee on the listing — USED for ranking
+  last_activity               // from the listing's Nostr heartbeat / DM timestamps
 }
 ```
 
-**Source:** `docs/why-this-design/constraints/reputation-on-chain-not-central-database.md`
+**Source:** [Reputation On-Chain](../../why-this-design/constraints/reputation-on-chain-not-central-database.md) — reputation is a **derived view**, not an on-chain record.
 
-**Update frequency:**
-- `total_transactions`, `completed_transactions`, `avg_value_eur`, `fee_actual_last_tx` — Updated automatically with each covenant funding (~€0.0002 cost, piggybacked on funding tx)
-- `fee_percent` — Seller's claimed fee in listing (manual update ~€0.01, rare <1x/month). NOT used for ranking (see "On-Chain Fee Tracking" above).
+**Update frequency:** the listing's `fee_percent` is the seller's declared current fee (updated in the listing); trade count/value are **derived** when covenants settle. (The earlier `fee_actual_last_tx` + stats-UTXO piggyback is superseded — see "Fee Enforcement" above.)
 
 ### Client-Side Calculation
 
 **The app calculates scores locally** (not on-chain):
 
-> **⚠️ Discovery mechanism under review (2026-09-16):** `electrum.querySellers(...)` below is **illustrative** — no such on-chain enumeration exists on our stack (see the limitation note in the [bulletin board README](README.md)). The filtering and scoring logic is correct; only the *source* of the seller list is being reworked.
+> **⚠️ Discovery mechanism (2026-09-21):** `electrum.querySellers(...)` below is **illustrative** — sellers are discovered from the **Nostr bulletin board** (NIP-99 `kind:30402`), not by on-chain enumeration. The filtering and scoring logic is correct; only the *source* of the seller list differs.
 
 ```javascript
 // 1. Query the bulletin board index for candidate sellers (mechanism under review)
@@ -580,7 +580,7 @@ const qualified = sellers.filter(/* filters above */);
 
 // 3. Score locally
 qualified.forEach(s => {
-  s.score = (s.total_transactions + s.avg_value_eur) / s.fee_actual_last_tx;
+  s.score = (s.total_transactions + s.avg_value_eur) / s.fee_percent;
 });
 
 // 4. Sort locally
@@ -600,23 +600,23 @@ return qualified.slice(0, 5);
 
 ### Formula A: Multiplicative (Current)
 ```javascript
-score = (total_transactions + avg_value_eur) / fee_actual_last_tx
+score = (total_transactions + avg_value_eur) / fee_percent
 ```
 
 ### Formula B: Subtractive
 ```javascript
-score = total_transactions + avg_value_eur - (fee_actual_last_tx × 500)
+score = total_transactions + avg_value_eur - (fee_percent × 500)
 ```
 
 ### Formula C: Weighted Sum
 ```javascript
-score = (total_transactions × 2) + (avg_value_eur × 1) + ((2.0 - fee_actual_last_tx) × 1000)
+score = (total_transactions × 2) + (avg_value_eur × 1) + ((2.0 - fee_percent) × 1000)
 ```
 
 ### Formula D: Volume Only (Fee as Filter)
 ```javascript
 // Filter out fee > 0.6%, then sort by volume
-if (fee_actual_last_tx <= 0.6) {
+if (fee_percent <= 0.6) {
   score = total_transactions + avg_value_eur;
 }
 ```

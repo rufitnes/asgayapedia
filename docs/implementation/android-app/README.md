@@ -89,7 +89,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | **v0.2 hybrid (build + Kotlin broadcast)** | ✅ Done | CREATE/REFUND/CLAIM/ABORT all hybrid (Aug 20-21) |
 | **Seller auto-funding (cash-in-person)** | ✅ **E2E-proven** | Sender creates unfunded (funderPubkey=seller) → seller verifies funderPubkey → confirms cash in Trade tab → funds. 4-device E2E Sep 8 |
 | **Refund (funder≠sender)** | ✅ **E2E-proven** | Sender refunds seller-funded covenant; buffer → seller automatically (Sep 8) |
-| **Nostr coordination (DM)** | 🎯 NEXT | Replace Telegram; minimal client via OkHttp + NIP-44 (works on cell data) |
+| **Nostr coordination (DM)** | ✅ Done | NIP-17 gift-wrapped DMs (NIP-44) via OkHttp; works on cell data. Telegram is now fallback only |
 | **Bulletin board** | ✅ Working (Phase 0) | Nostr (NIP-99) discovery — signed listings cached locally; on-chain anchor = Phase 0+ |
 | **Cash Accounts** | 🔨 MVP REQUIRED | Register/resolve `Elena#142`; match key for seller auto-funding Bizum concept field (interface to legacy payment system) |
 | **Merchant cash-out flow** | ✅ DONE on-chain | Merchant-first, TXID `05301369...` (Sep 1, 2026); merchant role needs no Telegram (QR/paste, tablet-tested) |
@@ -187,7 +187,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 - **Telegram app** - Testing tool + fallback for parameter coordination
 
 **Phase 0+ (planned):**
-- **Nostr relays** - NIP-44 encrypted DMs (target coordination layer); public relays sufficient
+- **Nostr relays** - NIP-17 DMs are **live**; public relays sufficient, dedicated relay later if needed
 - **Bank apps** - NotificationListener for seller auto-funding (Bizum, PagoMóvil)
 - **Kraken API** - Optional BCH replenishment when manual/mining insufficient
 
@@ -229,7 +229,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 **Full MVP success (Phase 0 ongoing):** 🔨 In Progress
 - Seller auto-funding + refund (funder≠sender) E2E-proven ✅ (Sep 7-8)
 - Merchant cash-out integrated + tablet-tested ✅ (Sep 8)
-- Nostr coordination working (replace Telegram copy-paste) — NEXT
+- Nostr coordination ✅ **working** (NIP-17 DMs; Telegram is fallback)
 - Bulletin board functional (merchant/seller discovery) — later (Phase-0 beta)
 - First real seller (Suso) + first real merchant
 

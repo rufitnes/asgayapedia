@@ -444,7 +444,7 @@ function calculateMarketVWAP(trades) {
 
 Same schema as before (covenant coordination, not price discovery).
 
-**See:** [Previous message types](#message-types) for complete covenant coordination schema.
+**See:** [Previous message types](#message-schema) for complete covenant coordination schema.
 
 ---
 

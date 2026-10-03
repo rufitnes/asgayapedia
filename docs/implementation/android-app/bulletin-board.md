@@ -152,7 +152,7 @@ Each returned event is **cached locally** (keyed by author + `d`, so a newer ver
 4. **Location:** for cash-in-person, filter by proximity.
 5. **Self:** drop the acting wallet's own ads.
 
-The **ranking** then orders the survivors — see [Seller Ranking Algorithm](../bulletin-board/seller-ranking-algorithm.md).
+The **ranking** then orders the survivors — see [Seller Ranking Algorithm](../../the-mechanism/bulletin-board/seller-ranking-algorithm.md).
 
 ---
 
@@ -208,4 +208,4 @@ Then the model is: **find** a listing via any index (Nostr or on-chain), **verif
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../glossary.md)**

@@ -58,8 +58,8 @@ Log all bot performance metrics: notification delays, missed notifications, batt
 
 ## Related Documents
 
-- [Notification Listener](../../android-app/notification-listener/README.md)
-- [Multi-Device Test Plan](../../android-app/backend-apis/multi-device-test-plan.md)
+- Notification Listener
+- Multi-Device Test Plan
 ---
 
 ## Navigation

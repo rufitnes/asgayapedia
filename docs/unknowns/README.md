@@ -32,6 +32,7 @@ Parameters that determine protocol viability:
 - [Volatility Buffer Rate](economic/volatility-buffer-rate.md) — Is 7% sufficient?
 - [Seller Fee Sufficiency](economic/seller-fee-sufficiency.md) — Is 0.5% enough?
 - [Merchant Spread Sufficiency](economic/merchant-spread-sufficiency.md) — Is 0.5% enough?
+- [Remittance Fee Levels](economic/remittance-fee-levels.md) — Free-market fees; can they go sub-1 % / 0 / negative? (bootstrap)
 - [Fiat Chargeback Risk](economic/fiat-chargeback-risk.md) — How often do Bizum payments reverse?
 
 ### 🧠 Behavioral Unknowns
@@ -191,11 +192,11 @@ Every unknown follows this format:
 
 | Category | Total Unknowns | Not Started | In Progress | Answered |
 |----------|---------------|-------------|-------------|----------|
-| Economic | 4 | 4 | 0 | 0 |
+| Economic | 5 | 5 | 0 | 0 |
 | Behavioral | 7 | 7 | 0 | 0 |
 | Technical | 4 | 3 | 1 | 0 |
 | Market | 3 | 3 | 0 | 0 |
-| **Total** | **18** | **17** | **1** | **0** |
+| **Total** | **19** | **18** | **1** | **0** |
 
 **Phase -1 progress:** [Universal Bot Reliability](technical/universal-bot-reliability.md) moved to "In Progress" after 24-hour validation testing with five Spanish banks. See [RS072](../research/RS072_notification_listener/) and [RS073](../research/RS072_notification_listener/RS073_notifyflow_decompilation.md) for details.
 

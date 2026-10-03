@@ -169,7 +169,7 @@ If the covenant expires unclaimed, who gets the €107? **Isabel.** She provided
 
 ---
 
-## 🔥 CRITICAL: Production-Blocking Bug (August 10, 2026)
+## CRITICAL: Production-Blocking Bug (August 10, 2026)
 
 **Status:** Show-stopper bug discovered during first end-to-end claim test  
 **Impact:** NO covenant could be claimed successfully  
@@ -570,8 +570,8 @@ When explaining covenant parameters:
 - [Progressive Payment Rollout](progressive-payment-rollout.md) - Remittances first, merchant payments later (explains naming evolution)
 
 **Related documentation:**
-- [Version History - Funder Parameter Semantics](../../implementation/covenants/version-history.md#funder-parameter-semantics) - Discovery details (August 2, 2026)
-- [Covenant v2.5 Specification](../../implementation/covenants/version-history.md#v25-permissionless-refund-august-2026) - Technical implementation
+- [Version History - Funder Parameter Semantics](../../implementation/covenants/version-history.md#3-funder-parameter-semantics-discovered-august-2-2026) - Discovery details (August 2, 2026)
+- [Covenant v2.5 Specification](../../implementation/covenants/version-history.md#v25-refund-anytime-production-ready) - Technical implementation
 - [Wallet Component](../../implementation/android-app/wallet.md) - Multi-wallet testing that revealed the parameter semantics
 
 ---

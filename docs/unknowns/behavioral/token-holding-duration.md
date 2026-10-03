@@ -232,7 +232,7 @@ Even basic scenarios help! Model just one velocity case and its capital implicat
 - [Stability Layer Overview](../../the-mechanism/stability-layer/README.md)
 - [Contract Period Duration Unknown](../economic/contract-period-duration.md)
 - [Bull Pool Capital Unknown](../economic/bull-pool-capital.md)
-- [Merchant Velocity Unknown](../economic/merchant-velocity.md)
+- Merchant Velocity Unknown
 
 ---
 

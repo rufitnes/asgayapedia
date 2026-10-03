@@ -7,7 +7,7 @@
 **Status (August 14, 2026):**
 - ✅ **Covenant Layer:** Accurate (v2.6 specification with 5 functions: claim, merchantCashout, refund, abort, sellerRecoverBuffer)
 - ⚠️ **Client Layer:** Code examples are illustrative/future (Nostr monitoring not in Phase 0)
-- ✅ **Core Principle:** Validated in production (refund anytime works, auto-refund logic tested)
+- ✅ **Core Principle:** Validated in production (refund-anytime works; auto-refund *monitoring* itself is **deferred**)
 
 **Note:** This document explains the architectural principle. Client layer code examples show future patterns (Nostr, auto-refund monitoring). Phase 0 implements manual refund only.
 
@@ -203,11 +203,14 @@ if (settings.advancedMode) {
 ```
 
 **Nostr monitoring (social layer):**
+
+> **Kinds (2026-09-21):** illustrative pseudocode. Shipped: the **bulletin board** is NIP-99 `kind:30402`; coordination is **NIP-17 DMs** (`kind:1059`). `30078` is **NIP-78** (oracle/blacklist), not a general covenant event.
+
 ```kotlin
 // Publish all refunds to Nostr
 fun publishRefundEvent(covenant: Covenant, reason: String) {
     val event = NostrEvent(
-        kind = 30078,  // Asgaya covenant event
+        kind = 1059,  // NIP-17 DM (illustrative)
         content = json {
             "covenant_address" to covenant.address
             "action" to "refund"
@@ -223,7 +226,7 @@ fun publishRefundEvent(covenant: Covenant, reason: String) {
 // Recipient's client monitors
 nostrClient.subscribe(filter = {
     authors = listOf(senderPubkey)
-    kinds = listOf(30078)
+    kinds = listOf(1059)
 }) { event ->
     if (event.content.action == "refund") {
         if (event.content.reason == "auto-refund: expired") {
@@ -347,11 +350,11 @@ fun refund(covenant: Covenant, manual: Boolean = false) {
 - Covenant construction: See [Manual Construction](../covenants/manual-construction.md)
 - Transaction building: See [Asgaya Trinity](./asgaya-trinity.md)
 - Nostr coordination: See [Nostr Integration](../../the-mechanism/nostr-coordination/README.md)
-- Reputation system: See [Social Layer](../../why-this-design/social-vs-technical-enforcement.md)
+- Reputation system: See [Reputation On-Chain](../../why-this-design/constraints/reputation-on-chain-not-central-database.md)
 
 **Related principles:**
 - [Covenant Simplicity Principle](../../why-this-design/constraints/covenant-simplicity-principle.md)
-- [User Sovereignty](../../why-this-design/constraints/user-sovereignty.md)
+- [Design Constraints](../../why-this-design/constraints/README.md)
 
 ---
 

@@ -3,7 +3,7 @@
 **Research Type:** Quantitative Market Analysis  
 **Status:** ✅ Draft  
 **Date:** 2026‑05‑31  
-**Related:** [RS062 Seller Profitability](RS062_seller_profitability_simulation.md), [RS055 USD Bank Accounts Venezuela](RS055_USD_bankaccounts_Venezuela.md), [Merchant Business Case](../glossary.md#triple-dip)
+**Related:** [RS062 Seller Profitability](RS062_seller_profitability_simulation.md), RS055 USD Bank Accounts Venezuela, [Merchant Business Case](../glossary.md#triple-dip)
 
 ---
 
@@ -148,7 +148,7 @@ Holding VES for any period always results in a loss of purchasing power, equival
 - Monitor Dólar — USD/VES parallel rate, for cross‑verification
 - ECB — EUR/USD daily reference rate, May 2025–May 2026
 - [RS062 — Seller Profitability Simulation](RS062_seller_profitability_simulation.md) — BCH volatility data for the same period
-- [RS055 — USD Bank Accounts Venezuela](RS055_USD_bankaccounts_Venezuela.md) — VES depreciation data and parallel rate dynamics
+- RS055 — USD Bank Accounts Venezuela — VES depreciation data and parallel rate dynamics
 
 ---
 

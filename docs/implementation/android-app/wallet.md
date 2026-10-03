@@ -104,7 +104,7 @@ CREATE INDEX idx_wallets_role ON wallets(role);
 - **Imported keys** for test wallets (Phase 0)
 - **Hybrid approach** - Best of both worlds during development
 
-**See:** [RS081 Multi-Wallet Management Patterns](../../knowledge/research-sessions/RS081_multi_wallet_management_patterns.md) for design rationale
+**See:** [RS081 Multi-Wallet Management Patterns](../../research/RS081_multi_wallet_management_patterns.md) for design rationale
 
 ---
 
@@ -1273,9 +1273,9 @@ if covenant.expiry - now() < 1_hour:
 **Status:** Phase 0 - Active execution (multi-wallet ✅, covenant integration ✅, send flow ⏳)  
 **Updated:** 2026-08-03  
 **Complexity:** Medium (multi-wallet management + standard BCH operations + covenant integration)  
-**References:** [WebView Covenant Bridge](./webview-covenant-bridge.md) | [Version History](../covenants/version-history.md) | [Asgaya Trinity](./asgaya-trinity.md) | [RS081 Multi-Wallet Patterns](../../knowledge/research-sessions/RS081_multi_wallet_management_patterns.md)
+**References:** [WebView Covenant Bridge](./webview-covenant-bridge.md) | [Version History](../covenants/version-history.md) | [Asgaya Trinity](./asgaya-trinity.md) | [RS081 Multi-Wallet Patterns](../../research/RS081_multi_wallet_management_patterns.md)
 ---
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../glossary.md)**

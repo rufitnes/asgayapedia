@@ -4,11 +4,11 @@
 
 **Complexity:** Medium - Queue management + graceful degradation strategies
 
-> **⚠️ Phase 0 Critical Infrastructure - Foundational Design Principle**
+> **⚠️ Foundational Design Principle (Phase 1+ — not Phase 0)**
 > 
 > Offline-first architecture is **essential** for Venezuelan users and must inform ALL design decisions:
 > 
-> **Why Phase 0 (Critical Priority):**
+> **Why it matters (Phase 1+):**
 > 1. **Venezuelan reality** - Power outages 4-8 hours/day, intermittent 3G, shared WiFi
 > 2. **User experience** - App must function despite unreliable connectivity or it's unusable
 > 3. **Queue system** - Covenant creation, payments, Nostr messages must queue when offline
@@ -669,7 +669,7 @@ catch DatabaseError:
 
 ---
 
-**Status:** Phase 0 - Design complete, implementation TODO (CRITICAL - app unusable without this)  
+**Status:** Phase 1+ - Design complete, implementation TODO (foundational for Venezuelan conditions)  
 **Updated:** 2026-08-04  
 **Complexity:** Medium (queue management + graceful degradation + multi-layer caching)  
 **Priority:** Essential for Venezuelan conditions (power outages 4-8 hrs/day, spotty internet)  
@@ -678,4 +678,4 @@ catch DatabaseError:
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../glossary.md)**

@@ -17,7 +17,7 @@ If the buffer is too small, sellers lose money when BCH price drops. If it's too
 
 ## Current Hypothesis
 
-7% buffer provides adequate protection for a 24-hour settlement window based on historical BCH volatility analysis.
+7% buffer provides adequate protection for the 8-hour settlement window based on historical BCH volatility analysis.
 
 ## Investigation Method
 
@@ -54,8 +54,8 @@ The buffer is intended to be **dynamic** — sized from recent **downward** BCH 
 
 ## Related Documents
 
-- [Risk Allocation Principle](../../../why-this-design/README.md)
-- [Bounty Contracts with Volatility Buffer](../../../glossary.md#payment-first-covenant)
+- [Risk Allocation Principle](../../why-this-design/README.md)
+- [Bounty Contracts with Volatility Buffer](../../glossary.md#payment-first-covenant)
 ---
 
 ## Navigation

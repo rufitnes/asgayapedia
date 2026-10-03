@@ -229,10 +229,10 @@ class CovenantNotificationListener : NotificationListenerService() {
 **Why Nostr next?**
 - Decentralized (no Telegram dependency)
 - Permissionless (no intermediaries)
-- Extensible (NIP-78 custom events)
+- Extensible (custom Nostr event kinds)
 - Reputation-friendly (pubkey-based identity)
 
-**The event format (NIP-78):**
+**Historical event format (NIP-78, `kind:30078` — superseded by NIP-17; kept for the trail):**
 ```json
 {
   "kind": 30078,
@@ -547,7 +547,7 @@ claimCovenant(
 
 **Design constraints:**
 - [Covenant Simplicity Principle](../../why-this-design/constraints/covenant-simplicity-principle.md)
-- [User Sovereignty](../../why-this-design/constraints/user-sovereignty.md)
+- [Design Constraints](../../why-this-design/constraints/README.md)
 
 ---
 

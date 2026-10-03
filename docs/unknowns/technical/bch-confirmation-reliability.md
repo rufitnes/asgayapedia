@@ -40,7 +40,7 @@ Track every BCH transaction: time to first confirmation, any rebroadcast needs, 
 
 ## Related Documents
 
-- [BCH Native Architecture](../../android-app/backend-apis/bch-native-architecture.md)
+- BCH Native Architecture
 ---
 
 ## Navigation

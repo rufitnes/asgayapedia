@@ -53,7 +53,7 @@ A sender is someone who wants to send money to another Asgaya user. In Asgaya's 
   - Settlement options: Elena can claim BCH or cash out at merchant
 
 ### 3. Find BCH Seller on Bulletin Board
-- App queries the bulletin board (NFTs on BCH blockchain)
+- App queries the bulletin board (Nostr listings)
 - Filters: Accepts Bizum, has capacity for €100
 - Shows list of available sellers with rates
 
@@ -290,7 +290,7 @@ When BCH drops 3%, both Elena and María get notifications with urgency based on
 - Exception: If Isabel also has BCH buyer listing (e.g., VES income → wants BCH)
 - Merchants escaping hyperinflation use H€/HAu as stability
 
-**Unknown to document:** Not all merchants attract remittance customers. **Hypothesis:** Small neighbourhood shops where recipients buy essentials regularly become main cash-out points. This is documented in [Merchant Asset Preference](../../../why-this-design/open-questions/behavioral/merchant-asset-preference.md).
+**Unknown to document:** Not all merchants attract remittance customers. **Hypothesis:** Small neighbourhood shops where recipients buy essentials regularly become main cash-out points. This is documented in [Merchant Asset Preference](../../../unknowns/behavioral/merchant-asset-preference.md).
 
 ### What if Nostr relay is down?
 
@@ -336,10 +336,10 @@ When BCH drops 3%, both Elena and María get notifications with urgency based on
 ## Technical Details
 
 **For implementation details, see:**
-- [Wallet](../../../implementation/android-app/wallet/README.md) - Covenant creation
-- [Bulletin Board](../../../implementation/android-app/bulletin-board/README.md) - Seller discovery
-- [Nostr](../../../implementation/android-app/nostr/README.md) - Message coordination
-- [Notification Bot](../../../implementation/android-app/notification-bot/README.md) - Payment matching
+- [Wallet](../../../implementation/android-app/wallet.md) - Covenant creation
+- [Bulletin Board](../../../implementation/android-app/bulletin-board.md) - Seller discovery
+- [Nostr](../../../implementation/android-app/nostr.md) - Message coordination
+- [Notification Bot](../../../implementation/android-app/notification-bot.md) - Payment matching
 
 **For rationale, see:**
 - [Why Payment-First?](../../../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design

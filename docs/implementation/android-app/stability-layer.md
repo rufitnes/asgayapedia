@@ -202,7 +202,7 @@ Wallet Balance:
 
 **What:** Single liquidity pool provides speculator side of AnyHedge contracts
 
-**Capacity:** ~€1,800 (60% of Phase 0 budget)
+**Capacity:** €3,000 (unified stability pool)
 
 **Pseudocode:**
 ```
@@ -241,11 +241,8 @@ if multiple_users_want_to_mint and pool_capacity_insufficient:
 - When pool refilled, second user's request processed
 
 **Phase 0 allocation (reference implementation):**
-- Total budget: €3,000
-- Passive BCH seller (covenants): €500
-- Passive BCH buyer (VES): €226
-- Reserve (refunds): €500
-- **Bull pool (stability): €1,800** ← 60% of capital
+- **€3,000 unified stability pool** (single pool)
+- *(An earlier draft split this into seller/buyer/reserve/bull sub-allocations — that split is superseded.)*
 
 **Phase 1+ alternative: Open Marketplace**
 
@@ -363,26 +360,26 @@ function mintH€FromContract(contract_id, amount_eur):
 **Burn economics (Phase 0):**
 
 **Auto-renewing contracts:**
-- Phase 0 uses 7-day contracts that auto-renew unless user exits
+- Phase 0 uses 30-day contracts that auto-renew unless user exits
 - Contract renews automatically → Elena keeps stable H€ indefinitely
 - Exit anytime: free at expiry, small fee if early
 
 **Free burning at contract expiry:**
-- Elena mints 100 H€ (7-day AnyHedge contract)
-- Day 7: Contract expires → burn free, get BCH back
-- Or: Let contract auto-renew → hold H€ another 7 days
+- Elena mints 100 H€ (30-day AnyHedge contract)
+- Day 30: Contract expires → burn free, get BCH back
+- Or: Let contract auto-renew → hold H€ another 30 days
 
 **Early exit fee (before expiry):**
 ```
 days_remaining = contract_expiry - now()
-total_days = 7  // 7-day contract duration
+total_days = 30  // 30-day contract duration
 
 early_exit_fee_percent = (days_remaining / total_days) * 0.5%
 
 Example:
-- Day 1 (6 days left): 6/7 × 0.5% = 0.43% fee
-- Day 4 (3 days left): 3/7 × 0.5% = 0.21% fee  
-- Day 7 (0 days left): 0/7 × 0.5% = 0% fee (free)
+- Day 1 (29 days left): 29/30 × 0.5% = 0.48% fee
+- Day 15 (15 days left): 15/30 × 0.5% = 0.25% fee  
+- Day 30 (0 days left): 0/30 × 0.5% = 0% fee (free)
 ```
 
 **Fee goes to:** Bull pool speculator (compensation for early settlement)
@@ -816,4 +813,4 @@ catch SettlementError:
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Android App](README.md)** | **[📖 Glossary](../../glossary.md)**

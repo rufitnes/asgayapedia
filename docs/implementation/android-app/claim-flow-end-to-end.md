@@ -669,10 +669,9 @@ function claim(
     require(tx.outputs[0].value == eurPayment);
     require(hash160(tx.outputs[0].lockingBytecode) == recipient);
     
-    // 6. Validate output 1 (buffer to SELLER = funder!)
-    int buffer = tx.inputs[0].value - eurPayment - tx.outputs[2].value;
-    require(tx.outputs[1].value >= buffer);
-    require(hash160(tx.outputs[1].lockingBytecode) == seller);  // ← Key check!
+    // 6. Validate output 1 (remainder / buffer → funder)
+    //    v2.6 `claim` is a 2-output path: output[0] → recipient, output[1] → funder.
+    require(hash160(tx.outputs[1].lockingBytecode) == funder);  // ← Key check!
 }
 ```
 

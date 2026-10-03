@@ -209,7 +209,7 @@ print(f"Abort frequency (24h): {len(abort_events) / len(df) * 100:.2f}%")
 ## Related Documents
 
 - [Covenant Mechanism](../../the-mechanism/wallet/README.md)
-- [Sender Journey - Covenant Abort](../../user-journeys/sender/README.md#what-if-bch-price-crashes-during-transaction)
+- [Sender Journey - Covenant Abort](../../user-journeys/remittance/sender/README.md#what-if-bch-price-crashes-during-transaction)
 - [Bull Pool Capital Unknown](bull-pool-capital.md)
 
 ---

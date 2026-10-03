@@ -769,7 +769,7 @@ const signature = signatureObj.toDER();
 
 ### v2.6.1 (Revision): Funder Semantics Rename
 
-**What:** Renamed `seller` → `funder` parameter for clarity (per the [funder principle](../../../why-this-design/constraints/funder-principle.md)).
+**What:** Renamed `seller` → `funder` parameter for clarity (per the [funder principle](../../why-this-design/constraints/funder-principle.md)).
 
 **Why at zero cost:** Constructor parameter *names* live in the artifact ABI, not the spending bytecode. Compiling with `pubkey funder` produces **byte-identical bytecode** to v2.6 — same address, no redeployment, no re-validation.
 
@@ -796,7 +796,7 @@ const signature = signatureObj.toDER();
 - sellerRecoverBuffer() is for the different case: sender offline but price ABOVE 6.8% (buffer intact, something to recover).
 - Phase 0: app logic enforces fairness + the overlap zone keeps funds accessible in all scenarios.
 
-**Future work:** The overlap between abort() and the other paths can be tightened with math refinement (dynamic buffer makes this easier — see [variable-buffer-rate](../../../unknowns/variable-buffer-rate.md)). Phase 0: current overlap is good enough.
+**Future work:** The overlap between abort() and the other paths can be tightened with math refinement (dynamic buffer makes this easier — see [variable-buffer-rate](../../unknowns/variable-buffer-rate.md)). Phase 0: current overlap is good enough.
 
 ### H€ Minting Policy (Phase 0 Compliance)
 
@@ -814,7 +814,7 @@ const signature = signatureObj.toDER();
 
 **Compliance proof:** If BCH price stabilizes, H€ becomes obsolete - proves it's just volatility protection, not money.
 
-**Reference:** [Stability Layer](../../the-mechanism/stability-layer.md) - H€ architecture and compliance
+**Reference:** [Stability Layer](../../the-mechanism/stability-layer/README.md) - H€ architecture and compliance
 
 ### Test Matrix Summary
 
@@ -1307,8 +1307,8 @@ val txid = covenantWebView.claimCovenant(
 
 **What's production-ready (August 10, 2026):**
 
-✅ **Covenant v2.5 smart contract**
-- All 4 spending paths tested (claim, merchantCashout, refund, sellerRecoverBuffer)
+✅ **Covenant v2.6 smart contract**
+- All 5 spending paths tested (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
 - On-chain validation proven (August 10 TXID)
 - Funder principle enforced by smart contract
 
@@ -1377,14 +1377,14 @@ val txid = covenantWebView.claimCovenant(
 
 ### Potential v3.0: Multi-Oracle Consensus
 
-**Current v2.5:** Single oracle signature verification via `checkDataSig`.
+**Current v2.6:** Single oracle signature verification via `checkDataSig`.
 
 **Oracle evolution (covenant stays the same):**
 - **Phase 0:** Bootstrap oracle (Asgaya queries centralized price source)
 - **Phase 1:** Oracle-over-Nostr (multiple sources, reputation-filtered consensus)
 - **Phase 2:** Blockchain-as-oracle (covenant fundings are trade signals, network VWAP)
 
-**Why the covenant doesn't need to change:** v2.5 verifies *one signature from one pubkey*. The oracle infrastructure can evolve from single-source to multi-source consensus without changing the covenant. The client determines which oracle signature to trust based on reputation, source diversity, and network consensus.
+**Why the covenant doesn't need to change:** v2.6 verifies *one signature from one pubkey*. The oracle infrastructure can evolve from single-source to multi-source consensus without changing the covenant. The client determines which oracle signature to trust based on reputation, source diversity, and network consensus.
 
 **True v3.0 (if needed):** Covenant-level multi-oracle (verify N signatures, calculate median on-chain). This would require more complex covenant logic and larger scripts. The trade-off (decentralization vs covenant simplicity) may not be worth it if Phase 2's blockchain-as-oracle already provides sufficient decentralization at the client layer.
 
@@ -1403,7 +1403,7 @@ val txid = covenantWebView.claimCovenant(
 
 **Implementation:**
 - [Distributed Monitoring](../../the-mechanism/nostr-coordination/distributed-monitoring.md) - 3-device price monitoring
-- [Testing Plan](../../../knowledge/meta/phase-1.5-testing-plan.md) - Phase 1.5 testing strategy
+- Testing Plan - Phase 1.5 testing strategy
 
 ---
 
@@ -1415,7 +1415,7 @@ val txid = covenantWebView.claimCovenant(
 
 ---
 
-**Status:** 🏆 **Production-Proven** - v2.5 complete, all 4 paths tested, first inter-device claim successful  
+**Status:** 🏆 **Production-Proven** - v2.6 complete, all 5 paths tested, first inter-device claim successful  
 **Last Milestone:** August 10, 2026 - First guaranteed-value covenant claim between two devices  
 **Evidence:** TXID `193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96`  
 **Updated:** 2026-08-21

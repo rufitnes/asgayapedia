@@ -9,7 +9,7 @@
 
 ## What It Is
 
-The Asgaya Bulletin Board is searchable data stored on the Bitcoin Cash blockchain. Not a website. Not a database. Just NFT tokens on the blockchain that say "I'm selling BCH for euros" or "I'm buying BCH with bolivares."
+The Asgaya Bulletin Board is open discovery data. Not a website. Not a database. In Phase 0 it is **signed Nostr listings** — anyone can post, anyone can read, no one needs permission. *(A censorship-resistant on-chain copy — the anchor — is planned for Phase 0+.)*
 
 Anyone can post. Anyone can read. No one can censor it.
 
@@ -46,7 +46,7 @@ When a recipient visits the merchant, they hand over the claim, receive cash, an
 | **Regulation** | Platform liable (KYC required) | No intermediary (MiCA compliant) |
 | **Uptime** | Depends on company | Depends on BCH network (99.99%) |
 
-There's no company to shut down. LocalBitcoins was ordered to close. The bulletin board is just data on the blockchain. No one can turn it off.
+There's no company to shut down. LocalBitcoins was ordered to close. The bulletin board is just open data — no one can turn it off.
 
 ---
 
@@ -82,7 +82,7 @@ Republish the same listing id with new details → relays replace the old versio
 
 ## Multi-Role Strategies: Playing Both Sides
 
-Because listings are just NFTs, you can post as many as you want.
+Because listings are just signed events, you can post as many as you want.
 
 ### Double-Dip (Seller + Buyer)
 
@@ -127,15 +127,15 @@ Reputation is **derived from the identity's settlement history** on-chain — th
 
 ## Key Takeaways
 
-1. **On-chain bulletin board** — Listings are NFT UTXOs on the BCH blockchain; no central server.
+1. **Permissionless bulletin board** — Listings are signed **Nostr** events (NIP‑99); no central server. *(On-chain anchor planned, Phase 0+.)*
 2. **Two listing types** — BCH Sellers and BCH Buyers. That's it.
 3. **Merchants are BCH buyers** — Payment method "cash" plus location. Nothing special.
 4. **Permissionless** — Anyone can post, anyone can read. No gatekeeper.
 5. **Multi-role earnings** — Post multiple listings to earn on both sides.
-6. **Censorship-resistant** — No company to shut down. Just blockchain data.
+6. **Censorship-resistant** — No company to shut down. Just open data.
 7. **Works with covenants** — Bulletin board discovers; covenants execute.
 
-The bulletin board isn't a product. It's infrastructure. When regulators shut down LocalBitcoins, users lost their marketplace. When they come for Asgaya, there's nothing to shut down. The listings are already on the blockchain.
+The bulletin board isn't a product. It's infrastructure. When regulators shut down LocalBitcoins, users lost their marketplace. When they come for Asgaya, there's nothing to shut down. The listings are already published (Nostr today; a censorship-resistant on-chain anchor is planned).
 
 That's the point.
 ---

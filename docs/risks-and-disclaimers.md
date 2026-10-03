@@ -102,7 +102,7 @@ By participating in Asgaya (as a user, merchant, or BCH seller), **you are solel
 - **Software bugs:** The protocol is experimental and may contain errors
 - **Covenant vulnerabilities:** Smart contract code may have bugs despite review and testing
 - **CashScript limitations:** Covenant language is powerful but relatively new technology
-- **Contract renewal failures:** 7-day auto-renewing contracts may behave unexpectedly
+- **Contract renewal failures:** 30-day auto-renewing contracts may behave unexpectedly
 - **Stability layer risks:** H€/HAu token minting via AnyHedge contracts is experimental
 - **Network failures:** Bitcoin Cash network or fiat payment systems may experience downtime
 - **User error:** Mistakes in addresses, amounts, or confirmations may be irreversible

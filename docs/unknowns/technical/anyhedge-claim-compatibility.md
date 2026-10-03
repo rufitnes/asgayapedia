@@ -202,7 +202,7 @@ If tests fail or documentation unclear:
 
 - [Stability Layer Overview](../../the-mechanism/stability-layer/README.md)
 - [How They Interact](../../the-mechanism/how-they-interact.md)
-- [Sender Journey - Covenant Abort](../../user-journeys/sender/README.md#what-if-bch-price-crashes-during-transaction)
+- [Sender Journey - Covenant Abort](../../user-journeys/remittance/sender/README.md#what-if-bch-price-crashes-during-transaction)
 
 ---
 
@@ -222,12 +222,12 @@ If tests fail or documentation unclear:
      - **Triggers:** MiCA CASP license (EU), PSD2 Payment Institution (EU), MSB + state licenses (US), VASP registration (Spain)
      - **Defeats entire purpose of Asgaya** (compliance without licensing)
    - **This workaround is unacceptable** - violates core "no custody, no intermediation" requirement
-   - Source: [RS069 StableHedge Analysis](../../../knowledge/research/RS069_stablehedge_analysis.md)
+   - Source: RS069 StableHedge Analysis
    
 2. **Fork AnyHedge:** Modify to support covenant payouts natively ⭐ **PREFERRED PATH**
    - Pro: Clean architecture, best UX, maintains "no custody" principle
    - Con: Maintenance burden, security audit needed, oracle dependency
-   - Note: MIT license allows this ([RS067 AnyHedge Fork Analysis](../../../knowledge/research/RS067_anyhedge_fork_analysis.md))
+   - Note: MIT license allows this (RS067 AnyHedge Fork Analysis)
    - **Status:** Viable and under our control - testnet validation before Phase 0
    
 3. **Build custom hedging mechanism:** Inspired by AnyHedge/StableHedge, designed for covenants

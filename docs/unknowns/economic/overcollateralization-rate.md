@@ -20,7 +20,7 @@ We have no empirical validation of:
 - Seller willingness to post different collateral levels
 - Trade-off between protection and capital efficiency
 
-**Current design assumes:** 107% collateral for 24h window, scaled dynamically to 103% for 2h window.
+**Current design assumes:** 107% collateral for the 8h window; dynamic scaling for other window lengths is under study.
 
 **Reality unknown:** Is this too conservative (scares away sellers)? Too aggressive (merchants/senders exposed to tail risk)?
 

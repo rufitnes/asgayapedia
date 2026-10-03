@@ -471,4 +471,4 @@ Many assume "buffer returns to seller" means Isabel gets €7 extra profit. **Th
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Trader](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Trader](README.md)** | **[📖 Glossary](../../glossary.md)**

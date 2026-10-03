@@ -18,10 +18,10 @@ A Bitcoin Cash smart contract that locks BCH and releases it only when specific 
 ### Cash Account
 A human‑readable name permanently registered on the BCH blockchain (e.g., `Elena#142`). Cash Accounts serve four simultaneous roles in Asgaya: user identifier, covenant recipient field, payment reference on bank transfers, and bot lookup key. They eliminate the need for phone numbers, email addresses, or long cryptographic addresses.
 
-### Payment‑First Covenant
+### Payment-First Covenant
 The architectural principle that a BCH seller never locks their BCH into a covenant until **after** their bank confirms receipt of the sender’s fiat payment. This eliminates the seller’s capital risk and avoids creating a custodial or money‑transmission relationship.
 
-### Two‑Transaction Model
+### Two-Transaction Model
 The compliance separation between the remittance (sender → recipient) and the subsequent commerce (recipient selling BCH to a merchant). The recipient owns the BCH after claiming it from the covenant, making the second transaction a voluntary peer‑to‑peer sale.
 
 ### Pull System
@@ -45,10 +45,10 @@ A BCH‑native CashToken pegged to the price of gold (XAU) via pooled AnyHedge c
 ### Bull Pool
 The Phase 0 liquidity pool that takes the long (speculative) side of all AnyHedge contracts backing H€ and HAu tokens. Funded by the founder, it will be replaced in Phase 1+ by a crowdfunded, community‑operated long‑side pool.
 
-### Triple‑Dip
+### Triple-Dip
 The three revenue streams a merchant earns from a single remittance: (1) a 0.5 % spread on the cash‑out, (2) product margin on groceries the recipient buys during the visit, and (3) the BCH position itself, which can be stabilised into H€/HAu or recycled as a seller.
 
-### Double‑Dip
+### Double-Dip
 When a participant operates simultaneously as a BCH seller and a BCH buyer, earning fees on both sides of the corridor. Common among dual‑citizens with bank accounts in both Spain and Venezuela.
 
 ### Onboarder
@@ -110,7 +110,7 @@ The automation engine running on a passive seller’s device. It intercepts bank
 ### npub / nsec
 A user's Nostr public key (`npub…`) and private key (`nsec…`). The `npub` is the coordination address others message; on the bulletin board the listing is **signed by** the poster's `npub`, which is also what verifies the poster's identity.
 
-### NIP‑17 (gift‑wrapped DMs)
+### NIP-17 (gift-wrapped DMs)
 The private‑messaging standard Asgaya uses. Each message is wrapped in three layers: a kind‑14 **rumor** (the payload, unsigned), a kind‑13 **seal** (encrypted, signed by the sender's real key), and a kind‑1059 **gift‑wrap** (encrypted, signed by a random one‑time key). Replaces the deprecated NIP‑04; NIP‑44 provides the encryption.
 
 ### Quote & TTL
@@ -119,7 +119,7 @@ In cash‑out, the merchant answers a sale request with a pre‑signed **quote**
 ### Liveness = response
 Asgaya has no heartbeat or presence system: a prompt reply *is* the proof the other side is online (the request proves the sender, the reply proves the responder). The cash‑out exchange finalises in seconds.
 
-### Confirm‑then‑pay
+### Confirm-then-pay
 The merchant broadcasts the cash‑out transaction (BCH moves first) and only then hands over the fiat. Until the transaction is confirmed a competing spend could still win, so remote or larger trades wait for a confirmation.
 
 ---
@@ -178,7 +178,7 @@ A BCH‑native overcollateralised stablecoin created by the Moria Protocol. MUSD
 ### SPV (Simplified Payment Verification)
 A method for lightweight clients to verify transactions without downloading the full blockchain. Asgaya’s mobile wallet can operate in SPV mode, though it primarily relies on Electrum servers for convenience.
 
-### 0‑conf (Zero‑Confirmation)
+### 0-conf (Zero-Confirmation)
 Accepting a Bitcoin Cash transaction as valid before it is included in a block. Safe for the small amounts involved in Asgaya remittances due to BCH's low double‑spend risk. Enables the sub‑minute settlement experience.
 
 ---
@@ -187,7 +187,7 @@ Accepting a Bitcoin Cash transaction as valid before it is included in a block. 
 
 Terms from the reference Android implementation (`AsgayaHusk`). These appear in `docs/implementation/`.
 
-### P2SH32 (Pay‑to‑Script‑Hash, 32‑byte)
+### P2SH32 (Pay-to-Script-Hash, 32-byte)
 A Bitcoin Cash script address type where the covenant's redeem script is hashed with SHA‑256 (32‑byte hash). Covenant addresses in Asgaya are P2SH32 (`bchtest:...`). Contrast with P2SH20 (20‑byte RIPEMD‑160 hash, used for standard script addresses).
 
 ### Covenant Address

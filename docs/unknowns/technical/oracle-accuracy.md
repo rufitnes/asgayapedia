@@ -73,7 +73,7 @@ Specifically:
 ### Step 1: Identify Available Oracle Providers
 
 **Research:**
-- **GeneralProtocols (Primary candidate)** - AnyHedge official oracle, used by StableHedge ([RS069](../../../knowledge/research/RS069_stablehedge_analysis.md))
+- **GeneralProtocols (Primary candidate)** - AnyHedge official oracle, used by StableHedge (RS069)
 - CoinGecko API (backup/validation)
 - Chainlink (if BCH-compatible)
 - Custom oracle (aggregate multiple sources)

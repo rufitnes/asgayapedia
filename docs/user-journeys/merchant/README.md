@@ -436,16 +436,16 @@ Carlos installs wallet → Creates Cash Account → Posts listing
 ## Technical Details
 
 **For implementation details, see:**
-- [Wallet](../implementation/android-app/wallet/README.md) - Accept trades, manage stability tokens
-- [Bulletin Board](../implementation/android-app/bulletin-board/README.md) - Post passive listings
-- [Nostr](../implementation/android-app/nostr/README.md) - Coordinate with recipients
-- [Notification Bot](../implementation/android-app/notification-bot/README.md) - Auto-match trades
-- [Stability Layer](../implementation/android-app/stability/README.md) - H€/HAu conversion
+- [Wallet](../../implementation/android-app/wallet.md) - Accept trades, manage stability tokens
+- [Bulletin Board](../../implementation/android-app/bulletin-board.md) - Post passive listings
+- [Nostr](../../implementation/android-app/nostr.md) - Coordinate with recipients
+- [Notification Bot](../../implementation/android-app/notification-bot.md) - Auto-match trades
+- [Stability Layer](../../implementation/android-app/stability-layer.md) - H€/HAu conversion
 
 **For rationale, see:**
-- [Why Covenants?](../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design
-- [Why 7% Buffer?](../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md) - Constraint #2: Value-Guaranteed Delivery
-- [Why Reputation?](../why-this-design/constraints/reputation-based-dispute-resolution-blacklist.md) - Constraint #5: Social Coordination
+- [Why Covenants?](../../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design
+- [Why 7% Buffer?](../../why-this-design/constraints/7%-volatility-buffer-value-guaranteed-delivery.md) - Constraint #2: Value-Guaranteed Delivery
+- [Why Reputation?](../../why-this-design/constraints/reputation-on-chain-not-central-database.md) - Constraint #5: Social Coordination (derived reputation, not a central database)
 
 ---
 

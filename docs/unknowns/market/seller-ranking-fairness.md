@@ -378,7 +378,7 @@ Large: (500 + 300) / 0.5 = 1600
 - **[Reputation On-Chain](../../why-this-design/constraints/reputation-on-chain-not-central-database.md)** — Data structure
 - **[Fraud Protection](../../why-this-design/fraud-protection.md)** — Self-dealing detection
 - **[Sender Journey](../../user-journeys/remittance/sender/README.md)** — How María selects a seller
-- **[UI Design Draft](../../../asgaya/knowledge/ui_design_draft/UIdesign.md)** — Seller selection screen mockup
+- **UI Design Draft** — Seller selection screen mockup
 
 ---
 

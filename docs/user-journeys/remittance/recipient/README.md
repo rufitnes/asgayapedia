@@ -285,7 +285,7 @@ This creates a self-sustaining liquidity cycle where recipients graduate into tr
 
 **Options:**
 1. **Passive trader with PagoMóvil** - find someone offering remote cash-out (most practical)
-2. **Elena waits** - covenant doesn't expire for 24 hours (8 hours Phase 0)
+2. **Elena waits** - the covenant doesn't expire for 8 hours (Phase 0)
 3. **Elena keeps BCH** - claim to wallet, cash out later
 4. **Carlos delivers** - unlikely unless €1000+ worth, and even then poses safety risk (Carlos travels with large cash amount, leaves shop unattended)
 
@@ -357,10 +357,10 @@ If María sends money every month, Elena can optimize:
 ## Technical Details
 
 **For implementation details, see:**
-- [Wallet](../../../implementation/android-app/wallet/README.md) - Claim covenant, create trade covenant
-- [Bulletin Board](../../../implementation/android-app/bulletin-board/README.md) - Find local merchants
-- [Nostr](../../../implementation/android-app/nostr/README.md) - Coordinate meeting
-- [Notification Bot](../../../implementation/android-app/notification-bot/README.md) - Push notifications
+- [Wallet](../../../implementation/android-app/wallet.md) - Claim covenant, create trade covenant
+- [Bulletin Board](../../../implementation/android-app/bulletin-board.md) - Find local merchants
+- [Nostr](../../../implementation/android-app/nostr.md) - Coordinate meeting
+- [Notification Bot](../../../implementation/android-app/notification-bot.md) - Push notifications
 
 **For rationale, see:**
 - [Why Covenants?](../../../why-this-design/constraints/asgaya-remittances-inefficient-by-design.md) - Constraint #1: Inefficient by Design

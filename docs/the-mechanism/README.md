@@ -1,7 +1,7 @@
 # Asgaya: A Bitcoin Cash Adoption Engine
 **📖 Unfamiliar terms?** See the [glossary](../glossary.md) for definitions.
 
-**Send €100 to Venezuela for €0.50 instead of €5.**
+**Send €100 to Venezuela for under €1 instead of €5.**
 No company. No custody. No KYC. Just five components working together.
 
 ---
@@ -25,7 +25,7 @@ becomes unnecessary. **Success means we disappear.**
 | Gear | What it does |
 |------|--------------|
 | ⚙️ **Wallet** | Where users hold BCH and establish identity (Cash Accounts replace phone numbers) |
-| ⚙️ **Bulletin Board** | Where buyers and sellers find each other (NFTs on the BCH blockchain — anyone can read) |
+| ⚙️ **Bulletin Board** | Where buyers and sellers find each other (permissionless listings — anyone can read) |
 | ⚙️ **Nostr** | How they coordinate payment details (encrypted P2P messaging) |
 | ⚙️ **Notification Bot** | How it runs automatically (the killer feature — set and forget) |
 | ⚙️ **Stability Layer** | How merchants protect against volatility (H€/HAu tokens backed by AnyHedge) |
@@ -36,12 +36,12 @@ becomes unnecessary. **Success means we disappear.**
 
 1. **Wallet:** María opens her wallet, enters Elena’s Cash Account (`Elena#142`).
 2. **Covenant:** María creates a covenant (smart contract) specifying the terms.
-3. **Bulletin Board:** The app queries the blockchain and finds a seller accepting Bizum.
+3. **Bulletin Board:** The app queries the bulletin board (Nostr listings) and finds a seller accepting Bizum.
 4. **Nostr:** María selects a seller and receives the payment instructions.
 5. **Notification Bot:** The seller’s bot detects María’s Bizum payment and funds the covenant.
 6. **Recipient:** Elena gets a notification and can claim BCH to her wallet or cash it out at a local merchant.
 
-**Cost:** 0.5% (€0.50) vs 5% (€5) via Western Union.  
+**Cost:** ~1% total (0.5% seller + 0.5% merchant — set by the counterparties; Phase-0 bootstrap) vs 5% (€5) via Western Union.  
 **Time:** 5 minutes–4 hours vs 1–2 days.  
 **Trust:** The seller never locks BCH until paid. The sender has legal recourse if the seller ghosts.
 
@@ -71,8 +71,7 @@ is traceable.
 typical daily swings. Unused buffer returns to the seller. Post-Phase 0, this evolves
 to a dynamic buffer that scales with 30-day downside volatility (see RS074).
 
-**On‑Chain Bulletin Board.** Listings are NFTs on the BCH blockchain. No central server
-to shut down. Anyone can read, anyone can post.
+**Permissionless Bulletin Board.** Listings are signed **Nostr** events (NIP‑99). No central server to shut down. Anyone can read, anyone can post. *(An on-chain anchor — a censorship-resistant copy — is planned for Phase 0+.)*
 
 **Notification Bot.** Once the seller posts a listing, the bot watches the blockchain
 and bank notifications. No manual intervention needed — scale without effort.

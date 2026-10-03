@@ -4,6 +4,8 @@
 **Feature:** Automatic refund protection without manual intervention  
 **Philosophy:** It's the user's money. Protection should be automatic, not manual.
 
+> **⚠️ Update (2026-10-03) — what actually ships.** This page describes the **proposed** sender-side auto-refund UX, which is **DEFERRED** to a later phase — Phase 0 keeps a **manual** `refund()` action and no automatic sender refund. What *is* **LIVE and automatic** at expiry is the **funder's `sellerRecoverBuffer`** (the seller recovers its buffer). And there is **no H€ minting on timeout** — minting happens **only** on `merchantCashout` and on `abort` (>7 % drop). Read the mechanism below as **design intent**, not shipped behaviour.
+
 ---
 
 ## The Core Idea
@@ -108,9 +110,9 @@ When price drops 3% (early warning), María sees:
 
 ---
 
-### Auto-Refund Triggered (Price Drop >7%)
+### Abort + H€ Mint (Price Drop >7%)
 
-When price drops below €930 (7% threshold), **system automatically refunds and protects the value** by default.
+If the price falls **more than 7 %** below the floor, the sender can **`abort`** — a sender-signed covenant path that returns the BCH and **triggers the H€ mint** (stability-layer protection). The covenant would reject the recipient's `claim` anyway (price < floor), so the remittance value is preserved as H€.
 
 ```
 ┌─────────────────────────────────────┐
@@ -128,66 +130,55 @@ When price drops below €930 (7% threshold), **system automatically refunds and
 └─────────────────────────────────────┘
 ```
 
-*Note: H€ minting uses bull pool capacity. If pool exhausted, you'll receive BCH instead.*
+*Note: H€ minting uses bull-pool capacity. If the pool is exhausted, you receive BCH instead.*
 
-**What happened automatically (default setting):**
-1. Price crossed 7% threshold
-2. María's app detected drop (60s check cycle)
-3. App automatically broadcast refund transaction
-4. **App immediately minted 100 H€** (stability layer protection)
-5. María gets notification (non-blocking)
+**What happens (Phase 0 = manual):**
+1. Price crosses the 7 % threshold
+2. María's app detects the drop (60 s check cycle)
+3. María **aborts** the covenant (sender-signed)
+4. **`abort` triggers the mint of 100 H€** (stability-layer protection)
 
-**María did nothing.** System protected her automatically.
+**Why the mint:**
+- ✅ **Preserves the remittance** - Elena can still cash out H€ at a merchant
+- ✅ **No incentive to abuse** - an abort is a *completed BCH sale* (the funder keeps the BCH), so it can't be used to drain the pool
+- ⚙️ **Configurable** - advanced users can keep BCH instead (Settings, below)
 
-**Why automatic protection:**
-- ⚠️ **Volatility window** - Can't wait for user input when price is dropping
-- ✅ **Preserves remittance** - Elena can still cash out H€ at merchant
-- ✅ **Zero friction** - Most users want stability, not BCH exposure
-- ⚙️ **Configurable** - Advanced users can disable in Settings (see below)
-
-**Technical note:** Covenant would reject Elena's claim anyway (price < floor). Auto-refund + H€ minting preserves the remittance value.
+> In Phase 0 the abort is a **manual** action. The "no button, fully automatic" UX in this page is the **deferred** design.
 
 ---
 
-### Auto-Refund Triggered (Timeout - 8 Hours)
+### Timeout (8 Hours)
 
-When Elena doesn't claim within 8 hours, **system automatically refunds and protects the value** by default.
+If Elena doesn't claim within **8 hours**, the covenant reaches expiry. **Nothing is minted or swapped for María**, and her BCH is not auto-refunded by a background swap. At expiry:
+
+- the **funder (the BCH seller) recovers its buffer** via the **automatic `sellerRecoverBuffer`** path — the *only* automatic action at expiry;
+- María can still **`refund()` manually** — a sender-signed path available any time before a claim.
 
 ```
 ┌─────────────────────────────────────┐
-│  ✅ Refund Protected                │
+│  ⏰ Payment window ended (8h)       │
 │                                      │
-│  Timeout: Not claimed in 8 hours    │
+│  Elena didn't claim.                 │
 │                                      │
-│  ✅ Protected: 100 H€                │
-│  (swapped from 0.0107 BCH)          │
+│  Your BCH is recoverable:            │
+│  [Refund to my wallet]               │
 │                                      │
-│  Your €100 value preserved.         │
-│  Elena can still cash out.          │
-│                                      │
-│  [Send H€ to Elena]  [View Swap]    │
+│  No H€ is minted on timeout.         │
 └─────────────────────────────────────┘
 ```
 
-*Note: BCH → H€ swap requires H€ seller on bulletin board. If no liquidity, you'll receive BCH instead.*
+**What happens:**
+1. 8 hours pass; Elena doesn't claim
+2. The oracle timestamp confirms expiry
+3. The **funder reclaims its buffer** (`sellerRecoverBuffer`, automatic)
+4. María can **manually `refund()`** her BCH whenever she likes
 
-**What happened automatically (default setting):**
-1. 8 hours passed, Elena didn't claim
-2. Oracle timestamp confirmed expiry
-3. App automatically broadcast refund transaction
-4. **App immediately swapped BCH → H€** on bulletin board
-5. María notified (she might not have been watching)
+**Why no H€ on timeout:**
+- ⚠️ **Minting or swapping on timeout would be abusable** - a deliberate never-claim could drain the bull pool or force a swap
+- ✅ **Minting is reserved** for `merchantCashout` and `abort` (>7% drop), where it is economically backed
+- ✅ **The sender keeps control** - `refund()` is always available and sender-signed
 
-**Why automatic swap:**
-- ⚠️ **Can't mint on timeout** - Would allow abuse (deliberately timeout to drain bull pool)
-- ✅ **Bulletin board swap** - H€ seller provides liquidity (permissionless!)
-- ✅ **Preserves remittance** - María can still send H€ to Elena
-- ✅ **Native tokens** - Swap happens in seconds, user doesn't need to know
-- ⚙️ **Configurable** - Advanced users can receive BCH instead (Settings)
-
-**Technical note:** H€ tokens are native BCH tokens (CashTokens). Anyone can be an H€ seller on the bulletin board - completely permissionless role. Phase 0: Asgaya bootstraps liquidity.
-
-**Edge case handled:** If María's device was offline, seller or recipient device would trigger refund. If all offline, María's device refunds when back online. Auto-swap happens when device reconnects.
+**Edge case:** If María's device is offline at expiry, the **funder's** device still recovers its buffer (automatic). María can `refund()` any time once she's back online.
 
 ---
 
@@ -212,7 +203,7 @@ Refund anyway? This may be unfair to recipient.
 ## Settings: Auto-Refund Protection (Advanced Users)
 
 **Default behavior (90% of users):**
-- ✅ Automatic H€ minting/swapping on refund
+- ✅ H€ minting on `abort` (>7% drop)
 - ✅ Instant protection from volatility
 - ✅ Zero friction (never see this menu)
 
@@ -224,8 +215,8 @@ Refund anyway? This may be unfair to recipient.
 │                                      │
 │  ● Automatic (Recommended)          │
 │    Protect refunds from volatility  │
-│    • Price drop: Mint H€            │
-│    • Timeout: Swap BCH → H€         │
+│    • Price drop >7%: mint H€        │
+│    • Timeout: no mint (refund)      │
 │                                      │
 │  ○ Manual Control                   │
 │    You decide after each refund     │
@@ -306,7 +297,7 @@ Result: €100 value preserved
 
 **Covenant Monitoring**
 - Compares market price against covenant threshold (7% drop)
-- Detects crossing, triggers auto-refund
+- Detects a crossing and prompts the sender to `abort`
 - Broadcasts alerts to per-covenant channels
 
 **Benefits:**
@@ -331,7 +322,7 @@ nostr.publish('asgaya:covenant:abc123', {
 ```
 
 **Other devices see alert:**
-- María: Gets notification "Auto-refund triggered"
+- María: Gets notification "Price dropped >7% — abort to mint H€?"
 - Elena: Gets notification "Payment cancelled - price drop"
 - Isabel: Gets notification "Covenant expired - buffer returned"
 
@@ -354,7 +345,7 @@ nostr.publish('asgaya:covenant:abc123', {
 
 **Asgaya's approach:**
 - **Covenant:** Allows sender to refund anytime (sender owns it)
-- **App:** Auto-refunds only when appropriate (timeout or price drop >7%)
+- **App:** offers an `abort` on a >7% drop (timeout is not an auto-refund)
 - **Stability layer:** Protects value automatically (but configurable in Settings)
 
 **Why automatic protection by default:**
@@ -412,7 +403,7 @@ The difference: **Volatility doesn't wait for user input.** In 30 seconds, price
 **Asgaya position:** This is discouraged but not prevented.
 
 **What María can do:**
-1. **Wait for timeout** (8 hours) → auto-refund triggers
+1. **Wait for the timeout** (8 hours) → the funder recovers its buffer; María recovers her BCH with `refund()`
 2. **Contact Elena** → ask her not to claim → timeout refunds
 3. **Advanced: Manual refund** (not exposed in UI, requires technical knowledge)
 
@@ -440,11 +431,11 @@ The difference: **Volatility doesn't wait for user input.** In 30 seconds, price
 | Traditional Wallet | Asgaya |
 |-------------------|--------|
 | User must check status manually | **Automatic monitoring** |
-| "Refund" button always visible | **No button (auto-refunds)** |
+| "Refund" button always visible | **Manual `refund()` (auto-refund deferred)** |
 | User decides when to refund | **App decides (pre-agreed conditions)** |
 | User decides if/when to stabilize | **Auto-protect by default (configurable)** |
-| Funds stuck if user forgets to refund | **Impossible - auto-refund guaranteed** |
-| Volatility exposure on refunds | **Automatic H€ minting/swap (default)** |
+| Funds stuck if user forgets to refund | **Manual `refund()`; the funder auto-recovers its buffer** |
+| Volatility exposure on refunds | **H€ mint on `abort` (>7% drop)** |
 | Complex UI with many options | **Simple - just status display** |
 | Decision fatigue ("Should I refund?") | **Zero decisions - just notifications** |
 | Emergency escape requires manual refund | **Same (advanced users can broadcast)** |
@@ -459,7 +450,7 @@ The difference: **Volatility doesn't wait for user input.** In 30 seconds, price
 
 **How it works:**
 - [Covenant Implementation](../../../implementation/covenants/version-history.md) - v2.2 simplified refund
-- [Auto-Refund Monitoring](../../../implementation/android-app/wallet/auto-refund-monitoring.md) - Background service implementation
+- Auto-Refund Monitoring - Background service implementation
 
 **Full sender journey:**
 - [Sender Journey](./README.md) - Complete flow including happy path
@@ -474,5 +465,5 @@ The difference: **Volatility doesn't wait for user input.** In 30 seconds, price
 
 ---
 
-**Status:** Phase 1.5 - Documentation (auto-refund UX designed, implementation planned)  
-**Updated:** 2026-07-25
+**Status:** ⚠️ Design proposal — **DEFERRED** (Phase 0 = manual `refund()` + automatic funder `sellerRecoverBuffer`)  
+**Updated:** 2026-10-03

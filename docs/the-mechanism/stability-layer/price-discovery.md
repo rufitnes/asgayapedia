@@ -125,4 +125,4 @@ Document the oracle strategy for H€ and HAu token price discovery, including:
 
 ## Navigation
 
-**[🏠 Home](../../../index.md)** | **[↑ Stability Layer](README.md)** | **[📖 Glossary](../../../glossary.md)**
+**[🏠 Home](../../index.md)** | **[↑ Stability Layer](README.md)** | **[📖 Glossary](../../glossary.md)**

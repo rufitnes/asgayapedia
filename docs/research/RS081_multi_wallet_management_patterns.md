@@ -327,8 +327,8 @@ data class Wallet(
 - [Asgaya Trinity](../implementation/android-app/asgaya-trinity.md) - 3-part covenant architecture
 
 **User Journeys:**
-- [Sender Journey](../user-journeys/sender/README.md) - How senders create covenants
-- [Recipient Journey](../user-journeys/recipient/README.md) - How recipients claim covenants
+- [Sender Journey](../user-journeys/remittance/sender/README.md) - How senders create covenants
+- [Recipient Journey](../user-journeys/remittance/recipient/README.md) - How recipients claim covenants
 
 **Design Decisions:**
 - [Why This Design](../why-this-design/README.md) - Architectural principles
