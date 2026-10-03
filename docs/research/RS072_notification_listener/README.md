@@ -16,7 +16,7 @@
 ### Validation Code
 
 - **[BizumParser/](BizumParser/)** - Research app that validates NotificationListenerService reliability
-  - 24-hour persistence test: ✅ PASSED
+  - 48-hour persistence test across 5 Spanish banks: ✅ PASSED
   - Parse accuracy: 100% (7/7 transactions)
   - Production-ready architecture confirmed
 
@@ -26,7 +26,7 @@
 
 **Can Android NotificationListenerService reliably detect and parse bank payment notifications for automatic confirmation?**
 
-**Answer:** ✅ Yes. 24-hour validation test proved:
+**Answer:** ✅ Yes. A 48-hour validation test across 5 Spanish banks proved:
 - Service survives 24+ hours continuous operation
 - Works while phone locked (8+ hours overnight)
 - Operates in background without user interaction
@@ -50,7 +50,7 @@
 ## Validation Methodology
 
 1. **Built research app:** BizumParser (minimal NotificationListenerService implementation)
-2. **Ran 24-hour test:** July 1-2, 2026 (22+ hours continuous operation)
+2. **Ran an initial 24-hour test:** July 1-2, 2026 (22+ hours); later validated over **48+ hours across 5 Spanish banks** (Phase -1 complete, July 9, 2026)
 3. **Tested real-world conditions:** Phone locked overnight, background operation
 4. **Validated against production app:** Compared to NotifyFlow (10K+ downloads)
 5. **Verified boot persistence:** Spontaneous reboot test on July 3, 2026
@@ -101,7 +101,7 @@ If you're exploring notification-based payment detection:
 1. **Start with BizumParser code** - Minimal working implementation
 2. **Read RS072** - Implementation details and parsing strategies  
 3. **Read RS073** - Production best practices from NotifyFlow
-4. **Run 24-hour test** - Validate on your target device/Android version
+4. **Run a 48-hour test** - Validate on your target device/Android version
 5. **Add production hardening** - Don't skip boot receiver and foreground service
 
 **Key takeaway:** The architecture works. Now it's about hardening for production and expanding bank support.
