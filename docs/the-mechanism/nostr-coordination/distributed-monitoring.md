@@ -183,7 +183,7 @@ const vwap = trustedTrades.reduce((acc, t) =>
 **Weight *voluntary delivery*, not "number of witnesses".** A `claim`/`cashout` is worth more because someone **chose the price** — not because more parties signed (they all sign the *same covenant terms*, so they cannot attest a different number). Treat `claim`/`merchantCashout` as first-class signals; `refund`/`abort` as second-class (real, but forced).
 
 **Two caveats for whoever builds it:**
-- **Circularity:** on the oracle paths the witness price — and therefore `eurCents / output[0]` — is the **trusted oracle's own** price, so the settlement **confirms** a trade *at that price* (real volume) rather than *discovering* a different one. The independent signal is the **seller's own quote** (the `initialBchPriceInCents` in the revealed script, i.e. their listing) — that is where decoupling ultimately comes from.
+- **Circularity:** on the oracle paths the witness price — and therefore `eurCents / output[0]` — is the **trusted oracle's own** price, so the settlement **confirms** a trade *at that price* (real volume) rather than *discovering* a different one. The independent signal is the **seller's own quote** — their **bulletin-board listing** (seller-set). The covenant's `initialBchPriceInCents` is **sender-set** at creation (from the oracle today), so it is *not* yet that independent signal; recording a seller-set price inside the covenant is the **funder-sets-the-price inversion** (internal `ui-rethink/20`), revisited in Phase 1+.
 - **Indexing:** you must watch **covenant spends by address** (the stack can't enumerate P2SH32 by script), and the spend publishes `eurCents` (amount disclosure — consistent with the §Privacy Model).
 
 ---
