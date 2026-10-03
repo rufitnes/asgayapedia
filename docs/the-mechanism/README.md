@@ -142,5 +142,6 @@ respect.
 - [Notification Bot](notification-bot/README.md) - Automation engine
 - [Stability Layer](stability-layer/README.md) - H€/HAu volatility protection
 - [How They Interact](how-they-interact.md) - The complete picture
+- [Fund-Request Lifecycle](fund-request-lifecycle.md) - How a covenant gets funded (and how it ends)
 
 **Related sections:** [Implementation](../implementation/README.md) · [User Journeys](../user-journeys/README.md) · [Why This Design?](../why-this-design/README.md) · [Unknowns](../unknowns/README.md)

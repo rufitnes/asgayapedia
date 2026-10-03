@@ -83,6 +83,7 @@ If Isabel's payment info matches blacklist hashes (name/phone/IBAN from previous
 - Detects payment with reference `Elena142`
 - Matches to covenant using Cash Account lookup
 - **Locks €107 of Isabel's own BCH** from her inventory into covenant (€100 face value + €7 volatility buffer)
+- *(The full request → funding → resolution flow — Isabel's pre-funding checks, the pay-by window, and how the covenant ends — is in [The Fund-Request Lifecycle](../../../the-mechanism/fund-request-lifecycle.md).)*
 
 ### 7. Elena Gets Notification
 - Elena receives notification: "You have €100 worth of BCH"

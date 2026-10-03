@@ -30,6 +30,8 @@ The **covenant fund request** needs a **pay-by window** per method. Too short �
 get cancelled while in flight. Too long → a pending request blocks a reference (we allow **one
 active covenant per CashAccount**). The window must be **method-specific**, not a global constant.
 
+> **Where this is used:** the **pay-by window** on the [fund-request lifecycle](../../the-mechanism/fund-request-lifecycle.md). Cash in person currently defaults to **5 minutes**.
+
 ## Current Hypothesis
 
 - **Cash in person:** ~5 minutes is enough.
@@ -52,6 +54,12 @@ payment method.
 ## Phase 0 Trial Integration
 
 Log both timings (request→sent, sent→notification) on every payment, tagged by method.
+
+## Phase 0 as-shipped (2026-10-02)
+
+- Cash in person ships with a **5-minute** default pay-by window, carried on the `[FUND_COVENANT]` message (`payWindowSeconds`).
+- A pending request **blocks its reference** for the window (one active fund request per reference).
+- The 5-minute value is a **guess** until the samples above exist — revisit per method.
 
 ## Contributor Guidance
 

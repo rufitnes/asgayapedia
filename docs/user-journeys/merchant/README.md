@@ -462,6 +462,7 @@ Carlos installs wallet → Creates Cash Account → Posts listing
 - [Recipient Journey](../remittance/recipient/README.md) - Elena's perspective
 - [Customer Journey](../customer/README.md) - Similar trade mechanics, different context
 - [Trader Journey](../trader/README.md) - Scaling to Pro Seller
+- [The Fund-Request Lifecycle](../../the-mechanism/fund-request-lifecycle.md) - The seller side: request → funding → resolution
 
 ---
 
