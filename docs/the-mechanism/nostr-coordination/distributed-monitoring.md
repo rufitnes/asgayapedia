@@ -1,10 +1,12 @@
 # Distributed Monitoring: Blockchain-as-Oracle Price Discovery
 
-**Pattern:** Every covenant funding is a trade signal. Network discovers price from real economic activity, not external speculation.
+**Pattern:** Every covenant **settlement** is a trade signal — the funding gives the BCH half, the spend reveals the EUR half + the oracle message ([The Settlement Is the Signal](#the-settlement-is-the-signal-no-op_return-needed)). Network discovers price from real economic activity, not external speculation.
 
 **Oracle Architecture:** The blockchain itself is the oracle. Covenant fundings (on-chain) + reputation-filtered VWAP (off-chain) = permissionless, censorship-resistant price discovery.
 
 **Purpose:** Enable automatic refund on price drops using market prices from actual Asgaya trades, bootstrapped by Asgaya oracle until network matures.
+
+> **⚠️ Phase (updated 2026-10-03): aspirational Phase 1+ — it may never be reached.** This needs **volume and worldwide adoption** so trades are a *constant trickle*. The gate starts at **the first organic merchant posting a listing on the bulletin board** — far below the volume required. **What we do now: document it, and design the Asgaya oracle so this upgrade is an easy rollout later — do not build it, and don't let it feature-creep.**
 
 ---
 
@@ -92,7 +94,7 @@ María pays via Bizum. Isabel's app detects payment, funds covenant:
 // Isabel's app funds covenant (on-chain)
 const covenantTx = await fundCovenant({
   bch_amount: 0.0107,
-  eur_amount: 100,           // In covenant metadata/OP_RETURN
+  eur_amount: 100,           // Constructor param — P2SH32 hides it until the spend reveals it
   recipient: elenaAddress,
   expiry: expiryTime
 });
@@ -156,6 +158,31 @@ const vwap = trustedTrades.reduce((acc, t) =>
 **Sybil-resistant:** Low-reputation sellers ignored. **Volume-weighted:** Big trades matter more. **Decentralized:** Every device calculates independently.
 
 **This five-step progression** transforms each trade into a trusted price signal, creating market-wide consensus from individual economic activity.
+
+---
+
+## The Settlement Is the Signal (no OP_RETURN needed)
+
+**The funding tx hides the trade; the spend reveals it.** A covenant is **P2SH32**, so at funding only the script hash and the BCH amount are on-chain — the params (`eurCents`, `initialBchPriceInCents`, `minPricePercent`, the keys) are hidden. **When the covenant is spent, the redeem script and the oracle message are revealed.** So:
+
+- **Funding gives the BCH half** (how much BCH the seller locked) — params hidden.
+- **The spend reveals the EUR half** (`eurCents`) **and the oracle message** (`timestamp ‖ price`).
+- **Together they price the trade — for free.** No OP_RETURN, no extra output, no extra fee. *(This supersedes the `eur_amount // OP_RETURN` sketch in §Step 3 — v2.6 carries no such output. The spend is what unlocks the meaning of the funding.)*
+
+**Any outcome is a valid signal.** The gate to a price is a real fiat↔BCH settlement, and every path is one:
+
+| Path | What actually happened | How to read it |
+|------|------------------------|----------------|
+| `claim` / `merchantCashout` | The recipient/merchant **chose to receive** | **Voluntary delivery** — the cleanest signal |
+| `refund` | The sender paid fiat and the BCH returned to them | The sender **bought BCH** (a fallback settlement) |
+| `abort` | Price moved past the buffer → BCH to the sender (+ H€ mint) | Fallback settlement |
+| `sellerRecoverBuffer` | The funder recovers its buffer | Buffer recovery (not a sale) |
+
+**Weight *voluntary delivery*, not "number of witnesses".** A `claim`/`cashout` is worth more because someone **chose the price** — not because more parties signed (they all sign the *same covenant terms*, so they cannot attest a different number). Treat `claim`/`merchantCashout` as first-class signals; `refund`/`abort` as second-class (real, but forced).
+
+**Two caveats for whoever builds it:**
+- **Circularity:** on the oracle paths the price in the witness is the **trusted oracle's own** price, so reading it back does not *replace* the oracle. The non-circular signal is the trade priced **without** the oracle: `eurCents` against the BCH the seller actually locked/delivered.
+- **Indexing:** you must watch **covenant spends by address** (the stack can't enumerate P2SH32 by script), and the spend publishes `eurCents` (amount disclosure — consistent with the §Privacy Model).
 
 ---
 
@@ -766,6 +793,16 @@ Price deviates from market:
 
 ---
 
+## Convergence Is Participation-Gated
+
+**The self-balancing above is real — but it is a *function of participation*, not a property of the mechanism.** Two feeds (a settlement-derived VWAP and the trusted/CEX oracle) converge only when the market is **thick enough to arbitrage the spread**. In a thin market — Phase 0, where Asgaya is the only seller — a deviation can simply **stick**, because there is no competing seller or arbitrageur to correct it. So manipulation-resistance **grows with volume**; it does not exist at bootstrap. (This is exactly why the [Asgaya oracle](oracle-husk.md) bootstraps: it stands in until the market can correct itself.)
+
+**The newcomer path (and its lag):** a newcomer can win customers by undercutting — but the [reputation filter](#reputation-filter-sybil-resistance) **ignores sub-90-reputation signals**, so their *price* doesn't count toward the reference until they've **completed** trades (which is how they earn reputation). The path is `undercut → win trades → earn reputation → your price starts counting`. The reference price therefore **lags new entrants** — expected, not a bug.
+
+**Hypothesis (not established): the miner cost-floor.** As adoption grows, miners (and merchants) might quote BCH against their **production cost plus scarcity** rather than a CEX feed — selling below spot but above their marginal (energy) cost to earn a second revenue stream from fees. If it happened, it would tie the floor to energy cost and **decouple the protocol from CEX price feeds**. ⚠️ **This is a direction, not a guarantee:** miners are largely **price-takers**, and sell/hold behaviour is capital-driven, not cost-driven. Treat it as the aspirational end of the same arc.
+
+---
+
 ## Cost Analysis
 
 **Traditional HTTP polling:**
@@ -809,6 +846,6 @@ Price deviates from market:
 
 ---
 
-**Status:** Phase 1.5 - Designed, implementation planned  
-**Updated:** 2026-07-25  
-**Architecture:** On-chain price discovery with Asgaya bootstrap oracle
+**Status:** ⚪ Aspirational — Phase 1+ (may never be reached). Needs volume + worldwide adoption (a constant trickle of trades); the gate starts at the first organic merchant listing. **Design the oracle so this is an easy upgrade; do not build it now.**  
+**Updated:** 2026-10-03 (settlement-as-signal; participation gate)  
+**Architecture:** On-chain settlement signals + reputation-filtered VWAP, bootstrapped by the Asgaya oracle
