@@ -1,159 +1,87 @@
 # Asgaya Roadmap
 
-> Single source of truth for what ships in each phase. Mined systematically from `docs/` (see source column on every row).
-> **Phase definitions are canonical in** [android-app/README.md](implementation/android-app/README.md) (Phase Model section).
-> **Terminology:** Phase 0 = MVP (interchangeable). Phase 0 launches as a limited **mainnet beta** with real money and a small, trusted user set.
+**What this is:** the plan — each phase's **focus**, and the **milestones that unlock the next capabilities**.
+**What works today:** see the [implementation README](implementation/README.md) and the [home page](index.md).
 
 ---
 
-## Phase Model (Canonical)
+## Phases at a glance
 
-| Phase | Definition | When |
-|-------|------------|------|
-| **Phase 0 (= MVP)** | Full value proposition end-to-end, launched as a limited **mainnet beta** with real money and a small, trusted user set (gated on MVP confidence; currently validated on testnet3) | Now / first |
-| **Phase 0+** | Opportunistic wins added *during* Phase 0 testing (cheap UX/reliability) | During Phase 0 |
-| **Phase 1** | Post-MVP enhancements driven by observed Phase 0 behavior | After MVP confidence |
-| **Phase 1+** | Later, larger enhancements / geographic expansion | Future |
+| Phase | Focus | Gate to move on |
+|-------|-------|-----------------|
+| **Phase 0** — the **MVP** | The whole loop end to end, launched as a limited **mainnet beta** (real money, a small trusted user set) | **MVP confidence** — the loop is proven and reliable |
+| **Phase 0+** | Cheap, opportunistic wins added *while* the beta runs | — |
+| **Phase 1** | Post-MVP work, **driven by what we observe** in Phase 0 | Demonstrated user behaviour / demand |
+| **Phase 1+** | Larger enhancements and geographic expansion | Adoption |
 
-**Current status:** Phase 0 MVP validation on **testnet3**. **Seller auto-funding E2E-proven across 4 devices (Sep 7-8):** sender → seller funds (TXID `9d7d94...`) → recipient claims (`731bdd2a...`) → merchant cashout on tablet. Refund of seller-funded covenant proven (`b02f4fa6...`). Phase 0 mainnet beta not yet started — gated on MVP confidence.
-
----
-
-## PHASE 0 — MVP (mainnet beta, real money, limited trusted users)
-
-**North star:** full sender → seller → covenant → recipient → merchant loop working in person (cash) and via Bizum, with the **customer flow** (merchant accepts BCH) treated as a first-class path.
-
-### On-ramp (fiat → BCH)
-
-| # | Feature | Status | Source | Notes |
-|---|---------|--------|--------|-------|
-|  | **Cash Accounts (register + resolve)** | 🎯 REQUIRED | wallet.md, cash-accounts…md | Match key for seller auto-funding Bizum concept field; interface to legacy payment system (human readability = bonus). MVP = Phase 0. |
-|  | Cash-in-person seller construct + fund (manual "cash received" trigger) | ✅ **E2E-proven** | seller-auto-funding/17 | Trade tab "Confirm Cash Received & Fund"; tested 4-device Sep 8 |
-|  | `[SELLER_REQUEST]` from sender device (all covenant params) | ✅ **Proven** | seller-auto-funding/17 | Includes 4 pubkeys + price; seller verifies funderPubkey before funding |
-|  | Seller verifies covenant is genuine (funderPubkey = seller) before funding | ✅ **Proven** | seller-auto-funding/17 | Security rejection on mismatch |
-|  | Bizum auto-funding (NotificationListener parse → fund) | 📅 Planned | implementation/README | Shares the construct+fund core (manual trigger proven first) |
-|  | Sender creates covenant with seller (funder≠sender) unfunded | ✅ **Proven** | seller-auto-funding/17 | createCovenantOnly + AWAITING_FUNDING status |
-
-### Customer flow (merchant accepts BCH) — raised priority
-
-| # | Feature | Status | Source | Notes |
-|---|---------|--------|--------|-------|
-|  | Customer flow = remittance config (recipient = merchant pubkey) | 🎯 Target | seller-auto-funding/06 | Same covenant; merchant terminal `claim()` |
-|  | Merchant UI flag: claim before releasing goods (refund window) | 🎯 Target | (workspace decision) | Customer can `refund()` until merchant claims |
-|  | Merchant auto-claim client (Phase 1 preferred) | 📅 Phase 1 | (workspace decision) | Notification-listener watches funding → claim; merchant/seller-focused client |
-
-### Off-ramp (cashout)
-
-| # | Feature | Status | Source | Notes |
-|---|---------|--------|--------|-------|
-|  | Merchant cashout (merchant-first) | ✅ Done on-chain | implementation/README | TXID 05301369… Sep 1 2026; **4-device E2E on tablet merchant Sep 8** |
-|  | Refund of seller-funded (funder≠sender) covenant | ✅ **Proven** | seller-auto-funding/17 | Sender refunds, buffer → seller (TXID `b02f4fa6...`) |
-
-### Discovery / coordination
-
-| # | Feature | Status | Source | Notes |
-|---|---------|--------|--------|-------|
-|  | Bulletin board (listing discovery) | ✅ **Working** (Phase 0) | android-app/README, bulletin-board.md | **Nostr (NIP-99) discovery shipped** — signed listings cached locally; on-chain anchor = Phase 0+ (category query not supported by current Fulcrum) |
-|  | Nostr coordination (NIP-17 encrypted DMs) | ✅ **Working** | android-app/README, nostr.md | Primary coordination transport; NIP-44 + NIP-17 gift-wrap; E2E on real devices (Telegram = test, QR = offline fallback) |
-|  | Hardcoded test seller / merchant (no bulletin board yet) | ✅ | seller-auto-funding | Phase 0 test pattern |
-
-### Core infra (done or nearly)
-
-| # | Feature | Status | Source | Notes |
-|---|---------|--------|--------|-------|
-|  | Covenant v2.6.1 — 5 spend paths | ✅ Done | version-history.md | testnet3 |
-|  | v0.2 hybrid architecture | ✅ Done | implementation/README | Kotlin network, WebView compute |
-|  | Oracle (own, 16-byte, multi-source) | ✅ Done | time-oracle…md | MTP fallback |
-|  | Multi-wallet management | ✅ Done | wallet.md | |
-|  | Self-funded sender flow | ✅ Done | android-app/README | |
+Phase 0 is validated on **testnet3** first; the **mainnet beta** begins once the MVP is proven.
 
 ---
 
-## PHASE 0+ — During Phase 0 (opportunistic)
+## Phase 0 — the MVP (current focus)
 
-| # | Feature | Why 0+ | Source |
-|---|---------|--------|--------|
-|  | Seed phrase backup (BIP39) | Cheap UX win | android-app/README |
-|  | Seller device health monitoring | Already built (RS072/075) | android-app/README, notification-bot.md |
-|  | Bank notification parsing (real bank apps) | Enables auto-fund | notification-bot.md |
-|  | HD wallet derivation | UX | wallet.md |
-|  | Covenant tracking (state) | UX | state-management.md |
-|  | Market price subscription | Volume dependent | notification-bot.md |
-|  | Electrum redundancy (3-5 servers) | Reliability | android-app/README |
+**North star:** the full **sender → seller → covenant → recipient → merchant** loop, in person (cash) and over **Bizum**, with the **customer flow** (a merchant accepting BCH) treated as a first-class path.
 
-*(Cash Accounts moved OUT of 0+ → they are Phase 0 / MVP REQUIRED, per Suso Sep 6.)*
+**The plan — milestones, each unlocking the next:**
 
----
+| # | Milestone | Status | Unlocks |
+|---|-----------|--------|---------|
+| 1 | **In-person on-ramp** — the sender sets terms; the seller funds the covenant on "cash received" | ✅ Proven (4 devices) | The basic loop |
+| 2 | **Cash-out** — the merchant cashes the recipient out (merchant-first) | ✅ On-chain | The off-ramp |
+| 3 | **Discovery & coordination** — bulletin board (Nostr listings) + Nostr DMs (NIP-17) | ✅ Working | Finding a seller/merchant without a central server |
+| 4 | **Cash Accounts** — register and use a `name#number` as the **payment reference** | 🎯 Next | The reference the **banking rails** match on → **Bizum auto-funding** |
+| 5 | **Bizum auto-funding** — the seller's app reads the bank notification and funds the covenant automatically | 📅 Planned | Removes the manual step → the **merchant/seller client** (Phase 1) |
+| 6 | **The customer flow** — a merchant accepts BCH directly (same covenant; merchant `claim()` before releasing goods) | 🎯 Target | A merchant that anyone can pay in BCH |
 
-## PHASE 1 — Post-MVP (observed-behavior driven)
+**Core infrastructure (done):** covenant **v2.6.1** (five spend paths); the **hybrid app** (native network + WebView compute); the **oracle** (own, signed 16-byte price + time, MTP fallback).
 
-| # | Feature | Driver | Source |
-|---|---------|--------|--------|
-|  | Merchant/seller-focused Asgaya client (auto-claim + auto-fund) | Refund-window fix; passive income | (workspace decision) |
-|  | Auto-claim via notification listener (customer flow) | Close refund window in seconds | (workspace decision) |
-|  | Stability layer H€/HAu activation | Merchant need (0+ launch-first per stability-layer.md) | stability-layer.md |
-|  | Reputation system (derived from settlement history) | Trust for untrusted sellers | reputation-on-chain…md |
-|  | Seller ranking algorithm | Discovery UX | seller-ranking-algorithm.md |
-|  | Passive mode bot automation | 24/7 liquidity | passive-mode-bot-automation.md |
-|  | Multi-covenant batching | Optimization | android-app/README |
-|  | Move covenant UTXO fetch fully to Kotlin | WebView 100% network-free | implementation/README |
-|  | Pure Kotlin covenant building (migrate from WebView) | Platform control | manual-construction.md |
-|  | Own Nostr relay (if public relays unreliable) | Operational | nostr.md |
-|  | 0-conf acceptance hardening | In-person UX | RS082 |
+**What "MVP confidence" means:** the loop runs end-to-end, the seller is paid only after the fiat lands, the recipient can always claim (or the funder recovers the buffer), and it survives real devices and real networks.
 
 ---
 
-## PHASE 1+ — Future / Expansion
+## Phase 0+ — opportunistic (during Phase 0)
 
-| # | Feature | Source |
-|---|---------|--------|
-|  | Offline-first (offline queue, cache, sync) | offline-first.md |
-|  | Geographic expansion (Spain→Venezuela first; PagoMóvil, M-Pesa) | progressive-payment-rollout.md |
-|  | iOS / web clients | implementation/README |
-|  | Protocol specifications (formal) | implementation/README |
-|  | N-of-M oracle support in covenant (v2.7+) | seller-auto-funding/06 |
+Cheap wins to add *while* the beta runs, as they become convenient — not gating anything:
 
----
-
-## Flow Map (who does what, per phase)
-
-_(To be completed from mining — 2-party contract framing: sender buys BCH at a future price; covenant determines price via refund/claim/merchant-counter.)_
-
-| Leg | Phase 0 | Phase 1 |
-|-----|---------|---------|
-| **On-ramp cash** | sender shows `[SELLER_REQUEST]` → seller constructs at fresh price → sender verifies → cash → fund | merchant/seller client auto-processes |
-| **On-ramp Bizum** | (2nd milestone) | auto-fund via notification listener |
-| **Customer flow** | merchant claims manually before releasing goods (UI flag) | merchant auto-claims on funding |
-| **Off-ramp cashout** | merchant-first cashout (done) | — |
+- **Seed-phrase backup** (BIP39)
+- **Seller device-health monitoring**
+- **HD wallet derivation**
+- **Covenant state tracking** in the client
+- **Market-price subscription** in the UI
+- **Electrum redundancy** (multiple servers)
 
 ---
 
-## Mined corpus & method
+## Phase 1 — post-MVP (driven by observed behaviour)
 
-- **Method:** deterministic extraction (grep, 729 phase-tagged lines across 94 docs) → grouped corpus → verified against authoritative seeds.
-- **⚠️ gemma4:e2b was NOT usable for this** — it hallucinated document structure and failed even verbatim table copy (confirmed again Sep 6; consistent with `05-GEMMA-MINING-EXPERIMENT.md` which limits it to short bounded Suso-quote copying). Deterministic extraction is the reliable miner.
-- **Corpus:** `roadmap-mining-corpus.md` (sibling file) — every phase-tagged line with file:line, grouped by doc.
-- **Authoritative seeds:** `implementation/README.md` (Sep 1), `implementation/android-app/README.md` (Aug 24 — stale), `seller-auto-funding/06-…` (Sep 6).
+What Phase 0 shows us it needs next:
+
+- **A merchant/seller-focused client** — auto-fund and auto-claim → closes the refund window and makes the passive side truly passive.
+- **Stability layer (H€/HAu) activation** — offered once merchants demonstrate the need (the beta launches **BCH-only**).
+- **Reputation + seller ranking** (derived from settlement history) — trust for sellers the user doesn't know.
+- **Passive-mode bot automation** — 24/7 liquidity without manual action.
+- **0-conf acceptance hardening**, multi-covenant batching, moving the remaining covenant work out of the WebView, and our **own Nostr relay** if the public ones prove unreliable.
 
 ---
 
-## ⚠️ Known conflicts / stale items found during mining
+## Phase 1+ — future / expansion
 
-| # | Item | Conflict | Resolution (Suso 🗨️, Sep 6) |
-|---|------|----------|-------------------|
-| 1 | **Cash Account registration phase** | `android-app/README.md` says **Phase 0+** (line 139); `wallet.md` says **Phase 1+** (line 20) | ✅ **MVP / Phase 0 — REQUIRED.** Cash Accounts are needed for the seller auto-funding Bizum concept field (match key). In Asgaya they exist to interface with the **legacy payment system**; human readability is a bonus, not the reason. (MVP = Phase 0, interchangeable.) |
-| 2 | **Electrum network naming** | `android-app/README.md` says "Chipnet.imaginary.cash" + "v2.5 on chipnet" (lines 66, 184); `index.md` + `implementation/README.md` say **testnet3** | ✅ **testnet3** (Suso correction Sep 2). Server is local Pi-chan Fulcrum `192.168.1.100`. Fixed in android-app README. |
-| 3 | **Merchant cash-out status** | `android-app/README.md` Phase 0 table lists "Merchant cash-out flow 🔨 Planned" (stale, dated Aug 24) | ✅ **DONE on-chain Sep 1** (merchant-first). Fixed in android-app README. |
-| 4 | **Stability layer H€/HAu phase** | `stability-layer.md` = **Phase 0+ "launch first"** | ✅ Keep 0+ (launch BCH-only, add if merchants demonstrate need) |
-| 5 | **Nostr = Phase 0 coordination** | Consistent across `nostr.md` (Phase 0 priority) + `nostr-coordination/README.md` | ✅ No conflict; Telegram = Phase 0 test/fallback only |
-| 6 | **Seller auto-funding framing** | `notification-bot.md` called bank-notification auto-funding **Phase 1+** | ✅ Fixed (Sep 6): cash-in-person on-ramp = Phase 0 first; Bizum auto-fund = Phase 0 second milestone (shares construct+fund core) |
-| 7 | **"Phase 0 = testnet" phrasing** | Several older docs imply Phase 0 runs on testnet | ✅ Phase 0 = **mainnet beta** (MVP, real money, limited trusted users); testnet3 = pre-Phase-0 MVP validation |
+- **Offline-first** (queue, cache, sync for unreliable connectivity).
+- **Geographic expansion** — the Spain → Venezuela corridor first, then other methods and regions (PagoMóvil, M-Pesa).
+- **iOS / web clients.**
+- **Formal protocol specifications.**
+- **N-of-M oracle support** in the covenant (multiple distinct price sources).
+
+---
+
+## The plan's logic
+
+The milestones are **gated, not parallel**: **Cash Accounts** (the payment reference) unblock the **banking rails**; the rails unblock **Bizum auto-funding**; auto-funding plus the **merchant claim** unblock the **merchant client**. Quiet dependencies matter elsewhere too — the **stability tokens** wait for a demonstrated merchant need, and everything larger waits on **adoption**. That is why the phases are ordered this way.
 
 ---
 
 ## Status legend
 
-✅ Done on-chain/testnet3 · 🔨 In progress · 🔧 Edit needed · 🎯 Next implementation target · 📅 Planned milestone · 🔵 Opportunistic (0+) · 🟢 Future (1+)
+✅ Done / proven · 🎯 Next target · 📅 Planned milestone · 🔵 Opportunistic (Phase 0+) · 🟢 Future (Phase 1+)
 
-**Last updated:** 2026-09-06
-**Maintainer:** TightDS 🔍 (mining) + Coordination ⚙️ (assembly) + Suso 🗨️ (priority calls)
+**Last updated:** 2026-10-04

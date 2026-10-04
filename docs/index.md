@@ -39,7 +39,7 @@ Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple 
 ### 📱 Implementation
 Technical specifications for building Asgaya clients:
 - [implementation/](implementation/README.md) - Android app reference implementation and technical details
-- [roadmap.md](roadmap.md) - What ships in each phase (MVP/Phase 0, 0+, 1, 1+)
+- [roadmap.md](roadmap.md) - The plan — each phase's focus and the milestones that unlock the next
 
 ### 🔧 The Mechanism
 How Asgaya actually works:
