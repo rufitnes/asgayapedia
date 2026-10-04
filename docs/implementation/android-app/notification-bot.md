@@ -471,7 +471,6 @@ function hasEnoughBCH(required_bch):
 
 **If insufficient:** Buy more from Kraken (see below)
 
-💬 I think this is a great use case for nostr in the bulletin board there is a range of transactions but the nstr message can say if the seller has enough bch to lock in the covenant. Why I think this is important if we allow sellers that don't hold bch to participate we are asking for problems and bad UX when something inevitably happens. If insuficient funds notify the sender and fail gracefully this give the oportunity to other sellers to do business and increase their reputation, if not a few early adopters can potentially concentrate most of the transactions per corridor and the new commers can only compeet in price.
 
 ---
 
