@@ -17,7 +17,9 @@ Anyone can post. Anyone can read. No one can censor it.
 
 ## Two Listing Types (Only Two)
 
-Every participant is either a **BCH Seller** (has BCH, wants fiat) or a **BCH Buyer** (has an asset, wants BCH). Everything else — the asset, the payment rail — is a field. *(The buyer side generalizes over time: fiat today, then H€/HAu and other assets, Phase 0+.)*
+Every participant is either a **BCH Seller** (has BCH, wants fiat) or a **BCH Buyer** (has an asset, wants BCH). Everything else — the asset, the payment rail — is a field.
+
+**The board is asset-agnostic: the asset is a free field.** Anyone can list *any* asset — a fiat (`EUR`, `VES`), a token (`H€`, `HAu`, `PUSD`), or even a non-monetary good (e.g. `rice`). Asgaya does **not** curate which assets are listed; that neutrality *is* the point, and the legal posture: no intermediary, nothing for us to control.
 
 ### BCH Sellers: "I Have BCH, I'll Lock It for Your Remittance"
 
