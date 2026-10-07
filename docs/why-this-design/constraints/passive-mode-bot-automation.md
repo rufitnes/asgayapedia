@@ -151,8 +151,8 @@ Asgaya's Nostr layer provides real-time presence. Active users see "5 passive se
 
 - [Buyers and Sellers: Two Roles, Two Modes](../../the-mechanism/bulletin-board/README.md) (active vs passive framework)
 - [Notification Bot Architecture](../../the-mechanism/notification-bot/README.md) (how bots detect payments and post covenants)
-- Radio Asgaya Episode 6: BCH Sellers (passive income for liquidity providers) — **priority: core to the passive-mode story**
-- Radio Asgaya Episode 16: BCH Buyers (capital recycling via passive listings) — **priority: core to the passive-mode story**
+- BCH Sellers (passive income for liquidity providers) — **priority: core to the passive-mode story**
+- BCH Buyers (capital recycling via passive listings) — **priority: core to the passive-mode story**
 
 ---
 

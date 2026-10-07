@@ -86,7 +86,7 @@ DO NOT PAY.
 ### Why This Matters
 
 **Without health checks:**
-- María pays → Seller's bank app is disabled → No notification → No covenant funding → María waits 48h for timeout
+- María pays → Seller's bank app is disabled → No notification → No covenant funding → María waits 8h for timeout
 - Fraud vector: Malicious seller disables app, collects payments, claims "never got notification"
 
 **With health checks:**

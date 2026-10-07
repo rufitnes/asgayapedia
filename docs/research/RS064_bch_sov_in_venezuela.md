@@ -137,7 +137,7 @@ Holding VES for any period always results in a loss of purchasing power, equival
 1. **Extend the back‑test to 2018–2026** using daily BCH/USD data from CoinGecko and USD/VES parallel rate data from DolarAPI. This will confirm whether the conclusion holds across multiple crypto market cycles.
 2. **Add intraday granularity** to more precisely estimate the probability of loss for a merchant who converts BCH to VES within hours.
 3. **Publish the analysis code** as a Python notebook in the Asgaya repository for community review and verification.
-4. **Incorporate results into merchant‑facing materials** (Radio Asgaya episode, merchant pitch document) to directly address the volatility concern.
+4. **Incorporate results into merchant‑facing materials** (a member-facing explainer, a merchant pitch document) to directly address the volatility concern.
 
 ---
 

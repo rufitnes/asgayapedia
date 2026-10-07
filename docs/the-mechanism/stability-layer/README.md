@@ -36,7 +36,7 @@ BCH volatility is a problem. Fiat inflation is a problem. **Solution:** Stabiliz
    - Creates standard AnyHedge contract:
      - Merchant shorts BCH vs ASSET
      - Pool provides long BCH
-     - Duration: TBD (1 week, 30 days - see unknowns), auto-renewing
+     - Duration: 30-day, auto-renewing
    - Mints H-ASSET tokens (CashTokens)
    - Sends to merchant's wallet
 4. **Merchant holds stable value** relative to chosen asset

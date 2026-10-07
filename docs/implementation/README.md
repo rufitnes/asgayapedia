@@ -10,7 +10,7 @@
 ## Current Status
 
 **Phase:** Phase 0 - Seller Auto-Funding + 4-Device E2E Complete 🏆  
-**Last Update:** September 8, 2026  
+**Last Update:** October 7, 2026  
 **Historic Milestone:** First inter-device covenant claim successful!
 
 **Production-Proven Capabilities:**
@@ -21,13 +21,13 @@
   - Smart contract validation working (rejected incorrect claim attempt)
 - ✅ **End-to-End Claim Flow** - Cross-device payment proven
   - Sender device (Moto G06) → Recipient device (Pixel 6a)
-  - Telegram parameter transport ([COVENANT_V25] format)
+  - **Nostr** NIP-17 parameter transport (`[COVENANT_V25]` format; Telegram = fallback)
   - NotificationListener auto-parsing
   - Manual balance check + claim execution
   - On-chain verification (€5 payment + 7% buffer distribution confirmed)
 - ✅ **Self-Funding Sender Flow** - Production-ready
   - Create covenant → Fund → Share parameters → Refund safety net
-  - Copy-to-share mechanism (Telegram/Nostr pattern)
+  - Share mechanism (Nostr NIP-17; QR offline fallback)
   - Connection management (5-second TCP cooldown, WebSocket cleanup)
 - ✅ **Multi-Wallet Management** - Complete (sender/recipient/seller wallet matching)
 - ✅ **v0.2 Hybrid Architecture** - Kotlin owns network, WebView does compute (Aug 20-21)
@@ -46,7 +46,7 @@
 
 **In Progress:**
 - ✅ **Nostr coordination** - Encrypted DM transport (NIP-17) is now the **primary** coordination channel (Telegram = test, QR = offline fallback); implemented — see [nostr.md](android-app/nostr.md)
-- ⏳ **Bulletin board** - listing discovery; design complete, **discovery mechanism under review** (on-chain category query is not supported by current Fulcrum)
+- ✅ **Bulletin board** — listing discovery **shipped** over **Nostr** (NIP-99 `kind:30402`); the on-chain anchor is **Phase 0+** (the current Fulcrum can't enumerate on-chain listings)
 - ⏳ **Multi-Covenant Batching** - Claim multiple covenants in one transaction
 - ⏳ **Move covenant UTXO fetch to Kotlin** - REFUND/CLAIM/ABORT still use brief WebSocket for `contract.getUtxos()`; moving to Kotlin makes WebView 100% network-free (Phase 1 enhancement)
 
@@ -66,7 +66,7 @@
 - Wallet balance fixes: connect timeout for unreachable servers; stale-result guard; refresh on resume
 - Complete documentation (funder principle, claim flow, version history, merchant cashout flow)
 
-**Next Milestone:** Bulletin board (listing discovery — mechanism under review) → real oracle price feed (Kraken).
+**Next Milestone:** a **public oracle** (the app is LAN-bound today) → **Phase-0 beta** (the board shipped; our own signed oracle is live).
 
 ---
 

@@ -80,7 +80,7 @@ Specifically:
 **Post in BCH forums/Telegram:**
 > "We're building H€ stability tokens for BCH remittances. Merchants short BCH (hedge), you go long BCH (leverage).
 > 
-> Contract: 1 week, auto-renewing, backed by AnyHedge
+> Contract: 30-day, auto-renewing, backed by AnyHedge
 > 
 > Would you provide bull capital for this? If yes:
 > - How much? (€100, €1K, €10K+)
@@ -121,10 +121,10 @@ Specifically:
 **Example:**
 ```
 Bull commits: €1,000
-Contract period: 1 week
-BCH appreciates 2% in that week
+Contract period: 30-day
+BCH appreciates 2% in that month
 Bull gains: €20 (2% of €1,000)
-Annualized: €20 × 52 weeks = €1,040 (104% APY!)
+Annualized: €20 × 12 = €240 (24% APY!)
 
 But: If BCH depreciates, bull loses
 Risk: Symmetric (±2% weekly = ±104% annualized volatility)
@@ -261,7 +261,7 @@ Even posting a survey helps! Bull responses = valuable market validation data.
 
 2. **Liquidity**
    - Can exit easily if needed
-   - 1 week lock acceptable, 1 month pushing it
+   - 30-day lock acceptable, longer pushing it
 
 3. **Trustlessness**
    - Smart contracts, not custodians

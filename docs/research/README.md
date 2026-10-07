@@ -100,7 +100,7 @@ The following documents describe the **old escrow architecture** and are retaine
 ## Contributing Research
 
 New research documents should:
-1. Use next sequential number (RS087, RS088, etc.)
+1. Use next sequential number (RS091, RS092, etc.)
 2. Include date and author
 3. Reference current covenant architecture (payment-first, H€/HAu, variable contract period)
 4. Link to relevant documentation in [Why This Design?](../why-this-design/README.md) or [Unknowns](../unknowns/README.md)

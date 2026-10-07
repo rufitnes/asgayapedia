@@ -255,7 +255,7 @@ These terms have been deliberately replaced in the documentation to maintain reg
 
 ---
 
-*Last updated: 2026‑08‑21 – reflects the covenant architecture, five‑gear model, stability layer, and v0.2 hybrid implementation terms (Aug 2026).*
+*Last updated: 2026-10-07 – reflects the covenant architecture, five-gear model, stability layer, and v0.2 hybrid implementation terms.*
 ---
 
 ## Navigation

@@ -57,7 +57,7 @@ becomes unnecessary. **Success means we disappear.**
 | Trader | Both (buys and sells for arbitrage) |
 
 **The entire system is a bulletin board where buyers and sellers discover each other
-and execute trades via covenants.**
+and execute trades via covenants.** *(On the **board** itself the SELLER/BUYER label is **internal** — every poster is a **seller of an asset**; here we're describing protocol **roles**.)*
 
 ---
 
@@ -120,14 +120,14 @@ respect.
 
 ## Status: Phase 0 (Pre‑Launch)
 
-**Launch corridor:** Spain → Venezuela (EUR → VES) — Q3 2026.  
+**Launch corridor:** Spain → Venezuela (EUR → VES) — Phase 0 pre-launch (testnet validation ongoing).  
 **Current:** Documentation in progress; stability tokens (H€/HAu) design validated.  
 **Validating:** Does the 7% buffer hold? Will merchants adopt stability tokens? Can bull pool scale?
 
 ---
 
 **Authors:** Suso + Claude Sonnet 4.5 (Coordination) + TightDS (DeepSeek)  
-**Updated:** 2026‑07‑15
+**Updated:** 2026-10-07
 
 ---
 

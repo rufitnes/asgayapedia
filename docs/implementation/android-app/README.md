@@ -59,7 +59,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | **CovenantWebView** | Kotlin ↔ JS bridge, CashScript SDK integration, P2SH32 address generation | ✅ Working (v0.2 hybrid: compute-only) | [webview-covenant-bridge.md](webview-covenant-bridge.md) |
 | **CovenantBuildService** | v0.2: Kotlin network ops (UTXO fetch + broadcast, native TCP) | ✅ Working | [webview-covenant-bridge.md](webview-covenant-bridge.md) |
 | **ElectrumClient** | Balance queries, transaction broadcast, UTXO management | ✅ Working | [connection-management-patterns.md](connection-management-patterns.md) |
-| **NotificationListener** | Telegram parameter parsing (testing tool + fallback; Nostr is Phase 0 target) | ✅ Working | [notification-bot.md](notification-bot.md) |
+| **NotificationListener** | Bank-notification parsing (auto-fund); coordination is **Nostr** (NIP-17) — Telegram = fallback | ✅ Working | [notification-bot.md](notification-bot.md) |
 | **Connection Management** | TCP cooldown (5s after balance query), WebSocket cleanup, manual updates | ✅ Working (v0.2: WebSocket only for brief UTXO fetch) | [connection-management-patterns.md](connection-management-patterns.md) |
 | **SendViewModel** | v0.2: viewModelScope transaction state, pending_transactions DB, rebroadcast, background confirmation (RS083) | ✅ Working | [state-management.md](state-management.md) |
 
@@ -83,7 +83,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | Covenant v2.6 (5 paths) | ✅ Done | All paths validated (v2.5 on chipnet, abort on testnet3) |
 | WebView + CashScript SDK | ✅ Done | v0.2 hybrid: compute-only (build/sign), broadcast in Kotlin |
 | ElectrumClient (balance/broadcast) | ✅ Done | TCP + WebSocket support |
-| Telegram parameter parsing | ✅ Done | Testing tool + fallback (Nostr is target) |
+| **Nostr** coordination (NIP-17) | ✅ Done | Primary transport; Telegram = test/fallback |
 | Connection management patterns | ✅ Done | TCP cooldown, cleanup, manual updates |
 | Self-funded sender flow | ✅ Done | Also a real future use case (BCH stable, B2B, CEX savings) |
 | **v0.2 hybrid (build + Kotlin broadcast)** | ✅ Done | CREATE/REFUND/CLAIM/ABORT all hybrid (Aug 20-21) |
@@ -91,7 +91,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | **Refund (funder≠sender)** | ✅ **E2E-proven** | Sender refunds seller-funded covenant; buffer → seller automatically (Sep 8) |
 | **Nostr coordination (DM)** | ✅ Done | NIP-17 gift-wrapped DMs (NIP-44) via OkHttp; works on cell data. Telegram is now fallback only |
 | **Bulletin board** | ✅ Working (Phase 0) | Nostr (NIP-99) discovery — signed listings cached locally; on-chain anchor = Phase 0+ |
-| **Cash Accounts** | 🔨 MVP REQUIRED | Register/resolve `Elena#142`; match key for seller auto-funding Bizum concept field (interface to legacy payment system) |
+| **Cash Accounts** | ✅ Registered (testnet) | Real `name#number` as the **payment reference** (the bank-notification match key); registered on testnet |
 | **Merchant cash-out flow** | ✅ DONE on-chain | Merchant-first, TXID `05301369...` (Sep 1, 2026); merchant role needs no Telegram (QR/paste, tablet-tested) |
 | **First BCH seller (Suso)** | 🔨 Needed | MVP validation requires real seller |
 
@@ -138,7 +138,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
    Covenant (permissionless) vs Client (opinionated) separation principle
 
 6. **[wallet.md](wallet.md)** 🔨  
-   Multi-wallet ✅, HD derivation (Phase 0+), Cash Account registration (Phase 0+)
+   Multi-wallet ✅, **Cash Account registration ✅** (real, testnet), HD derivation (Phase 0+)
 
 7. **[notification-bot.md](notification-bot.md)** 🔨  
    Telegram parsing ✅, bank notification parsing (Phase 0+), market price subscription (Phase 0+)
@@ -172,7 +172,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 
 **Phase 0+ challenges (deferred):**
 - **Notification bot reliability:** Must not miss payments (seller loses money); RS072 DeviceHealthMonitor addresses this
-- **Cash Account collisions:** `name#number` format disambiguates (Phase 0+ implementation)
+- **Cash Account collisions:** `name#number` format disambiguates ✅ (implemented)
 - **Offline queue management:** Queue size limits, stale item expiry (Phase 1+ when offline-first implemented)
 - **Key recovery UX:** Manual WIF import works; BIP39 seed phrase is Phase 0+ UX win
 
@@ -214,8 +214,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 - RS083 - Transaction broadcast UI patterns (ViewModel, navigate-on-success, rebroadcast; hybrid architecture validation)
 
 **Media (Phase 0+ content refresh needed):**
-- **Radio Asgaya** 📻 - 105 podcast episodes, workflow proven; content needs re-audit against covenant v2.6 + funder principle before public use  
-  Location: `knowledge/meta/radio_asgaya/`
+- **Radio Asgaya** 📻 - a podcast series on the project; content needs a re-audit against the current covenant + funder principle before public use
 
 ---
 

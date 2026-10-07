@@ -343,7 +343,7 @@ A trader is someone who operates as BOTH buyer and seller, earning fees by provi
 
 ---
 
-**Status:** Phase 0 (Pre-Launch) - Q3 2026 Spain → Venezuela corridor  
+**Status:** Phase 0 (Pre-Launch) - Spain → Venezuela corridor  
 **Updated:** 2026-06-24  
 **Key Insight:** Set-and-forget on phone in pocket. Automation enables small capital to compete. Profit = Fee × Volume.
 

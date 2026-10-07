@@ -36,7 +36,7 @@ Visit [docs.asgaya.org](https://docs.asgaya.org/) to explore:
 - **[the-mechanism/](https://docs.asgaya.org/the-mechanism/)** - The 5 gears and how they interact
 - **[user-journeys/](https://docs.asgaya.org/user-journeys/)** - Sender, recipient, merchant, trader perspectives
 - **[why-this-design/](https://docs.asgaya.org/why-this-design/)** - Design constraints and rationale
-- **[unknowns/](https://docs.asgaya.org/unknowns/)** - 32 investigation briefs (research entry point)
+- **[unknowns/](https://docs.asgaya.org/unknowns/)** - 36 investigation briefs (research entry point)
 - **[research/](https://docs.asgaya.org/research/)** - Research sessions and summaries
 
 ---
@@ -44,18 +44,18 @@ Visit [docs.asgaya.org](https://docs.asgaya.org/) to explore:
 ## 🔍 Current Status
 
 **Phase:** Phase 0 — Active Implementation & Testnet3 Validation  
-**Last Update:** August 21, 2026  
+**Last Update:** October 7, 2026  
 **Architecture:** Payment-first covenants + H€/HAu stability layer
 
 **Implementation progress:**
 - ✅ **Covenant v2.6** — All 5 spending paths (claim, merchantCashout, refund, abort, sellerRecoverBuffer) validated on testnet3
 - ✅ **First inter-device claim** — Sender (Moto G06) → Recipient (Pixel 6a) guaranteed-value transfer proven (Aug 10, 2026)
 - ✅ **v0.2 hybrid architecture** — Kotlin owns network, WebView does compute (build/sign). Eliminated the WebView connection-hang bug class; multi-device reliable
-- ✅ **Oracle integration** — Dynamic pubkey fetching, zero hardcoded keys (Aug 16)
-- ✅ **7 implementation components** (TightDS reviewed)
-- ✅ **H€/HAu stability tokens** via 7-day AnyHedge contracts
+- ✅ **Own signed oracle** — a 16-byte price + time message (`checkDataSig`), dynamic keys (no hardcoded keys), live on Pi-chan
+- ✅ **Bulletin board + coordination** — permissionless discovery over **Nostr** (NIP-99 listings, no central server) + **NIP-17** gift-wrapped DMs
+- ✅ **H€/HAu stability tokens** via 30-day AnyHedge contracts
 - ✅ **Payment-first covenant architecture** (no seller capital risk)
-- ✅ **32 structured unknowns** for Phase 0 validation
+- ✅ **36 structured unknowns** for Phase 0 validation
 - ✅ **Documentation publicly accessible** at docs.asgaya.org
 
 **Notable:** An Android reference implementation is under active development and being tested on testnet3 with real devices.

@@ -387,7 +387,7 @@ If María sends money every month, Elena can optimize:
 
 ---
 
-**Status:** Phase 0 (Pre-Launch) - Q3 2026 Spain → Venezuela corridor  
+**Status:** Phase 0 (Pre-Launch) - Spain → Venezuela corridor  
 **Updated:** 2026-07-18 - Added currency denomination compliance section
 
 ---

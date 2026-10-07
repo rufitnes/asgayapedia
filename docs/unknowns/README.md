@@ -102,7 +102,7 @@ Long-term effects and expansion strategy:
 ### If You're a Researcher
 
 **This is a structured research program:**
-- 14 distinct unknowns across 4 categories
+- 36 distinct unknowns across 5 categories
 - Each with hypothesis, method, success criteria
 - All answerable within Phase 0 timeline (3-6 months)
 
@@ -177,26 +177,27 @@ Every unknown follows this format:
 9. [Seller Buy-the-Dip](behavioral/seller-buy-the-dip.md) — Seller economics & BCH stabilization hypothesis
 
 ### Low (Can Answer in Phase 1)
-9. [Fiat Chargeback Risk](economic/fiat-chargeback-risk.md) — Rare edge case
-10. [SMS Delivery (Venezuela)](technical/sms-delivery-venezuela.md) — Infrastructure
-11. [BCH Confirmation Reliability](technical/bch-confirmation-reliability.md) — Infrastructure
-12. [Recipient Smartphone Access](market/recipient-smartphone-access.md) — Market data
-13. [Cash Float Management](behavioral/cash-float-management.md) — Merchant operations
-14. [Corridor Demand Signals](market/corridor-demand-signals.md) — Market expansion
+10. [Fiat Chargeback Risk](economic/fiat-chargeback-risk.md) — Rare edge case
+11. [SMS Delivery (Venezuela)](technical/sms-delivery-venezuela.md) — Infrastructure
+12. [BCH Confirmation Reliability](technical/bch-confirmation-reliability.md) — Infrastructure
+13. [Recipient Smartphone Access](market/recipient-smartphone-access.md) — Market data
+14. [Cash Float Management](behavioral/cash-float-management.md) — Merchant operations
+15. [Corridor Demand Signals](market/corridor-demand-signals.md) — Market expansion
 
 **Priority drives effort allocation.** Phase 0 focuses on Critical and High unknowns first.
 
 ---
 
-## Current Status (July 2026)
+## Current Status
 
-| Category | Total Unknowns | Not Started | In Progress | Answered |
-|----------|---------------|-------------|-------------|----------|
-| Economic | 5 | 5 | 0 | 0 |
-| Behavioral | 7 | 7 | 0 | 0 |
-| Technical | 4 | 3 | 1 | 0 |
-| Market | 3 | 3 | 0 | 0 |
-| **Total** | **19** | **18** | **1** | **0** |
+| Category | Unknowns |
+|----------|----------|
+| Economic | 9 |
+| Behavioral | 7 |
+| Technical | 9 |
+| Market | 5 |
+| Strategic | 6 |
+| **Total** | **36** |
 
 **Phase -1 progress:** [Universal Bot Reliability](technical/universal-bot-reliability.md) moved to "In Progress" after 24-hour validation testing with five Spanish banks. See [RS072](../research/RS072_notification_listener/) and [RS073](../research/RS072_notification_listener/RS073_notifyflow_decompilation.md) for details.
 

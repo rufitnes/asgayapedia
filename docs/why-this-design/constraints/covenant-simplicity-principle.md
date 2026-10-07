@@ -307,10 +307,9 @@ function sellerRecoverBuffer(sig sellerSig, datasig oracleSig, bytes oracleMessa
 **Client implementation:** Auto-refund monitoring (20-second checks, distributed across sender/recipient/seller devices)
 
 **Testing status:** 
-- ✅ v2.0 oracle refund tested (chipnet)
-- ✅ v2.1 price drop protection tested (chipnet)
-- ⏳ v2.2 simplified refund deployed, testing in progress
-- 📋 v2.3 seller recovery planned
+- ✅ v2.0 oracle refund · v2.1 price-drop protection (chipnet)
+- ✅ v2.2 simplified refund · v2.3 seller recovery — **shipped** long ago
+- ✅ **v2.6 / v2.6.1 (current)** — all **5 paths** validated on **testnet3** (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
 
 ---
 

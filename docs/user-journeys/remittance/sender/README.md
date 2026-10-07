@@ -366,7 +366,7 @@ When BCH drops 3%, both Elena and María get notifications with urgency based on
 
 ---
 
-**Status:** Phase 0 (Pre-Launch) - Q3 2026 Spain → Venezuela corridor  
+**Status:** Phase 0 (Pre-Launch) - Spain → Venezuela corridor  
 **Updated:** 2026-06-16
 
 ---

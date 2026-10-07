@@ -1,6 +1,6 @@
 # Risks and Disclaimers
 
-**Last Updated:** June 28, 2026
+**Last Updated:** October 7, 2026
 
 ---
 

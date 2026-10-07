@@ -568,7 +568,7 @@ Should covenant accept 30-minute-old oracle data?
 - [Progressive Payment Rollout](progressive-payment-rollout.md) - How covenant parameters evolve over phases
 
 **Research:**
-- Kraken API price scripts: `knowledge/research_code/` (Python scripts for oracle data)
+- Kraken API price scripts (internal tooling)
 - Oracle research: TBD (Phase 1)
 
 ---

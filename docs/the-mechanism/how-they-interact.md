@@ -32,7 +32,7 @@ María sees the payment instructions, taps “Open Bizum,” and pays €100.50 
 
 ### Step 3 — Bot Funds Covenant
 
-Isabel’s Android notification listener detects the BBVA message (“Recibido 100,40 € … Concepto: Elena#142”), parses it, and matches it to the pending covenant. The bot creates a funding transaction locking €107 of Isabel’s BCH, signs it with limited covenant keys, and broadcasts it. Total processing time: ~2 seconds. Isabel is at work, completely unaware.
+Isabel’s Android notification listener detects the BBVA message (“Recibido 100,50 € … Concepto: Elena#142”), parses it, and matches it to the pending covenant. The bot creates a funding transaction locking €107 of Isabel’s BCH, signs it with limited covenant keys, and broadcasts it. Total processing time: ~2 seconds. Isabel is at work, completely unaware.
 
 María’s app confirms the covenant is funded. Elena receives a push notification: “María sent you €100 in BCH.”
 

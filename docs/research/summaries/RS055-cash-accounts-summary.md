@@ -133,7 +133,7 @@ Bizum/SEPA concept field:
 - Lookup server: `https://cashaccounts.bchdata.cash/`
 - npm library: `https://www.npmjs.com/package/cashaccounts`
 - Electron Cash wallet integration (2019)
-- Radio Asgaya Episode 9: Cash Accounts
+- Cash Accounts
 
 ---
 

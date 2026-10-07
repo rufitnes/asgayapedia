@@ -77,6 +77,8 @@ Publish/replace the **same `d`** → the relay replaces the prior version. Set `
 | **Seller ad** (`SELLER`) | someone with BCH | "I sell BCH for fiat" | the **sender** (buying BCH for a remittance) |
 | **Buyer ad** (`BUYER`) | a merchant / BCH buyer | "I sell ⟨asset⟩ for BCH" | the **recipient** (cashing out) |
 
+**These two labels are internal and derived** — every poster is a **seller of an asset**; the board just resolves which side is BCH. The UI treats them as one thing: *"I sell ⟨asset⟩, I accept ⟨…⟩."*
+
 The recipient's cash-out picker shows **buyer ads**; the sender's picker shows **seller ads**. Both carry `bchpub` + `npub`.
 
 > **The payment method is the filter.** A recipient who picks *"Cash in person"* sees only the ads that buy BCH for cash; the sender filters by *Bizum* / *SEPA*. The **asset** is a multi-value field and is **asset-agnostic** — the app ships an **`OTHER` free-text escape hatch** (the "Other" input, **Phase 0**), so any asset can be listed; a protocol-level bitmask for the long tail is **Phase 0+**.
