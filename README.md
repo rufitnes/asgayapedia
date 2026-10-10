@@ -44,7 +44,7 @@ Visit [docs.asgaya.org](https://docs.asgaya.org/) to explore:
 ## 🔍 Current Status
 
 **Phase:** Phase 0 — Active Implementation & Testnet3 Validation  
-**Last Update:** October 7, 2026  
+**Last Update:** October 10, 2026  
 **Architecture:** Payment-first covenants + H€/HAu stability layer
 
 **Implementation progress:**
@@ -53,7 +53,7 @@ Visit [docs.asgaya.org](https://docs.asgaya.org/) to explore:
 - ✅ **v0.2 hybrid architecture** — Kotlin owns network, WebView does compute (build/sign). Eliminated the WebView connection-hang bug class; multi-device reliable
 - ✅ **Own signed oracle** — a 16-byte price + time message (`checkDataSig`), dynamic keys (no hardcoded keys), live on Pi-chan
 - ✅ **Bulletin board + coordination** — permissionless discovery over **Nostr** (NIP-99 listings, no central server) + **NIP-17** gift-wrapped DMs
-- ✅ **H€/HAu stability tokens** via 30-day AnyHedge contracts
+- 📋 **H€/HAu stability tokens** — *planned (Phase 1+)*: tokenized AnyHedge positions; design settled, legal review + build pending
 - ✅ **Payment-first covenant architecture** (no seller capital risk)
 - ✅ **36 structured unknowns** for Phase 0 validation
 - ✅ **Documentation publicly accessible** at docs.asgaya.org
