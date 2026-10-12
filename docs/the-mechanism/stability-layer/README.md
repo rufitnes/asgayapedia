@@ -1,4 +1,7 @@
 # Universal Stability: Depegging from Fiat
+
+> **Status: planned (Phase 1+).** The stability layer (**H€**/**HAu**) is **designed but not built** — build + legal review pending. This document is the **design**; it is **not** part of Phase 0.
+
 **📖 Unfamiliar terms?** See the [glossary](../../glossary.md) for definitions.
 
 **The mechanism that powers H€ and HAu works for any measurable asset with a reliable oracle.** Gold and Euro are just the beginning.

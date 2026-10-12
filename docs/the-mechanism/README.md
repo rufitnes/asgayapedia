@@ -28,7 +28,7 @@ becomes unnecessary. **Success means we disappear.**
 | ⚙️ **Bulletin Board** | Where buyers and sellers find each other (permissionless listings — anyone can read) |
 | ⚙️ **Nostr** | How they coordinate payment details (encrypted P2P messaging) |
 | ⚙️ **Notification Bot** | How it runs automatically (the killer feature — set and forget) |
-| ⚙️ **Stability Layer** | How merchants protect against volatility (H€/HAu tokens backed by AnyHedge) |
+| ⚙️ **Stability Layer** | How merchants protect against volatility (H€/HAu tokens backed by AnyHedge) *(planned, Phase 1+)* |
 
 ---
 
@@ -80,6 +80,8 @@ and bank notifications. No manual intervention needed — scale without effort.
 
 ## The Merchant Problem: Post‑Cashout Volatility
 
+> **Planned (Phase 1+).** The stability layer below is **designed but not built** (build + legal review pending). It is **not** part of Phase 0 — it is the direction for when merchants need it.
+
 **After Elena cashes out at a merchant, that merchant holds BCH.** If they need to convert to VES for rent in two weeks, they're exposed to ±20% monthly volatility. Lose 15% once, they quit.
 
 **Solution:** Optional stability tokens backed by pooled AnyHedge contracts.
@@ -106,7 +108,7 @@ and bank notifications. No manual intervention needed — scale without effort.
 
 **Phase 0 capital:** €3K unified pool (approved assets: H€, HAu). High merchant velocity (weekly VES conversion) means low capital lock. Supports ~80 merchants initially.
 
-**The hook:** Merchants come for remittances (0.5% spread). Stay for stability (hedge hyperinflation without trusting banks).
+**The hook:** Merchants come for remittances (a small spread). Stay for stability (hedge hyperinflation without trusting banks).
 
 ---
 

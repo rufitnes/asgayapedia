@@ -25,17 +25,17 @@ Every participant is either a **BCH Seller** (has BCH, wants fiat) or a **BCH Bu
 
 ### BCH Sellers: "I Have BCH, I'll Lock It for Your Remittance"
 
-A seller posts a listing with their accepted payment methods (Bizum, SEPA), fee (0.5%), and volatility buffer (7%). When a sender selects them and pays €100 via Bizum, the seller's bot detects the payment and locks €107 worth of BCH into the covenant. The seller earns 0.5% (€0.50) plus any unused buffer if BCH appreciates during the window.
+A seller posts a listing with their accepted payment methods (Bizum, SEPA, cash or card in person), a fee (a Phase-0 bootstrap default of 0.5%), and the volatility buffer (7%). When a sender selects them and pays €100 via Bizum, the seller's bot detects the payment and locks €107 worth of BCH into the covenant. The seller earns its fee (€0.50 at the default) plus any unused buffer if BCH appreciates during the window.
 
 **Guarantee:** The seller never locks BCH until their bank confirms the fiat payment. No capital risk.
 
 ### BCH Buyers: "I Have Fiat, I'll Buy Your BCH"
 
-A buyer posts a listing with their payment method. For a merchant, that method is "cash at my shop" plus a location. For an online buyer, it's "bank transfer" or "PagoMóvil."
+A buyer posts a listing with their payment method. For a merchant, that method is "cash at my shop" (or **card in person**) plus a location. For an online buyer, it's "bank transfer" or "PagoMóvil."
 
 **Merchants are BCH buyers.** Nothing more. A merchant is just a buyer whose payment method is cash and who has a physical address. The system doesn't need a separate "merchant" category.
 
-When a recipient visits the merchant, they hand over the claim, receive cash, and both sign. The merchant earns 0.5% in BCH. The recipient is now in the shop—likely to buy groceries. The remittance fee is the door opener.
+When a recipient visits the merchant, they hand over the claim, receive cash, and both sign. The merchant earns its fee in BCH. The recipient is now in the shop—likely to buy groceries. The remittance fee is the door opener.
 
 ---
 

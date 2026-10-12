@@ -29,7 +29,7 @@ Phase 0 is validated on **testnet3** first; the **mainnet beta** begins once the
 | 1 | **In-person on-ramp** — the sender sets terms; the seller funds the covenant on "cash received" | ✅ Proven (4 devices) | The basic loop |
 | 2 | **Cash-out** — the merchant cashes the recipient out (merchant-first) | ✅ On-chain | The off-ramp |
 | 3 | **Discovery & coordination** — bulletin board (Nostr listings) + Nostr DMs (NIP-17) | ✅ Working | Finding a seller/merchant without a central server |
-| 4 | **Cash Accounts** — register and use a `name#number` as the **payment reference** | 🎯 Next | The reference the **banking rails** match on → **Bizum auto-funding** |
+| 4 | **Cash Accounts** — register and use a `name#number` as the **payment reference** | ✅ Registered — 🎯 *using it as the reference* next | The reference the **banking rails** match on → **Bizum auto-funding** |
 | 5 | **Bizum auto-funding** — the seller's app reads the bank notification and funds the covenant automatically | 📅 Planned | Removes the manual step → the **merchant/seller client** (Phase 1) |
 | 6 | **The customer flow** — a merchant accepts BCH directly (same covenant; merchant `claim()` before releasing goods) | 🎯 Target | A merchant that anyone can pay in BCH |
 

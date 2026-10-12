@@ -28,7 +28,7 @@ Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple 
 | **⚙️ Bulletin Board** | Discover buyers and sellers (signed Nostr listings; on-chain anchor Phase 0+) | [the-mechanism/bulletin-board](the-mechanism/bulletin-board/README.md) |
 | **⚙️ Nostr** | Coordinate payment details privately + blacklist warnings | [the-mechanism/nostr-coordination](the-mechanism/nostr-coordination/README.md) |
 | **⚙️ Notification Bot** | Automate everything (passive income, 24/7 operation) | [the-mechanism/notification-bot](the-mechanism/notification-bot/README.md) |
-| **⚙️ Stability Layer** | Protect from volatility via H€/HAu tokens | [the-mechanism/stability-layer](the-mechanism/stability-layer/README.md) |
+| **⚙️ Stability Layer** | Protect from volatility via H€/HAu tokens *(planned, Phase 1+)* | [the-mechanism/stability-layer](the-mechanism/stability-layer/README.md) |
 
 **How they work together:** [the-mechanism/how-they-interact.md](the-mechanism/how-they-interact.md)
 
@@ -106,17 +106,17 @@ Anyone can participate without KYC, using minimal hardware and knowledge. No cus
 Beat 6.49% average remittance costs through market-rate exchanges and decentralized covenant-based settlement.
 
 **3. Promote Adoption First**  
-Every transaction must create economic incentives for participants to join and grow the network. Merchants earn ~0.5% spread, BCH sellers earn ~0.5% fee + volatility protection via H€/HAu.
+Every transaction must create economic incentives for participants to join and grow the network. Merchants earn a small spread and BCH sellers a small fee (a Phase-0 bootstrap default of ~0.5 % each); merchants can optionally hold H€/HAu stability tokens to hedge volatility *(planned, Phase 1+)*.
 
 ---
 
 ## Fee Structure
 
-**Total fee: ~1% of transfer amount**
+**Typical total cost: ~1 % of the transfer amount** *(a Phase-0 bootstrap default — the poster sets its own fee)*
 
-On a €100 transfer:
-- Sender pays: €100.50 (includes 0.5% seller fee)
-- Recipient receives: €99.50 cash (merchant keeps 0.5% spread)
+On a €100 transfer (at the default):
+- Sender pays: €100.50 (includes ~0.5 % seller fee)
+- Recipient receives: €99.50 cash (merchant keeps ~0.5 % spread)
 - **Total cost: ~€1 (1%) vs €5-€6.50 (5-6.5%) via traditional remittances**
 
 **Zero custody:** No company holds your funds at any point. BCH covenants enforce settlement automatically.
@@ -129,7 +129,7 @@ Asgaya builds on proven open standards and Bitcoin Cash innovations:
 
 - **[CashAccounts](https://gitlab.com/cash-accounts/specification)** — Human-readable addresses (`Elena#142`)
 - **[CashScript](https://cashscript.org/)** — Covenant (smart-contract) language for automated settlement
-- **[CashTokens](https://cashtokens.org/)** — On-chain tokens (e.g. H€/HAu stable tokens)
+- **[CashTokens](https://cashtokens.org/)** — On-chain tokens (e.g. H€/HAu stable tokens — *planned, Phase 1+*)
 - **[AnyHedge](https://anyhedge.com/)** — Volatility protection via hedge contracts
 - **[Nostr](https://nostr.com/)** — Decentralized coordination: encrypted (NIP-17) messages between participants, with no company server
 - **[Electrum/Fulcrum](https://github.com/cculianu/Fulcrum)** — SPV infrastructure for mobile wallets

@@ -28,16 +28,16 @@ The compliance separation between the remittance (sender → recipient) and the 
 The design choice that lets the recipient decide when to claim a remittance, rather than having the sender push it automatically. The pull system compresses volatility exposure to the few seconds of the cash‑out event and creates merchant foot traffic.
 
 ### Volatility Buffer (7 %)
-Extra BCH that a seller locks into a covenant (currently 7 % above face value) to protect the recipient and merchant from moderate price drops during the claim window. If BCH drops by more than 7 %, the covenant aborts and the BCH returns to the sender. The buffer is not a fee—it is the seller’s own capital that returns to them when the covenant settles normally.
+Extra BCH that a seller locks into a covenant (currently 7 % above face value) to protect the recipient and merchant from moderate price drops during the claim window. If BCH drops far enough that the collateral can no longer cover the face value, the covenant aborts and the BCH returns to the sender. The buffer is not a fee—it is the seller’s own capital that returns to them when the covenant settles normally.
 
 ### 3 % Early Warning
 A notification sent to both sender and recipient when the BCH price drops by 3 % from the covenant’s starting price. It warns the recipient to claim soon before a potential 7 % abort. This is a Phase 0 hypothesis, not a guaranteed protection.
 
 ### Stability Layer
-The set of mechanisms that allow merchants (and senders) to convert volatile BCH into value‑stable tokens (H€ or HAu). It uses pooled AnyHedge contracts and CashTokens to mint EUR‑pegged or gold‑pegged tokens.
+The set of mechanisms that allow merchants (and senders) to convert volatile BCH into value‑stable tokens (H€ or HAu). **Planned (Phase 1+) — designed but not built.** It uses pooled AnyHedge contracts and CashTokens to mint EUR‑pegged or gold‑pegged tokens.
 
 ### H€ (Hedged Euro)
-A BCH‑native CashToken pegged to the Euro via pooled AnyHedge contracts. 1 H€ is always worth approximately €1. It can be minted at covenant lifecycle endpoints (abort or merchant cash‑out). Phase 0: founder‑provided long side; Phase 1+: open long‑side market.
+A BCH‑native CashToken pegged to the Euro via pooled AnyHedge contracts. 1 H€ is always worth approximately €1. It can be minted at covenant lifecycle endpoints (abort or merchant cash‑out). Bootstrap: founder‑provided long side; later: open long‑side market.
 
 ### HAu (Hedged Gold)
 A BCH‑native CashToken pegged to the price of gold (XAU) via pooled AnyHedge contracts. It serves as a universal stable value alternative, especially attractive to merchants who want to escape both BCH volatility and local‑currency depreciation.
@@ -70,7 +70,7 @@ A BCH seller who receives BCH through a covenant and either keeps it or sells it
 A BCH buyer whose payment method is “cash at a physical shop.” Merchants provide cash‑out services for recipients and earn spreads, product margins, and stability‑layer benefits.
 
 ### BCH Seller (Passive)
-Someone who lists on the bulletin board as a seller, accepts fiat payments (via Bizum, SEPA, or cash), and uses the notification bot to automatically lock BCH into covenants. They earn a 0.5 % fee per transaction.
+Someone who lists on the bulletin board as a seller, accepts fiat payments (via Bizum, SEPA, or cash), and uses the notification bot to automatically lock BCH into covenants. They earn a fee per transaction (a Phase-0 bootstrap default of ~0.5 %).
 
 ### BCH Buyer (Passive)
 Someone who lists on the bulletin board as a buyer, provides fiat in exchange for BCH, and may stabilise received BCH into H€ or HAu. Merchants are the primary passive buyers.
@@ -127,7 +127,7 @@ The merchant broadcasts the cash‑out transaction (BCH moves first) and only th
 ## Economics & Strategy
 
 ### Fee Split
-The 1 % total system fee is split equally: 0.5 % goes to the BCH seller who provided the BCH, and 0.5 % goes to the merchant who provided cash‑out services. The protocol takes no fee.
+The **Phase-0 bootstrap default** total fee is ~1 %, split equally: 0.5 % to the BCH seller who provided the BCH, and 0.5 % to the merchant who provided cash‑out services. The protocol takes no fee. *(The poster sets its own `fee` per ad; the reference rate is a guardrail.)*
 
 ### Capital Recycling
 The ability of a passive seller to immediately reuse fiat received from a sender to replenish their BCH inventory (via exchange), while the original BCH is still locked in the covenant. Enables small capital to process high transaction volumes.
@@ -142,7 +142,7 @@ The phased approach from a curated Phase 0 (trusted sellers, coordinator‑vet
 The Phase 0 plan to bootstrap a two‑sided marketplace: recruit 150 senders and 5 merchants through personal networks, onboarders, and freelancers, and validate all economic and behavioural assumptions before scaling.
 
 ### Progressive Payment Rollout
-The decision to support only cash‑in‑person and a few well‑documented digital payment methods (Bizum, SEPA) at launch, adding new methods only after they are thoroughly researched and tested by community pioneers.
+The decision to support only physical methods (cash in person, **card in person**) and a few well‑documented digital payment methods (Bizum, SEPA) at launch, adding new methods only after they are thoroughly researched and tested by community pioneers.
 
 ### Pioneer Badge
 A permanent reputation marker awarded to users who document a new payment method or corridor. Pioneers earn higher trust scores and are credited in the protocol’s release notes.
@@ -250,12 +250,12 @@ These terms have been deliberately replaced in the documentation to maintain reg
 | Order | Listing | No central order book exists |
 | Trade | Transaction or Exchange | Avoids securities‑law connotations |
 | Buy/Sell BCH | Trade BCH | Regulatory‑safe language for UI |
-| Fee | Spread (for merchant), Fee (for seller) | Clarifies who charges what |
-| Kraken | Exchange (generic) | Exchange dependency is not part of the protocol |
+| _Fee_ / _Spread_ | both are used — *spread* (the concept), *fee* (the app’s per‑ad field) | the poster sets its own rate; there is no protocol fee |
+| Kraken | Exchange (generic) | a *soft* preference — the oracle’s source feed is an implementation detail |
 
 ---
 
-*Last updated: 2026-10-07 – reflects the covenant architecture, five-gear model, stability layer, and v0.2 hybrid implementation terms.*
+*Last updated: 2026-10-12 – reflects the covenant architecture, five-gear model, stability layer (planned, Phase 1+), the single per-ad `fee`, and v0.2 hybrid implementation terms.*
 ---
 
 ## Navigation

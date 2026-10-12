@@ -53,7 +53,7 @@ That's it. Everything else is context.
 
 Carlos runs a grocery store. VES loses 5 % per week. He needs stable value to preserve purchasing power and bolívars for daily operations.
 
-**Passive mode (most of the month):** Posts as a BCH Buyer (cash at store, 0.5 % spread). Recipients visit, get cash, and Carlos accumulates BCH automatically—no effort, just foot traffic and grocery sales.
+**Passive mode (most of the month):** Posts as a BCH Buyer (cash at store, a small spread — ~0.5 % Phase-0 default). Recipients visit, get cash, and Carlos accumulates BCH automatically—no effort, just foot traffic and grocery sales.
 
 **Stability option:** When Carlos cashes out a remittance covenant, his wallet offers: *Keep BCH or stabilice with H€ (Euro), or HAu (Gold)?* We think he's going to pick **H€** (familiar unit, he's used to convert to VES) but we don't know that's why we want to offer a non fiat denominated option. The app mints H€ or HAu tokens backed by pooled AnyHedge contracts. Carlos now holds stable value, immune to BCH's ±20 % monthly swings.
 

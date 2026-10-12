@@ -60,9 +60,9 @@ Publish/replace the **same `d`** → the relay replaces the prior version. Set `
 |---|---|
 | `adType` | `SELLER` (sells BCH) or `BUYER` (sells an asset for BCH) |
 | `assets` | non-BCH side: fiat code (`EUR`, `VES`), token (`H€`, `HAu`), or free text |
-| `paymentMethods` | the fiat rail (`Bizum`, `Cash in person`, …) — **the effective filter** |
+| `paymentMethods` | the fiat rail (`Bizum`, `Cash in person`, `Card in person`, …) — **the effective filter** |
 | `bchPubkey` / `npub` | identity (funding key / coordination key) |
-| `fee` | the seller's fee, e.g. `0.5%` |
+| `fee` | the poster's own fee/rate (Phase-0 bootstrap default ~`0.5%`) |
 | `buffer` | volatility buffer (`minPricePercent`, e.g. `93` = 7%) |
 | `min` / `max` | amount bracket |
 | `location` | required for cash-in-person |

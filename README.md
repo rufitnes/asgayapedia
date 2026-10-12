@@ -20,7 +20,7 @@ A Bitcoin Cash wallet with a **peer-to-peer marketplace** to trade any fiat curr
 - **<1% total fees** - Trade fiat↔BCH cheaper than exchanges or remittance services
 - **No KYC** - Permissionless participation
 - **No custody** - Payment-first covenant model
-- **Volatility protection** - H€ and HAu stability tokens via AnyHedge
+- **Volatility protection** *(planned, Phase 1+)* - H€ and HAu stability tokens via AnyHedge
 
 **Use cases:** Remittances, merchant cash-out, cross-border payments, BCH liquidity provision.
 

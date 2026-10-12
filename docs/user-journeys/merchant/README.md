@@ -14,7 +14,7 @@
 
 Carlos is not just a BCH buyer — he's a **triple-dip profit machine**:
 
-1. **0.5% spread** on every BCH purchase from a recipient
+1. **A small spread** on every BCH purchase from a recipient (a Phase-0 default of ~0.5 % over the reference rate)
 2. **15-30% margin** on grocery sales (the recipient spends cash at his store)
 3. **Stable value** held in **H€ / HAu** (a hedge against VES inflation, once the stability layer is available)
 
@@ -69,7 +69,7 @@ Carlos is not just a BCH buyer — he's a **triple-dip profit machine**:
 
 **The transaction (merchant-first):**
 - Elena sends her **BCH-for-sale request** (over Nostr, or a QR if she has no data).
-- Carlos's app fetches a **fresh price** (seconds old — this protects his 0.5% margin) and **pre-signs** the transaction.
+- Carlos's app fetches a **fresh price** (seconds old — this protects his margin) and **pre-signs** the transaction.
 - Elena reviews the checks (fresh price, covenant, outputs), co-signs, and sends it.
 - Carlos **broadcasts immediately** → **hands Elena the cash** (0-conf for small amounts).
 - **The merchant controls the timing and the freshness** — the point of merchant-first.

@@ -12,7 +12,7 @@ A trader is someone who operates as BOTH buyer and seller, earning fees by provi
 
 1. **Sell BCH** to senders (María buying BCH to send to Elena)
 2. **Buy BCH** from recipients (Elena cashing out to VES)
-3. **Earn fees on volume** (0.5% per transaction, profits scale with automation)
+3. **Earn fees on volume** (a small fee per transaction — a Phase-0 default of ~0.5 %; profits scale with automation)
 4. **Operate passively** (set-and-forget on phone in pocket, manual attention only for edge cases)
 
 **Mode:** Passive (app-driven automation, 5-10 min/day oversight)
@@ -64,7 +64,7 @@ A trader is someone who operates as BOTH buyer and seller, earning fees by provi
 
 **2. Post Passive Listing**
 - Amount: Up to €500/transaction (can scale later)
-- Fee: 0.5% (Isabel sells BCH at 100.5% of spot)
+- Fee: ~0.5 % (a Phase-0 default; Isabel sells BCH at 100.5% of spot)
 - Payment method: Bizum (instant bank transfer via phone number)
 - Buffer: 7% (€107 BCH locked for €100 trade to protect recipient)
 - Hours: 24/7 (app operates while Isabel sleeps)

@@ -69,6 +69,8 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 
 **Evidence:** First inter-device claim August 10, 2026 ([TXID](https://github.com/bitcoin-cash-node/bitcoin-cash-node): 193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96)
 
+**Navigation (2026-10):** the app is organised as **Home · Market · Trade**. **Home** shows the balance plus the active remittance and **Activity/History**; **Market** is the **bulletin board** as a first-class tab — **Buy/Sell**, filter by **asset** and **payment method**, sort by **fee** — where a seller posts and re-prices an ad; **Trade** holds the seller/merchant surfaces. `Advanced` mode now gates the **Trade** tab only (one Home for everyone).
+
 **See complete flow:** [claim-flow-end-to-end.md](claim-flow-end-to-end.md)
 
 ---
@@ -93,6 +95,8 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | **Bulletin board** | ✅ Working (Phase 0) | Nostr (NIP-99) discovery — signed listings cached locally; on-chain anchor = Phase 0+ |
 | **Cash Accounts** | ✅ Registered (testnet) | Real `name#number` as the **payment reference** (the bank-notification match key); registered on testnet |
 | **Merchant cash-out flow** | ✅ DONE on-chain | Merchant-first, TXID `05301369...` (Sep 1, 2026); merchant role needs no Telegram (QR/paste, tablet-tested) |
+| **Market tab** (the board) | ✅ Working | The bulletin board as a **first-class tab**: **Buy/Sell**, filter by **asset · payment method**, sort by **fee**; a seller posts and re-prices an ad (Oct 10) |
+| **Card in person** | ✅ Working | A **second physical rail** (alongside cash in person): a Settings toggle + a publish chip + method-specific instructions (Oct 11) |
 | **First BCH seller (Suso)** | 🔨 Needed | MVP validation requires real seller |
 
 ### Phase 0+ (During Testing — Opportunistic)
@@ -101,7 +105,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 |---------|--------|-------|
 | **Seed phrase backup** | Cheap UX win | BIP39 HD wallets, 12-word recovery |
 | **Seller device health** | Already built! | RS072/RS075 DeviceHealthMonitor.kt exists; needs integration + bulletin board ranking |
-| **Stability layer (H€/HAu)** | Retention incentive | Launch-first per `stability-layer.md`; merchant hook |
+| **Stability layer (H€/HAu)** | Retention incentive | *Planned (Phase 1+)* — design settled; build + legal review pending (`stability-layer.md`) |
 | **Kraken API** | Volume dependent | Manual/mining covers Phase 0; automate when needed |
 
 ### Phase 1+ (Post-MVP)
@@ -248,6 +252,6 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 
 ---
 
-**Last updated:** 2026-09-08 (seller auto-funding E2E + 4-device flow)  
+**Last updated:** 2026-10-12 (Market tab, card rail, multi-currency)  
 **Status:** Phase 0 in progress (covenant flow proven, integration ongoing)  
 **Evidence:** First inter-device claim TXID 193c3c9e5287e13cc56e1401aed55de34db9a375312e052807aea060e58e3d96

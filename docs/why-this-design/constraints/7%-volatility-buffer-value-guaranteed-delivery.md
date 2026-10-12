@@ -25,8 +25,8 @@ BCH volatility is the price we pay for censorship resistance and zero intermedia
 **What it does:**
 
 1. Seller locks BCH into covenant: **€100 face value + €7 buffer** (€107 total)
-2. If BCH drops <7% during claim window → covenant settles normally
-3. If BCH drops >7% → covenant aborts, returns BCH to sender, seller keeps fiat
+2. If the drop stays within the buffer during the claim window → the covenant settles normally
+3. If the drop consumes the buffer → the covenant aborts, returns the BCH to the sender, seller keeps fiat
 
 **Why not 5%?** More aborts during volatility spikes → system fails when needed most  
 **Why not 10%?** 10% locked = less capacity → fewer participants

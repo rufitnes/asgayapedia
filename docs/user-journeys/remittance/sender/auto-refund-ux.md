@@ -110,9 +110,9 @@ When price drops 3% (early warning), María sees:
 
 ---
 
-### Abort + H€ Mint (Price Drop >7%)
+### Abort + H€ Mint (Price Drop Consuming the Buffer)
 
-If the price falls **more than 7 %** below the floor, the sender can **`abort`** — a sender-signed covenant path that returns the BCH and **triggers the H€ mint** (stability-layer protection). The covenant would reject the recipient's `claim` anyway (price < floor), so the remittance value is preserved as H€.
+If the price falls **far enough that the collateral can no longer cover the face value**, the sender can **`abort`** — a sender-signed covenant path that returns the BCH and **triggers the H€ mint** (stability-layer protection). The covenant would reject the recipient's `claim` anyway (price < floor), so the remittance value is preserved as H€.
 
 ```
 ┌─────────────────────────────────────┐
