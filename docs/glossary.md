@@ -4,6 +4,14 @@
 
 ---
 
+## The Name
+
+**Asgaya** is an **Asturleonese** word — the Romance language of **Asturias and León** (with its **Mirandese** kin just across the border in Portugal) — meaning **"in abundance, plenty"**, as in *sidra a esgaya* ("cider in abundance"). The everyday form **asgaya** is a **contraction of the locution *a esgaya***, from the verb *esgayar* ("to break off, split") — the image of things arriving in quantity.
+
+The name is the promise: a fiat ↔ BCH market **in abundance** — enough sellers, merchants and liquidity — so that moving money across borders gets cheap for everyone.
+
+---
+
 ## Core Concepts
 
 ### Asgaya Protocol
@@ -255,7 +263,7 @@ These terms have been deliberately replaced in the documentation to maintain reg
 
 ---
 
-*Last updated: 2026-10-12 – reflects the covenant architecture, five-gear model, stability layer (planned, Phase 1+), the single per-ad `fee`, and v0.2 hybrid implementation terms.*
+*Last updated: 2026-10-12 – adds the **name etymology**; reflects the covenant architecture, five-gear model, stability layer (planned, Phase 1+), the single per-ad `fee`, and v0.2 hybrid implementation terms.*
 ---
 
 ## Navigation
