@@ -35,7 +35,7 @@ Asgaya's long-term vision is **blockchain-as-oracle** — the network discovers 
 - **Deterministic testing** — the same result as hardcoded prices, but through the real signing path (checkdatasig), so the full covenant validation is exercised.
 - **No external dependency** — tests don't fail because Kraken is down or rate-limited.
 
-**Running service (Pi-chan):** `http://192.168.1.100:3001`
+**Running service (Pi-chan):** `http://<oracle-host>:3001`
 
 | Endpoint | Purpose | Phase |
 |----------|---------|-------|
@@ -100,7 +100,7 @@ The same husk graduates to production when Asgaya starts testing on mainnet.
 
 **Status:** Phase 0 (running on Pi-chan, integrated with app)  
 **Last Updated:** 2026-08-16  
-**Location:** Raspberry Pi (Pi-chan) — `http://192.168.1.100:3001`
+**Location:** Raspberry Pi (Pi-chan) — `http://<oracle-host>:3001`
 
 ---
 

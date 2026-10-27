@@ -269,7 +269,7 @@ val txid = covenantWebView.claimCovenant(
     recipientWIF = recipientWIF,
     recipientAddress = recipientWallet.address,  // Payment to recipient
     sellerAddress = sellerWallet.address,         // ✅ Buffer to seller (funder)!
-    fulcrumHost = "192.168.1.100",
+    fulcrumHost = "<fulcrum-host>",
     fulcrumPort = 60003
 )
 ```

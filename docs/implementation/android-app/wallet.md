@@ -251,21 +251,21 @@ suspend fun seedTestWallets() {
     importWallet(
         label = "Sender",
         role = WalletRole.SENDER,
-        wif = "cSAXMqnRNDxPVuFviX5EPHRFPoB7zdmXhrgJu9zNu9cuDnGsvYnA"
+        wif = "<sender-wif>"      // testnet; redacted (burned — do not reuse)
     )
     
     // Import Recipient wallet (Isabel)
     importWallet(
         label = "Recipient (Isabel)",
         role = WalletRole.RECIPIENT,
-        wif = "cRzbt6ZpcgyWLPFdogrddKEH7gYWHBnLaFR9D1KKZEdwxYRd7z9z"
+        wif = "<recipient-wif>"   // testnet; redacted (burned)
     )
     
     // Import Merchant wallet (Bob)
     importWallet(
         label = "Merchant (Bob)",
         role = WalletRole.MERCHANT,
-        wif = "cMxUSPCEYvF62E4aSbz3y3uRdqzW9vN8w5YGTDxZVFxKiKzK9vEF"
+        wif = "<merchant-wif>"    // testnet; redacted (burned)
     )
     
     // Set sender as default active
@@ -273,6 +273,8 @@ suspend fun seedTestWallets() {
     sender?.let { switchWallet(it.id) }
 }
 ```
+
+**Testnet only.** The seed WIFs above are **redacted placeholders** — these are test wallets, **treated as burned** (rotate if any are still in use). Never commit a private key.
 
 **Production:** Test wallet seeding disabled (debug builds only)
 

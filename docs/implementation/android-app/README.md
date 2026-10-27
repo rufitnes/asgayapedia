@@ -187,7 +187,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 ## External Dependencies
 
 **Phase 0 (in use):**
-- **Electrum/Fulcrum server** - Pi-chan `192.168.1.100` (60001 TCP, 60003 WS), **testnet3**; Phase 0+ adds redundancy (3-5 servers)
+- **Electrum/Fulcrum server** - Pi-chan `<fulcrum-host>` (60001 TCP, 60003 WS), **testnet3**; Phase 0+ adds redundancy (3-5 servers). *The reference implementation points at a local node; production clients use public/redundant servers.*
 - **Telegram app** - Testing tool + fallback for parameter coordination
 
 **Phase 0+ (planned):**

@@ -84,7 +84,7 @@ holder.checkBalanceButton.setOnClickListener {
             // Query balance via TCP
             val balance = electrumClient.getBalance(
                 address = covenantAddress,
-                host = "192.168.1.100",
+                host = "<fulcrum-host>",
                 port = 60001  // TCP port
             )
             
@@ -276,7 +276,7 @@ ss -tlnp | grep -E "60001|60003|60004"
 // Uses TCP (port 60001)
 val balance = electrumClient.getBalance(
     address = covenantAddress,
-    host = "192.168.1.100",
+    host = "<fulcrum-host>",
     port = 60001  // TCP - no WebSocket, no SSL
 )
 ```
@@ -289,7 +289,7 @@ const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort ==
 // Port 60003 → useSSL = false ✅
 
 const socket = new ElectrumWebSocket(
-    "192.168.1.100",
+    "<fulcrum-host>",
     60003,  // WebSocket port — UTXO fetch only
     false   // No SSL
 );
@@ -299,7 +299,7 @@ const socket = new ElectrumWebSocket(
 ```kotlin
 val txid = covenantWebView.claimCovenant(
     // ... params ...
-    fulcrumHost = "192.168.1.100",
+    fulcrumHost = "<fulcrum-host>",
     fulcrumPort = 60003  // WebSocket (ws://), not TCP, not WSS
 )
 ```

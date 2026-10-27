@@ -35,7 +35,7 @@
   - CREATE ~100ms, covenant ops ~200ms, zero WebSocket connections on critical path
   - Multi-device bug (WebSocket connection accumulation) eliminated at the root
 - ✅ **WebView Integration** - Compute-only (CashScript build/sign); broadcast moved to Kotlin (Aug 20)
-- ✅ **Oracle Husk (Pi-chan)** - Running at `192.168.1.100:3001`, dynamic pubkey fetching, zero hardcoded keys (Aug 16)
+- ✅ **Oracle Husk (Pi-chan)** - Running at `<oracle-host>:3001`, dynamic pubkey fetching, zero hardcoded keys (Aug 16)
 - ✅ **Timeout & Lifecycle Handling** - `withTimeout()` + ViewModel migration (RS083); stuck "Sending..." bug resolved (Aug 17-20)
 - ✅ **Merchant Cashout (Merchant-First)** - **Production-proven on-chain** (Sep 1, 2026)
   - Merchant pre-signs first (fresh oracle at counter → protects 0.5% margin)

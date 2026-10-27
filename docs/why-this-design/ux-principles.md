@@ -246,7 +246,7 @@ User understands there's a delay and why.
 **WebSocket connection fails:**
 ```
 ❌ Connection failed: ElectrumClient timeout
-Try: Check Fulcrum node is running (192.168.1.100:60003)
+Try: Check Fulcrum node is running (<fulcrum-host>:60003)
 ```
 
 **NOT:** "Error" (what error? what should I do?)

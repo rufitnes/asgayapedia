@@ -90,7 +90,7 @@ The covenant claim flow enables a recipient to receive a guaranteed EUR-denomina
 │     │     recipientWIF: "...",                                      │
 │     │     recipientAddress: "bchtest:qq2uxg...",                    │
 │     │     sellerAddress: "bchtest:qrw5nuk...",  ← Critical!         │
-│     │     fulcrumHost: "192.168.1.100",                             │
+│     │     fulcrumHost: "<fulcrum-host>",                             │
 │     │     fulcrumPort: 60003                                        │
 │     │   }                                                            │
 │     └─ Calls CovenantWebView.claimCovenantHybrid(params)  (v0.2)    │
@@ -385,7 +385,7 @@ holder.checkBalanceButton.setOnClickListener {
             // Query balance via TCP (ElectrumClient)
             val balance = electrumClient.getBalance(
                 remittance.covenantAddress,
-                host = "192.168.1.100",
+                host = "<fulcrum-host>",
                 port = 60001  // TCP port (not WebSocket!)
             )
             
@@ -484,7 +484,7 @@ private fun executeClaim(remittance: Remittance) {
             recipientWIF = recipientWIF,
             recipientAddress = recipientWallet.address,  // Payment goes here
             sellerAddress = sellerWallet.address,        // Buffer goes here!
-            fulcrumHost = "192.168.1.100",
+            fulcrumHost = "<fulcrum-host>",
             fulcrumPort = 60003  // WebSocket port
         )
         
@@ -510,7 +510,7 @@ suspend fun claimCovenant(
     recipientWIF: String,
     recipientAddress: String,
     sellerAddress: String,  // ← Added Aug 10 (critical fix!)
-    fulcrumHost: String = "192.168.1.100",
+    fulcrumHost: String = "<fulcrum-host>",
     fulcrumPort: Int = 60003
 ): String = suspendCancellableCoroutine { continuation ->
     
