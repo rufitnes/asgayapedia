@@ -132,8 +132,6 @@ Two users volunteer → become "pioneers" for that payment method.
 
 Two pioneers test notification parsing by sending small payments to each other (e.g., KES 100 via M-Pesa). The bot learns the notification format (SMS structure, field extraction, timestamp format), and the parsed data is reviewed on GitHub before code merge. The payment method launches as "experimental" with pioneers getting early access. After 50-100 organic transactions with >99% success rate and <1% disputes, the method graduates to "stable" and becomes available to all users in that country.
 
-**Note:** Detailed pioneer documentation is being developed in [Cold Start Strategy](../../cold-start-strategy/README.md) (contributions welcome!).
-
 ---
 
 ### Step 5: Pioneer Rewards
@@ -213,7 +211,6 @@ We could launch with 50 payment methods on day 1 and hope they work. Or we can l
 ## Related Documents
 
 - [Dispute Resolution via Nostr Blacklist](../../the-mechanism/nostr-coordination/dispute-resolution.md) (why payment method differences matter for evidence)
-- [Cold Start Strategy](../../cold-start-strategy/README.md) (pioneer program and payment method expansion details)
 - [Reputation On-Chain](./reputation-on-chain-not-central-database.md) (pioneer badges as reputation markers)
 
 ---

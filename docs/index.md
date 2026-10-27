@@ -57,10 +57,6 @@ Design rationale:
 - [why-this-design/constraints/](why-this-design/constraints/README.md) - Design constraints
 - [why-this-design/fraud-protection.md](why-this-design/fraud-protection.md) - How we prevent fraud
 
-### 🚀 Cold Start Strategy
-How to bootstrap Phase 0:
-- [cold-start-strategy/](cold-start-strategy/README.md) - Phase 0 rollout plan
-
 ### ❓ Unknowns
 Structured investigation briefs (research entry point):
 - [unknowns/](unknowns/README.md) - Open research questions by category
@@ -147,7 +143,6 @@ Asgaya is at **Phase 0**: a working Android reference implementation, validated 
 - **Bulletin board** — sellers and buyers publish signed listings (NIP-99) that clients cache and filter; the on-chain anchor (censorship-resistance) is planned for Phase 0+.
 
 **Next**
-- Bring this documentation in line with what has been validated.
 - Run a small pilot with real users.
 
 *This page describes what has been built. Older design notes and research are kept for transparency; where they differ, this page reflects the current state.*
