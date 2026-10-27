@@ -15,7 +15,7 @@ Bitcoin Cash remittances with <1% fees, no KYC, self-custody.
 
 ## 🎯 What is Asgaya?
 
-A Bitcoin Cash wallet with a **peer-to-peer marketplace** to trade any fiat currency for BCH or BCH-native tokens (H€, HAu).
+A Bitcoin Cash wallet with a **peer-to-peer marketplace** to trade any fiat currency for BCH — and, in a later phase, BCH-native tokens (H€, HAu).
 
 - **<1% total fees** - Trade fiat↔BCH cheaper than exchanges or remittance services
 - **No KYC** - Permissionless participation
@@ -44,11 +44,11 @@ Visit [docs.asgaya.org](https://docs.asgaya.org/) to explore:
 ## 🔍 Current Status
 
 **Phase:** Phase 0 — Active Implementation & Testnet3 Validation  
-**Last Update:** October 10, 2026  
-**Architecture:** Payment-first covenants + H€/HAu stability layer
+**Last Update:** October 27, 2026  
+**Architecture:** Payment-first covenants (+ H€/HAu stability layer, *planned*)
 
 **Implementation progress:**
-- ✅ **Covenant v2.6** — All 5 spending paths (claim, merchantCashout, refund, abort, sellerRecoverBuffer) validated on testnet3
+- ✅ **Covenant v2.6.1** — All 5 spending paths (claim, merchantCashout, refund, abort, sellerRecoverBuffer) validated on testnet3
 - ✅ **First inter-device claim** — Sender (Moto G06) → Recipient (Pixel 6a) guaranteed-value transfer proven (Aug 10, 2026)
 - ✅ **v0.2 hybrid architecture** — Kotlin owns network, WebView does compute (build/sign). Eliminated the WebView connection-hang bug class; multi-device reliable
 - ✅ **Own signed oracle** — a 16-byte price + time message (`checkDataSig`), dynamic keys (no hardcoded keys), live on Pi-chan

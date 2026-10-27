@@ -2,7 +2,7 @@
 
 **Purpose:** Payment-first covenant with 7% volatility buffer for remittances.
 
-**Current Version:** v2.6 (5 spending paths)  
+**Current Version:** v2.6.1 (5 spending paths) — the production artifact; a cosmetic `seller`→`funder` rename of v2.6, **same bytecode/address**  
 **Status:** Production-ready (testnet3 validated Aug 15, 2026)
 
 **Files:**

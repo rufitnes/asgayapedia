@@ -3,7 +3,7 @@
 
 **Purpose:** This section explains WHY Asgaya works the way it does.
 
-After understanding [The Mechanism](/the-mechanism/README.md) (what it IS) and [User Journeys](/user-journeys/README.md) (what it LOOKS LIKE), you might wonder:
+After understanding [The Mechanism](../the-mechanism/README.md) (what it IS) and [User Journeys](../user-journeys/README.md) (what it LOOKS LIKE), you might wonder:
 
 - **Why** these specific components?
 - **Why** payment-first covenants instead of escrow?
@@ -17,7 +17,7 @@ This section provides the answers, organized into four categories:
 
 ## Navigation
 
-### [Requirements](/why-this-design/requirements/README.md)
+### [Requirements](requirements/README.md)
 **What constraints did we start with?**
 
 **The ultimate goal:** Bitcoin Cash merchant adoption
@@ -38,7 +38,7 @@ This section provides the answers, organized into four categories:
 
 ---
 
-### [Constraints](/why-this-design/constraints/README.md)
+### [Constraints](constraints/README.md)
 **What design decisions were forced by reality?**
 
 The trade-offs and limitations we can't avoid:
@@ -55,10 +55,10 @@ The trade-offs and limitations we can't avoid:
 ## How to Use This Section
 
 ### If You're New
-Start with [Requirements](/why-this-design/requirements/README.md) → understand the problems first
+Start with [Requirements](requirements/README.md) → understand the problems first
 
 ### If You're Technical
-Read [Constraints](/why-this-design/constraints/README.md) → understand the trade-offs
+Read [Constraints](constraints/README.md) → understand the trade-offs
 
 ### If You're Skeptical
 Review [Research Summaries](../research/summaries/README.md) → see the data (RS062, RS039, etc.)
@@ -74,10 +74,10 @@ Check [Unknowns](../unknowns/README.md) → find research gaps and investigation
 **See:** [Reference](../implementation/README.md) - technical specs, code, APIs
 
 ### User Guides
-**See:** [User Journeys](/user-journeys/README.md) - step-by-step flows
+**See:** [User Journeys](../user-journeys/README.md) - step-by-step flows
 
 ### Mechanism Explanations
-**See:** [The Mechanism](/the-mechanism/README.md) - what components do
+**See:** [The Mechanism](../the-mechanism/README.md) - what components do
 
 **This section is purely about "why"** - the rationale, constraints, evidence, and open questions.
 

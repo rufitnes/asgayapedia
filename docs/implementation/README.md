@@ -72,7 +72,7 @@
 
 ## Overview
 
-After understanding [The Mechanism](/the-mechanism/README.md), [User Journeys](/user-journeys/README.md), and [Why This Design](/why-this-design/README.md), you might want to:
+After understanding [The Mechanism](../the-mechanism/README.md), [User Journeys](../user-journeys/README.md), and [Why This Design](../why-this-design/README.md), you might want to:
 
 - **Build:** Implement your own Asgaya client
 - **Integrate:** Connect existing app to Asgaya protocol
@@ -85,7 +85,7 @@ This section provides the technical details you need.
 
 ## Key References
 
-### [Android App](/implementation/android-app/README.md)
+### [Android App](android-app/README.md)
 **What:** Reference implementation of Asgaya client
 
 Contains:
@@ -99,7 +99,7 @@ Contains:
 
 ---
 
-### [Glossary](/glossary.md)
+### [Glossary](../glossary.md)
 **What:** Definitions of technical terms (site-wide reference)
 
 Contains:
@@ -133,23 +133,23 @@ Contains:
 ## How to Use This Section
 
 ### If You're Building
-Start with [Android App](/implementation/android-app/README.md) → see reference implementation and blockchain query patterns
+Start with [Android App](android-app/README.md) → see reference implementation and blockchain query patterns
 
 ### If You're Confused
-Read [Glossary](/glossary.md) → define terms
+Read [Glossary](../glossary.md) → define terms
 
 ---
 
 ## What's NOT in This Section
 
 ### Conceptual Explanations
-**See:** [The Mechanism](/the-mechanism/README.md) - what components do, how they work
+**See:** [The Mechanism](../the-mechanism/README.md) - what components do, how they work
 
 ### Rationale
-**See:** [Why This Design](/why-this-design/README.md) - why these choices were made
+**See:** [Why This Design](../why-this-design/README.md) - why these choices were made
 
 ### User Guides
-**See:** [User Journeys](/user-journeys/README.md) - step-by-step flows for end users
+**See:** [User Journeys](../user-journeys/README.md) - step-by-step flows for end users
 
 **This section is purely technical** - code, blockchain queries, specs, debugging.
 

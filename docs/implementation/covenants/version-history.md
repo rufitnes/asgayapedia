@@ -2,6 +2,8 @@
 
 **Purpose:** Track covenant evolution from initial Phase 1 implementation through production v2.6.
 
+> **Naming:** the **functional design** is **v2.6** (5 paths). The **production artifact** is **`price-oracle-v2.6.1`** — a *cosmetic* `seller`→`funder` rename (byte-identical bytecode, **same address**). When a doc says "the current covenant", it means **v2.6.1**.
+
 **Key insight:** Evolution from complex (enforce everything on-chain) to simple (covenant enables, client enforces).
 
 ---
@@ -765,7 +767,7 @@ const signature = signatureObj.toDER();
 
 **Artifact:** `price-oracle-v2.6.json` (compiled August 15, 2026)
 
-**v2.6 is the new production covenant.** It supersedes v2.5 by fixing the fund locking scenario while preserving all v2.5 functionality. The abort path enables Phase 0 H€ minting compliance (utility token, not money substitute).
+**v2.6 (artifact `v2.6.1`) is the new production covenant.** It supersedes v2.5 by fixing the fund locking scenario while preserving all v2.5 functionality. The abort path enables Phase 0 H€ minting compliance (utility token, not money substitute).
 
 ### v2.6.1 (Revision): Funder Semantics Rename
 

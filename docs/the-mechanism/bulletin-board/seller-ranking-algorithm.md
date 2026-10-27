@@ -31,6 +31,8 @@ When María wants to send €100 to Elena, the bulletin board returns 50+ seller
 
 ### Step 1: Filter for Quality
 
+> **Superseded (2026-09-21).** This is the original *Phase 0 baseline*. On-chain, every **settled** covenant means the seller **funded and honoured** their side, so `completed/total` is **vacuous** (and penalises refunds/aborts they don't control). Rank on **volume / distinct counterparties / longevity**; treat the outcome mix as a **fraud signal**, not a gate (see the note under the code).
+
 **Only show sellers who meet minimum standards:**
 
 ```javascript
@@ -244,7 +246,7 @@ Felipe: FILTERED OUT (84% < 85% completion rate)
 - Isabel wins despite higher fee (0.5% vs 0.4%) because of much higher volume
 - Ana ranks 2nd (lower fee, good volume)
 - Carlos ranks 3rd (lowest fee but much lower volume)
-- Felipe filtered out for low completion rate (protects users!)
+- Felipe filtered out under the **old** 85 % gate — *superseded (2026-09-21)*; today he'd be ranked on **volume / distinct counterparties**, not completion rate (84 % is not a quality signal on-chain).
 
 ---
 

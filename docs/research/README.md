@@ -3,6 +3,8 @@
 
 Research documents supporting Asgaya's design decisions.
 
+> **Historical research.** These documents are **exploratory and may be outdated** — they record what we investigated and learned at the time, not necessarily current product behaviour. For the current model, see the rest of `docs.asgaya.org`.
+
 ---
 
 ## About This Directory
