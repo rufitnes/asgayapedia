@@ -1,18 +1,22 @@
 # Asgayapedia
 
-> Bitcoin Cash remittances with <1% fees, no KYC, self-custody
+> Bitcoin Cash remittances with <1% fees as a target, no KYC, self-custody
 
 **Send €100 to Venezuela for €1 instead of €5. No company. No custody. No KYC.**
+
+> **You have read the README — the why.** This page is the map: **the thesis in one line, the five gears, the fees, the status, and the paths into the docs.**
+>
+> **The thesis: remittances put BCH in customers' pockets; the universal gateway turns merchants into ambassadors; B2B wholesale keeps the money circulating.** The full argument and the tripod are in the [repository README](https://github.com/rufitnes/asgayapedia/blob/main/README.md).
 
 ---
 
 ## What is Asgaya?
 
-Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple and affordable—with <1% fees, no KYC, and full self-custody.
+Asgaya is the **testbed** for that thesis: a **Bitcoin Cash wallet** and a peer-to-peer network, designed to make sending value simple and affordable—with <1% fees as a target, no KYC, and full self-custody.
 
 **The mission:** Promote merchant Bitcoin Cash adoption by turning every remittance into an opportunity for circular economy growth.
 
-**How it works:** A peer-to-peer marketplace connects senders with BCH sellers and merchants, using covenant smart contracts and a decentralized bulletin board—without any central server or custodian.
+**How it works:** A peer-to-peer network connects senders with BCH sellers and merchants, using covenant smart contracts and a decentralized discovery board—**Mercar Asgaya**—without any central server or custodian.
 
 **The insight:** Every remittance creates a new BCH merchant. Use the $44.5 billion annually lost to fees to build circular economy infrastructure where it's needed most.
 
@@ -25,12 +29,12 @@ Asgaya is a **Bitcoin Cash wallet** designed to make sending remittances simple 
 | Gear | What it does | Documentation |
 |------|--------------|---------------|
 | **⚙️ Wallet** | Hold BCH + establish identity via Cash Accounts | [the-mechanism/wallet](the-mechanism/wallet/README.md) |
-| **⚙️ Bulletin Board** | Discover buyers and sellers (signed Nostr listings; on-chain anchor Phase 0+) | [the-mechanism/bulletin-board](the-mechanism/bulletin-board/README.md) |
+| **⚙️ Mercar Asgaya** | The discovery board: buyers and sellers find each other (signed Nostr listings; on-chain anchor in progress — BLAZE slice) | [the-mechanism/bulletin-board](the-mechanism/bulletin-board/README.md) |
 | **⚙️ Nostr** | Coordinate payment details privately + blacklist warnings | [the-mechanism/nostr-coordination](the-mechanism/nostr-coordination/README.md) |
 | **⚙️ Notification Bot** | Automate everything (passive income, 24/7 operation) | [the-mechanism/notification-bot](the-mechanism/notification-bot/README.md) |
 | **⚙️ Stability Layer** | Protect from volatility via H€/HAu tokens *(planned, Phase 1+)* | [the-mechanism/stability-layer](the-mechanism/stability-layer/README.md) |
 
-**How they work together:** [the-mechanism/how-they-interact.md](the-mechanism/how-they-interact.md)
+**How they work together:** [the-mechanism/how-they-interact.md](the-mechanism/how-they-interact.md). The **covenant** is the payment engine that connects them: the five spending paths, the oracle and the outputs — see [implementation/covenants/](implementation/covenants/).
 
 ---
 
@@ -75,6 +79,9 @@ Formal research sessions and summaries:
 ## Quick Start
 
 **Choose your path:**
+
+### I'm a judge, or new to Asgaya
+→ Read the [repository README](https://github.com/rufitnes/asgayapedia/blob/main/README.md), then this map, then [the-mechanism/bulletin-board](the-mechanism/bulletin-board/README.md) (Mercar), [implementation/covenants/](implementation/covenants/) and the BLAZE slice.
 
 ### I'm sending money to family
 → Read [user-journeys/remittance/sender/](user-journeys/remittance/sender/README.md)
@@ -140,9 +147,11 @@ Asgaya is at **Phase 0**: a working Android reference implementation, validated 
 - **Transfers between Android devices** — a sender funds an on-chain covenant, the recipient claims it, and settlement is automatic. No company ever holds the funds.
 - **Merchant cash-out** — a recipient can sell BCH to a merchant and receive fiat (in person or via a payment method).
 - **Coordination over Nostr** — encrypted, serverless messages replace the earlier copy-paste/manual steps, with offline QR as a fallback.
-- **Bulletin board** — sellers and buyers publish signed listings (NIP-99) that clients cache and filter; the on-chain anchor (censorship-resistance) is planned for Phase 0+.
+- **Bulletin board** — sellers and buyers publish signed listings (NIP-99) that clients cache and filter; the on-chain anchor (censorship-resistance) is in progress (BLAZE slice).
 
 **Next**
+- **BCH BLAZE 2026 slice**: the web board, the identity anchor and a direct checkout (in progress). The product runs on testnet3; the anchor is the real artefact on mainnet; the demo payment runs on chipnet.
+- **Covenant security revision v2.7** — the atomic input check (and the funding-value guard) are in progress.
 - Run a small pilot with real users.
 
 *This page describes what has been built. Older design notes and research are kept for transparency; where they differ, this page reflects the current state.*
@@ -155,7 +164,7 @@ Asgaya is at **Phase 0**: a working Android reference implementation, validated 
 
 **Research:** See [unknowns/](unknowns/README.md) for structured investigation briefs - no permission needed to turn unknowns into knowns.
 
-**Implementation:** Code contributions will be accepted after Phase 0 implementation begins.
+**Implementation:** The reference implementation will be published under MIT; contributions welcome once it is.
 
 ---
 
