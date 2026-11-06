@@ -49,7 +49,7 @@ The first ignites, the second widens, the third sustains.
 
 The **discovery board** makes the sellers and merchants findable. The **stability layer** removes the volatility for the people who do not want it. The **notification bot** makes the seller's side automatic. None of it is the point; all of it serves the two incentives.
 
-## What Asgaya actually is
+## What we are building
 
 A Bitcoin Cash wallet and a peer-to-peer network, with no company, no custodian and no gatekeeper.
 
