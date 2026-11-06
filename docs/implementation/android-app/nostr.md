@@ -15,7 +15,7 @@
 > 4. **No external dependencies** - Users don't need Telegram/WhatsApp accounts
 > 
 > **Current status (2026-09-16):**
-> - **Design:** ✅ NIP-17 decided; authoritative design in `collaborative_workspace/nostr-transport/` (now **closed** — see its `67` closure note).
+> - **Design:** ✅ NIP-17 decided; authoritative design in the private design workspace.
 > - **Implementation:** ✅ **Working end-to-end** — sender→seller funding (`[FUND_COVENANT]`), sender→recipient claim (`[COVENANT_V25]`), and recipient→merchant cash-out (`[BCH_FOR_SALE]` / `[BCH_PURCHASE_COSIGN]` / `[SIGNED_TX]`) — all proven on real devices.
 > - **Testing:** Telegram serves as a development / async fallback.
 > - **Production:** Nostr is the coordination layer for mainnet.
@@ -579,7 +579,7 @@ catch ParseError:
 **Priority:** Essential coordination layer (sender ↔ seller payment instructions)  
 **Current:** Telegram bot (testing/fallback only) | **Production:** Nostr required (integrated UX)
 
-**Note:** Updated to NIP-44 (current standard: ChaCha20-Poly1305). NIP-04 (kind-4) is legacy (AES-256-CBC, deprecated). DMs use **NIP-17 gift-wrap** (kind-14 → kind-13 seal → kind-1059). Authoritative implementation design: `collaborative_workspace/nostr-transport/` (files 00, 03, 09, 10, 12).
+**Note:** Updated to NIP-44 (current standard: ChaCha20-Poly1305). NIP-04 (kind-4) is legacy (AES-256-CBC, deprecated). DMs use **NIP-17 gift-wrap** (kind-14 → kind-13 seal → kind-1059). Authoritative implementation design: the private design workspace.
 ---
 
 ## Navigation

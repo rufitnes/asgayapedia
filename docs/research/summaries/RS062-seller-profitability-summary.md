@@ -1,6 +1,5 @@
 # RS062: Seller Profitability Simulation (Summary)
 
-**Full Research:** `/home/suso/Documents/asgaya/knowledge/research/RS062_seller_profitability_simulation.md`
 
 **Date:** June 2026  
 **Type:** Back-test simulation  

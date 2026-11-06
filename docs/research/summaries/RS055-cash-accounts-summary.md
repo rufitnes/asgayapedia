@@ -1,6 +1,5 @@
 # RS055: Cash Accounts (Summary)
 
-**Full Research:** `/home/suso/Documents/asgaya/knowledge/research/RS055_cash_accounts.md`
 
 **Date:** May 2026  
 **Type:** Protocol analysis  

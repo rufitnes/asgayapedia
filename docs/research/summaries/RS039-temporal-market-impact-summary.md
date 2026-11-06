@@ -1,6 +1,5 @@
 # RS039: Temporal Market Impact (Summary)
 
-**Full Research:** `/home/suso/Documents/asgaya/knowledge/research/RS039_temporal_market_impact.md`
 
 **Date:** April 2026  
 **Type:** Market analysis + strategy design  

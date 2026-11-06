@@ -348,9 +348,7 @@ Kraken BCHUSD: 380 USD/BCH
 
 ## 10. Related Documents
 
-- **Code:** `/knowledge/code/usdt_ars_rate_fetcher.py` (Argentine crypto APIs - archived)
 - **Research:** `ARGENTINE_CRYPTO_API_RESEARCH.md` (detailed crypto exchange analysis)
-- **Architecture:** `/core_arquitecture/2_3_volatility_protection.md` (two-step settlement)
 - **Concepts:** `/concepts/two_step_settlement.md` (ARS calculation point)
 
 ---

@@ -4,7 +4,6 @@
 **Date:** May 2026 (Laila upgrade activation)  
 **Status:** ✅ Complete — Technical foundation validated
 
-**Full Research:** `/home/suso/Documents/asgaya/knowledge/research/RS057_bitcoincash_laila.md`
 
 ---
 

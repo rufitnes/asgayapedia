@@ -363,7 +363,6 @@ Top 5 ask levels:
 
 ## Should I Save This as RS036?
 
-**Location:** `~/Documents/asgaya/knowledge/research/RS036_kraken_ticker_api.md`
 
 **Then tomorrow's SW23 can reference it:** "See RS036 for endpoint details"
 

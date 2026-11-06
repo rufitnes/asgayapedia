@@ -870,7 +870,6 @@ r = (1.0% - 0.25%) / 3 = 0.25% per intermediary
 # 25% increase in intermediary rewards!
 ```
 
-**Test script:** `/knowledge/research_code/test_kraken_limit_order.py`
 
 ---
 

@@ -18,7 +18,7 @@
 - Table 2 – Distribution by destination country of remittances sent from Spain (2013–2023)
 - Table 1 – Distribution by geographic area
 
-**Local copy:** Stored in `knowledge/research/` (original PDF) and referenced in research sessions RS008 and RS009.
+**Local copy:** Stored internally (original PDF) and referenced in research sessions RS008 and RS009.
 
 ---
 
@@ -31,7 +31,7 @@
 - `2025_Act1_incomes_LAC.xlsx` – Per capita income by deciles (national, urban, rural), in local currency units
 
 **Local storage:**
-- Both files are located in `knowledge/intelligence/` folder.
+- Both files are stored internally.
 
 **Access:**
 - SEDLAC public portal: [https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/](https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/)

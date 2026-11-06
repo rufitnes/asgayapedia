@@ -4,7 +4,6 @@
 **Date:** April 2026  
 **Status:** ✅ Complete — Validated
 
-**Full Research:** `/home/suso/Documents/asgaya/knowledge/research/RS026_android_notifications.md`
 
 ---
 

@@ -189,7 +189,7 @@ These should be added for production deployment.
 
 - **RS072_implementation_guide.md** - Technical implementation details
 - **RS073_notifyflow_decompilation.md** - Production app comparison
-- **Project blog:** `asgaya/knowledge/meta/project_blog/2026-07-02_*.md` - Full test narrative
+- **Project blog:** the project blog - Full test narrative
 
 ---
 

@@ -4,7 +4,6 @@
 **Type:** Technical research — Production wallet analysis  
 **Status:** ✅ Confirmed + Implemented (Aug 17-21)  
 **Phase:** 0 → 1 transition (Production readiness)  
-**Full research:** `asgaya/knowledge/research/RS083_transaction_broadcast_ui_patterns.md` (private knowledge base)
 
 ---
 

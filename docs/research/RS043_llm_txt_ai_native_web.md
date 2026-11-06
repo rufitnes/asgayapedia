@@ -450,7 +450,7 @@ Optimization: llm.txt, structured data, original content
 1. **Docsify Website Architecture**
    - How to set up
    - Structure guide
-   - Migration from /knowledge/
+   - Migration from the internal knowledge base
 
 2. **Markdown-First Documentation**
    - Why Markdown over HTML
@@ -508,7 +508,6 @@ Optimization: llm.txt, structured data, original content
 
 ### **Current Deployment**
 
-**File location:** `/home/suso/Documents/asgaya/active/web/llm.txt`
 
 **Deployed to:** https://asgaya.org/llm.txt (via Netlify)
 
@@ -599,7 +598,7 @@ Optimization: llm.txt, structured data, original content
 **The research flow:**
 ```
 1. Suso has insight while away from keyboard
-2. Documents in drift_detector.md
+2. Documents in the drift detector.
 3. Next session: Coordination reads drift detector
 4. Discussion yields breakthrough (hierarchical llm.txt)
 5. Implementation (root llm.txt deployed)
@@ -650,7 +649,7 @@ Optimization: llm.txt, structured data, original content
 ### **Short-term (1-2 Weeks)**
 
 1. [ ] Design Docsify structure for Asgayapedia
-2. [ ] Migrate key docs from /knowledge/ to /docs/
+2. [ ] Migrate key docs from the internal knowledge base to the public docs
 3. [ ] Create hierarchical llm.txt structure
 4. [ ] Deploy Asgayapedia beta
 
@@ -673,9 +672,6 @@ Optimization: llm.txt, structured data, original content
 ## **Cross-References**
 
 **Related documents:**
-- Drift detector: `/knowledge/drift_detector.md` (where this idea originated)
-- Internal blog: `/knowledge/meta/internal_blog/2026-04-22_sms_escrow_integration_3_euro_lessons.md`
-- Core architecture index: `/knowledge/core_arquitecture/index.md`
 
 **Concepts to create:**
 - Docsify website architecture

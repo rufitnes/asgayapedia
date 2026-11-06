@@ -437,14 +437,12 @@ Reward: 1% fee on €350 = €3.50, split 3 ways = €1.17 each
 
 ## Code Artifacts
 
-**Test script:** `/home/suso/Documents/asgaya/knowledge/research_code/test_kraken_withdraw.py`
 
 **Key functions:**
 - `load_encrypted_env()` - Credential loading (Pichan pattern)
 - `withdraw_bch()` - Kraken API withdrawal
 - `check_withdrawal_status()` - Status monitoring
 
-**Production integration:** `/home/suso/Documents/asgaya/active/settlement_engine.py`
 
 ---
 

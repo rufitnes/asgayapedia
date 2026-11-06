@@ -205,7 +205,7 @@ Android kills apps aggressively in the background (PID observed changing 12286 â
 
 ### Full Pattern Study
 
-See the research doc: `docs/research/RS083_transaction_broadcast_ui_patterns.md` (mirrored from `knowledge/research/`).
+See the research doc: `docs/research/RS083_transaction_broadcast_ui_patterns.md`.
 
 ---
 

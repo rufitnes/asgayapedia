@@ -170,7 +170,7 @@ Title: "Bizum recibido"
 Text: "Has recibido 100,50 € de María García. Concepto: Elena#142"
 ```
 
-**Note:** This example is based on typical Bizum SMS format. Actual push notification format needs validation with real banking apps. Test data available in `knowledge/intelligence/raw_intelligence/` (historical SMS from PoC testing on Pichan/Raspberry Pi). Push notification format may differ slightly from SMS format.
+**Note:** This example is based on typical Bizum SMS format. Actual push notification format needs validation with real banking apps. Test data available in internal test data (historical SMS from PoC testing). Push notification format may differ slightly from SMS format.
 
 **Regex pattern:**
 ```
@@ -282,7 +282,7 @@ function parsePagoMovilNotification(text):
 
 **Currency conversion needed:** Bs → EUR (use exchange rate oracle, Phase 1+)
 
-**Market validation:** Traditional remittance services charge ~10% fees on EUR→VES corridor. Asgaya can offer 0.5-2% fees (sender fee + seller profit margin), capturing 7-9% savings for users. See `knowledge/intelligence/2026-06-26-remittance-quote.md` for real market data.
+**Market validation:** Traditional remittance services charge ~10% fees on EUR→VES corridor. Asgaya can offer 0.5-2% fees (sender fee + seller profit margin), capturing 7-9% savings for users. See the internal market-data note for real market data.
 
 ---
 
@@ -918,13 +918,11 @@ function handlePaymentReceived(payment):
 - Early prototype (SMS parsing via Termux + Python)
 - Replaced by Notification Listener Service (better UX)
 - Still useful reference for regex patterns
-- Located: `/knowledge/poc/smsbridge_loop.py`
 
 **RS026: Android Notifications Architecture**
 - Validates Notification Listener Service approach
 - Alternative strategies (SMS, bank APIs)
 - Privacy/security considerations
-- Located: `/knowledge/research/RS026_android_notifications.md`
 
 ---
 

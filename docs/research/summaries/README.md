@@ -3,7 +3,6 @@
 
 **Purpose:** Distilled findings from research sessions relevant to experimental documentation.
 
-**Full research archive:** `/home/suso/Documents/asgaya/knowledge/research/`
 
 ---
 
