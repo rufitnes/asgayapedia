@@ -86,7 +86,7 @@ For **BCH BLAZE 2026** we are building the slice that makes it visible: the **we
 - ✅ **Discovery over Nostr** — signed listings (NIP-99); the anchor adds censorship resistance.
 - 🧩 **BLAZE slice** — the web board, the identity anchor and a direct checkout (in progress).
 - ✅ **Signed oracle** — a 16-byte price and time message, verified on-chain.
-- ✅ **Notification bot** — the seller's bank app is parsed locally; no credentials and nothing leaves the device.
+- ✅ **Notification bot** — the seller's bank app is parsed locally; no credentials or sensitive data leaves the device.
 - 📋 **Stability layer** — *planned, Phase 1+*.
 
 The honest limits: Phase 0 is a small, trusted test; the stability layer is not built; some of the research questions are still open. We publish the questions as **36 structured unknowns**.
