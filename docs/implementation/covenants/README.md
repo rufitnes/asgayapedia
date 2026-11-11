@@ -2,13 +2,14 @@
 
 **Purpose:** Payment-first covenant with 7% volatility buffer for remittances.
 
-**Current Version:** v2.6.1 (5 spending paths) — the production artifact; a cosmetic `seller`→`funder` rename of v2.6, **same bytecode/address**  
-**Status:** Production-ready (testnet3 validated Aug 15, 2026)
+**Current Version:** v2.7 (5 spending paths) — **atomic single-input spends** (every path requires `tx.inputs.length == 1`) plus a **funding check** on the four split paths (the covenant must hold the full face + buffer before a split; `abort` is exempt). New bytecode and P2SH32 address (v2.6.1: 1,524 bytes; v2.7: 1,876). `fiatCents` replaces `eurCents` in the ABI.  
+**Status:** v2.7 compiled and offline-tested (5/5, including the two-input and underfunded rejections); EUR/NGN end-to-end on testnet3 (2026-11-11); formal on-chain matrix pending.
 
-**Files:**
-- `price-oracle-v2.6.1.cash` - CashScript source code
-- `price-oracle-v2.6.1.json` - Compiled artifact
-- `version-history.md` - Complete evolution from Phase 1 → v2.6.1
+**Files (development tree):**
+- `price-oracle-v2.7.cash` - CashScript source code (current)
+- `price-oracle-v2.7.json` - Compiled artifact (cashc 0.13.2)
+- `price-oracle-v2.6.1.cash` / `.json` - previous version (superseded)
+- `version-history.md` - Complete evolution from Phase 1 → v2.7
 
 > **Note (2026-10-03):** the `payment-covenant.cash`/`.json` files in this folder are **pre-v2.6** (kept as-is).
 
@@ -68,7 +69,7 @@ const signature = oracleKey.sign(messageHash);  // Wrong format
 npm install -g cashc
 
 # Compile
-cashc price-oracle-v2.6.1.cash -o price-oracle-v2.6.1.json
+cashc price-oracle-v2.7.cash -o price-oracle-v2.7.json
 ```
 
 ---
@@ -77,15 +78,15 @@ cashc price-oracle-v2.6.1.cash -o price-oracle-v2.6.1.json
 
 ```javascript
 import { Contract, ElectrumNetworkProvider } from 'cashscript';
-import artifact from './price-oracle-v2.6.1.json';
+import artifact from './price-oracle-v2.7.json';
 
 // Connect to network (Phase 0 = testnet3)
 const provider = new ElectrumNetworkProvider('testnet3');
 
-// Create covenant instance (v2.6: 8 constructor args)
+// Create covenant instance (8 constructor args)
 const contract = new Contract(
     artifact,
-    [senderPubkey, recipientPubkey, funderPubkey, oraclePubkey, eurCents, expiryOracleTime, initialBchPriceInCents, minPricePercent],
+    [senderPubkey, recipientPubkey, funderPubkey, oraclePubkey, fiatCents, expiryOracleTime, initialBchPriceInCents, minPricePercent],
     provider
 );
 
@@ -104,5 +105,5 @@ console.log('Covenant address:', contract.address);
 
 ---
 
-**Status:** Phase 0 production-ready  
-**Updated:** 2026-07-18
+**Status:** Phase 0 — v2.7 (testnet3)  
+**Updated:** 2026-11-11

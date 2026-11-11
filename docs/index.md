@@ -151,7 +151,7 @@ Asgaya is at **Phase 0**: a working Android reference implementation, validated 
 
 **Next**
 - **BCH BLAZE 2026 slice**: the web board, the identity anchor and a direct checkout (in progress). The product runs on testnet3; the anchor is the real artefact on mainnet; the demo payment runs on chipnet.
-- **Covenant security revision v2.7** — the atomic input check (and the funding-value guard) are in progress.
+- **Covenant v2.7** — atomic single-input spends and a funding check on the split paths; built and offline-tested (5/5) and exercised end-to-end on testnet3; the formal on-chain attack matrix is pending.
 - Run a small pilot with real users.
 
 *This page describes what has been built. Older design notes and research are kept for transparency; where they differ, this page reflects the current state.*

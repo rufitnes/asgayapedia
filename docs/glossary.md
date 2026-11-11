@@ -21,7 +21,7 @@ A permissionless peer-to-peer protocol built on Bitcoin Cash, delivered as a wal
 The decentralised marketplace where BCH sellers and buyers discover each other. In Phase 0, listings are **signed Nostr events** (NIP-99) that any client can read and cache; anyone can post without permission. A small **on-chain anchor** (a per-seller NFT carrying the essential fields) is **planned for Phase 0+** — it makes listings censorship-resistant and enumerable on-chain, still with no central server.
 
 ### Covenant
-A Bitcoin Cash smart contract that locks BCH and releases it only when specific conditions are met. In Asgaya, covenants are used to coordinate multi‑party remittances: a seller funds a covenant after receiving fiat, and the BCH is released when the recipient (and optionally a merchant) co‑signs.
+A Bitcoin Cash smart contract that locks BCH and releases it only when specific conditions are met. In Asgaya, covenants are used to coordinate multi‑party remittances: a seller funds a covenant after receiving fiat, and the BCH is released when the recipient (and optionally a merchant) co‑signs. The current contract (**v2.7**) additionally requires **single-input spends** and that the covenant hold the **full funding** before any split (the emergency `abort` is exempt).
 
 ### Cash Account
 A human‑readable name permanently registered on the BCH blockchain (e.g., `Elena#142`). Cash Accounts serve four simultaneous roles in Asgaya: user identifier, covenant recipient field, payment reference on bank transfers, and bot lookup key. They eliminate the need for phone numbers, email addresses, or long cryptographic addresses.
@@ -263,7 +263,7 @@ These terms have been deliberately replaced in the documentation to maintain reg
 
 ---
 
-*Last updated: 2026-10-12 – adds the **name etymology**; reflects the covenant architecture, five-gear model, stability layer (planned, Phase 1+), the single per-ad `fee`, and v0.2 hybrid implementation terms.*
+*Last updated: 2026-11-11 – **covenant v2.7** (atomic single-input spends + funding check); reflects the covenant architecture, five-gear model, stability layer (planned, Phase 1+), the single per-ad `fee`, and v0.2 hybrid implementation terms.*
 ---
 
 ## Navigation

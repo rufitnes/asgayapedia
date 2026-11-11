@@ -85,7 +85,7 @@ The same husk graduates to production when Asgaya starts testing on mainnet.
 - The husk retires (or becomes a 5% sanity check per the distributed-monitoring design)
 - Fully permissionless, user-driven price discovery
 
-**Flag:** This is aspirational, not a commitment. Treat it as a direction, not a roadmap item. The current covenant (v2.6/v2.6.1) requires the trusted oracle, and that's acceptable.
+**Flag:** This is aspirational, not a commitment. Treat it as a direction, not a roadmap item. The current covenant (v2.7) requires the trusted oracle, and that's acceptable.
 
 ---
 

@@ -14,7 +14,7 @@
 **Historic Milestone:** First inter-device covenant claim successful!
 
 **Production-Proven Capabilities:**
-- ✅ **Covenant v2.6.1** - Production-proven on testnet3 (abort path validated Aug 15, 2026)
+- ✅ **Covenant v2.7** - 5 paths; atomic single-input spends + funding check on the split paths (offline 5/5); validated on testnet3
   - All 5 spending paths implemented (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
   - Claim path proven with real devices (Aug 10, 2026)
   - Refund path tested and reliable (Aug 8, 2026)
@@ -35,7 +35,7 @@
   - CREATE ~100ms, covenant ops ~200ms, zero WebSocket connections on critical path
   - Multi-device bug (WebSocket connection accumulation) eliminated at the root
 - ✅ **WebView Integration** - Compute-only (CashScript build/sign); broadcast moved to Kotlin (Aug 20)
-- ✅ **Oracle Husk (Pi-chan)** - Running at `<oracle-host>:3001`, dynamic pubkey fetching, zero hardcoded keys (Aug 16)
+- ✅ **Oracle Husk (Pi-chan)** - Running at `<oracle-host>:3001`, oracle pubkey fetched at runtime from `/oracle/info`
 - ✅ **Timeout & Lifecycle Handling** - `withTimeout()` + ViewModel migration (RS083); stuck "Sending..." bug resolved (Aug 17-20)
 - ✅ **Merchant Cashout (Merchant-First)** - **Production-proven on-chain** (Sep 1, 2026)
   - Merchant pre-signs first (fresh oracle at counter → protects 0.5% margin)

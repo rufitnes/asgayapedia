@@ -63,7 +63,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | **Connection Management** | TCP cooldown (5s after balance query), WebSocket cleanup, manual updates | ✅ Working (v0.2: WebSocket only for brief UTXO fetch) | [connection-management-patterns.md](connection-management-patterns.md) |
 | **SendViewModel** | v0.2: viewModelScope transaction state, pending_transactions DB, rebroadcast, background confirmation (RS083) | ✅ Working | [state-management.md](state-management.md) |
 
-**Covenant v2.6:** All 5 spending paths implemented (claim, merchantCashout, refund, abort, sellerRecoverBuffer); v2.5 validated on chipnet, abort on testnet3 (Aug 15)
+**Covenant v2.7:** All 5 spending paths implemented (claim, merchantCashout, refund, abort, sellerRecoverBuffer); v2.6.1 validated on testnet3; v2.7 adds atomic single-input spends + the funding guard
 
 **v0.2 hybrid architecture (Aug 20-21):** All 4 covenant operations (CREATE/REFUND/CLAIM/ABORT) now build in the WebView and broadcast from Kotlin. WebView is compute-only. Multi-device reliability restored (the WebSocket connection-accumulation bug is eliminated at the root).
 
@@ -82,7 +82,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 | Feature | Status | Notes |
 |---------|--------|-------|
 | Multi-wallet management | ✅ Done | Room database, WalletManager, reactive UI |
-| Covenant v2.6 (5 paths) | ✅ Done | All paths validated (v2.5 on chipnet, abort on testnet3) |
+| Covenant v2.7 (5 paths) | ✅ Done | Atomic single-input + funding guards; v2.6.1 validated on testnet3 |
 | WebView + CashScript SDK | ✅ Done | v0.2 hybrid: compute-only (build/sign), broadcast in Kotlin |
 | ElectrumClient (balance/broadcast) | ✅ Done | TCP + WebSocket support |
 | **Nostr** coordination (NIP-17) | ✅ Done | Primary transport; Telegram = test/fallback |

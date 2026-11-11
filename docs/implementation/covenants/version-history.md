@@ -1,8 +1,8 @@
-# Covenant Version History: Phase 1 → v2.6
+# Covenant Version History: Phase 1 → v2.7
 
-**Purpose:** Track covenant evolution from initial Phase 1 implementation through production v2.6.
+**Purpose:** Track covenant evolution from initial Phase 1 implementation through v2.7.
 
-> **Naming:** the **functional design** is **v2.6** (5 paths). The **production artifact** is **`price-oracle-v2.6.1`** — a *cosmetic* `seller`→`funder` rename (byte-identical bytecode, **same address**). When a doc says "the current covenant", it means **v2.6.1**.
+> **Naming:** **v2.6** is the functional design (5 paths); **`v2.6.1`** is a *cosmetic* `seller`→`funder` rename (byte-identical bytecode, **same address**). **`v2.7`** adds on-chain guards (atomic single-input spends + a funding check on the split paths), so it has **new bytecode and a new P2SH32 address**. When a doc says "the current covenant", it means **v2.7**.
 
 **Key insight:** Evolution from complex (enforce everything on-chain) to simple (covenant enables, client enforces).
 
@@ -20,6 +20,19 @@
 | **v2.4** | 2026-07-27 | ✅ Tested | Merchant cashout (killer feature) |
 | **v2.5** | 2026-07-27 | ✅ **PRODUCTION** | Refund anytime + all 4 paths tested |
 | **v2.6** | 2026-08-15 | ✅ **PRODUCTION** | Emergency abort + overlap zone (5 paths) |
+| **v2.7** | 2026-11-11 | ✅ Tested (offline 5/5 + e2e) | Multi-input hardening: atomic single-input spend + funding check |
+
+---
+
+## v2.7: Multi-input hardening (current, 2026-11-11)
+
+**Status:** ✅ offline tests 5/5; EUR/NGN end-to-end on testnet3; formal on-chain matrix pending.
+
+**What changed:**
+- **Atomic single-input spends.** Every path requires `tx.inputs.length == 1`, so one covenant execution can no longer be satisfied by another input's spend.
+- **Funding check (four split paths).** `claim`, `merchantCashout`, `refund` and `sellerRecoverBuffer` require the active input to hold at least the full funding (face + buffer); `abort` is exempt as the emergency exit.
+- **`eurCents` → `fiatCents`** (ABI only; the fiat is per oracle key).
+- New bytecode (**1,876** bytes; v2.6.1 was 1,524) and a **new P2SH32 address**.
 
 ---
 

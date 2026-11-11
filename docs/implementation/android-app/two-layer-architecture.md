@@ -5,7 +5,7 @@
 **Why this matters:** Separating "what's possible" (covenant) from "what's recommended" (client) gives users maximum sovereignty while maintaining good UX.
 
 **Status (August 14, 2026):**
-- ✅ **Covenant Layer:** Accurate (v2.6.1 specification with 5 functions: claim, merchantCashout, refund, abort, sellerRecoverBuffer)
+- ✅ **Covenant Layer:** Accurate (v2.7 specification with 5 functions: claim, merchantCashout, refund, abort, sellerRecoverBuffer)
 - ⚠️ **Client Layer:** Code examples are illustrative/future (Nostr monitoring not in Phase 0)
 - ✅ **Core Principle:** Validated in production (refund-anytime works; auto-refund *monitoring* itself is **deferred**)
 
@@ -137,7 +137,7 @@ function refund(sig senderSig) {
 
 ## Asgaya's Implementation
 
-### Covenant Layer (v2.6.1)
+### Covenant Layer (v2.7)
 
 **5 functions, 4 actors, permissionless:**
 

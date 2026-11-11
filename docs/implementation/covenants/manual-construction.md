@@ -4,7 +4,7 @@
 **Platform:** Android (Kotlin)  
 **Originally Targeted:** CashScript v0.13+ (P2SH32 format)
 
-> **⚠️ Version (2026-10-03):** the shipped covenant is **v2.6.1** (5 paths — added `abort`; funder rename). The `payment-covenant.cash`/`.json` artifacts in this folder are **pre-v2.6**. Byte counts below are the **v2.5** measurement — re-verify against v2.6.1.
+> **⚠️ Version (2026-11-11):** the current covenant is **v2.7** (5 paths; atomic single-input spends + a funding check on the split paths). The `payment-covenant.cash`/`.json` artifacts in this folder are **pre-v2.6**. Byte counts below are the **v2.5** measurement — see the v2.7 note at Step 2.
 
 ---
 
@@ -59,15 +59,15 @@ A Bitcoin Cash covenant is a P2SH32 script with this structure:
 
 ### Step 2: Append Bytecode Template
 
-The v2.6 bytecode template is 367 bytes of Bitcoin Script opcodes compiled from the [PriceOracle contract](./payment-covenant.cash).
+The v2.7 bytecode template is **1,876 bytes** of Bitcoin Script opcodes (v2.6.1: 1,524 bytes). The 367-byte figure used later in this page is the older **v2.5** measurement.
 
-**Source:** `price-oracle-v2.6.1.json` artifact
+**Source:** `price-oracle-v2.7.json` artifact
 
-This bytecode is **static and shared** across all v2.6 covenants. It implements:
+This bytecode is **static and shared** across all v2.7 covenants. It implements:
 - Claim path (recipient + oracle signature)
 - Merchant cashout path (recipient + merchant + oracle)
 - Refund path (sender, anytime)
-- Abort path (sender, on >7% price drop → H€ mint)
+- Abort path (sender, on ≥6.5% price drop → H€ mint)
 - Seller recovery path (funder + oracle, after expiry)
 
 **Complete script:** 150 bytes (params) + 367 bytes (bytecode) = **517 bytes**
@@ -134,7 +134,7 @@ val params = CovenantBuilder.CovenantParams(
     senderPubkey = senderKey.publicKey,
     recipientPubkey = recipientKey.publicKey,
     sellerPubkey = sellerKey.publicKey,
-    oraclePubkey = fetchOraclePubkey(),  // From Pi-chan oracle /oracle/info (no hardcoded keys since Aug 16)
+    oraclePubkey = fetchOraclePubkey(),  // Fetched at runtime from the oracle's /oracle/info
     eurCents = 10000,                  // €100.00
     expiryOracleTime = currentTime + 8.hours,
     initialBchPriceInCents = 65000,    // €650/BCH
@@ -205,7 +205,7 @@ If script hashes match, construction is correct. Address format differences (And
 
 ⚠️ **Private key storage:** WIF keys stored in SharedPreferences (plaintext for testing)  
 ⚠️ **Parameter validation:** Malformed params produce invalid covenants  
-⚠️ **Oracle pubkey:** fetched dynamically from the oracle (`/oracle/info`) — no hardcoded keys (since Aug 16)  
+⚠️ **Oracle pubkey:** fetched dynamically from the oracle (`/oracle/info`).  
 ⚠️ **Network flag:** IS_TESTNET toggle—double-check before mainnet  
 
 **Production TODO:**
@@ -225,7 +225,7 @@ If script hashes match, construction is correct. Address format differences (And
 
 3. **Parameter negotiation:** This assumes you already know recipient's pubkey, seller's pubkey, current BCH price, and agreed EUR amount. Coordination is separate (Telegram, Nostr, or bulletin board).
 
-4. **Bytecode compilation:** We use pre-compiled v2.6.1 bytecode. If covenant logic changes (v3.0), we need a new artifact.
+4. **Bytecode compilation:** We use pre-compiled v2.7 bytecode. If covenant logic changes (v3.0), we need a new artifact.
 
 **Scope boundary:** This module does ONE thing—turn covenant parameters into a P2SH32 address. Everything before (parameter negotiation) and after (transaction construction) is handled elsewhere.
 
@@ -233,7 +233,7 @@ If script hashes match, construction is correct. Address format differences (And
 
 ## Versioning
 
-**Current:** v2.6.1
+**Current:** v2.7
 
 If covenant logic changes:
 1. RaspberryPi compiles new CashScript contract
