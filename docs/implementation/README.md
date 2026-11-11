@@ -14,7 +14,7 @@
 **Historic Milestone:** First inter-device covenant claim successful!
 
 **Production-Proven Capabilities:**
-- ✅ **Covenant v2.7** - 5 paths; atomic single-input spends + funding check on the split paths (offline 5/5); validated on testnet3
+- ✅ **Covenant v2.7.1** - 5 paths; atomic single-input spends + abort escape (offline 6/6); validated on testnet3
   - All 5 spending paths implemented (claim, merchantCashout, refund, abort, sellerRecoverBuffer)
   - Claim path proven with real devices (Aug 10, 2026)
   - Refund path tested and reliable (Aug 8, 2026)

@@ -1,8 +1,8 @@
-# Covenant Version History: Phase 1 → v2.7
+# Covenant Version History: Phase 1 → v2.7.1
 
-**Purpose:** Track covenant evolution from initial Phase 1 implementation through v2.7.
+**Purpose:** Track covenant evolution from initial Phase 1 implementation through v2.7.1.
 
-> **Naming:** **v2.6** is the functional design (5 paths); **`v2.6.1`** is a *cosmetic* `seller`→`funder` rename (byte-identical bytecode, **same address**). **`v2.7`** adds on-chain guards (atomic single-input spends + a funding check on the split paths), so it has **new bytecode and a new P2SH32 address**. When a doc says "the current covenant", it means **v2.7**.
+> **Naming:** **v2.6** is the functional design (5 paths); **`v2.6.1`** is a *cosmetic* `seller`→`funder` rename (byte-identical bytecode, **same address**). **`v2.7`** added atomic single-input spends + a funding check (new bytecode/address); **`v2.7.1`** (current) removed the funding check and added the abort escape. When a doc says "the current covenant", it means **v2.7.1**.
 
 **Key insight:** Evolution from complex (enforce everything on-chain) to simple (covenant enables, client enforces).
 
@@ -20,19 +20,27 @@
 | **v2.4** | 2026-07-27 | ✅ Tested | Merchant cashout (killer feature) |
 | **v2.5** | 2026-07-27 | ✅ **PRODUCTION** | Refund anytime + all 4 paths tested |
 | **v2.6** | 2026-08-15 | ✅ **PRODUCTION** | Emergency abort + overlap zone (5 paths) |
-| **v2.7** | 2026-11-11 | ✅ Tested (offline 5/5 + e2e) | Multi-input hardening: atomic single-input spend + funding check |
+| **v2.7** | 2026-11-11 | ✅ Tested (superseded) | Atomic single-input + funding check |
+| **v2.7.1** | 2026-11-11 | ✅ **Current** | Remove the funding check; add the abort escape |
 
 ---
 
-## v2.7: Multi-input hardening (current, 2026-11-11)
+## v2.7.1: Remove the funding check, add the abort escape (current, 2026-11-11)
 
-**Status:** ✅ offline tests 5/5; EUR/NGN end-to-end on testnet3; formal on-chain matrix pending.
+**Status:** ✅ offline tests 6/6; EUR/NGN e2e on testnet3; formal on-chain matrix pending.
 
 **What changed:**
-- **Atomic single-input spends.** Every path requires `tx.inputs.length == 1`, so one covenant execution can no longer be satisfied by another input's spend.
-- **Funding check (four split paths).** `claim`, `merchantCashout`, `refund` and `sellerRecoverBuffer` require the active input to hold at least the full funding (face + buffer); `abort` is exempt as the emergency exit.
-- **`eurCents` → `fiatCents`** (ABI only; the fiat is per oracle key).
-- New bytecode (**1,876** bytes; v2.6.1 was 1,524) and a **new P2SH32 address**.
+- **Remove the v2.7 funding check** from the four split paths. It did not protect the payee (`outputs[0].value == paymentSats` already guarantees the exact payment) and it could **lock an underfunded covenant**.
+- **Atomic stays** in all five paths (`tx.inputs.length == 1`).
+- **Abort escape:** `abort` is allowed at the price threshold *or* when the input cannot cover the face at the current price (`tx.inputs[activeInputIndex].value < paymentSats`).
+- Funding (face + buffer) is a **client responsibility**: the app verifies it before accepting a funding.
+
+## v2.7: Atomic single-input + funding check (2026-11-11, superseded)
+
+- **Atomic single-input spends** in all five paths (the multi-input calculated-outputs class is closed).
+- **Funding check** on the four split paths — removed in v2.7.1 (it could lock an underfunded covenant).
+- **`eurCents` → `fiatCents`** (ABI only).
+- New bytecode and P2SH32 address.
 
 ---
 

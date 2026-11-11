@@ -270,9 +270,9 @@ function claim(...) {
 
 ## Implementation Status
 
-> **Update (2026-11-11):** current is **v2.7** — **5 paths** (`claim`, `merchantCashout`, `refund`, `abort`, `sellerRecoverBuffer`); v2.7 adds **atomic single-input spends** and a **funding check** on the split paths (v2.6 added `abort`; v2.6.1 was a cosmetic funder rename). The v2.2→v2.3 narrative below is the *evolution*.
+> **Update (2026-11-11):** current is **v2.7.1** — **5 paths** (`claim`, `merchantCashout`, `refund`, `abort`, `sellerRecoverBuffer`); v2.7 added **atomic single-input spends** (the funding check was removed in v2.7.1 because it could lock an underfunded covenant; v2.7.1 keeps atomic and adds the abort escape). The v2.2→v2.3 narrative below is the *evolution*.
 
-**Current version: v2.7** (5 paths; atomic single-input spends + funding check)  
+**Current version: v2.7.1** (5 paths; atomic single-input spends + abort escape)  
 **Historical:** v2.2 (simplified refund) → v2.3 (seller buffer recovery).
 
 **v2.2 Covenant code:**
@@ -309,7 +309,7 @@ function sellerRecoverBuffer(sig sellerSig, datasig oracleSig, bytes oracleMessa
 **Testing status:** 
 - ✅ v2.0 oracle refund · v2.1 price-drop protection (chipnet)
 - ✅ v2.2 simplified refund · v2.3 seller recovery — **shipped** long ago
-- ✅ **v2.6.1** — all **5 paths** validated on **testnet3** (claim, merchantCashout, refund, abort, sellerRecoverBuffer); **v2.7 (current)** adds the atomic + funding guards (offline 5/5; EUR/NGN e2e on testnet3)
+- ✅ **v2.6.1** — all **5 paths** validated on **testnet3** (claim, merchantCashout, refund, abort, sellerRecoverBuffer); **v2.7/v2.7.1 (current)** add atomic single-input spends (+ the abort escape) (offline 6/6; EUR/NGN e2e on testnet3)
 
 ---
 

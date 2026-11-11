@@ -4,7 +4,7 @@
 **Platform:** Android (Kotlin)  
 **Originally Targeted:** CashScript v0.13+ (P2SH32 format)
 
-> **⚠️ Version (2026-11-11):** the current covenant is **v2.7** (5 paths; atomic single-input spends + a funding check on the split paths). The `payment-covenant.cash`/`.json` artifacts in this folder are **pre-v2.6**. Byte counts below are the **v2.5** measurement — see the v2.7 note at Step 2.
+> **⚠️ Version (2026-11-11):** the current covenant is **v2.7.1** (5 paths; atomic single-input spends + the abort escape). The `payment-covenant.cash`/`.json` artifacts in this folder are **pre-v2.6**. Byte counts below are the **v2.5** measurement — see the v2.7.1 note at Step 2.
 
 ---
 
@@ -59,11 +59,11 @@ A Bitcoin Cash covenant is a P2SH32 script with this structure:
 
 ### Step 2: Append Bytecode Template
 
-The v2.7 bytecode template is **1,876 bytes** of Bitcoin Script opcodes (v2.6.1: 1,524 bytes). The 367-byte figure used later in this page is the older **v2.5** measurement.
+The v2.7.1 contract bytecode is the current template (see `price-oracle-v2.7.1.json`). The 367-byte figure used later in this page is the older **v2.5** measurement.
 
-**Source:** `price-oracle-v2.7.json` artifact
+**Source:** `price-oracle-v2.7.1.json` artifact
 
-This bytecode is **static and shared** across all v2.7 covenants. It implements:
+This bytecode is **static and shared** across all v2.7.1 covenants. It implements:
 - Claim path (recipient + oracle signature)
 - Merchant cashout path (recipient + merchant + oracle)
 - Refund path (sender, anytime)
@@ -225,7 +225,7 @@ If script hashes match, construction is correct. Address format differences (And
 
 3. **Parameter negotiation:** This assumes you already know recipient's pubkey, seller's pubkey, current BCH price, and agreed EUR amount. Coordination is separate (Telegram, Nostr, or bulletin board).
 
-4. **Bytecode compilation:** We use pre-compiled v2.7 bytecode. If covenant logic changes (v3.0), we need a new artifact.
+4. **Bytecode compilation:** We use pre-compiled v2.7.1 bytecode. If covenant logic changes (v3.0), we need a new artifact.
 
 **Scope boundary:** This module does ONE thing—turn covenant parameters into a P2SH32 address. Everything before (parameter negotiation) and after (transaction construction) is handled elsewhere.
 
@@ -233,7 +233,7 @@ If script hashes match, construction is correct. Address format differences (And
 
 ## Versioning
 
-**Current:** v2.7
+**Current:** v2.7.1
 
 If covenant logic changes:
 1. RaspberryPi compiles new CashScript contract

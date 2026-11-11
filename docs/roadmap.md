@@ -33,7 +33,7 @@ Phase 0 is validated on **testnet3** first; the **mainnet beta** begins once the
 | 5 | **Bizum auto-funding** — the seller's app reads the bank notification and funds the covenant automatically | 📅 Planned | Removes the manual step → the **merchant/seller client** (Phase 1) |
 | 6 | **The customer flow** — a merchant accepts BCH directly (same covenant; merchant `claim()` before releasing goods) | 🎯 Target | A merchant that anyone can pay in BCH |
 
-**Core infrastructure (done):** covenant **v2.7** (five spend paths; atomic single-input spends + a funding check on the split paths); the **hybrid app** (native network + WebView compute); the **oracle** (own, signed 16-byte price + time, MTP fallback).
+**Core infrastructure (done):** covenant **v2.7.1** (five spend paths; atomic single-input spends + the abort escape); the **hybrid app** (native network + WebView compute); the **oracle** (own, signed 16-byte price + time, MTP fallback).
 
 **What "MVP confidence" means:** the loop runs end-to-end, the seller is paid only after the fiat lands, the recipient can always claim (or the funder recovers the buffer), and it survives real devices and real networks.
 
