@@ -151,7 +151,7 @@ function refund(sig senderSig) {
 
 **Key insight:** Only `claim` and `merchantCashout` have restrictions (they move funds to new parties). `refund`, `abort`, and `sellerRecoverBuffer` return funds to original funders—should be permissionless.
 
-**v2.6 addition:** `abort` fixes fund locking when price drops below buffer capacity. The overlap zone (93.5% threshold) ensures both `abort` and `refund` work at critical prices, preventing lock scenarios.
+**v2.6 addition:** `abort` fixes fund locking when price drops below buffer capacity. The overlap zone (93.5% threshold) ensures both `abort` and `refund` work at critical prices, preventing lock scenarios. **v2.7.1** adds the atomic single-input check and the abort escape (`input < paymentSats`).
 
 ### Client Layer (AsgayaHusk)
 

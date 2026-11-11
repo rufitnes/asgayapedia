@@ -207,7 +207,7 @@ Asgaya implements peer-to-peer Bitcoin Cash remittances with **no backend server
 - [Why This Design](../../why-this-design/README.md) - Architectural constraints & rationale
 
 **Implementation (covenants):**
-- [Covenant Version History](../covenants/version-history.md) - v2.6 specification, all 5 spending paths
+- [Covenant Version History](../covenants/version-history.md) - v2.7.1 evolution, all 5 spending paths
 - [Manual Construction](../covenants/manual-construction.md) - Future: pure Kotlin covenant building (Phase 1+ migration from WebView)
 
 **Research:**

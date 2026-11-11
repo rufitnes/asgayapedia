@@ -4,7 +4,7 @@
 **Feature:** Automatic refund protection without manual intervention  
 **Philosophy:** It's the user's money. Protection should be automatic, not manual.
 
-> **⚠️ Update (2026-10-03) — what actually ships.** This page describes the **proposed** sender-side auto-refund UX, which is **DEFERRED** to a later phase — Phase 0 keeps a **manual** `refund()` action and no automatic sender refund. What *is* **LIVE and automatic** at expiry is the **funder's `sellerRecoverBuffer`** (the seller recovers its buffer). And there is **no H€ minting on timeout** — minting happens **only** on `merchantCashout` and on `abort` (>7 % drop). Read the mechanism below as **design intent**, not shipped behaviour.
+> **⚠️ Update (2026-10-03) — what actually ships.** This page describes the **proposed** sender-side auto-refund UX, which is **DEFERRED** to a later phase — Phase 0 keeps a **manual** `refund()` action and no automatic sender refund. What *is* **LIVE and automatic** at expiry is the **funder's `sellerRecoverBuffer`** (the seller recovers its buffer). And there is **no H€ minting on timeout** — minting is **planned (Phase 1+)** and only on `merchantCashout` and on `abort` (≥6.5 % drop, or when the covenant cannot cover the face). Read the mechanism below as **design intent**, not shipped behaviour.
 
 ---
 
@@ -203,7 +203,7 @@ Refund anyway? This may be unfair to recipient.
 ## Settings: Auto-Refund Protection (Advanced Users)
 
 **Default behavior (90% of users):**
-- ✅ H€ minting on `abort` (>7% drop)
+- ✅ H€ minting on `abort` (≥6.5% drop) — *planned, Phase 1+*
 - ✅ Instant protection from volatility
 - ✅ Zero friction (never see this menu)
 

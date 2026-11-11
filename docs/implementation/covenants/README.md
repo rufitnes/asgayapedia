@@ -1,9 +1,10 @@
 # Payment Covenant Implementation
 
-**Purpose:** Payment-first covenant with 7% volatility buffer for remittances.
+**Purpose:** Payment-first covenant with a 7 % price-drop tolerance (the funding is grossed up ~7.5 %) for remittances.
 
 **Current Version:** v2.7.1 (5 spending paths) — **atomic single-input spends** (every path requires `tx.inputs.length == 1`) with the **exact-output checks** (`outputs[0].value == paymentSats`). `abort` is also allowed when the input cannot cover the face at the current price. New bytecode and P2SH32 address; `fiatCents` replaces `eurCents` in the ABI.  
-**Status:** v2.7.1 compiled and offline-tested (6/6: two-input rejection, underfunded-but-sufficient claim, abort escape, normal claim/refund); EUR/NGN end-to-end on testnet3 (2026-11-11); formal on-chain matrix pending.
+**Status:** v2.7.1 compiled and offline-tested (6/6: two-input rejection, underfunded-but-sufficient claim, abort escape, normal claim/refund); an **EUR covenant with an NGN local payout** on testnet3 (2026-11-11); formal on-chain matrix pending.  
+**Redeem script:** 1,216 bytes (v2.7: 1,346; v2.6.1: 1,154).
 
 **Files (development tree):**
 - `price-oracle-v2.7.1.cash` - CashScript source code (current)
@@ -19,7 +20,7 @@
 ## Five Spending Paths
 
 **1. claim()** - Recipient gets BCH (normal path, requires oracle price)  
-**2. merchantCashout()** - Merchant cash-out with co-signatures (H€/HAu minting trigger)  
+**2. merchantCashout()** - Merchant cash-out with co-signatures (planned H€/HAu minting trigger, Phase 1+)  
 **3. refund()** - Sender recovery (anytime, permissionless)  
 **4. abort()** - Emergency exit when price drops ≥6.5% (v2.6 addition)  
 **5. sellerRecoverBuffer()** - Seller buffer recovery (post-expiry, sender offline)

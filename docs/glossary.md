@@ -36,7 +36,7 @@ The compliance separation between the remittance (sender → recipient) and the 
 The design choice that lets the recipient decide when to claim a remittance, rather than having the sender push it automatically. The pull system compresses volatility exposure to the few seconds of the cash‑out event and creates merchant foot traffic.
 
 ### Volatility Buffer (7 %)
-Extra BCH that a seller locks into a covenant (currently 7 % above face value) to protect the recipient and merchant from moderate price drops during the claim window. If BCH drops far enough that the collateral can no longer cover the face value, the covenant aborts and the BCH returns to the sender. The buffer is not a fee—it is the seller’s own capital that returns to them when the covenant settles normally.
+Extra BCH that a seller locks into a covenant (a 7 % price-drop tolerance; the funding is grossed up ~7.5 % of the face) to protect the recipient and merchant from moderate price drops during the claim window. If BCH drops far enough that the collateral can no longer cover the face value, the covenant aborts and the BCH returns to the sender. The buffer is not a fee—it is the seller’s own capital that returns to them when the covenant settles normally.
 
 ### 3 % Early Warning
 A notification sent to both sender and recipient when the BCH price drops by 3 % from the covenant’s starting price. It warns the recipient to claim soon before a potential 7 % abort. This is a Phase 0 hypothesis, not a guaranteed protection.
@@ -238,7 +238,7 @@ The CashScript SDK class that assembles a signed transaction from inputs (UTXOs)
 The Electrum server implementation Asgaya runs on Pi‑chan (testnet). Ports: 60001 TCP (balance/UTXO/broadcast), 60003 WebSocket (brief covenant UTXO fetch), 60004 WebSocket‑Secure (reserved).
 
 ### Oracle (Asgaya context)
-The price‑feed component that signs exchange‑rate messages (CHECKDATASIG‑verifiable). Asgaya fetches the oracle pubkey dynamically from the Pi‑chan oracle API (`/oracle/info`) — zero hardcoded keys. Oracle signatures are inputs to claim/refund/abort covenant spends.
+The price‑feed component that signs exchange‑rate messages (CHECKDATASIG‑verifiable). Asgaya fetches the oracle pubkey at runtime from the oracle API (`/oracle/info`). Oracle signatures are inputs to claim/refund/abort covenant spends.
 
 ### Testnet3 (testnet)
 A parallel Bitcoin Cash blockchain with worthless coins, used for safe development and validation. All Phase 0 covenant testing happens on testnet3 before mainnet. (Chipnet is a separate testnet used for covenant‑upgrade testing.)

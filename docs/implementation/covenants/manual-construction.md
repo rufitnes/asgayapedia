@@ -43,7 +43,7 @@ A Bitcoin Cash covenant is a P2SH32 script with this structure:
 2. `recipientPubkey` - 33 bytes
 3. `sellerPubkey` - 33 bytes
 4. `oraclePubkey` - 33 bytes
-5. `eurCents` - int (e.g., 10000 = €100.00) — *payment amount in cents*
+5. `fiatCents` - int (e.g., 10000 = €100.00) — *payment amount in cents*
 6. `expiryOracleTime` - int (Unix timestamp)
 7. `initialBchPriceInCents` - int (e.g., 65000 = €650/BCH) — *BCH price in EUR cents*
 8. `minPricePercent` - int (e.g., 93 = 7% drop tolerance)
@@ -59,7 +59,7 @@ A Bitcoin Cash covenant is a P2SH32 script with this structure:
 
 ### Step 2: Append Bytecode Template
 
-The v2.7.1 contract bytecode is the current template (see `price-oracle-v2.7.1.json`). The 367-byte figure used later in this page is the older **v2.5** measurement.
+The v2.7.1 redeem script is **1,216 bytes** (v2.7: 1,346; v2.6.1: 1,154). The 367-byte template and the "150 + 367 = 517 bytes" figure later in this page were the older **v2.5** measurement.
 
 **Source:** `price-oracle-v2.7.1.json` artifact
 
@@ -135,7 +135,7 @@ val params = CovenantBuilder.CovenantParams(
     recipientPubkey = recipientKey.publicKey,
     sellerPubkey = sellerKey.publicKey,
     oraclePubkey = fetchOraclePubkey(),  // Fetched at runtime from the oracle's /oracle/info
-    eurCents = 10000,                  // €100.00
+    fiatCents = 10000,                 // €100.00
     expiryOracleTime = currentTime + 8.hours,
     initialBchPriceInCents = 65000,    // €650/BCH
     minPricePercent = 93               // 7% drop tolerance

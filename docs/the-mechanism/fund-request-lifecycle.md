@@ -52,7 +52,7 @@ The reference (the recipient's Cash Account) is **unique per recipient, not per 
 
 A covenant ends in one of five ways: `claim`, `merchantCashout`, `refund`, `abort`, `sellerRecoverBuffer`. When it ends, the actor tells the counterparties over Nostr with a **`[COVENANT_RESOLVED]`** message (`covenantAddress`, `path`, `txid`). That message is a **hint, not the truth**: the receiver **verifies on-chain** (the covenant is spent, the tx exists) before concluding. The **spending transaction is the source of truth**; the DM only triggers a timely look.
 
-At **expiry (8 h)** the **funder automatically recovers its buffer** (`sellerRecoverBuffer`: an exact alarm, a catch-up on app/boot start, and a short retry). The **sender's `refund()` is manual** (available any time before a claim). **No stability tokens are minted at expiry** — minting happens only on `merchantCashout` and on `abort` (>7 % drop). See [Auto-Refund UX](../user-journeys/remittance/sender/auto-refund-ux.md) and [Funder Principle](../why-this-design/constraints/funder-principle.md).
+At **expiry (8 h)** the **funder automatically recovers its buffer** (`sellerRecoverBuffer`: an exact alarm, a catch-up on app/boot start, and a short retry). The **sender's `refund()` is manual** (available any time before a claim). **No stability tokens are minted at expiry** — minting (planned, Phase 1+) happens only on `merchantCashout` and on `abort` (≥6.5 % drop, or when the covenant cannot cover the face). See [Auto-Refund UX](../user-journeys/remittance/sender/auto-refund-ux.md) and [Funder Principle](../why-this-design/constraints/funder-principle.md).
 
 ## The seller's / merchant's card
 

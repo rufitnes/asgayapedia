@@ -150,7 +150,7 @@ Asgaya is at **Phase 0**: a working Android reference implementation, validated 
 - **Bulletin board** — sellers and buyers publish signed listings (NIP-99) that clients cache and filter; the on-chain anchor (censorship-resistance) is in progress (BLAZE slice).
 
 **Next**
-- **BCH BLAZE 2026 slice**: the web board, the identity anchor and a direct checkout (in progress). The product runs on testnet3; the anchor is the real artefact on mainnet; the demo payment runs on chipnet.
+- **BCH BLAZE 2026 slice**: the web board, the identity anchor and a direct checkout (in preparation). The product runs on testnet3; the anchor is the real artefact on mainnet; the demo payment runs on chipnet.
 - **Covenant v2.7.1** — atomic single-input spends with exact-output checks; `abort` also opens when the input cannot cover the face at the current price. Built and offline-tested (6/6) and exercised end-to-end on testnet3; the formal on-chain attack matrix is pending.
 - Run a small pilot with real users.
 

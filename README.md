@@ -79,12 +79,12 @@ For **BCH BLAZE 2026** we are building the slice that makes it visible: the **we
 
 ## Current status
 
-**Phase 0 — active implementation and testnet3 validation.** Last update: **November 6, 2026.**
+**Phase 0 — active implementation and testnet3 validation.** Last update: **November 11, 2026.**
 
 - ✅ **Covenant v2.7.1** — five spending paths; atomic single-input spends with exact-output checks, and `abort` also opens when the input cannot cover the face at the current price (offline 6/6 and e2e on testnet3).
 - ✅ **Identity** — the same key for Nostr and BCH; the merchant keeps the key.
 - ✅ **Discovery over Nostr** — signed listings (NIP-99); the anchor adds censorship resistance.
-- 🧩 **BLAZE slice** — the web board, the identity anchor and a direct checkout (in progress).
+- 🧩 **BLAZE slice** — the web board, the identity anchor and a direct checkout (in preparation).
 - ✅ **Signed oracle** — a 16-byte price and time message, verified on-chain.
 - ✅ **Notification bot** — the seller's bank app is parsed locally; no credentials or sensitive data leaves the device.
 - 📋 **Stability layer** — *planned, Phase 1+*.

@@ -1,7 +1,7 @@
 # Phase 1.5 Testing Plan: Blockchain-as-Oracle Price Discovery
 
 **Phase:** 1.5 - Distributed monitoring and auto-refund  
-**Status:** In progress  
+**Status:** Plan — not active (Phase 0 is current; Phase 1.5 is future)  
 **Last updated:** 2026-07-25
 
 ---

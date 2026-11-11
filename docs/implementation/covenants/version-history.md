@@ -34,6 +34,7 @@
 - **Atomic stays** in all five paths (`tx.inputs.length == 1`).
 - **Abort escape:** `abort` is allowed at the price threshold *or* when the input cannot cover the face at the current price (`tx.inputs[activeInputIndex].value < paymentSats`).
 - Funding (face + buffer) is a **client responsibility**: the app verifies it before accepting a funding.
+- **Redeem script: 1,216 bytes** (v2.7: 1,346; v2.6.1: 1,154).
 
 ## v2.7: Atomic single-input + funding check (2026-11-11, superseded)
 
@@ -41,6 +42,8 @@
 - **Funding check** on the four split paths — removed in v2.7.1 (it could lock an underfunded covenant).
 - **`eurCents` → `fiatCents`** (ABI only).
 - New bytecode and P2SH32 address.
+
+*Further reading (the class, no exploit here): the GP "calculated outputs" thread `1423` and the CashScript multi-input guide.*
 
 ---
 

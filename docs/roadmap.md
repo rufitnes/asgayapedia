@@ -84,4 +84,4 @@ The milestones are **gated, not parallel**: **Cash Accounts** (the payment refer
 
 ✅ Done / proven · 🎯 Next target · 📅 Planned milestone · 🔵 Opportunistic (Phase 0+) · 🟢 Future (Phase 1+)
 
-**Last updated:** 2026-10-04
+**Last updated:** 2026-11-11
