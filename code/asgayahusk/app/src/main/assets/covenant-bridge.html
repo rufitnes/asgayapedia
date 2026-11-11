@@ -1,0 +1,2683 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covenant Bridge v2.7.1</title>
+</head>
+<body>
+    <h3>Asgaya Covenant Bridge v2.7.1</h3>
+    <div id="status">Loading CashScript SDK 0.13.2...</div>
+
+    <!-- Load libauth from esm.sh CDN (ES module) -->
+    <script type="module">
+        try {
+            console.log('[CovenantBridge] Loading libauth from esm.sh...');
+            const libauth = await import('https://esm.sh/@bitauth/libauth@3.0.0');
+            window.libauth = libauth;
+            console.log('[CovenantBridge] ✅ libauth loaded:', Object.keys(libauth).length, 'exports');
+            if (typeof Android !== 'undefined' && Android.onLog) {
+                Android.onLog('[JS] libauth loaded successfully with ' + Object.keys(libauth).length + ' exports');
+            }
+        } catch (error) {
+            console.error('[CovenantBridge] ❌ Failed to load libauth:', error);
+            if (typeof Android !== 'undefined' && Android.onLog) {
+                Android.onLog('[JS] ERROR loading libauth: ' + error.message);
+            }
+        }
+    </script>
+
+    <!-- Load CashScript SDK bundle (ES module) - includes all dependencies -->
+    <script type="module" src="./cashscript-bundle.js"></script>
+
+    <script type="module">
+        // Wait for CashScript bundle to load
+        // The bundle exports window.CashScriptSDK global
+
+        // Status logging
+        function log(msg) {
+            console.log('[CovenantBridge]', msg);
+
+            try {
+                document.getElementById('status').textContent = msg;
+            } catch (e) {
+                // DOM might not be ready
+            }
+
+            // Send to Android via interface (with safety check)
+            try {
+                if (typeof Android !== 'undefined' && Android && Android.onLog) {
+                    Android.onLog('[JS] ' + msg);
+                }
+            } catch (e) {
+                // Android object might be gone during async execution
+                console.log('[Bridge unavailable]', msg);
+            }
+        }
+
+        // Wait for SDK to be available
+        const checkSDK = setInterval(() => {
+            if (window.CashScriptSDK) {
+                clearInterval(checkSDK);
+                log('CashScript SDK 0.13.2 loaded successfully');
+                setupBridge();
+            }
+        }, 100);
+
+        function setupBridge() {
+
+        // Helper function to add timeout to promises with socket cleanup
+        function withTimeout(promise, timeoutMs, errorMessage, socket) {
+            let timeoutHandle;
+            const timeoutPromise = new Promise((_, reject) => {
+                timeoutHandle = setTimeout(() => {
+                    // Forcibly close the socket if provided
+                    if (socket && socket.close) {
+                        try {
+                            log(`⏱️ Timeout - forcibly closing socket`);
+                            socket.close();
+                        } catch (e) {
+                            log(`Socket close error: ${e.message}`);
+                        }
+                    }
+                    reject(new Error(errorMessage || `Timeout after ${timeoutMs}ms`));
+                }, timeoutMs);
+            });
+
+            return Promise.race([
+                promise.then(result => {
+                    clearTimeout(timeoutHandle);
+                    return result;
+                }),
+                timeoutPromise
+            ]);
+        }
+
+        // Price Oracle v2.7.1 Artifact (embedded)
+        const ARTIFACT = {
+  "contractName": "PriceOracle",
+  "constructorInputs": [
+    {
+      "name": "sender",
+      "type": "pubkey"
+    },
+    {
+      "name": "recipient",
+      "type": "pubkey"
+    },
+    {
+      "name": "funder",
+      "type": "pubkey"
+    },
+    {
+      "name": "oraclePubkey",
+      "type": "pubkey"
+    },
+    {
+      "name": "fiatCents",
+      "type": "int"
+    },
+    {
+      "name": "expiryOracleTime",
+      "type": "int"
+    },
+    {
+      "name": "initialBchPriceInCents",
+      "type": "int"
+    },
+    {
+      "name": "minPricePercent",
+      "type": "int"
+    }
+  ],
+  "abi": [
+    {
+      "name": "claim",
+      "inputs": [
+        {
+          "name": "recipientSig",
+          "type": "sig"
+        },
+        {
+          "name": "oracleSig",
+          "type": "datasig"
+        },
+        {
+          "name": "oracleMessage",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "merchantCashout",
+      "inputs": [
+        {
+          "name": "recipientSig",
+          "type": "sig"
+        },
+        {
+          "name": "merchantSig",
+          "type": "sig"
+        },
+        {
+          "name": "merchantPubkey",
+          "type": "pubkey"
+        },
+        {
+          "name": "oracleSig",
+          "type": "datasig"
+        },
+        {
+          "name": "oracleMessage",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "refund",
+      "inputs": [
+        {
+          "name": "senderSig",
+          "type": "sig"
+        },
+        {
+          "name": "oracleSig",
+          "type": "datasig"
+        },
+        {
+          "name": "oracleMessage",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "abort",
+      "inputs": [
+        {
+          "name": "senderSig",
+          "type": "sig"
+        },
+        {
+          "name": "oracleSig",
+          "type": "datasig"
+        },
+        {
+          "name": "oracleMessage",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "sellerRecoverBuffer",
+      "inputs": [
+        {
+          "name": "sellerSig",
+          "type": "sig"
+        },
+        {
+          "name": "oracleSig",
+          "type": "datasig"
+        },
+        {
+          "name": "oracleMessage",
+          "type": "bytes"
+        }
+      ]
+    }
+  ],
+  "bytecode": "OP_8 OP_PICK OP_0 OP_NUMEQUAL OP_IF OP_TXINPUTCOUNT OP_1 OP_NUMEQUALVERIFY OP_10 OP_ROLL OP_11 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_9 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_9 OP_PICK OP_8 OP_SPLIT OP_DROP OP_10 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_SWAP OP_BIN2NUM OP_SWAP OP_BIN2NUM OP_SWAP OP_6 OP_ROLL OP_LESSTHAN OP_VERIFY OP_5 OP_ROLL OP_6 OP_ROLL OP_MUL 64 OP_DIV OP_OVER OP_LESSTHANOREQUAL OP_VERIFY OP_4 OP_ROLL 00e1f505 OP_MUL OP_SWAP OP_DIV OP_5 OP_ROLL OP_3 OP_PICK OP_CHECKSIGVERIFY OP_0 OP_OUTPUTVALUE OP_NUMEQUALVERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_1 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUAL OP_NIP OP_NIP OP_ELSE OP_8 OP_PICK OP_1 OP_NUMEQUAL OP_IF OP_TXINPUTCOUNT OP_1 OP_NUMEQUALVERIFY OP_12 OP_ROLL OP_13 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_11 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_11 OP_PICK OP_8 OP_SPLIT OP_DROP OP_12 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_SWAP OP_BIN2NUM OP_SWAP OP_BIN2NUM OP_SWAP OP_6 OP_ROLL OP_LESSTHAN OP_VERIFY OP_5 OP_ROLL OP_6 OP_ROLL OP_MUL 64 OP_DIV OP_OVER OP_LESSTHANOREQUAL OP_VERIFY OP_4 OP_ROLL 00e1f505 OP_MUL OP_SWAP OP_DIV OP_5 OP_ROLL OP_3 OP_ROLL OP_CHECKSIGVERIFY OP_4 OP_ROLL OP_5 OP_PICK OP_CHECKSIGVERIFY OP_0 OP_OUTPUTVALUE OP_NUMEQUALVERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_5 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_1 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUAL OP_NIP OP_NIP OP_ELSE OP_8 OP_PICK OP_2 OP_NUMEQUAL OP_IF OP_TXINPUTCOUNT OP_1 OP_NUMEQUALVERIFY OP_9 OP_ROLL OP_OVER OP_CHECKSIGVERIFY OP_9 OP_ROLL OP_10 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_8 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_8 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_BIN2NUM OP_4 OP_ROLL 00e1f505 OP_MUL OP_SWAP OP_DIV OP_0 OP_OUTPUTVALUE OP_NUMEQUALVERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_ROT OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_1 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_2DROP OP_2DROP OP_DROP OP_1 OP_ELSE OP_8 OP_PICK OP_3 OP_NUMEQUAL OP_IF OP_TXINPUTCOUNT OP_1 OP_NUMEQUALVERIFY OP_9 OP_ROLL OP_OVER OP_CHECKSIGVERIFY OP_9 OP_ROLL OP_10 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_8 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_8 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_BIN2NUM OP_4 OP_ROLL 00e1f505 OP_MUL OP_OVER OP_DIV OP_6 OP_ROLL a703 OP_MUL e803 OP_DIV OP_ROT OP_GREATERTHANOREQUAL OP_INPUTINDEX OP_UTXOVALUE OP_ROT OP_LESSTHAN OP_BOOLOR OP_VERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_ROT OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_2DROP OP_2DROP OP_DROP OP_1 OP_ELSE OP_8 OP_ROLL OP_4 OP_NUMEQUALVERIFY OP_TXINPUTCOUNT OP_1 OP_NUMEQUALVERIFY OP_8 OP_ROLL OP_3 OP_PICK OP_CHECKSIGVERIFY OP_8 OP_ROLL OP_9 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_7 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_7 OP_PICK OP_8 OP_SPLIT OP_DROP OP_8 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_SWAP OP_BIN2NUM OP_SWAP OP_BIN2NUM OP_SWAP OP_6 OP_ROLL OP_GREATERTHANOREQUAL OP_VERIFY OP_4 OP_ROLL 00e1f505 OP_MUL OP_SWAP OP_DIV OP_0 OP_OUTPUTVALUE OP_NUMEQUALVERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_ROT OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_1 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUAL OP_NIP OP_NIP OP_NIP OP_ENDIF OP_ENDIF OP_ENDIF OP_ENDIF",
+  "fingerprint": "df114b0ca8654decfd9d513335dc086ca9eaecbe9084190567210c7da5a236fa",
+  "debug": {
+    "bytecode": "5879009c63c3519d5a7a5b79557abb59798277609d5979587f755a7a587f777c817c817c567a9f69557a567a9501649678a169547a0400e1f505957c96557a5379ad00cc9d00cd0376a914537aa97e0288ac7e8851cd0376a914537aa97e0288ac7e877777675879519c63c3519d5c7a5d79557abb5b798277609d5b79587f755c7a587f777c817c817c567a9f69557a567a9501649678a169547a0400e1f505957c96557a537aad547a5579ad00cc9d00cd0376a914557aa97e0288ac7e8851cd0376a914537aa97e0288ac7e877777675879529c63c3519d597a78ad597a5a79557abb58798277609d587a587f7781547a0400e1f505957c9600cc9d00cd0376a9147ba97e0288ac7e8851cd0376a914537aa97e0288ac7e886d6d7551675879539c63c3519d597a78ad597a5a79557abb58798277609d587a587f7781547a0400e1f505957896567a02a7039502e803967ba2c0c67b9f9b6900cd0376a9147ba97e0288ac7e886d6d755167587a549dc3519d587a5379ad587a5979557abb57798277609d5779587f75587a587f777c817c817c567aa269547a0400e1f505957c9600cc9d00cd0376a9147ba97e0288ac7e8851cd0376a914537aa97e0288ac7e8777777768686868",
+    "sourceMap": "39:4:82:5;;;;;45:16:45:32;:36::37;:8::39:1;47:29:47:38:0;;:40::53;;:55::67;;:8::70:1;50:16:50:29:0;;:::36:1;;:40::42:0;:8::44:1;52:46:52:59:0;;:66::67;:46::68:1;:::71;53:42:53:55:0;;:62::63;:42::64:1;:::67;56:34:56:48:0;:30::49:1;57:34:57:44:0;:30::45:1;60:16:60:31:0;:34::50;;:16:::1;:8::52;64:26:64:48:0;;:51::66;;:26:::1;:70::73:0;:25:::1;65:16:65:31:0;:::45:1;:8::47;69:27:69:36:0;;:39::48;:27:::1;:52::67:0;:26:::1;72:25:72:37:0;;:39::48;;:8::51:1;76:27:76:28:0;:16::35:1;:8::52;77:27:77:28:0;:16::45:1;:49::93:0;:82::91;;:74::92:1;:49::93;;;:8::95;81:27:81:28:0;:16::45:1;:49::90:0;:82::88;;:74::89:1;:49::90;;;:8::92;43:6:82:5;;39:4;96::143::0;;;;;104:16:104:32;:36::37;:8::39:1;106:29:106:38:0;;:40::53;;:55::67;;:8::70:1;109:16:109:29:0;;:::36:1;;:40::42:0;:8::44:1;111:46:111:59:0;;:66::67;:46::68:1;:::71;112:42:112:55:0;;:62::63;:42::64:1;:::67;115:34:115:48:0;:30::49:1;116:34:116:44:0;:30::45:1;119:16:119:31:0;:34::50;;:16:::1;:8::52;122:26:122:48:0;;:51::66;;:26:::1;:70::73:0;:25:::1;123:16:123:31:0;:::45:1;:8::47;126:27:126:36:0;;:39::48;:27:::1;:52::67:0;:26:::1;130:25:130:37:0;;:39::48;;:8::51:1;132:25:132:36:0;;:38::52;;:8::55:1;137:27:137:28:0;:16::35:1;:8::52;138:27:138:28:0;:16::45:1;:49::98:0;:82::96;;:74::97:1;:49::98;;;:8::100;142:27:142:28:0;:16::45:1;:49::90:0;:82::88;;:74::89:1;:49::90;;;:8::92;102:6:143:5;;96:4;160::186::0;;;;;162:16:162:32;:36::37;:8::39:1;164:25:164:34:0;;:36::42;:8::45:1;167:29:167:38:0;;:40::53;;:55::67;;:8::70:1;170:16:170:29:0;;:::36:1;;:40::42:0;:8::44:1;172:42:172:55:0;;:62::63;:42::64:1;:::67;173:30:173:45;176:27:176:36:0;;:39::48;:27:::1;:52::67:0;:26:::1;180:27:180:28:0;:16::35:1;:8::52;181:27:181:28:0;:16::45:1;:49::90:0;:82::88;:74::89:1;:49::90;;;:8::92;185:27:185:28:0;:16::45:1;:49::90:0;:82::88;;:74::89:1;:49::90;;;:8::92;160:75:186:5;;;;:4;215::248::0;;;;;217:16:217:32;:36::37;:8::39:1;219:25:219:34:0;;:36::42;:8::45:1;222:29:222:38:0;;:40::53;;:55::67;;:8::70:1;225:16:225:29:0;;:::36:1;;:40::42:0;:8::44:1;227:42:227:55:0;;:62::63;:42::64:1;:::67;228:30:228:45;232:27:232:36:0;;:39::48;:27:::1;:52::67:0;:26:::1;238:30:238:52:0;;:55::58;:30:::1;:62::66:0;:29:::1;239:16:239:31:0;:::49:1;:63::84:0;:53::91:1;:94::105:0;:53:::1;:16;:8::107;243:27:243:28:0;:16::45:1;:49::90:0;:82::88;:74::89:1;:49::90;;;:8::92;215:74:248:5;;;;:4;269::301::0;;;;271:16:271:32;:36::37;:8::39:1;273:25:273:34:0;;:36::42;;:8::45:1;276:29:276:38:0;;:40::53;;:55::67;;:8::70:1;279:16:279:29:0;;:::36:1;;:40::42:0;:8::44:1;281:46:281:59:0;;:66::67;:46::68:1;:::71;282:42:282:55:0;;:62::63;:42::64:1;:::67;284:34:284:48:0;:30::49:1;285:34:285:44:0;:30::45:1;288:16:288:31:0;:35::51;;:16:::1;:8::53;291:27:291:36:0;;:39::48;:27:::1;:52::67:0;:26:::1;295:27:295:28:0;:16::35:1;:8::52;296:27:296:28:0;:16::45:1;:49::90:0;:82::88;:74::89:1;:49::90;;;:8::92;300:27:300:28:0;:16::45:1;:49::90:0;:82::88;;:74::89:1;:49::90;;;:8::92;269:88:301:5;;;21:0:302:1;;;",
+    "logs": [],
+    "requires": [
+      {
+        "ip": 15,
+        "line": 45
+      },
+      {
+        "ip": 22,
+        "line": 47
+      },
+      {
+        "ip": 28,
+        "line": 50
+      },
+      {
+        "ip": 47,
+        "line": 60
+      },
+      {
+        "ip": 57,
+        "line": 65
+      },
+      {
+        "ip": 68,
+        "line": 72
+      },
+      {
+        "ip": 71,
+        "line": 76
+      },
+      {
+        "ip": 81,
+        "line": 77
+      },
+      {
+        "ip": 92,
+        "line": 81
+      },
+      {
+        "ip": 102,
+        "line": 104
+      },
+      {
+        "ip": 109,
+        "line": 106
+      },
+      {
+        "ip": 115,
+        "line": 109
+      },
+      {
+        "ip": 134,
+        "line": 119
+      },
+      {
+        "ip": 144,
+        "line": 123
+      },
+      {
+        "ip": 155,
+        "line": 130
+      },
+      {
+        "ip": 160,
+        "line": 132
+      },
+      {
+        "ip": 163,
+        "line": 137
+      },
+      {
+        "ip": 173,
+        "line": 138
+      },
+      {
+        "ip": 184,
+        "line": 142
+      },
+      {
+        "ip": 194,
+        "line": 162
+      },
+      {
+        "ip": 198,
+        "line": 164
+      },
+      {
+        "ip": 205,
+        "line": 167
+      },
+      {
+        "ip": 211,
+        "line": 170
+      },
+      {
+        "ip": 226,
+        "line": 180
+      },
+      {
+        "ip": 235,
+        "line": 181
+      },
+      {
+        "ip": 245,
+        "line": 185
+      },
+      {
+        "ip": 258,
+        "line": 217
+      },
+      {
+        "ip": 262,
+        "line": 219
+      },
+      {
+        "ip": 269,
+        "line": 222
+      },
+      {
+        "ip": 275,
+        "line": 225
+      },
+      {
+        "ip": 301,
+        "line": 239
+      },
+      {
+        "ip": 310,
+        "line": 243
+      },
+      {
+        "ip": 322,
+        "line": 271
+      },
+      {
+        "ip": 327,
+        "line": 273
+      },
+      {
+        "ip": 334,
+        "line": 276
+      },
+      {
+        "ip": 340,
+        "line": 279
+      },
+      {
+        "ip": 359,
+        "line": 288
+      },
+      {
+        "ip": 368,
+        "line": 295
+      },
+      {
+        "ip": 377,
+        "line": 296
+      },
+      {
+        "ip": 388,
+        "line": 300
+      }
+    ],
+    "sourceTags": "84:85:sc;176:177:sc;380:382:sc"
+  },
+  "compiler": {
+    "name": "cashc",
+    "version": "0.13.2",
+    "options": {
+      "enforceFunctionParameterTypes": true,
+      "enforceLocktimeGuard": true
+    }
+  },
+  "updatedAt": "2026-11-11T12:19:32.189Z"
+};
+
+        log('Price Oracle v2.7.1 artifact loaded (atomic; no value check)');
+
+        /**
+         * Create covenant and return address (for sanity check)
+         *
+         * @param paramsJson JSON string with covenant parameters
+         * @returns Covenant address
+         */
+        window.createCovenant = function(paramsJson) {
+            try {
+                log('=== Creating Covenant (START) ===');
+                log('Received params: ' + paramsJson.substring(0, 100) + '...');
+
+                const params = JSON.parse(paramsJson);
+                log('Parsed JSON successfully');
+
+                // Create contract with provider for address generation
+                log('Creating contract with v2.7.1 artifact...');
+
+                // Create a provider instance (not connected, just for address generation)
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(params.senderPubkey, 'hex'),
+                        Buffer.from(params.recipientPubkey, 'hex'),
+                        Buffer.from(params.funderPubkey, 'hex'),
+                        Buffer.from(params.oraclePubkey, 'hex'),
+                        BigInt(params.eurCents),
+                        BigInt(params.expiryOracleTime),
+                        BigInt(params.initialBchPriceInCents),
+                        BigInt(params.minPricePercent)
+                    ],
+                    {
+                        provider,
+                        addressType: 'p2sh32'
+                    }
+                );
+
+                const address = contract.address;
+                log(`✅ Covenant address: ${address}`);
+
+                // Return to Android
+                Android.onLog('[JS] Final address: ' + address);
+                return address;
+
+            } catch (error) {
+                log(`❌ Error creating covenant: ${error.message}`);
+                log(`❌ Stack: ${error.stack}`);
+                console.error(error);
+                Android.onLog('[JS] ERROR: ' + error.message);
+                return null;
+            }
+        };
+
+        /**
+         * Claim covenant - called from Android
+         *
+         * This function will be called via evaluateJavascript with covenant parameters
+         * It recreates the contract, builds the claim transaction, and returns the signed tx hex
+         */
+        window.claimCovenant = async function(paramsJson) {
+            let electrum = null;
+            try {
+                log('=== Claim Covenant Started ===');
+
+                const params = JSON.parse(paramsJson);
+                log(`Params: ${JSON.stringify(params).substring(0, 100)}...`);
+
+                // Extract parameters
+                const {
+                    covenantParams,  // Constructor parameters
+                    oracleSig,       // Oracle signature data
+                    recipientWIF,    // Recipient private key
+                    recipientAddress,// Recipient address for output
+                    funderAddress,   // Seller address for remainder
+                    fulcrumHost,     // Pi Fulcrum host (e.g., "localhost")
+                    fulcrumPort      // Pi Fulcrum port (e.g., 60003)
+                } = params;
+
+                log('Connecting to Fulcrum...');
+                log(`Target: ${fulcrumHost}:${fulcrumPort}`);
+
+                // Auto-detect SSL based on port
+                // 60003 = ws (no SSL), 60004 = wss (SSL), 50003 = ssl, 50004 = wss
+                const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
+                log(`SSL: ${useSSL}`);
+
+                // Connect to Pi's Fulcrum server
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, useSSL);
+                electrum = new window.CashScriptSDK.ElectrumClient('Asgaya Claim', '1.4.1', socket);
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3', {
+                    electrum,
+                    manualConnectionManagement: true
+                });
+
+                await withTimeout(electrum.connect(), 10000, 'Fulcrum connection timeout (10s)', socket);
+                log('✅ Connected to Fulcrum');
+
+                // Recreate contract from stored parameters
+                log('Recreating contract...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                // Get UTXOs
+                log('Fetching covenant UTXOs...');
+                const utxos = await contract.getUtxos();
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already claimed');
+                }
+
+                const utxo = utxos[0];
+                log(`✅ Found UTXO: ${Number(utxo.satoshis)} sats`);
+
+                // Parse oracle signature
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                // Calculate payment amounts
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats to recipient`);
+                log(`Remainder: ${Number(remainderSats)} sats to funder`);
+
+                // Build claim transaction
+                log('Building claim transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider });
+
+                // Create unlocker with SignatureTemplate (accepts WIF directly)
+                log('Creating signature template with WIF...');
+                const unlocker = contract.unlock.claim(
+                    new window.CashScriptSDK.SignatureTemplate(recipientWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                // Add input
+                txBuilder.addInput(utxo, unlocker);
+
+                // Add outputs
+                txBuilder.addOutput({
+                    to: recipientAddress,
+                    amount: paymentSats
+                });
+
+                txBuilder.addOutput({
+                    to: funderAddress,
+                    amount: remainderSats
+                });
+
+                log('Broadcasting transaction...');
+                const txResponse = await txBuilder.send();
+                const txid = typeof txResponse === 'string' ? txResponse : txResponse.txid;
+
+                log(`✅ SUCCESS! TXID: ${txid}`);
+
+                // Return result to Android
+                Android.onClaimSuccess(txid);
+
+            } catch (error) {
+                log(`❌ Error: ${error.message}`);
+                console.error(error);
+                Android.onClaimError(error.message);
+            } finally {
+                // Always disconnect, whether success or failure
+                if (electrum) {
+                    try {
+                        await electrum.disconnect();
+                        log('🔌 Disconnected from Fulcrum');
+                    } catch (e) {
+                        // Ignore disconnect errors
+                        log(`⚠️ Disconnect error (ignored): ${e.message}`);
+                    }
+                }
+            }
+        };
+
+        /**
+         * Refund covenant after expiry - called from Android
+         */
+        window.refundCovenant = async function(paramsJson) {
+            let electrum = null;
+            try {
+                log('=== Refund Covenant Started ===');
+
+                const params = JSON.parse(paramsJson);
+                log(`Params: ${JSON.stringify(params).substring(0, 100)}...`);
+
+                const {
+                    covenantParams,
+                    oracleSig,
+                    senderWIF,
+                    senderAddress,
+                    funderAddress,
+                    fulcrumHost,
+                    fulcrumPort
+                } = params;
+
+                log('Connecting to Fulcrum...');
+                log(`Target: ${fulcrumHost}:${fulcrumPort}`);
+
+                // Auto-detect SSL based on port
+                // 60003 = ws (no SSL), 60004 = wss (SSL), 50003 = ssl, 50004 = wss
+                const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
+                log(`SSL: ${useSSL}`);
+
+
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, useSSL);
+                electrum = new window.CashScriptSDK.ElectrumClient('Asgaya Refund', '1.4.1', socket);
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3', {
+                    electrum,
+                    manualConnectionManagement: true
+                });
+
+                await withTimeout(electrum.connect(), 10000, 'Fulcrum connection timeout (10s)', socket);
+                log('✅ Connected to Fulcrum');
+
+                log('Recreating contract...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                log('Fetching covenant UTXOs...');
+                const utxos = await contract.getUtxos();
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = utxos[0];
+                log(`✅ Found UTXO: ${Number(utxo.satoshis)} sats`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+                log(`Oracle timestamp: ${oracleSig.timestamp} (expiry: ${covenantParams.expiryOracleTime})`);
+
+                // Calculate refund amounts
+                const eurCents = covenantParams.eurCents;
+                const refundSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - refundSats - feeSats;
+
+                log(`Refund: ${Number(refundSats)} sats to sender`);
+                log(`Remainder: ${Number(remainderSats)} sats to funder`);
+
+                log('Building refund transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider });
+
+                log('Creating signature template with sender WIF...');
+                const unlocker = contract.unlock.refund(
+                    new window.CashScriptSDK.SignatureTemplate(senderWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+
+                txBuilder.addOutput({
+                    to: senderAddress,
+                    amount: refundSats
+                });
+
+                txBuilder.addOutput({
+                    to: funderAddress,
+                    amount: remainderSats
+                });
+
+                log('Broadcasting transaction...');
+                const txResponse = await txBuilder.send();
+                const txid = typeof txResponse === 'string' ? txResponse : txResponse.txid;
+
+                log(`✅ SUCCESS! TXID: ${txid}`);
+
+                Android.onRefundSuccess(txid);
+
+            } catch (error) {
+                log(`❌ Error: ${error.message}`);
+                console.error(error);
+                Android.onRefundError(error.message);
+            } finally {
+                // Always disconnect, whether success or failure
+                if (electrum) {
+                    try {
+                        await electrum.disconnect();
+                        log('🔌 Disconnected from Fulcrum');
+                    } catch (e) {
+                        // Ignore disconnect errors
+                        log(`⚠️ Disconnect error (ignored): ${e.message}`);
+                    }
+                }
+            }
+        };
+
+        /**
+         * v0.2 HYBRID: Build refund transaction without broadcasting
+         *
+         * This version:
+         * - Fetches covenant UTXOs via CashScript (needs WebSocket for getUtxos)
+         * - Builds refund transaction in WebView
+         * - Returns txHex to Kotlin (NO BROADCAST)
+         * - Kotlin broadcasts via native TCP
+         */
+        /**
+         * v0.2 HYBRID: Build refund transaction from UTXOs provided by Kotlin
+         * NO NETWORK - Pure computation
+         * - Kotlin fetches UTXOs (native TCP)
+         * - Builds refund transaction in WebView (unconnected provider)
+         * - Returns txHex to Kotlin (NO BROADCAST)
+         * - Kotlin broadcasts via native TCP
+         */
+        window.buildRefundTransactionFromUTXOs = async function(paramsJson) {
+            try {
+                log('=== Build Refund Transaction (v0.2 - NO NETWORK) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    oracleSig,
+                    senderWIF,
+                    senderAddress,
+                    funderAddress,
+                    utxos  // Provided by Kotlin!
+                } = params;
+
+                log(`Received ${utxos.length} UTXOs from Kotlin`);
+
+                // Convert UTXOs from Kotlin format to CashScript format
+                // NOTE: CashScript SDK expects { txid, vout, satoshis }
+                const convertedUtxos = utxos.map(utxo => ({
+                    txid: utxo.txHash,
+                    vout: utxo.txPos,
+                    satoshis: BigInt(utxo.value),
+                    height: utxo.height || -1
+                }));
+
+                if (convertedUtxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = convertedUtxos[0];
+                log(`Using UTXO: ${Number(utxo.satoshis)} sats`);
+
+                // Create UNCONNECTED provider (proven: build() is fully local, no network needed)
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+                log('Provider created (unconnected, no WebSocket)');
+
+                log('Recreating contract...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                // Calculate refund amounts
+                const eurCents = covenantParams.eurCents;
+                const refundSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - refundSats - feeSats;
+
+                log(`Refund: ${Number(refundSats)} sats to sender`);
+                log(`Remainder: ${Number(remainderSats)} sats to funder`);
+
+                // Derive the funder address from funderPubkey (deterministic, per contract)
+                // The covenant enforces output[1] = P2PKH(hash160(funder)), so the address
+                // is ALWAYS derivable from the pubkey — no funder wallet needed on this device.
+                // CRITICAL for funder≠sender flow: refund's buffer must go to the FUNDER (seller),
+                // not the sender. Contract rejects the tx otherwise.
+                let derivedFunderAddress = funderAddress;
+                if (window.libauth && covenantParams.funderPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(covenantParams.funderPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedFunderAddress = derived.address;
+                            log(`✅ Derived funder address from pubkey: ${derivedFunderAddress}`);
+                        }
+                    } catch (e) {
+                        log(`⚠️ Failed to derive funder address, using fallback: ${e.message}`);
+                    }
+                }
+
+                log('Building refund transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                const unlocker = contract.unlock.refund(
+                    new window.CashScriptSDK.SignatureTemplate(senderWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+                txBuilder.addOutput({ to: senderAddress, amount: refundSats });
+                txBuilder.addOutput({ to: derivedFunderAddress, amount: remainderSats });
+
+                // Use build() instead of send() - returns signed hex, NO BROADCAST!
+                log('Building transaction (local, no network)...');
+                const txHex = txBuilder.build();  // ← sync, instant!
+
+                log(`✅ Transaction built! Hex length: ${txHex.length} chars`);
+
+                // Return to Kotlin for broadcasting
+                Android.onTransactionBuilt(JSON.stringify({
+                    txHex: txHex
+                    // Kotlin's broadcast will return the real txid
+                }));
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            }
+        };
+
+        /**
+         * v0.2 HYBRID: Build sellerRecoverBuffer transaction (NO BROADCAST)
+         * The SELLER (funder) recovers its buffer after expiry with the sender offline.
+         * Covenant path: sellerRecoverBuffer(sellerSig, oracleSig, oracleMessage).
+         * Output 0: payment amount → sender address (derived from senderPubkey)
+         * Output 1: buffer/remainder → seller (funder) address
+         * Kotlin fetches UTXOs, JavaScript builds+signs, Kotlin broadcasts.
+         */
+        window.buildSellerRecoverTransactionFromUTXOs = async function(paramsJson) {
+            try {
+                log('=== Build Seller Recover Buffer Transaction (v0.2 - NO NETWORK) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    oracleSig,
+                    sellerWIF,
+                    sellerAddress,
+                    senderAddress,
+                    utxos  // Provided by Kotlin!
+                } = params;
+
+                log(`Received ${utxos.length} UTXOs from Kotlin`);
+
+                const convertedUtxos = utxos.map(utxo => ({
+                    txid: utxo.txHash,
+                    vout: utxo.txPos,
+                    satoshis: BigInt(utxo.value),
+                    height: utxo.height || -1
+                }));
+
+                if (convertedUtxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = convertedUtxos[0];
+                log(`Using UTXO: ${Number(utxo.satoshis)} sats`);
+
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                // Fair split: Output 0 = payment → sender ; Output 1 = buffer → seller
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const bufferSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats to sender`);
+                log(`Buffer: ${Number(bufferSats)} sats to seller`);
+
+                // Derive the sender address from senderPubkey (output[0] = P2PKH(hash160(sender))).
+                // The seller's device does NOT hold the sender's wallet — the address is derivable.
+                if (!window.libauth) throw new Error('libauth not loaded yet — retry');
+                let derivedSenderAddress = senderAddress;
+                if (window.libauth && covenantParams.senderPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(covenantParams.senderPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedSenderAddress = derived.address;
+                            log(`✅ Derived sender address from pubkey: ${derivedSenderAddress}`);
+                        }
+                    } catch (e) {
+                        log(`⚠️ Failed to derive sender address, using fallback: ${e.message}`);
+                    }
+                }
+
+                log('Building sellerRecoverBuffer transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                const unlocker = contract.unlock.sellerRecoverBuffer(
+                    new window.CashScriptSDK.SignatureTemplate(sellerWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+                txBuilder.addOutput({ to: derivedSenderAddress, amount: paymentSats });
+                txBuilder.addOutput({ to: sellerAddress, amount: bufferSats });
+
+                // Use build() instead of send() - returns signed hex, NO BROADCAST!
+                const txHex = txBuilder.build();
+
+                log(`✅ Transaction built! Hex length: ${txHex.length} chars`);
+
+                Android.onTransactionBuilt(JSON.stringify({
+                    txHex: txHex
+                }));
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            }
+        };
+
+        /**
+         * v0.2 HYBRID: Build claim transaction (NO BROADCAST)
+         * Kotlin fetches UTXOs, JavaScript builds+signs, Kotlin broadcasts
+         */
+        window.buildClaimTransaction = async function(paramsJson) {
+            let electrum = null;
+            try {
+                log('=== Build Claim Transaction (v0.2 Hybrid) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    oracleSig,
+                    recipientWIF,
+                    recipientAddress,
+                    funderAddress,
+                    fulcrumHost,
+                    fulcrumPort
+                } = params;
+
+                // Derive the funder address from funderPubkey (deterministic, per contract)
+                // The covenant enforces output[1] = P2PKH(hash160(funder)), so the address
+                // is ALWAYS derivable from the pubkey — no funder wallet needed on this device.
+                // CRITICAL for funder≠sender flow: refund's buffer must go to the FUNDER (seller),
+                // not the sender. Contract rejects the tx otherwise.
+                let derivedFunderAddress = funderAddress;
+                if (window.libauth && covenantParams.funderPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(covenantParams.funderPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedFunderAddress = derived.address;
+                            log(`✅ Derived funder address from pubkey: ${derivedFunderAddress}`);
+                        }
+                    } catch (e) {
+                        log(`⚠️ Funder address derivation failed, using passed value: ${e.message}`);
+                    }
+                }
+
+                log('Connecting to Fulcrum for UTXO fetch only...');
+                const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
+
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, useSSL);
+                electrum = new window.CashScriptSDK.ElectrumClient('Asgaya Claim v0.2', '1.4.1', socket);
+
+                // Create provider (no mock needed - we'll use build() not send()!)
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3', {
+                    electrum,
+                    manualConnectionManagement: true
+                });
+
+                await withTimeout(electrum.connect(), 10000, 'Fulcrum connection timeout (10s)', socket);
+                log('✅ Connected to Fulcrum');
+
+                log('Recreating contract...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                log('Fetching covenant UTXOs...');
+                const utxos = await contract.getUtxos();
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already claimed');
+                }
+
+                const utxo = utxos[0];
+                log(`✅ Found UTXO: ${Number(utxo.satoshis)} sats`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                // Calculate payment amounts
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats to recipient`);
+                log(`Remainder: ${Number(remainderSats)} sats to funder`);
+
+                log('Building claim transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                const unlocker = contract.unlock.claim(
+                    new window.CashScriptSDK.SignatureTemplate(recipientWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+                txBuilder.addOutput({ to: recipientAddress, amount: paymentSats });
+                txBuilder.addOutput({ to: derivedFunderAddress, amount: remainderSats });
+
+                // Use build() instead of send() - returns signed hex, NO BROADCAST!
+                log('Building transaction (local, no network)...');
+                const txHex = txBuilder.build();  // ← sync, instant!
+
+                log(`✅ Transaction built! Hex length: ${txHex.length} chars`);
+
+                // Return to Kotlin for broadcasting
+                Android.onTransactionBuilt(JSON.stringify({
+                    txHex: txHex
+                    // Kotlin's broadcast will return the real txid
+                }));
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            } finally {
+                if (electrum) {
+                    try {
+                        await electrum.disconnect();
+                        log('🔌 Disconnected from Fulcrum');
+                    } catch (e) {
+                        log(`⚠️ Disconnect error (ignored): ${e.message}`);
+                    }
+                }
+            }
+        };
+
+        /**
+         * v0.2 HYBRID: Build claim transaction with UTXOs provided by Kotlin
+         * NO NETWORK - Pure computation
+         *
+         * @param paramsJson JSON with covenant params, oracle sig, recipient WIF/address, and UTXOs from Kotlin
+         */
+        window.buildClaimTransactionFromUTXOs = async function(paramsJson) {
+            try {
+                log('=== Build Claim Transaction from UTXOs (v0.2 - NO NETWORK) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    oracleSig,
+                    recipientWIF,
+                    recipientAddress,
+                    funderAddress,
+                    utxos  // Provided by Kotlin!
+                } = params;
+
+                log(`Received ${utxos.length} UTXOs from Kotlin`);
+
+                // Convert UTXOs to CashScript format
+                // NOTE: CashScript SDK expects { txid, vout, satoshis }
+                const convertedUtxos = utxos.map(utxo => ({
+                    txid: utxo.txHash,
+                    vout: utxo.txPos,
+                    satoshis: BigInt(utxo.value),
+                    height: utxo.height || -1
+                }));
+
+                if (convertedUtxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already claimed');
+                }
+
+                const utxo = convertedUtxos[0];
+                log(`Using UTXO: ${Number(utxo.satoshis)} sats`);
+
+                // Create UNCONNECTED provider (proven: build() is fully local, no network needed)
+                // UTXOs come from Kotlin, so no WebSocket connection is required at all.
+                // This eliminates the WebView WebSocket reliability problem entirely.
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+                log('Provider created (unconnected, no WebSocket)');
+
+                // Create contract with provider
+                log('Creating contract instance...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                // Calculate payment amounts
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats to recipient`);
+                log(`Remainder: ${Number(remainderSats)} sats to funder`);
+
+                // Derive funder address from pubkey (no wallet needed!)
+                let derivedFunderAddress = funderAddress;
+                if (window.libauth && covenantParams.funderPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(covenantParams.funderPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedFunderAddress = derived.address;
+                            log(`✅ Derived funder address from pubkey: ${derivedFunderAddress}`);
+                        }
+                    } catch (e) {
+                        log(`⚠️ Funder address derivation failed, using passed value: ${e.message}`);
+                    }
+                }
+
+                log('Building claim transaction (build() only, no send())...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                const unlocker = contract.unlock.claim(
+                    new window.CashScriptSDK.SignatureTemplate(recipientWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+                txBuilder.addOutput({ to: recipientAddress, amount: paymentSats });
+                txBuilder.addOutput({ to: derivedFunderAddress, amount: remainderSats });
+
+                // Use build() - returns signed hex, NO BROADCAST!
+                const txHex = txBuilder.build();
+
+                log(`✅ Transaction built! Hex length: ${txHex.length} chars`);
+
+                // Return to Kotlin for broadcasting
+                Android.onTransactionBuilt(JSON.stringify({
+                    txHex: txHex
+                }));
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            } finally {
+                if (electrum) {
+                    try {
+                        await electrum.disconnect();
+                        log('🔌 Disconnected from Fulcrum');
+                    } catch (e) {
+                        log(`⚠️ Disconnect error (ignored): ${e.message}`);
+                    }
+                }
+            }
+        };
+
+        /**
+         * PRE-SIGN merchantCashout (Recipient Side - BEFORE sending message)
+         *
+         * Recipient signs transaction BEFORE generating [CASH_IN_PERSON] message.
+         * Returns recipientSig to include in message for merchant.
+         *
+         * @param paramsJson JSON with: covenantParams, recipientWIF, merchantPubkey, merchantAddress, funderAddress, oracleSig, utxos
+         */
+        window.preSignMerchantCashout = async function(paramsJson) {
+            try {
+                log('=== Pre-Sign MerchantCashout (Recipient Side) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    recipientWIF,      // Recipient's WIF (to sign)
+                    merchantPubkey,    // From bulletin board
+                    merchantAddress,   // Merchant's receive address
+                    funderAddress,     // Funder's address for buffer
+                    oracleSig,         // Fresh oracle signature
+                    utxos              // Provided by Kotlin
+                } = params;
+
+                log(`Received ${utxos.length} UTXOs from Kotlin`);
+
+                const convertedUtxos = utxos.map(utxo => ({
+                    txid: utxo.txHash,
+                    vout: utxo.txPos,
+                    satoshis: BigInt(utxo.value),
+                    height: utxo.height || -1
+                }));
+
+                if (convertedUtxos.length === 0) {
+                    throw new Error('No UTXOs found');
+                }
+
+                const utxo = convertedUtxos[0];
+                log(`Using UTXO: ${Number(utxo.satoshis)} sats`);
+
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats`);
+
+                // Derive merchant address from pubkey
+                let derivedMerchantAddress = merchantAddress;
+                if (window.libauth && merchantPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(merchantPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedMerchantAddress = derived.address;
+                            log(`✅ Derived merchant address: ${derivedMerchantAddress}`);
+                        }
+                    } catch (e) {
+                        log(`⚠️ Merchant address derivation failed: ${e.message}`);
+                    }
+                }
+
+                // Derive funder address
+                let derivedFunderAddress = funderAddress;
+                if (window.libauth && covenantParams.funderPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(covenantParams.funderPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedFunderAddress = derived.address;
+                            log(`✅ Derived funder address: ${derivedFunderAddress}`);
+                        }
+                    } catch (e) {}
+                }
+
+                // TightDS fix: Fail-fast if addresses are missing (prevents silent libauth failures)
+                if (!derivedMerchantAddress || !derivedFunderAddress) {
+                    throw new Error('Missing merchant/funder address — cannot build (libauth unavailable or wallet not found)');
+                }
+
+                log('Building transaction for pre-signing...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                // Throwaway dummy WIF for the placeholder merchant sig: it only builds the
+                // sighash (SIGHASH does not commit to the unlocking bytecode). No funds and no
+                // role beyond a valid placeholder; the real merchant signs at broadcast.
+                const dummyMerchantWIF = 'cMwszxcajcPeKbtnQfoqacekPDFhHsRimnWnyKAYV9T3EjRFPvW8';
+
+                const unlocker = contract.unlock.merchantCashout(
+                    new window.CashScriptSDK.SignatureTemplate(recipientWIF),     // Recipient signs NOW
+                    new window.CashScriptSDK.SignatureTemplate(dummyMerchantWIF), // Dummy merchant sig
+                    Buffer.from(merchantPubkey, 'hex'),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+                txBuilder.addOutput({ to: derivedMerchantAddress, amount: paymentSats });
+                txBuilder.addOutput({ to: derivedFunderAddress, amount: remainderSats });
+
+                const txHex = txBuilder.build();
+                log(`✅ Transaction built and signed by recipient`);
+
+                // Extract recipient signature from transaction
+                const tx = window.libauth.decodeTransaction(window.libauth.hexToBin(txHex));
+                const unlockingBytecode = tx.inputs[0].unlockingBytecode;
+
+                // ⚠️ CRITICAL: Script bytecode is in REVERSE order!
+                // merchantCashout(recipientSig, merchantSig, merchantPubkey, oracleSig, oracleMessage)
+                // → bytecode order: [oracleMessage, oracleSig, merchantPubkey, merchantSig, recipientSig, ...]
+                // RecipientSig is the 5th push (index 4)
+
+                // Parse pushes - we need exactly the 5th one (index 4)
+                let offset = 0;
+                const pushes = [];
+
+                while (offset < unlockingBytecode.length && pushes.length < 6) {
+                    const pushLength = unlockingBytecode[offset];
+                    if (pushLength === 0 || pushLength > 75) break;  // Stop at non-push opcodes
+                    offset += 1;
+                    const pushBytes = unlockingBytecode.slice(offset, offset + pushLength);
+                    pushes.push(pushBytes);
+                    offset += pushLength;
+                }
+
+                log(`Found ${pushes.length} pushes in unlocking bytecode`);
+
+                // RecipientSig is the 5th push (index 4, counting from 0)
+                const recipientSigBytes = pushes[4];
+                const recipientSigHex = window.libauth.binToHex(recipientSigBytes);
+
+                log(`✅ Extracted recipientSig (push #5): ${recipientSigHex.substring(0, 20)}... (${recipientSigBytes.length} bytes)`);
+
+                Android.onPreSignComplete(JSON.stringify({
+                    recipientSig: recipientSigHex
+                }));
+
+            } catch (error) {
+                log(`❌ Pre-sign error: ${error.message}`);
+                console.error(error);
+                Android.onPreSignError(error.message);
+            }
+        };
+
+        /**
+         * v0.2 HYBRID: Build merchantCashout transaction from UTXOs provided by Kotlin
+         *
+         * Merchant cashout allows recipient to sell BCH for cash at a local merchant.
+         * The merchant provides merchantPubkey at claim time (flexible, not at covenant creation).
+         *
+         * Flow:
+         * 1. Recipient pre-signs with recipientSig (passed in)
+         * 2. Merchant co-signs live with merchantWIF
+         * 3. Merchant broadcasts IMMEDIATELY (BCH-first, then gives cash)
+         * 4. Output 0: Merchant gets BCH (payment)
+         * 5. Output 1: Funder gets buffer (remainder)
+         *
+         * @param paramsJson JSON with: covenantParams, recipientSig, merchantWIF, merchantPubkey, oracleSig, utxos
+         */
+        window.buildMerchantCashoutTransactionFromUTXOs = async function(paramsJson) {
+            try {
+                log('=== Build MerchantCashout Transaction from UTXOs (v0.2 - NO NETWORK) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    recipientSig,      // Pre-signed by recipient (hex string)
+                    merchantWIF,       // Merchant signs live
+                    merchantPubkey,    // Merchant's public key (hex string)
+                    merchantAddress,   // Merchant's receive address
+                    funderAddress,     // Funder's address for buffer
+                    oracleSig,         // Fresh oracle signature
+                    utxos              // Provided by Kotlin!
+                } = params;
+
+                log(`Received ${utxos.length} UTXOs from Kotlin`);
+
+                // Convert UTXOs to CashScript format
+                const convertedUtxos = utxos.map(utxo => ({
+                    txid: utxo.txHash,
+                    vout: utxo.txPos,
+                    satoshis: BigInt(utxo.value),
+                    height: utxo.height || -1
+                }));
+
+                if (convertedUtxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = convertedUtxos[0];
+                log(`Using UTXO: ${Number(utxo.satoshis)} sats`);
+
+                // Create UNCONNECTED provider (v0.2 hybrid - no WebSocket!)
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+                log('Provider created (unconnected, no WebSocket)');
+
+                // Create contract instance
+                log('Creating contract instance...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                // Calculate payment amounts
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats to merchant (output 0)`);
+                log(`Remainder: ${Number(remainderSats)} sats to funder (output 1)`);
+
+                // Derive funder address from pubkey
+                let derivedFunderAddress = funderAddress;
+                if (window.libauth && covenantParams.funderPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(covenantParams.funderPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedFunderAddress = derived.address;
+                            log(`✅ Derived funder address from pubkey: ${derivedFunderAddress}`);
+                        }
+                    } catch (e) {
+                        log(`⚠️ Funder address derivation failed, using passed value: ${e.message}`);
+                    }
+                }
+
+                log('Building merchantCashout transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                // Convert recipientSig from base64 to Buffer (message uses base64 to save space!)
+                const recipientSigBuffer = Buffer.from(recipientSig, 'base64');
+                log(`Recipient signature: ${recipientSig.substring(0, 30)} (${recipientSigBuffer.length} bytes from base64)`);
+
+                // Merchant signs live with SignatureTemplate
+                const unlocker = contract.unlock.merchantCashout(
+                    recipientSigBuffer,                                        // Recipient pre-signed
+                    new window.CashScriptSDK.SignatureTemplate(merchantWIF),  // Merchant signs live
+                    Buffer.from(merchantPubkey, 'hex'),                       // Merchant's pubkey
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+                txBuilder.addOutput({ to: merchantAddress, amount: paymentSats });     // Output 0: Merchant
+                txBuilder.addOutput({ to: derivedFunderAddress, amount: remainderSats }); // Output 1: Funder
+
+                // Use build() - returns signed hex, NO BROADCAST!
+                const txHex = txBuilder.build();
+
+                log(`✅ Transaction built! Hex length: ${txHex.length} chars`);
+                log(`⚠️ Merchant must broadcast IMMEDIATELY then give cash (BCH-first model)`);
+
+                // Return to Kotlin for broadcasting
+                Android.onTransactionBuilt(JSON.stringify({
+                    txHex: txHex
+                }));
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            }
+        };
+
+        /**
+         * MERCHANT-FIRST FLOW: Build transaction and merchant pre-signs
+         * Returns transaction hex + merchantSig for recipient to review & co-sign
+         *
+         * This is Phase 1 of the two-QR exchange:
+         * 1. Merchant builds tx structure + fetches fresh oracle + pre-signs
+         * 2. Returns txHex + merchantSig to recipient (via QR)
+         * 3. Recipient validates, co-signs, returns to merchant
+         * 4. Merchant broadcasts
+         */
+        window.buildMerchantPreSignTransaction = async function(paramsJson) {
+            try {
+                log('=== Merchant Pre-Sign (Merchant-First Flow) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    merchantWIF,       // Merchant signs now
+                    merchantPubkey,    // Merchant's public key (hex string)
+                    merchantAddress,   // Merchant's receive address
+                    funderAddress,     // Funder's address for buffer (empty → derived from pubkey below)
+                    expectedCovenantAddress, // F3: params must reconstruct this address
+                    oracleSig,         // Fresh oracle signature (fetched at counter!)
+                    utxos              // Provided by Kotlin!
+                } = params;
+
+                log(`Received ${utxos.length} UTXOs from Kotlin`);
+
+                // Convert UTXOs to CashScript format
+                const convertedUtxos = utxos.map(utxo => ({
+                    txid: utxo.txHash,
+                    vout: utxo.txPos,
+                    satoshis: BigInt(utxo.value),
+                    height: utxo.height || -1
+                }));
+
+                if (convertedUtxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = convertedUtxos[0];
+                log(`Using UTXO: ${Number(utxo.satoshis)} sats`);
+
+                // Create UNCONNECTED provider (no WebSocket needed!)
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+                log('Provider created (unconnected, no WebSocket)');
+
+                // Create contract instance
+                log('Creating contract instance...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                // F3: the request is remotely reachable — require the params to reconstruct
+                // the covenant address whose UTXOs we are spending.
+                if (expectedCovenantAddress && contract.address !== expectedCovenantAddress) {
+                    throw new Error(`Covenant address mismatch: params derive ${contract.address} but request says ${expectedCovenantAddress}`);
+                }
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH (fresh at counter!)`);
+
+                // Calculate payment amounts
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats to merchant (output 0)`);
+                log(`Remainder: ${Number(remainderSats)} sats to funder (output 1)`);
+
+                // Derive funder address from pubkey
+                let derivedFunderAddress = funderAddress;
+                if (window.libauth && covenantParams.funderPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(covenantParams.funderPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedFunderAddress = derived.address;
+                            log(`✅ Derived funder address from pubkey: ${derivedFunderAddress}`);
+                        }
+                    } catch (e) {
+                        log(`⚠️ Funder address derivation failed, using passed value: ${e.message}`);
+                    }
+                }
+
+                // Build transaction structure
+                log('Building transaction structure...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                // Create placeholder recipientSig (65 bytes of zeros - will be replaced by recipient)
+                const placeholderRecipientSig = Buffer.alloc(65);
+
+                // Merchant signs with SignatureTemplate
+                const unlocker = contract.unlock.merchantCashout(
+                    placeholderRecipientSig,                               // Placeholder for recipient (will sign later!)
+                    new window.CashScriptSDK.SignatureTemplate(merchantWIF), // Merchant signs NOW
+                    Buffer.from(merchantPubkey, 'hex'),                    // Merchant's pubkey
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+                txBuilder.addOutput({ to: merchantAddress, amount: paymentSats });     // Output 0: Merchant
+                txBuilder.addOutput({ to: derivedFunderAddress, amount: remainderSats }); // Output 1: Funder
+
+                // Build transaction (with placeholder recipientSig + real merchantSig)
+                const txHex = txBuilder.build();
+
+                log(`✅ Transaction built! Hex length: ${txHex.length} chars`);
+                log(`⚠️ Transaction has PLACEHOLDER recipientSig - recipient must co-sign!`);
+
+                // Extract merchantSig from the built transaction
+                // The unlocking script has: [recipientSig, merchantSig, merchantPubkey, oracleSig, oracleMessage]
+                // We need to extract merchantSig to pass to recipient
+
+                // For now, return the full txHex - recipient will decode, verify, co-sign
+                // TODO: Extract merchantSig from unlocking script if needed
+
+                // Return to Kotlin
+                Android.onMerchantPreSignSuccess(JSON.stringify({
+                    txHex: txHex,
+                    merchantSig: "EXTRACTED_FROM_UNLOCKING_SCRIPT", // TODO: Extract from txHex
+                    merchantAddress: merchantAddress,
+                    funderAddress: derivedFunderAddress,
+                    oracleSig: oracleSig.signature,
+                    oracleMessage: oracleSig.message,
+                    currentPrice: oraclePrice / 100,
+                    paymentSats: Number(paymentSats),
+                    remainderSats: Number(remainderSats)
+                }));
+
+            } catch (error) {
+                log(`❌ Merchant pre-sign error: ${error.message}`);
+                console.error(error);
+                Android.onMerchantPreSignError(error.message);
+            }
+        };
+
+        /**
+         * Recipient co-signs the merchant's pre-signed transaction
+         *
+         * @param paramsJson JSON with:
+         *   - merchantTxHex: The merchant's pre-signed transaction (with placeholder recipientSig)
+         *   - covenantParams: Covenant parameters
+         *   - recipientWIF: Recipient's WIF to sign
+         *   - merchantPubkey: Merchant's public key (hex)
+         *   - oracleSig: Oracle signature {signature, message, price}
+         *   - utxos: UTXOs array (same as merchant used)
+         *   - merchantAddress: Merchant's receive address
+         *   - funderAddress: Funder's address for remainder
+         */
+        window.buildRecipientCoSignTransaction = async function(paramsJson) {
+            try {
+                log('=== Recipient Co-Signing (Merchant-First Flow) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    merchantTxHex,
+                    covenantParams,
+                    recipientWIF,
+                    merchantPubkey,
+                    oracleSig,
+                    utxos,
+                    merchantAddress,
+                    funderAddress
+                } = params;
+
+                log(`Received merchant's pre-signed tx: ${merchantTxHex.length} chars`);
+                log(`Covenant params: ${JSON.stringify(covenantParams)}`);
+
+                // Convert UTXOs to CashScript format
+                const convertedUtxos = utxos.map(utxo => ({
+                    txid: utxo.txHash,
+                    vout: utxo.txPos,
+                    satoshis: BigInt(utxo.value),
+                    height: utxo.height || -1
+                }));
+
+                const utxo = convertedUtxos[0];
+                log(`Using UTXO: ${Number(utxo.satoshis)} sats`);
+
+                // Create UNCONNECTED provider (no WebSocket needed!)
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+                log('Provider created (unconnected, no WebSocket)');
+
+                // Create contract instance
+                log('Creating contract instance...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                // Calculate payment amounts (must match merchant's!)
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const remainderSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats to merchant (output 0)`);
+                log(`Remainder: ${Number(remainderSats)} sats to funder (output 1)`);
+
+                // Derive funder address from pubkey
+                let derivedFunderAddress = funderAddress;
+                if (window.libauth && covenantParams.funderPubkey) {
+                    try {
+                        const pubkeyBin = window.libauth.hexToBin(covenantParams.funderPubkey);
+                        const derived = window.libauth.publicKeyToP2pkhCashAddress({
+                            publicKey: pubkeyBin,
+                            prefix: 'bchtest'
+                        });
+                        if (derived && derived.address) {
+                            derivedFunderAddress = derived.address;
+                            log(`✅ Derived funder address from pubkey: ${derivedFunderAddress}`);
+                        }
+                    } catch (e) {
+                        log(`⚠️ Funder address derivation failed, using passed value: ${e.message}`);
+                    }
+                }
+
+                // Extract merchantSig from merchant's transaction BY POSITION (push index 3)
+                // TightDS fix: Don't search by byte length (oracle sig is also 70-72 bytes!)
+                log('Extracting merchantSig from merchant transaction by position...');
+                const merchantTxBin = window.libauth.hexToBin(merchantTxHex);
+                const merchantTx = window.libauth.decodeTransaction(merchantTxBin);
+                const merchantScript = merchantTx.inputs[0].unlockingBytecode;
+
+                // Parse pushes and extract by position (index 3 = merchantSig)
+                let p = 0, pushes = [];
+                while (p < merchantScript.length) {
+                    const len = merchantScript[p++];
+                    if (p + len > merchantScript.length) break;
+                    pushes.push(merchantScript.slice(p, p + len));
+                    p += len;
+                }
+                const merchantSig = pushes[3];  // BY POSITION, not by length filter
+                log(`✅ Extracted merchantSig by position [3]: ${merchantSig.length} bytes`);
+
+                // Build the FINAL transaction with the SDK — ONE call, recipient signs now
+                log('Building final transaction with SDK (recipient SignatureTemplate + merchant raw sig)...');
+                const finalUnlocker = contract.unlock.merchantCashout(
+                    new window.CashScriptSDK.SignatureTemplate(recipientWIF),  // recipient signs NOW
+                    merchantSig,                                                // merchant's raw sig bytes
+                    Buffer.from(merchantPubkey, 'hex'),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+                const finalBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+                finalBuilder.addInput(utxo, finalUnlocker);
+                finalBuilder.addOutput({ to: merchantAddress, amount: paymentSats });
+                finalBuilder.addOutput({ to: derivedFunderAddress, amount: remainderSats });
+                const finalTxHex = finalBuilder.build();
+
+                log(`✅ Final transaction built! Hex length: ${finalTxHex.length} chars`);
+                log(`✅ Transaction is FULLY SIGNED with both signatures!`);
+
+                // Return to Kotlin
+                Android.onRecipientCoSignSuccess(JSON.stringify({
+                    txHex: finalTxHex,
+                    paymentSats: Number(paymentSats),
+                    remainderSats: Number(remainderSats)
+                }));
+
+            } catch (error) {
+                log(`❌ Recipient co-sign error: ${error.message}`);
+                console.error(error);
+                Android.onRecipientCoSignError(error.message);
+            }
+        };
+
+        /**
+         * Execute abort from covenant - emergency exit when price drops >= 6.5%
+         * Sends entire balance to sender (single output)
+         *
+         * @param paramsJson JSON with covenant params, oracle sig, sender WIF/address, Fulcrum connection
+         */
+        window.executeAbort = async function(paramsJson) {
+            let electrum = null;
+            try {
+                log('=== Abort Execution Started ===');
+
+                const params = JSON.parse(paramsJson);
+                const covenantParams = params.covenantParams;
+                const oracleSig = params.oracleSig;
+                const senderWIF = params.senderWIF;
+                const senderAddress = params.senderAddress;
+                const fulcrumHost = params.fulcrumHost || '127.0.0.1';
+                const fulcrumPort = params.fulcrumPort || 60003;
+
+                log('Connecting to Fulcrum...');
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, false);
+                electrum = new window.CashScriptSDK.ElectrumClient('Abort', '1.4.1', socket);
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider(
+                    covenantParams.network || 'testnet3',
+                    { electrum, manualConnectionManagement: true }
+                );
+
+                await withTimeout(electrum.connect(), 10000, 'Fulcrum connection timeout (10s)', socket);
+                log('✅ Connected to Fulcrum');
+
+                log('Creating contract instance...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                log('Fetching covenant UTXOs...');
+                const utxos = await contract.getUtxos();
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = utxos[0];
+                log(`✅ Found UTXO: ${Number(utxo.satoshis)} sats`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+                const initialPrice = covenantParams.initialBchPriceInCents;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+                log(`Initial price: ${initialPrice / 100} EUR/BCH`);
+
+                const priceDrop = ((initialPrice - oraclePrice) / initialPrice) * 100;
+                log(`Price drop: ${priceDrop.toFixed(2)}%`);
+
+                // Abort sends ENTIRE balance to sender (single output)
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const abortAmount = inputSats - feeSats;
+
+                log(`Abort amount: ${Number(abortAmount)} sats to sender (all funds)`);
+
+                log('Building abort transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider });
+
+                log('Creating signature template with sender WIF...');
+                const unlocker = contract.unlock.abort(
+                    new window.CashScriptSDK.SignatureTemplate(senderWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+
+                // CRITICAL: Single output (abort detection signal)
+                txBuilder.addOutput({
+                    to: senderAddress,
+                    amount: abortAmount
+                });
+
+                log('Broadcasting abort transaction...');
+                const txResponse = await txBuilder.send();
+                const txid = typeof txResponse === 'string' ? txResponse : txResponse.txid;
+
+                log(`✅ SUCCESS! TXID: ${txid}`);
+                log(`⚠️ Funder gets nothing (buffer consumed by price drop)`);
+
+                Android.onAbortSuccess(txid);
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            }
+        };
+
+        /**
+         * v0.2 HYBRID: Build abort transaction (NO BROADCAST)
+         * Kotlin fetches UTXOs, JavaScript builds+signs, Kotlin broadcasts
+         */
+        window.buildAbortTransaction = async function(paramsJson) {
+            let electrum = null;
+            try {
+                log('=== Build Abort Transaction (v0.2 Hybrid) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    oracleSig,
+                    senderWIF,
+                    senderAddress,
+                    fulcrumHost,
+                    fulcrumPort
+                } = params;
+
+                log('Connecting to Fulcrum for UTXO fetch only...');
+                const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
+
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, useSSL);
+                electrum = new window.CashScriptSDK.ElectrumClient('Asgaya Abort v0.2', '1.4.1', socket);
+
+                // Create provider (no mock needed - we'll use build() not send()!)
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider(
+                    covenantParams.network || 'testnet3',
+                    { electrum, manualConnectionManagement: true }
+                );
+
+                await withTimeout(electrum.connect(), 10000, 'Fulcrum connection timeout (10s)', socket);
+                log('✅ Connected to Fulcrum');
+
+                log('Creating contract instance...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                log('Fetching covenant UTXOs...');
+                const utxos = await contract.getUtxos();
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = utxos[0];
+                log(`✅ Found UTXO: ${Number(utxo.satoshis)} sats`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+                const initialPrice = covenantParams.initialBchPriceInCents;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+                log(`Initial price: ${initialPrice / 100} EUR/BCH`);
+
+                const priceDrop = ((initialPrice - oraclePrice) / initialPrice) * 100;
+                log(`Price drop: ${priceDrop.toFixed(2)}%`);
+
+                // Abort sends ENTIRE balance to sender (single output)
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const abortAmount = inputSats - feeSats;
+
+                log(`Abort amount: ${Number(abortAmount)} sats to sender (all funds)`);
+
+                log('Building abort transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                log('Creating signature template with sender WIF...');
+                const unlocker = contract.unlock.abort(
+                    new window.CashScriptSDK.SignatureTemplate(senderWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+
+                // CRITICAL: Single output (abort detection signal)
+                txBuilder.addOutput({
+                    to: senderAddress,
+                    amount: abortAmount
+                });
+
+                // Use build() instead of send() - returns signed hex, NO BROADCAST!
+                log('Building transaction (local, no network)...');
+                const txHex = txBuilder.build();  // ← sync, instant!
+
+                log(`✅ Transaction built! Hex length: ${txHex.length} chars`);
+                log(`⚠️ Funder gets nothing (buffer consumed by price drop)`);
+
+                // Return to Kotlin for broadcasting
+                Android.onTransactionBuilt(JSON.stringify({
+                    txHex: txHex
+                    // Kotlin's broadcast will return the real txid
+                }));
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            } finally {
+                if (electrum) {
+                    try {
+                        await electrum.disconnect();
+                        log('🔌 Disconnected from Fulcrum');
+                    } catch (e) {
+                        log(`⚠️ Disconnect error (ignored): ${e.message}`);
+                    }
+                }
+            }
+        };
+
+        /**
+         * v0.2 HYBRID: Build abort transaction from UTXOs (NO NETWORK)
+         * Kotlin fetches UTXOs, JavaScript builds, Kotlin broadcasts
+         */
+        window.buildAbortTransactionFromUTXOs = async function(paramsJson) {
+            try {
+                log('=== Build Abort Transaction from UTXOs (v0.2 - NO NETWORK) ===');
+
+                const params = JSON.parse(paramsJson);
+                const {
+                    covenantParams,
+                    oracleSig,
+                    senderWIF,
+                    senderAddress,
+                    utxos  // Provided by Kotlin!
+                } = params;
+
+                log(`Received ${utxos.length} UTXOs from Kotlin`);
+
+                // Convert UTXOs from Kotlin format to CashScript format
+                // NOTE: CashScript SDK expects { txid, vout, satoshis } (matching contract.getUtxos() output)
+                // NOT { tx_hash, tx_pos }. build() reads utxo.txid/utxo.vout — wrong names = undefined → hexToBin(undefined) crashes with "reading 'length'".
+                const convertedUtxos = utxos.map(utxo => ({
+                    txid: utxo.txHash,
+                    vout: utxo.txPos,
+                    satoshis: BigInt(utxo.value),
+                    height: utxo.height || -1
+                }));
+
+                if (convertedUtxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = convertedUtxos[0];
+                log(`Using UTXO: ${Number(utxo.satoshis)} sats`);
+
+                // Create UNCONNECTED provider (proven: build() is fully local, no network needed)
+                // UTXOs come from Kotlin, so no WebSocket connection is required at all.
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+                log('Provider created (unconnected, no WebSocket)');
+
+                // Create contract instance with provider
+                log('Creating contract instance...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.funderPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider: provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+                const initialPrice = covenantParams.initialBchPriceInCents;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+                log(`Initial price: ${initialPrice / 100} EUR/BCH`);
+
+                const priceDrop = ((initialPrice - oraclePrice) / initialPrice) * 100;
+                log(`Price drop: ${priceDrop.toFixed(2)}%`);
+
+                // Abort sends ENTIRE balance to sender (single output)
+                const inputSats = utxo.satoshis;
+                const feeSats = 3000n;
+                const abortAmount = inputSats - feeSats;
+
+                log(`Abort amount: ${Number(abortAmount)} sats to sender (all funds)`);
+
+                log('Building abort transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider: provider });
+
+                log('Creating signature template with sender WIF...');
+                log(`DEBUG: oracleSigBuffer length: ${oracleSigBuffer ? oracleSigBuffer.length : 'undefined'}`);
+                log(`DEBUG: oracleMessage length: ${oracleMessage ? oracleMessage.length : 'undefined'}`);
+                log(`DEBUG: senderWIF length: ${senderWIF ? senderWIF.length : 'undefined'}`);
+
+                const unlocker = contract.unlock.abort(
+                    new window.CashScriptSDK.SignatureTemplate(senderWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+
+                // CRITICAL: Single output (abort detection signal)
+                txBuilder.addOutput({
+                    to: senderAddress,
+                    amount: abortAmount
+                });
+
+                // Use build() instead of send() - returns signed hex, NO BROADCAST!
+                log('Building transaction (local, no network)...');
+                const txHex = txBuilder.build();
+
+                log(`✅ Transaction built! Hex length: ${txHex.length} chars`);
+                log(`⚠️ Funder gets nothing (buffer consumed by price drop)`);
+
+                // Return to Kotlin for broadcasting
+                Android.onTransactionBuilt(JSON.stringify({
+                    txHex: txHex
+                    // Kotlin's broadcast will return the real txid
+                }));
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            }
+        };
+
+        /**
+         * v0.2 HYBRID ARCHITECTURE: Build transaction with UTXOs provided by Kotlin
+         *
+         * This function does NO NETWORK OPERATIONS - it's pure computation.
+         * - Kotlin fetches UTXOs (native TCP)
+         * - JavaScript builds+signs transaction (CashScript/libauth)
+         * - JavaScript returns txHex to Kotlin
+         * - Kotlin broadcasts (native TCP)
+         *
+         * Why: WebView WebSocket connections hang when screen goes off (JS timers pause).
+         * Solution: Move all network to Kotlin, keep computation in WebView.
+         *
+         * @param paramsJson JSON with: senderWIF, senderAddress, recipientAddress, amountSats, utxos
+         */
+        window.buildTransactionFromUTXOs = async function(paramsJson) {
+            try {
+                log('=== Build Transaction (v0.2 - Kotlin Network) ===');
+
+                const params = JSON.parse(paramsJson);
+                log(`Building for ${params.amountSats} sats`);
+                log(`Received ${params.utxos.length} UTXOs from Kotlin`);
+
+                const {
+                    senderWIF,
+                    senderAddress,
+                    recipientAddress,
+                    amountSats,
+                    utxos  // Provided by Kotlin!
+                } = params;
+
+                const amountSatsBigInt = BigInt(amountSats);
+
+                // Convert UTXOs to format expected by libauth
+                const convertedUtxos = utxos.map(utxo => ({
+                    satoshis: BigInt(utxo.value),
+                    tx_hash: utxo.txHash,
+                    tx_pos: utxo.txPos
+                }));
+
+                // UTXO selection (same logic as sendBch)
+                let selectedUtxos = [];
+                let totalInput = 0n;
+
+                const sortedUtxos = [...convertedUtxos].sort((a, b) =>
+                    Number(b.satoshis - a.satoshis)
+                );
+
+                for (const utxo of sortedUtxos) {
+                    selectedUtxos.push(utxo);
+                    totalInput += utxo.satoshis;
+
+                    const estimatedTxSize = (selectedUtxos.length * 150) + (2 * 34) + 10;
+                    const feeSats = BigInt(Math.ceil(estimatedTxSize * 1.1));
+                    const requiredSats = amountSatsBigInt + feeSats;
+
+                    if (totalInput >= requiredSats) {
+                        break;
+                    }
+                }
+
+                const finalTxSize = (selectedUtxos.length * 150) + (2 * 34) + 10;
+                const feeSats = BigInt(Math.ceil(finalTxSize * 1.1));
+                const requiredSats = amountSatsBigInt + feeSats;
+
+                if (totalInput < requiredSats) {
+                    throw new Error(`Insufficient funds: need ${Number(requiredSats)} sats, have ${Number(totalInput)} sats`);
+                }
+
+                const changeSats = totalInput - amountSatsBigInt - feeSats;
+
+                log(`Selected ${selectedUtxos.length} UTXOs, total: ${Number(totalInput)} sats`);
+                log(`Amount: ${Number(amountSatsBigInt)} sats`);
+                log(`Fee: ${Number(feeSats)} sats`);
+                log(`Change: ${Number(changeSats)} sats`);
+
+                // Wait for libauth
+                let retries = 0;
+                while (!window.libauth && retries < 30) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    retries++;
+                }
+
+                if (!window.libauth) {
+                    throw new Error('libauth not loaded');
+                }
+
+                // Decode WIF
+                const privateKeyResult = libauth.decodePrivateKeyWif(senderWIF);
+                if (typeof privateKeyResult === 'string') {
+                    throw new Error(`Invalid WIF: ${privateKeyResult}`);
+                }
+                const privateKey = privateKeyResult.privateKey;
+                log('✅ Private key decoded from WIF');
+
+                // Get locking bytecodes
+                const senderBytecode = libauth.cashAddressToLockingBytecode(senderAddress);
+                const recipientBytecode = libauth.cashAddressToLockingBytecode(recipientAddress);
+
+                if (typeof senderBytecode === 'string') {
+                    throw new Error(`Invalid sender address: ${senderBytecode}`);
+                }
+                if (typeof recipientBytecode === 'string') {
+                    throw new Error(`Invalid recipient address: ${recipientBytecode}`);
+                }
+
+                // Build P2PKH compiler (same as sendBch - working pattern!)
+                const compiler = libauth.walletTemplateToCompilerBCH(libauth.walletTemplateP2pkhNonHd);
+                log('✅ P2PKH compiler created');
+
+                // Build inputs
+                const inputDirectives = selectedUtxos.map((utxo) => ({
+                    outpointIndex: utxo.tx_pos,
+                    outpointTransactionHash: libauth.hexToBin(utxo.tx_hash),
+                    unlockingBytecode: {
+                        compiler,
+                        valueSatoshis: utxo.satoshis,
+                        script: 'unlock',
+                        data: {
+                            keys: { privateKeys: { key: privateKey } }
+                        }
+                    },
+                    sequenceNumber: 0
+                }));
+
+                // Build outputs
+                const outputs = [{
+                    lockingBytecode: recipientBytecode.bytecode,
+                    valueSatoshis: amountSatsBigInt
+                }];
+
+                if (changeSats > 546n) {
+                    outputs.push({
+                        lockingBytecode: senderBytecode.bytecode,
+                        valueSatoshis: changeSats
+                    });
+                    log(`Added change output: ${Number(changeSats)} sats`);
+                }
+
+                log('Building and signing transaction...');
+
+                // Generate transaction
+                const generatedTx = libauth.generateTransaction({
+                    version: 2,
+                    locktime: 0,
+                    inputs: inputDirectives,
+                    outputs: outputs
+                });
+
+                if (!generatedTx.success) {
+                    throw new Error('Transaction generation failed: ' + JSON.stringify(generatedTx.errors || generatedTx));
+                }
+
+                log('✅ Transaction generated and signed');
+
+                // Encode transaction
+                const encodedTx = libauth.encodeTransaction(generatedTx.transaction);
+                const txHex = libauth.binToHex(encodedTx);
+                const txHash = libauth.binToHex(libauth.sha256.hash(libauth.sha256.hash(encodedTx)));
+                const txid = txHash.match(/../g).reverse().join('');
+
+                log(`Transaction size: ${encodedTx.length} bytes`);
+                log(`✅ Transaction built! TXID: ${txid}`);
+
+                // Return to Kotlin for broadcasting
+                Android.onTransactionBuilt(JSON.stringify({
+                    txHex: txHex,
+                    txid: txid
+                }));
+
+            } catch (error) {
+                log(`❌ Build error: ${error.message}`);
+                console.error(error);
+                Android.onTransactionBuildError(error.message);
+            }
+        };
+
+        /**
+         * Send simple P2PKH BCH transaction - called from Android
+         *
+         * @param paramsJson JSON with: senderWIF, senderAddress, recipientAddress, amountSats, fulcrumHost, fulcrumPort
+         */
+        window.sendBch = async function(paramsJson) {
+            let electrum = null;
+            try {
+                log('=== Send BCH Started ===');
+
+                const params = JSON.parse(paramsJson);
+                log(`Amount: ${params.amountSats} sats to ${params.recipientAddress.substring(0, 20)}...`);
+
+                const {
+                    senderWIF,
+                    senderAddress,
+                    recipientAddress,
+                    amountSats,
+                    fulcrumHost,
+                    fulcrumPort
+                } = params;
+
+                log('Connecting to Fulcrum...');
+                log(`Target: ${fulcrumHost}:${fulcrumPort}`);
+
+                // Auto-detect SSL based on port
+                // 60003 = ws (no SSL), 60004 = wss (SSL), 50003 = ssl, 50004 = wss
+                const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
+                log(`SSL: ${useSSL}`);
+
+                // Connect to Fulcrum (same as refund - simple and works!)
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, useSSL);
+                electrum = new window.CashScriptSDK.ElectrumClient('Asgaya Send', '1.4.1', socket);
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3', {
+                    electrum,
+                    manualConnectionManagement: true
+                });
+
+                await withTimeout(electrum.connect(), 10000, 'Fulcrum connection timeout (10s)', socket);
+                log('✅ Connected to Fulcrum');
+
+                // Get UTXOs for sender address
+                log(`Fetching UTXOs for ${senderAddress.substring(0, 30)}...`);
+
+                // Query UTXOs using provider (CashScript SDK handles scripthash conversion)
+                const utxos = await provider.getUtxos(senderAddress);
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs available in wallet (balance is 0)');
+                }
+
+                log(`✅ Found ${utxos.length} UTXOs`);
+
+                // Calculate total input and select UTXOs
+                const amountSatsBigInt = BigInt(amountSats);
+
+                let selectedUtxos = [];
+                let totalInput = 0n;
+
+                // Simple selection: largest first
+                const sortedUtxos = [...utxos].sort((a, b) => Number(b.satoshis - a.satoshis));
+
+                // Select UTXOs iteratively, recalculating fee as we add inputs
+                for (const utxo of sortedUtxos) {
+                    selectedUtxos.push(utxo);
+                    totalInput += utxo.satoshis;
+
+                    // Calculate fee based on current selection
+                    // Formula: (numInputs * 150) + (numOutputs * 34) + 10 overhead
+                    // Assuming 2 outputs (payment + change), use 1.1 sat/byte safety margin
+                    const estimatedTxSize = (selectedUtxos.length * 150) + (2 * 34) + 10;
+                    const feeSats = BigInt(Math.ceil(estimatedTxSize * 1.1));
+                    const requiredSats = amountSatsBigInt + feeSats;
+
+                    if (totalInput >= requiredSats) {
+                        break;
+                    }
+                }
+
+                // Final fee calculation
+                const finalTxSize = (selectedUtxos.length * 150) + (2 * 34) + 10;
+                const feeSats = BigInt(Math.ceil(finalTxSize * 1.1));
+                const requiredSats = amountSatsBigInt + feeSats;
+
+                if (totalInput < requiredSats) {
+                    throw new Error(`Insufficient funds: need ${Number(requiredSats)} sats, have ${Number(totalInput)} sats`);
+                }
+
+                const changeSats = totalInput - amountSatsBigInt - feeSats;
+
+                log(`Selected ${selectedUtxos.length} UTXOs, total: ${Number(totalInput)} sats`);
+                log(`Amount: ${Number(amountSatsBigInt)} sats`);
+                log(`Estimated fee: ${Number(feeSats)} sats (${selectedUtxos.length} inputs, ~${finalTxSize} bytes)`);
+                log(`Change: ${Number(changeSats)} sats`);
+
+                // Build transaction using libauth (loaded from CDN)
+                log('Building transaction with libauth...');
+
+                // Wait for libauth to load (if not ready yet) - max 3 seconds
+                let retries = 0;
+                while (!window.libauth && retries < 30) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    retries++;
+                    if (retries % 10 === 0) {
+                        log('Still waiting for libauth... (' + retries + '00ms)');
+                    }
+                }
+
+                const libauth = window.libauth;
+                if (!libauth) {
+                    throw new Error('libauth not loaded from CDN after ' + (retries * 100) + 'ms - check network/CORS');
+                }
+
+                log('✅ libauth loaded with ' + Object.keys(libauth).length + ' exports');
+
+                // Decode WIF to get private key (Selene's pattern)
+                const wifResult = libauth.decodePrivateKeyWif(senderWIF);
+                if (typeof wifResult === 'string') {
+                    throw new Error(`Invalid WIF: ${wifResult}`);
+                }
+                const privateKey = wifResult.privateKey;
+                log('✅ Private key decoded from WIF');
+
+                // Get locking bytecode for addresses
+                const recipientBytecode = libauth.cashAddressToLockingBytecode(recipientAddress);
+                if (typeof recipientBytecode === 'string') {
+                    throw new Error(`Invalid recipient address: ${recipientBytecode}`);
+                }
+                const senderBytecode = libauth.cashAddressToLockingBytecode(senderAddress);
+                if (typeof senderBytecode === 'string') {
+                    throw new Error(`Invalid sender address: ${senderBytecode}`);
+                }
+
+                // Create P2PKH compiler (Selene's pattern - handles signing automatically!)
+                const compiler = libauth.walletTemplateToCompilerBCH(libauth.walletTemplateP2pkhNonHd);
+                log('✅ P2PKH compiler created');
+
+                // Build input directives (compiler will sign them)
+                const inputDirectives = selectedUtxos.map(utxo => ({
+                    outpointIndex: utxo.vout,
+                    outpointTransactionHash: libauth.hexToBin(utxo.txid),
+                    sequenceNumber: 0,
+                    unlockingBytecode: {
+                        compiler: compiler,
+                        data: {
+                            keys: { privateKeys: { key: privateKey } }
+                        },
+                        script: 'unlock',
+                        valueSatoshis: utxo.satoshis
+                    }
+                }));
+
+                // Build outputs
+                const outputs = [
+                    {
+                        lockingBytecode: recipientBytecode.bytecode,
+                        valueSatoshis: amountSatsBigInt
+                    }
+                ];
+
+                // Add change output if above dust
+                if (changeSats > 546n) {
+                    outputs.push({
+                        lockingBytecode: senderBytecode.bytecode,
+                        valueSatoshis: changeSats
+                    });
+                    log(`Added change output: ${Number(changeSats)} sats`);
+                }
+
+                log('Building and signing transaction...');
+
+                // Generate transaction (compiler handles signing!)
+                const generatedTx = libauth.generateTransaction({
+                    version: 2,
+                    locktime: 0,
+                    inputs: inputDirectives,
+                    outputs: outputs
+                });
+
+                if (!generatedTx.success) {
+                    throw new Error('Transaction generation failed: ' + JSON.stringify(generatedTx.errors || generatedTx));
+                }
+
+                log('✅ Transaction generated and signed');
+
+                // Encode transaction
+                const encodedTx = libauth.encodeTransaction(generatedTx.transaction);
+                const txHex = libauth.binToHex(encodedTx);
+                const txHash = libauth.binToHex(libauth.sha256.hash(libauth.sha256.hash(encodedTx)));
+                const txid = txHash.match(/../g).reverse().join(''); // Reverse byte order for txid
+
+                log(`Transaction size: ${encodedTx.length} bytes`);
+                log(`Broadcasting transaction...`);
+
+                // Broadcast via Electrum
+                const broadcastResult = await electrum.request('blockchain.transaction.broadcast', txHex);
+                log(`✅ Broadcast result: ${broadcastResult}`);
+
+                const finalTxid = typeof broadcastResult === 'string' ? broadcastResult : txid;
+
+                log(`✅ SUCCESS! TXID: ${finalTxid}`);
+
+                // Return result to Android
+                if (typeof Android !== 'undefined' && Android.onSendSuccess) {
+                    Android.onSendSuccess(finalTxid);
+                }
+
+                return finalTxid;
+
+            } catch (error) {
+                log(`❌ Error: ${error.message}`);
+                console.error(error);
+
+                if (typeof Android !== 'undefined' && Android.onSendError) {
+                    Android.onSendError(error.message);
+                }
+
+                throw error;
+            } finally {
+                // Always disconnect, whether success or failure
+                if (electrum) {
+                    try {
+                        await electrum.disconnect();
+                        log('🔌 Disconnected from Fulcrum');
+                    } catch (e) {
+                        // Ignore disconnect errors
+                        log(`⚠️ Disconnect error (ignored): ${e.message}`);
+                    }
+                }
+            }
+        };
+
+            // Ready signal
+            log('✅ Covenant bridge v2.7.1 ready');
+            if (typeof Android !== 'undefined') {
+                Android.onReady();
+            }
+        } // End setupBridge()
+    </script>
+</body>
+</html>

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covenant Bridge v2.6.1</title>
+</head>
+<body>
+    <h3>Asgaya Covenant Bridge v2.6.1</h3>
+    <div id="status">Loading CashScript SDK 0.13.2...</div>
+
+    <!-- Load libauth from esm.sh CDN (ES module) -->
+    <script type="module">
+        try {
+            console.log('[CovenantBridge] Loading libauth from esm.sh...');
+            const libauth = await import('https://esm.sh/@bitauth/libauth@3.0.0');
+            window.libauth = libauth;
+            console.log('[CovenantBridge] ✅ libauth loaded:', Object.keys(libauth).length, 'exports');
+            if (typeof Android !== 'undefined' && Android.onLog) {
+                Android.onLog('[JS] libauth loaded successfully with ' + Object.keys(libauth).length + ' exports');
+            }
+        } catch (error) {
+            console.error('[CovenantBridge] ❌ Failed to load libauth:', error);
+            if (typeof Android !== 'undefined' && Android.onLog) {
+                Android.onLog('[JS] ERROR loading libauth: ' + error.message);
+            }
+        }
+    </script>
+
+    <!-- Load bitcoincashjs-lib from CDN (for WIF derivation) -->
+    <script type="module">
+        try {
+            console.log('[CovenantBridge] Loading bitcoincashjs-lib from esm.sh...');
+            const bitcoincashJsLib = await import('https://esm.sh/bitcoincashjs-lib@10.0.0');
+            window.bitcoincashJsLib = bitcoincashJsLib;
+            console.log('[CovenantBridge] ✅ bitcoincashjs-lib loaded');
+            if (typeof Android !== 'undefined' && Android.onLog) {
+                Android.onLog('[JS] bitcoincashjs-lib loaded successfully');
+            }
+        } catch (error) {
+            console.error('[CovenantBridge] ❌ Failed to load bitcoincashjs-lib:', error);
+            if (typeof Android !== 'undefined' && Android.onLog) {
+                Android.onLog('[JS] ERROR loading bitcoincashjs-lib: ' + error.message);
+            }
+        }
+    </script>
+
+    <!-- Load CashScript SDK bundle (ES module) - includes all dependencies -->
+    <script type="module" src="./cashscript-bundle.js"></script>
+
+    <script type="module">
+        // Wait for CashScript bundle to load
+        // The bundle exports window.CashScriptSDK global
+
+        // Status logging
+        function log(msg) {
+            console.log('[CovenantBridge]', msg);
+
+            try {
+                document.getElementById('status').textContent = msg;
+            } catch (e) {
+                // DOM might not be ready
+            }
+
+            // Send to Android via interface (with safety check)
+            try {
+                if (typeof Android !== 'undefined' && Android && Android.onLog) {
+                    Android.onLog('[JS] ' + msg);
+                }
+            } catch (e) {
+                // Android object might be gone during async execution
+                console.log('[Bridge unavailable]', msg);
+            }
+        }
+
+        // Wait for SDK to be available
+        const checkSDK = setInterval(() => {
+            if (window.CashScriptSDK) {
+                clearInterval(checkSDK);
+                log('CashScript SDK 0.13.2 loaded successfully');
+                setupBridge();
+            }
+        }, 100);
+
+        function setupBridge() {
+
+        // Price Oracle v2.5 Artifact (embedded)
+        const ARTIFACT = {
+  "contractName": "PriceOracle",
+  "constructorInputs": [
+    { "name": "sender", "type": "pubkey" },
+    { "name": "recipient", "type": "pubkey" },
+    { "name": "funder", "type": "pubkey" },
+    { "name": "oraclePubkey", "type": "pubkey" },
+    { "name": "eurCents", "type": "int" },
+    { "name": "expiryOracleTime", "type": "int" },
+    { "name": "initialBchPriceInCents", "type": "int" },
+    { "name": "minPricePercent", "type": "int" }
+  ],
+  "abi": [
+    {
+      "name": "claim",
+      "inputs": [
+        { "name": "recipientSig", "type": "sig" },
+        { "name": "oracleSig", "type": "datasig" },
+        { "name": "oracleMessage", "type": "bytes" }
+      ]
+    },
+    {
+      "name": "merchantCashout",
+      "inputs": [
+        { "name": "recipientSig", "type": "sig" },
+        { "name": "merchantSig", "type": "sig" },
+        { "name": "merchantPubkey", "type": "pubkey" },
+        { "name": "oracleSig", "type": "datasig" },
+        { "name": "oracleMessage", "type": "bytes" }
+      ]
+    },
+    {
+      "name": "refund",
+      "inputs": [
+        { "name": "senderSig", "type": "sig" },
+        { "name": "oracleSig", "type": "datasig" },
+        { "name": "oracleMessage", "type": "bytes" }
+      ]
+    },
+    {
+      "name": "sellerRecoverBuffer",
+      "inputs": [
+        { "name": "sellerSig", "type": "sig" },
+        { "name": "oracleSig", "type": "datasig" },
+        { "name": "oracleMessage", "type": "bytes" }
+      ]
+    }
+  ],
+  "bytecode": "OP_8 OP_PICK OP_0 OP_NUMEQUAL OP_IF OP_10 OP_ROLL OP_11 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_9 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_9 OP_PICK OP_8 OP_SPLIT OP_DROP OP_10 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_SWAP OP_BIN2NUM OP_SWAP OP_BIN2NUM OP_SWAP OP_6 OP_ROLL OP_LESSTHAN OP_VERIFY OP_5 OP_ROLL OP_6 OP_ROLL OP_MUL 64 OP_DIV OP_OVER OP_LESSTHANOREQUAL OP_VERIFY OP_4 OP_ROLL 00e1f505 OP_MUL OP_SWAP OP_DIV OP_5 OP_ROLL OP_3 OP_PICK OP_CHECKSIGVERIFY OP_0 OP_OUTPUTVALUE OP_NUMEQUALVERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_1 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUAL OP_NIP OP_NIP OP_ELSE OP_8 OP_PICK OP_1 OP_NUMEQUAL OP_IF OP_12 OP_ROLL OP_13 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_11 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_11 OP_PICK OP_8 OP_SPLIT OP_DROP OP_12 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_SWAP OP_BIN2NUM OP_SWAP OP_BIN2NUM OP_SWAP OP_6 OP_ROLL OP_LESSTHAN OP_VERIFY OP_5 OP_ROLL OP_6 OP_ROLL OP_MUL 64 OP_DIV OP_OVER OP_LESSTHANOREQUAL OP_VERIFY OP_4 OP_ROLL 00e1f505 OP_MUL OP_SWAP OP_DIV OP_5 OP_ROLL OP_3 OP_ROLL OP_CHECKSIGVERIFY OP_4 OP_ROLL OP_5 OP_PICK OP_CHECKSIGVERIFY OP_0 OP_OUTPUTVALUE OP_NUMEQUALVERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_5 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_1 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUAL OP_NIP OP_NIP OP_ELSE OP_8 OP_PICK OP_2 OP_NUMEQUAL OP_IF OP_9 OP_ROLL OP_OVER OP_CHECKSIGVERIFY OP_9 OP_ROLL OP_10 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_8 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_8 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_BIN2NUM OP_4 OP_ROLL 00e1f505 OP_MUL OP_SWAP OP_DIV OP_0 OP_OUTPUTVALUE OP_NUMEQUALVERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_ROT OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_1 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_2DROP OP_2DROP OP_DROP OP_1 OP_ELSE OP_8 OP_ROLL OP_3 OP_NUMEQUALVERIFY OP_8 OP_ROLL OP_3 OP_PICK OP_CHECKSIGVERIFY OP_8 OP_ROLL OP_9 OP_PICK OP_5 OP_ROLL OP_CHECKDATASIGVERIFY OP_7 OP_PICK OP_SIZE OP_NIP OP_16 OP_NUMEQUALVERIFY OP_7 OP_PICK OP_8 OP_SPLIT OP_DROP OP_8 OP_ROLL OP_8 OP_SPLIT OP_NIP OP_SWAP OP_BIN2NUM OP_SWAP OP_BIN2NUM OP_SWAP OP_6 OP_ROLL OP_GREATERTHANOREQUAL OP_VERIFY OP_4 OP_ROLL 00e1f505 OP_MUL OP_SWAP OP_DIV OP_0 OP_OUTPUTVALUE OP_NUMEQUALVERIFY OP_0 OP_OUTPUTBYTECODE 76a914 OP_ROT OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_1 OP_OUTPUTBYTECODE 76a914 OP_3 OP_ROLL OP_HASH160 OP_CAT 88ac OP_CAT OP_EQUAL OP_NIP OP_NIP OP_NIP OP_ENDIF OP_ENDIF OP_ENDIF",
+  "compiler": {
+    "name": "cashc",
+    "version": "0.13.2"
+  }
+};
+
+        log('Price Oracle v2.6.1 artifact loaded (funder semantics)');
+
+        /**
+         * Create covenant and return address (for sanity check)
+         *
+         * @param paramsJson JSON string with covenant parameters
+         * @returns Covenant address
+         */
+        window.createCovenant = function(paramsJson) {
+            try {
+                log('=== Creating Covenant (START) ===');
+                log('Received params: ' + paramsJson.substring(0, 100) + '...');
+
+                const params = JSON.parse(paramsJson);
+                log('Parsed JSON successfully');
+
+                // Create contract with provider for address generation
+                log('Creating contract with v2.5 artifact...');
+
+                // Create a provider instance (not connected, just for address generation)
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3');
+
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(params.senderPubkey, 'hex'),
+                        Buffer.from(params.recipientPubkey, 'hex'),
+                        Buffer.from(params.sellerPubkey, 'hex'),
+                        Buffer.from(params.oraclePubkey, 'hex'),
+                        BigInt(params.eurCents),
+                        BigInt(params.expiryOracleTime),
+                        BigInt(params.initialBchPriceInCents),
+                        BigInt(params.minPricePercent)
+                    ],
+                    {
+                        provider,
+                        addressType: 'p2sh32'
+                    }
+                );
+
+                const address = contract.address;
+                log(`✅ Covenant address: ${address}`);
+
+                // Return to Android
+                Android.onLog('[JS] Final address: ' + address);
+                return address;
+
+            } catch (error) {
+                log(`❌ Error creating covenant: ${error.message}`);
+                log(`❌ Stack: ${error.stack}`);
+                console.error(error);
+                Android.onLog('[JS] ERROR: ' + error.message);
+                return null;
+            }
+        };
+
+        /**
+         * Claim covenant - called from Android
+         *
+         * This function will be called via evaluateJavascript with covenant parameters
+         * It recreates the contract, builds the claim transaction, and returns the signed tx hex
+         */
+        window.claimCovenant = async function(paramsJson) {
+            try {
+                log('=== Claim Covenant Started ===');
+
+                const params = JSON.parse(paramsJson);
+                log(`Params: ${JSON.stringify(params).substring(0, 100)}...`);
+
+                // Extract parameters
+                const {
+                    covenantParams,  // Constructor parameters
+                    oracleSig,       // Oracle signature data
+                    recipientWIF,    // Recipient private key
+                    recipientAddress,// Recipient address for output
+                    sellerAddress,   // Seller address for remainder
+                    fulcrumHost,     // Pi Fulcrum host (e.g., "localhost")
+                    fulcrumPort      // Pi Fulcrum port (e.g., 60003)
+                } = params;
+
+                log('Connecting to Fulcrum...');
+                log(`Target: ${fulcrumHost}:${fulcrumPort}`);
+
+                // Auto-detect SSL based on port
+                // 60003 = ws (no SSL), 60004 = wss (SSL), 50003 = ssl, 50004 = wss
+                const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
+                log(`SSL: ${useSSL}`);
+
+                // Connect to Pi's Fulcrum server
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, useSSL);
+                const electrum = new window.CashScriptSDK.ElectrumClient('Asgaya Claim', '1.4.1', socket);
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3', {
+                    electrum,
+                    manualConnectionManagement: true
+                });
+
+                await electrum.connect();
+                log('✅ Connected to Fulcrum');
+
+                // Recreate contract from stored parameters
+                log('Recreating contract...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.sellerPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                // Get UTXOs
+                log('Fetching covenant UTXOs...');
+                const utxos = await contract.getUtxos();
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already claimed');
+                }
+
+                const utxo = utxos[0];
+                log(`✅ Found UTXO: ${Number(utxo.satoshis)} sats`);
+
+                // Parse oracle signature
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+
+                // Calculate payment amounts
+                const eurCents = covenantParams.eurCents;
+                const paymentSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 1000n;
+                const remainderSats = inputSats - paymentSats - feeSats;
+
+                log(`Payment: ${Number(paymentSats)} sats to recipient`);
+                log(`Remainder: ${Number(remainderSats)} sats to seller`);
+
+                // Build claim transaction
+                log('Building claim transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider });
+
+                // Create unlocker with SignatureTemplate (accepts WIF directly)
+                log('Creating signature template with WIF...');
+                const unlocker = contract.unlock.claim(
+                    new window.CashScriptSDK.SignatureTemplate(recipientWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                // Add input
+                txBuilder.addInput(utxo, unlocker);
+
+                // Add outputs
+                txBuilder.addOutput({
+                    to: recipientAddress,
+                    amount: paymentSats
+                });
+
+                txBuilder.addOutput({
+                    to: sellerAddress,
+                    amount: remainderSats
+                });
+
+                log('Broadcasting transaction...');
+                const txResponse = await txBuilder.send();
+                const txid = typeof txResponse === 'string' ? txResponse : txResponse.txid;
+
+                await electrum.disconnect();
+
+                log(`✅ SUCCESS! TXID: ${txid}`);
+
+                // Return result to Android
+                Android.onClaimSuccess(txid);
+
+            } catch (error) {
+                log(`❌ Error: ${error.message}`);
+                console.error(error);
+                Android.onClaimError(error.message);
+            }
+        };
+
+        /**
+         * Refund covenant after expiry - called from Android
+         */
+        window.refundCovenant = async function(paramsJson) {
+            let electrum = null;
+            try {
+                log('=== Refund Covenant Started ===');
+
+                const params = JSON.parse(paramsJson);
+                log(`Params: ${JSON.stringify(params).substring(0, 100)}...`);
+
+                const {
+                    covenantParams,
+                    oracleSig,
+                    senderWIF,
+                    senderAddress,
+                    sellerAddress,
+                    fulcrumHost,
+                    fulcrumPort
+                } = params;
+
+                log('Connecting to Fulcrum...');
+                log(`Target: ${fulcrumHost}:${fulcrumPort}`);
+
+                // Auto-detect SSL based on port
+                // 60003 = ws (no SSL), 60004 = wss (SSL), 50003 = ssl, 50004 = wss
+                const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
+                log(`SSL: ${useSSL}`);
+
+
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, useSSL);
+                electrum = new window.CashScriptSDK.ElectrumClient('Asgaya Refund', '1.4.1', socket);
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3', {
+                    electrum,
+                    manualConnectionManagement: true
+                });
+
+                await electrum.connect();
+                log('✅ Connected to Fulcrum');
+
+                log('Recreating contract...');
+                const contract = new window.CashScriptSDK.Contract(
+                    ARTIFACT,
+                    [
+                        Buffer.from(covenantParams.senderPubkey, 'hex'),
+                        Buffer.from(covenantParams.recipientPubkey, 'hex'),
+                        Buffer.from(covenantParams.sellerPubkey, 'hex'),
+                        Buffer.from(covenantParams.oraclePubkey, 'hex'),
+                        BigInt(covenantParams.eurCents),
+                        BigInt(covenantParams.expiryOracleTime),
+                        BigInt(covenantParams.initialBchPriceInCents),
+                        BigInt(covenantParams.minPricePercent)
+                    ],
+                    { provider, addressType: 'p2sh32' }
+                );
+
+                log(`✅ Contract address: ${contract.address}`);
+
+                log('Fetching covenant UTXOs...');
+                const utxos = await contract.getUtxos();
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs found - covenant not funded or already spent');
+                }
+
+                const utxo = utxos[0];
+                log(`✅ Found UTXO: ${Number(utxo.satoshis)} sats`);
+
+                const oracleMessage = Buffer.from(oracleSig.message, 'hex');
+                const oracleSigBuffer = Buffer.from(oracleSig.signature, 'hex');
+                const oraclePrice = oracleSig.price;
+
+                log(`Oracle price: ${oraclePrice / 100} EUR/BCH`);
+                log(`Oracle timestamp: ${oracleSig.timestamp} (expiry: ${covenantParams.expiryOracleTime})`);
+
+                // Calculate refund amounts
+                const eurCents = covenantParams.eurCents;
+                const refundSats = BigInt(Math.floor((eurCents * 100000000) / oraclePrice));
+                const inputSats = utxo.satoshis;
+                const feeSats = 1000n;
+                const remainderSats = inputSats - refundSats - feeSats;
+
+                log(`Refund: ${Number(refundSats)} sats to sender`);
+                log(`Remainder: ${Number(remainderSats)} sats to seller`);
+
+                log('Building refund transaction...');
+                const txBuilder = new window.CashScriptSDK.TransactionBuilder({ provider });
+
+                log('Creating signature template with sender WIF...');
+                const unlocker = contract.unlock.refund(
+                    new window.CashScriptSDK.SignatureTemplate(senderWIF),
+                    oracleSigBuffer,
+                    oracleMessage
+                );
+
+                txBuilder.addInput(utxo, unlocker);
+
+                txBuilder.addOutput({
+                    to: senderAddress,
+                    amount: refundSats
+                });
+
+                txBuilder.addOutput({
+                    to: sellerAddress,
+                    amount: remainderSats
+                });
+
+                log('Broadcasting transaction...');
+                const txResponse = await txBuilder.send();
+                const txid = typeof txResponse === 'string' ? txResponse : txResponse.txid;
+
+                log(`✅ SUCCESS! TXID: ${txid}`);
+
+                Android.onRefundSuccess(txid);
+
+            } catch (error) {
+                log(`❌ Error: ${error.message}`);
+                console.error(error);
+                Android.onRefundError(error.message);
+            } finally {
+                // Always disconnect, whether success or failure
+                if (electrum) {
+                    try {
+                        await electrum.disconnect();
+                        log('🔌 Disconnected from Fulcrum');
+                    } catch (e) {
+                        // Ignore disconnect errors
+                        log(`⚠️ Disconnect error (ignored): ${e.message}`);
+                    }
+                }
+            }
+        };
+
+        /**
+         * Send simple P2PKH BCH transaction - called from Android
+         *
+         * @param paramsJson JSON with: senderWIF, senderAddress, recipientAddress, amountSats, fulcrumHost, fulcrumPort
+         */
+        window.sendBch = async function(paramsJson) {
+            let electrum = null;
+            try {
+                log('=== Send BCH Started ===');
+
+                const params = JSON.parse(paramsJson);
+                log(`Amount: ${params.amountSats} sats to ${params.recipientAddress.substring(0, 20)}...`);
+
+                const {
+                    senderWIF,
+                    senderAddress,
+                    recipientAddress,
+                    amountSats,
+                    fulcrumHost,
+                    fulcrumPort
+                } = params;
+
+                log('Connecting to Fulcrum...');
+                log(`Target: ${fulcrumHost}:${fulcrumPort}`);
+
+                // Auto-detect SSL based on port
+                // 60003 = ws (no SSL), 60004 = wss (SSL), 50003 = ssl, 50004 = wss
+                const useSSL = (fulcrumPort === 60004 || fulcrumPort === 50003 || fulcrumPort === 50004);
+                log(`SSL: ${useSSL}`);
+
+                // Connect to Fulcrum (same as refund - simple and works!)
+                const socket = new window.CashScriptSDK.ElectrumWebSocket(fulcrumHost, fulcrumPort, useSSL);
+                electrum = new window.CashScriptSDK.ElectrumClient('Asgaya Send', '1.4.1', socket);
+                const provider = new window.CashScriptSDK.ElectrumNetworkProvider('testnet3', {
+                    electrum,
+                    manualConnectionManagement: true
+                });
+
+                await electrum.connect();
+                log('✅ Connected to Fulcrum');
+
+                // Get UTXOs for sender address
+                log(`Fetching UTXOs for ${senderAddress.substring(0, 30)}...`);
+
+                // Query UTXOs using provider (CashScript SDK handles scripthash conversion)
+                const utxos = await provider.getUtxos(senderAddress);
+
+                if (utxos.length === 0) {
+                    throw new Error('No UTXOs available in wallet (balance is 0)');
+                }
+
+                log(`✅ Found ${utxos.length} UTXOs`);
+
+                // Calculate total input and select UTXOs
+                const amountSatsBigInt = BigInt(amountSats);
+
+                let selectedUtxos = [];
+                let totalInput = 0n;
+
+                // Simple selection: largest first
+                const sortedUtxos = [...utxos].sort((a, b) => Number(b.satoshis - a.satoshis));
+
+                // Select UTXOs iteratively, recalculating fee as we add inputs
+                for (const utxo of sortedUtxos) {
+                    selectedUtxos.push(utxo);
+                    totalInput += utxo.satoshis;
+
+                    // Calculate fee based on current selection
+                    // Formula: (numInputs * 150) + (numOutputs * 34) + 10 overhead
+                    // Assuming 2 outputs (payment + change), use 1.1 sat/byte safety margin
+                    const estimatedTxSize = (selectedUtxos.length * 150) + (2 * 34) + 10;
+                    const feeSats = BigInt(Math.ceil(estimatedTxSize * 1.1));
+                    const requiredSats = amountSatsBigInt + feeSats;
+
+                    if (totalInput >= requiredSats) {
+                        break;
+                    }
+                }
+
+                // Final fee calculation
+                const finalTxSize = (selectedUtxos.length * 150) + (2 * 34) + 10;
+                const feeSats = BigInt(Math.ceil(finalTxSize * 1.1));
+                const requiredSats = amountSatsBigInt + feeSats;
+
+                if (totalInput < requiredSats) {
+                    throw new Error(`Insufficient funds: need ${Number(requiredSats)} sats, have ${Number(totalInput)} sats`);
+                }
+
+                const changeSats = totalInput - amountSatsBigInt - feeSats;
+
+                log(`Selected ${selectedUtxos.length} UTXOs, total: ${Number(totalInput)} sats`);
+                log(`Amount: ${Number(amountSatsBigInt)} sats`);
+                log(`Estimated fee: ${Number(feeSats)} sats (${selectedUtxos.length} inputs, ~${finalTxSize} bytes)`);
+                log(`Change: ${Number(changeSats)} sats`);
+
+                // Build transaction using libauth (loaded from CDN)
+                log('Building transaction with libauth...');
+
+                // Wait for libauth to load (if not ready yet) - max 3 seconds
+                let retries = 0;
+                while (!window.libauth && retries < 30) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    retries++;
+                    if (retries % 10 === 0) {
+                        log('Still waiting for libauth... (' + retries + '00ms)');
+                    }
+                }
+
+                const libauth = window.libauth;
+                if (!libauth) {
+                    throw new Error('libauth not loaded from CDN after ' + (retries * 100) + 'ms - check network/CORS');
+                }
+
+                log('✅ libauth loaded with ' + Object.keys(libauth).length + ' exports');
+
+                // Decode WIF to get private key (Selene's pattern)
+                const wifResult = libauth.decodePrivateKeyWif(senderWIF);
+                if (typeof wifResult === 'string') {
+                    throw new Error(`Invalid WIF: ${wifResult}`);
+                }
+                const privateKey = wifResult.privateKey;
+                log('✅ Private key decoded from WIF');
+
+                // Get locking bytecode for addresses
+                const recipientBytecode = libauth.cashAddressToLockingBytecode(recipientAddress);
+                if (typeof recipientBytecode === 'string') {
+                    throw new Error(`Invalid recipient address: ${recipientBytecode}`);
+                }
+                const senderBytecode = libauth.cashAddressToLockingBytecode(senderAddress);
+                if (typeof senderBytecode === 'string') {
+                    throw new Error(`Invalid sender address: ${senderBytecode}`);
+                }
+
+                // Create P2PKH compiler (Selene's pattern - handles signing automatically!)
+                const compiler = libauth.walletTemplateToCompilerBCH(libauth.walletTemplateP2pkhNonHd);
+                log('✅ P2PKH compiler created');
+
+                // Build input directives (compiler will sign them)
+                const inputDirectives = selectedUtxos.map(utxo => ({
+                    outpointIndex: utxo.vout,
+                    outpointTransactionHash: libauth.hexToBin(utxo.txid),
+                    sequenceNumber: 0,
+                    unlockingBytecode: {
+                        compiler: compiler,
+                        data: {
+                            keys: { privateKeys: { key: privateKey } }
+                        },
+                        script: 'unlock',
+                        valueSatoshis: utxo.satoshis
+                    }
+                }));
+
+                // Build outputs
+                const outputs = [
+                    {
+                        lockingBytecode: recipientBytecode.bytecode,
+                        valueSatoshis: amountSatsBigInt
+                    }
+                ];
+
+                // Add change output if above dust
+                if (changeSats > 546n) {
+                    outputs.push({
+                        lockingBytecode: senderBytecode.bytecode,
+                        valueSatoshis: changeSats
+                    });
+                    log(`Added change output: ${Number(changeSats)} sats`);
+                }
+
+                log('Building and signing transaction...');
+
+                // Generate transaction (compiler handles signing!)
+                const generatedTx = libauth.generateTransaction({
+                    version: 2,
+                    locktime: 0,
+                    inputs: inputDirectives,
+                    outputs: outputs
+                });
+
+                if (!generatedTx.success) {
+                    throw new Error('Transaction generation failed: ' + JSON.stringify(generatedTx.errors || generatedTx));
+                }
+
+                log('✅ Transaction generated and signed');
+
+                // Encode transaction
+                const encodedTx = libauth.encodeTransaction(generatedTx.transaction);
+                const txHex = libauth.binToHex(encodedTx);
+                const txHash = libauth.binToHex(libauth.sha256.hash(libauth.sha256.hash(encodedTx)));
+                const txid = txHash.match(/../g).reverse().join(''); // Reverse byte order for txid
+
+                log(`Transaction size: ${encodedTx.length} bytes`);
+                log(`Broadcasting transaction...`);
+
+                // Broadcast via Electrum
+                const broadcastResult = await electrum.request('blockchain.transaction.broadcast', txHex);
+                log(`✅ Broadcast result: ${broadcastResult}`);
+
+                const finalTxid = typeof broadcastResult === 'string' ? broadcastResult : txid;
+
+                log(`✅ SUCCESS! TXID: ${finalTxid}`);
+
+                // Return result to Android
+                if (typeof Android !== 'undefined' && Android.onSendSuccess) {
+                    Android.onSendSuccess(finalTxid);
+                }
+
+                return finalTxid;
+
+            } catch (error) {
+                log(`❌ Error: ${error.message}`);
+                console.error(error);
+
+                if (typeof Android !== 'undefined' && Android.onSendError) {
+                    Android.onSendError(error.message);
+                }
+
+                throw error;
+            } finally {
+                // Always disconnect, whether success or failure
+                if (electrum) {
+                    try {
+                        await electrum.disconnect();
+                        log('🔌 Disconnected from Fulcrum');
+                    } catch (e) {
+                        // Ignore disconnect errors
+                        log(`⚠️ Disconnect error (ignored): ${e.message}`);
+                    }
+                }
+            }
+        };
+
+            // Ready signal
+            log('✅ Covenant bridge v2.5 ready');
+            if (typeof Android !== 'undefined') {
+                Android.onReady();
+            }
+        } // End setupBridge()
+    </script>
+</body>
+</html>

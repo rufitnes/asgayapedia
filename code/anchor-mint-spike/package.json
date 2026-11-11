@@ -1,0 +1,62 @@
+{
+  "name": "@cashmint/sdk",
+  "version": "0.2.0",
+  "description": "Official TypeScript SDK for the CashMintStandard NFT specification on Bitcoin Cash",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "schema"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@bitauth/libauth": "^3.0.0",
+    "@wizardconnect/core": "^0.1.10",
+    "@wizardconnect/dapp": "^0.1.7",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "multiformats": "^13.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "bip32": "^5.0.1",
+    "bip39": "^3.1.0",
+    "bitcore-lib-cash": "^10.10.5",
+    "tiny-secp256k1": "^2.2.4",
+    "tsup": "^8.3.5",
+    "tsx": "^4.21.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "bitcoin-cash",
+    "bch",
+    "cashtokens",
+    "nft",
+    "cashmintstandard",
+    "bcmr"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BCH-CashMint/sdk.git"
+  }
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "package": "com.rsi.nba",
+    "bankName": "Caja Rural",
+    "patterns": [
+      {
+        "name": "standard",
+        "regex": "Has recibido un Bizum de\\s*(\\d+(?:[.,]\\d{2})?)\\s*EUR\\s*de\\s*(.+?)\\s*con el concepto\\s*(.+)",
+        "amountGroup": 1,
+        "senderGroup": 2,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
+    "package": "com.bbva.bbvacontigo",
+    "bankName": "BBVA",
+    "patterns": [
+      {
+        "name": "title_text_split",
+        "regex": "Bizum recibido por importe de\\s*(\\d+(?:[.,]\\d{2})?)\\s*EUR",
+        "amountGroup": 1,
+        "senderInTitle": true,
+        "referenceRegex": "Concepto:\\s*(.+)"
+      }
+    ]
+  },
+  {
+    "package": "es.bancosantander.apps",
+    "bankName": "Santander",
+    "patterns": [
+      {
+        "name": "standard",
+        "regex": "Bizum:\\s*(.+?)\\s+te ha enviado\\s*(\\d+(?:[.,]\\d{2})?)\\s*[€€]\\.?\\s*Concepto:\\s*(.+)",
+        "amountGroup": 2,
+        "senderGroup": 1,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
+    "package": "es.bancsabadell.mobilebancohd",
+    "bankName": "Sabadell",
+    "patterns": [
+      {
+        "name": "standard",
+        "regex": "Has recibido un Bizum de\\s*(\\d+(?:[.,]\\d{2})?)\\s*[€€]\\s*de\\s*(.+?)\\.?\\s*Concepto:\\s*(.+)",
+        "amountGroup": 1,
+        "senderGroup": 2,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
+    "package": "net.inverline.bancosabadell.officelocator.android",
+    "bankName": "Sabadell (Office Locator)",
+    "patterns": [
+      {
+        "name": "por_format",
+        "regex": "Has recibido un Bizum de\\s*(\\d+(?:[.,]\\d{2})?)\\s*(?:EUR|€)\\s*de\\s*(.+?)\\s*por\\s*(.+)",
+        "amountGroup": 1,
+        "senderGroup": 2,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
+    "package": "es.ingdirect.ing",
+    "bankName": "ING",
+    "patterns": [
+      {
+        "name": "standard",
+        "regex": "¡Has recibido un Bizum!\\s*(.+?)\\s+te ha enviado\\s*(\\d+(?:[.,]\\d{2})?)\\s*[€€]\\.?\\s*Concepto:\\s*(.+)",
+        "amountGroup": 2,
+        "senderGroup": 1,
+        "referenceGroup": 3
+      }
+    ]
+  },
+  {
+    "package": "org.telegram.messenger",
+    "bankName": "Telegram (Covenant)",
+    "patterns": [
+      {
+        "name": "covenant_notification",
+        "regex": "Amount:\\s*€?(\\d+(?:[.,]\\d{2})?)[\\s\\S]*?Recipient:\\s*([A-Za-z0-9]+#\\d+)[\\s\\S]*?Covenant:[\\s\\S]*?`?(bchtest:[a-z0-9]+)`?",
+        "amountGroup": 1,
+        "senderGroup": 2,
+        "referenceGroup": 3
+      },
+      {
+        "name": "bizum_test",
+        "regex": "Has recibido\\s*(\\d+(?:[.,]\\d{2})?)\\s*€\\s*de\\s*(.+?)\\s*Concepto:\\s*(.+)",
+        "amountGroup": 1,
+        "senderGroup": 2,
+        "referenceGroup": 3
+      }
+    ]
+  }
+]

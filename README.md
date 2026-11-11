@@ -102,11 +102,18 @@ The honest limits: Phase 0 is a small, trusted test; the stability layer is not 
 - **[glossary.md](docs/glossary.md)** — the terminology.
 - **[risks-and-disclaimers.md](docs/risks-and-disclaimers.md)** — the risks, stated plainly.
 
+## Research code
+
+The reference implementation and the proof-of-concept spikes live in [`code/`](code/README.md). They are research artifacts, not a production release. The pre-BLAZE baseline is tagged `v0-prehackathon-baseline` (2026-11-11); the BCH BLAZE 2026 slice is built from 14 Nov.
+
+- [`asgayahusk/`](code/asgayahusk/) — the Android reference implementation (covenant v2.7.1, Nostr coordination, signed oracle).
+- [`anchor-mint-spike/`](code/anchor-mint-spike/) — WizardConnect and the genesis anchor NFT, verified on chipnet.
+
 ## Feedback and license
 
 - **GitHub Issues:** [github.com/rufitnes/asgayapedia/issues](https://github.com/rufitnes/asgayapedia/issues)
 - **Email:** rufitnes@proton.me
-- **Documentation:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). **Code:** MIT, when published.
+- **Documentation:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). **Code:** MIT, see [`code/LICENSE`](code/LICENSE).
 
 ---
 

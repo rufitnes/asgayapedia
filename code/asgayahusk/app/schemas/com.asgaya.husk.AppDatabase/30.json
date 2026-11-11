@@ -1,0 +1,969 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 30,
+    "identityHash": "a10d9eb0b2e21f8a9f440477c10cff90",
+    "entities": [
+      {
+        "tableName": "notifications",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER NOT NULL, `bankApp` TEXT NOT NULL, `amount` REAL NOT NULL, `sender` TEXT NOT NULL, `reference` TEXT NOT NULL, `rawText` TEXT NOT NULL, `parsedSuccessfully` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bankApp",
+            "columnName": "bankApp",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sender",
+            "columnName": "sender",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reference",
+            "columnName": "reference",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rawText",
+            "columnName": "rawText",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parsedSuccessfully",
+            "columnName": "parsedSuccessfully",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "covenant_requests",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `cashAccount` TEXT NOT NULL, `covenantAddress` TEXT NOT NULL, `eurCents` INTEGER NOT NULL, `expiryTime` INTEGER NOT NULL, `initialBchPrice` INTEGER NOT NULL, `minPricePercent` INTEGER NOT NULL, `status` TEXT NOT NULL, `redeemScript` TEXT, `txid` TEXT, `fundingTxid` TEXT, `fundingVout` INTEGER, `senderPubkey` TEXT, `recipientPubkey` TEXT, `funderPubkey` TEXT, `oraclePubkey` TEXT, `senderNostrPubkey` TEXT, `payWindowSeconds` INTEGER, `assetCurrency` TEXT, `payAmount` REAL, `payCurrency` TEXT, `feePercent` REAL, `createdAt` INTEGER NOT NULL, `fundedAt` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cashAccount",
+            "columnName": "cashAccount",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "covenantAddress",
+            "columnName": "covenantAddress",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eurCents",
+            "columnName": "eurCents",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "expiryTime",
+            "columnName": "expiryTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "initialBchPrice",
+            "columnName": "initialBchPrice",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minPricePercent",
+            "columnName": "minPricePercent",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "redeemScript",
+            "columnName": "redeemScript",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "txid",
+            "columnName": "txid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fundingTxid",
+            "columnName": "fundingTxid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fundingVout",
+            "columnName": "fundingVout",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "senderPubkey",
+            "columnName": "senderPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "recipientPubkey",
+            "columnName": "recipientPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "funderPubkey",
+            "columnName": "funderPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "oraclePubkey",
+            "columnName": "oraclePubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "senderNostrPubkey",
+            "columnName": "senderNostrPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "payWindowSeconds",
+            "columnName": "payWindowSeconds",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "assetCurrency",
+            "columnName": "assetCurrency",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "payAmount",
+            "columnName": "payAmount",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "payCurrency",
+            "columnName": "payCurrency",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "feePercent",
+            "columnName": "feePercent",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fundedAt",
+            "columnName": "fundedAt",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "contacts",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `cashAccount` TEXT NOT NULL, `publicKey` TEXT NOT NULL, `bchAddress` TEXT NOT NULL, `nostrPubkey` TEXT, `balance` TEXT NOT NULL, `notes` TEXT, `createdAt` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cashAccount",
+            "columnName": "cashAccount",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicKey",
+            "columnName": "publicKey",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bchAddress",
+            "columnName": "bchAddress",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nostrPubkey",
+            "columnName": "nostrPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "balance",
+            "columnName": "balance",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "wallets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `label` TEXT NOT NULL, `role` TEXT NOT NULL, `sourceType` TEXT NOT NULL, `sourceData` TEXT NOT NULL, `address` TEXT NOT NULL, `publicKey` TEXT NOT NULL, `isActive` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `colorHex` TEXT, `iconName` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "role",
+            "columnName": "role",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceType",
+            "columnName": "sourceType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceData",
+            "columnName": "sourceData",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicKey",
+            "columnName": "publicKey",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isActive",
+            "columnName": "isActive",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colorHex",
+            "columnName": "colorHex",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "iconName",
+            "columnName": "iconName",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "remittances",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipientAddress` TEXT NOT NULL, `recipientName` TEXT, `amountBch` REAL NOT NULL, `amountPaymentCurrency` REAL NOT NULL, `paymentCurrency` TEXT NOT NULL, `amountRecipientCurrency` REAL NOT NULL, `recipientCurrency` TEXT NOT NULL, `txid` TEXT, `networkFee` REAL NOT NULL, `fundingMethod` TEXT NOT NULL, `covenantAddress` TEXT, `cashAccount` TEXT, `senderCashAccount` TEXT, `senderPubkey` TEXT, `recipientPubkey` TEXT, `funderPubkey` TEXT, `oraclePubkey` TEXT, `eurCents` INTEGER, `expiryOracleTime` INTEGER, `initialBchPriceInCents` INTEGER, `minPricePercent` INTEGER, `redeemScriptHex` TEXT, `status` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `confirmedAt` INTEGER, `deliveredAt` INTEGER, `resolutionPath` TEXT, `resolutionTxid` TEXT, `resolvedAt` INTEGER, `funderNostrPubkey` TEXT, `senderNostrPubkey` TEXT, `isReceived` INTEGER NOT NULL, `notes` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipientAddress",
+            "columnName": "recipientAddress",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipientName",
+            "columnName": "recipientName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amountBch",
+            "columnName": "amountBch",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountPaymentCurrency",
+            "columnName": "amountPaymentCurrency",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paymentCurrency",
+            "columnName": "paymentCurrency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountRecipientCurrency",
+            "columnName": "amountRecipientCurrency",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipientCurrency",
+            "columnName": "recipientCurrency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "txid",
+            "columnName": "txid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "networkFee",
+            "columnName": "networkFee",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fundingMethod",
+            "columnName": "fundingMethod",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "covenantAddress",
+            "columnName": "covenantAddress",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cashAccount",
+            "columnName": "cashAccount",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "senderCashAccount",
+            "columnName": "senderCashAccount",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "senderPubkey",
+            "columnName": "senderPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "recipientPubkey",
+            "columnName": "recipientPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "funderPubkey",
+            "columnName": "funderPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "oraclePubkey",
+            "columnName": "oraclePubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "eurCents",
+            "columnName": "eurCents",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "expiryOracleTime",
+            "columnName": "expiryOracleTime",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "initialBchPriceInCents",
+            "columnName": "initialBchPriceInCents",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minPricePercent",
+            "columnName": "minPricePercent",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "redeemScriptHex",
+            "columnName": "redeemScriptHex",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "confirmedAt",
+            "columnName": "confirmedAt",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "deliveredAt",
+            "columnName": "deliveredAt",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resolutionPath",
+            "columnName": "resolutionPath",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resolutionTxid",
+            "columnName": "resolutionTxid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "resolvedAt",
+            "columnName": "resolvedAt",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "funderNostrPubkey",
+            "columnName": "funderNostrPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "senderNostrPubkey",
+            "columnName": "senderNostrPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isReceived",
+            "columnName": "isReceived",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "pending_transactions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`txid` TEXT NOT NULL, `tx_hex` TEXT NOT NULL, `status` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `confirmed_at` INTEGER, `block_height` INTEGER, `confirmations` INTEGER NOT NULL, `covenant_address` TEXT, `remittance_id` INTEGER, `error_message` TEXT, `retry_count` INTEGER NOT NULL, `last_retry_at` INTEGER, PRIMARY KEY(`txid`))",
+        "fields": [
+          {
+            "fieldPath": "txid",
+            "columnName": "txid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tx_hex",
+            "columnName": "tx_hex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "confirmed_at",
+            "columnName": "confirmed_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "block_height",
+            "columnName": "block_height",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "confirmations",
+            "columnName": "confirmations",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "covenant_address",
+            "columnName": "covenant_address",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "remittance_id",
+            "columnName": "remittance_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "error_message",
+            "columnName": "error_message",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "retry_count",
+            "columnName": "retry_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "last_retry_at",
+            "columnName": "last_retry_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "txid"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_pending_transactions_status",
+            "unique": false,
+            "columnNames": [
+              "status"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pending_transactions_status` ON `${TABLE_NAME}` (`status`)"
+          },
+          {
+            "name": "index_pending_transactions_created_at",
+            "unique": false,
+            "columnNames": [
+              "created_at"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pending_transactions_created_at` ON `${TABLE_NAME}` (`created_at`)"
+          },
+          {
+            "name": "index_pending_transactions_covenant_address",
+            "unique": false,
+            "columnNames": [
+              "covenant_address"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pending_transactions_covenant_address` ON `${TABLE_NAME}` (`covenant_address`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "cashout_messages",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `covenantAddress` TEXT NOT NULL, `type` TEXT NOT NULL, `payload` TEXT NOT NULL, `messageHash` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `consumed` INTEGER NOT NULL, `counterpartyNpub` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "covenantAddress",
+            "columnName": "covenantAddress",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "payload",
+            "columnName": "payload",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "messageHash",
+            "columnName": "messageHash",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "consumed",
+            "columnName": "consumed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "counterpartyNpub",
+            "columnName": "counterpartyNpub",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_cashout_messages_messageHash",
+            "unique": true,
+            "columnNames": [
+              "messageHash"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_cashout_messages_messageHash` ON `${TABLE_NAME}` (`messageHash`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "listings",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `adType` TEXT NOT NULL, `cashAccount` TEXT NOT NULL, `publicKey` TEXT NOT NULL, `nostrPubkey` TEXT, `assetsCsv` TEXT NOT NULL, `paymentMethodsCsv` TEXT NOT NULL, `fee` REAL NOT NULL, `minPricePercent` INTEGER NOT NULL, `location` TEXT, `minAmount` REAL, `maxAmount` REAL, `availableHours` TEXT, `isOnline` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, `establishment` TEXT, `contactPhone` TEXT, `contactIban` TEXT, `notes` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "adType",
+            "columnName": "adType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cashAccount",
+            "columnName": "cashAccount",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicKey",
+            "columnName": "publicKey",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nostrPubkey",
+            "columnName": "nostrPubkey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "assetsCsv",
+            "columnName": "assetsCsv",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paymentMethodsCsv",
+            "columnName": "paymentMethodsCsv",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fee",
+            "columnName": "fee",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minPricePercent",
+            "columnName": "minPricePercent",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minAmount",
+            "columnName": "minAmount",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxAmount",
+            "columnName": "maxAmount",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "availableHours",
+            "columnName": "availableHours",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isOnline",
+            "columnName": "isOnline",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "establishment",
+            "columnName": "establishment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contactPhone",
+            "columnName": "contactPhone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contactIban",
+            "columnName": "contactIban",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_listings_publicKey",
+            "unique": false,
+            "columnNames": [
+              "publicKey"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_listings_publicKey` ON `${TABLE_NAME}` (`publicKey`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "board_events",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pubkey` TEXT NOT NULL, `adTag` TEXT NOT NULL, `eventId` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `raw` TEXT NOT NULL, PRIMARY KEY(`pubkey`, `adTag`))",
+        "fields": [
+          {
+            "fieldPath": "pubkey",
+            "columnName": "pubkey",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "adTag",
+            "columnName": "adTag",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eventId",
+            "columnName": "eventId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raw",
+            "columnName": "raw",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "pubkey",
+            "adTag"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a10d9eb0b2e21f8a9f440477c10cff90')"
+    ]
+  }
+}

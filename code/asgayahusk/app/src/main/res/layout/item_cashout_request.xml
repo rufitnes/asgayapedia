@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="4dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="12dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="?attr/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Amount in Fiat (Large, Bold) -->
+        <TextView
+            android:id="@+id/amountFiat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="€100.00 Cash Out"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
+            tools:text="€100.00 Cash Out" />
+
+        <!-- Amount in BCH (Smaller) -->
+        <TextView
+            android:id="@+id/amountBch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="For 0.154 BCH"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="4dp"
+            tools:text="For 0.154 BCH" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorOutline"
+            android:layout_marginVertical="12dp"
+            android:alpha="0.3" />
+
+        <!-- From (Sender Name) -->
+        <TextView
+            android:id="@+id/fromName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From: Elena"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="From: Elena" />
+
+        <!-- Covenant Address Preview -->
+        <TextView
+            android:id="@+id/covenantAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Covenant: bchtest:pv...7a3b"
+            android:textSize="12sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:fontFamily="monospace"
+            android:layout_marginTop="4dp"
+            tools:text="Covenant: bchtest:pv...7a3b" />
+
+        <!-- Timestamp -->
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏰ 2 minutes ago"
+            android:textSize="12sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginTop="8dp"
+            tools:text="⏰ 2 minutes ago" />
+
+        <!-- Verify & Accept Button -->
+        <Button
+            android:id="@+id/verifyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verify &amp; Accept"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            style="@style/Widget.Material3.Button" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
