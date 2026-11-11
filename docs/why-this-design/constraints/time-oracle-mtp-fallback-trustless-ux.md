@@ -4,7 +4,7 @@
 **Category:** Covenant Design Constraint  
 **Trust Model:** Oracle for UX, MTP for Security
 
-> **⚠️ Reconcile (2026-10-03) — shipped v2.6.1.** In the shipped covenant, **`refund()` is sender-signed and available *anytime*** (no oracle-time or MTP gate), and the **funder's** expiry path is **`sellerRecoverBuffer`**. MTP is therefore **not** the operative fallback in the normal flow — it remains the design's last-resort *time* guarantee. Read the MTP-fallback framing below as **design rationale**, not shipped control flow (see *Key Insight: Refund() Can Happen Anytime*).
+> **⚠️ Reconcile (2026-10-03) — shipped v2.6.1.** In the shipped covenant, **`refund()` is sender-signed and available *anytime*** (no oracle-time or MTP gate), and the **funder's** expiry path is **`sellerRecoverBuffer`**. MTP is therefore **not** the operative fallback in the normal flow — it remains the design's last-resort *time* guarantee. Read the MTP-fallback framing below as **design rationale**, not shipped control flow (see *Key Insight: Refund() Can Happen Anytime*). (Current covenant: **v2.7.1**; this time mechanism is unchanged.)
 
 ---
 

@@ -584,7 +584,7 @@ When explaining covenant parameters:
 
 The `seller` → `funder` rename was applied in `price-oracle-v2.6.1.cash` at **zero cost** — constructor parameter names live in the artifact ABI, not the spending bytecode, so the compiled output is byte-identical to v2.6 (same address, no redeployment).
 
-**Decision:** The version stays v2.6 (same address); `price-oracle-v2.6.1.json` is the production artifact with the correct `funder` parameter name.
+**Decision:** The version stays v2.6 (same address); `price-oracle-v2.6.1.json` is the production artifact with the correct `funder` parameter name. **(Historical — superseded: the current covenant is v2.7.1, with new bytecode and address.)**
 
 **What this resolves:** The naming confusion that caused the Aug 2 (parameter population) and Aug 10 (seller address) bugs. Future developers see `funder`, which matches the semantics.
 

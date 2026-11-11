@@ -4,6 +4,8 @@
 **Status:** Plan — not active (Phase 0 is current; Phase 1.5 is future)  
 **Last updated:** 2026-07-25
 
+> **⚠️ Note (2026-11-11):** this is a **future** plan. The shipped abort threshold is **≥ 6.5 %** (≈ €935 at €1000/BCH), not 7 % / €930; **H€ minting is planned (Phase 1+)** — nothing mints H€ today.
+
 ---
 
 ## Overview

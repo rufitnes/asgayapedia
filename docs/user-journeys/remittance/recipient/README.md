@@ -264,7 +264,7 @@ This creates a self-sustaining liquidity cycle where recipients graduate into tr
 **Stage 1: María → Elena covenant (protected by 7% buffer)**
 - Seller (Isabel) locks €107 worth of BCH into covenant
 - If BCH drops <7%: Buffer absorbs volatility, Elena still gets €100 worth
-- If BCH drops >7%: Covenant aborts, María gets BCH back (can mint H€ if pool available)
+- If BCH drops ≥6.5%: Covenant aborts, María gets BCH back (can mint H€ if pool available — *planned, Phase 1+*)
 
 **Stage 2: After Elena claims (Elena's choice)**
 - Elena claims €100 worth of BCH to her wallet

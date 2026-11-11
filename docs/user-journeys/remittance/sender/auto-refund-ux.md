@@ -31,7 +31,7 @@ María sees conditions explained **once** at covenant creation:
 │  You will be automatically          │
 │  refunded if:                       │
 │  • Not claimed in 8 hours           │
-│  • BCH price drops >7% (€930)       │
+│  • BCH price drops ≥6.5% (≈€935)       │
 │                                     │
 │  ✅ selected BCH seller fee 0.5%     │
 │  [ request Payment instructions]    │
@@ -93,7 +93,7 @@ When price drops 3% (early warning), María sees:
 │  ⚠️ Price Drop Warning              │
 │                                      │
 │  BCH dropped 3%. Auto-refund will   │
-│  trigger if it drops below €930     │
+│  trigger if it drops below ≈€935     │
 │  (7% threshold).                    │
 │                                      │
 │  No action needed - monitoring.     │
@@ -118,7 +118,7 @@ If the price falls **far enough that the collateral can no longer cover the face
 ┌─────────────────────────────────────┐
 │  ✅ Refund Protected                │
 │                                      │
-│  Price dropped >7% (€930/BCH)       │
+│  Price dropped ≥6.5% (≈€935/BCH)       │
 │                                      │
 │  ✅ Protected: 100 H€                │
 │  (equivalent to €100)               │
@@ -175,7 +175,7 @@ If Elena doesn't claim within **8 hours**, the covenant reaches expiry. **Nothin
 
 **Why no H€ on timeout:**
 - ⚠️ **Minting or swapping on timeout would be abusable** - a deliberate never-claim could drain the bull pool or force a swap
-- ✅ **Minting is reserved** for `merchantCashout` and `abort` (>7% drop), where it is economically backed
+- ✅ **Minting is reserved** for `merchantCashout` and `abort` (≥6.5% drop), where it is economically backed
 - ✅ **The sender keeps control** - `refund()` is always available and sender-signed
 
 **Edge case:** If María's device is offline at expiry, the **funder's** device still recovers its buffer (automatic). María can `refund()` any time once she's back online.
@@ -190,7 +190,7 @@ Traditional wallet might show:
 ```
 ⚠️ Refund Conditions Not Met
 Time remaining: 6h 12min
-Price: €970 (above floor €930)
+Price: €970 (above floor ≈€935)
 
 Refund anyway? This may be unfair to recipient.
 [Cancel] [Refund Anyway]
@@ -215,7 +215,7 @@ Refund anyway? This may be unfair to recipient.
 │                                      │
 │  ● Automatic (Recommended)          │
 │    Protect refunds from volatility  │
-│    • Price drop >7%: mint H€        │
+│    • Price drop ≥6.5%: mint H€        │
 │    • Timeout: no mint (refund)      │
 │                                      │
 │  ○ Manual Control                   │
@@ -240,7 +240,7 @@ Refund anyway? This may be unfair to recipient.
 
 **Example scenario without auto-protect:**
 ```
-t=0:   Price drops >7% → refund triggered
+t=0:   Price drops ≥6.5% → refund triggered
 t=5:   María sees notification: "Convert to H€?"
 t=10:  María clicks "Yes" → price dropped another 3%
 Result: Lost €3 waiting for user input
@@ -248,7 +248,7 @@ Result: Lost €3 waiting for user input
 
 **With auto-protect (default):**
 ```
-t=0:   Price drops >7% → refund + mint H€ (instant)
+t=0:   Price drops ≥6.5% → refund + mint H€ (instant)
 t=5:   María sees notification: "✅ Protected: 100 H€"
 Result: €100 value preserved
 ```
@@ -322,14 +322,14 @@ nostr.publish('asgaya:covenant:abc123', {
 ```
 
 **Other devices see alert:**
-- María: Gets notification "Price dropped >7% — abort to mint H€?"
+- María: Gets notification "Price dropped ≥6.5% — abort to mint H€?"
 - Elena: Gets notification "Payment cancelled - price drop"
 - Isabel: Gets notification "Covenant expired - buffer returned"
 
 **Everyone informed instantly.** No coordination failures.
 
 **Nostr message types used:**
-- `PRICE_DROP_ALERT` - Any device detects >7% drop
+- `PRICE_DROP_ALERT` - Any device detects ≥6.5% drop
 - `REFUND_BROADCAST` - Sender broadcasted refund tx
 - `REFUND_CONFIRMED` - Refund tx confirmed (seller gets buffer)
 - `CLAIM_BROADCAST` - Recipient broadcasted claim tx
@@ -345,14 +345,14 @@ nostr.publish('asgaya:covenant:abc123', {
 
 **Asgaya's approach:**
 - **Covenant:** Allows sender to refund anytime (sender owns it)
-- **App:** offers an `abort` on a >7% drop (timeout is not an auto-refund)
+- **App:** offers an `abort` on a ≥6.5% drop (timeout is not an auto-refund)
 - **Stability layer:** Protects value automatically (but configurable in Settings)
 
 **Why automatic protection by default:**
 
 **Manual prompt approach:**
 ```
-⚠️ Price dropped >7%. Convert to H€?
+⚠️ Price dropped ≥6.5%. Convert to H€?
 [Yes] [No]
 ```
 
@@ -372,7 +372,7 @@ The difference: **Volatility doesn't wait for user input.** In 30 seconds, price
 
 ### What if María's device is offline when refund condition triggers?
 
-**Scenario:** Price drops >7%, but María's phone is dead.
+**Scenario:** Price drops ≥6.5%, but María's phone is dead.
 
 **What happens:**
 1. **Recipient device detects drop** (20s later) → broadcasts refund
@@ -385,7 +385,7 @@ The difference: **Volatility doesn't wait for user input.** In 30 seconds, price
 
 ### What if all devices offline?
 
-**Scenario:** Price drops >7%, but María, Elena, and Isabel all offline.
+**Scenario:** Price drops ≥6.5%, but María, Elena, and Isabel all offline.
 
 **What happens:**
 1. Covenant remains locked temporarily
@@ -435,7 +435,7 @@ The difference: **Volatility doesn't wait for user input.** In 30 seconds, price
 | User decides when to refund | **App decides (pre-agreed conditions)** |
 | User decides if/when to stabilize | **Auto-protect by default (configurable)** |
 | Funds stuck if user forgets to refund | **Manual `refund()`; the funder auto-recovers its buffer** |
-| Volatility exposure on refunds | **H€ mint on `abort` (>7% drop)** |
+| Volatility exposure on refunds | **H€ mint on `abort` (≥6.5% drop)** |
 | Complex UI with many options | **Simple - just status display** |
 | Decision fatigue ("Should I refund?") | **Zero decisions - just notifications** |
 | Emergency escape requires manual refund | **Same (advanced users can broadcast)** |
