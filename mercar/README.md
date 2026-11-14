@@ -5,11 +5,11 @@
 
 ## The slice
 
-A live web board at `mercar.asgaya.org`:
+**Mercar Asgaya is Asgaya's discovery layer**, a classifieds board at `mercar.asgaya.org`:
 
-1. **The board** — a listing (merchant, network badge, menu) built from a catalogue.
-2. **The catalogue** — a restaurant menu as a static JSON, linked from the listing. The schema is in `public/catalogue/schema.json`.
-3. **The direct checkout** — the customer adds dishes and pays from a BCH wallet with **WizardConnect**, straight to the merchant's address. The board builds the payment request and never holds money.
+1. **Categories** — currency exchange first, then restaurants, goods and services. Each ad shows the merchant's **npub and on-chain anchor** (the identity ↔ anchor binding).
+2. **The exchange section (the core)** — reuse the AsgayaHusk ad template: currency, fee, min/max, and **payment methods** (cash, card, Bizum, …). Payment methods + automation are what make Asgaya a universal on-ramp.
+3. **The restaurant example** — a catalogue (static JSON) with a menu and the direct BCH checkout via **WizardConnect**; a product category, not the core.
 
 Networks: the **anchor is mainnet**; the demo shop and payment run on **chipnet**. Every listing carries a network badge.
 
@@ -20,7 +20,8 @@ Networks: the **anchor is mainnet**; the demo shop and payment run on **chipnet*
 - [x] Catalogue schema (`public/catalogue/schema.json`) and the example restaurant (`public/catalogue/menu.json`).
 - [x] Static board (`/`): menu by category, cart, total in EUR, checkout request with a demo fiat→BCH quote.
 - [x] Pre-BLAZE demo recorded (three devices, side-by-side, GIF in `media/`).
-- [x] WizardConnect direct payment (P2PKH) on chipnet: connect, build the tx to the merchant, sign and broadcast (test with Cashonize/Paytaca pending).
+- [x] WizardConnect direct payment (P2PKH) proven on chipnet: `d469ea55…` (merchant 962,094 sats; change 34,879; fee 1,500).
+- [ ] Restructure the board into categories (exchange first) with the identity ↔ anchor badge; the exchange ad template (currency, fee, min/max, methods).
 - [ ] Anchor mint page (mainnet) — reuse `asgaya-docs/code/anchor-mint-spike`.
 - [ ] Validating relay / Nostr listing (the BLAZE demonstrator).
 - [ ] Deploy to `mercar.asgaya.org` (Pages + CNAME).
