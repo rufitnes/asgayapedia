@@ -162,7 +162,8 @@ async function payWithBch() {
       const have = list.reduce((a, u) => a + BigInt(u.value), 0n);
       throw new Error(`Need ${need} sats on chipnet; the wallet has ${have}.`);
     }
-    const txidBytes = hexToBin(utxo.tx_hash).slice().reverse();
+    // libauth expects the outpoint in display order and reverses on encode (see the spike).
+    const txidBytes = hexToBin(utxo.tx_hash);
     const transaction = {
       version: 2,
       inputs: [{
