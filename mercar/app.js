@@ -229,26 +229,22 @@ function renderExchange() {
   for (const ad of ads) {
     const card = document.createElement('article');
     card.className = 'ad';
+    const isSeller = ad.adType === 'SELLER';
+    const sold = isSeller ? 'BCH' : (ad.assets[0] ?? 'asset');
+    const accepts = isSeller ? (ad.assets.join(', ') || '—') : 'BCH';
     card.innerHTML = `
       <div class="ad-top"><span class="ad-type ${ad.adType.toLowerCase()}"></span><span class="ad-name"></span><span class="ad-fee"></span></div>
-      <div class="ad-assets"></div>
+      <div class="ad-row accepts"></div>
       <div class="ad-row methods"></div>
       <div class="ad-row meta"></div>
       <div class="ad-row locality"></div>
       <div class="ad-id"></div>`;
-    card.querySelector('.ad-type').textContent = ad.adType === 'SELLER' ? 'SELLS BCH' : 'BUYS BCH';
+    card.querySelector('.ad-type').textContent = `Sells ${sold}`;
     card.querySelector('.ad-name').textContent = ad.name || ad.cashAccount || 'Merchant';
     card.querySelector('.ad-fee').textContent = `${(ad.fee * 100).toFixed(2)}%`;
-    for (const asset of ad.assets) {
-      const chip = document.createElement('span');
-      chip.className = 'ad-chip';
-      chip.textContent = asset;
-      card.querySelector('.ad-assets').appendChild(chip);
-    }
+    card.querySelector('.accepts').textContent = `for ${accepts}`;
     card.querySelector('.methods').textContent = ad.methods.join(' · ');
-    const min = ad.min ?? '—';
-    const max = ad.max ?? '—';
-    card.querySelector('.meta').textContent = `${min} – ${max} ${ad.assets[0] ?? ''}`;
+    card.querySelector('.meta').textContent = `${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}`;
     card.querySelector('.locality').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ');
     card.querySelector('.ad-id').textContent = `${ad.npub.slice(0, 18)}…`;
     card.title = `BCH pubkey: ${ad.publicKey}`;
