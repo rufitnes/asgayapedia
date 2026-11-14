@@ -186,6 +186,8 @@ async function payWithBch() {
       valueSatoshis: utxo.value,
     };
     console.log('[mercar] signing…');
+    $('co-pay').textContent = 'Approve in your wallet…';
+    $('pay-note').textContent = 'Open your wallet (Cashonize, Paytaca, …) and approve the payment.';
     const res = await wc.signTransaction({ transaction, sourceOutput, inputIndex: 0 });
     console.log('[mercar] signed, broadcast:', res.txid ?? 'self');
     const txid = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
