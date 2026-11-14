@@ -1,7 +1,7 @@
 import QRCode from 'qrcode';
-import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin } from '@bitauth/libauth';
+import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex } from '@bitauth/libauth';
 import { WizardConnectSigner } from './wizardconnect.js';
-import { electrumListUnspent, scripthashFromLockingBytecode } from './electrum.js';
+import { electrumListUnspent, scripthashFromLockingBytecode, broadcastTransaction } from './electrum.js';
 
 const CATALOGUE_URL = 'catalogue/menu.json';
 const ELECTRUM_WS = 'wss://chipnet.imaginary.cash:50004';
@@ -126,13 +126,14 @@ async function connectWallet() {
       $('wc-uri').textContent = u;
       try { $('wc-qr').src = await QRCode.toDataURL(q ?? u, { width: 280, margin: 1 }); } catch { /* optional */ }
     },
-    broadcast: true,
+    broadcast: false,
     userPrompt: 'Pay with BCH',
     dappName: 'Mercar Asgaya',
   });
   wcLocking = await wc.getLockingBytecode();
   const r = lockingBytecodeToCashAddress({ prefix: 'bchtest', bytecode: wcLocking, tokenSupport: false });
   wcAddress = typeof r === 'string' ? null : r.address;
+  console.log('[mercar] wallet', wcAddress);
   $('connect-btn').textContent = wcAddress ? `Connected ${wcAddress.slice(0, 14)}…` : 'Connected';
   dlg.close();
 }
@@ -147,8 +148,10 @@ async function payWithBch() {
     const dec = decodeCashAddress(state.catalogue.merchant.address);
     if (typeof dec === 'string') throw new Error(dec);
     const merchantLocking = new Uint8Array([0x76, 0xa9, 0x14, ...dec.payload, 0x88, 0xac]);
+    console.log('[mercar] amount', amountSats, 'sats; wallet', wcAddress);
     const sh = await scripthashFromLockingBytecode(wcLocking);
     const list = await electrumListUnspent(ELECTRUM_WS, sh);
+    console.log('[mercar] utxos', list.map((u) => u.value));
     const fee = 1500n;
     const need = BigInt(amountSats) + fee;
     const utxo = list
@@ -182,11 +185,15 @@ async function payWithBch() {
       lockingBytecode: wcLocking,
       valueSatoshis: utxo.value,
     };
+    console.log('[mercar] signing…');
     const res = await wc.signTransaction({ transaction, sourceOutput, inputIndex: 0 });
+    console.log('[mercar] signed, broadcast:', res.txid ?? 'self');
+    const txid = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
+    console.log('[mercar] txid', txid);
     $('co-pay').textContent = 'Paid';
-    $('pay-note').textContent = `Paid ${amountSats} sats.${res.txid ? ` txid ${res.txid}` : ' Broadcast by the wallet.'}`;
+    $('pay-note').textContent = `Paid ${amountSats} sats. txid ${txid}`;
     $('checkout').close();
-    alert(`Payment sent.${res.txid ? `\ntxid: ${res.txid}` : ''}`);
+    alert(`Payment sent.\ntxid: ${txid}`);
   } catch (e) {
     alert(`Payment failed: ${e.message}`);
     $('co-pay').disabled = false;
