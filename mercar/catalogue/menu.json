@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "merchant": {
+    "name": "Casa Elena",
+    "description": "Home cooking. Pickup or neighbourhood delivery.",
+    "address": "bchtest:qz4llaasruxhme2l80dsnme76fmj24ve05h6d8ghe5",
+    "network": "chipnet"
+  },
+  "currency": "EUR",
+  "items": [
+    {
+      "id": "gazpacho",
+      "name": "Gazpacho andaluz",
+      "description": "Tomato, cucumber, pepper and olive oil.",
+      "price": 650,
+      "category": "Starters"
+    },
+    {
+      "id": "croquetas",
+      "name": "Ham croquettes",
+      "description": "Six homemade croquettes.",
+      "price": 850,
+      "category": "Starters"
+    },
+    {
+      "id": "paella",
+      "name": "Seafood paella",
+      "description": "Bomba rice, fresh seafood and saffron. Single portion.",
+      "price": 1450,
+      "category": "Mains"
+    },
+    {
+      "id": "pulpo",
+      "name": "Octopus a la gallega",
+      "description": "Potato, paprika and olive oil.",
+      "price": 1650,
+      "category": "Mains"
+    },
+    {
+      "id": "tortilla",
+      "name": "Spanish omelette",
+      "description": "With or without onion. Portion for two.",
+      "price": 900,
+      "category": "Mains"
+    },
+    {
+      "id": "tarta",
+      "name": "Cheesecake",
+      "description": "Baked, with red-berry jam.",
+      "price": 550,
+      "category": "Desserts"
+    },
+    {
+      "id": "agua",
+      "name": "Mineral water",
+      "description": "50 cl bottle.",
+      "price": 200,
+      "category": "Drinks"
+    },
+    {
+      "id": "vino",
+      "name": "Glass of red wine",
+      "description": "Rioja, 2022 vintage.",
+      "price": 350,
+      "category": "Drinks"
+    }
+  ]
+}

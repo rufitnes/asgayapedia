@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mercar.asgaya.org/catalogue.schema.json",
+  "title": "Mercar Asgaya catalogue",
+  "description": "A merchant's catalogue (e.g. a restaurant menu), linked from the merchant's on-chain anchor. Prices are fiat minor units; the board quotes BCH at checkout.",
+  "type": "object",
+  "required": ["version", "merchant", "currency", "items"],
+  "properties": {
+    "version": { "const": 1 },
+    "merchant": {
+      "type": "object",
+      "required": ["name", "address"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "npub": { "type": "string", "description": "The merchant's Nostr npub (identity; same key as the anchor genesis signer in Phase 0)." },
+        "address": { "type": "string", "description": "BCH address that receives the payment." },
+        "network": { "enum": ["mainnet", "chipnet", "testnet3"], "default": "mainnet" },
+        "logo": { "type": "string", "format": "uri-reference" },
+        "anchor": { "type": "string", "description": "txid:vout of the merchant's anchor NFT." }
+      }
+    },
+    "currency": { "type": "string", "description": "ISO 4217 code for the item prices (e.g. EUR)." },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "price", "category"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "price": { "type": "integer", "minimum": 0, "description": "Price in fiat minor units (cents)." },
+          "category": { "type": "string" },
+          "image": { "type": "string", "format": "uri-reference" },
+          "available": { "type": "boolean", "default": true }
+        }
+      }
+    }
+  }
+}

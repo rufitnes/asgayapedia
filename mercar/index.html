@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mercar Asgaya — Casa Elena</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Mercar <span>Asgaya</span></div>
+    <div class="topbar-right">
+      <span class="badge" id="network-badge">chipnet demo</span>
+      <button class="ghost" id="connect-btn" type="button">Connect wallet</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="listing" aria-live="polite">
+      <div class="listing-head">
+        <div>
+          <h1 id="merchant-name">Cargando…</h1>
+          <p id="merchant-desc" class="muted"></p>
+        </div>
+        <div class="merchant-address" id="merchant-address" title="Payment address"></div>
+      </div>
+      <div id="menu"></div>
+    </section>
+
+    <aside class="cart" aria-label="Cart">
+      <h2>Your order</h2>
+      <div id="cart-items" class="cart-items"></div>
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cart-total">€0,00</strong>
+      </div>
+      <button class="primary" id="pay-btn" type="button" disabled>Pay with BCH</button>
+      <p class="note" id="pay-note">Add something from the menu to start.</p>
+    </aside>
+  </main>
+
+  <dialog id="checkout" class="checkout">
+    <h2>Payment</h2>
+    <p class="muted">Demo: the direct WizardConnect payment is wired in the next step.</p>
+    <dl>
+      <dt>Amount</dt><dd id="co-total"></dd>
+      <dt>Demo rate</dt><dd id="co-rate"></dd>
+      <dt>BCH</dt><dd id="co-bch"></dd>
+      <dt>Merchant address</dt><dd class="mono" id="co-address"></dd>
+    </dl>
+    <div class="checkout-actions">
+      <button class="ghost" id="co-close" type="button">Close</button>
+      <button class="primary" id="co-pay" type="button" disabled>WizardConnect (next step)</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
