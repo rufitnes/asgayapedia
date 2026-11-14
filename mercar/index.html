@@ -48,6 +48,16 @@
     </aside>
   </main>
 
+  <dialog id="wc-dialog" class="checkout">
+    <h2>Connect a BCH wallet</h2>
+    <p class="muted">Scan the QR with Cashonize, Paytaca or any WizardConnect wallet.</p>
+    <img id="wc-qr" alt="WizardConnect QR" width="280" height="280" />
+    <p class="mono" id="wc-uri"></p>
+    <div class="checkout-actions">
+      <button class="ghost" id="wc-cancel" type="button">Cancel</button>
+    </div>
+  </dialog>
+
   <dialog id="checkout" class="checkout">
     <h2>Payment</h2>
     <p class="muted">Demo: the direct WizardConnect payment is wired in the next step.</p>
@@ -59,7 +69,7 @@
     </dl>
     <div class="checkout-actions">
       <button class="ghost" id="co-close" type="button">Close</button>
-      <button class="primary" id="co-pay" type="button" disabled>WizardConnect (next step)</button>
+      <button class="primary" id="co-pay" type="button">Pay with WizardConnect</button>
     </div>
   </dialog>
 

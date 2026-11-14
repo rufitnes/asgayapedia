@@ -11,7 +11,9 @@
   "dependencies": {
     "@bitauth/libauth": "^3.0.0",
     "@walletconnect/sign-client": "^2.17.0",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "@wizardconnect/core": "^0.1.10",
+    "@wizardconnect/dapp": "^0.1.7"
   },
   "devDependencies": {
     "vite": "^5.4.14"

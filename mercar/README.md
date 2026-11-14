@@ -20,7 +20,7 @@ Networks: the **anchor is mainnet**; the demo shop and payment run on **chipnet*
 - [x] Catalogue schema (`public/catalogue/schema.json`) and the example restaurant (`public/catalogue/menu.json`).
 - [x] Static board (`/`): menu by category, cart, total in EUR, checkout request with a demo fiat→BCH quote.
 - [x] Pre-BLAZE demo recorded (three devices, side-by-side, GIF in `media/`).
-- [ ] WizardConnect direct payment (P2PKH) on chipnet — the next step.
+- [x] WizardConnect direct payment (P2PKH) on chipnet: connect, build the tx to the merchant, sign and broadcast (test with Cashonize/Paytaca pending).
 - [ ] Anchor mint page (mainnet) — reuse `asgaya-docs/code/anchor-mint-spike`.
 - [ ] Validating relay / Nostr listing (the BLAZE demonstrator).
 - [ ] Deploy to `mercar.asgaya.org` (Pages + CNAME).
@@ -36,7 +36,7 @@ npm run dev
 
 ## Open build items (from `bulletin-board/26`)
 
-- (a) Confirm the **simple P2PKH payment path** via WizardConnect on chipnet (the spike proved the anchor mint; the payment is the next test).
+- (a) **WizardConnect P2PKH path implemented** in the board; test it with Cashonize/Paytaca on chipnet.
 - (b) The demo needs a **fiat→BCH quote**; `web/app.js` uses a fixed demo rate until the oracle is wired.
 - (c) The **catalogue schema** is defined here; iterate with the merchant data.
 
