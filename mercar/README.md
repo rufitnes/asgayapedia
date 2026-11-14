@@ -17,6 +17,7 @@ Networks: the **anchor is mainnet**; the demo shop and payment run on **chipnet*
 
 - [x] Catalogue schema (`catalogue/schema.json`) and the example restaurant (`catalogue/menu.json`).
 - [x] Static board (`/`): menu by category, cart, total in EUR, checkout request with a demo fiat→BCH quote.
+- [x] Pre-BLAZE demo recorded (three devices, side-by-side, GIF in `media/`).
 - [ ] WizardConnect direct payment (P2PKH) on chipnet — the next step.
 - [ ] Anchor mint page (mainnet) — reuse `asgaya-docs/code/anchor-mint-spike`.
 - [ ] Validating relay / Nostr listing (the BLAZE demonstrator).

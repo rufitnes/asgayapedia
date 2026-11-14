@@ -8,4 +8,6 @@ Use this list in the BUIDL About and in any submission form.
 - **Build log:** https://github.com/rufitnes/asgayapedia/tree/blaze-2026/docs/build-log
 - **Research code (pre-BLAZE):** https://github.com/rufitnes/asgayapedia/tree/main/code
 - **Public docs:** https://docs.asgaya.org
-- **Pre-BLAZE demo:** _to add: a short screen recording of the app (testnet3) or the anchor-mint spike (chipnet)._
+- **Pre-BLAZE demo (GIF):** https://raw.githubusercontent.com/rufitnes/asgayapedia/blaze-2026/mercar/media/preblaze.gif
+- **Pre-BLAZE demo (video):** https://github.com/rufitnes/asgayapedia/raw/blaze-2026/mercar/media/preblaze-side-by-side.mp4
+- **Three devices (still):** https://raw.githubusercontent.com/rufitnes/asgayapedia/blaze-2026/mercar/media/preblaze-three-devices.png
