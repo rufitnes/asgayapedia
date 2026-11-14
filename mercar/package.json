@@ -1,0 +1,19 @@
+{
+  "name": "mercar-asgaya",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@bitauth/libauth": "^3.0.0",
+    "@walletconnect/sign-client": "^2.17.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "vite": "^5.4.14"
+  }
+}
