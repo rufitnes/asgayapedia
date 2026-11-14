@@ -13,6 +13,8 @@ A live web board at `mercar.asgaya.org`:
 
 Networks: the **anchor is mainnet**; the demo shop and payment run on **chipnet**. Every listing carries a network badge.
 
+**Prior work (the WizardConnect proof):** the [anchor-mint spike](https://github.com/rufitnes/asgayapedia/tree/main/code/anchor-mint-spike) connects a real wallet through WizardConnect and mints the genesis anchor on chipnet. The board's direct checkout uses the same connection; the spike is the proof that the wallet path works.
+
 ## Day 1 (14 Nov) — status
 
 - [x] Catalogue schema (`catalogue/schema.json`) and the example restaurant (`catalogue/menu.json`).
