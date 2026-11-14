@@ -144,3 +144,15 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   .listing-head { flex-direction: column; }
   .merchant-address { text-align: left; }
 }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  padding: 8px 22px;
+  background: #17122b;
+  font-size: 12px;
+}
+.links a { color: #cfc8ff; text-decoration: none; }
+.links a:hover { color: #ffffff; text-decoration: underline; }
