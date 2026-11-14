@@ -21,7 +21,8 @@ Networks: the **anchor is mainnet**; the demo shop and payment run on **chipnet*
 - [x] Static board (`/`): menu by category, cart, total in EUR, checkout request with a demo fiat→BCH quote.
 - [x] Pre-BLAZE demo recorded (three devices, side-by-side, GIF in `media/`).
 - [x] WizardConnect direct payment (P2PKH) proven on chipnet: `d469ea55…` (merchant 962,094 sats; change 34,879; fee 1,500).
-- [ ] Restructure the board into categories (exchange first) with the identity ↔ anchor badge; the exchange ad template (currency, fee, min/max, methods).
+- [x] Exchange list from the LAN relay: the board renders the existing NIP-99 ads published from the app's Trade tab (4 real ads: EUR card/cash, NGN buy, USD cash), with asset/method filters and fee sort.
+- [ ] Identity ↔ anchor badge; categories (exchange/restaurant/goods); publish from the web.
 - [ ] Anchor mint page (mainnet) — reuse `asgaya-docs/code/anchor-mint-spike`.
 - [ ] Validating relay / Nostr listing (the BLAZE demonstrator).
 - [ ] Deploy to `mercar.asgaya.org` (Pages + CNAME).
