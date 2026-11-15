@@ -1,3 +1,4 @@
+import { sha256, secp256k1, hexToBin, binToHex } from '@bitauth/libauth';
 // Minimal NIP-99 read client: fetch the Asgaya board ads (kind 30402) from a relay.
 export const NOSTR_RELAY = 'ws://192.168.1.115:7777';
 export const KIND_LISTING = 30402;
@@ -69,5 +70,34 @@ export function fetchListings(relay = NOSTR_RELAY, timeoutMs = 8000) {
       if (byId.size) finish();
       else reject(new Error(`relay ${relay} unreachable`));
     };
+  });
+}
+
+export function makeEvent({ privHex, pubHex, kind, tags, content }) {
+  const createdAt = Math.floor(Date.now() / 1000);
+  const serial = JSON.stringify([0, pubHex, createdAt, kind, tags, content]);
+  const id = binToHex(sha256.hash(new TextEncoder().encode(serial)));
+  const sig = secp256k1.signMessageHashSchnorr(hexToBin(privHex), hexToBin(id));
+  if (typeof sig === 'string') throw new Error(sig);
+  return { id, pubkey: pubHex, created_at: createdAt, kind, tags, content, sig: binToHex(sig) };
+}
+
+export function publishEvent(relay, event, timeoutMs = 10000) {
+  return new Promise((resolve, reject) => {
+    const ws = new WebSocket(relay);
+    let done = false;
+    const finish = (fn) => { if (done) return; done = true; try { ws.close(); } catch { /* ignore */ } fn(); };
+    const timer = setTimeout(() => finish(() => reject(new Error('relay publish timeout'))), timeoutMs);
+    ws.onopen = () => ws.send(JSON.stringify(['EVENT', event]));
+    ws.onmessage = (ev) => {
+      let msg;
+      try { msg = JSON.parse(ev.data); } catch { return; }
+      if (msg[0] === 'OK' && msg[1] === event.id) {
+        clearTimeout(timer);
+        if (msg[2] === false) finish(() => reject(new Error(msg[3] || 'relay rejected the event')));
+        else finish(() => resolve(event.id));
+      }
+    };
+    ws.onerror = () => { clearTimeout(timer); finish(() => reject(new Error(`relay ${relay} unreachable`))); };
   });
 }

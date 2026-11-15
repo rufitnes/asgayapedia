@@ -1,9 +1,9 @@
 import QRCode from 'qrcode';
-import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex } from '@bitauth/libauth';
+import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, encodePrivateKeyWif } from '@bitauth/libauth';
 import { WizardConnectSigner } from './wizardconnect.js';
 import { encodeAnchorCommitment, buildGenesisAnchor, buildSelfSend } from './anchor.js';
 import { electrumListUnspent, scripthashFromLockingBytecode, broadcastTransaction } from './electrum.js';
-import { fetchListings, NOSTR_RELAY } from './nostr.js';
+import { fetchListings, NOSTR_RELAY, makeEvent, publishEvent } from './nostr.js';
 
 const CATALOGUE_URL = 'catalogue/menu.json';
 const ELECTRUM_WS = 'wss://chipnet.imaginary.cash:50004';
@@ -365,9 +365,24 @@ function applyCategory(it) {
 
 let anchorUtxos = [];
 
-async function anchorIdentity() {
-  const pub = await wc.getPubkey();
-  return binToHex(pub.slice(1));
+const DEMO_KEY_STORAGE = 'mercar-demo-key';
+const METHOD_KEY = { 'Cash in person': 'cash', 'Card in person': 'card', 'Bizum': 'bizum' };
+const slug = (v) => v.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+function demoKey() {
+  let hex = localStorage.getItem(DEMO_KEY_STORAGE);
+  if (!hex) {
+    hex = binToHex(secp256k1.generatePrivateKey());
+    localStorage.setItem(DEMO_KEY_STORAGE, hex);
+  }
+  const priv = hexToBin(hex);
+  const pub = secp256k1.derivePublicKeyCompressed(priv);
+  return {
+    privHex: hex,
+    pubHex: binToHex(pub),
+    xHex: binToHex(pub.slice(1)),
+    wif: encodePrivateKeyWif(priv, 'testnet', sha256),
+  };
 }
 
 async function anchorLoad() {
@@ -387,34 +402,98 @@ async function anchorLoad() {
 
 function openAnchor() {
   showView('anchor');
+  const k = demoKey();
+  document.getElementById('demo-wif').textContent = `WIF: ${k.wif}`;
+  document.getElementById('demo-npub').textContent = `npub (hex): ${k.xHex}`;
   if (wc) anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; });
-  else document.getElementById('anchor-note').textContent = 'Connect a chipnet wallet to mint the anchor.';
+  else document.getElementById('anchor-note').textContent = 'Connect the anchor wallet (with the demo WIF).';
 }
 
-async function anchorMint() {
+async function publishAd() {
   const btn = document.getElementById('anchor-mint');
   btn.disabled = true;
   try {
+    const k = demoKey();
     if (!wc) await connectWallet();
+    const walletPub = await wc.getPubkey();
+    if (binToHex(walletPub.slice(1)) !== k.xHex) {
+      throw new Error('Connect the wallet with the demo WIF (same key).');
+    }
+    const role = document.getElementById('ad-role').value;
+    const assets = [...document.querySelectorAll('input[name=ad-asset]:checked')].map((x) => x.value);
+    const methods = [...document.querySelectorAll('input[name=ad-method]:checked')].map((x) => x.value);
+    if (assets.length === 0) throw new Error('Pick at least one currency.');
+    if (methods.length === 0) throw new Error('Pick at least one payment method.');
+    const fee = Number(document.getElementById('ad-fee').value);
+    const min = Number(document.getElementById('ad-min').value);
+    const max = Number(document.getElementById('ad-max').value);
+    const name = document.getElementById('ad-name').value;
+    const cash = document.getElementById('ad-cash').value;
+    const location = document.getElementById('ad-location').value;
+    const hours = document.getElementById('ad-hours').value;
     const v0 = anchorUtxos
       .filter((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n)
       .sort((a, b) => Number(b.value) - Number(a.value))[0];
-    if (!v0) throw new Error('No vout-0 UTXO');
+    if (!v0) throw new Error('No vout-0 UTXO; prepare one first.');
     const commitment = encodeAnchorCommitment({
-      role: document.getElementById('anchor-role').value,
-      asset: document.getElementById('anchor-asset').value,
-      method: document.getElementById('anchor-method').value,
-      feeBps: Number(document.getElementById('anchor-fee').value),
+      role,
+      asset: assets[0],
+      method: METHOD_KEY[methods[0]] ?? 'cash',
+      feeBps: Math.round(fee * 100),
     });
     const built = buildGenesisAnchor(wcLocking, { txid: v0.tx_hash, vout: v0.tx_pos, satoshis: BigInt(v0.value) }, commitment);
-    document.getElementById('anchor-note').textContent = 'Approve in your wallet…';
+    document.getElementById('anchor-note').textContent = 'Approve the anchor in your wallet…';
     const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Mint your identity anchor' });
-    const txid = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
-    const identity = await anchorIdentity();
-    document.getElementById('anchor-result').textContent = `Anchor tx: ${txid}\nCategory: ${built.categoryHex}\nIdentity (npub hex): ${identity}`;
-    document.getElementById('anchor-note').textContent = 'Anchor minted on chipnet. The identity is the genesis signer.';
+    const anchorTx = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
+    const adId = `${k.xHex.slice(0, 16)}-${role === 'seller' ? 'SELLER' : 'BUYER'}-${assets.join('')}-${slug(methods[0])}`;
+    const tags = [
+      ['d', adId],
+      ['t', 'asgaya-board'],
+      ['t', role === 'seller' ? 'asgaya-seller' : 'asgaya-buyer'],
+      ['bchpub', k.pubHex],
+      ...assets.map((a) => ['t', `asset:${a.toLowerCase()}`]),
+      ...methods.map((m) => ['t', `pay:${slug(m)}`]),
+      ['fee', String(fee)],
+      ['buffer', '93'],
+      ['location', location],
+      ['min', String(min)],
+      ['max', String(max)],
+      ['hours', hours],
+      ['cash', cash],
+      ['name', name],
+      ['status', 'active'],
+      ['anchor', `${anchorTx}:0`],
+    ];
+    const content = JSON.stringify({
+      adType: role === 'seller' ? 'SELLER' : 'BUYER',
+      assets,
+      paymentMethods: methods,
+      fee: fee / 100,
+      minPricePercent: 93,
+      cashAccount: cash,
+      bchPubkey: k.pubHex,
+      npub: k.xHex,
+      location,
+      min,
+      max,
+      hours,
+      name,
+      phone: document.getElementById('ad-phone').value,
+      iban: document.getElementById('ad-iban').value,
+      notes: document.getElementById('ad-notes').value,
+    });
+    const event = makeEvent({ privHex: k.privHex, pubHex: k.xHex, kind: 30402, tags, content });
+    document.getElementById('anchor-note').textContent = 'Publishing the listing…';
+    await publishEvent(NOSTR_RELAY, event);
+    document.getElementById('anchor-result').textContent =
+      `Anchor tx: ${anchorTx}\nListing: ${event.id}\nIdentity (npub hex): ${k.xHex}`;
+    document.getElementById('anchor-note').textContent = 'Published. The ad is on the board with its identity anchor.';
+    exchangeAds = await fetchListings();
+    populateFilters();
+    renderExchange();
+    showView('exchange');
   } catch (e) {
-    document.getElementById('anchor-note').textContent = `Mint failed: ${e.message}`;
+    document.getElementById('anchor-note').textContent = `Publish failed: ${e.message}`;
     btn.disabled = false;
   }
 }
@@ -456,7 +535,7 @@ async function main() {
   $('hero-publish').addEventListener('click', openAnchor);
   $('back-anchor').addEventListener('click', () => showView(null));
   $('anchor-connect').addEventListener('click', () => connectWallet().then(() => anchorLoad()).catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
-  $('anchor-mint').addEventListener('click', anchorMint);
+  $('anchor-mint').addEventListener('click', publishAd);
   $('anchor-selfsend').addEventListener('click', anchorSelfSend);
   $('anchor-refresh').addEventListener('click', () => anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
   $('hero-buy-bch').addEventListener('click', () => applyCategory({ kind: 'buyBch' }));

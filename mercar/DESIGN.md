@@ -87,6 +87,13 @@
 - The Mint explainer: approve in the wallet; then the result shows the anchor tx, the category and the identity (npub hex, the genesis signer).
 - The view is labelled **chipnet demo**; the mainnet mint is the same code with a sanity check later.
 
+## Publish flow (the merchant)
+
+- **Publish an ad** opens a **pre-filled, fully editable** form (the Trade-tab fields: role, name, cash account, currencies, methods, fee, min/max, location, hours, contacts). The pre-fill is demo data; the inputs make it obvious it can be edited.
+- **Demo identity:** a throwaway key shown as a **WIF** (import into Cashonize, chipnet) and the **npub hex**; the listing is signed with the same key. A dashed box, clearly a demo.
+- **One step:** Publish → the wallet approves the **anchor** (vout-0 funding; the self-send helper if needed) → the **NIP-99 listing** is signed and published to the relay → the board opens on the exchange with the new ad.
+- The result line shows the anchor tx, the listing id and the identity; the app keeps the same ad schema.
+
 ## Copy & voice
 
 - Sentence case; short lines. The ad reads **“Sells BCH”** or **“Sells NGN”**, then **“for EUR”**, methods, min–max.

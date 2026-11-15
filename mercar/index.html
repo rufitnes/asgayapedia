@@ -108,21 +108,48 @@
 
   <section class="view" id="anchor-view" hidden>
     <button class="back" id="back-anchor" type="button">← All categories</button>
-    <h2 class="view-title">Mint your identity anchor</h2>
-    <p class="muted">Step 1 of 2: your identity. Chipnet demo. The anchor ties your merchant identity (npub) to an on-chain NFT; the identity is the key that signs the genesis. The ad comes next.</p>
+    <h2 class="view-title">Publish an ad</h2>
+    <p class="muted">The ad comes pre-filled with demo data. Edit anything (it is a normal form), then Publish: we mint your identity anchor and list the ad. Chipnet demo.</p>
     <div class="anchor-box">
-      <div class="anchor-row">
-        <button class="primary" id="anchor-connect" type="button">Connect wallet</button>
-        <span class="mono" id="anchor-address"></span>
+      <div class="demo-key">
+        <strong>Your demo identity (chipnet)</strong>
+        <p class="muted">Import this WIF into Cashonize (chipnet) to sign the anchor. The listing is signed with the same key. Throwaway key, no real funds.</p>
+        <p class="mono" id="demo-wif"></p>
+        <p class="mono" id="demo-npub"></p>
       </div>
       <div class="anchor-fields">
-        <label>Role<select id="anchor-role"><option value="seller">Seller (I sell BCH)</option><option value="buyer">Buyer (I buy BCH)</option></select></label>
-        <label>Currency<select id="anchor-asset"><option>EUR</option><option>USD</option><option>NGN</option></select></label>
-        <label>Payment<select id="anchor-method"><option value="cash">Cash in person</option><option value="card">Card in person</option><option value="bizum">Bizum</option></select></label>
-        <label>Fee (bps)<input id="anchor-fee" type="number" value="50" min="0" max="10000" /></label>
+        <label>I want to<select id="ad-role"><option value="seller">Sell BCH (I accept fiat)</option><option value="buyer">Buy BCH (I pay fiat)</option></select></label>
+        <label>Name<input id="ad-name" value="Casa Elena" /></label>
+        <label>Cash account<input id="ad-cash" value="Casa Elena#142" /></label>
+        <label>Fee (%)<input id="ad-fee" type="number" step="0.01" value="0.5" /></label>
+        <label>Min<input id="ad-min" type="number" value="1" /></label>
+        <label>Max<input id="ad-max" type="number" value="1000" /></label>
+        <label>Location<input id="ad-location" value="Calle la Vega 5, Mieres" /></label>
+        <label>Hours<input id="ad-hours" value="24/7" /></label>
+        <label>Phone<input id="ad-phone" /></label>
+        <label>IBAN<input id="ad-iban" /></label>
+        <label>Notes<input id="ad-notes" /></label>
+      </div>
+      <fieldset class="ad-checks">
+        <legend>Currencies</legend>
+        <label><input type="checkbox" name="ad-asset" value="EUR" checked /> EUR</label>
+        <label><input type="checkbox" name="ad-asset" value="USD" /> USD</label>
+        <label><input type="checkbox" name="ad-asset" value="NGN" /> NGN</label>
+      </fieldset>
+      <fieldset class="ad-checks">
+        <legend>Payment methods</legend>
+        <label><input type="checkbox" name="ad-method" value="Cash in person" checked /> Cash in person</label>
+        <label><input type="checkbox" name="ad-method" value="Card in person" /> Card in person</label>
+        <label><input type="checkbox" name="ad-method" value="Bizum" /> Bizum</label>
+        <label><input type="checkbox" name="ad-method" value="SEPA" /> SEPA</label>
+        <label><input type="checkbox" name="ad-method" value="Pago Móvil" /> Pago Móvil</label>
+      </fieldset>
+      <div class="anchor-row">
+        <button class="ghost" id="anchor-connect" type="button">Connect anchor wallet</button>
+        <span class="mono" id="anchor-address"></span>
       </div>
       <div class="anchor-actions">
-        <button class="primary" id="anchor-mint" type="button" disabled>Mint anchor (chipnet)</button>
+        <button class="primary" id="anchor-mint" type="button" disabled>Publish (mint anchor + listing)</button>
         <button class="ghost" id="anchor-selfsend" type="button" disabled>Prepare a vout-0 UTXO</button>
         <button class="ghost" id="anchor-refresh" type="button">Refresh</button>
       </div>
