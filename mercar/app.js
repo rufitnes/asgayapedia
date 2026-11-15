@@ -7,6 +7,13 @@ import { fetchListings, NOSTR_RELAY, makeEvent, publishEvent, nip04Encrypt, nip0
 
 const CATALOGUE_URL = 'catalogue/menu.json';
 const ELECTRUM_WS = 'wss://chipnet.imaginary.cash:50004';
+// The identity badge verifies an anchor on the network that actually holds it: the app mints on
+// testnet3, the web canary on chipnet. New ads declare `network`; older ones are probed.
+const ELECTRUM_WS_BY_NETWORK = {
+  chipnet: 'wss://chipnet.imaginary.cash:50004',
+  testnet3: 'wss://testnet.imaginary.cash:50004',
+};
+const VERIFY_NETWORKS = ['chipnet', 'testnet3'];
 // Demo quote. The live fiat->BCH quote comes from the oracle in the next step.
 const DEMO_EUR_PER_BCH = 207.88;
 
@@ -333,28 +340,37 @@ async function verifyAnchor(ad) {
     return;
   }
   const txid = ad.anchor.split(':')[0];
-  try {
-    const raw = await electrumGetRawTx(ELECTRUM_WS, txid);
-    if (typeof raw !== 'string') throw new Error('transaction not found');
-    const tx = decodeTransaction(hexToBin(raw));
-    if (typeof tx === 'string') throw new Error(tx);
-    const pub = (tx.inputs?.[0]?.unlockingBytecode ?? new Uint8Array()).slice(-33);
-    if (pub.length !== 33) throw new Error('no signer pubkey in the genesis tx');
-    if (binToHex(pub) !== ad.publicKey.toLowerCase()) {
-      badge.textContent = 'Mismatch';
-      badge.className = 'badge warn';
-      note.textContent = 'The anchor was not signed by this ad’s key.';
+  const candidates = ad.network && ELECTRUM_WS_BY_NETWORK[ad.network]
+    ? [ad.network, ...VERIFY_NETWORKS.filter((n) => n !== ad.network)]
+    : VERIFY_NETWORKS;
+  let lastError = null;
+  for (const network of candidates) {
+    try {
+      const raw = await electrumGetRawTx(ELECTRUM_WS_BY_NETWORK[network], txid);
+      if (typeof raw !== 'string') throw new Error('transaction not found');
+      const tx = decodeTransaction(hexToBin(raw));
+      if (typeof tx === 'string') throw new Error(tx);
+      const pub = (tx.inputs?.[0]?.unlockingBytecode ?? new Uint8Array()).slice(-33);
+      if (pub.length !== 33) throw new Error('no signer pubkey in the genesis tx');
+      if (binToHex(pub) !== ad.publicKey.toLowerCase()) {
+        badge.textContent = `Mismatch · ${network}`;
+        badge.className = 'badge warn';
+        note.textContent = `The anchor on ${network} was not signed by this ad’s key.`;
+        $('identity-anchor').textContent = `Anchor: ${ad.anchor} (${network})`;
+        return;
+      }
+      badge.textContent = `Verified on-chain · ${network}`;
+      badge.className = 'badge ok';
+      note.textContent = `The genesis anchor on ${network} was signed by this ad’s key: same-key identity.`;
+      $('identity-anchor').textContent = `Anchor: ${ad.anchor} (${network})`;
       return;
+    } catch (e) {
+      lastError = e;
     }
-    badge.textContent = 'Verified on-chain';
-    badge.className = 'badge ok';
-    note.textContent = 'The genesis anchor was signed by this ad’s key: same-key identity.';
-    $('identity-anchor').textContent = `Anchor: ${ad.anchor}`;
-  } catch (e) {
-    badge.textContent = 'Unverified';
-    badge.className = 'badge warn';
-    note.textContent = `Could not verify the anchor: ${e.message}`;
   }
+  badge.textContent = 'Unverified';
+  badge.className = 'badge warn';
+  note.textContent = `Could not verify the anchor on ${candidates.join(' / ')}: ${lastError?.message ?? 'not found'}`;
 }
 
 function showInstructions() {
@@ -536,14 +552,27 @@ function currentCommitmentHex() {
   }));
 }
 
-async function findIdentityAnchor() {
-  const token = anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft && String(u.token_data.nft.commitment ?? '').toLowerCase().startsWith('01'));
+/**
+ * Reuse is per on-chain tuple (`10 §2.1`): an anchor commits `(seller, asset, method, fee)`, so
+ * ads that share that tuple share the anchor; a different tuple needs a new anchor. Matching the
+ * full commitment (not just the `0x01` version byte) is what makes the reuse honest.
+ */
+function matchAnchor(commitmentHex) {
+  const want = (commitmentHex || '').toLowerCase();
+  if (!want) return null;
+  const token = anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft
+    && String(u.token_data.nft.commitment ?? '').toLowerCase() === want);
   if (token) return token.tx_hash;
-  const dust = anchorUtxos.find((u) => u.tx_pos === 0 && BigInt(u.value) > 0n && BigInt(u.value) <= 2000n);
-  if (dust) return dust.tx_hash;
   const saved = loadSavedAnchor();
-  if (saved?.txid) return saved.txid;
-  if (!wcLocking) return null;
+  if (saved?.txid && String(saved.commitmentHex ?? '').toLowerCase() === want) return saved.txid;
+  return null;
+}
+
+async function findIdentityAnchor(commitmentHex) {
+  const sync = matchAnchor(commitmentHex);
+  if (sync) return sync;
+  const want = (commitmentHex || '').toLowerCase();
+  if (!want || !wcLocking) return null;
   const sh = await scripthashFromLockingBytecode(wcLocking);
   const history = await electrumGetHistory(ELECTRUM_WS, sh);
   for (const h of history) {
@@ -553,23 +582,26 @@ async function findIdentityAnchor() {
       const tx = decodeTransaction(hexToBin(raw));
       if (typeof tx === 'string') continue;
       const c = tx.outputs?.[0]?.token?.nft?.commitment;
-      if (c && c[0] === 0x01) return h.tx_hash;
+      if (c && binToHex(c).toLowerCase() === want) return h.tx_hash;
     } catch { /* skip */ }
   }
   return null;
 }
 
-function refreshPublishButton() {
+function refreshPublishButton(keepExisting = false) {
   const btn = document.getElementById('anchor-mint');
   const note = document.getElementById('anchor-note');
   if (!btn) return;
   if (!wc) { btn.disabled = true; note.textContent = 'Connect a chipnet wallet to mint the anchor.'; return; }
-  const existing = identityAnchor;
+  const want = currentCommitmentHex();
+  if (!keepExisting) identityAnchor = matchAnchor(want);
+  const existing = want ? identityAnchor : null;
   const hasV0 = anchorUtxos.some((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n);
-  btn.disabled = !(existing || hasV0);
+  btn.disabled = !(want && (existing || hasV0));
   document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
-  if (existing) note.textContent = `Ready: reusing the identity anchor ${existing}.`;
-  else if (hasV0) note.textContent = 'Ready: a vout-0 UTXO is available for the anchor.';
+  if (!want) note.textContent = 'Pick one currency and one payment method to compute the anchor tuple.';
+  else if (existing) note.textContent = `Ready: reusing the anchor ${existing} (same seller/asset/method/fee).`;
+  else if (hasV0) note.textContent = 'Ready: a vout-0 UTXO is available; this tuple gets a new anchor.';
   else if (anchorUtxos.length) note.textContent = 'No vout-0 UTXO: use “Prepare a vout-0 UTXO”.';
   else note.textContent = 'No chipnet UTXOs: use the chipnet faucet first.';
 }
@@ -579,8 +611,8 @@ async function anchorLoad() {
   document.getElementById('anchor-address').textContent = wcAddress ?? '';
   const sh = await scripthashFromLockingBytecode(wcLocking);
   anchorUtxos = await electrumListUnspent(ELECTRUM_WS, sh);
-  try { identityAnchor = await findIdentityAnchor(); } catch { identityAnchor = null; }
-  refreshPublishButton();
+  try { identityAnchor = await findIdentityAnchor(currentCommitmentHex()); } catch { identityAnchor = null; }
+  refreshPublishButton(true);
 }
 
 function openAnchor() {
@@ -640,6 +672,7 @@ async function publishAd() {
       const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Mint your identity anchor' });
       anchorTx = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
       saveSavedAnchor({ txid: anchorTx, commitmentHex });
+      identityAnchor = anchorTx;
     }
     const adId = `${k.bchPubHex.slice(0, 16)}-${role === 'seller' ? 'SELLER' : 'BUYER'}-${assets.join('')}-${slug(methods[0])}`;
     const tags = [
@@ -658,6 +691,7 @@ async function publishAd() {
       ['name', name],
       ['status', 'active'],
       ['anchor', `${anchorTx}:0`],
+      ['network', 'chipnet'],
     ];
     const content = JSON.stringify({
       adType: role === 'seller' ? 'SELLER' : 'BUYER',
@@ -734,6 +768,23 @@ function chatAdd(kind, text) {
   div.scrollIntoView({ block: 'nearest' });
 }
 
+/** Render the app's `[PAY_INSTRUCTIONS]` reply like the app's own instructions dialog. */
+function formatInstructions(message) {
+  const text = String(message);
+  if (!text.includes('[PAY_INSTRUCTIONS]')) return text;
+  const kv = {};
+  for (const line of text.split('\n')) {
+    const i = line.indexOf('=');
+    if (i > 0) kv[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+  }
+  const methods = { cash: 'Cash in person', card: 'Card in person', bizum: 'Bizum', sepa: 'SEPA', pago_movil: 'Pago Móvil' };
+  const labels = { name: 'Name', location: 'Where', hours: 'Hours', phone: 'Phone', iban: 'IBAN', notes: 'Notes', concept: 'Concept' };
+  const skip = new Set(['requestId', 'adId', 'method', 'timestamp']);
+  const out = [`💳 Method: ${methods[kv.method] || kv.method || '?'}`];
+  for (const [k, v] of Object.entries(kv)) if (!skip.has(k) && v) out.push(`• ${labels[k] || k}: ${v}`);
+  return out.join('\n');
+}
+
 async function startPay(params) {
   showView('pay');
   const seller = String(params.get('seller') || '').toLowerCase();
@@ -752,10 +803,19 @@ async function startPay(params) {
   $('pay-status').className = 'badge warn';
   chatAdd('sys', 'A private, end-to-end encrypted channel with the merchant. Mercar only showed you the ad; it cannot read or store these messages.');
   if (!seller) { chatAdd('sys', 'This ad has no merchant npub, so the channel cannot be opened.'); return; }
-  const request = { type: 'asgaya/instructions_request', ad: params.get('ad'), amount, asset, method, anchor, buyer: npubHex, note: 'Please send the payment instructions.' };
+  const requestId = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now());
+  const request = [
+    '[PAY_INSTRUCTIONS_REQUEST]',
+    `adId=${params.get('ad') || ''}`,
+    `amount=${amount}`,
+    `currency=${asset}`,
+    `requestId=${requestId}`,
+    `timestamp=${Date.now()}`,
+    '[/PAY_INSTRUCTIONS_REQUEST]',
+  ].join('\n');
   chatAdd('me', `Hi ${name}, I'd like ${amount} ${asset} (${method}). Please send the payment instructions.`);
   try {
-    const content = await nip04Encrypt(privHex, seller, JSON.stringify(request));
+    const content = await nip04Encrypt(privHex, seller, request);
     const event = makeEvent({ privHex, pubHex: npubHex, kind: 4, tags: [['p', seller]], content });
     await publishEvent(NOSTR_RELAY, event);
   } catch (e) { chatAdd('sys', `Could not send the request: ${e.message}`); }
@@ -769,9 +829,7 @@ async function startPay(params) {
     if (ev.pubkey !== seller) return;
     try {
       const pt = await nip04Decrypt(privHex, seller, ev.content);
-      let text = pt;
-      try { const o = JSON.parse(pt); text = o.text || o.instructions || pt; } catch { /* plain text */ }
-      chatAdd('them', text);
+      chatAdd('them', formatInstructions(pt));
       $('pay-status').textContent = 'Merchant replied (live)';
       $('pay-status').className = 'badge ok';
       clearTimeout(timer);

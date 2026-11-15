@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mercar Asgaya — P2P classifieds</title>
+  <link rel="icon" href="data:," />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -97,6 +98,71 @@
         <h3 id="buy-title">Buy BCH</h3>
         <p class="muted" id="buy-hint"></p>
         <div class="buy-row">
+          <label>Amount<input id="buy-amount" type="number" min="0" inputmode="decimal" /></label>
+          <label>Pay with<select id="buy-method"></select></label>
+        </div>
+        <button class="cta" id="buy-get" type="button">Get payment instructions</button>
+        <div class="instructions" id="buy-instructions" hidden></div>
+      </section>
+    </article>
+  </section>
+
+  <section class="view" id="restaurants-view" hidden>
+    <button class="back" id="back-restaurants" type="button">← All categories</button>
+    <h2 class="view-title">Restaurants</h2>
+    <button class="merchant-card" id="casa-elena" type="button">
+      <div class="merchant-card-top"><strong>Casa Elena</strong><span class="badge">chipnet demo</span></div>
+      <p class="muted">Home cooking. Pickup or neighbourhood delivery.</p>
+      <span class="merchant-card-cta">View menu →</span>
+    </button>
+  </section>
+
+  <section class="view" id="menu-view" hidden>
+    <button class="back" id="back-menu" type="button">← Restaurants</button>
+    <main class="layout">
+      <section class="listing" aria-live="polite">
+        <div class="listing-head">
+          <div>
+            <h1 id="merchant-name">Cargando…</h1>
+            <p id="merchant-desc" class="muted"></p>
+          </div>
+          <div class="merchant-address" id="merchant-address" title="Payment address"></div>
+        </div>
+        <div id="menu"></div>
+      </section>
+
+      <aside class="cart" aria-label="Cart">
+        <h2>Your order</h2>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-total">
+          <span>Total</span>
+          <strong id="cart-total">€0,00</strong>
+        </div>
+        <button class="primary" id="pay-btn" type="button" disabled>Pay with BCH</button>
+        <p class="note" id="pay-note">Add something from the menu to start.</p>
+      </aside>
+    </main>
+  </section>
+
+  <section class="view" id="anchor-view" hidden>
+    <button class="back" id="back-anchor" type="button">← All categories</button>
+    <h2 class="view-title">Publish an ad</h2>
+    <p class="muted">The ad comes pre-filled with demo data. Edit anything (it is a normal form), then Publish: we mint your identity anchor and list the ad. Chipnet demo.</p>
+    <div class="anchor-box">
+      <div class="demo-key">
+        <strong>Your app merchant wallet</strong>
+        <p class="muted">Connect the merchant wallet you use in the app with WizardConnect. The app's merchant wallets keep their app identity; any other wallet gets a stable web demo identity derived from its pubkey. You only confirm the anchor in the wallet.</p>
+        <p class="mono" id="ad-pub"></p>
+        <p class="mono" id="ad-npub"></p>
+      </div>
+      <div class="anchor-fields">
+        <label>I want to<select id="ad-role"><option value="seller">Sell BCH (I accept fiat)</option><option value="buyer">Buy BCH (I pay fiat)</option></select></label>
+        <label>Name<input id="ad-name" value="Casa Elena" /></label>
+        <label>Fee (%)<input id="ad-fee" type="number" step="0.01" value="0.5" /></label>
+        <label>Min<input id="ad-min" type="number" value="1" /></label>
+        <label>Max<input id="ad-max" type="number" value="1000" /></label>
+        <label>Location<input id="ad-location" value="Calle la Vega 5, Mieres" /></label>
+        <label>Hours<input id="ad-hours" value="24/7" /></label>
         <label>Notes<input id="ad-notes" /></label>
       </div>
       <fieldset class="ad-checks">
@@ -125,6 +191,27 @@
       <p class="note" id="anchor-note"></p>
       <p class="mono" id="anchor-result"></p>
     </div>
+  </section>
+
+  <section class="view" id="pay-view" hidden>
+    <button class="back" type="button" onclick="window.close()">← Close</button>
+    <div class="pay-head">
+      <div>
+        <h2 id="pay-name">Merchant</h2>
+        <p class="muted" id="pay-sub"></p>
+      </div>
+      <span class="badge" id="pay-status">Waiting…</span>
+    </div>
+    <p class="mono" id="pay-ids"></p>
+    <div class="pay-didactic">
+      <p><strong>Private by design.</strong> This channel is end-to-end encrypted and goes between you and the merchant.</p>
+      <p>Payment instructions come from the merchant’s own device (liveness). If there is no reply, do not pay. Mercar never sees or stores them.</p>
+    </div>
+    <div class="chat" id="pay-chat"></div>
+    <form class="chat-form" id="pay-form">
+      <input id="pay-input" type="text" placeholder="Ask the merchant…" autocomplete="off" />
+      <button class="primary" type="submit">Send</button>
+    </form>
   </section>
 
   <dialog id="categories-dialog" class="checkout categories-dialog">

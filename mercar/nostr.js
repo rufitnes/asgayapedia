@@ -38,6 +38,7 @@ export function parseListing(ev) {
     name: content.name ?? tag(ev, 'name') ?? null,
     status: tag(ev, 'status') ?? 'active',
     anchor: tag(ev, 'anchor') ?? null,
+    network: tag(ev, 'network') ?? content.network ?? null,
     phone: content.phone ?? tag(ev, 'phone') ?? null,
     iban: content.iban ?? tag(ev, 'iban') ?? null,
     notes: content.notes ?? null,
