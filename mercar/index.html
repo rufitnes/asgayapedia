@@ -58,7 +58,7 @@
     <button class="back" id="back-exchange" type="button">← All categories</button>
     <div class="exchange-head">
       <h2 id="exchange-title">Currency exchange</h2>
-      <p class="muted">All the ads in this category. Identity: npub ↔ anchor (anchor pending).</p>
+      <p class="muted">All the ads in this category. Open one to verify its identity (npub ↔ on-chain anchor).</p>
     </div>
     <div class="filters">
       <select id="filter-asset"><option value="">All currencies</option></select>
@@ -67,6 +67,43 @@
     </div>
     <div class="ads" id="exchange-list"></div>
     <p class="note" id="exchange-note"></p>
+  </section>
+
+  <section class="view" id="ad-view" hidden>
+    <button class="back" id="back-ad" type="button">← Currency exchange</button>
+    <article class="ad-detail">
+      <header class="ad-detail-head">
+        <div>
+          <span class="ad-type" id="detail-type"></span>
+          <h2 id="detail-name"></h2>
+          <p class="muted" id="detail-sub"></p>
+        </div>
+        <div class="ad-fee" id="detail-fee"></div>
+      </header>
+      <section class="identity" aria-live="polite">
+        <div class="identity-top"><strong>Identity</strong><span class="badge" id="identity-badge">Checking…</span></div>
+        <p class="muted" id="identity-note">Verifying the on-chain anchor…</p>
+        <p class="mono" id="identity-pub"></p>
+        <p class="mono" id="identity-npub"></p>
+        <p class="mono" id="identity-anchor"></p>
+      </section>
+      <dl class="ad-detail-facts">
+        <div><dt>Offers</dt><dd id="detail-assets"></dd></div>
+        <div><dt>Payment</dt><dd id="detail-methods"></dd></div>
+        <div><dt>Limits</dt><dd id="detail-limits"></dd></div>
+        <div><dt>Where</dt><dd id="detail-where"></dd></div>
+      </dl>
+      <section class="buy">
+        <h3 id="buy-title">Buy BCH</h3>
+        <p class="muted" id="buy-hint"></p>
+        <div class="buy-row">
+          <label>Amount<input id="buy-amount" type="number" min="0" inputmode="decimal" /></label>
+          <label>Pay with<select id="buy-method"></select></label>
+        </div>
+        <button class="cta" id="buy-get" type="button">Get payment instructions</button>
+        <div class="instructions" id="buy-instructions" hidden></div>
+      </section>
+    </article>
   </section>
 
   <section class="view" id="restaurants-view" hidden>

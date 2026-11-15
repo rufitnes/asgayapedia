@@ -10,7 +10,7 @@ const ELECTRUM_WS = 'wss://chipnet.imaginary.cash:50004';
 // Demo quote. The live fiat->BCH quote comes from the oracle in the next step.
 const DEMO_EUR_PER_BCH = 207.88;
 
-const state = { catalogue: null, cart: new Map(), adType: null, view: null };
+const state = { catalogue: null, cart: new Map(), adType: null, view: null, selectedAd: null };
 let wc = null;
 let wcLocking = null;
 let wcAddress = null;
@@ -270,6 +270,10 @@ function renderExchange() {
     card.querySelector('.locality').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ');
     card.querySelector('.ad-id').textContent = `${ad.npub.slice(0, 18)}…`;
     card.title = `BCH pubkey: ${ad.publicKey}`;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.addEventListener('click', () => openAd(ad));
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAd(ad); } });
     list.appendChild(card);
   }
   $('featured-buy-bch').classList.toggle('active', state.adType === 'SELLER');
@@ -277,6 +281,111 @@ function renderExchange() {
     state.adType === 'SELLER' ? 'Currency exchange · Buy BCH'
     : state.adType === 'BUYER' ? 'Currency exchange · Sell BCH'
     : 'Currency exchange';
+}
+
+function openAd(ad) {
+  state.selectedAd = ad;
+  showView('ad');
+  const isSeller = ad.adType === 'SELLER';
+  $('detail-type').textContent = `Sells ${isSeller ? 'BCH' : (ad.assets[0] ?? 'asset')}`;
+  $('detail-type').className = `ad-type ${ad.adType.toLowerCase()}`;
+  $('detail-name').textContent = ad.name || ad.cashAccount || 'Merchant';
+  $('detail-sub').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ');
+  $('detail-fee').textContent = `${(ad.fee * 100).toFixed(2)}% fee`;
+  $('detail-assets').textContent = isSeller ? (ad.assets.join(', ') || '—') : 'BCH';
+  $('detail-methods').textContent = ad.methods.join(' · ') || '—';
+  $('detail-limits').textContent = `${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}`;
+  $('detail-where').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ') || '—';
+  $('buy-title').textContent = isSeller ? 'Buy BCH' : 'Sell BCH';
+  $('buy-get').textContent = isSeller ? 'Buy BCH' : 'Sell BCH';
+  $('buy-hint').textContent = `Fee ${(ad.fee * 100).toFixed(2)}%; limits ${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}.`;
+  const amount = $('buy-amount');
+  amount.min = ad.min ?? '';
+  amount.max = ad.max ?? '';
+  amount.value = ad.min ?? '';
+  const method = $('buy-method');
+  method.innerHTML = '';
+  for (const m of ad.methods) method.add(new Option(m, m));
+  $('buy-instructions').hidden = true;
+  $('buy-instructions').innerHTML = '';
+  $('identity-badge').textContent = 'Checking…';
+  $('identity-badge').className = 'badge';
+  $('identity-note').textContent = 'Verifying the on-chain anchor…';
+  $('identity-pub').textContent = ad.publicKey ? `BCH pubkey: ${ad.publicKey}` : '';
+  $('identity-npub').textContent = ad.npub ? `npub (hex): ${ad.npub}` : '';
+  $('identity-anchor').textContent = ad.anchor ? `Anchor: ${ad.anchor}` : '';
+  verifyAnchor(ad);
+}
+
+async function verifyAnchor(ad) {
+  const badge = $('identity-badge');
+  const note = $('identity-note');
+  if (!ad.anchor) {
+    badge.textContent = 'No anchor';
+    badge.className = 'badge warn';
+    note.textContent = 'This ad has no on-chain identity anchor.';
+    return;
+  }
+  if (!ad.publicKey) {
+    badge.textContent = 'No key';
+    badge.className = 'badge warn';
+    note.textContent = 'This ad has no BCH pubkey to compare with the anchor.';
+    return;
+  }
+  const txid = ad.anchor.split(':')[0];
+  try {
+    const raw = await electrumGetRawTx(ELECTRUM_WS, txid);
+    if (typeof raw !== 'string') throw new Error('transaction not found');
+    const tx = decodeTransaction(hexToBin(raw));
+    if (typeof tx === 'string') throw new Error(tx);
+    const pub = (tx.inputs?.[0]?.unlockingBytecode ?? new Uint8Array()).slice(-33);
+    if (pub.length !== 33) throw new Error('no signer pubkey in the genesis tx');
+    if (binToHex(pub) !== ad.publicKey.toLowerCase()) {
+      badge.textContent = 'Mismatch';
+      badge.className = 'badge warn';
+      note.textContent = 'The anchor was not signed by this ad’s key.';
+      return;
+    }
+    badge.textContent = 'Verified on-chain';
+    badge.className = 'badge ok';
+    note.textContent = 'The genesis anchor was signed by this ad’s key: same-key identity.';
+    $('identity-anchor').textContent = `Anchor: ${ad.anchor}`;
+  } catch (e) {
+    badge.textContent = 'Unverified';
+    badge.className = 'badge warn';
+    note.textContent = `Could not verify the anchor: ${e.message}`;
+  }
+}
+
+function showInstructions() {
+  const ad = state.selectedAd;
+  if (!ad) return;
+  const amount = Number($('buy-amount').value);
+  if (!Number.isFinite(amount) || amount <= 0) { alert('Enter an amount.'); return; }
+  if (ad.min != null && amount < ad.min) { alert(`Minimum is ${ad.min} ${ad.assets[0] ?? ''}.`); return; }
+  if (ad.max != null && amount > ad.max) { alert(`Maximum is ${ad.max} ${ad.assets[0] ?? ''}.`); return; }
+  const method = $('buy-method').value;
+  const asset = ad.assets[0] ?? 'EUR';
+  const isSeller = ad.adType === 'SELLER';
+  const box = $('buy-instructions');
+  box.innerHTML = '';
+  const add = (text) => { const p = document.createElement('p'); p.textContent = text; box.appendChild(p); };
+  add(`${isSeller ? 'Buy BCH' : 'Sell BCH'}: ${amount.toLocaleString('en-GB')} ${asset}.`);
+  if (/cash|in person/i.test(method)) {
+    add(`Visit ${ad.name || 'the merchant'} at ${ad.location || 'the merchant’s location'}${ad.hours ? ` (${ad.hours})` : ''} and complete the exchange in person.`);
+  } else if (/bizum/i.test(method)) {
+    add(`Send ${amount.toLocaleString('en-GB')} ${asset} by Bizum to ${ad.cashAccount || ad.phone || 'the merchant’s phone'}.`);
+    add(`Concept: Asgaya ${ad.name || ''}. Name: ${ad.name || 'the merchant'}.`);
+  } else if (/sepa|transfer/i.test(method)) {
+    add(`Send ${amount.toLocaleString('en-GB')} ${asset} by SEPA${ad.iban ? ` to ${ad.iban}` : ' to the merchant’s account'}.`);
+    add(`Concept: Asgaya ${ad.name || ''}. Name: ${ad.name || 'the merchant'}.`);
+  } else {
+    add(`Contact the merchant to complete the payment (${method}).`);
+  }
+  if (ad.phone) add(`Contact: ${ad.phone}`);
+  if (ad.notes) add(ad.notes);
+  add(isSeller ? 'The merchant sends the BCH to your address once the payment is confirmed in the app.' : 'The merchant pays you the fiat once your BCH is received.');
+  box.hidden = false;
 }
 
 const CATEGORY_GROUPS = [
@@ -352,7 +461,8 @@ function showView(name) {
   document.getElementById('restaurants-view').hidden = name !== 'restaurants';
   document.getElementById('menu-view').hidden = name !== 'menu';
   document.getElementById('anchor-view').hidden = name !== 'anchor';
-  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : name === 'anchor' ? 'anchor-view' : 'categories';
+  document.getElementById('ad-view').hidden = name !== 'ad';
+  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : name === 'anchor' ? 'anchor-view' : name === 'ad' ? 'ad-view' : 'categories';
   const el = document.getElementById(target);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -654,6 +764,10 @@ async function main() {
   $('back-exchange').addEventListener('click', () => showView(null));
   $('back-restaurants').addEventListener('click', () => showView(null));
   $('back-menu').addEventListener('click', () => showView('restaurants'));
+  $('back-ad').addEventListener('click', () => showView('exchange'));
+  $('buy-get').addEventListener('click', showInstructions);
+  $('buy-amount').addEventListener('input', () => { $('buy-instructions').hidden = true; });
+  $('buy-method').addEventListener('change', () => { $('buy-instructions').hidden = true; });
   $('all-categories').addEventListener('click', openCategories);
   $('categories-close').addEventListener('click', () => $('categories-dialog').close());
   $('featured-buy-bch').addEventListener('click', () => applyCategory({ kind: state.adType === 'SELLER' ? 'all' : 'buyBch' }));

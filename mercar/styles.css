@@ -270,3 +270,27 @@ button.tile { font: inherit; }
 .demo-key .mono { font-size: 11px; word-break: break-all; }
 .demo-key label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 8px 0; }
 .demo-key input { font: inherit; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); }
+
+.ad { cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease; }
+.ad:hover, .ad:focus-visible { border-color: var(--accent); box-shadow: 0 8px 20px rgba(23, 18, 43, .07); outline: none; }
+.ad-detail { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: grid; gap: 18px; }
+.ad-detail-head { display: flex; align-items: flex-start; gap: 12px; }
+.ad-detail-head h2 { margin: 8px 0 2px; font-size: 22px; }
+.ad-detail-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px; margin: 0; }
+.ad-detail-facts dt { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; font-weight: 700; }
+.ad-detail-facts dd { margin: 3px 0 0; font-weight: 600; }
+.identity { background: var(--accent-soft); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 6px; }
+.identity-top { display: flex; align-items: center; gap: 10px; }
+.badge.ok { background: var(--ok-bg); color: var(--ok-ink); }
+.badge.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.buy { display: grid; gap: 10px; }
+.buy h3 { margin: 0; }
+.buy-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.buy-row label { display: grid; gap: 5px; font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.buy-row input, .buy-row select { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; font: inherit; background: #fff; color: var(--ink); }
+.instructions { background: var(--panel); border: 1px dashed var(--line); border-radius: 12px; padding: 14px; }
+.instructions p { margin: 0 0 8px; }
+.instructions p:last-child { margin: 0; }
+@media (max-width: 620px) {
+  .buy-row, .ad-detail-facts { grid-template-columns: 1fr; }
+}

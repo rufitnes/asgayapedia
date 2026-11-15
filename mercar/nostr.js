@@ -36,6 +36,10 @@ export function parseListing(ev) {
     hours: content.hours ?? tag(ev, 'hours') ?? null,
     name: content.name ?? tag(ev, 'name') ?? null,
     status: tag(ev, 'status') ?? 'active',
+    anchor: tag(ev, 'anchor') ?? null,
+    phone: content.phone ?? tag(ev, 'phone') ?? null,
+    iban: content.iban ?? tag(ev, 'iban') ?? null,
+    notes: content.notes ?? null,
     createdAt: ev.created_at ?? 0,
   };
 }
