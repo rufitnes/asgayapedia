@@ -1,5 +1,5 @@
 import QRCode from 'qrcode';
-import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, encodePrivateKeyWif } from '@bitauth/libauth';
+import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, generatePrivateKey, encodePrivateKeyWif } from '@bitauth/libauth';
 import { WizardConnectSigner } from './wizardconnect.js';
 import { encodeAnchorCommitment, buildGenesisAnchor, buildSelfSend } from './anchor.js';
 import { electrumListUnspent, scripthashFromLockingBytecode, broadcastTransaction } from './electrum.js';
@@ -372,7 +372,7 @@ const slug = (v) => v.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g
 function demoKey() {
   let hex = localStorage.getItem(DEMO_KEY_STORAGE);
   if (!hex) {
-    hex = binToHex(secp256k1.generatePrivateKey());
+    hex = binToHex(generatePrivateKey());
     localStorage.setItem(DEMO_KEY_STORAGE, hex);
   }
   const priv = hexToBin(hex);
