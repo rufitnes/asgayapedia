@@ -112,9 +112,8 @@
     <p class="muted">The ad comes pre-filled with demo data. Edit anything (it is a normal form), then Publish: we mint your identity anchor and list the ad. Chipnet demo.</p>
     <div class="anchor-box">
       <div class="demo-key">
-        <strong>Use your Asgaya app merchant wallet</strong>
-        <p class="muted">Paste the WIF of the merchant wallet you use in the app (chipnet/testnet). The web keeps the app's Nostr identity (the seeded test mapping) and signs the listing with it; the WIF is not stored.</p>
-        <label>Merchant WIF<input id="ad-wif" type="password" autocomplete="off" placeholder="c…" /></label>
+        <strong>Your app merchant wallet</strong>
+        <p class="muted">Connect the merchant wallet you use in the app with WizardConnect. We derive the app's Nostr identity from its pubkey (the seeded demo map); you only confirm the anchor in the wallet.</p>
         <p class="mono" id="ad-pub"></p>
         <p class="mono" id="ad-npub"></p>
       </div>

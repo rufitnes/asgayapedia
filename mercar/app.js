@@ -371,15 +371,11 @@ const TEST_NOSTR = {
   '03886b4f4100f9e348caed5155474f0a1a96db3e2706dc59e15260ed3d2b35e148': '22'.repeat(32),
 };
 
-function keyFromWif(wif) {
-  const decoded = decodePrivateKeyWif(wif.trim(), sha256);
-  if (typeof decoded === 'string') throw new Error(decoded);
-  const bchPriv = decoded.privateKey;
-  const bchPub = secp256k1.derivePublicKeyCompressed(bchPriv);
-  const bchPubHex = binToHex(bchPub);
-  const nostrPrivHex = TEST_NOSTR[bchPubHex.toLowerCase()] ?? binToHex(bchPriv);
+function keyFromPub(pubHex) {
+  const nostrPrivHex = TEST_NOSTR[pubHex.toLowerCase()];
+  if (!nostrPrivHex) throw new Error('This wallet is not a seeded demo identity; use the app’s merchant wallet.');
   const nostrPub = secp256k1.derivePublicKeyCompressed(hexToBin(nostrPrivHex));
-  return { bchPubHex, nostrPrivHex, npubHex: binToHex(nostrPub.slice(1)) };
+  return { bchPubHex: pubHex, nostrPrivHex, npubHex: binToHex(nostrPub.slice(1)) };
 }
 
 async function anchorLoad() {
@@ -399,32 +395,27 @@ async function anchorLoad() {
 
 function openAnchor() {
   showView('anchor');
-  const wif = document.getElementById('ad-wif').value.trim();
   document.getElementById('ad-pub').textContent = '';
   document.getElementById('ad-npub').textContent = '';
-  if (wif) {
-    try {
-      const k = keyFromWif(wif);
-      document.getElementById('ad-pub').textContent = `BCH pubkey: ${k.bchPubHex}`;
-      document.getElementById('ad-npub').textContent = `npub (hex): ${k.npubHex}`;
-    } catch (e) {
-      document.getElementById('ad-npub').textContent = e.message;
-    }
+  if (!wc) {
+    document.getElementById('anchor-note').textContent = 'Connect your merchant wallet (WizardConnect).';
+    return;
   }
-  if (wc) anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; });
-  else document.getElementById('anchor-note').textContent = 'Paste your merchant WIF and connect the same wallet.';
+  wc.getPubkey().then((pub) => {
+    const k = keyFromPub(binToHex(pub));
+    document.getElementById('ad-pub').textContent = `BCH pubkey: ${k.bchPubHex}`;
+    document.getElementById('ad-npub').textContent = `npub (hex): ${k.npubHex}`;
+    return anchorLoad();
+  }).catch((e) => { document.getElementById('anchor-note').textContent = e.message; });
 }
 
 async function publishAd() {
   const btn = document.getElementById('anchor-mint');
   btn.disabled = true;
   try {
-    const k = keyFromWif(document.getElementById('ad-wif').value.trim());
     if (!wc) await connectWallet();
     const walletPub = await wc.getPubkey();
-    if (binToHex(walletPub) !== k.bchPubHex) {
-      throw new Error('Connect Cashonize with the same merchant WIF.');
-    }
+    const k = keyFromPub(binToHex(walletPub));
     const role = document.getElementById('ad-role').value;
     const assets = [...document.querySelectorAll('input[name=ad-asset]:checked')].map((x) => x.value);
     const methods = [...document.querySelectorAll('input[name=ad-method]:checked')].map((x) => x.value);
@@ -545,10 +536,9 @@ async function main() {
   $('search').addEventListener('input', () => { if ($('search').value.trim()) showView('exchange'); renderExchange(); });
   $('browse-board').addEventListener('click', () => showView(null));
   $('merchant-btn').addEventListener('click', openAnchor);
-  $('ad-wif').addEventListener('input', () => { const wif = $('ad-wif').value.trim(); try { if (!wif) throw new Error(''); const k = keyFromWif(wif); $('ad-pub').textContent = `BCH pubkey: ${k.bchPubHex}`; $('ad-npub').textContent = `npub (hex): ${k.npubHex}`; } catch (e) { $('ad-pub').textContent = ''; $('ad-npub').textContent = e.message; } });
   $('hero-publish').addEventListener('click', openAnchor);
   $('back-anchor').addEventListener('click', () => showView(null));
-  $('anchor-connect').addEventListener('click', () => connectWallet().then(() => anchorLoad()).catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
+  $('anchor-connect').addEventListener('click', () => connectWallet().then(() => openAnchor()).catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
   $('anchor-mint').addEventListener('click', publishAd);
   $('anchor-selfsend').addEventListener('click', anchorSelfSend);
   $('anchor-refresh').addEventListener('click', () => anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));

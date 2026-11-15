@@ -90,7 +90,7 @@
 ## Publish flow (the merchant)
 
 - **Publish an ad** opens a **pre-filled, fully editable** form (the Trade-tab fields: role, name, cash account, currencies, methods, fee, min/max, location, hours, contacts). The pre-fill is demo data; the inputs make it obvious it can be edited.
-- **Merchant identity:** paste the **WIF of the app's merchant wallet** (chipnet/testnet); the web derives the BCH pubkey and the app's **seeded Nostr identity** (the Phase-0 `TestNostrKeys` mapping, so the npub matches the app's existing ads). The WIF is not stored. The anchor is minted with the same BCH wallet (connect Cashonize with it).
+- **Merchant identity:** **no WIF.** Connect the app's merchant wallet with WizardConnect; the web reads the pubkey and maps it to the app's **seeded Nostr identity** (the Phase-0 `TestNostrKeys` mapping), so the npub matches the app's existing ads. The anchor is minted with the same wallet; the only wallet interaction is the anchor approval.
 - **One step:** Publish → the wallet approves the **anchor** (vout-0 funding; the self-send helper if needed) → the **NIP-99 listing** is signed and published to the relay → the board opens on the exchange with the new ad.
 - The result line shows the anchor tx, the listing id and the identity; the app keeps the same ad schema.
 
