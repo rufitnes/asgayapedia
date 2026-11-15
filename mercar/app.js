@@ -9,7 +9,7 @@ const ELECTRUM_WS = 'wss://chipnet.imaginary.cash:50004';
 // Demo quote. The live fiat->BCH quote comes from the oracle in the next step.
 const DEMO_EUR_PER_BCH = 207.88;
 
-const state = { catalogue: null, cart: new Map(), adType: null };
+const state = { catalogue: null, cart: new Map(), adType: null, view: null };
 let wc = null;
 let wcLocking = null;
 let wcAddress = null;
@@ -257,6 +257,10 @@ function renderExchange() {
     list.appendChild(card);
   }
   $('featured-buy-bch').classList.toggle('active', state.adType === 'SELLER');
+  $('exchange-title').textContent =
+    state.adType === 'SELLER' ? 'Currency exchange · Buy BCH'
+    : state.adType === 'BUYER' ? 'Currency exchange · Sell BCH'
+    : 'Currency exchange';
 }
 
 const CATEGORY_GROUPS = [
@@ -271,7 +275,7 @@ const CATEGORY_GROUPS = [
     { label: 'Card in person', kind: 'method', value: 'Card in person' },
     { label: 'Bizum', kind: 'method', value: 'Bizum' },
   ] },
-  { title: 'Restaurants', items: [{ label: 'Open the menu', kind: 'restaurants' }] },
+  { title: 'Restaurants', items: [{ label: 'View restaurants', kind: 'restaurants' }] },
   { title: 'Goods', soon: true, items: ['Technology', 'Home', 'Fashion', 'Motor', 'Sport'].map((l) => ({ label: l })) },
   { title: 'Services', soon: true, items: ['Home', 'Professional', 'Classes'].map((l) => ({ label: l })) },
 ];
@@ -326,25 +330,35 @@ function openCategories() {
   $('categories-dialog').showModal();
 }
 
+function showView(name) {
+  state.view = name;
+  document.getElementById('exchange').hidden = name !== 'exchange';
+  document.getElementById('restaurants-view').hidden = name !== 'restaurants';
+  document.getElementById('menu-view').hidden = name !== 'menu';
+  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : 'categories';
+  const el = document.getElementById(target);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function applyCategory(it) {
   if (it.kind === 'restaurants') {
-    $('categories-dialog').close();
-    document.getElementById('restaurants').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('categories-dialog').close();
+    showView('restaurants');
     return;
   }
   state.adType = it.kind === 'buyBch' ? 'SELLER' : it.kind === 'sellBch' ? 'BUYER' : null;
   if (it.kind === 'asset') {
-    $('filter-asset').value = it.value;
-    $('filter-method').value = '';
+    document.getElementById('filter-asset').value = it.value;
+    document.getElementById('filter-method').value = '';
   } else if (it.kind === 'method') {
-    $('filter-method').value = it.value;
-    $('filter-asset').value = '';
+    document.getElementById('filter-method').value = it.value;
+    document.getElementById('filter-asset').value = '';
   } else {
-    $('filter-asset').value = '';
-    $('filter-method').value = '';
+    document.getElementById('filter-asset').value = '';
+    document.getElementById('filter-method').value = '';
   }
   renderExchange();
-  document.getElementById('exchange').scrollIntoView({ behavior: 'smooth' });
+  showView('exchange');
 }
 
 async function main() {
@@ -363,7 +377,15 @@ async function main() {
   $('co-pay').addEventListener('click', payWithBch);
   $('connect-btn').addEventListener('click', () => connectWallet().catch((e) => alert(e.message)));
   $('wc-cancel').addEventListener('click', () => $('wc-dialog').close());
-  $('search').addEventListener('input', renderExchange);
+  $('search').addEventListener('input', () => { if ($('search').value.trim()) showView('exchange'); renderExchange(); });
+  $('browse-board').addEventListener('click', () => showView(null));
+  $('hero-buy-bch').addEventListener('click', () => applyCategory({ kind: 'buyBch' }));
+  $('featured-exchange').addEventListener('click', () => { state.adType = null; $('filter-asset').value = ''; $('filter-method').value = ''; renderExchange(); showView('exchange'); });
+  $('featured-restaurants').addEventListener('click', () => showView('restaurants'));
+  $('casa-elena').addEventListener('click', () => showView('menu'));
+  $('back-exchange').addEventListener('click', () => showView(null));
+  $('back-restaurants').addEventListener('click', () => showView(null));
+  $('back-menu').addEventListener('click', () => showView('restaurants'));
   $('all-categories').addEventListener('click', openCategories);
   $('categories-close').addEventListener('click', () => $('categories-dialog').close());
   $('featured-buy-bch').addEventListener('click', () => applyCategory({ kind: state.adType === 'SELLER' ? 'all' : 'buyBch' }));

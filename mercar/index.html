@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mercar Asgaya — Casa Elena</title>
+  <title>Mercar Asgaya — P2P classifieds</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -30,32 +30,34 @@
       <h1>Buy and sell anything,<br><span>peer to peer.</span></h1>
       <p class="hero-sub">The classifieds board for Bitcoin Cash. Merchants you can verify, prices in your currency, payment in BCH. No custodian, no middleman.</p>
       <div class="hero-ctas">
-        <a class="btn primary" href="#exchange">Browse the board</a>
-        <a class="btn ghost" href="#exchange">Buy BCH</a>
+        <button class="btn primary" id="browse-board" type="button">Browse the board</button>
+        <button class="btn ghost" id="hero-buy-bch" type="button">Buy BCH</button>
         <button class="btn ghost" type="button" disabled>Publish an ad (soon)</button>
       </div>
       <p class="hero-trust">Wallet empty? Buy BCH from a seller on the board. Merchant identity anchored on-chain.</p>
     </div>
   </section>
 
-  <section class="board-tools">
+  <section class="board-tools" id="categories">
     <div class="search-wrap">
       <span class="search-icon" aria-hidden="true">🔎</span>
       <input id="search" type="search" placeholder="Search merchants, currencies, payment methods…" />
     </div>
     <nav class="category-tiles" aria-label="Board categories">
-      <button class="tile" id="all-categories" type="button"><span aria-hidden="true">🗂️</span>All categories</button>
+      <button class="tile" id="featured-exchange" type="button"><span aria-hidden="true">💱</span>Currency exchange</button>
       <button class="tile" id="featured-buy-bch" type="button"><span aria-hidden="true">₿</span>Buy BCH</button>
-      <a class="tile" href="#restaurants"><span aria-hidden="true">🍽️</span>Restaurants</a>
+      <button class="tile" id="featured-restaurants" type="button"><span aria-hidden="true">🍽️</span>Restaurants</button>
       <span class="tile disabled"><span aria-hidden="true">📦</span>Goods<small>soon</small></span>
       <span class="tile disabled"><span aria-hidden="true">🛠️</span>Services<small>soon</small></span>
+      <button class="tile" id="all-categories" type="button"><span aria-hidden="true">🗂️</span>All categories</button>
     </nav>
   </section>
 
-  <section class="exchange" id="exchange">
+  <section class="exchange view" id="exchange" hidden>
+    <button class="back" id="back-exchange" type="button">← All categories</button>
     <div class="exchange-head">
-      <h2>Currency exchange</h2>
-      <p class="muted">Merchants selling and buying currencies. Identity: npub ↔ anchor (anchor pending).</p>
+      <h2 id="exchange-title">Currency exchange</h2>
+      <p class="muted">All the ads in this category. Identity: npub ↔ anchor (anchor pending).</p>
     </div>
     <div class="filters">
       <select id="filter-asset"><option value="">All currencies</option></select>
@@ -66,31 +68,42 @@
     <p class="note" id="exchange-note"></p>
   </section>
 
-  <h2 class="category category-section" id="restaurants">Restaurants (example category)</h2>
+  <section class="view" id="restaurants-view" hidden>
+    <button class="back" id="back-restaurants" type="button">← All categories</button>
+    <h2 class="view-title">Restaurants</h2>
+    <button class="merchant-card" id="casa-elena" type="button">
+      <div class="merchant-card-top"><strong>Casa Elena</strong><span class="badge">chipnet demo</span></div>
+      <p class="muted">Home cooking. Pickup or neighbourhood delivery.</p>
+      <span class="merchant-card-cta">View menu →</span>
+    </button>
+  </section>
 
-  <main class="layout">
-    <section class="listing" aria-live="polite">
-      <div class="listing-head">
-        <div>
-          <h1 id="merchant-name">Cargando…</h1>
-          <p id="merchant-desc" class="muted"></p>
+  <section class="view" id="menu-view" hidden>
+    <button class="back" id="back-menu" type="button">← Restaurants</button>
+    <main class="layout">
+      <section class="listing" aria-live="polite">
+        <div class="listing-head">
+          <div>
+            <h1 id="merchant-name">Cargando…</h1>
+            <p id="merchant-desc" class="muted"></p>
+          </div>
+          <div class="merchant-address" id="merchant-address" title="Payment address"></div>
         </div>
-        <div class="merchant-address" id="merchant-address" title="Payment address"></div>
-      </div>
-      <div id="menu"></div>
-    </section>
+        <div id="menu"></div>
+      </section>
 
-    <aside class="cart" aria-label="Cart">
-      <h2>Your order</h2>
-      <div id="cart-items" class="cart-items"></div>
-      <div class="cart-total">
-        <span>Total</span>
-        <strong id="cart-total">€0,00</strong>
-      </div>
-      <button class="primary" id="pay-btn" type="button" disabled>Pay with BCH</button>
-      <p class="note" id="pay-note">Add something from the menu to start.</p>
-    </aside>
-  </main>
+      <aside class="cart" aria-label="Cart">
+        <h2>Your order</h2>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-total">
+          <span>Total</span>
+          <strong id="cart-total">€0,00</strong>
+        </div>
+        <button class="primary" id="pay-btn" type="button" disabled>Pay with BCH</button>
+        <p class="note" id="pay-note">Add something from the menu to start.</p>
+      </aside>
+    </main>
+  </section>
 
   <dialog id="categories-dialog" class="checkout categories-dialog">
     <h2>All categories</h2>

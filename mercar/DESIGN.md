@@ -71,6 +71,14 @@
 - **All categories** (🗂️) opens a modal with the taxonomy: a group title (the 13 px uppercase label) and a row of chips; each chip carries a count (muted micro). The exchange group is the core (All ads, Buy BCH, Sell BCH, EUR, USD, NGN, cash/card/Bizum); Restaurants opens the menu; Goods/Services are disabled with a “soon”.
 - **Featured “Buy BCH”** (₿) toggles the ads where the merchant sells BCH (`adType === SELLER`), with the active `--accent-soft` state; the Restaurants tile anchors to the example section.
 
+## Landing & views
+
+- **The home does not list merchants.** It is the hero + the search + the categories. No ad or merchant appears on the landing by default (compliance: the front page must not rank or promote one merchant over another).
+- **A category opens its view:** the exchange lists all the ads (fast UX); the restaurants show the **merchant card** first and the menu on click; Goods/Services are “soon”.
+- **Back link** at the top of every view (“← All categories”; the menu adds “← Restaurants”); the browser stays on the same page.
+- **The merchant card** is a full-width panel button: the name + the network badge, a one-line description, and the “View menu →” CTA. The exchange does not use the card; it lists the ads directly.
+- The exchange title reflects the filter (“Currency exchange · Buy BCH”); the ads are sorted by fee or recency, never editorially.
+
 ## Copy & voice
 
 - Sentence case; short lines. The ad reads **“Sells BCH”** or **“Sells NGN”**, then **“for EUR”**, methods, min–max.
