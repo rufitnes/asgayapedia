@@ -453,6 +453,7 @@ async function main() {
   $('search').addEventListener('input', () => { if ($('search').value.trim()) showView('exchange'); renderExchange(); });
   $('browse-board').addEventListener('click', () => showView(null));
   $('merchant-btn').addEventListener('click', openAnchor);
+  $('hero-publish').addEventListener('click', openAnchor);
   $('back-anchor').addEventListener('click', () => showView(null));
   $('anchor-connect').addEventListener('click', () => connectWallet().then(() => anchorLoad()).catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
   $('anchor-mint').addEventListener('click', anchorMint);

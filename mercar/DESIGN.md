@@ -81,7 +81,7 @@
 
 ## The merchant anchor view
 
-- Entry: the topbar **Merchant** button. The view is the **identity** step (the ad comes after).
+- Entry: **Publish an ad** (the topbar and the hero CTA). The view is **step 1 of 2: the identity** (the ad comes after).
 - A panel (`.anchor-box`): the wallet connect + the chipnet address; the anchor fields (role, currency, payment, fee bps); the actions (Mint, Prepare a vout-0 UTXO, Refresh).
 - A **vout-0** funding UTXO is required (its txid becomes the NFT category). If the wallet has none, the “Prepare a vout-0 UTXO” self-send creates one; then Refresh.
 - The Mint explainer: approve in the wallet; then the result shows the anchor tx, the category and the identity (npub hex, the genesis signer).
