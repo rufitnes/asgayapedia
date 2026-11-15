@@ -389,7 +389,7 @@ const TEST_NOSTR = {
 function keyFromPub(pubHex) {
   const p = pubHex.toLowerCase();
   const seeded = TEST_NOSTR[p];
-  const nostrPrivHex = seeded || binToHex(sha256(new TextEncoder().encode('asgaya-web-test-nostr:' + p)));
+  const nostrPrivHex = seeded || binToHex(sha256.hash(new TextEncoder().encode('asgaya-web-test-nostr:' + p)));
   const nostrPub = secp256k1.derivePublicKeyCompressed(hexToBin(nostrPrivHex));
   return { bchPubHex: p, nostrPrivHex, npubHex: binToHex(nostrPub.slice(1)), seeded: !!seeded };
 }
