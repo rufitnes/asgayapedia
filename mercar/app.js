@@ -1,8 +1,8 @@
 import QRCode from 'qrcode';
-import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, decodePrivateKeyWif } from '@bitauth/libauth';
+import { decodeCashAddress, decodeTransaction, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, decodePrivateKeyWif } from '@bitauth/libauth';
 import { WizardConnectSigner } from './wizardconnect.js';
 import { encodeAnchorCommitment, buildGenesisAnchor, buildSelfSend } from './anchor.js';
-import { electrumListUnspent, scripthashFromLockingBytecode, broadcastTransaction } from './electrum.js';
+import { electrumListUnspent, electrumGetHistory, electrumGetRawTx, scripthashFromLockingBytecode, broadcastTransaction } from './electrum.js';
 import { fetchListings, NOSTR_RELAY, makeEvent, publishEvent } from './nostr.js';
 
 const CATALOGUE_URL = 'catalogue/menu.json';
@@ -379,6 +379,7 @@ function applyCategory(it) {
 }
 
 let anchorUtxos = [];
+let identityAnchor = null;
 
 const METHOD_KEY = {
   'Cash in person': 'cash',
@@ -424,15 +425,26 @@ function currentCommitmentHex() {
   }));
 }
 
-function findIdentityAnchor(commitmentHex) {
-  if (commitmentHex) {
-    const tokenMatch = anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft && String(u.token_data.nft.commitment ?? '').toLowerCase() === commitmentHex);
-    if (tokenMatch) return tokenMatch.tx_hash;
-  }
+async function findIdentityAnchor() {
+  const token = anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft && String(u.token_data.nft.commitment ?? '').toLowerCase().startsWith('01'));
+  if (token) return token.tx_hash;
   const dust = anchorUtxos.find((u) => u.tx_pos === 0 && BigInt(u.value) > 0n && BigInt(u.value) <= 2000n);
   if (dust) return dust.tx_hash;
   const saved = loadSavedAnchor();
-  if (saved && saved.txid && (!commitmentHex || saved.commitmentHex === commitmentHex)) return saved.txid;
+  if (saved?.txid) return saved.txid;
+  if (!wcLocking) return null;
+  const sh = await scripthashFromLockingBytecode(wcLocking);
+  const history = await electrumGetHistory(ELECTRUM_WS, sh);
+  for (const h of history) {
+    try {
+      const raw = await electrumGetRawTx(ELECTRUM_WS, h.tx_hash);
+      if (typeof raw !== 'string') continue;
+      const tx = decodeTransaction(hexToBin(raw));
+      if (typeof tx === 'string') continue;
+      const c = tx.outputs?.[0]?.token?.nft?.commitment;
+      if (c && c[0] === 0x01) return h.tx_hash;
+    } catch { /* skip */ }
+  }
   return null;
 }
 
@@ -441,8 +453,7 @@ function refreshPublishButton() {
   const note = document.getElementById('anchor-note');
   if (!btn) return;
   if (!wc) { btn.disabled = true; note.textContent = 'Connect a chipnet wallet to mint the anchor.'; return; }
-  const commitmentHex = currentCommitmentHex();
-  const existing = findIdentityAnchor(commitmentHex);
+  const existing = identityAnchor;
   const hasV0 = anchorUtxos.some((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n);
   btn.disabled = !(existing || hasV0);
   document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
@@ -457,6 +468,7 @@ async function anchorLoad() {
   document.getElementById('anchor-address').textContent = wcAddress ?? '';
   const sh = await scripthashFromLockingBytecode(wcLocking);
   anchorUtxos = await electrumListUnspent(ELECTRUM_WS, sh);
+  try { identityAnchor = await findIdentityAnchor(); } catch { identityAnchor = null; }
   refreshPublishButton();
 }
 
@@ -504,7 +516,7 @@ async function publishAd() {
       feeBps: Math.round(fee * 100),
     });
     const commitmentHex = binToHex(commitment);
-    let anchorTx = findIdentityAnchor(commitmentHex) ?? undefined;
+    let anchorTx = identityAnchor ?? undefined;
     if (anchorTx) {
       document.getElementById('anchor-note').textContent = `Reusing the identity anchor ${anchorTx}…`;
     } else {
