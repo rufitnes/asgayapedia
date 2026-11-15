@@ -372,10 +372,11 @@ const TEST_NOSTR = {
 };
 
 function keyFromPub(pubHex) {
-  const nostrPrivHex = TEST_NOSTR[pubHex.toLowerCase()];
-  if (!nostrPrivHex) throw new Error('This wallet is not a seeded demo identity; use the app’s merchant wallet.');
+  const p = pubHex.toLowerCase();
+  const seeded = TEST_NOSTR[p];
+  const nostrPrivHex = seeded || binToHex(sha256(utf8ToBin('asgaya-web-test-nostr:' + p)));
   const nostrPub = secp256k1.derivePublicKeyCompressed(hexToBin(nostrPrivHex));
-  return { bchPubHex: pubHex, nostrPrivHex, npubHex: binToHex(nostrPub.slice(1)) };
+  return { bchPubHex: p, nostrPrivHex, npubHex: binToHex(nostrPub.slice(1)), seeded: !!seeded };
 }
 
 async function anchorLoad() {
@@ -404,7 +405,7 @@ function openAnchor() {
   wc.getPubkey().then((pub) => {
     const k = keyFromPub(binToHex(pub));
     document.getElementById('ad-pub').textContent = `BCH pubkey: ${k.bchPubHex}`;
-    document.getElementById('ad-npub').textContent = `npub (hex): ${k.npubHex}`;
+    document.getElementById('ad-npub').textContent = `npub (hex): ${k.npubHex} (${k.seeded ? 'app merchant identity' : 'web demo identity'})`;
     return anchorLoad();
   }).catch((e) => { document.getElementById('anchor-note').textContent = e.message; });
 }
