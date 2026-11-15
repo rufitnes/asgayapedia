@@ -1,4 +1,5 @@
 import { sha256, secp256k1, hexToBin, binToHex } from '@bitauth/libauth';
+import { secp256k1 as noble } from '@noble/curves/secp256k1';
 // Minimal NIP-99 read client: fetch the Asgaya board ads (kind 30402) from a relay.
 export const NOSTR_RELAY = 'ws://192.168.1.115:7777';
 export const KIND_LISTING = 30402;
@@ -104,4 +105,40 @@ export function publishEvent(relay, event, timeoutMs = 10000) {
     };
     ws.onerror = () => { clearTimeout(timer); finish(() => reject(new Error(`relay ${relay} unreachable`))); };
   });
+}
+
+const toB64 = (bytes) => btoa(String.fromCharCode(...bytes));
+const fromB64 = (str) => Uint8Array.from(atob(str), (c) => c.charCodeAt(0));
+
+async function sharedX(privHex, pubXHex) {
+  const pub = '02' + String(pubXHex).replace(/^0x/, '').toLowerCase();
+  const shared = noble.getSharedSecret(hexToBin(privHex), pub, true);
+  return shared.slice(1);
+}
+
+export async function nip04Encrypt(privHex, pubXHex, plaintext) {
+  const key = await crypto.subtle.importKey('raw', await sharedX(privHex, pubXHex), 'AES-CBC', false, ['encrypt']);
+  const iv = crypto.getRandomValues(new Uint8Array(16));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-CBC', iv }, key, new TextEncoder().encode(plaintext)));
+  return `${toB64(ct)}?iv=${toB64(iv)}`;
+}
+
+export async function nip04Decrypt(privHex, pubXHex, content) {
+  const [ct, iv] = String(content).split('?iv=');
+  if (!ct || !iv) throw new Error('not a NIP-04 message');
+  const key = await crypto.subtle.importKey('raw', await sharedX(privHex, pubXHex), 'AES-CBC', false, ['decrypt']);
+  const pt = await crypto.subtle.decrypt({ name: 'AES-CBC', iv: fromB64(iv) }, key, fromB64(ct));
+  return new TextDecoder().decode(pt);
+}
+
+export function subscribeDMs(relay, { me, author, onEvent }) {
+  const ws = new WebSocket(relay);
+  const sub = `dm-${Math.random().toString(36).slice(2)}`;
+  ws.onopen = () => ws.send(JSON.stringify(['REQ', sub, { kinds: [4], '#p': [me], authors: [author], limit: 50 }]));
+  ws.onmessage = (ev) => {
+    let msg;
+    try { msg = JSON.parse(ev.data); } catch { return; }
+    if (msg[0] === 'EVENT' && msg[1] === sub) onEvent(msg[2]);
+  };
+  return () => { try { ws.close(); } catch { /* ignore */ } };
 }

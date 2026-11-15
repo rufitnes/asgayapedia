@@ -1,9 +1,9 @@
 import QRCode from 'qrcode';
-import { decodeCashAddress, decodeTransaction, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, decodePrivateKeyWif } from '@bitauth/libauth';
+import { decodeCashAddress, decodeTransaction, generatePrivateKey, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, decodePrivateKeyWif } from '@bitauth/libauth';
 import { WizardConnectSigner } from './wizardconnect.js';
 import { encodeAnchorCommitment, buildGenesisAnchor, buildSelfSend } from './anchor.js';
 import { electrumListUnspent, electrumGetHistory, electrumGetRawTx, scripthashFromLockingBytecode, broadcastTransaction } from './electrum.js';
-import { fetchListings, NOSTR_RELAY, makeEvent, publishEvent } from './nostr.js';
+import { fetchListings, NOSTR_RELAY, makeEvent, publishEvent, nip04Encrypt, nip04Decrypt, subscribeDMs } from './nostr.js';
 
 const CATALOGUE_URL = 'catalogue/menu.json';
 const ELECTRUM_WS = 'wss://chipnet.imaginary.cash:50004';
@@ -462,7 +462,8 @@ function showView(name) {
   document.getElementById('menu-view').hidden = name !== 'menu';
   document.getElementById('anchor-view').hidden = name !== 'anchor';
   document.getElementById('ad-view').hidden = name !== 'ad';
-  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : name === 'anchor' ? 'anchor-view' : name === 'ad' ? 'ad-view' : 'categories';
+  document.getElementById('pay-view').hidden = name !== 'pay';
+  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : name === 'anchor' ? 'anchor-view' : name === 'ad' ? 'ad-view' : name === 'pay' ? 'pay-view' : 'categories';
   const el = document.getElementById(target);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -615,7 +616,7 @@ async function publishAd() {
     const min = Number(document.getElementById('ad-min').value);
     const max = Number(document.getElementById('ad-max').value);
     const name = document.getElementById('ad-name').value;
-    const cash = document.getElementById('ad-cash').value;
+    const cash = '';
     const location = document.getElementById('ad-location').value;
     const hours = document.getElementById('ad-hours').value;
     await anchorLoad();
@@ -654,7 +655,6 @@ async function publishAd() {
       ['min', String(min)],
       ['max', String(max)],
       ['hours', hours],
-      ['cash', cash],
       ['name', name],
       ['status', 'active'],
       ['anchor', `${anchorTx}:0`],
@@ -673,8 +673,6 @@ async function publishAd() {
       max,
       hours,
       name,
-      phone: document.getElementById('ad-phone').value,
-      iban: document.getElementById('ad-iban').value,
       notes: document.getElementById('ad-notes').value,
     });
     const event = makeEvent({ privHex: k.nostrPrivHex, pubHex: k.npubHex, kind: 30402, tags, content });
@@ -715,7 +713,87 @@ async function anchorSelfSend() {
   }
 }
 
-async function main() {
+async function openPay(ad) {
+  const amount = Number($('buy-amount').value);
+  const method = $('buy-method').value;
+  if (!Number.isFinite(amount) || amount <= 0) { alert('Enter an amount.'); return; }
+  if (ad.min != null && amount < ad.min) { alert(`Minimum is ${ad.min} ${ad.assets[0] ?? ''}.`); return; }
+  if (ad.max != null && amount > ad.max) { alert(`Maximum is ${ad.max} ${ad.assets[0] ?? ''}.`); return; }
+  const params = new URLSearchParams({
+    ad: ad.id, seller: ad.npub, name: ad.name || '', asset: ad.assets[0] || 'EUR',
+    amount: String(amount), method, anchor: ad.anchor || '',
+  });
+  window.open(`${location.pathname}#pay?${params}`, '_blank', 'noopener');
+}
+
+function chatAdd(kind, text) {
+  const div = document.createElement('div');
+  div.className = `msg ${kind}`;
+  div.textContent = text;
+  $('pay-chat').appendChild(div);
+  div.scrollIntoView({ block: 'nearest' });
+}
+
+async function startPay(params) {
+  showView('pay');
+  const seller = String(params.get('seller') || '').toLowerCase();
+  const name = params.get('name') || 'the merchant';
+  const asset = params.get('asset') || 'EUR';
+  const amount = params.get('amount') || '';
+  const method = params.get('method') || '';
+  const anchor = params.get('anchor') || '';
+  const privHex = binToHex(generatePrivateKey());
+  const pub = secp256k1.derivePublicKeyCompressed(hexToBin(privHex));
+  const npubHex = binToHex(pub.slice(1));
+  $('pay-name').textContent = name;
+  $('pay-sub').textContent = `${amount} ${asset} · ${method}`;
+  $('pay-ids').textContent = `You (session): ${npubHex.slice(0, 16)}… · Merchant: ${seller.slice(0, 16)}…${anchor ? ` · anchor ${anchor}` : ''}`;
+  $('pay-status').textContent = 'Waiting for the merchant…';
+  $('pay-status').className = 'badge warn';
+  chatAdd('sys', 'A private, end-to-end encrypted channel with the merchant. Mercar only showed you the ad; it cannot read or store these messages.');
+  if (!seller) { chatAdd('sys', 'This ad has no merchant npub, so the channel cannot be opened.'); return; }
+  const request = { type: 'asgaya/instructions_request', ad: params.get('ad'), amount, asset, method, anchor, buyer: npubHex, note: 'Please send the payment instructions.' };
+  chatAdd('me', `Hi ${name}, I'd like ${amount} ${asset} (${method}). Please send the payment instructions.`);
+  try {
+    const content = await nip04Encrypt(privHex, seller, JSON.stringify(request));
+    const event = makeEvent({ privHex, pubHex: npubHex, kind: 4, tags: [['p', seller]], content });
+    await publishEvent(NOSTR_RELAY, event);
+  } catch (e) { chatAdd('sys', `Could not send the request: ${e.message}`); }
+  const timer = setTimeout(() => {
+    if ($('pay-status').textContent.startsWith('Waiting')) {
+      $('pay-status').textContent = 'Merchant not detected';
+      chatAdd('sys', 'The merchant’s app has not replied. It must be open: the instructions come from their device (liveness).');
+    }
+  }, 45000);
+  subscribeDMs(NOSTR_RELAY, { me: npubHex, author: seller, onEvent: async (ev) => {
+    if (ev.pubkey !== seller) return;
+    try {
+      const pt = await nip04Decrypt(privHex, seller, ev.content);
+      let text = pt;
+      try { const o = JSON.parse(pt); text = o.text || o.instructions || pt; } catch { /* plain text */ }
+      chatAdd('them', text);
+      $('pay-status').textContent = 'Merchant replied (live)';
+      $('pay-status').className = 'badge ok';
+      clearTimeout(timer);
+    } catch (e) { chatAdd('sys', `Could not decrypt a message: ${e.message}`); }
+  } });
+  $('pay-form').onsubmit = async (e) => {
+    e.preventDefault();
+    const text = $('pay-input').value.trim();
+    if (!text) return;
+    $('pay-input').value = '';
+    chatAdd('me', text);
+    try {
+      const content = await nip04Encrypt(privHex, seller, text);
+      const event = makeEvent({ privHex, pubHex: npubHex, kind: 4, tags: [['p', seller]], content });
+      await publishEvent(NOSTR_RELAY, event);
+    } catch (err) { chatAdd('sys', `Could not send: ${err.message}`); }
+  };
+}
+
+function main() {
+  const payParams = location.hash.startsWith('#pay?') ? new URLSearchParams(location.hash.slice(5)) : null;
+  if (payParams) { startPay(payParams).catch((e) => { $('pay-status').textContent = `Chat error: ${e.message}`; }); return; }
   try {
     const res = await fetch(CATALOGUE_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -765,7 +843,7 @@ async function main() {
   $('back-restaurants').addEventListener('click', () => showView(null));
   $('back-menu').addEventListener('click', () => showView('restaurants'));
   $('back-ad').addEventListener('click', () => showView('exchange'));
-  $('buy-get').addEventListener('click', showInstructions);
+  $('buy-get').addEventListener('click', () => { if (state.selectedAd) openPay(state.selectedAd); });
   $('buy-amount').addEventListener('input', () => { $('buy-instructions').hidden = true; });
   $('buy-method').addEventListener('change', () => { $('buy-instructions').hidden = true; });
   $('all-categories').addEventListener('click', openCategories);

@@ -294,3 +294,16 @@ button.tile { font: inherit; }
 @media (max-width: 620px) {
   .buy-row, .ad-detail-facts { grid-template-columns: 1fr; }
 }
+
+.pay { max-width: 720px; margin: 0 auto; }
+.pay-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pay-didactic { background: var(--accent-soft); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 13px; }
+.pay-didactic p { margin: 0 0 6px; }
+.pay-didactic p:last-child { margin: 0; }
+.chat { display: flex; flex-direction: column; gap: 10px; min-height: 240px; padding: 14px 0; }
+.msg { max-width: 82%; padding: 10px 13px; border-radius: 14px; line-height: 1.45; white-space: pre-wrap; word-break: break-word; }
+.msg.me { align-self: flex-end; background: var(--accent); color: var(--accent-ink); }
+.msg.them { align-self: flex-start; background: var(--panel); border: 1px solid var(--line); }
+.msg.sys { align-self: center; background: transparent; color: var(--muted); font-size: 12px; padding: 0; text-align: center; }
+.chat-form { display: flex; gap: 8px; }
+.chat-form input { flex: 1; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; font: inherit; background: #fff; color: var(--ink); }
