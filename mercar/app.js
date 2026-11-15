@@ -380,6 +380,14 @@ function applyCategory(it) {
 
 let anchorUtxos = [];
 
+const METHOD_KEY = {
+  'Cash in person': 'cash',
+  'Card in person': 'card',
+  'Bizum': 'bizum',
+  'SEPA': 'other',
+  'Pago Móvil': 'other',
+};
+
 const TEST_NOSTR = {
   '03d6e1b33780e34dff1c6dc705c626deed385e827e762abfc596764be0ca3e4f45': '33'.repeat(32),
   '032774f66536468a06a244568724bf1f8762682be1573ff9910667c0fea1226ece': '11'.repeat(32),
@@ -452,7 +460,7 @@ async function publishAd() {
     const commitment = encodeAnchorCommitment({
       role,
       asset: assets[0],
-      method: METHOD_KEY[methods[0]] ?? 'cash',
+      method: METHOD_KEY[methods[0]] ?? 'other',
       feeBps: Math.round(fee * 100),
     });
     const built = buildGenesisAnchor(wcLocking, { txid: v0.tx_hash, vout: v0.tx_pos, satoshis: BigInt(v0.value) }, commitment);
