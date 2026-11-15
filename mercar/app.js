@@ -424,20 +424,29 @@ function currentCommitmentHex() {
   }));
 }
 
+function findIdentityAnchor(commitmentHex) {
+  if (commitmentHex) {
+    const tokenMatch = anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft && String(u.token_data.nft.commitment ?? '').toLowerCase() === commitmentHex);
+    if (tokenMatch) return tokenMatch.tx_hash;
+  }
+  const dust = anchorUtxos.find((u) => u.tx_pos === 0 && BigInt(u.value) > 0n && BigInt(u.value) <= 2000n);
+  if (dust) return dust.tx_hash;
+  const saved = loadSavedAnchor();
+  if (saved && saved.txid && (!commitmentHex || saved.commitmentHex === commitmentHex)) return saved.txid;
+  return null;
+}
+
 function refreshPublishButton() {
   const btn = document.getElementById('anchor-mint');
   const note = document.getElementById('anchor-note');
   if (!btn) return;
   if (!wc) { btn.disabled = true; note.textContent = 'Connect a chipnet wallet to mint the anchor.'; return; }
   const commitmentHex = currentCommitmentHex();
-  const existing = commitmentHex && anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft && String(u.token_data.nft.commitment ?? '').toLowerCase() === commitmentHex);
-  const saved = loadSavedAnchor();
-  const savedMatch = commitmentHex && saved && saved.txid && saved.commitmentHex === commitmentHex;
+  const existing = findIdentityAnchor(commitmentHex);
   const hasV0 = anchorUtxos.some((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n);
-  btn.disabled = !(existing || savedMatch || hasV0);
+  btn.disabled = !(existing || hasV0);
   document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
-  if (existing) note.textContent = `Ready: reusing the identity anchor ${existing.tx_hash}.`;
-  else if (savedMatch) note.textContent = `Ready: reusing the identity anchor ${saved.txid}.`;
+  if (existing) note.textContent = `Ready: reusing the identity anchor ${existing}.`;
   else if (hasV0) note.textContent = 'Ready: a vout-0 UTXO is available for the anchor.';
   else if (anchorUtxos.length) note.textContent = 'No vout-0 UTXO: use “Prepare a vout-0 UTXO”.';
   else note.textContent = 'No chipnet UTXOs: use the chipnet faucet first.';
@@ -495,14 +504,7 @@ async function publishAd() {
       feeBps: Math.round(fee * 100),
     });
     const commitmentHex = binToHex(commitment);
-    const existing = anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft && String(u.token_data.nft.commitment ?? '').toLowerCase() === commitmentHex);
-    const saved = loadSavedAnchor();
-    let anchorTx;
-    if (existing) {
-      anchorTx = existing.tx_hash;
-    } else if (saved && saved.txid && saved.commitmentHex === commitmentHex) {
-      anchorTx = saved.txid;
-    }
+    let anchorTx = findIdentityAnchor(commitmentHex) ?? undefined;
     if (anchorTx) {
       document.getElementById('anchor-note').textContent = `Reusing the identity anchor ${anchorTx}…`;
     } else {
