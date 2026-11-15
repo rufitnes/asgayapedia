@@ -122,9 +122,9 @@ async function connectWallet() {
   const dlg = $('wc-dialog');
   $('wc-qr').removeAttribute('src');
   $('wc-uri').textContent = 'Waiting for the relay…';
-  if (!dlg.open) dlg.showModal();
   wc = await WizardConnectSigner.connect({
     onUri: async (u, q) => {
+      if (!dlg.open) dlg.showModal();
       $('wc-uri').textContent = u;
       try { $('wc-qr').src = await QRCode.toDataURL(q ?? u, { width: 280, margin: 1 }); } catch { /* optional */ }
     },

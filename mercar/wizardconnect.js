@@ -16,6 +16,18 @@ export class WizardConnectSigner {
 
   static connect({ onUri, pathName = 'receive', addressIndex = 0, broadcast = true, userPrompt = 'Confirm payment', dappName = 'Mercar Asgaya' }) {
     const mgr = new DappConnectionManager(dappName);
+    const stored = mgr.loadStoredSession();
+    if (stored && stored.walletPublicKey) {
+      try {
+        const relay = initiateDappRelay((payload) => mgr.updateConnection(payload.client, payload.status), {
+          existingCredentials: { privateKey: stored.privateKey, secret: stored.secret, walletPublicKey: stored.walletPublicKey },
+        });
+        mgr.attachRelay(relay);
+        return Promise.resolve(new WizardConnectSigner(mgr, pathName, addressIndex, broadcast, userPrompt));
+      } catch {
+        mgr.clearStoredSession();
+      }
+    }
     return new Promise((resolve, reject) => {
       const relay = initiateDappRelay((payload) => mgr.updateConnection(payload.client, payload.status));
       mgr.attachRelay(relay);
@@ -55,5 +67,6 @@ export class WizardConnectSigner {
 
   disconnect() {
     try { this.mgr.sendDisconnect(); } catch { /* ignore */ }
+    try { this.mgr.clearStoredSession(); } catch { /* ignore */ }
   }
 }
