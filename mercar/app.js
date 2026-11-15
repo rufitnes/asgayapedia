@@ -223,7 +223,13 @@ function renderExchange() {
   const fa = $('filter-asset').value;
   const fm = $('filter-method').value;
   const sort = $('sort-by').value;
+  const q = ($('search')?.value || '').trim().toLowerCase();
   let ads = exchangeAds.filter((a) => (!fa || a.assets.includes(fa)) && (!fm || a.methods.includes(fm)));
+  if (q) {
+    ads = ads.filter((a) =>
+      [a.name, a.cashAccount, a.location, a.npub, ...a.assets, ...a.methods]
+        .filter(Boolean).join(' ').toLowerCase().includes(q));
+  }
   ads = sort === 'fee' ? [...ads].sort((a, b) => a.fee - b.fee) : [...ads].sort((a, b) => b.createdAt - a.createdAt);
   $('exchange-note').textContent = ads.length ? '' : 'No ads match the filters.';
   for (const ad of ads) {
@@ -268,6 +274,7 @@ async function main() {
   $('co-pay').addEventListener('click', payWithBch);
   $('connect-btn').addEventListener('click', () => connectWallet().catch((e) => alert(e.message)));
   $('wc-cancel').addEventListener('click', () => $('wc-dialog').close());
+  $('search').addEventListener('input', renderExchange);
   $('filter-asset').addEventListener('change', renderExchange);
   $('filter-method').addEventListener('change', renderExchange);
   $('sort-by').addEventListener('change', renderExchange);

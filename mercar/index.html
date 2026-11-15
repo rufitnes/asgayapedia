@@ -38,6 +38,19 @@
     </div>
   </section>
 
+  <section class="board-tools">
+    <div class="search-wrap">
+      <span class="search-icon" aria-hidden="true">🔎</span>
+      <input id="search" type="search" placeholder="Search merchants, currencies, payment methods…" />
+    </div>
+    <nav class="category-tiles" aria-label="Board categories">
+      <a class="tile active" href="#exchange"><span aria-hidden="true">💱</span>Currency exchange</a>
+      <a class="tile" href="#restaurants"><span aria-hidden="true">🍽️</span>Restaurants</a>
+      <span class="tile disabled"><span aria-hidden="true">📦</span>Goods<small>soon</small></span>
+      <span class="tile disabled"><span aria-hidden="true">🛠️</span>Services<small>soon</small></span>
+    </nav>
+  </section>
+
   <section class="exchange" id="exchange">
     <div class="exchange-head">
       <h2>Currency exchange</h2>
@@ -52,7 +65,7 @@
     <p class="note" id="exchange-note"></p>
   </section>
 
-  <h2 class="category category-section">Restaurants (example category)</h2>
+  <h2 class="category category-section" id="restaurants">Restaurants (example category)</h2>
 
   <main class="layout">
     <section class="listing" aria-live="polite">

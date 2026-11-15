@@ -22,6 +22,7 @@
 | `--muted` | `#6b6580` | secondary text |
 | `--accent` | `#6d5bd0` | primary actions, links, the brand accent |
 | `--accent-ink` | `#ffffff` | text on the accent |
+| `--accent-soft` | `#efeaff` | the active category tile / soft accent |
 | `--line` | `#e5e0f2` | borders, dividers |
 | `--chipnet` | `#f59e0b` | the network status |
 | `--hero-1/2/3` | `#1b1436` / `#3a2a7a` / `#6d5bd0` | the landing hero gradient (only there) |
@@ -60,6 +61,13 @@
 - **Ad card:** the role (seller/buyer) in the semantic colour, the merchant name, the fee on the right; the terms lines (for … / methods / min–max / location·hours); the `npub` in mono.
 - **Badges:** the network (`--warn-*`); the role (`--ok-*` / `--info-*`).
 - **Cart / checkout:** the same panel language; the totals in weight 700; the mono address.
+
+## Search & categories
+
+- **Search bar:** the panel/border/radius language; the accent focus ring; a 🔎 glyph; the placeholder “Search merchants, currencies, payment methods…”.
+- **Category tiles:** a row of pill tiles (emoji + label). The active tile uses `--accent-soft` and the accent border; disabled tiles use 55 % opacity + a “soon” micro-label.
+- **Category icons:** emoji, one per category (💱 exchange, 🍽️ restaurants, 📦 goods, 🛠️ services). No icon library.
+- The tiles are navigation first; the search filters the current board content.
 
 ## Copy & voice
 

@@ -10,6 +10,7 @@
   --radius: 14px;
   --page-max: 1120px;
   --card-min: 260px;
+  --accent-soft: #efeaff;
   --hero-1: #1b1436;
   --hero-2: #3a2a7a;
   --hero-3: #6d5bd0;
@@ -208,3 +209,26 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,.35); color: var(--hero-ink); }
 .btn[disabled] { opacity: .5; cursor: not-allowed; }
 .hero-trust { font-size: 13px; color: var(--hero-muted); margin: 0; }
+
+.board-tools { max-width: var(--page-max); margin: 26px auto 0; padding: 0 22px; }
+.search-wrap {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 12px 16px; box-shadow: 0 1px 2px rgba(23, 18, 43, .04);
+}
+.search-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(109, 91, 208, .12); }
+.search-wrap input { border: 0; outline: 0; font: inherit; flex: 1; background: transparent; color: var(--ink); }
+.search-icon { font-size: 16px; opacity: .7; }
+.category-tiles { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.tile {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--panel); color: var(--ink); text-decoration: none;
+  font-weight: 600; font-size: 14px;
+}
+.tile span { font-size: 18px; }
+.tile:hover { border-color: var(--accent); }
+.tile.active { border-color: var(--accent); background: var(--accent-soft); color: #2a1f5c; }
+.tile.disabled { opacity: .55; cursor: not-allowed; }
+.tile small { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+#exchange, #restaurants { scroll-margin-top: 84px; }
