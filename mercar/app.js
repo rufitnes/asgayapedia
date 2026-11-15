@@ -394,6 +394,14 @@ const TEST_NOSTR = {
   '03886b4f4100f9e348caed5155474f0a1a96db3e2706dc59e15260ed3d2b35e148': '22'.repeat(32),
 };
 
+function slug(value) {
+  return String(value).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+const ANCHOR_KEY = 'mercar-identity-anchor';
+function loadSavedAnchor() { try { return JSON.parse(localStorage.getItem(ANCHOR_KEY) || 'null'); } catch { return null; } }
+function saveSavedAnchor(a) { try { localStorage.setItem(ANCHOR_KEY, JSON.stringify(a)); } catch { /* ignore */ } }
+
 function keyFromPub(pubHex) {
   const p = pubHex.toLowerCase();
   const seeded = TEST_NOSTR[p];
@@ -453,20 +461,35 @@ async function publishAd() {
     const cash = document.getElementById('ad-cash').value;
     const location = document.getElementById('ad-location').value;
     const hours = document.getElementById('ad-hours').value;
-    const v0 = anchorUtxos
-      .filter((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n)
-      .sort((a, b) => Number(b.value) - Number(a.value))[0];
-    if (!v0) throw new Error('No vout-0 UTXO; prepare one first.');
+    await anchorLoad();
     const commitment = encodeAnchorCommitment({
       role,
       asset: assets[0],
       method: METHOD_KEY[methods[0]] ?? 'other',
       feeBps: Math.round(fee * 100),
     });
-    const built = buildGenesisAnchor(wcLocking, { txid: v0.tx_hash, vout: v0.tx_pos, satoshis: BigInt(v0.value) }, commitment);
-    document.getElementById('anchor-note').textContent = 'Approve the anchor in your wallet…';
-    const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Mint your identity anchor' });
-    const anchorTx = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
+    const commitmentHex = binToHex(commitment);
+    const existing = anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft && String(u.token_data.nft.commitment ?? '').toLowerCase() === commitmentHex);
+    const saved = loadSavedAnchor();
+    let anchorTx;
+    if (existing) {
+      anchorTx = existing.tx_hash;
+    } else if (saved && saved.txid && saved.commitmentHex === commitmentHex) {
+      anchorTx = saved.txid;
+    }
+    if (anchorTx) {
+      document.getElementById('anchor-note').textContent = `Reusing the identity anchor ${anchorTx}…`;
+    } else {
+      const v0 = anchorUtxos
+        .filter((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n)
+        .sort((a, b) => Number(b.value) - Number(a.value))[0];
+      if (!v0) throw new Error('No vout-0 UTXO; prepare one first.');
+      const built = buildGenesisAnchor(wcLocking, { txid: v0.tx_hash, vout: v0.tx_pos, satoshis: BigInt(v0.value) }, commitment);
+      document.getElementById('anchor-note').textContent = 'Approve the anchor in your wallet…';
+      const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Mint your identity anchor' });
+      anchorTx = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
+      saveSavedAnchor({ txid: anchorTx, commitmentHex });
+    }
     const adId = `${k.bchPubHex.slice(0, 16)}-${role === 'seller' ? 'SELLER' : 'BUYER'}-${assets.join('')}-${slug(methods[0])}`;
     const tags = [
       ['d', adId],
@@ -508,7 +531,7 @@ async function publishAd() {
     document.getElementById('anchor-note').textContent = 'Publishing the listing…';
     await publishEvent(NOSTR_RELAY, event);
     document.getElementById('anchor-result').textContent =
-      `Anchor tx: ${anchorTx}\nListing: ${event.id}\nIdentity (npub hex): ${k.xHex}`;
+      `Anchor tx: ${anchorTx}\nListing: ${event.id}\nIdentity (npub hex): ${k.npubHex}`;
     document.getElementById('anchor-note').textContent = 'Published. The ad is on the board with its identity anchor.';
     exchangeAds = await fetchListings();
     populateFilters();
