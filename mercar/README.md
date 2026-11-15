@@ -1,7 +1,7 @@
 # Mercar Asgaya — BLAZE 2026 build
 
 **Window:** 14–22 Nov 2026. **Submission:** 22 Nov 14:00 UTC. **Kickoff:** 14 Nov 14:00 UTC.
-**Docs (public):** [asgayapedia](https://github.com/rufitnes/asgayapedia) · **Baseline:** tag `v0-prehackathon-baseline`.
+**Docs (public):** [asgayapedia](https://github.com/rufitnes/asgayapedia) · **Baseline:** tag `v0-prehackathon-baseline`. · **Design:** [`DESIGN.md`](./DESIGN.md) (frozen 2026-11-15).
 
 ## The slice
 

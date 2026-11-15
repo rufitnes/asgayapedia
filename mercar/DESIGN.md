@@ -1,0 +1,82 @@
+# Mercar Asgaya: design system
+
+**Status:** 🟢 **Frozen 2026-11-15.** Every new page uses these tokens; do not introduce new colours, sizes or radii.
+**Source of truth:** the `:root` tokens in [`styles.css`](./styles.css). This page explains how to use them.
+
+---
+
+## Principles
+
+- **Calm, honest, legible.** The product is a board; the ads and the merchants are the content. The UI stays quiet.
+- **One strong surface:** the **hero gradient**. Everything else is a restrained light surface with the purple accent.
+- **Colour is semantic:** the accent (purple) for action/identity; green/blue for the seller/buyer roles; amber for the network badge; mono for keys and addresses.
+- **The identity is visible:** the merchant's `npub`/anchor is a trust line, not decoration.
+
+## Palette
+
+| Token | Value | Use |
+|---|---|---|
+| `--bg` | `#f7f5ff` | page background |
+| `--panel` | `#ffffff` | cards, topbar, dialogs |
+| `--ink` | `#17122b` | text; the dark links banner |
+| `--muted` | `#6b6580` | secondary text |
+| `--accent` | `#6d5bd0` | primary actions, links, the brand accent |
+| `--accent-ink` | `#ffffff` | text on the accent |
+| `--line` | `#e5e0f2` | borders, dividers |
+| `--chipnet` | `#f59e0b` | the network status |
+| `--hero-1/2/3` | `#1b1436` / `#3a2a7a` / `#6d5bd0` | the landing hero gradient (only there) |
+| `--hero-ink` | `#ffffff` | hero text and the white primary button |
+| `--hero-muted` | `#cfc8ff` | hero eyebrow, the H1 span, the trust line, the links banner |
+| `--hero-sub` | `#e8e3ff` | the hero subline |
+| `--ok-bg` / `--ok-ink` | `#dff7e6` / `#1a6b3a` | “Sells …” (seller) |
+| `--info-bg` / `--info-ink` | `#e6ecff` / `#2a3d8f` | the buyer role |
+| `--warn-bg` / `--warn-ink` / `--warn-line` | `#fdeccb` / `#7a4b00` / `#f7d69b` | the network badge |
+| `--mono` | `ui-monospace, SFMono-Regular, Menlo, monospace` | addresses, txids, npub |
+
+## Typography
+
+- **Family:** `system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`.
+- **Body:** 16 px, line-height 1.45.
+- **H1 (hero):** `clamp(36px, 6vw, 64px)`, weight 800, letter-spacing `-0.04em`, line-height 1.02. The second line in `--hero-muted`.
+- **H2:** 24 px, letter-spacing `-0.02em`.
+- **Section label:** 13 px, uppercase, letter-spacing 0.08em, `--muted`.
+- **Small:** 13 px; **micro:** 11–12 px; **mono:** 10–12 px for keys.
+- No web fonts. No italics for emphasis; use weight and colour.
+
+## Layout & spacing
+
+- **Page max:** `--page-max` 1120 px, 22 px side padding.
+- **Cards:** radius 14 px (`--radius`), 14 px padding, 1 px `--line` border, `--panel` background.
+- **Grids:** ads `minmax(260px, 1fr)` (`--card-min`), gap 14 px; menu items `minmax(220px, 1fr)`, gap 14 px.
+- **Sections:** 22–26 px vertical rhythm; the hero has its own 64/56 px padding.
+- **Dialogs:** panel, 480 px max, backdrop `rgba(23, 18, 43, 0.35)`.
+
+## Components
+
+- **Topbar:** panel, 1 px bottom border, brand (20 px, 800; “Asgaya” in `--accent`), the network badge, the connect button.
+- **Links banner:** `--ink` background, 12 px, `--hero-muted` links; the judges' links.
+- **Hero:** the gradient; the eyebrow (uppercase, 12 px); the H1 with the muted second line; the sub; the CTAs; the trust line.
+- **Buttons:** `.primary` = accent/white on light surfaces; `.ghost` = transparent with a `--line` border; on the hero, `.btn.primary` = white/ink and `.btn.ghost` = white border. Disabled = 50 % opacity.
+- **Ad card:** the role (seller/buyer) in the semantic colour, the merchant name, the fee on the right; the terms lines (for … / methods / min–max / location·hours); the `npub` in mono.
+- **Badges:** the network (`--warn-*`); the role (`--ok-*` / `--info-*`).
+- **Cart / checkout:** the same panel language; the totals in weight 700; the mono address.
+
+## Copy & voice
+
+- Sentence case; short lines. The ad reads **“Sells BCH”** or **“Sells NGN”**, then **“for EUR”**, methods, min–max.
+- Say what is true: “demo”, “chipnet”, “coming” where it applies. No hype, no invented metrics.
+- The identity line: “Merchant identity anchored on-chain” (the anchor is the promise; label it when it is live).
+- No em dashes; use commas, colons or parentheses.
+- Numbers: fiat with the currency; BCH in sats in the checkout; the fee as a percentage with two decimals.
+
+## Do / don't
+
+- **Do** use the tokens; reuse the card, badge, button and mono patterns.
+- **Don't** add colours outside the palette; don't use the hero gradient on subpages; don't use the accent for large surfaces; don't mix the role colours with the network badge.
+- Keep the **network badge** visible on every listing; keep the **identity/anchor** evidence near the merchant name.
+
+## Files
+
+- [`styles.css`](./styles.css): the tokens and the components.
+- [`index.html`](./index.html): the landing (hero + exchange + restaurant example).
+- [`app.js`](./app.js), [`nostr.js`](./nostr.js): the data; no styling decisions.
