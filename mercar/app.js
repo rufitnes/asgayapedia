@@ -507,9 +507,16 @@ async function anchorSelfSend() {
     document.getElementById('anchor-note').textContent = 'Approve in your wallet…';
     const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Prepare a vout-0 UTXO' });
     const txid = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
-    document.getElementById('anchor-note').textContent = `Self-send sent (${txid}). When it confirms, press Refresh: the new vout-0 UTXO is ready.`;
+    await anchorLoad();
+    document.getElementById('anchor-note').textContent = `Self-send sent (${txid}). If the vout-0 is not ready yet, press Refresh in a moment.`;
   } catch (e) {
-    document.getElementById('anchor-note').textContent = `Self-send failed: ${e.message}`;
+    const msg = e.message || '';
+    if (/already in block chain|already known|already-in-mempool|already in the mempool/i.test(msg)) {
+      document.getElementById('anchor-note').textContent = 'The self-send is already on-chain. Refreshing the UTXOs…';
+      await anchorLoad().catch(() => {});
+    } else {
+      document.getElementById('anchor-note').textContent = `Self-send failed: ${msg}`;
+    }
   }
 }
 
