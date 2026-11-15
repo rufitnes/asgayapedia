@@ -25,20 +25,24 @@ export class WizardConnectSigner {
     });
   }
 
-  async getLockingBytecode() {
+  async getPubkey() {
     const child = childIndexOfPathName(this.pathName);
     const pubkey = this.mgr.getPubkey(child, BigInt(this.addressIndex));
     if (!pubkey) throw new Error(`No pubkey for path '${this.pathName}[${this.addressIndex}]'`);
-    return publicKeyToP2pkhLockingBytecode({ publicKey: pubkey });
+    return pubkey;
   }
 
-  async signTransaction({ transaction, sourceOutput, inputIndex }) {
+  async getLockingBytecode() {
+    return publicKeyToP2pkhLockingBytecode({ publicKey: await this.getPubkey() });
+  }
+
+  async signTransaction({ transaction, sourceOutput, inputIndex, userPrompt }) {
     const payload = {
       transaction: {
         transaction: transactionToHex(transaction.inputs, transaction.outputs, transaction.version, transaction.locktime),
         sourceOutputs: [sourceOutputToRelay(sourceOutput)],
         broadcast: this.broadcast,
-        userPrompt: this.userPrompt,
+        userPrompt: userPrompt ?? this.userPrompt,
       },
       inputPaths: [[inputIndex, this.pathName, this.addressIndex]],
     };

@@ -1,6 +1,7 @@
 import QRCode from 'qrcode';
 import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex } from '@bitauth/libauth';
 import { WizardConnectSigner } from './wizardconnect.js';
+import { encodeAnchorCommitment, buildGenesisAnchor, buildSelfSend } from './anchor.js';
 import { electrumListUnspent, scripthashFromLockingBytecode, broadcastTransaction } from './electrum.js';
 import { fetchListings, NOSTR_RELAY } from './nostr.js';
 
@@ -335,7 +336,8 @@ function showView(name) {
   document.getElementById('exchange').hidden = name !== 'exchange';
   document.getElementById('restaurants-view').hidden = name !== 'restaurants';
   document.getElementById('menu-view').hidden = name !== 'menu';
-  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : 'categories';
+  document.getElementById('anchor-view').hidden = name !== 'anchor';
+  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : name === 'anchor' ? 'anchor-view' : 'categories';
   const el = document.getElementById(target);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -361,6 +363,77 @@ function applyCategory(it) {
   showView('exchange');
 }
 
+let anchorUtxos = [];
+
+async function anchorIdentity() {
+  const pub = await wc.getPubkey();
+  return binToHex(pub.slice(1));
+}
+
+async function anchorLoad() {
+  if (!wc) { document.getElementById('anchor-note').textContent = 'Connect a chipnet wallet to mint the anchor.'; return; }
+  document.getElementById('anchor-address').textContent = wcAddress ?? '';
+  const sh = await scripthashFromLockingBytecode(wcLocking);
+  anchorUtxos = await electrumListUnspent(ELECTRUM_WS, sh);
+  const v0 = anchorUtxos.filter((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n);
+  document.getElementById('anchor-mint').disabled = v0.length === 0;
+  document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
+  document.getElementById('anchor-note').textContent = v0.length
+    ? `Ready: vout-0 UTXO with ${Number(v0[0].value)} sats.`
+    : anchorUtxos.length
+      ? 'No vout-0 UTXO: use “Prepare a vout-0 UTXO”.'
+      : 'No chipnet UTXOs: use the chipnet faucet first.';
+}
+
+function openAnchor() {
+  showView('anchor');
+  if (wc) anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; });
+  else document.getElementById('anchor-note').textContent = 'Connect a chipnet wallet to mint the anchor.';
+}
+
+async function anchorMint() {
+  const btn = document.getElementById('anchor-mint');
+  btn.disabled = true;
+  try {
+    if (!wc) await connectWallet();
+    const v0 = anchorUtxos
+      .filter((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n)
+      .sort((a, b) => Number(b.value) - Number(a.value))[0];
+    if (!v0) throw new Error('No vout-0 UTXO');
+    const commitment = encodeAnchorCommitment({
+      role: document.getElementById('anchor-role').value,
+      asset: document.getElementById('anchor-asset').value,
+      method: document.getElementById('anchor-method').value,
+      feeBps: Number(document.getElementById('anchor-fee').value),
+    });
+    const built = buildGenesisAnchor(wcLocking, { txid: v0.tx_hash, vout: v0.tx_pos, satoshis: BigInt(v0.value) }, commitment);
+    document.getElementById('anchor-note').textContent = 'Approve in your wallet…';
+    const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Mint your identity anchor' });
+    const txid = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
+    const identity = await anchorIdentity();
+    document.getElementById('anchor-result').textContent = `Anchor tx: ${txid}\nCategory: ${built.categoryHex}\nIdentity (npub hex): ${identity}`;
+    document.getElementById('anchor-note').textContent = 'Anchor minted on chipnet. The identity is the genesis signer.';
+  } catch (e) {
+    document.getElementById('anchor-note').textContent = `Mint failed: ${e.message}`;
+    btn.disabled = false;
+  }
+}
+
+async function anchorSelfSend() {
+  try {
+    if (!wc) await connectWallet();
+    const u = anchorUtxos.slice().sort((a, b) => Number(b.value) - Number(a.value))[0];
+    if (!u) throw new Error('No UTXOs');
+    const built = buildSelfSend(wcLocking, { txid: u.tx_hash, vout: u.tx_pos, satoshis: BigInt(u.value) });
+    document.getElementById('anchor-note').textContent = 'Approve in your wallet…';
+    const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Prepare a vout-0 UTXO' });
+    const txid = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
+    document.getElementById('anchor-note').textContent = `Self-send sent (${txid}). When it confirms, press Refresh: the new vout-0 UTXO is ready.`;
+  } catch (e) {
+    document.getElementById('anchor-note').textContent = `Self-send failed: ${e.message}`;
+  }
+}
+
 async function main() {
   try {
     const res = await fetch(CATALOGUE_URL, { cache: 'no-store' });
@@ -379,6 +452,12 @@ async function main() {
   $('wc-cancel').addEventListener('click', () => $('wc-dialog').close());
   $('search').addEventListener('input', () => { if ($('search').value.trim()) showView('exchange'); renderExchange(); });
   $('browse-board').addEventListener('click', () => showView(null));
+  $('merchant-btn').addEventListener('click', openAnchor);
+  $('back-anchor').addEventListener('click', () => showView(null));
+  $('anchor-connect').addEventListener('click', () => connectWallet().then(() => anchorLoad()).catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
+  $('anchor-mint').addEventListener('click', anchorMint);
+  $('anchor-selfsend').addEventListener('click', anchorSelfSend);
+  $('anchor-refresh').addEventListener('click', () => anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
   $('hero-buy-bch').addEventListener('click', () => applyCategory({ kind: 'buyBch' }));
   $('featured-exchange').addEventListener('click', () => { state.adType = null; $('filter-asset').value = ''; $('filter-method').value = ''; renderExchange(); showView('exchange'); });
   $('featured-restaurants').addEventListener('click', () => showView('restaurants'));

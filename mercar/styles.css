@@ -253,3 +253,11 @@ button.tile { font: inherit; }
 .merchant-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
 .merchant-card-top strong { font-size: 18px; }
 .merchant-card-cta { display: inline-block; margin-top: 10px; color: var(--accent); font-weight: 700; }
+
+.anchor-box { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
+.anchor-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.anchor-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.anchor-fields label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.anchor-fields select, .anchor-fields input { font: inherit; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); }
+.anchor-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.anchor-box .mono { white-space: pre-wrap; }

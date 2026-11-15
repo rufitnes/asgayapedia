@@ -20,6 +20,7 @@
     <div class="brand">Mercar <span>Asgaya</span></div>
     <div class="topbar-right">
       <span class="badge" id="network-badge">chipnet demo</span>
+      <button class="ghost" id="merchant-btn" type="button">Merchant</button>
       <button class="ghost" id="connect-btn" type="button">Connect wallet</button>
     </div>
   </header>
@@ -103,6 +104,31 @@
         <p class="note" id="pay-note">Add something from the menu to start.</p>
       </aside>
     </main>
+  </section>
+
+  <section class="view" id="anchor-view" hidden>
+    <button class="back" id="back-anchor" type="button">← All categories</button>
+    <h2 class="view-title">Mint your identity anchor</h2>
+    <p class="muted">Chipnet demo. The anchor ties your merchant identity (npub) to an on-chain NFT; the identity is the key that signs the genesis.</p>
+    <div class="anchor-box">
+      <div class="anchor-row">
+        <button class="primary" id="anchor-connect" type="button">Connect wallet</button>
+        <span class="mono" id="anchor-address"></span>
+      </div>
+      <div class="anchor-fields">
+        <label>Role<select id="anchor-role"><option value="seller">Seller (I sell BCH)</option><option value="buyer">Buyer (I buy BCH)</option></select></label>
+        <label>Currency<select id="anchor-asset"><option>EUR</option><option>USD</option><option>NGN</option></select></label>
+        <label>Payment<select id="anchor-method"><option value="cash">Cash in person</option><option value="card">Card in person</option><option value="bizum">Bizum</option></select></label>
+        <label>Fee (bps)<input id="anchor-fee" type="number" value="50" min="0" max="10000" /></label>
+      </div>
+      <div class="anchor-actions">
+        <button class="primary" id="anchor-mint" type="button" disabled>Mint anchor (chipnet)</button>
+        <button class="ghost" id="anchor-selfsend" type="button" disabled>Prepare a vout-0 UTXO</button>
+        <button class="ghost" id="anchor-refresh" type="button">Refresh</button>
+      </div>
+      <p class="note" id="anchor-note"></p>
+      <p class="mono" id="anchor-result"></p>
+    </div>
   </section>
 
   <dialog id="categories-dialog" class="checkout categories-dialog">

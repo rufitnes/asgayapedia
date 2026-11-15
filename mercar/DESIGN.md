@@ -79,6 +79,14 @@
 - **The merchant card** is a full-width panel button: the name + the network badge, a one-line description, and the “View menu →” CTA. The exchange does not use the card; it lists the ads directly.
 - The exchange title reflects the filter (“Currency exchange · Buy BCH”); the ads are sorted by fee or recency, never editorially.
 
+## The merchant anchor view
+
+- Entry: the topbar **Merchant** button. The view is the **identity** step (the ad comes after).
+- A panel (`.anchor-box`): the wallet connect + the chipnet address; the anchor fields (role, currency, payment, fee bps); the actions (Mint, Prepare a vout-0 UTXO, Refresh).
+- A **vout-0** funding UTXO is required (its txid becomes the NFT category). If the wallet has none, the “Prepare a vout-0 UTXO” self-send creates one; then Refresh.
+- The Mint explainer: approve in the wallet; then the result shows the anchor tx, the category and the identity (npub hex, the genesis signer).
+- The view is labelled **chipnet demo**; the mainnet mint is the same code with a sanity check later.
+
 ## Copy & voice
 
 - Sentence case; short lines. The ad reads **“Sells BCH”** or **“Sells NGN”**, then **“for EUR”**, methods, min–max.
