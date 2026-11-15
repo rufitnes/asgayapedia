@@ -791,7 +791,7 @@ async function startPay(params) {
   };
 }
 
-function main() {
+async function main() {
   const payParams = location.hash.startsWith('#pay?') ? new URLSearchParams(location.hash.slice(5)) : null;
   if (payParams) { startPay(payParams).catch((e) => { $('pay-status').textContent = `Chat error: ${e.message}`; }); return; }
   try {
