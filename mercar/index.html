@@ -44,7 +44,8 @@
       <input id="search" type="search" placeholder="Search merchants, currencies, payment methods…" />
     </div>
     <nav class="category-tiles" aria-label="Board categories">
-      <a class="tile active" href="#exchange"><span aria-hidden="true">💱</span>Currency exchange</a>
+      <button class="tile" id="all-categories" type="button"><span aria-hidden="true">🗂️</span>All categories</button>
+      <button class="tile" id="featured-buy-bch" type="button"><span aria-hidden="true">₿</span>Buy BCH</button>
       <a class="tile" href="#restaurants"><span aria-hidden="true">🍽️</span>Restaurants</a>
       <span class="tile disabled"><span aria-hidden="true">📦</span>Goods<small>soon</small></span>
       <span class="tile disabled"><span aria-hidden="true">🛠️</span>Services<small>soon</small></span>
@@ -90,6 +91,14 @@
       <p class="note" id="pay-note">Add something from the menu to start.</p>
     </aside>
   </main>
+
+  <dialog id="categories-dialog" class="checkout categories-dialog">
+    <h2>All categories</h2>
+    <div id="categories-body" class="categories-body"></div>
+    <div class="checkout-actions">
+      <button class="ghost" id="categories-close" type="button">Close</button>
+    </div>
+  </dialog>
 
   <dialog id="wc-dialog" class="checkout">
     <h2>Connect a BCH wallet</h2>

@@ -229,6 +229,17 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .tile span { font-size: 18px; }
 .tile:hover { border-color: var(--accent); }
 .tile.active { border-color: var(--accent); background: var(--accent-soft); color: #2a1f5c; }
+.tile:disabled, .tile.disabled { opacity: .55; cursor: not-allowed; }
+button.tile { font: inherit; }
 .tile.disabled { opacity: .55; cursor: not-allowed; }
 .tile small { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
 #exchange, #restaurants { scroll-margin-top: 84px; }
+
+.categories-dialog { width: min(720px, 94vw); max-height: 82vh; overflow: auto; }
+.categories-body { display: flex; flex-direction: column; gap: 18px; margin: 8px 0 4px; }
+.cat-group h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 8px; }
+.cat-items { display: flex; flex-wrap: wrap; gap: 8px; }
+.cat-item { font: inherit; font-size: 13px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); color: var(--ink); cursor: pointer; }
+.cat-item:hover { border-color: var(--accent); }
+.cat-item .count { color: var(--muted); font-size: 11px; margin-left: 6px; }
+.cat-group.soon .cat-item { opacity: .55; cursor: not-allowed; }

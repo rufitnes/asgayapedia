@@ -68,6 +68,8 @@
 - **Category tiles:** a row of pill tiles (emoji + label). The active tile uses `--accent-soft` and the accent border; disabled tiles use 55 % opacity + a “soon” micro-label.
 - **Category icons:** emoji, one per category (💱 exchange, 🍽️ restaurants, 📦 goods, 🛠️ services). No icon library.
 - The tiles are navigation first; the search filters the current board content.
+- **All categories** (🗂️) opens a modal with the taxonomy: a group title (the 13 px uppercase label) and a row of chips; each chip carries a count (muted micro). The exchange group is the core (All ads, Buy BCH, Sell BCH, EUR, USD, NGN, cash/card/Bizum); Restaurants opens the menu; Goods/Services are disabled with a “soon”.
+- **Featured “Buy BCH”** (₿) toggles the ads where the merchant sells BCH (`adType === SELLER`), with the active `--accent-soft` state; the Restaurants tile anchors to the example section.
 
 ## Copy & voice
 

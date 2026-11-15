@@ -9,7 +9,7 @@ const ELECTRUM_WS = 'wss://chipnet.imaginary.cash:50004';
 // Demo quote. The live fiat->BCH quote comes from the oracle in the next step.
 const DEMO_EUR_PER_BCH = 207.88;
 
-const state = { catalogue: null, cart: new Map() };
+const state = { catalogue: null, cart: new Map(), adType: null };
 let wc = null;
 let wcLocking = null;
 let wcAddress = null;
@@ -224,7 +224,7 @@ function renderExchange() {
   const fm = $('filter-method').value;
   const sort = $('sort-by').value;
   const q = ($('search')?.value || '').trim().toLowerCase();
-  let ads = exchangeAds.filter((a) => (!fa || a.assets.includes(fa)) && (!fm || a.methods.includes(fm)));
+  let ads = exchangeAds.filter((a) => (!state.adType || a.adType === state.adType) && (!fa || a.assets.includes(fa)) && (!fm || a.methods.includes(fm)));
   if (q) {
     ads = ads.filter((a) =>
       [a.name, a.cashAccount, a.location, a.npub, ...a.assets, ...a.methods]
@@ -256,6 +256,95 @@ function renderExchange() {
     card.title = `BCH pubkey: ${ad.publicKey}`;
     list.appendChild(card);
   }
+  $('featured-buy-bch').classList.toggle('active', state.adType === 'SELLER');
+}
+
+const CATEGORY_GROUPS = [
+  { title: 'Currency exchange', items: [
+    { label: 'All ads', kind: 'all' },
+    { label: 'Buy BCH', kind: 'buyBch' },
+    { label: 'Sell BCH', kind: 'sellBch' },
+    { label: 'EUR', kind: 'asset', value: 'EUR' },
+    { label: 'USD', kind: 'asset', value: 'USD' },
+    { label: 'NGN', kind: 'asset', value: 'NGN' },
+    { label: 'Cash in person', kind: 'method', value: 'Cash in person' },
+    { label: 'Card in person', kind: 'method', value: 'Card in person' },
+    { label: 'Bizum', kind: 'method', value: 'Bizum' },
+  ] },
+  { title: 'Restaurants', items: [{ label: 'Open the menu', kind: 'restaurants' }] },
+  { title: 'Goods', soon: true, items: ['Technology', 'Home', 'Fashion', 'Motor', 'Sport'].map((l) => ({ label: l })) },
+  { title: 'Services', soon: true, items: ['Home', 'Professional', 'Classes'].map((l) => ({ label: l })) },
+];
+
+function countFor(it) {
+  if (it.kind === 'all') return exchangeAds.length;
+  if (it.kind === 'buyBch') return exchangeAds.filter((a) => a.adType === 'SELLER').length;
+  if (it.kind === 'sellBch') return exchangeAds.filter((a) => a.adType === 'BUYER').length;
+  if (it.kind === 'asset') return exchangeAds.filter((a) => a.assets.includes(it.value)).length;
+  if (it.kind === 'method') return exchangeAds.filter((a) => a.methods.includes(it.value)).length;
+  if (it.kind === 'restaurants') return 1;
+  return null;
+}
+
+function openCategories() {
+  const body = $('categories-body');
+  body.innerHTML = '';
+  for (const g of CATEGORY_GROUPS) {
+    const group = document.createElement('div');
+    group.className = 'cat-group' + (g.soon ? ' soon' : '');
+    const h = document.createElement('h3');
+    h.textContent = g.title;
+    group.appendChild(h);
+    const items = document.createElement('div');
+    items.className = 'cat-items';
+    for (const it of g.items) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cat-item';
+      b.textContent = it.label;
+      if (g.soon) {
+        b.disabled = true;
+        const s = document.createElement('span');
+        s.className = 'count';
+        s.textContent = 'soon';
+        b.appendChild(s);
+      } else {
+        const c = countFor(it);
+        if (c !== null) {
+          const s = document.createElement('span');
+          s.className = 'count';
+          s.textContent = c;
+          b.appendChild(s);
+        }
+        b.addEventListener('click', () => { applyCategory(it); $('categories-dialog').close(); });
+      }
+      items.appendChild(b);
+    }
+    group.appendChild(items);
+    body.appendChild(group);
+  }
+  $('categories-dialog').showModal();
+}
+
+function applyCategory(it) {
+  if (it.kind === 'restaurants') {
+    $('categories-dialog').close();
+    document.getElementById('restaurants').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  state.adType = it.kind === 'buyBch' ? 'SELLER' : it.kind === 'sellBch' ? 'BUYER' : null;
+  if (it.kind === 'asset') {
+    $('filter-asset').value = it.value;
+    $('filter-method').value = '';
+  } else if (it.kind === 'method') {
+    $('filter-method').value = it.value;
+    $('filter-asset').value = '';
+  } else {
+    $('filter-asset').value = '';
+    $('filter-method').value = '';
+  }
+  renderExchange();
+  document.getElementById('exchange').scrollIntoView({ behavior: 'smooth' });
 }
 
 async function main() {
@@ -275,6 +364,9 @@ async function main() {
   $('connect-btn').addEventListener('click', () => connectWallet().catch((e) => alert(e.message)));
   $('wc-cancel').addEventListener('click', () => $('wc-dialog').close());
   $('search').addEventListener('input', renderExchange);
+  $('all-categories').addEventListener('click', openCategories);
+  $('categories-close').addEventListener('click', () => $('categories-dialog').close());
+  $('featured-buy-bch').addEventListener('click', () => applyCategory({ kind: state.adType === 'SELLER' ? 'all' : 'buyBch' }));
   $('filter-asset').addEventListener('change', renderExchange);
   $('filter-method').addEventListener('change', renderExchange);
   $('sort-by').addEventListener('change', renderExchange);
