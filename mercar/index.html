@@ -112,10 +112,11 @@
     <p class="muted">The ad comes pre-filled with demo data. Edit anything (it is a normal form), then Publish: we mint your identity anchor and list the ad. Chipnet demo.</p>
     <div class="anchor-box">
       <div class="demo-key">
-        <strong>Your demo identity (chipnet)</strong>
-        <p class="muted">Import this WIF into Cashonize (chipnet) to sign the anchor. The listing is signed with the same key. Throwaway key, no real funds.</p>
-        <p class="mono" id="demo-wif"></p>
-        <p class="mono" id="demo-npub"></p>
+        <strong>Use your Asgaya app merchant wallet</strong>
+        <p class="muted">Paste the WIF of the merchant wallet you use in the app (chipnet/testnet). The web keeps the app's Nostr identity (the seeded test mapping) and signs the listing with it; the WIF is not stored.</p>
+        <label>Merchant WIF<input id="ad-wif" type="password" autocomplete="off" placeholder="c…" /></label>
+        <p class="mono" id="ad-pub"></p>
+        <p class="mono" id="ad-npub"></p>
       </div>
       <div class="anchor-fields">
         <label>I want to<select id="ad-role"><option value="seller">Sell BCH (I accept fiat)</option><option value="buyer">Buy BCH (I pay fiat)</option></select></label>

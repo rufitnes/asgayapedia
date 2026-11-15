@@ -1,5 +1,5 @@
 import QRCode from 'qrcode';
-import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, generatePrivateKey, encodePrivateKeyWif } from '@bitauth/libauth';
+import { decodeCashAddress, lockingBytecodeToCashAddress, hexToBin, binToHex, secp256k1, sha256, decodePrivateKeyWif } from '@bitauth/libauth';
 import { WizardConnectSigner } from './wizardconnect.js';
 import { encodeAnchorCommitment, buildGenesisAnchor, buildSelfSend } from './anchor.js';
 import { electrumListUnspent, scripthashFromLockingBytecode, broadcastTransaction } from './electrum.js';
@@ -365,24 +365,21 @@ function applyCategory(it) {
 
 let anchorUtxos = [];
 
-const DEMO_KEY_STORAGE = 'mercar-demo-key';
-const METHOD_KEY = { 'Cash in person': 'cash', 'Card in person': 'card', 'Bizum': 'bizum' };
-const slug = (v) => v.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const TEST_NOSTR = {
+  '03d6e1b33780e34dff1c6dc705c626deed385e827e762abfc596764be0ca3e4f45': '33'.repeat(32),
+  '032774f66536468a06a244568724bf1f8762682be1573ff9910667c0fea1226ece': '11'.repeat(32),
+  '03886b4f4100f9e348caed5155474f0a1a96db3e2706dc59e15260ed3d2b35e148': '22'.repeat(32),
+};
 
-function demoKey() {
-  let hex = localStorage.getItem(DEMO_KEY_STORAGE);
-  if (!hex) {
-    hex = binToHex(generatePrivateKey());
-    localStorage.setItem(DEMO_KEY_STORAGE, hex);
-  }
-  const priv = hexToBin(hex);
-  const pub = secp256k1.derivePublicKeyCompressed(priv);
-  return {
-    privHex: hex,
-    pubHex: binToHex(pub),
-    xHex: binToHex(pub.slice(1)),
-    wif: encodePrivateKeyWif(priv, 'testnet', sha256),
-  };
+function keyFromWif(wif) {
+  const decoded = decodePrivateKeyWif(wif.trim(), sha256);
+  if (typeof decoded === 'string') throw new Error(decoded);
+  const bchPriv = decoded.privateKey;
+  const bchPub = secp256k1.derivePublicKeyCompressed(bchPriv);
+  const bchPubHex = binToHex(bchPub);
+  const nostrPrivHex = TEST_NOSTR[bchPubHex.toLowerCase()] ?? binToHex(bchPriv);
+  const nostrPub = secp256k1.derivePublicKeyCompressed(hexToBin(nostrPrivHex));
+  return { bchPubHex, nostrPrivHex, npubHex: binToHex(nostrPub.slice(1)) };
 }
 
 async function anchorLoad() {
@@ -402,22 +399,31 @@ async function anchorLoad() {
 
 function openAnchor() {
   showView('anchor');
-  const k = demoKey();
-  document.getElementById('demo-wif').textContent = `WIF: ${k.wif}`;
-  document.getElementById('demo-npub').textContent = `npub (hex): ${k.xHex}`;
+  const wif = document.getElementById('ad-wif').value.trim();
+  document.getElementById('ad-pub').textContent = '';
+  document.getElementById('ad-npub').textContent = '';
+  if (wif) {
+    try {
+      const k = keyFromWif(wif);
+      document.getElementById('ad-pub').textContent = `BCH pubkey: ${k.bchPubHex}`;
+      document.getElementById('ad-npub').textContent = `npub (hex): ${k.npubHex}`;
+    } catch (e) {
+      document.getElementById('ad-npub').textContent = e.message;
+    }
+  }
   if (wc) anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; });
-  else document.getElementById('anchor-note').textContent = 'Connect the anchor wallet (with the demo WIF).';
+  else document.getElementById('anchor-note').textContent = 'Paste your merchant WIF and connect the same wallet.';
 }
 
 async function publishAd() {
   const btn = document.getElementById('anchor-mint');
   btn.disabled = true;
   try {
-    const k = demoKey();
+    const k = keyFromWif(document.getElementById('ad-wif').value.trim());
     if (!wc) await connectWallet();
     const walletPub = await wc.getPubkey();
-    if (binToHex(walletPub.slice(1)) !== k.xHex) {
-      throw new Error('Connect the wallet with the demo WIF (same key).');
+    if (binToHex(walletPub) !== k.bchPubHex) {
+      throw new Error('Connect Cashonize with the same merchant WIF.');
     }
     const role = document.getElementById('ad-role').value;
     const assets = [...document.querySelectorAll('input[name=ad-asset]:checked')].map((x) => x.value);
@@ -445,12 +451,12 @@ async function publishAd() {
     document.getElementById('anchor-note').textContent = 'Approve the anchor in your wallet…';
     const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Mint your identity anchor' });
     const anchorTx = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
-    const adId = `${k.xHex.slice(0, 16)}-${role === 'seller' ? 'SELLER' : 'BUYER'}-${assets.join('')}-${slug(methods[0])}`;
+    const adId = `${k.bchPubHex.slice(0, 16)}-${role === 'seller' ? 'SELLER' : 'BUYER'}-${assets.join('')}-${slug(methods[0])}`;
     const tags = [
       ['d', adId],
       ['t', 'asgaya-board'],
       ['t', role === 'seller' ? 'asgaya-seller' : 'asgaya-buyer'],
-      ['bchpub', k.pubHex],
+      ['bchpub', k.bchPubHex],
       ...assets.map((a) => ['t', `asset:${a.toLowerCase()}`]),
       ...methods.map((m) => ['t', `pay:${slug(m)}`]),
       ['fee', String(fee)],
@@ -471,8 +477,8 @@ async function publishAd() {
       fee: fee / 100,
       minPricePercent: 93,
       cashAccount: cash,
-      bchPubkey: k.pubHex,
-      npub: k.xHex,
+      bchPubkey: k.bchPubHex,
+      npub: k.npubHex,
       location,
       min,
       max,
@@ -482,7 +488,7 @@ async function publishAd() {
       iban: document.getElementById('ad-iban').value,
       notes: document.getElementById('ad-notes').value,
     });
-    const event = makeEvent({ privHex: k.privHex, pubHex: k.xHex, kind: 30402, tags, content });
+    const event = makeEvent({ privHex: k.nostrPrivHex, pubHex: k.npubHex, kind: 30402, tags, content });
     document.getElementById('anchor-note').textContent = 'Publishing the listing…';
     await publishEvent(NOSTR_RELAY, event);
     document.getElementById('anchor-result').textContent =
@@ -539,6 +545,7 @@ async function main() {
   $('search').addEventListener('input', () => { if ($('search').value.trim()) showView('exchange'); renderExchange(); });
   $('browse-board').addEventListener('click', () => showView(null));
   $('merchant-btn').addEventListener('click', openAnchor);
+  $('ad-wif').addEventListener('input', () => { const wif = $('ad-wif').value.trim(); try { if (!wif) throw new Error(''); const k = keyFromWif(wif); $('ad-pub').textContent = `BCH pubkey: ${k.bchPubHex}`; $('ad-npub').textContent = `npub (hex): ${k.npubHex}`; } catch (e) { $('ad-pub').textContent = ''; $('ad-npub').textContent = e.message; } });
   $('hero-publish').addEventListener('click', openAnchor);
   $('back-anchor').addEventListener('click', () => showView(null));
   $('anchor-connect').addEventListener('click', () => connectWallet().then(() => anchorLoad()).catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));

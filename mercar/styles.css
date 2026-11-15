@@ -268,3 +268,5 @@ button.tile { font: inherit; }
 .demo-key { border: 1px dashed var(--line); border-radius: 12px; padding: 12px 14px; background: var(--bg); }
 .demo-key strong { font-size: 13px; }
 .demo-key .mono { font-size: 11px; word-break: break-all; }
+.demo-key label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 8px 0; }
+.demo-key input { font: inherit; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); }
