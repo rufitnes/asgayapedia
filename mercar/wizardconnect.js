@@ -14,7 +14,7 @@ export class WizardConnectSigner {
     this.userPrompt = userPrompt;
   }
 
-  static connect({ onUri, pathName = 'receive', addressIndex = 0, broadcast = true, userPrompt = 'Confirm payment', dappName = 'Mercar Asgaya' }) {
+  static connect({ onUri, onCancel, pathName = 'receive', addressIndex = 0, broadcast = true, userPrompt = 'Confirm payment', dappName = 'Mercar Asgaya' }) {
     const mgr = new DappConnectionManager(dappName);
     const stored = mgr.loadStoredSession();
     if (stored && stored.walletPublicKey) {
@@ -31,6 +31,11 @@ export class WizardConnectSigner {
     return new Promise((resolve, reject) => {
       const relay = initiateDappRelay((payload) => mgr.updateConnection(payload.client, payload.status));
       mgr.attachRelay(relay);
+      if (onCancel) onCancel(() => {
+        try { relay.cleanup(); } catch { /* ignore */ }
+        try { mgr.clearStoredSession(); } catch { /* ignore */ }
+        reject(new Error('Cancelled'));
+      });
       onUri(relay.uri, relay.qrUri);
       mgr.once('walletready', () => resolve(new WizardConnectSigner(mgr, pathName, addressIndex, broadcast, userPrompt)));
       mgr.once('disconnect', (reason, msg) => reject(new Error(`WizardConnect disconnected: ${reason}${msg ? ` — ${msg}` : ''}`)));
@@ -63,6 +68,13 @@ export class WizardConnectSigner {
     const signed = hexToBin(res.signedTransaction);
     const txid = this.broadcast ? binToHex(hash256(signed).slice().reverse()) : undefined;
     return { signedTxBytes: signed, txid };
+  }
+
+  onDisconnect(handler) {
+    this.mgr.on('disconnect', (reason, msg) => {
+      try { this.mgr.clearStoredSession(); } catch { /* ignore */ }
+      handler(reason, msg);
+    });
   }
 
   disconnect() {

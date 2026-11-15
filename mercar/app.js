@@ -117,6 +117,18 @@ function openCheckout() {
   $('checkout').showModal();
 }
 
+let cancelConnect = null;
+
+function resetWallet() {
+  wc = null;
+  wcLocking = null;
+  wcAddress = null;
+  $('connect-btn').textContent = 'Connect wallet';
+  const ab = $('anchor-connect'); if (ab) ab.textContent = 'Connect anchor wallet';
+  const pubEl = document.getElementById('ad-pub'); if (pubEl) pubEl.textContent = '';
+  const npubEl = document.getElementById('ad-npub'); if (npubEl) npubEl.textContent = '';
+}
+
 async function connectWallet() {
   if (wc) return;
   const dlg = $('wc-dialog');
@@ -131,7 +143,10 @@ async function connectWallet() {
     broadcast: false,
     userPrompt: 'Pay with BCH',
     dappName: 'Mercar Asgaya',
+    onCancel: (fn) => { cancelConnect = fn; },
   });
+  cancelConnect = null;
+  wc.onDisconnect(() => { console.log('[mercar] wallet disconnected'); resetWallet(); });
   wcLocking = await wc.getLockingBytecode();
   const r = lockingBytecodeToCashAddress({ prefix: 'bchtest', bytecode: wcLocking, tokenSupport: false });
   wcAddress = typeof r === 'string' ? null : r.address;
@@ -396,6 +411,7 @@ async function anchorLoad() {
 
 function openAnchor() {
   showView('anchor');
+  { const ab = $('anchor-connect'); if (ab) ab.textContent = wc ? 'Disconnect wallet' : 'Connect anchor wallet'; }
   document.getElementById('ad-pub').textContent = '';
   document.getElementById('ad-npub').textContent = '';
   if (!wc) {
@@ -532,14 +548,26 @@ async function main() {
   $('pay-btn').addEventListener('click', openCheckout);
   $('co-close').addEventListener('click', () => $('checkout').close());
   $('co-pay').addEventListener('click', payWithBch);
-  $('connect-btn').addEventListener('click', () => connectWallet().catch((e) => alert(e.message)));
-  $('wc-cancel').addEventListener('click', () => $('wc-dialog').close());
+  $('connect-btn').addEventListener('click', () => {
+    if (wc) {
+      if (confirm('Disconnect the wallet?')) { wc.disconnect(); resetWallet(); }
+      return;
+    }
+    connectWallet().catch((e) => { if (e.message !== 'Cancelled') alert(e.message); });
+  });
+  $('wc-cancel').addEventListener('click', () => {
+    if (cancelConnect) { cancelConnect(); cancelConnect = null; }
+    $('wc-dialog').close();
+  });
   $('search').addEventListener('input', () => { if ($('search').value.trim()) showView('exchange'); renderExchange(); });
   $('browse-board').addEventListener('click', () => showView(null));
   $('merchant-btn').addEventListener('click', openAnchor);
   $('hero-publish').addEventListener('click', openAnchor);
   $('back-anchor').addEventListener('click', () => showView(null));
-  $('anchor-connect').addEventListener('click', () => connectWallet().then(() => openAnchor()).catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
+  $('anchor-connect').addEventListener('click', () => {
+    if (wc) { wc.disconnect(); resetWallet(); openAnchor(); return; }
+    connectWallet().then(() => openAnchor()).catch((e) => { if (e.message !== 'Cancelled') document.getElementById('anchor-note').textContent = e.message; });
+  });
   $('anchor-mint').addEventListener('click', publishAd);
   $('anchor-selfsend').addEventListener('click', anchorSelfSend);
   $('anchor-refresh').addEventListener('click', () => anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
