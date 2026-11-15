@@ -410,19 +410,45 @@ function keyFromPub(pubHex) {
   return { bchPubHex: p, nostrPrivHex, npubHex: binToHex(nostrPub.slice(1)), seeded: !!seeded };
 }
 
+function currentCommitmentHex() {
+  const role = document.getElementById('ad-role').value;
+  const asset = document.querySelector('input[name=ad-asset]:checked')?.value;
+  const method = document.querySelector('input[name=ad-method]:checked')?.value;
+  const fee = Number(document.getElementById('ad-fee').value);
+  if (!asset || !method || !Number.isFinite(fee)) return null;
+  return binToHex(encodeAnchorCommitment({
+    role,
+    asset,
+    method: METHOD_KEY[method] ?? 'other',
+    feeBps: Math.round(fee * 100),
+  }));
+}
+
+function refreshPublishButton() {
+  const btn = document.getElementById('anchor-mint');
+  const note = document.getElementById('anchor-note');
+  if (!btn) return;
+  if (!wc) { btn.disabled = true; note.textContent = 'Connect a chipnet wallet to mint the anchor.'; return; }
+  const commitmentHex = currentCommitmentHex();
+  const existing = commitmentHex && anchorUtxos.find((u) => u.tx_pos === 0 && u.token_data?.nft && String(u.token_data.nft.commitment ?? '').toLowerCase() === commitmentHex);
+  const saved = loadSavedAnchor();
+  const savedMatch = commitmentHex && saved && saved.txid && saved.commitmentHex === commitmentHex;
+  const hasV0 = anchorUtxos.some((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n);
+  btn.disabled = !(existing || savedMatch || hasV0);
+  document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
+  if (existing) note.textContent = `Ready: reusing the identity anchor ${existing.tx_hash}.`;
+  else if (savedMatch) note.textContent = `Ready: reusing the identity anchor ${saved.txid}.`;
+  else if (hasV0) note.textContent = 'Ready: a vout-0 UTXO is available for the anchor.';
+  else if (anchorUtxos.length) note.textContent = 'No vout-0 UTXO: use “Prepare a vout-0 UTXO”.';
+  else note.textContent = 'No chipnet UTXOs: use the chipnet faucet first.';
+}
+
 async function anchorLoad() {
   if (!wc) { document.getElementById('anchor-note').textContent = 'Connect a chipnet wallet to mint the anchor.'; return; }
   document.getElementById('anchor-address').textContent = wcAddress ?? '';
   const sh = await scripthashFromLockingBytecode(wcLocking);
   anchorUtxos = await electrumListUnspent(ELECTRUM_WS, sh);
-  const v0 = anchorUtxos.filter((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n);
-  document.getElementById('anchor-mint').disabled = v0.length === 0;
-  document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
-  document.getElementById('anchor-note').textContent = v0.length
-    ? `Ready: vout-0 UTXO with ${Number(v0[0].value)} sats.`
-    : anchorUtxos.length
-      ? 'No vout-0 UTXO: use “Prepare a vout-0 UTXO”.'
-      : 'No chipnet UTXOs: use the chipnet faucet first.';
+  refreshPublishButton();
 }
 
 function openAnchor() {
@@ -602,6 +628,11 @@ async function main() {
   $('anchor-mint').addEventListener('click', publishAd);
   $('anchor-selfsend').addEventListener('click', anchorSelfSend);
   $('anchor-refresh').addEventListener('click', () => anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
+  const anchorForm = document.getElementById('anchor-view');
+  if (anchorForm) {
+    anchorForm.addEventListener('change', refreshPublishButton);
+    anchorForm.addEventListener('input', refreshPublishButton);
+  }
   $('hero-buy-bch').addEventListener('click', () => applyCategory({ kind: 'buyBch' }));
   $('featured-exchange').addEventListener('click', () => { state.adType = null; $('filter-asset').value = ''; $('filter-method').value = ''; renderExchange(); showView('exchange'); });
   $('featured-restaurants').addEventListener('click', () => showView('restaurants'));
