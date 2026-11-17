@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="partner-banner" aria-label="Mercar Asgaya + Nomos">
+    <a href="https://github.com/rufitnes/asgayapedia" target="_blank" rel="noopener">Mercar Asgaya · GitHub</a>
+    <span aria-hidden="true">×</span>
+    <a href="https://github.com/thereal-awetoby/nomos" target="_blank" rel="noopener">Nomos · GitHub</a>
+    <span class="partner-banner-tag">P2P BCH · partner project</span>
+  </div>
   <nav class="links" aria-label="Project links">
     <a href="https://github.com/rufitnes/asgayapedia/tree/blaze-2026">Code (BLAZE 2026)</a>
     <a href="https://github.com/rufitnes/asgayapedia/tree/v0-prehackathon-baseline">Before BLAZE</a>
@@ -99,8 +105,10 @@
         <p class="muted" id="buy-hint"></p>
         <div class="buy-row">
           <label>Amount<input id="buy-amount" type="number" min="0" inputmode="decimal" /></label>
+          <label>Currency<select id="buy-currency"><option value="EUR">EUR</option><option value="BCH">BCH</option></select></label>
           <label>Pay with<select id="buy-method"></select></label>
         </div>
+        <label class="buy-dest">Receive BCH at<input id="buy-destination" type="text" placeholder="Your BCH address (autofilled if a wallet is connected)" spellcheck="false" /></label>
         <button class="cta" id="buy-get" type="button">Get payment instructions</button>
         <div class="instructions" id="buy-instructions" hidden></div>
       </section>
@@ -147,7 +155,7 @@
   <section class="view" id="anchor-view" hidden>
     <button class="back" id="back-anchor" type="button">← All categories</button>
     <h2 class="view-title">Publish an ad</h2>
-    <p class="muted">The ad comes pre-filled with demo data. Edit anything (it is a normal form), then Publish: we mint your identity anchor and list the ad. Chipnet demo.</p>
+    <p class="muted">The ad comes pre-filled with demo data. Edit anything (it is a normal form), then Publish: we mint your identity anchor and list the ad. Chipnet is the canary; mainnet is the BLAZE artefact.</p>
     <div class="anchor-box">
       <div class="demo-key">
         <strong>Your app merchant wallet</strong>
@@ -156,6 +164,7 @@
         <p class="mono" id="ad-npub"></p>
       </div>
       <div class="anchor-fields">
+        <label>Network<select id="anchor-network"><option value="chipnet">chipnet (canary)</option><option value="mainnet">mainnet (BLAZE)</option></select></label>
         <label>I want to<select id="ad-role"><option value="seller">Sell BCH (I accept fiat)</option><option value="buyer">Buy BCH (I pay fiat)</option></select></label>
         <label>Name<input id="ad-name" value="Casa Elena" /></label>
         <label>Fee (%)<input id="ad-fee" type="number" step="0.01" value="0.5" /></label>
@@ -234,11 +243,11 @@
 
   <dialog id="checkout" class="checkout">
     <h2>Payment</h2>
-    <p class="muted">Demo: the direct WizardConnect payment is wired in the next step.</p>
+    <p class="muted">Reference only. The merchant's payment instructions set the final amount.</p>
     <dl>
       <dt>Amount</dt><dd id="co-total"></dd>
-      <dt>Demo rate</dt><dd id="co-rate"></dd>
-      <dt>BCH</dt><dd id="co-bch"></dd>
+      <dt>Market rate</dt><dd id="co-rate"></dd>
+      <dt>BCH (approx.)</dt><dd id="co-bch"></dd>
       <dt>Merchant address</dt><dd class="mono" id="co-address"></dd>
     </dl>
     <div class="checkout-actions">

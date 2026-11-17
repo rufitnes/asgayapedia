@@ -174,6 +174,23 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .links a { color: var(--hero-muted); text-decoration: none; }
 .links a:hover { color: var(--hero-ink); text-decoration: underline; }
 
+.partner-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 22px;
+  background: var(--accent-soft);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+.partner-banner a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.partner-banner a:hover { text-decoration: underline; }
+.partner-banner span[aria-hidden="true"] { color: var(--muted); }
+.partner-banner .partner-banner-tag { color: var(--muted); }
+
 .exchange { max-width: var(--page-max); margin: 22px auto 0; padding: 0 22px; }
 .exchange-head h2 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; }
 .filters { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
@@ -307,3 +324,6 @@ button.tile { font: inherit; }
 .msg.sys { align-self: center; background: transparent; color: var(--muted); font-size: 12px; padding: 0; text-align: center; }
 .chat-form { display: flex; gap: 8px; }
 .chat-form input { flex: 1; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; font: inherit; background: #fff; color: var(--ink); }
+
+.buy-dest { display: block; margin-top: 10px; }
+.buy-dest input { width: 100%; }

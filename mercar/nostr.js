@@ -1,7 +1,7 @@
 import { sha256, secp256k1, hexToBin, binToHex } from '@bitauth/libauth';
 import { secp256k1 as noble } from '@noble/curves/secp256k1';
 // Minimal NIP-99 read client: fetch the Asgaya board ads (kind 30402) from a relay.
-export const NOSTR_RELAY = 'ws://192.168.1.115:7777';
+export const NOSTR_RELAY = (import.meta.env && import.meta.env.VITE_NOSTR_RELAY) || 'ws://192.168.1.115:7777';
 export const KIND_LISTING = 30402;
 export const TAG_BOARD = 'asgaya-board';
 

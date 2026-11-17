@@ -12,10 +12,26 @@ const ELECTRUM_WS = 'wss://chipnet.imaginary.cash:50004';
 const ELECTRUM_WS_BY_NETWORK = {
   chipnet: 'wss://chipnet.imaginary.cash:50004',
   testnet3: 'wss://testnet.imaginary.cash:50004',
+  mainnet: 'wss://bch.imaginary.cash:50004',
 };
-const VERIFY_NETWORKS = ['chipnet', 'testnet3'];
-// Demo quote. The live fiat->BCH quote comes from the oracle in the next step.
-const DEMO_EUR_PER_BCH = 207.88;
+const VERIFY_NETWORKS = ['chipnet', 'testnet3', 'mainnet'];
+// Informational market reference. NOT an offer and NOT the binding quote: the merchant's
+// payment instructions carry the final amount. Mercar must not intermediate.
+const FEED_URL = 'https://oracle.asgaya.org/quote';
+let liveRate = null; // EUR per BCH from the public feed
+
+async function fetchLiveRate() {
+  try {
+    const r = await fetch(FEED_URL, { cache: 'no-store' });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const j = await r.json();
+    if (!(j.priceEur > 0)) throw new Error('bad quote');
+    liveRate = j.priceEur;
+  } catch (e) {
+    liveRate = null;
+  }
+  return liveRate;
+}
 
 const state = { catalogue: null, cart: new Map(), adType: null, view: null, selectedAd: null };
 let wc = null;
@@ -24,8 +40,17 @@ let wcAddress = null;
 
 const eur = (cents) =>
   new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR' }).format(cents / 100);
-const sats = (cents) => Math.round((cents / 100 / DEMO_EUR_PER_BCH) * 100_000_000);
+const sats = (cents, rate) => Math.round((cents / 100 / rate) * 100_000_000);
 const $ = (id) => document.getElementById(id);
+const cleanConcept = (s) => String(s || '').replace(/[^A-Za-z0-9]/g, '').slice(0, 40);
+
+// The anchor page can target chipnet (the canary) or mainnet (the BLAZE artefact).
+function selectedNetwork() {
+  const el = document.getElementById('anchor-network');
+  return el && el.value === 'mainnet' ? 'mainnet' : 'chipnet';
+}
+function anchorWs() { return ELECTRUM_WS_BY_NETWORK[selectedNetwork()]; }
+function addressPrefix() { return selectedNetwork() === 'mainnet' ? 'bitcoincash' : 'bchtest'; }
 
 function renderMerchant(c) {
   $('merchant-name').textContent = c.merchant.name;
@@ -112,12 +137,15 @@ function renderCart() {
   $('pay-note').textContent = total === 0 ? 'Add something from the menu to start.' : 'Direct payment on chipnet (demo).';
 }
 
-function openCheckout() {
+async function openCheckout() {
   const total = cartTotalCents();
   if (total === 0) return;
   $('co-total').textContent = eur(total);
-  $('co-rate').textContent = `1 BCH = ${eur(Math.round(DEMO_EUR_PER_BCH * 100))} (demo)`;
-  $('co-bch').textContent = `${sats(total).toLocaleString('en-GB')} sats`;
+  const rate = await fetchLiveRate();
+  $('co-rate').textContent = rate
+    ? `1 BCH ≈ ${eur(Math.round(rate * 100))} (reference only)`
+    : 'Reference rate unavailable';
+  $('co-bch').textContent = rate ? `≈ ${sats(total, rate).toLocaleString('en-GB')} sats` : '—';
   $('co-address').textContent = state.catalogue.merchant.address;
   $('co-pay').disabled = false;
   $('co-pay').textContent = 'Pay with WizardConnect';
@@ -155,10 +183,11 @@ async function connectWallet() {
   cancelConnect = null;
   wc.onDisconnect(() => { console.log('[mercar] wallet disconnected'); resetWallet(); });
   wcLocking = await wc.getLockingBytecode();
-  const r = lockingBytecodeToCashAddress({ prefix: 'bchtest', bytecode: wcLocking, tokenSupport: false });
+  const r = lockingBytecodeToCashAddress({ prefix: addressPrefix(), bytecode: wcLocking, tokenSupport: false });
   wcAddress = typeof r === 'string' ? null : r.address;
   console.log('[mercar] wallet', wcAddress);
   $('connect-btn').textContent = wcAddress ? `Connected ${wcAddress.slice(0, 14)}…` : 'Connected';
+  if (wcAddress) { const d = document.getElementById('buy-destination'); if (d && !d.value) d.value = wcAddress; }
   dlg.close();
 }
 
@@ -168,7 +197,8 @@ async function payWithBch() {
   $('co-pay').disabled = true;
   try {
     if (!wc) await connectWallet();
-    const amountSats = sats(total);
+    if (!liveRate) throw new Error('Reference rate unavailable — try again in a moment');
+    const amountSats = sats(total, liveRate);
     const dec = decodeCashAddress(state.catalogue.merchant.address);
     if (typeof dec === 'string') throw new Error(dec);
     const merchantLocking = new Uint8Array([0x76, 0xa9, 0x14, ...dec.payload, 0x88, 0xac]);
@@ -381,7 +411,7 @@ function showInstructions() {
   if (ad.min != null && amount < ad.min) { alert(`Minimum is ${ad.min} ${ad.assets[0] ?? ''}.`); return; }
   if (ad.max != null && amount > ad.max) { alert(`Maximum is ${ad.max} ${ad.assets[0] ?? ''}.`); return; }
   const method = $('buy-method').value;
-  const asset = ad.assets[0] ?? 'EUR';
+  const asset = $('buy-currency')?.value || ad.assets[0] || 'EUR';
   const isSeller = ad.adType === 'SELLER';
   const box = $('buy-instructions');
   box.innerHTML = '';
@@ -400,7 +430,9 @@ function showInstructions() {
   }
   if (ad.phone) add(`Contact: ${ad.phone}`);
   if (ad.notes) add(ad.notes);
-  add(isSeller ? 'The merchant sends the BCH to your address once the payment is confirmed in the app.' : 'The merchant pays you the fiat once your BCH is received.');
+  const dest = $('buy-destination')?.value.trim();
+  if (isSeller) add(dest ? `The merchant sends the BCH to: ${dest}` : 'Enter the BCH address where you want to receive the funds.');
+  else add('The merchant pays you the fiat once your BCH is received.');
   box.hidden = false;
 }
 
@@ -564,7 +596,8 @@ function matchAnchor(commitmentHex) {
     && String(u.token_data.nft.commitment ?? '').toLowerCase() === want);
   if (token) return token.tx_hash;
   const saved = loadSavedAnchor();
-  if (saved?.txid && String(saved.commitmentHex ?? '').toLowerCase() === want) return saved.txid;
+  if (saved?.txid && (saved.network || 'chipnet') === selectedNetwork()
+    && String(saved.commitmentHex ?? '').toLowerCase() === want) return saved.txid;
   return null;
 }
 
@@ -574,10 +607,10 @@ async function findIdentityAnchor(commitmentHex) {
   const want = (commitmentHex || '').toLowerCase();
   if (!want || !wcLocking) return null;
   const sh = await scripthashFromLockingBytecode(wcLocking);
-  const history = await electrumGetHistory(ELECTRUM_WS, sh);
+  const history = await electrumGetHistory(anchorWs(), sh);
   for (const h of history) {
     try {
-      const raw = await electrumGetRawTx(ELECTRUM_WS, h.tx_hash);
+      const raw = await electrumGetRawTx(anchorWs(), h.tx_hash);
       if (typeof raw !== 'string') continue;
       const tx = decodeTransaction(hexToBin(raw));
       if (typeof tx === 'string') continue;
@@ -592,7 +625,7 @@ function refreshPublishButton(keepExisting = false) {
   const btn = document.getElementById('anchor-mint');
   const note = document.getElementById('anchor-note');
   if (!btn) return;
-  if (!wc) { btn.disabled = true; note.textContent = 'Connect a chipnet wallet to mint the anchor.'; return; }
+  if (!wc) { btn.disabled = true; note.textContent = 'Connect a wallet to mint the anchor.'; return; }
   const want = currentCommitmentHex();
   if (!keepExisting) identityAnchor = matchAnchor(want);
   const existing = want ? identityAnchor : null;
@@ -603,14 +636,14 @@ function refreshPublishButton(keepExisting = false) {
   else if (existing) note.textContent = `Ready: reusing the anchor ${existing} (same seller/asset/method/fee).`;
   else if (hasV0) note.textContent = 'Ready: a vout-0 UTXO is available; this tuple gets a new anchor.';
   else if (anchorUtxos.length) note.textContent = 'No vout-0 UTXO: use “Prepare a vout-0 UTXO”.';
-  else note.textContent = 'No chipnet UTXOs: use the chipnet faucet first.';
+  else note.textContent = `No ${selectedNetwork()} UTXOs: fund the wallet first.`;
 }
 
 async function anchorLoad() {
-  if (!wc) { document.getElementById('anchor-note').textContent = 'Connect a chipnet wallet to mint the anchor.'; return; }
+  if (!wc) { document.getElementById('anchor-note').textContent = 'Connect a wallet to mint the anchor.'; return; }
   document.getElementById('anchor-address').textContent = wcAddress ?? '';
   const sh = await scripthashFromLockingBytecode(wcLocking);
-  anchorUtxos = await electrumListUnspent(ELECTRUM_WS, sh);
+  anchorUtxos = await electrumListUnspent(anchorWs(), sh);
   try { identityAnchor = await findIdentityAnchor(currentCommitmentHex()); } catch { identityAnchor = null; }
   refreshPublishButton(true);
 }
@@ -670,8 +703,8 @@ async function publishAd() {
       const built = buildGenesisAnchor(wcLocking, { txid: v0.tx_hash, vout: v0.tx_pos, satoshis: BigInt(v0.value) }, commitment);
       document.getElementById('anchor-note').textContent = 'Approve the anchor in your wallet…';
       const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Mint your identity anchor' });
-      anchorTx = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
-      saveSavedAnchor({ txid: anchorTx, commitmentHex });
+      anchorTx = res.txid ?? (await broadcastTransaction(anchorWs(), binToHex(res.signedTxBytes)));
+      saveSavedAnchor({ txid: anchorTx, commitmentHex, network: selectedNetwork() });
       identityAnchor = anchorTx;
     }
     const adId = `${k.bchPubHex.slice(0, 16)}-${role === 'seller' ? 'SELLER' : 'BUYER'}-${assets.join('')}-${slug(methods[0])}`;
@@ -691,7 +724,7 @@ async function publishAd() {
       ['name', name],
       ['status', 'active'],
       ['anchor', `${anchorTx}:0`],
-      ['network', 'chipnet'],
+      ['network', selectedNetwork()],
     ];
     const content = JSON.stringify({
       adType: role === 'seller' ? 'SELLER' : 'BUYER',
@@ -733,7 +766,7 @@ async function anchorSelfSend() {
     const built = buildSelfSend(wcLocking, { txid: u.tx_hash, vout: u.tx_pos, satoshis: BigInt(u.value) });
     document.getElementById('anchor-note').textContent = 'Approve in your wallet…';
     const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Prepare a vout-0 UTXO' });
-    const txid = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
+    const txid = res.txid ?? (await broadcastTransaction(anchorWs(), binToHex(res.signedTxBytes)));
     await anchorLoad();
     document.getElementById('anchor-note').textContent = `Self-send sent (${txid}). If the vout-0 is not ready yet, press Refresh in a moment.`;
   } catch (e) {
@@ -753,17 +786,25 @@ async function openPay(ad) {
   if (!Number.isFinite(amount) || amount <= 0) { alert('Enter an amount.'); return; }
   if (ad.min != null && amount < ad.min) { alert(`Minimum is ${ad.min} ${ad.assets[0] ?? ''}.`); return; }
   if (ad.max != null && amount > ad.max) { alert(`Maximum is ${ad.max} ${ad.assets[0] ?? ''}.`); return; }
+  const dest = ($('buy-destination')?.value || '').trim();
+  if (!dest) { alert('Enter the BCH address where you want to receive the funds.'); return; }
   const params = new URLSearchParams({
     ad: ad.id, seller: ad.npub, name: ad.name || '', asset: ad.assets[0] || 'EUR',
     amount: String(amount), method, anchor: ad.anchor || '',
+    dest,
   });
   window.open(`${location.pathname}#pay?${params}`, '_blank', 'noopener');
 }
 
-function chatAdd(kind, text) {
+function chatAdd(kind, text, id) {
+  if (id) {
+    const prev = $('pay-chat').querySelector(`.msg[data-id="${id}"]`);
+    if (prev) { prev.textContent = text; prev.scrollIntoView({ block: 'nearest' }); return; }
+  }
   const div = document.createElement('div');
   div.className = `msg ${kind}`;
   div.textContent = text;
+  if (id) div.dataset.id = id;
   $('pay-chat').appendChild(div);
   div.scrollIntoView({ block: 'nearest' });
 }
@@ -771,6 +812,14 @@ function chatAdd(kind, text) {
 /** Render the app's `[PAY_INSTRUCTIONS]` reply like the app's own instructions dialog. */
 function formatInstructions(message) {
   const text = String(message);
+  if (text.includes('[PAY_RECEIVED]')) {
+    const kv = {};
+    for (const line of text.split('\n')) {
+      const i = line.indexOf('=');
+      if (i > 0) kv[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    }
+    return `✅ Payment received — ${kv.amountBch || '?'} BCH · tx ${kv.txid || '?'}`;
+  }
   if (!text.includes('[PAY_INSTRUCTIONS]')) return text;
   const kv = {};
   for (const line of text.split('\n')) {
@@ -779,7 +828,15 @@ function formatInstructions(message) {
   }
   const methods = { cash: 'Cash in person', card: 'Card in person', bizum: 'Bizum', sepa: 'SEPA', pago_movil: 'Pago Móvil' };
   const labels = { name: 'Name', location: 'Where', hours: 'Hours', phone: 'Phone', iban: 'IBAN', notes: 'Notes', concept: 'Concept' };
-  const skip = new Set(['requestId', 'adId', 'method', 'timestamp']);
+  const skip = new Set(['requestId', 'adId', 'method', 'timestamp', 'amount', 'asset']);
+  if (kv.busy) {
+    return `The merchant has a payment in progress${kv.activeConcept ? ` (${kv.activeConcept})` : ''}. Try again in a few minutes.`;
+  }
+  if (kv.method === 'bizum') {
+    const amount = [kv.amount, kv.asset].filter(Boolean).join(' ');
+    const rate = kv.rate ? `The merchant's BCH price is ${kv.rate} ${kv.asset || 'EUR'}/BCH.` : '';
+    return `To finish your purchase, send ${amount ? amount + ' ' : ''}by Bizum to ${kv.phone || '?'} with concept ${kv.concept || '?'}. ${rate} The final price is set when the payment is received.`;
+  }
   const out = [`💳 Method: ${methods[kv.method] || kv.method || '?'}`];
   for (const [k, v] of Object.entries(kv)) if (!skip.has(k) && v) out.push(`• ${labels[k] || k}: ${v}`);
   return out.join('\n');
@@ -792,6 +849,7 @@ async function startPay(params) {
   const asset = params.get('asset') || 'EUR';
   const amount = params.get('amount') || '';
   const method = params.get('method') || '';
+  const destination = (params.get('dest') || wcAddress || '').trim();
   const anchor = params.get('anchor') || '';
   const privHex = binToHex(generatePrivateKey());
   const pub = secp256k1.derivePublicKeyCompressed(hexToBin(privHex));
@@ -809,11 +867,12 @@ async function startPay(params) {
     `adId=${params.get('ad') || ''}`,
     `amount=${amount}`,
     `currency=${asset}`,
+    `buyerAddress=${destination}`,
     `requestId=${requestId}`,
     `timestamp=${Date.now()}`,
     '[/PAY_INSTRUCTIONS_REQUEST]',
   ].join('\n');
-  chatAdd('me', `Hi ${name}, I'd like ${amount} ${asset} (${method}). Please send the payment instructions.`);
+  chatAdd('sys', `Requested payment instructions: ${amount} ${asset} (${method}).`);
   try {
     const content = await nip04Encrypt(privHex, seller, request);
     const event = makeEvent({ privHex, pubHex: npubHex, kind: 4, tags: [['p', seller]], content });
@@ -826,10 +885,12 @@ async function startPay(params) {
     }
   }, 45000);
   subscribeDMs(NOSTR_RELAY, { me: npubHex, author: seller, onEvent: async (ev) => {
+    console.log('[pay] dm', String(ev.id || '').slice(0, 10), 'from', String(ev.pubkey || '').slice(0, 12), 'expected seller', String(seller || '').slice(0, 12));
     if (ev.pubkey !== seller) return;
     try {
       const pt = await nip04Decrypt(privHex, seller, ev.content);
-      chatAdd('them', formatInstructions(pt));
+      const reqId = (pt.match(/requestId=([^\n\]]+)/) || [])[1];
+      chatAdd('them', formatInstructions(pt), reqId ? `pi-${reqId}` : undefined);
       $('pay-status').textContent = 'Merchant replied (live)';
       $('pay-status').className = 'badge ok';
       clearTimeout(timer);
@@ -892,6 +953,13 @@ async function main() {
   if (anchorForm) {
     anchorForm.addEventListener('change', refreshPublishButton);
     anchorForm.addEventListener('input', refreshPublishButton);
+  }
+  const anchorNetwork = document.getElementById('anchor-network');
+  if (anchorNetwork) {
+    anchorNetwork.addEventListener('change', () => {
+      anchorUtxos = []; identityAnchor = null;
+      anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; });
+    });
   }
   $('hero-buy-bch').addEventListener('click', () => applyCategory({ kind: 'buyBch' }));
   $('featured-exchange').addEventListener('click', () => { state.adType = null; $('filter-asset').value = ''; $('filter-method').value = ''; renderExchange(); showView('exchange'); });

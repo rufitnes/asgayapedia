@@ -75,9 +75,9 @@ npm run dev      # http://localhost:5173/
 npm run build    # static build in dist/
 ```
 
-The board reads NIP-99 ads from a Nostr relay. Set `NOSTR_RELAY` in
-[`nostr.js`](./nostr.js) to your relay (the demo uses the team's relay; the public
-deployment will use `wss://relay.asgaya.org`).
+The board reads NIP-99 ads from a Nostr relay. Set `VITE_NOSTR_RELAY` (the public
+build reads `.env.production`, which points at `wss://relay.asgaya.org`; the dev
+server falls back to the LAN relay).
 The identity badge uses public Electrum WebSockets: chipnet
 `wss://chipnet.imaginary.cash:50004`, testnet3 `wss://testnet.imaginary.cash:50004`.
 
