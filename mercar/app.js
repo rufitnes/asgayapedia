@@ -277,14 +277,15 @@ function renderExchange() {
   const fm = $('filter-method').value;
   const sort = $('sort-by').value;
   const q = ($('search')?.value || '').trim().toLowerCase();
-  let ads = exchangeAds.filter((a) => (!state.adType || a.adType === state.adType) && (!fa || a.assets.includes(fa)) && (!fm || a.methods.includes(fm)));
+  const cat = state.category || 'exchange';
+  let ads = exchangeAds.filter((a) => ((a.category || 'exchange') === cat) && (!state.adType || a.adType === state.adType) && (!fa || a.assets.includes(fa)) && (!fm || a.methods.includes(fm)));
   if (q) {
     ads = ads.filter((a) =>
       [a.name, a.cashAccount, a.location, a.npub, ...a.assets, ...a.methods]
         .filter(Boolean).join(' ').toLowerCase().includes(q));
   }
   ads = sort === 'fee' ? [...ads].sort((a, b) => a.fee - b.fee) : [...ads].sort((a, b) => b.createdAt - a.createdAt);
-  $('exchange-note').textContent = ads.length ? '' : 'No ads match the filters.';
+  $('exchange-note').textContent = ads.length ? '' : `No ads in ${cat} yet. Publish the first one.`;
   for (const ad of ads) {
     const card = document.createElement('article');
     card.className = 'ad';
@@ -306,6 +307,45 @@ function renderExchange() {
     card.querySelector('.meta').textContent = `${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}`;
     card.querySelector('.locality').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ');
     card.querySelector('.ad-id').textContent = `${ad.npub.slice(0, 18)}…`;
+    if (ad.title) {
+      card.querySelector('.ad-type').style.display = 'none';
+      card.querySelector('.ad-fee').style.display = 'none';
+      card.querySelector('.accepts').style.display = 'none';
+      card.querySelector('.methods').style.display = 'none';
+      card.querySelector('.meta').style.display = 'none';
+      const h = document.createElement('h3');
+      h.textContent = ad.title;
+      card.prepend(h);
+      if (ad.description) {
+        const d = document.createElement('p');
+        d.className = 'muted';
+        d.textContent = ad.description;
+        card.insertBefore(d, h.nextSibling);
+      }
+      if (ad.image) {
+        const img = document.createElement('img');
+        img.src = ad.image;
+        img.loading = 'lazy';
+        img.alt = ad.title;
+        img.className = 'ad-image';
+        card.insertBefore(img, card.firstChild);
+      }
+      if (ad.price != null) {
+        const p = document.createElement('div');
+        p.className = 'ad-price';
+        p.textContent = `${ad.price} ${ad.assets[0] || ''}`;
+        card.insertBefore(p, card.querySelector('.ad-row'));
+      }
+      if (ad.url) {
+        const a = document.createElement('a');
+        a.href = ad.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.className = 'ad-external';
+        a.textContent = 'View in shop ↗';
+        card.appendChild(a);
+      }
+    }
     card.title = `BCH pubkey: ${ad.publicKey}`;
     card.tabIndex = 0;
     card.setAttribute('role', 'button');
@@ -314,10 +354,10 @@ function renderExchange() {
     list.appendChild(card);
   }
   $('featured-buy-bch').classList.toggle('active', state.adType === 'SELLER');
-  $('exchange-title').textContent =
-    state.adType === 'SELLER' ? 'Currency exchange · Buy BCH'
-    : state.adType === 'BUYER' ? 'Currency exchange · Sell BCH'
-    : 'Currency exchange';
+  const CAT_LABEL = { exchange: 'Currency exchange', goods: 'Goods', services: 'Services', restaurants: 'Restaurants' };
+  $('exchange-title').textContent = cat === 'exchange'
+    ? (state.adType === 'SELLER' ? 'Currency exchange · Buy BCH' : state.adType === 'BUYER' ? 'Currency exchange · Sell BCH' : 'Currency exchange')
+    : (CAT_LABEL[cat] || 'Board');
 }
 
 function openAd(ad) {
@@ -449,12 +489,13 @@ const CATEGORY_GROUPS = [
     { label: 'Bizum', kind: 'method', value: 'Bizum' },
   ] },
   { title: 'Restaurants', items: [{ label: 'View restaurants', kind: 'restaurants' }] },
-  { title: 'Goods', soon: true, items: ['Technology', 'Home', 'Fashion', 'Motor', 'Sport'].map((l) => ({ label: l })) },
-  { title: 'Services', soon: true, items: ['Home', 'Professional', 'Classes'].map((l) => ({ label: l })) },
+  { title: 'Goods', items: ['Technology', 'Home', 'Fashion', 'Motor', 'Sport'].map((l) => ({ label: l, kind: 'category', value: 'goods' })) },
+  { title: 'Services', items: ['Home', 'Professional', 'Classes'].map((l) => ({ label: l, kind: 'category', value: 'services' })) },
 ];
 
 function countFor(it) {
   if (it.kind === 'all') return exchangeAds.length;
+  if (it.kind === 'category') return exchangeAds.filter((a) => (a.category || 'exchange') === it.value).length;
   if (it.kind === 'buyBch') return exchangeAds.filter((a) => a.adType === 'SELLER').length;
   if (it.kind === 'sellBch') return exchangeAds.filter((a) => a.adType === 'BUYER').length;
   if (it.kind === 'asset') return exchangeAds.filter((a) => a.assets.includes(it.value)).length;
@@ -522,6 +563,17 @@ function applyCategory(it) {
     showView('restaurants');
     return;
   }
+  if (it.kind === 'category') {
+    state.category = it.value;
+    state.adType = null;
+    document.getElementById('filter-asset').value = '';
+    document.getElementById('filter-method').value = '';
+    renderExchange();
+    showView('exchange');
+    document.getElementById('categories-dialog').close();
+    return;
+  }
+  state.category = 'exchange';
   state.adType = it.kind === 'buyBch' ? 'SELLER' : it.kind === 'sellBch' ? 'BUYER' : null;
   if (it.kind === 'asset') {
     document.getElementById('filter-asset').value = it.value;
@@ -673,17 +725,34 @@ async function publishAd() {
     const walletPub = await wc.getPubkey();
     const k = keyFromPub(binToHex(walletPub));
     const role = document.getElementById('ad-role').value;
-    const assets = [...document.querySelectorAll('input[name=ad-asset]:checked')].map((x) => x.value);
-    const methods = [...document.querySelectorAll('input[name=ad-method]:checked')].map((x) => x.value);
-    if (assets.length === 0) throw new Error('Pick at least one currency.');
-    if (methods.length === 0) throw new Error('Pick at least one payment method.');
-    const fee = Number(document.getElementById('ad-fee').value);
-    const min = Number(document.getElementById('ad-min').value);
-    const max = Number(document.getElementById('ad-max').value);
+    const category = document.getElementById('ad-category').value;
+    const generic = category !== 'exchange';
+    const assets = generic
+      ? [document.getElementById('ad-currency').value]
+      : [...document.querySelectorAll('input[name=ad-asset]:checked')].map((x) => x.value);
+    const methods = generic
+      ? ['BCH']
+      : [...document.querySelectorAll('input[name=ad-method]:checked')].map((x) => x.value);
+    if (!generic && assets.length === 0) throw new Error('Pick at least one currency.');
+    if (!generic && methods.length === 0) throw new Error('Pick at least one payment method.');
+    const fee = generic ? 0 : Number(document.getElementById('ad-fee').value);
+    const min = generic ? 0 : Number(document.getElementById('ad-min').value);
+    const max = generic ? 0 : Number(document.getElementById('ad-max').value);
     const name = document.getElementById('ad-name').value;
+    const title = document.getElementById('ad-title').value.trim();
+    const description = document.getElementById('ad-description').value.trim();
+    const price = Number(document.getElementById('ad-price').value);
+    const image = document.getElementById('ad-image').value.trim();
+    const externalUrl = document.getElementById('ad-url').value.trim();
+    if (generic && !title) throw new Error('Enter a title.');
+    if (generic && (!Number.isFinite(price) || price <= 0)) throw new Error('Enter a price.');
     const cash = '';
-    const location = document.getElementById('ad-location').value;
-    const hours = document.getElementById('ad-hours').value;
+    const location = (generic ? document.getElementById('ad-location-product') : document.getElementById('ad-location')).value;
+    const hours = generic ? '' : document.getElementById('ad-hours').value;
+    const subcategory = generic ? document.getElementById('ad-subcategory').value : null;
+    const condition = generic ? document.getElementById('ad-condition').value : null;
+    const shipping = generic ? document.getElementById('ad-shipping').value : null;
+    const notes = (generic ? document.getElementById('ad-notes-product') : document.getElementById('ad-notes')).value;
     await anchorLoad();
     const commitment = encodeAnchorCommitment({
       role,
@@ -692,7 +761,7 @@ async function publishAd() {
       feeBps: Math.round(fee * 100),
     });
     const commitmentHex = binToHex(commitment);
-    let anchorTx = identityAnchor ?? undefined;
+    let anchorTx = identityAnchor ?? loadSavedAnchor()?.txid ?? undefined;
     if (anchorTx) {
       document.getElementById('anchor-note').textContent = `Reusing the identity anchor ${anchorTx}…`;
     } else {
@@ -707,11 +776,13 @@ async function publishAd() {
       saveSavedAnchor({ txid: anchorTx, commitmentHex, network: selectedNetwork() });
       identityAnchor = anchorTx;
     }
-    const adId = `${k.bchPubHex.slice(0, 16)}-${role === 'seller' ? 'SELLER' : 'BUYER'}-${assets.join('')}-${slug(methods[0])}`;
+    const adId = generic
+      ? `${k.bchPubHex.slice(0, 16)}-${category}-${slug(title)}`
+      : `${k.bchPubHex.slice(0, 16)}-${role === 'seller' ? 'SELLER' : 'BUYER'}-${assets.join('')}-${slug(methods[0])}`;
     const tags = [
       ['d', adId],
       ['t', 'asgaya-board'],
-      ['t', role === 'seller' ? 'asgaya-seller' : 'asgaya-buyer'],
+      ['t', generic ? `asgaya-${category}` : (role === 'seller' ? 'asgaya-seller' : 'asgaya-buyer')],
       ['bchpub', k.bchPubHex],
       ...assets.map((a) => ['t', `asset:${a.toLowerCase()}`]),
       ...methods.map((m) => ['t', `pay:${slug(m)}`]),
@@ -722,12 +793,24 @@ async function publishAd() {
       ['max', String(max)],
       ['hours', hours],
       ['name', name],
+      ...(generic ? [['title', title], ['price', String(price)], ['t', `category:${category}`], ['t', `subcategory:${slug(subcategory || '')}`], ['condition', condition || ''], ['shipping', shipping || '']] : []),
+      ...(image ? [['image', image]] : []),
+      ...(externalUrl ? [['url', externalUrl]] : []),
       ['status', 'active'],
       ['anchor', `${anchorTx}:0`],
       ['network', selectedNetwork()],
     ];
     const content = JSON.stringify({
-      adType: role === 'seller' ? 'SELLER' : 'BUYER',
+      adType: generic ? 'SELLER' : (role === 'seller' ? 'SELLER' : 'BUYER'),
+      category,
+      title: generic ? title : undefined,
+      description: generic ? description : undefined,
+      price: generic ? price : undefined,
+      subcategory: generic ? subcategory : undefined,
+      condition: generic ? condition : undefined,
+      shipping: generic ? shipping : undefined,
+      image: image || undefined,
+      url: externalUrl || undefined,
       assets,
       paymentMethods: methods,
       fee: fee / 100,
@@ -740,7 +823,7 @@ async function publishAd() {
       max,
       hours,
       name,
-      notes: document.getElementById('ad-notes').value,
+      notes,
     });
     const event = makeEvent({ privHex: k.nostrPrivHex, pubHex: k.npubHex, kind: 30402, tags, content });
     document.getElementById('anchor-note').textContent = 'Publishing the listing…';
@@ -947,6 +1030,13 @@ async function main() {
     connectWallet().then(() => openAnchor()).catch((e) => { if (e.message !== 'Cancelled') document.getElementById('anchor-note').textContent = e.message; });
   });
   $('anchor-mint').addEventListener('click', publishAd);
+  $('ad-category').addEventListener('change', () => {
+    const generic = $('ad-category').value !== 'exchange';
+    $('ad-exchange').hidden = generic;
+    $('ad-product').hidden = !generic;
+    $('ad-assets-field').hidden = generic;
+    $('ad-methods-field').hidden = generic;
+  });
   $('anchor-selfsend').addEventListener('click', anchorSelfSend);
   $('anchor-refresh').addEventListener('click', () => anchorLoad().catch((e) => { document.getElementById('anchor-note').textContent = e.message; }));
   const anchorForm = document.getElementById('anchor-view');
@@ -964,6 +1054,8 @@ async function main() {
   $('hero-buy-bch').addEventListener('click', () => applyCategory({ kind: 'buyBch' }));
   $('featured-exchange').addEventListener('click', () => { state.adType = null; $('filter-asset').value = ''; $('filter-method').value = ''; renderExchange(); showView('exchange'); });
   $('featured-restaurants').addEventListener('click', () => showView('restaurants'));
+  $('featured-goods').addEventListener('click', () => applyCategory({ kind: 'category', value: 'goods' }));
+  $('featured-services').addEventListener('click', () => applyCategory({ kind: 'category', value: 'services' }));
   $('casa-elena').addEventListener('click', () => showView('menu'));
   $('back-exchange').addEventListener('click', () => showView(null));
   $('back-restaurants').addEventListener('click', () => showView(null));

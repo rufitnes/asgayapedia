@@ -327,3 +327,11 @@ button.tile { font: inherit; }
 
 .buy-dest { display: block; margin-top: 10px; }
 .buy-dest input { width: 100%; }
+
+.ad-image { width:100%; max-height:180px; object-fit:cover; border-radius:10px; margin-bottom:8px; }
+.ad-price { font-weight:700; font-size:18px; margin:6px 0; }
+.ad-external { display:inline-block; margin-top:8px; font-weight:600; }
+
+.anchor-fields .span2 { grid-column: 1 / -1; }
+
+[hidden] { display: none !important; }

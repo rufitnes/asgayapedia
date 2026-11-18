@@ -55,8 +55,8 @@
       <button class="tile" id="featured-exchange" type="button"><span aria-hidden="true">💱</span>Currency exchange</button>
       <button class="tile" id="featured-buy-bch" type="button"><span aria-hidden="true">₿</span>Buy BCH</button>
       <button class="tile" id="featured-restaurants" type="button"><span aria-hidden="true">🍽️</span>Restaurants</button>
-      <span class="tile disabled"><span aria-hidden="true">📦</span>Goods<small>soon</small></span>
-      <span class="tile disabled"><span aria-hidden="true">🛠️</span>Services<small>soon</small></span>
+      <button class="tile" id="featured-goods" type="button"><span aria-hidden="true">📦</span>Goods</button>
+      <button class="tile" id="featured-services" type="button"><span aria-hidden="true">🛠️</span>Services</button>
       <button class="tile" id="all-categories" type="button"><span aria-hidden="true">🗂️</span>All categories</button>
     </nav>
   </section>
@@ -164,7 +164,10 @@
         <p class="mono" id="ad-npub"></p>
       </div>
       <div class="anchor-fields">
+        <label>Category<select id="ad-category"><option value="exchange">Currency exchange</option><option value="goods">Goods</option><option value="services">Services</option><option value="restaurants">Restaurants</option></select></label>
         <label>Network<select id="anchor-network"><option value="chipnet">chipnet (canary)</option><option value="mainnet">mainnet (BLAZE)</option></select></label>
+      </div>
+      <div class="anchor-fields" id="ad-exchange">
         <label>I want to<select id="ad-role"><option value="seller">Sell BCH (I accept fiat)</option><option value="buyer">Buy BCH (I pay fiat)</option></select></label>
         <label>Name<input id="ad-name" value="Casa Elena" /></label>
         <label>Fee (%)<input id="ad-fee" type="number" step="0.01" value="0.5" /></label>
@@ -174,13 +177,26 @@
         <label>Hours<input id="ad-hours" value="24/7" /></label>
         <label>Notes<input id="ad-notes" /></label>
       </div>
-      <fieldset class="ad-checks">
+      <div class="anchor-fields" id="ad-product" hidden>
+        <label>Title<input id="ad-title" placeholder="Product or service name" /></label>
+        <label>Price<input id="ad-price" type="number" step="0.01" min="0" placeholder="0.00" /></label>
+        <label>Currency<select id="ad-currency"><option value="EUR">EUR</option><option value="USD">USD</option><option value="NGN">NGN</option></select></label>
+        <label>Subcategory<select id="ad-subcategory"><option>Technology</option><option>Home</option><option>Fashion</option><option>Motor</option><option>Sport</option><option>Professional</option><option>Classes</option><option>Other</option></select></label>
+        <label>Condition<select id="ad-condition"><option>New</option><option>Used</option></select></label>
+        <label>Shipping<select id="ad-shipping"><option>Pickup</option><option>Shipping</option><option>Pickup or shipping</option></select></label>
+        <label>Location<input id="ad-location-product" placeholder="City / area" /></label>
+        <label>Image URL<input id="ad-image" type="url" placeholder="https://…" /></label>
+        <label>External link<input id="ad-url" type="url" placeholder="https://your-shop.example/product" /></label>
+        <label>Notes<input id="ad-notes-product" /></label>
+        <label class="span2">Description<textarea id="ad-description" rows="3" placeholder="Condition, details, measurements…"></textarea></label>
+      </div>
+      <fieldset class="ad-checks" id="ad-assets-field">
         <legend>Currencies</legend>
         <label><input type="checkbox" name="ad-asset" value="EUR" checked /> EUR</label>
         <label><input type="checkbox" name="ad-asset" value="USD" /> USD</label>
         <label><input type="checkbox" name="ad-asset" value="NGN" /> NGN</label>
       </fieldset>
-      <fieldset class="ad-checks">
+      <fieldset class="ad-checks" id="ad-methods-field">
         <legend>Payment methods</legend>
         <label><input type="checkbox" name="ad-method" value="Cash in person" checked /> Cash in person</label>
         <label><input type="checkbox" name="ad-method" value="Card in person" /> Card in person</label>
