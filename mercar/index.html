@@ -87,15 +87,21 @@
         </div>
         <div class="ad-fee" id="detail-fee"></div>
       </header>
+      <div id="detail-product" hidden>
+        <img id="detail-image" class="ad-image" alt="" hidden />
+        <p class="ad-price" id="detail-price"></p>
+        <p class="muted" id="detail-cond"></p>
+        <p id="detail-desc"></p>
+      </div>
       <section class="identity" aria-live="polite">
-        <div class="identity-top"><strong>Identity</strong><span class="badge" id="identity-badge">Checking…</span></div>
+        <div class="identity-top"><strong id="identity-title">Identity</strong><span class="badge" id="identity-badge">Checking…</span></div>
         <p class="muted" id="identity-note">Verifying the on-chain anchor…</p>
         <p class="mono" id="identity-pub"></p>
         <p class="mono" id="identity-npub"></p>
         <p class="mono" id="identity-anchor"></p>
       </section>
       <dl class="ad-detail-facts">
-        <div><dt>Offers</dt><dd id="detail-assets"></dd></div>
+        <div><dt id="detail-assets-label">Offers</dt><dd id="detail-assets"></dd></div>
         <div><dt>Payment</dt><dd id="detail-methods"></dd></div>
         <div><dt>Limits</dt><dd id="detail-limits"></dd></div>
         <div><dt>Where</dt><dd id="detail-where"></dd></div>
@@ -218,8 +224,8 @@
     </div>
   </section>
 
-  <section class="view" id="pay-view" hidden>
-    <button class="back" type="button" onclick="window.close()">← Close</button>
+  <dialog id="pay-dialog" class="checkout pay-dialog">
+    <button class="back" id="pay-close" type="button">← Close</button>
     <div class="pay-head">
       <div>
         <h2 id="pay-name">Merchant</h2>
@@ -237,7 +243,7 @@
       <input id="pay-input" type="text" placeholder="Ask the merchant…" autocomplete="off" />
       <button class="primary" type="submit">Send</button>
     </form>
-  </section>
+  </dialog>
 
   <dialog id="categories-dialog" class="checkout categories-dialog">
     <h2>All categories</h2>
@@ -269,6 +275,18 @@
     <div class="checkout-actions">
       <button class="ghost" id="co-close" type="button">Close</button>
       <button class="primary" id="co-pay" type="button">Pay with WizardConnect</button>
+    </div>
+  </dialog>
+
+  <dialog id="order-dialog" class="checkout">
+    <h2 id="order-title">Place your order</h2>
+    <p class="muted" id="order-sub"></p>
+    <label>Your name<input id="order-name" type="text" placeholder="Full name" /></label>
+    <label>Shipping address<input id="order-shipping" type="text" placeholder="Street, city, postal code — or write “pickup”" /></label>
+    <label>Quantity<input id="order-qty" type="number" min="1" value="1" /></label>
+    <div class="checkout-actions">
+      <button class="ghost" id="order-cancel" type="button">Cancel</button>
+      <button class="primary" id="order-place" type="button">Send order to merchant</button>
     </div>
   </dialog>
 

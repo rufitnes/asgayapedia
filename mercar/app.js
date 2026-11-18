@@ -33,7 +33,7 @@ async function fetchLiveRate() {
   return liveRate;
 }
 
-const state = { catalogue: null, cart: new Map(), adType: null, view: null, selectedAd: null };
+const state = { catalogue: null, cart: new Map(), adType: null, view: null, selectedAd: null, category: 'exchange', payAddress: null, payAmount: null };
 let wc = null;
 let wcLocking = null;
 let wcAddress = null;
@@ -138,15 +138,15 @@ function renderCart() {
 }
 
 async function openCheckout() {
-  const total = cartTotalCents();
+  const total = state.payAmount ?? cartTotalCents();
   if (total === 0) return;
-  $('co-total').textContent = eur(total);
+  $('co-total').textContent = eur(Math.round(total * 100));
   const rate = await fetchLiveRate();
   $('co-rate').textContent = rate
     ? `1 BCH ≈ ${eur(Math.round(rate * 100))} (reference only)`
     : 'Reference rate unavailable';
-  $('co-bch').textContent = rate ? `≈ ${sats(total, rate).toLocaleString('en-GB')} sats` : '—';
-  $('co-address').textContent = state.catalogue.merchant.address;
+  $('co-bch').textContent = rate ? `≈ ${sats(Math.round(total * 100), rate).toLocaleString('en-GB')} sats` : '—';
+  $('co-address').textContent = state.payAddress || state.catalogue.merchant.address;
   $('co-pay').disabled = false;
   $('co-pay').textContent = 'Pay with WizardConnect';
   $('checkout').showModal();
@@ -192,14 +192,14 @@ async function connectWallet() {
 }
 
 async function payWithBch() {
-  const total = cartTotalCents();
-  if (total === 0) return;
+  const total = state.payAmount ?? cartTotalCents() / 100;
+  if (!total) return;
   $('co-pay').disabled = true;
   try {
     if (!wc) await connectWallet();
     if (!liveRate) throw new Error('Reference rate unavailable — try again in a moment');
-    const amountSats = sats(total, liveRate);
-    const dec = decodeCashAddress(state.catalogue.merchant.address);
+    const amountSats = sats(Math.round(total * 100), liveRate);
+    const dec = decodeCashAddress(state.payAddress || state.catalogue.merchant.address);
     if (typeof dec === 'string') throw new Error(dec);
     const merchantLocking = new Uint8Array([0x76, 0xa9, 0x14, ...dec.payload, 0x88, 0xac]);
     console.log('[mercar] amount', amountSats, 'sats; wallet', wcAddress);
@@ -364,22 +364,42 @@ function openAd(ad) {
   state.selectedAd = ad;
   showView('ad');
   const isSeller = ad.adType === 'SELLER';
+  const generic = ad.category && ad.category !== 'exchange';
+  const CAT_LABEL = { exchange: 'Currency exchange', goods: 'Goods', services: 'Services', restaurants: 'Restaurants' };
+  $('back-ad').textContent = `← ${CAT_LABEL[generic ? ad.category : 'exchange'] || 'Board'}`;
+  $('identity-title').textContent = `Identity: ${ad.name || ad.cashAccount || 'this merchant'}`;
+  $('detail-product').hidden = !generic;
+  $('detail-image').hidden = !generic || !ad.image;
+  if (generic && ad.image) $('detail-image').src = ad.image;
+  $('detail-price').textContent = generic && ad.price != null ? `${ad.price} ${ad.assets[0] || ''}` : '';
+  $('detail-cond').textContent = generic ? [ad.condition, ad.shipping].filter(Boolean).join(' · ') : '';
+  $('detail-desc').textContent = generic ? (ad.description || '') : '';
   $('detail-type').textContent = `Sells ${isSeller ? 'BCH' : (ad.assets[0] ?? 'asset')}`;
   $('detail-type').className = `ad-type ${ad.adType.toLowerCase()}`;
-  $('detail-name').textContent = ad.name || ad.cashAccount || 'Merchant';
+  $('detail-type').style.display = generic ? 'none' : '';
+  $('detail-name').textContent = generic ? (ad.title || ad.name || 'Item') : (ad.name || ad.cashAccount || 'Merchant');
   $('detail-sub').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ');
   $('detail-fee').textContent = `${(ad.fee * 100).toFixed(2)}% fee`;
-  $('detail-assets').textContent = isSeller ? (ad.assets.join(', ') || '—') : 'BCH';
+  $('detail-fee').style.display = generic ? 'none' : '';
+  $('detail-assets-label').textContent = generic ? 'Payment BCH' : 'Offers';
+  $('detail-assets').textContent = generic ? 'BCH' : (isSeller ? (ad.assets.join(', ') || '—') : 'BCH');
   $('detail-methods').textContent = ad.methods.join(' · ') || '—';
   $('detail-limits').textContent = `${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}`;
+  $('detail-limits').parentElement.style.display = generic ? 'none' : '';
   $('detail-where').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ') || '—';
+  $('buy-title').style.display = generic ? 'none' : '';
   $('buy-title').textContent = isSeller ? 'Buy BCH' : 'Sell BCH';
-  $('buy-get').textContent = isSeller ? 'Buy BCH' : 'Sell BCH';
-  $('buy-hint').textContent = `Fee ${(ad.fee * 100).toFixed(2)}%; limits ${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}.`;
-  const amount = $('buy-amount');
-  amount.min = ad.min ?? '';
-  amount.max = ad.max ?? '';
-  amount.value = ad.min ?? '';
+  $('buy-get').textContent = generic ? 'Buy this item' : (isSeller ? 'Buy BCH' : 'Sell BCH');
+  $('buy-hint').textContent = generic
+    ? `${ad.price ?? '—'} ${ad.assets[0] || 'EUR'} · ${ad.condition || ''}${ad.shipping ? ' · ' + ad.shipping : ''}`
+    : `Fee ${(ad.fee * 100).toFixed(2)}%; limits ${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}.`;
+  $('buy-amount').value = generic ? (ad.price ?? '') : (ad.min ?? '');
+  $('buy-amount').min = generic ? '' : (ad.min ?? '');
+  $('buy-amount').max = generic ? '' : (ad.max ?? '');
+  $('buy-amount').disabled = generic;
+  $('buy-currency').disabled = generic;
+  $('buy-method').closest('label').style.display = generic ? 'none' : '';
+  $('buy-destination').closest('label').style.display = generic ? 'none' : '';
   const method = $('buy-method');
   method.innerHTML = '';
   for (const m of ad.methods) method.add(new Option(m, m));
@@ -551,8 +571,7 @@ function showView(name) {
   document.getElementById('menu-view').hidden = name !== 'menu';
   document.getElementById('anchor-view').hidden = name !== 'anchor';
   document.getElementById('ad-view').hidden = name !== 'ad';
-  document.getElementById('pay-view').hidden = name !== 'pay';
-  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : name === 'anchor' ? 'anchor-view' : name === 'ad' ? 'ad-view' : name === 'pay' ? 'pay-view' : 'categories';
+  const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : name === 'anchor' ? 'anchor-view' : name === 'ad' ? 'ad-view' : 'categories';
   const el = document.getElementById(target);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -864,19 +883,52 @@ async function anchorSelfSend() {
 }
 
 async function openPay(ad) {
-  const amount = Number($('buy-amount').value);
+  const generic = ad.category && ad.category !== 'exchange';
   const method = $('buy-method').value;
+  const dest = ($('buy-destination')?.value || wcAddress || '').trim();
+  if (generic) {
+    const amount = Number(ad.price || 0);
+    if (!(amount > 0)) { alert('This ad has no price.'); return; }
+    $('order-title').textContent = `Order: ${ad.title || ad.name || 'item'}`;
+    $('order-sub').textContent = `${amount} ${ad.assets[0] || 'EUR'} · the merchant confirms the payment details in the chat.`;
+    $('order-name').value = '';
+    $('order-shipping').value = '';
+    $('order-qty').value = '1';
+    $('order-dialog').showModal();
+    return;
+  }
+  const amount = Number($('buy-amount').value);
   if (!Number.isFinite(amount) || amount <= 0) { alert('Enter an amount.'); return; }
   if (ad.min != null && amount < ad.min) { alert(`Minimum is ${ad.min} ${ad.assets[0] ?? ''}.`); return; }
   if (ad.max != null && amount > ad.max) { alert(`Maximum is ${ad.max} ${ad.assets[0] ?? ''}.`); return; }
-  const dest = ($('buy-destination')?.value || '').trim();
   if (!dest) { alert('Enter the BCH address where you want to receive the funds.'); return; }
   const params = new URLSearchParams({
     ad: ad.id, seller: ad.npub, name: ad.name || '', asset: ad.assets[0] || 'EUR',
     amount: String(amount), method, anchor: ad.anchor || '',
     dest,
   });
-  window.open(`${location.pathname}#pay?${params}`, '_blank', 'noopener');
+  state.payAddress = null;
+  state.payAmount = null;
+  history.pushState(null, '', `#pay?${params}`);
+  startPay(params);
+}
+
+function placeOrder(ad) {
+  const orderName = $('order-name').value.trim();
+  const shipping = $('order-shipping').value.trim();
+  const qty = Math.max(1, Number($('order-qty').value || 1));
+  if (!orderName) { alert('Enter your name.'); return; }
+  if (!shipping) { alert('Enter the shipping address or “pickup”.'); return; }
+  const amount = Number(ad.price || 0) * qty;
+  const params = new URLSearchParams({
+    type: 'product', ad: ad.id, seller: ad.npub, name: ad.name || '',
+    asset: ad.assets[0] || 'EUR', amount: String(amount), method: 'BCH',
+    anchor: ad.anchor || '', dest: (wcAddress || ''), orderName, shipping,
+    quantity: String(qty),
+  });
+  $('order-dialog').close();
+  history.pushState(null, '', `#pay?${params}`);
+  startPay(params);
 }
 
 function chatAdd(kind, text, id) {
@@ -895,6 +947,14 @@ function chatAdd(kind, text, id) {
 /** Render the app's `[PAY_INSTRUCTIONS]` reply like the app's own instructions dialog. */
 function formatInstructions(message) {
   const text = String(message);
+  if (text.includes('[ORDER_INSTRUCTIONS]')) {
+    const kv = {};
+    for (const line of text.split('\n')) {
+      const i = line.indexOf('=');
+      if (i > 0) kv[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    }
+    return `✅ Order confirmed — send ${kv.amount || '?'} ${kv.currency || 'EUR'} in BCH to ${kv.address || '?'}. Order ${kv.orderId || '?'}.`;
+  }
   if (text.includes('[PAY_RECEIVED]')) {
     const kv = {};
     for (const line of text.split('\n')) {
@@ -926,7 +986,9 @@ function formatInstructions(message) {
 }
 
 async function startPay(params) {
-  showView('pay');
+  { const d = $('pay-dialog'); if (!d.open) d.showModal(); }
+  if (state.payUnsub) { try { state.payUnsub(); } catch { /* ignore */ } state.payUnsub = null; }
+  $('pay-chat').innerHTML = '';
   const seller = String(params.get('seller') || '').toLowerCase();
   const name = params.get('name') || 'the merchant';
   const asset = params.get('asset') || 'EUR';
@@ -945,17 +1007,35 @@ async function startPay(params) {
   chatAdd('sys', 'A private, end-to-end encrypted channel with the merchant. Mercar only showed you the ad; it cannot read or store these messages.');
   if (!seller) { chatAdd('sys', 'This ad has no merchant npub, so the channel cannot be opened.'); return; }
   const requestId = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now());
-  const request = [
-    '[PAY_INSTRUCTIONS_REQUEST]',
-    `adId=${params.get('ad') || ''}`,
-    `amount=${amount}`,
-    `currency=${asset}`,
-    `buyerAddress=${destination}`,
-    `requestId=${requestId}`,
-    `timestamp=${Date.now()}`,
-    '[/PAY_INSTRUCTIONS_REQUEST]',
-  ].join('\n');
-  chatAdd('sys', `Requested payment instructions: ${amount} ${asset} (${method}).`);
+  const type = params.get('type') || 'exchange';
+  const request = type === 'product'
+    ? [
+        '[PRODUCT_ORDER]',
+        `orderId=${requestId}`,
+        `adId=${params.get('ad') || ''}`,
+        `title=${params.get('name') || ''}`,
+        `quantity=1`,
+        `amount=${amount}`,
+        `currency=${asset}`,
+        `buyerAddress=${destination}`,
+        `buyerName=${params.get('orderName') || ''}`,
+        `shipping=${params.get('shipping') || ''}`,
+        `timestamp=${Date.now()}`,
+        '[/PRODUCT_ORDER]',
+      ].join('\n')
+    : [
+        '[PAY_INSTRUCTIONS_REQUEST]',
+        `adId=${params.get('ad') || ''}`,
+        `amount=${amount}`,
+        `currency=${asset}`,
+        `buyerAddress=${destination}`,
+        `requestId=${requestId}`,
+        `timestamp=${Date.now()}`,
+        '[/PAY_INSTRUCTIONS_REQUEST]',
+      ].join('\n');
+  chatAdd('sys', type === 'product'
+    ? `Order placed: ${amount} ${asset} · we asked the merchant for the payment details.`
+    : `Requested payment instructions: ${amount} ${asset} (${method}).`);
   try {
     const content = await nip04Encrypt(privHex, seller, request);
     const event = makeEvent({ privHex, pubHex: npubHex, kind: 4, tags: [['p', seller]], content });
@@ -967,13 +1047,24 @@ async function startPay(params) {
       chatAdd('sys', 'The merchant’s app has not replied. It must be open: the instructions come from their device (liveness).');
     }
   }, 45000);
-  subscribeDMs(NOSTR_RELAY, { me: npubHex, author: seller, onEvent: async (ev) => {
+  state.payUnsub = subscribeDMs(NOSTR_RELAY, { me: npubHex, author: seller, onEvent: async (ev) => {
     console.log('[pay] dm', String(ev.id || '').slice(0, 10), 'from', String(ev.pubkey || '').slice(0, 12), 'expected seller', String(seller || '').slice(0, 12));
     if (ev.pubkey !== seller) return;
     try {
       const pt = await nip04Decrypt(privHex, seller, ev.content);
       const reqId = (pt.match(/requestId=([^\n\]]+)/) || [])[1];
-      chatAdd('them', formatInstructions(pt), reqId ? `pi-${reqId}` : undefined);
+      const orderId = (pt.match(/orderId=([^\n\]]+)/) || [])[1];
+      chatAdd('them', formatInstructions(pt), orderId ? `order-${orderId}` : (reqId ? `pi-${reqId}` : undefined));
+      if (pt.includes('[ORDER_INSTRUCTIONS]')) {
+        const kv = {};
+        for (const line of pt.split('\n')) {
+          const i = line.indexOf('=');
+          if (i > 0) kv[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+        }
+        state.payAddress = kv.address || null;
+        state.payAmount = kv.amount ? Number(kv.amount) : null;
+        if (state.payAddress) openCheckout().catch(() => {});
+      }
       $('pay-status').textContent = 'Merchant replied (live)';
       $('pay-status').className = 'badge ok';
       clearTimeout(timer);
@@ -1009,6 +1100,9 @@ async function main() {
   $('pay-btn').addEventListener('click', openCheckout);
   $('co-close').addEventListener('click', () => $('checkout').close());
   $('co-pay').addEventListener('click', payWithBch);
+  $('order-cancel').addEventListener('click', () => $('order-dialog').close());
+  $('pay-close').addEventListener('click', () => $('pay-dialog').close());
+  $('order-place').addEventListener('click', () => { if (state.selectedAd) placeOrder(state.selectedAd); });
   $('connect-btn').addEventListener('click', () => {
     if (wc) {
       if (confirm('Disconnect the wallet?')) { wc.disconnect(); resetWallet(); }
