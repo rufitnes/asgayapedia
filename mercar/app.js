@@ -57,7 +57,7 @@ function renderMerchant(c) {
   $('merchant-desc').textContent = c.merchant.description ?? '';
   $('merchant-address').textContent = c.merchant.address;
   if (c.merchant.network) {
-    $('network-badge').textContent = `${c.merchant.network} demo`;
+    $('network-badge').textContent = c.merchant.network;
     $('network-badge').dataset.network = c.merchant.network;
   }
 }

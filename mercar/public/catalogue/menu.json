@@ -4,7 +4,7 @@
     "name": "Casa Elena",
     "description": "Home cooking. Pickup or neighbourhood delivery.",
     "address": "bchtest:qz4llaasruxhme2l80dsnme76fmj24ve05h6d8ghe5",
-    "network": "chipnet"
+    "network": "mainnet"
   },
   "currency": "EUR",
   "items": [
