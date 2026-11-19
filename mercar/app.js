@@ -1148,7 +1148,7 @@ async function main() {
     });
   }
   $('hero-buy-bch').addEventListener('click', () => applyCategory({ kind: 'buyBch' }));
-  $('featured-exchange').addEventListener('click', () => { state.adType = null; $('filter-asset').value = ''; $('filter-method').value = ''; renderExchange(); showView('exchange'); });
+  $('featured-exchange').addEventListener('click', () => applyCategory({ kind: 'all' }));
   $('featured-restaurants').addEventListener('click', () => showView('restaurants'));
   $('featured-goods').addEventListener('click', () => applyCategory({ kind: 'category', value: 'goods' }));
   $('featured-services').addEventListener('click', () => applyCategory({ kind: 'category', value: 'services' }));
