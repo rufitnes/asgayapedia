@@ -4,8 +4,9 @@
 on-chain identity is bound to its Nostr ads, and the payment instructions come
 from the merchant's own device.
 
+[**Open the board**](https://mercar.asgaya.org) · [**Docs**](https://docs.asgaya.org) · [**Design**](./DESIGN.md) · [**Repo**](https://github.com/rufitnes/asgayapedia) · [**Demo video**](#demo-video) · [**How it meets BLAZE**](#how-it-meets-bch-blaze-2026)
+
 **BCH BLAZE 2026** (14–22 Nov). **Submission:** 22 Nov 14:00 UTC.
-**Docs:** [docs.asgaya.org](https://docs.asgaya.org) · **Repo:** [github.com/rufitnes/asgayapedia](https://github.com/rufitnes/asgayapedia) · **Design:** [`DESIGN.md`](./DESIGN.md)
 
 ## What it is, in 60 seconds
 
@@ -42,18 +43,62 @@ merchant app ── genesis CashToken NFT (anchor) ──▶ chain
                               └── [PAY_INSTRUCTIONS] ──▶ buyer
 ```
 
-## What works (16 Nov 2026)
+## Demo video
 
-- **The board** (Vite): categories, the exchange list from the relay, filters,
-  the ad detail and the on-chain identity badge (chipnet and testnet3).
+<!-- TODO: link the 60–90 s video ("how to publish" / "how to buy BCH P2P") -->
+
+A short walk through the board: publish a listing, the identity badge verifying the
+anchor, and a buyer asking for and receiving payment instructions from the merchant's
+device. *(Link to be added.)*
+
+## What works (18 Nov 2026)
+
+- **The board** (Vite): the three categories (exchange, goods, services/restaurants),
+  product cards, the ad detail, and the on-chain identity badge (chipnet, testnet3,
+  mainnet).
 - **Publish from the web**: connect with WizardConnect, mint or reuse the anchor,
   sign the NIP-99 listing. The browser never holds the private key.
-- **The companion app** (AsgayaHusk): mints the anchor **on the device** (the WebView
-  signs with the wallet key; the app only broadcasts), reuses it per tuple, and
-  answers the payment chat with the merchant's instructions.
+- **The product flow**: a buyer sends `[PRODUCT_ORDER]`; the merchant answers
+  `[ORDER_INSTRUCTIONS]` with its BCH address; the checkout asks the wallet to sign.
 - **The payment chat**: the web sends `[PAY_INSTRUCTIONS_REQUEST]`; the merchant's app
   replies with `[PAY_INSTRUCTIONS]`. The demo transport is NIP-04; NIP-17 is the app's
   native transport and the convergence.
+- **The companion app** (AsgayaHusk): mints the anchor **on the device**, reuses it per
+  tuple, and answers the payment chat with the merchant's instructions.
+
+## How it meets BCH BLAZE 2026
+
+The Mainnet Track, requirement by requirement:
+
+| Requirement | How Mercar meets it | Check it |
+|---|---|---|
+| A live, usable **web demo** | [`mercar.asgaya.org`](https://mercar.asgaya.org) is the board: publish, discover, verify | [open the board](https://mercar.asgaya.org) |
+| ≥1 **mainnet transaction** | publishing an ad mints the identity anchor (a genesis CashToken NFT); the BLAZE artefact is live on mainnet | [`d7b1468f…`](https://explorer.salemkode.com/tx/d7b1468f1fd65295eebb4785489614eb58adde1f480c5cecabffcb78109c9ad4) |
+| **WizardConnect** | the web connects the merchant's BCH wallet to mint/reuse the anchor and sign the listing | [`wizardconnect.js`](./wizardconnect.js) |
+| **Presentation** ("Widget Factory" deck) | the BLAZE deck | <!-- TODO: deck link --> |
+| **Original / improved in the hackathon** | the baseline is tagged `v0-prehackathon-baseline`; the board, the identity badge, the categories and the product flow land during BLAZE | git history |
+
+## Proof on mainnet
+
+| Artefact | Where | Notes |
+|---|---|---|
+| The identity anchor | [`d7b1468f…`](https://explorer.salemkode.com/tx/d7b1468f1fd65295eebb4785489614eb58adde1f480c5cecabffcb78109c9ad4) | the BLAZE artefact: the genesis CashToken NFT |
+| The category | `29e3168c…` | the anchor's token category (named after the funding input) |
+| The commitment | `0101455552023200` | type · asset · method · fee, < 128 B |
+| The ad | NIP-99 on `relay.asgaya.org` | references the anchor; the badge verifies it on-chain |
+
+The badge labels the network it verified. A testnet reputation is a demonstration,
+not real reputation.
+
+## Built on
+
+| Piece | What it does in Mercar | Where |
+|---|---|---|
+| **Nostr (NIP-99)** | the ads (kind 30402) and the payment chat | [`nostr.js`](./nostr.js) |
+| **WizardConnect** | the wallet connection for the anchor and the listing | [`wizardconnect.js`](./wizardconnect.js) |
+| **CashScript / the anchor** | the genesis CashToken NFT and its commitment | [`anchor.js`](./anchor.js) |
+| **Electrum (public WebSockets)** | the on-chain verification of the anchor | [`electrum.js`](./electrum.js) |
+| **AsgayaHusk (Android)** | the merchant's device: the on-device anchor and the payment chat | [the app](../asgaya/knowledge/research_code/AsgayaHusk-v0.2) |
 
 ## Networks
 
@@ -61,10 +106,7 @@ merchant app ── genesis CashToken NFT (anchor) ──▶ chain
 |---|---|
 | **testnet3** | the app and the on-device anchors (the demo) |
 | **chipnet** | the web canary and its anchor |
-| **mainnet** | the BLAZE artefact: one identity anchor (pending) |
-
-The badge labels the network it verified. Testnet reputation is a demonstration,
-not real reputation.
+| **mainnet** | the BLAZE artefact: the identity anchor (live) |
 
 ## Run the web
 
@@ -79,7 +121,8 @@ The board reads NIP-99 ads from a Nostr relay. Set `VITE_NOSTR_RELAY` (the publi
 build reads `.env.production`, which points at `wss://relay.asgaya.org`; the dev
 server falls back to the LAN relay).
 The identity badge uses public Electrum WebSockets: chipnet
-`wss://chipnet.imaginary.cash:50004`, testnet3 `wss://testnet.imaginary.cash:50004`.
+`wss://chipnet.imaginary.cash:50004`, testnet3 `wss://testnet.imaginary.cash:50004`,
+mainnet `wss://bch.imaginary.cash:50004`.
 
 The companion app is not part of the web demo. The public
 [anchor-mint spike](https://github.com/rufitnes/asgayapedia/tree/main/code/anchor-mint-spike)
@@ -113,10 +156,9 @@ first partner we also host the demo.
 
 ## Status and next
 
-Mid-hackathon. The board, the identity badge, the on-device anchor and the payment chat
-work on testnet3/chipnet. Next: the **mainnet anchor** (the BLAZE artefact), the
-**public deployment** (`mercar.asgaya.org` + a public WSS relay), the **NIP-04 → NIP-17**
-convergence, and the first partner's demo.
+The board, the identity badge, the on-device anchor, the product flow and the payment
+chat work. Next: the **video** and the **deck**, and the **NIP-04 → NIP-17**
+convergence.
 
 **Not in the web demo:** the covenant's on-chain flow (testnet research), the
 on-chain notary escrow, the graph score, the tracking-hash scheme.
