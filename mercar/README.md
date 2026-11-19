@@ -4,7 +4,7 @@
 on-chain identity is bound to its Nostr ads, and the payment instructions come
 from the merchant's own device.
 
-[**Open the board**](https://mercar.asgaya.org) · [**Docs**](https://docs.asgaya.org) · [**Design**](./DESIGN.md) · [**Repo**](https://github.com/rufitnes/asgayapedia) · [**Demo video**](#demo-video) · [**How it meets BLAZE**](#how-it-meets-bch-blaze-2026)
+[**Open the board**](https://mercar.asgaya.org) · [**Docs**](https://docs.asgaya.org) · [**Design**](./DESIGN.md) · [**Repo**](https://github.com/rufitnes/asgayapedia) · [**Demo video**](#demo-video) · [**Deck**](https://docs.google.com/presentation/d/1f1qsd08NRjdRxpXul0MQFi33aWcLG4vj/edit?usp=sharing) · [**How it meets BLAZE**](#how-it-meets-bch-blaze-2026)
 
 **BCH BLAZE 2026** (14–22 Nov). **Submission:** 22 Nov 14:00 UTC.
 
@@ -75,7 +75,7 @@ The Mainnet Track, requirement by requirement:
 | A live, usable **web demo** | [`mercar.asgaya.org`](https://mercar.asgaya.org) is the board: publish, discover, verify | [open the board](https://mercar.asgaya.org) |
 | ≥1 **mainnet transaction** | publishing an ad mints the identity anchor (a genesis CashToken NFT); the BLAZE artefact is live on mainnet | [`d7b1468f…`](https://explorer.salemkode.com/tx/d7b1468f1fd65295eebb4785489614eb58adde1f480c5cecabffcb78109c9ad4) |
 | **WizardConnect** | the web connects the merchant's BCH wallet to mint/reuse the anchor and sign the listing | [`wizardconnect.js`](./wizardconnect.js) |
-| **Presentation** ("Widget Factory" deck) | the BLAZE deck | <!-- TODO: deck link --> |
+| **Presentation** ("Widget Factory" deck) | [the BLAZE deck](https://docs.google.com/presentation/d/1f1qsd08NRjdRxpXul0MQFi33aWcLG4vj/edit?usp=sharing) | Google Slides (read-only) |
 | **Original / improved in the hackathon** | the baseline is tagged `v0-prehackathon-baseline`; the board, the identity badge, the categories and the product flow land during BLAZE | git history |
 
 ## Proof on mainnet
@@ -157,8 +157,7 @@ first partner we also host the demo.
 ## Status and next
 
 The board, the identity badge, the on-device anchor, the product flow and the payment
-chat work. Next: the **video** and the **deck**, and the **NIP-04 → NIP-17**
-convergence.
+chat work. Next: the **video**, and the **NIP-04 → NIP-17** convergence.
 
 **Not in the web demo:** the covenant's on-chain flow (testnet research), the
 on-chain notary escrow, the graph score, the tracking-hash scheme.
