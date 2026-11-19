@@ -33,7 +33,7 @@ async function fetchLiveRate() {
   return liveRate;
 }
 
-const state = { catalogue: null, cart: new Map(), adType: null, view: null, selectedAd: null, category: 'exchange', payAddress: null, payAmount: null };
+const state = { catalogue: null, cart: new Map(), adType: null, view: null, selectedAd: null, category: 'exchange', subcategory: null, payAddress: null, payAmount: null };
 let wc = null;
 let wcLocking = null;
 let wcAddress = null;
@@ -278,7 +278,7 @@ function renderExchange() {
   const sort = $('sort-by').value;
   const q = ($('search')?.value || '').trim().toLowerCase();
   const cat = state.category || 'exchange';
-  let ads = exchangeAds.filter((a) => ((a.category || 'exchange') === cat) && (!state.adType || a.adType === state.adType) && (!fa || a.assets.includes(fa)) && (!fm || a.methods.includes(fm)));
+  let ads = exchangeAds.filter((a) => ((a.category || 'exchange') === cat) && (!state.subcategory || String(a.subcategory || '').toLowerCase() === state.subcategory.toLowerCase()) && (!state.adType || a.adType === state.adType) && (!fa || a.assets.includes(fa)) && (!fm || a.methods.includes(fm)));
   if (q) {
     ads = ads.filter((a) =>
       [a.name, a.cashAccount, a.location, a.npub, ...a.assets, ...a.methods]
@@ -357,7 +357,7 @@ function renderExchange() {
   const CAT_LABEL = { exchange: 'Currency exchange', goods: 'Goods', services: 'Services', restaurants: 'Restaurants' };
   $('exchange-title').textContent = cat === 'exchange'
     ? (state.adType === 'SELLER' ? 'Currency exchange · Buy BCH' : state.adType === 'BUYER' ? 'Currency exchange · Sell BCH' : 'Currency exchange')
-    : (CAT_LABEL[cat] || 'Board');
+    : (CAT_LABEL[cat] || 'Board') + (state.subcategory ? ` · ${state.subcategory}` : '');
 }
 
 function openAd(ad) {
@@ -509,13 +509,13 @@ const CATEGORY_GROUPS = [
     { label: 'Bizum', kind: 'method', value: 'Bizum' },
   ] },
   { title: 'Restaurants', items: [{ label: 'View restaurants', kind: 'restaurants' }] },
-  { title: 'Goods', items: ['Technology', 'Home', 'Fashion', 'Motor', 'Sport'].map((l) => ({ label: l, kind: 'category', value: 'goods' })) },
-  { title: 'Services', items: ['Home', 'Professional', 'Classes'].map((l) => ({ label: l, kind: 'category', value: 'services' })) },
+  { title: 'Goods', items: ['Technology', 'Home', 'Fashion', 'Motor', 'Sport'].map((l) => ({ label: l, kind: 'category', value: 'goods', sub: l })) },
+  { title: 'Services', items: ['Home', 'Professional', 'Classes'].map((l) => ({ label: l, kind: 'category', value: 'services', sub: l })) },
 ];
 
 function countFor(it) {
   if (it.kind === 'all') return exchangeAds.length;
-  if (it.kind === 'category') return exchangeAds.filter((a) => (a.category || 'exchange') === it.value).length;
+  if (it.kind === 'category') return exchangeAds.filter((a) => (a.category || 'exchange') === it.value && (!it.sub || String(a.subcategory || '').toLowerCase() === it.sub.toLowerCase())).length;
   if (it.kind === 'buyBch') return exchangeAds.filter((a) => a.adType === 'SELLER').length;
   if (it.kind === 'sellBch') return exchangeAds.filter((a) => a.adType === 'BUYER').length;
   if (it.kind === 'asset') return exchangeAds.filter((a) => a.assets.includes(it.value)).length;
@@ -584,6 +584,7 @@ function applyCategory(it) {
   }
   if (it.kind === 'category') {
     state.category = it.value;
+    state.subcategory = it.sub || null;
     state.adType = null;
     document.getElementById('filter-asset').value = '';
     document.getElementById('filter-method').value = '';
@@ -593,6 +594,7 @@ function applyCategory(it) {
     return;
   }
   state.category = 'exchange';
+  state.subcategory = null;
   state.adType = it.kind === 'buyBch' ? 'SELLER' : it.kind === 'sellBch' ? 'BUYER' : null;
   if (it.kind === 'asset') {
     document.getElementById('filter-asset').value = it.value;
