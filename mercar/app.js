@@ -1170,3 +1170,21 @@ async function main() {
 }
 
 main();
+
+// The judges' banner: copy the CashTokens address (EMBER2026 votes).
+const CASH_TOKENS_ADDRESS = 'bitcoincash:zr2zsrsy00ns7v2uce3esmrrsnvv38qswsvas3fyzq';
+const cashBtn = $('cash-btn');
+if (cashBtn) {
+  cashBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(CASH_TOKENS_ADDRESS);
+      const label = cashBtn.querySelector('span');
+      const prev = label.textContent;
+      label.textContent = 'copied';
+      cashBtn.classList.add('copied');
+      setTimeout(() => { label.textContent = prev; cashBtn.classList.remove('copied'); }, 1400);
+    } catch (e) {
+      cashBtn.title = CASH_TOKENS_ADDRESS;
+    }
+  });
+}

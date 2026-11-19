@@ -173,6 +173,31 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 .links a { color: var(--hero-muted); text-decoration: none; }
 .links a:hover { color: var(--hero-ink); text-decoration: underline; }
+.links-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hero-muted);
+  opacity: 0.78;
+}
+.links-cash {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--hero-muted);
+  cursor: pointer;
+}
+.links-cash:hover { color: var(--hero-ink); }
+.links-cash.copied { color: #9ef0b8; }
+.links-qr { width: 14px; height: 14px; display: block; }
 
 .partner-banner {
   display: flex;
