@@ -36,6 +36,7 @@ async function fetchLiveRate() {
 const state = { catalogue: null, cart: new Map(), adType: null, view: null, selectedAd: null, category: 'exchange', subcategory: null, payAddress: null, payAmount: null };
 let wc = null;
 let wcPubHex = null;
+let wcReceiveAddress = null;
 let wcLocking = null;
 let wcAddress = null;
 
@@ -156,6 +157,7 @@ let cancelConnect = null;
 
 function resetWallet() {
   wcPubHex = null;
+  wcReceiveAddress = null;
   updateOwnAd();
   wc = null;
   wcLocking = null;
@@ -190,8 +192,9 @@ async function connectWallet() {
   const r = lockingBytecodeToCashAddress({ prefix: addressPrefix(), bytecode: wcLocking, tokenSupport: false });
   wcAddress = typeof r === 'string' ? null : r.address;
   console.log('[mercar] wallet', wcAddress);
+  wcReceiveAddress = wcAddress;
   $('connect-btn').textContent = wcAddress ? `Connected ${wcAddress.slice(0, 14)}…` : 'Connected';
-  if (wcAddress) { const d = document.getElementById('buy-destination'); if (d && !d.value) d.value = wcAddress; }
+  if (wcReceiveAddress) { const d = document.getElementById('buy-destination'); if (d && !d.value) d.value = wcReceiveAddress; }
   dlg.close();
 }
 
@@ -439,6 +442,8 @@ function openAd(ad) {
   $('identity-anchor').textContent = ad.anchor ? `Anchor: ${ad.anchor}` : '';
   verifyAnchor(ad);
   updateOwnAd();
+  const dest = document.getElementById('buy-destination');
+  if (dest && !dest.value && wcReceiveAddress) dest.value = wcReceiveAddress;
 }
 
 async function verifyAnchor(ad) {
