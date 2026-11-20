@@ -789,10 +789,45 @@ function lockIdentityName(name) {
 }
 
 async function anchorLoad() {
-  if (!wc) { document.getElementById('anchor-note').textContent = 'Connect a wallet to mint the anchor.'; return; }
+  if (!wc) { lockIdentityName(null); document.getElementById('anchor-note').textContent = 'Connect a BCH wallet to publish.'; return; }
   document.getElementById('anchor-address').textContent = wcAddress ?? '';
-  const sh = await scripthashFromLockingBytecode(wcLocking);
-  anchorUtxos = await electrumListUnspent(anchorWs(), sh);
+  const note = document.getElementById('anchor-note');
+  note.textContent = 'Looking for the wallet funds…';
+  const tryPath = async (pathName, index) => {
+    wc.pathName = pathName; wc.addressIndex = index;
+    const lb = await wc.getLockingBytecode();
+    const sh = await scripthashFromLockingBytecode(lb);
+    const utxos = await electrumListUnspent(anchorWs(), sh);
+    return { pathName, index, lb, utxos };
+  };
+  let found = null;
+  const start = state.fundPath || null;
+  if (start) { const t = await tryPath(start.pathName, start.index); if (t.utxos.length) found = t; }
+  if (!found) {
+    for (const pathName of ['receive', 'change']) {
+      for (let index = 0; index < 20 && !found; index++) {
+        if (start && start.pathName === pathName && start.index === index) continue;
+        const t = await tryPath(pathName, index);
+        if (t.utxos.length) found = t;
+      }
+    }
+  }
+  if (found) {
+    state.fundPath = { pathName: found.pathName, index: found.index };
+    wcLocking = found.lb;
+    const r = lockingBytecodeToCashAddress({ prefix: addressPrefix(), bytecode: wcLocking, tokenSupport: false });
+    wcAddress = typeof r === 'string' ? null : r.address;
+    anchorUtxos = found.utxos;
+    try { wcPubHex = binToHex(await wc.getPubkey()); } catch { /* keep */ }
+    document.getElementById('anchor-address').textContent = `${wcAddress ?? ''} (${found.pathName}[${found.index}])`;
+    note.textContent = 'Found the wallet funds. Ready to publish.';
+  } else {
+    wc.pathName = 'receive'; wc.addressIndex = 0;
+    wcLocking = await wc.getLockingBytecode();
+    const r = lockingBytecodeToCashAddress({ prefix: addressPrefix(), bytecode: wcLocking, tokenSupport: false });
+    wcAddress = typeof r === 'string' ? null : r.address;
+    anchorUtxos = [];
+  }
   try { identityAnchor = await findIdentityAnchor(currentCommitmentHex()); } catch { identityAnchor = null; }
   lockIdentityName(identityAnchor ? await identityNameFor(identityAnchor) : null);
   refreshPublishButton(true);
