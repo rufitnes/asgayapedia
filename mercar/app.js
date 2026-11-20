@@ -35,6 +35,7 @@ async function fetchLiveRate() {
 
 const state = { catalogue: null, cart: new Map(), adType: null, view: null, selectedAd: null, category: 'exchange', subcategory: null, payAddress: null, payAmount: null };
 let wc = null;
+let wcPubHex = null;
 let wcLocking = null;
 let wcAddress = null;
 
@@ -154,6 +155,8 @@ async function openCheckout() {
 let cancelConnect = null;
 
 function resetWallet() {
+  wcPubHex = null;
+  updateOwnAd();
   wc = null;
   wcLocking = null;
   wcAddress = null;
@@ -181,6 +184,8 @@ async function connectWallet() {
   });
   cancelConnect = null;
   wc.onDisconnect(() => { console.log('[mercar] wallet disconnected'); resetWallet(); });
+  try { wcPubHex = binToHex(await wc.getPubkey()); } catch { wcPubHex = null; }
+  updateOwnAd();
   wcLocking = await wc.getLockingBytecode();
   const r = lockingBytecodeToCashAddress({ prefix: addressPrefix(), bytecode: wcLocking, tokenSupport: false });
   wcAddress = typeof r === 'string' ? null : r.address;
@@ -433,6 +438,7 @@ function openAd(ad) {
   $('identity-npub').textContent = ad.npub ? `npub (hex): ${ad.npub}` : '';
   $('identity-anchor').textContent = ad.anchor ? `Anchor: ${ad.anchor}` : '';
   verifyAnchor(ad);
+  updateOwnAd();
 }
 
 async function verifyAnchor(ad) {
@@ -978,6 +984,7 @@ async function anchorSelfSend() {
 }
 
 async function openPay(ad) {
+  if (isOwnAd(ad)) { alert('This is your own ad — you are the seller. Switch to a buyer wallet to try it.'); return; }
   const generic = ad.category && ad.category !== 'exchange';
   const method = $('buy-method').value;
   const dest = ($('buy-destination')?.value || wcAddress || '').trim();
@@ -1008,7 +1015,24 @@ async function openPay(ad) {
   startPay(params);
 }
 
+function isOwnAd(ad) {
+  return !!(wcPubHex && ad && ad.publicKey && ad.publicKey.toLowerCase() === wcPubHex.toLowerCase());
+}
+
+function updateOwnAd() {
+  const w = document.getElementById('own-warning');
+  if (!w) return;
+  const ad = state.selectedAd;
+  const own = !!(ad && state.view === 'ad' && isOwnAd(ad));
+  w.hidden = !own;
+  const b = document.getElementById('buy-get');
+  const c = document.getElementById('contact-seller');
+  if (b) { b.disabled = own; b.title = own ? 'This is your own ad' : ''; }
+  if (c) { c.disabled = own; c.title = own ? 'This is your own ad' : ''; }
+}
+
 function openChat(ad) {
+  if (isOwnAd(ad)) { alert('This is your own ad — you are the seller. Switch to a buyer wallet to try it.'); return; }
   const params = new URLSearchParams({
     type: 'chat', ad: ad.id, seller: ad.npub,
     name: ad.name || ad.title || '', anchor: ad.anchor || '',
@@ -1017,6 +1041,7 @@ function openChat(ad) {
 }
 
 function placeOrder(ad) {
+  if (isOwnAd(ad)) { alert('This is your own ad — you are the seller.'); return; }
   const orderName = $('order-name').value.trim();
   const shipping = $('order-shipping').value.trim();
   const qty = Math.max(1, Number($('order-qty').value || 1));

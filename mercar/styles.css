@@ -393,3 +393,13 @@ body.viewing .featured { display: none; }
   border: 1px solid var(--warn-line);
   font-weight: 700;
 }
+
+.own-warning {
+  margin: 0 0 16px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  border: 1px solid var(--warn-line);
+  font-weight: 700;
+}
