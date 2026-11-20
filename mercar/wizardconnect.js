@@ -5,6 +5,25 @@ import { initiateDappRelay, childIndexOfPathName } from '@wizardconnect/core';
 import { transactionToHex, sourceOutputToRelay } from '@wizardconnect/core/hdwalletv1-serialize';
 import { DappConnectionManager } from '@wizardconnect/dapp';
 
+// Wallets like Selene send a first `wallet_ready` with empty paths and a second one
+// only after the user approves the connection. Wait for the paths, not the first event.
+function waitForPaths(mgr, timeoutMs) {
+  return new Promise((resolve, reject) => {
+    if (mgr.getSessionPaths().length > 0) return resolve();
+    const timer = setTimeout(() => {
+      mgr.off('walletready', onReady);
+      reject(new Error('The wallet did not approve the connection. Approve it in the wallet and try again.'));
+    }, timeoutMs);
+    const onReady = () => {
+      if (mgr.getSessionPaths().length === 0) return;
+      clearTimeout(timer);
+      mgr.off('walletready', onReady);
+      resolve();
+    };
+    mgr.on('walletready', onReady);
+  });
+}
+
 export class WizardConnectSigner {
   constructor(mgr, pathName, addressIndex, broadcast, userPrompt) {
     this.mgr = mgr;
@@ -16,6 +35,7 @@ export class WizardConnectSigner {
 
   static connect({ onUri, onCancel, pathName = 'receive', addressIndex = 0, broadcast = true, userPrompt = 'Confirm payment', dappName = 'Mercar Asgaya' }) {
     const mgr = new DappConnectionManager(dappName);
+    const signer = () => new WizardConnectSigner(mgr, pathName, addressIndex, broadcast, userPrompt);
     const stored = mgr.loadStoredSession();
     if (stored && stored.walletPublicKey) {
       try {
@@ -23,7 +43,8 @@ export class WizardConnectSigner {
           existingCredentials: { privateKey: stored.privateKey, secret: stored.secret, walletPublicKey: stored.walletPublicKey },
         });
         mgr.attachRelay(relay);
-        return Promise.resolve(new WizardConnectSigner(mgr, pathName, addressIndex, broadcast, userPrompt));
+        // The wallet may need to be opened; wait for the session paths before returning.
+        return waitForPaths(mgr, 90000).then(signer);
       } catch {
         mgr.clearStoredSession();
       }
@@ -37,8 +58,8 @@ export class WizardConnectSigner {
         reject(new Error('Cancelled'));
       });
       onUri(relay.uri, relay.qrUri);
-      mgr.once('walletready', () => resolve(new WizardConnectSigner(mgr, pathName, addressIndex, broadcast, userPrompt)));
       mgr.once('disconnect', (reason, msg) => reject(new Error(`WizardConnect disconnected: ${reason}${msg ? ` — ${msg}` : ''}`)));
+      waitForPaths(mgr, 90000).then(() => resolve(signer())).catch(reject);
     });
   }
 
