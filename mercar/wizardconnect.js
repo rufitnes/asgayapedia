@@ -1,6 +1,6 @@
 // WizardConnect dapp signer (adapted from the anchor-mint spike): connect,
 // derive the wallet's P2PKH locking bytecode, sign a transaction, disconnect.
-import { publicKeyToP2pkhLockingBytecode, hexToBin, hash256, binToHex } from '@bitauth/libauth';
+import { publicKeyToP2pkhLockingBytecode, hexToBin, hash256, binToHex, decodeHdPublicKey, deriveHdPublicNodeChild } from '@bitauth/libauth';
 import { initiateDappRelay, childIndexOfPathName } from '@wizardconnect/core';
 import { transactionToHex, sourceOutputToRelay } from '@wizardconnect/core/hdwalletv1-serialize';
 import { DappConnectionManager } from '@wizardconnect/dapp';
@@ -53,7 +53,19 @@ export class WizardConnectSigner {
       }
     }
     if (!pubkey) {
-      throw new Error('This wallet connected but did not share a receive address. Try again, or use Cashonize or Paytaca.');
+      // Last resort: derive from any xpub the wallet published, whatever its path name.
+      for (const path of this.mgr.getSessionPaths()) {
+        const decoded = decodeHdPublicKey(path.xpub);
+        if (typeof decoded === 'string') continue;
+        const child = deriveHdPublicNodeChild(decoded.node, Number(this.addressIndex));
+        if (typeof child === 'string') continue;
+        pubkey = child.publicKey;
+        break;
+      }
+    }
+    if (!pubkey) {
+      const names = this.mgr.getSessionPaths().map((p) => p.name).join(', ') || 'none';
+      throw new Error(`This wallet connected but did not share a usable key (paths: ${names}). Try again, or use Cashonize or Paytaca.`);
     }
     return pubkey;
   }
