@@ -383,3 +383,13 @@ body.viewing .featured { display: none; }
   padding: 2px 8px;
   white-space: nowrap;
 }
+
+.anchor-prompt {
+  margin: 16px 0 0;
+  padding: 13px 16px;
+  border-radius: 12px;
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  border: 1px solid var(--warn-line);
+  font-weight: 700;
+}

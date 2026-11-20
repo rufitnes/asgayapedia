@@ -46,8 +46,7 @@ const cleanConcept = (s) => String(s || '').replace(/[^A-Za-z0-9]/g, '').slice(0
 
 // The anchor page can target chipnet (the canary) or mainnet (the BLAZE artefact).
 function selectedNetwork() {
-  const el = document.getElementById('anchor-network');
-  return el && el.value === 'mainnet' ? 'mainnet' : 'chipnet';
+  return 'mainnet';
 }
 function anchorWs() { return ELECTRUM_WS_BY_NETWORK[selectedNetwork()]; }
 function addressPrefix() { return selectedNetwork() === 'mainnet' ? 'bitcoincash' : 'bchtest'; }
@@ -721,18 +720,16 @@ function refreshPublishButton(keepExisting = false) {
   const btn = document.getElementById('anchor-mint');
   const note = document.getElementById('anchor-note');
   if (!btn) return;
-  if (!wc) { btn.disabled = true; note.textContent = 'Connect a wallet to mint the anchor.'; return; }
+  if (!wc) { btn.disabled = true; note.textContent = 'Connect a BCH wallet to publish.'; return; }
   const want = currentCommitmentHex();
   if (!keepExisting) identityAnchor = matchAnchor(want);
   const existing = want ? identityAnchor : null;
-  const hasV0 = anchorUtxos.some((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n);
-  btn.disabled = !(want && (existing || hasV0));
+  btn.disabled = !want;
   document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
-  if (!want) note.textContent = 'Pick one currency and one payment method to compute the anchor tuple.';
-  else if (existing) note.textContent = `Ready: reusing the anchor ${existing} (same seller/asset/method/fee).`;
-  else if (hasV0) note.textContent = 'Ready: a vout-0 UTXO is available; this tuple gets a new anchor.';
-  else if (anchorUtxos.length) note.textContent = 'No vout-0 UTXO: use “Prepare a vout-0 UTXO”.';
-  else note.textContent = `No ${selectedNetwork()} UTXOs: fund the wallet first.`;
+  if (!want) note.textContent = 'Pick one currency and one payment method to continue.';
+  else if (existing) note.textContent = `Ready — this reuses your identity anchor ${existing.slice(0, 12)}….`;
+  else if (anchorUtxos.length) note.textContent = 'Ready — you will approve the transaction in your wallet.';
+  else note.textContent = 'The wallet has no spendable funds yet: fund it first.';
 }
 
 async function anchorLoad() {
@@ -746,11 +743,11 @@ async function anchorLoad() {
 
 function openAnchor() {
   showView('anchor');
-  { const ab = $('anchor-connect'); if (ab) ab.textContent = wc ? 'Disconnect wallet' : 'Connect anchor wallet'; }
+  { const ab = $('anchor-connect'); if (ab) ab.textContent = wc ? 'Disconnect wallet' : '1 · Connect a BCH wallet'; }
   document.getElementById('ad-pub').textContent = '';
   document.getElementById('ad-npub').textContent = '';
   if (!wc) {
-    document.getElementById('anchor-note').textContent = 'Connect your merchant wallet (WizardConnect).';
+    document.getElementById('anchor-note').textContent = 'Connect a BCH wallet to publish.';
     return;
   }
   wc.getPubkey().then((pub) => {
@@ -807,15 +804,22 @@ async function publishAd() {
     const commitmentHex = binToHex(commitment);
     let anchorTx = identityAnchor ?? loadSavedAnchor()?.txid ?? undefined;
     if (anchorTx) {
-      document.getElementById('anchor-note').textContent = `Reusing the identity anchor ${anchorTx}…`;
+      document.getElementById('anchor-note').textContent = `Reusing your identity anchor ${anchorTx.slice(0, 12)}…`;
     } else {
-      const v0 = anchorUtxos
+      let v0 = anchorUtxos
         .filter((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n)
         .sort((a, b) => Number(b.value) - Number(a.value))[0];
-      if (!v0) throw new Error('No vout-0 UTXO; prepare one first.');
+      if (!v0) {
+        await anchorSelfSend();
+        v0 = anchorUtxos
+          .filter((u) => u.tx_pos === 0 && BigInt(u.value) >= 3000n)
+          .sort((a, b) => Number(b.value) - Number(a.value))[0];
+      }
+      if (!v0) throw new Error('The wallet is not ready yet. Give it a moment and press Publish again.');
       const built = buildGenesisAnchor(wcLocking, { txid: v0.tx_hash, vout: v0.tx_pos, satoshis: BigInt(v0.value) }, commitment);
-      document.getElementById('anchor-note').textContent = 'Approve the anchor in your wallet…';
-      const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Mint your identity anchor' });
+      walletPrompt('Check Cashonize: approve the transaction that creates your identity.');
+      const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Create your identity' });
+      walletPrompt('');
       anchorTx = res.txid ?? (await broadcastTransaction(anchorWs(), binToHex(res.signedTxBytes)));
       saveSavedAnchor({ txid: anchorTx, commitmentHex, network: selectedNetwork() });
       identityAnchor = anchorTx;
@@ -885,21 +889,31 @@ async function publishAd() {
   }
 }
 
+function walletPrompt(text) {
+  const p = document.getElementById('anchor-prompt');
+  if (!p) return;
+  if (!text) { p.hidden = true; p.textContent = ''; return; }
+  p.hidden = false;
+  p.textContent = text;
+  document.getElementById('anchor-note').textContent = text;
+}
+
 async function anchorSelfSend() {
   try {
     if (!wc) await connectWallet();
     const u = anchorUtxos.slice().sort((a, b) => Number(b.value) - Number(a.value))[0];
     if (!u) throw new Error('No UTXOs');
     const built = buildSelfSend(wcLocking, { txid: u.tx_hash, vout: u.tx_pos, satoshis: BigInt(u.value) });
-    document.getElementById('anchor-note').textContent = 'Approve in your wallet…';
-    const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Prepare a vout-0 UTXO' });
+    walletPrompt('Check Cashonize: approve the small self-send (one-time).');
+    const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Prepare the wallet (one-time)' });
     const txid = res.txid ?? (await broadcastTransaction(anchorWs(), binToHex(res.signedTxBytes)));
     await anchorLoad();
-    document.getElementById('anchor-note').textContent = `Self-send sent (${txid}). If the vout-0 is not ready yet, press Refresh in a moment.`;
+    walletPrompt('');
+    document.getElementById('anchor-note').textContent = `Wallet prepared (${txid.slice(0, 12)}…).`;
   } catch (e) {
     const msg = e.message || '';
     if (/already in block chain|already known|already-in-mempool|already in the mempool/i.test(msg)) {
-      document.getElementById('anchor-note').textContent = 'The self-send is already on-chain. Refreshing the UTXOs…';
+      document.getElementById('anchor-note').textContent = 'The wallet is already prepared. Refreshing…';
       await anchorLoad().catch(() => {});
     } else {
       document.getElementById('anchor-note').textContent = `Self-send failed: ${msg}`;

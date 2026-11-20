@@ -176,17 +176,17 @@
   <section class="view" id="anchor-view" hidden>
     <button class="back" id="back-anchor" type="button">← All categories</button>
     <h2 class="view-title">Publish an ad</h2>
-    <p class="muted">The ad comes pre-filled with demo data. Edit anything (it is a normal form), then Publish: we mint your identity anchor and list the ad. Chipnet is the canary; mainnet is the BLAZE artefact.</p>
+    <p class="muted">Publish an ad in three steps: connect a BCH wallet, review the details, and sign. Your ad gets a public identity that anyone can verify on-chain — later ads reuse it.</p>
+    <p class="anchor-prompt" id="anchor-prompt" hidden></p>
     <div class="anchor-box">
       <div class="demo-key">
-        <strong>Your app merchant wallet</strong>
-        <p class="muted">Connect the merchant wallet you use in the app with WizardConnect. The app's merchant wallets keep their app identity; any other wallet gets a stable web demo identity derived from its pubkey. You only confirm the anchor in the wallet.</p>
+        <strong>Your BCH wallet</strong>
+        <p class="muted">Connect the BCH wallet you use in the app. The app's wallets keep their identity; any other wallet gets a stable demo identity derived from its key. You only confirm in the wallet.</p>
         <p class="mono" id="ad-pub"></p>
         <p class="mono" id="ad-npub"></p>
       </div>
       <div class="anchor-fields">
         <label>Category<select id="ad-category"><option value="exchange">Currency exchange</option><option value="goods">Goods</option><option value="services">Services</option><option value="restaurants">Restaurants</option></select></label>
-        <label>Network<select id="anchor-network"><option value="chipnet">chipnet (canary)</option><option value="mainnet">mainnet (BLAZE)</option></select></label>
       </div>
       <div class="anchor-fields" id="ad-exchange">
         <label>I want to<select id="ad-role"><option value="seller">Sell BCH (I accept fiat)</option><option value="buyer">Buy BCH (I pay fiat)</option></select></label>
@@ -226,12 +226,12 @@
         <label><input type="checkbox" name="ad-method" value="Pago Móvil" /> Pago Móvil</label>
       </fieldset>
       <div class="anchor-row">
-        <button class="ghost" id="anchor-connect" type="button">Connect anchor wallet</button>
+        <button class="primary" id="anchor-connect" type="button">1 · Connect a BCH wallet</button>
         <span class="mono" id="anchor-address"></span>
       </div>
       <div class="anchor-actions">
-        <button class="primary" id="anchor-mint" type="button" disabled>Publish (mint anchor + listing)</button>
-        <button class="ghost" id="anchor-selfsend" type="button" disabled>Prepare a vout-0 UTXO</button>
+        <button class="primary" id="anchor-mint" type="button" disabled>Publish ad</button>
+        <button class="ghost" id="anchor-selfsend" type="button" disabled hidden>Prepare the wallet</button>
         <button class="ghost" id="anchor-refresh" type="button">Refresh</button>
       </div>
       <p class="note" id="anchor-note"></p>
