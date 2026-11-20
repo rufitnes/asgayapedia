@@ -45,7 +45,7 @@ merchant app ── genesis CashToken NFT (anchor) ──▶ chain
 
 ## Demo video
 
-<!-- TODO: link the 60–90 s video ("how to publish" / "how to buy BCH P2P") -->
+[**Watch the demo on YouTube**](https://youtu.be/ghSi2tEXGDM) — 75 s.
 
 A short walk through the board: publish a listing, the identity badge verifying the
 anchor, and a buyer asking for and receiving payment instructions from the merchant's
@@ -148,11 +148,11 @@ shows the WizardConnect + anchor path.
 
 ## For partners
 
-Mercar is the **discovery layer** for BCH builders: the merchants on the
-board can fund the BCH side of a project, peer to peer, with no custodian. The first
-integration is a general covenant (testnet). If you build on BCH and need the other side funded,
-the board gives you discovery, on-chain identity and access to the merchants. For the
-first partner we also host the demo.
+Mercar is the **discovery layer** for BCH builders. Its first client was the
+**remittance flow** (it needed a neutral, peer-to-peer place to exchange fiat and BCH);
+**Nomos** (the marketplace) is the second. If you build on BCH and need discovery, on-chain
+identity and access to the merchants, the board gives you all three. For early partners we
+also host the demo.
 
 ## Status and next
 
