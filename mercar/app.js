@@ -763,7 +763,7 @@ function refreshPublishButton(keepExisting = false) {
   if (!want) note.textContent = 'Pick one currency and one payment method to continue.';
   else if (existing) note.textContent = `Ready — reusing your identity anchor ${existing.slice(0, 12)}…`;
   else if (anchorUtxos.length) note.textContent = 'Ready — you will approve the transaction in your wallet.';
-  else note.textContent = 'The wallet has no spendable funds yet: fund it first.';
+  else note.textContent = `No mainnet UTXOs for ${wcAddress || 'this wallet'}. Check that the wallet is on mainnet and funded (the address is shown below the button).`;
 }
 
 async function identityNameFor(anchorTx) {
