@@ -37,6 +37,7 @@ const state = { catalogue: null, cart: new Map(), adType: null, view: null, sele
 let wc = null;
 let wcPubHex = null;
 let wcReceiveAddress = null;
+let walletPubkeys = new Set();
 let wcLocking = null;
 let wcAddress = null;
 
@@ -158,6 +159,7 @@ let cancelConnect = null;
 function resetWallet() {
   wcPubHex = null;
   wcReceiveAddress = null;
+  walletPubkeys = new Set();
   updateOwnAd();
   wc = null;
   wcLocking = null;
@@ -193,6 +195,7 @@ async function connectWallet() {
   wcAddress = typeof r === 'string' ? null : r.address;
   console.log('[mercar] wallet', wcAddress);
   wcReceiveAddress = wcAddress;
+  collectWalletPubkeys();
   const shownAddr = wcReceiveAddress || wcAddress;
   $('connect-btn').textContent = shownAddr ? `Connected ${shownAddr.slice(0, 14)}…` : 'Connected';
   $('connect-btn').title = shownAddr || '';
@@ -826,6 +829,7 @@ async function anchorLoad() {
     wcAddress = typeof r === 'string' ? null : r.address;
     anchorUtxos = found.utxos;
     try { wcPubHex = binToHex(await wc.getPubkey()); } catch { /* keep */ }
+    collectWalletPubkeys();
     document.getElementById('anchor-address').textContent = `${wcAddress ?? ''} (${found.pathName}[${found.index}])`;
     document.getElementById('anchor-address').title = wcAddress || '';
     note.textContent = 'Found the wallet funds. Ready to publish.';
@@ -1059,8 +1063,22 @@ async function openPay(ad) {
   startPay(params);
 }
 
+function collectWalletPubkeys() {
+  const set = new Set();
+  try {
+    for (const child of [0, 1]) {
+      for (let i = 0; i < 20; i++) {
+        const p = wc && wc.mgr && wc.mgr.getPubkey(child, BigInt(i));
+        if (p && p.length === 33) set.add(binToHex(p));
+      }
+    }
+  } catch { /* ignore */ }
+  if (wcPubHex) set.add(String(wcPubHex).toLowerCase());
+  walletPubkeys = set;
+}
+
 function isOwnAd(ad) {
-  return !!(wcPubHex && ad && ad.publicKey && ad.publicKey.toLowerCase() === wcPubHex.toLowerCase());
+  return !!(ad && ad.publicKey && walletPubkeys.has(String(ad.publicKey).toLowerCase()));
 }
 
 function updateOwnAd() {
