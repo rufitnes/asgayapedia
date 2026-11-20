@@ -403,3 +403,20 @@ body.viewing .featured { display: none; }
   border: 1px solid var(--warn-line);
   font-weight: 700;
 }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  cursor: pointer;
+}
+.brand-mark { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; }
+.brand:hover { opacity: 0.85; }

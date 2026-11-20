@@ -1248,6 +1248,7 @@ async function main() {
   });
   $('search').addEventListener('input', () => { if ($('search').value.trim()) showView('exchange'); renderExchange(); });
   $('browse-board').addEventListener('click', () => showView(null));
+  $('brand-home').addEventListener('click', () => { if (location.hash) history.pushState(null, '', location.pathname); showView(null); window.scrollTo({ top: 0, behavior: 'smooth' }); });
   $('merchant-btn').addEventListener('click', openAnchor);
   $('hero-publish').addEventListener('click', openAnchor);
   $('back-anchor').addEventListener('click', () => showView(null));
