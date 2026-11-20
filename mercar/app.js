@@ -938,6 +938,14 @@ async function openPay(ad) {
   startPay(params);
 }
 
+function openChat(ad) {
+  const params = new URLSearchParams({
+    type: 'chat', ad: ad.id, seller: ad.npub,
+    name: ad.name || ad.title || '', anchor: ad.anchor || '',
+  });
+  startPay(params);
+}
+
 function placeOrder(ad) {
   const orderName = $('order-name').value.trim();
   const shipping = $('order-shipping').value.trim();
@@ -1024,15 +1032,15 @@ async function startPay(params) {
   const privHex = binToHex(generatePrivateKey());
   const pub = secp256k1.derivePublicKeyCompressed(hexToBin(privHex));
   const npubHex = binToHex(pub.slice(1));
+  const type = params.get('type') || 'exchange';
   $('pay-name').textContent = name;
-  $('pay-sub').textContent = `${amount} ${asset} · ${method}`;
+  $('pay-sub').textContent = type === 'chat' ? 'Ask the merchant anything' : `${amount} ${asset} · ${method}`;
   $('pay-ids').textContent = `You (session): ${npubHex.slice(0, 16)}… · Merchant: ${seller.slice(0, 16)}…${anchor ? ` · anchor ${anchor}` : ''}`;
   $('pay-status').textContent = 'Waiting for the merchant…';
   $('pay-status').className = 'badge warn';
   chatAdd('sys', 'A private, end-to-end encrypted channel with the merchant. Mercar only showed you the ad; it cannot read or store these messages.');
   if (!seller) { chatAdd('sys', 'This ad has no merchant npub, so the channel cannot be opened.'); return; }
   const requestId = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now());
-  const type = params.get('type') || 'exchange';
   const request = type === 'product'
     ? [
         '[PRODUCT_ORDER]',
@@ -1058,6 +1066,9 @@ async function startPay(params) {
         `timestamp=${Date.now()}`,
         '[/PAY_INSTRUCTIONS_REQUEST]',
       ].join('\n');
+  if (type === 'chat') {
+    chatAdd('sys', 'Ask the merchant anything. They answer from their own device — Mercar never reads or stores these messages.');
+  } else {
   chatAdd('sys', type === 'product'
     ? `Order placed: ${amount} ${asset} · we asked the merchant for the payment details.`
     : `Requested payment instructions: ${amount} ${asset} (${method}).`);
@@ -1066,7 +1077,8 @@ async function startPay(params) {
     const event = makeEvent({ privHex, pubHex: npubHex, kind: 4, tags: [['p', seller]], content });
     await publishEvent(NOSTR_RELAY, event);
   } catch (e) { chatAdd('sys', `Could not send the request: ${e.message}`); }
-  const timer = setTimeout(() => {
+  }
+  const timer = type === 'chat' ? null : setTimeout(() => {
     if ($('pay-status').textContent.startsWith('Waiting')) {
       $('pay-status').textContent = 'Merchant not detected';
       chatAdd('sys', 'The merchant’s app has not replied. It must be open: the instructions come from their device (liveness).');
@@ -1182,6 +1194,7 @@ async function main() {
   $('back-ad').addEventListener('click', () => showView('exchange'));
   $('buy-get').addEventListener('click', () => { if (state.selectedAd) openPay(state.selectedAd); });
   $('buy-amount').addEventListener('input', () => { $('buy-instructions').hidden = true; });
+  $('contact-seller').addEventListener('click', () => { if (state.selectedAd) openChat(state.selectedAd); });
   $('buy-method').addEventListener('change', () => { $('buy-instructions').hidden = true; });
   $('all-categories').addEventListener('click', openCategories);
   $('categories-close').addEventListener('click', () => $('categories-dialog').close());
