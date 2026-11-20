@@ -124,6 +124,10 @@ The identity badge uses public Electrum WebSockets: chipnet
 `wss://chipnet.imaginary.cash:50004`, testnet3 `wss://testnet.imaginary.cash:50004`,
 mainnet `wss://bch.imaginary.cash:50004`.
 
+**Wallets:** Cashonize and Paytaca work through WizardConnect. A wallet that connects but does not
+share the `hdwalletv1` keys (some Selene builds, for example) gets a clear message instead of a
+silent failure.
+
 The companion app is not part of the web demo. The public
 [anchor-mint spike](https://github.com/rufitnes/asgayapedia/tree/main/code/anchor-mint-spike)
 shows the WizardConnect + anchor path.
