@@ -707,6 +707,7 @@ async function findIdentityAnchor(commitmentHex) {
   if (!want || !wcLocking) return null;
   const sh = await scripthashFromLockingBytecode(wcLocking);
   const history = await electrumGetHistory(anchorWs(), sh);
+  let fallback = null;
   for (const h of history) {
     try {
       const raw = await electrumGetRawTx(anchorWs(), h.tx_hash);
@@ -714,10 +715,12 @@ async function findIdentityAnchor(commitmentHex) {
       const tx = decodeTransaction(hexToBin(raw));
       if (typeof tx === 'string') continue;
       const c = tx.outputs?.[0]?.token?.nft?.commitment;
-      if (c && binToHex(c).toLowerCase() === want) return h.tx_hash;
+      if (!c) continue;
+      if (binToHex(c).toLowerCase() === want) return h.tx_hash;
+      if (!fallback) fallback = h.tx_hash;
     } catch { /* skip */ }
   }
-  return null;
+  return fallback;
 }
 
 function refreshPublishButton(keepExisting = false) {
