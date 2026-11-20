@@ -661,6 +661,26 @@ function savedAnchorForNetwork() {
   return s?.txid && (s.network || 'mainnet') === selectedNetwork() ? s.txid : null;
 }
 
+// The write-through anchor index: clients register their anchor when they mint it,
+// and any browser can look it up by the wallet pubkey (the same key that signed it).
+const ANCHOR_INDEX = 'https://oracle.asgaya.org/anchors';
+async function lookupIndexedAnchor(pubHex) {
+  if (!pubHex) return null;
+  try {
+    const r = await fetch(`${ANCHOR_INDEX}?pubkey=${encodeURIComponent(pubHex)}`, { cache: 'no-store' });
+    if (!r.ok) return null;
+    const j = await r.json();
+    return (j.anchors && j.anchors[0] && j.anchors[0].anchor) || null;
+  } catch { return null; }
+}
+function registerAnchor({ pubkey, address, anchor, commitment }) {
+  fetch(ANCHOR_INDEX, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ pubkey, address, anchor, commitment, network: 'mainnet' }),
+  }).catch(() => {});
+}
+
 function keyFromPub(pubHex) {
   const p = pubHex.toLowerCase();
   const seeded = TEST_NOSTR[p];
@@ -720,7 +740,8 @@ async function findIdentityAnchor(commitmentHex) {
       if (!fallback) fallback = h.tx_hash;
     } catch { /* skip */ }
   }
-  return fallback;
+  if (fallback) return fallback;
+  return state.bchPub ? await lookupIndexedAnchor(state.bchPub) : null;
 }
 
 function refreshPublishButton(keepExisting = false) {
@@ -759,6 +780,7 @@ function openAnchor() {
   }
   wc.getPubkey().then((pub) => {
     const k = keyFromPub(binToHex(pub));
+    state.bchPub = k.bchPubHex;
     document.getElementById('ad-pub').textContent = `BCH pubkey: ${k.bchPubHex}`;
     document.getElementById('ad-npub').textContent = `npub (hex): ${k.npubHex} (${k.seeded ? 'app merchant identity' : 'web demo identity'})`;
     return anchorLoad();
@@ -772,6 +794,7 @@ async function publishAd() {
     if (!wc) await connectWallet();
     const walletPub = await wc.getPubkey();
     const k = keyFromPub(binToHex(walletPub));
+    state.bchPub = k.bchPubHex;
     const role = document.getElementById('ad-role').value;
     const category = document.getElementById('ad-category').value;
     const generic = category !== 'exchange';
@@ -829,6 +852,7 @@ async function publishAd() {
       walletPrompt('');
       anchorTx = res.txid ?? (await broadcastTransaction(anchorWs(), binToHex(res.signedTxBytes)));
       saveSavedAnchor({ txid: anchorTx, commitmentHex, network: selectedNetwork() });
+      registerAnchor({ pubkey: k.bchPubHex, address: wcAddress, anchor: anchorTx, commitment: commitmentHex });
       identityAnchor = anchorTx;
     }
     const adId = generic
