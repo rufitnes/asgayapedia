@@ -534,13 +534,13 @@ const CATEGORY_GROUPS = [
 ];
 
 function countFor(it) {
-  if (it.kind === 'all') return exchangeAds.length;
+  const exch = (a) => (a.category || 'exchange') === 'exchange';
+  if (it.kind === 'all') return exchangeAds.filter(exch).length;
   if (it.kind === 'category') return exchangeAds.filter((a) => (a.category || 'exchange') === it.value && (!it.sub || String(a.subcategory || '').toLowerCase() === it.sub.toLowerCase())).length;
-  if (it.kind === 'buyBch') return exchangeAds.filter((a) => a.adType === 'SELLER').length;
-  if (it.kind === 'sellBch') return exchangeAds.filter((a) => a.adType === 'BUYER').length;
-  if (it.kind === 'asset') return exchangeAds.filter((a) => a.assets.includes(it.value)).length;
-  if (it.kind === 'method') return exchangeAds.filter((a) => a.methods.includes(it.value)).length;
-  if (it.kind === 'restaurants') return 1;
+  if (it.kind === 'buyBch') return exchangeAds.filter((a) => exch(a) && a.adType === 'SELLER').length;
+  if (it.kind === 'sellBch') return exchangeAds.filter((a) => exch(a) && a.adType === 'BUYER').length;
+  if (it.kind === 'asset') return exchangeAds.filter((a) => exch(a) && a.assets.includes(it.value)).length;
+  if (it.kind === 'method') return exchangeAds.filter((a) => exch(a) && a.methods.includes(it.value)).length;
   return null;
 }
 
