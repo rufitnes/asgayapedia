@@ -45,7 +45,7 @@ merchant app ── genesis CashToken NFT (anchor) ──▶ chain
 
 ## Demo video
 
-[**Watch the demo on YouTube**](https://youtu.be/ghSi2tEXGDM) — 75 s.
+[**Watch the overview on YouTube**](https://youtu.be/ghSi2tEXGDM) — 75 s.
 
 A short walk through the board: publish a listing, the identity badge verifying the
 anchor, and a buyer asking for and receiving payment instructions from the merchant's
