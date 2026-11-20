@@ -270,6 +270,93 @@ function populateFilters() {
   for (const x of methods) method.add(new Option(x, x));
 }
 
+function buildCard(ad) {
+  const card = document.createElement('article');
+  card.className = 'ad';
+  const isSeller = ad.adType === 'SELLER';
+  const sold = isSeller ? 'BCH' : (ad.assets[0] ?? 'asset');
+  const accepts = isSeller ? (ad.assets.join(', ') || '—') : 'BCH';
+  card.innerHTML = `
+    <div class="ad-top"><span class="ad-type ${ad.adType.toLowerCase()}"></span><span class="ad-name"></span><span class="ad-fee"></span></div>
+    <div class="ad-row accepts"></div>
+    <div class="ad-row methods"></div>
+    <div class="ad-row meta"></div>
+    <div class="ad-row locality"></div>
+    <div class="ad-id"></div>`;
+  card.querySelector('.ad-type').textContent = `Sells ${sold}`;
+  card.querySelector('.ad-name').textContent = ad.name || ad.cashAccount || 'Merchant';
+  card.querySelector('.ad-fee').textContent = `${(ad.fee * 100).toFixed(2)}%`;
+  card.querySelector('.accepts').textContent = `for ${accepts}`;
+  card.querySelector('.methods').textContent = ad.methods.join(' · ');
+  card.querySelector('.meta').textContent = `${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}`;
+  card.querySelector('.locality').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ');
+  card.querySelector('.ad-id').textContent = `${ad.npub.slice(0, 18)}…`;
+  if (ad.anchor) {
+    const chip = document.createElement('span');
+    chip.className = 'ad-anchored';
+    chip.title = 'Identity anchored on-chain';
+    chip.textContent = '✓ on-chain';
+    card.querySelector('.ad-id').appendChild(chip);
+  }
+  if (ad.title) {
+    card.querySelector('.ad-type').style.display = 'none';
+    card.querySelector('.ad-fee').style.display = 'none';
+    card.querySelector('.accepts').style.display = 'none';
+    card.querySelector('.methods').style.display = 'none';
+    card.querySelector('.meta').style.display = 'none';
+    const h = document.createElement('h3');
+    h.textContent = ad.title;
+    card.prepend(h);
+    if (ad.description) {
+      const d = document.createElement('p');
+      d.className = 'muted';
+      d.textContent = ad.description;
+      card.insertBefore(d, h.nextSibling);
+    }
+    if (ad.image) {
+      const img = document.createElement('img');
+      img.src = ad.image;
+      img.loading = 'lazy';
+      img.alt = ad.title;
+      img.className = 'ad-image';
+      card.insertBefore(img, card.firstChild);
+    }
+    if (ad.price != null) {
+      const p = document.createElement('div');
+      p.className = 'ad-price';
+      p.textContent = `${ad.price} ${ad.assets[0] || ''}`;
+      card.insertBefore(p, card.querySelector('.ad-row'));
+    }
+    if (ad.url) {
+      const a = document.createElement('a');
+      a.href = ad.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'ad-external';
+      a.textContent = 'View in shop ↗';
+      card.appendChild(a);
+    }
+  }
+  card.title = `BCH pubkey: ${ad.publicKey}`;
+  card.tabIndex = 0;
+  card.setAttribute('role', 'button');
+  card.addEventListener('click', () => openAd(ad));
+  card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAd(ad); } });
+  return card;
+}
+
+function renderFeatured() {
+  const list = document.getElementById('featured-list');
+  const section = document.getElementById('featured');
+  if (!list || !section) return;
+  list.innerHTML = '';
+  const withImage = exchangeAds.filter((a) => a.image);
+  const picks = (withImage.length >= 4 ? withImage : exchangeAds).slice(0, 4);
+  if (!picks.length) { section.hidden = true; return; }
+  for (const ad of picks) list.appendChild(buildCard(ad));
+  section.hidden = false;
+}
+
 function renderExchange() {
   const list = $('exchange-list');
   list.innerHTML = '';
@@ -281,78 +368,12 @@ function renderExchange() {
   let ads = exchangeAds.filter((a) => ((a.category || 'exchange') === cat) && (!state.subcategory || String(a.subcategory || '').toLowerCase() === state.subcategory.toLowerCase()) && (!state.adType || a.adType === state.adType) && (!fa || a.assets.includes(fa)) && (!fm || a.methods.includes(fm)));
   if (q) {
     ads = ads.filter((a) =>
-      [a.name, a.cashAccount, a.location, a.npub, ...a.assets, ...a.methods]
+      [a.name, a.cashAccount, a.title, a.description, a.location, a.npub, ...a.assets, ...a.methods]
         .filter(Boolean).join(' ').toLowerCase().includes(q));
   }
   ads = sort === 'fee' ? [...ads].sort((a, b) => a.fee - b.fee) : [...ads].sort((a, b) => b.createdAt - a.createdAt);
   $('exchange-note').textContent = ads.length ? '' : `No ads in ${cat} yet. Publish the first one.`;
-  for (const ad of ads) {
-    const card = document.createElement('article');
-    card.className = 'ad';
-    const isSeller = ad.adType === 'SELLER';
-    const sold = isSeller ? 'BCH' : (ad.assets[0] ?? 'asset');
-    const accepts = isSeller ? (ad.assets.join(', ') || '—') : 'BCH';
-    card.innerHTML = `
-      <div class="ad-top"><span class="ad-type ${ad.adType.toLowerCase()}"></span><span class="ad-name"></span><span class="ad-fee"></span></div>
-      <div class="ad-row accepts"></div>
-      <div class="ad-row methods"></div>
-      <div class="ad-row meta"></div>
-      <div class="ad-row locality"></div>
-      <div class="ad-id"></div>`;
-    card.querySelector('.ad-type').textContent = `Sells ${sold}`;
-    card.querySelector('.ad-name').textContent = ad.name || ad.cashAccount || 'Merchant';
-    card.querySelector('.ad-fee').textContent = `${(ad.fee * 100).toFixed(2)}%`;
-    card.querySelector('.accepts').textContent = `for ${accepts}`;
-    card.querySelector('.methods').textContent = ad.methods.join(' · ');
-    card.querySelector('.meta').textContent = `${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}`;
-    card.querySelector('.locality').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ');
-    card.querySelector('.ad-id').textContent = `${ad.npub.slice(0, 18)}…`;
-    if (ad.title) {
-      card.querySelector('.ad-type').style.display = 'none';
-      card.querySelector('.ad-fee').style.display = 'none';
-      card.querySelector('.accepts').style.display = 'none';
-      card.querySelector('.methods').style.display = 'none';
-      card.querySelector('.meta').style.display = 'none';
-      const h = document.createElement('h3');
-      h.textContent = ad.title;
-      card.prepend(h);
-      if (ad.description) {
-        const d = document.createElement('p');
-        d.className = 'muted';
-        d.textContent = ad.description;
-        card.insertBefore(d, h.nextSibling);
-      }
-      if (ad.image) {
-        const img = document.createElement('img');
-        img.src = ad.image;
-        img.loading = 'lazy';
-        img.alt = ad.title;
-        img.className = 'ad-image';
-        card.insertBefore(img, card.firstChild);
-      }
-      if (ad.price != null) {
-        const p = document.createElement('div');
-        p.className = 'ad-price';
-        p.textContent = `${ad.price} ${ad.assets[0] || ''}`;
-        card.insertBefore(p, card.querySelector('.ad-row'));
-      }
-      if (ad.url) {
-        const a = document.createElement('a');
-        a.href = ad.url;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.className = 'ad-external';
-        a.textContent = 'View in shop ↗';
-        card.appendChild(a);
-      }
-    }
-    card.title = `BCH pubkey: ${ad.publicKey}`;
-    card.tabIndex = 0;
-    card.setAttribute('role', 'button');
-    card.addEventListener('click', () => openAd(ad));
-    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAd(ad); } });
-    list.appendChild(card);
-  }
+  for (const ad of ads) list.appendChild(buildCard(ad));
   $('featured-buy-bch').classList.toggle('active', state.adType === 'SELLER');
   const CAT_LABEL = { exchange: 'Currency exchange', goods: 'Goods', services: 'Services', restaurants: 'Restaurants' };
   $('exchange-title').textContent = cat === 'exchange'
@@ -383,6 +404,7 @@ function openAd(ad) {
   $('detail-fee').style.display = generic ? 'none' : '';
   $('detail-assets-label').textContent = generic ? 'Payment BCH' : 'Offers';
   $('detail-assets').textContent = generic ? 'BCH' : (isSeller ? (ad.assets.join(', ') || '—') : 'BCH');
+  $('detail-assets').closest('div').style.display = generic ? 'none' : '';
   $('detail-methods').textContent = ad.methods.join(' · ') || '—';
   $('detail-limits').textContent = `${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}`;
   $('detail-limits').parentElement.style.display = generic ? 'none' : '';
@@ -566,6 +588,7 @@ function openCategories() {
 
 function showView(name) {
   state.view = name;
+  document.body.classList.toggle('viewing', !!name);
   document.getElementById('exchange').hidden = name !== 'exchange';
   document.getElementById('restaurants-view').hidden = name !== 'restaurants';
   document.getElementById('menu-view').hidden = name !== 'menu';
@@ -1167,8 +1190,23 @@ async function main() {
   $('filter-method').addEventListener('change', renderExchange);
   $('sort-by').addEventListener('change', renderExchange);
   fetchListings()
-    .then((ads) => { exchangeAds = ads; populateFilters(); renderExchange(); })
+    .then((ads) => { exchangeAds = ads; populateFilters(); renderExchange(); renderFeatured(); applyLocationHash(); })
     .catch((e) => { $('exchange-note').textContent = `Could not load ads (${e.message}). LAN relay: ${NOSTR_RELAY}`; });
+  window.addEventListener('hashchange', applyLocationHash);
+}
+
+// Shareable links: #exchange, #goods, #services, #restaurants, #buy-bch, #cat=<category>, #ad=<event id>.
+function applyLocationHash() {
+  const raw = decodeURIComponent(location.hash.slice(1));
+  if (!raw) return;
+  const [key, value] = raw.split('=');
+  const cat = key === 'cat' ? value : (raw === 'exchange' || raw === 'goods' || raw === 'services' || raw === 'restaurants' ? raw : null);
+  if (cat) { state.subcategory = null; applyCategory({ kind: 'category', value: cat }); return; }
+  if (raw === 'buy-bch') { applyCategory({ kind: 'buyBch' }); return; }
+  if (key === 'ad' && value) {
+    const ad = exchangeAds.find((a) => a.id === value);
+    if (ad) openAd(ad);
+  }
 }
 
 main();

@@ -363,3 +363,23 @@ button.tile { font: inherit; }
 
 .checkout label { display: grid; gap: 6px; margin: 10px 0; font-weight: 600; font-size: 13px; }
 .checkout label input { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; font: inherit; font-weight: 400; }
+
+/* The hero is for the landing; the board takes over when a view is active. */
+body.viewing .hero { display: none; }
+body.viewing .featured { display: none; }
+
+.featured { max-width: var(--page-max); margin: 26px auto 0; padding: 0 22px; }
+.featured h2 { font-size: 20px; letter-spacing: -0.02em; margin: 0 0 12px; }
+.featured .ads { margin-bottom: 8px; }
+
+.ad-id { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ad-anchored {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ok-ink);
+  background: var(--ok-bg);
+  border-radius: 999px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
