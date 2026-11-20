@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How fiat becomes BCH — Mercar Asgaya</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" style="text-decoration:none"><img class="brand-mark" src="/img/logo-asgaya.png" alt="" />Mercar <span>Asgaya</span></a>
+    <div class="topbar-right"><a class="ghost" href="/">← Back to the board</a></div>
+  </header>
+
+  <section class="hero" style="padding:56px 22px">
+    <div class="hero-inner" style="max-width:1120px;margin:0 auto">
+      <p class="hero-eyebrow">The fiat → BCH flow · recorded demo</p>
+      <h1 style="font-size:clamp(34px,5vw,58px)">Send money home<br><span>in the money they use.</span></h1>
+      <p class="hero-sub">The sender pays in fiat (Bizum, in Spain). The merchant's own device turns it into BCH. Mercar never holds the money.</p>
+    </div>
+  </section>
+
+  <main style="max-width:1120px;margin:0 auto;padding:26px 22px 60px">
+    <video controls preload="metadata" poster="/media/fiat-to-bch-poster.png" style="width:100%;border-radius:14px;border:1px solid var(--line);background:#000">
+      <source src="/media/fiat-to-bch.mp4" type="video/mp4" />
+    </video>
+    <p class="note" style="margin-top:10px">Recorded on <strong>testnet3</strong> (research), before BLAZE, with three Asgaya devices: the merchant, the recipient and the sender. The BCH settlement is the next step to move to mainnet; the board, the identity anchor and the chat you can use today are on mainnet.</p>
+
+    <h2 style="margin-top:34px">The four steps</h2>
+    <ol style="line-height:1.7;font-size:17px">
+      <li><strong>The sender pays in fiat.</strong> A Bizum (or any instant rail) to the merchant, with the concept the merchant's device gave them.</li>
+      <li><strong>The merchant's phone sees the payment.</strong> The Asgaya app reads the bank notification on the merchant's own device.</li>
+      <li><strong>The merchant's device sends the BCH.</strong> It funds the covenant (or pays the recipient directly) from the merchant's wallet. No custodian, no platform in the middle.</li>
+      <li><strong>The recipient gets BCH.</strong> The BCH arrives in the recipient's wallet; the fiat never touched a crypto exchange.</li>
+    </ol>
+
+    <h2 style="margin-top:34px">Why Bizum</h2>
+    <p style="font-size:17px;line-height:1.7;max-width:820px">Bizum is the rail most people already use in Spain: instant, familiar, and free for the payer. Mercar treats it as one rail, not the only one: the same discovery and coordination layer can carry SEPA Instant, Pix or any other instant fiat rail. The protocol is open; the merchant's device is the source of the payment instructions.</p>
+
+    <p style="margin-top:34px"><a class="btn primary" href="/">Open the board</a></p>
+  </main>
+</body>
+</html>
