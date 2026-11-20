@@ -312,9 +312,9 @@ function buildCard(ad) {
       d.textContent = ad.description;
       card.insertBefore(d, h.nextSibling);
     }
-    if (ad.image) {
+    {
       const img = document.createElement('img');
-      img.src = ad.image;
+      img.src = ad.image || '/img/placeholder.svg';
       img.loading = 'lazy';
       img.alt = ad.title;
       img.className = 'ad-image';
@@ -389,8 +389,8 @@ function openAd(ad) {
   $('back-ad').textContent = `← ${CAT_LABEL[generic ? ad.category : 'exchange'] || 'Board'}`;
   $('identity-title').textContent = `Identity: ${ad.name || ad.cashAccount || 'this merchant'}`;
   $('detail-product').hidden = !generic;
-  $('detail-image').hidden = !generic || !ad.image;
-  if (generic && ad.image) $('detail-image').src = ad.image;
+  $('detail-image').hidden = !generic;
+  if (generic) $('detail-image').src = ad.image || '/img/placeholder.svg';
   $('detail-price').textContent = generic && ad.price != null ? `${ad.price} ${ad.assets[0] || ''}` : '';
   $('detail-cond').textContent = generic ? [ad.condition, ad.shipping].filter(Boolean).join(' · ') : '';
   $('detail-desc').textContent = generic ? (ad.description || '') : '';
@@ -937,7 +937,9 @@ async function publishAd() {
     exchangeAds = await fetchListings();
     populateFilters();
     renderExchange();
-    showView('exchange');
+    renderFeatured();
+    const created = exchangeAds.find((a) => a.id === event.id);
+    if (created) openAd(created); else showView('exchange');
   } catch (e) {
     document.getElementById('anchor-note').textContent = `Publish failed: ${e.message}`;
     btn.disabled = false;
