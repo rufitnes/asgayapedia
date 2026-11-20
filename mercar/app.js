@@ -529,9 +529,8 @@ const CATEGORY_GROUPS = [
     { label: 'Card in person', kind: 'method', value: 'Card in person' },
     { label: 'Bizum', kind: 'method', value: 'Bizum' },
   ] },
-  { title: 'Restaurants', items: [{ label: 'View restaurants', kind: 'restaurants' }] },
-  { title: 'Goods', items: ['Technology', 'Home', 'Fashion', 'Motor', 'Sport'].map((l) => ({ label: l, kind: 'category', value: 'goods', sub: l })) },
-  { title: 'Services', items: ['Home', 'Professional', 'Classes'].map((l) => ({ label: l, kind: 'category', value: 'services', sub: l })) },
+  { title: 'Goods', items: ['Technology', 'Home', 'Fashion', 'Motor', 'Sport', 'Food', 'Books', 'Collectibles'].map((l) => ({ label: l, kind: 'category', value: 'goods', sub: l })) },
+  { title: 'Services', items: ['Home', 'Professional', 'Classes', 'Repairs'].map((l) => ({ label: l, kind: 'category', value: 'services', sub: l })) },
 ];
 
 function countFor(it) {
@@ -1255,7 +1254,6 @@ async function main() {
   }
   $('hero-buy-bch').addEventListener('click', () => applyCategory({ kind: 'buyBch' }));
   $('featured-exchange').addEventListener('click', () => applyCategory({ kind: 'all' }));
-  $('featured-restaurants').addEventListener('click', () => showView('restaurants'));
   $('featured-goods').addEventListener('click', () => applyCategory({ kind: 'category', value: 'goods' }));
   $('featured-services').addEventListener('click', () => applyCategory({ kind: 'category', value: 'services' }));
   $('casa-elena').addEventListener('click', () => showView('menu'));
