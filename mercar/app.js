@@ -1168,7 +1168,8 @@ function formatInstructions(message) {
   if (kv.method === 'bizum') {
     const amount = [kv.amount, kv.asset].filter(Boolean).join(' ');
     const rate = kv.rate ? `The merchant's BCH price is ${kv.rate} ${kv.asset || 'EUR'}/BCH.` : '';
-    return `To finish your purchase, send ${amount ? amount + ' ' : ''}by Bizum to ${kv.phone || '?'} with concept ${kv.concept || '?'}. ${rate} The final price is set when the payment is received.`;
+    const note = kv.note ? ` ${kv.note}` : '';
+    return `To finish your purchase, send ${amount ? amount + ' ' : ''}by Bizum to ${kv.phone || '?'} with concept ${kv.concept || '?'}. ${rate} The final price is set when the payment is received.${note}`;
   }
   const out = [`💳 Method: ${methods[kv.method] || kv.method || '?'}`];
   for (const [k, v] of Object.entries(kv)) if (!skip.has(k) && v) out.push(`• ${labels[k] || k}: ${v}`);
