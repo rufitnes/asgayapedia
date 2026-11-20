@@ -670,14 +670,14 @@ async function lookupIndexedAnchor(pubHex) {
     const r = await fetch(`${ANCHOR_INDEX}?pubkey=${encodeURIComponent(pubHex)}`, { cache: 'no-store' });
     if (!r.ok) return null;
     const j = await r.json();
-    return (j.anchors && j.anchors[0] && j.anchors[0].anchor) || null;
+    return (j.anchors && j.anchors[0]) || null;
   } catch { return null; }
 }
-function registerAnchor({ pubkey, address, anchor, commitment }) {
+function registerAnchor({ pubkey, address, anchor, commitment, name }) {
   fetch(ANCHOR_INDEX, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ pubkey, address, anchor, commitment, network: 'mainnet' }),
+    body: JSON.stringify({ pubkey, address, anchor, commitment, name: name || '', network: 'mainnet' }),
   }).catch(() => {});
 }
 
@@ -741,7 +741,8 @@ async function findIdentityAnchor(commitmentHex) {
     } catch { /* skip */ }
   }
   if (fallback) return fallback;
-  return state.bchPub ? await lookupIndexedAnchor(state.bchPub) : null;
+  const idx = state.bchPub ? await lookupIndexedAnchor(state.bchPub) : null;
+  return idx ? idx.anchor : null;
 }
 
 function refreshPublishButton(keepExisting = false) {
@@ -760,12 +761,35 @@ function refreshPublishButton(keepExisting = false) {
   else note.textContent = 'The wallet has no spendable funds yet: fund it first.';
 }
 
+async function identityNameFor(anchorTx) {
+  if (!anchorTx) return null;
+  const saved = loadSavedAnchor();
+  if (saved?.txid === anchorTx && saved.name) return saved.name;
+  if (state.bchPub) {
+    const rec = await lookupIndexedAnchor(state.bchPub);
+    if (rec?.anchor === anchorTx && rec.name) return rec.name;
+  }
+  return null;
+}
+
+function lockIdentityName(name) {
+  const el = document.getElementById('ad-name');
+  if (!el) return;
+  if (name) {
+    el.value = name; el.disabled = true;
+    el.title = 'This name belongs to your identity. To change it, spend the anchor NFT and mint a successor that inherits the reputation.';
+  } else {
+    el.disabled = false; el.title = '';
+  }
+}
+
 async function anchorLoad() {
   if (!wc) { document.getElementById('anchor-note').textContent = 'Connect a wallet to mint the anchor.'; return; }
   document.getElementById('anchor-address').textContent = wcAddress ?? '';
   const sh = await scripthashFromLockingBytecode(wcLocking);
   anchorUtxos = await electrumListUnspent(anchorWs(), sh);
   try { identityAnchor = await findIdentityAnchor(currentCommitmentHex()); } catch { identityAnchor = null; }
+  lockIdentityName(identityAnchor ? await identityNameFor(identityAnchor) : null);
   refreshPublishButton(true);
 }
 
@@ -851,8 +875,8 @@ async function publishAd() {
       const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Create your identity' });
       walletPrompt('');
       anchorTx = res.txid ?? (await broadcastTransaction(anchorWs(), binToHex(res.signedTxBytes)));
-      saveSavedAnchor({ txid: anchorTx, commitmentHex, network: selectedNetwork() });
-      registerAnchor({ pubkey: k.bchPubHex, address: wcAddress, anchor: anchorTx, commitment: commitmentHex });
+      saveSavedAnchor({ txid: anchorTx, commitmentHex, name: name, network: selectedNetwork() });
+      registerAnchor({ pubkey: k.bchPubHex, address: wcAddress, anchor: anchorTx, commitment: commitmentHex, name });
       identityAnchor = anchorTx;
     }
     const adId = generic
