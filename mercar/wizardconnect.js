@@ -44,8 +44,17 @@ export class WizardConnectSigner {
 
   async getPubkey() {
     const child = childIndexOfPathName(this.pathName);
-    const pubkey = this.mgr.getPubkey(child, BigInt(this.addressIndex));
-    if (!pubkey) throw new Error(`No pubkey for path '${this.pathName}[${this.addressIndex}]'`);
+    let pubkey = this.mgr.getPubkey(child, BigInt(this.addressIndex));
+    if (!pubkey) {
+      // Some wallets do not publish the receive path. Use any path they did publish (index 0).
+      for (let c = 0; c <= 8 && !pubkey; c++) {
+        if (c === child || !this.mgr.hasPath(c)) continue;
+        pubkey = this.mgr.getPubkey(c, 0n);
+      }
+    }
+    if (!pubkey) {
+      throw new Error('This wallet connected but did not share a receive address. Try again, or use Cashonize or Paytaca.');
+    }
     return pubkey;
   }
 

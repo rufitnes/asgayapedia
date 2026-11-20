@@ -1240,7 +1240,12 @@ async function main() {
       if (confirm('Disconnect the wallet?')) { wc.disconnect(); resetWallet(); }
       return;
     }
-    connectWallet().catch((e) => { if (e.message !== 'Cancelled') alert(e.message); });
+    connectWallet().catch((e) => {
+      if (e.message === 'Cancelled') return;
+      const dlg = $('wc-dialog');
+      if (!dlg.open) dlg.showModal();
+      $('wc-uri').textContent = e.message;
+    });
   });
   $('wc-cancel').addEventListener('click', () => {
     if (cancelConnect) { cancelConnect(); cancelConnect = null; }
