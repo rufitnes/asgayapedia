@@ -656,6 +656,10 @@ function slug(value) {
 const ANCHOR_KEY = 'mercar-identity-anchor';
 function loadSavedAnchor() { try { return JSON.parse(localStorage.getItem(ANCHOR_KEY) || 'null'); } catch { return null; } }
 function saveSavedAnchor(a) { try { localStorage.setItem(ANCHOR_KEY, JSON.stringify(a)); } catch { /* ignore */ } }
+function savedAnchorForNetwork() {
+  const s = loadSavedAnchor();
+  return s?.txid && (s.network || 'mainnet') === selectedNetwork() ? s.txid : null;
+}
 
 function keyFromPub(pubHex) {
   const p = pubHex.toLowerCase();
@@ -722,12 +726,12 @@ function refreshPublishButton(keepExisting = false) {
   if (!btn) return;
   if (!wc) { btn.disabled = true; note.textContent = 'Connect a BCH wallet to publish.'; return; }
   const want = currentCommitmentHex();
-  if (!keepExisting) identityAnchor = matchAnchor(want);
+  if (!keepExisting) identityAnchor = matchAnchor(want) ?? savedAnchorForNetwork();
   const existing = want ? identityAnchor : null;
   btn.disabled = !want;
   document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
   if (!want) note.textContent = 'Pick one currency and one payment method to continue.';
-  else if (existing) note.textContent = `Ready — this reuses your identity anchor ${existing.slice(0, 12)}….`;
+  else if (existing) note.textContent = `Ready — reusing your identity anchor ${existing.slice(0, 12)}…`;
   else if (anchorUtxos.length) note.textContent = 'Ready — you will approve the transaction in your wallet.';
   else note.textContent = 'The wallet has no spendable funds yet: fund it first.';
 }
@@ -802,7 +806,7 @@ async function publishAd() {
       feeBps: Math.round(fee * 100),
     });
     const commitmentHex = binToHex(commitment);
-    let anchorTx = identityAnchor ?? loadSavedAnchor()?.txid ?? undefined;
+    let anchorTx = identityAnchor ?? savedAnchorForNetwork() ?? undefined;
     if (anchorTx) {
       document.getElementById('anchor-note').textContent = `Reusing your identity anchor ${anchorTx.slice(0, 12)}…`;
     } else {
