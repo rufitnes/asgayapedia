@@ -135,7 +135,7 @@ function renderCart() {
   const total = cartTotalCents();
   $('cart-total').textContent = eur(total);
   $('pay-btn').disabled = total === 0;
-  $('pay-note').textContent = total === 0 ? 'Add something from the menu to start.' : 'Direct payment on chipnet (demo).';
+  $('pay-note').textContent = total === 0 ? 'Add something from the menu to start.' : 'Direct payment on Bitcoin Cash.';
 }
 
 async function openCheckout() {
@@ -193,7 +193,9 @@ async function connectWallet() {
   wcAddress = typeof r === 'string' ? null : r.address;
   console.log('[mercar] wallet', wcAddress);
   wcReceiveAddress = wcAddress;
-  $('connect-btn').textContent = wcAddress ? `Connected ${wcAddress.slice(0, 14)}…` : 'Connected';
+  const shownAddr = wcReceiveAddress || wcAddress;
+  $('connect-btn').textContent = shownAddr ? `Connected ${shownAddr.slice(0, 14)}…` : 'Connected';
+  $('connect-btn').title = shownAddr || '';
   if (wcReceiveAddress) { const d = document.getElementById('buy-destination'); if (d && !d.value) d.value = wcReceiveAddress; }
   dlg.close();
 }
@@ -211,7 +213,7 @@ async function payWithBch() {
     const merchantLocking = new Uint8Array([0x76, 0xa9, 0x14, ...dec.payload, 0x88, 0xac]);
     console.log('[mercar] amount', amountSats, 'sats; wallet', wcAddress);
     const sh = await scripthashFromLockingBytecode(wcLocking);
-    const list = await electrumListUnspent(ELECTRUM_WS, sh);
+    const list = await electrumListUnspent(anchorWs(), sh);
     console.log('[mercar] utxos', list.map((u) => u.value));
     const fee = 1500n;
     const need = BigInt(amountSats) + fee;
@@ -221,7 +223,7 @@ async function payWithBch() {
       .sort((a, b) => (b.value > a.value ? 1 : b.value < a.value ? -1 : 0))[0];
     if (!utxo) {
       const have = list.reduce((a, u) => a + BigInt(u.value), 0n);
-      throw new Error(`Need ${need} sats on chipnet; the wallet has ${have}.`);
+      throw new Error(`Need ${need} sats on mainnet; the wallet has ${have}.`);
     }
     // libauth expects the outpoint in display order and reverses on encode (see the spike).
     const txidBytes = hexToBin(utxo.tx_hash);
@@ -249,7 +251,7 @@ async function payWithBch() {
     };
     console.log('[mercar] signing…');
     $('co-pay').textContent = 'Approve in your wallet…';
-    $('pay-note').textContent = 'Open your wallet (Cashonize, Paytaca, …) and approve the payment.';
+    $('pay-note').textContent = 'Open your wallet (Cashonize, Paytaca, Selene, …) and approve the payment.';
     const res = await wc.signTransaction({ transaction, sourceOutput, inputIndex: 0 });
     console.log('[mercar] signed, broadcast:', res.txid ?? 'self');
     const txid = res.txid ?? (await broadcastTransaction(ELECTRUM_WS, binToHex(res.signedTxBytes)));
@@ -825,6 +827,7 @@ async function anchorLoad() {
     anchorUtxos = found.utxos;
     try { wcPubHex = binToHex(await wc.getPubkey()); } catch { /* keep */ }
     document.getElementById('anchor-address').textContent = `${wcAddress ?? ''} (${found.pathName}[${found.index}])`;
+    document.getElementById('anchor-address').title = wcAddress || '';
     note.textContent = 'Found the wallet funds. Ready to publish.';
   } else {
     wc.pathName = 'receive'; wc.addressIndex = 0;
@@ -883,7 +886,8 @@ async function publishAd() {
     const description = document.getElementById('ad-description').value.trim();
     const price = Number(document.getElementById('ad-price').value);
     const image = document.getElementById('ad-image').value.trim();
-    const externalUrl = document.getElementById('ad-url').value.trim();
+    let externalUrl = document.getElementById('ad-url').value.trim();
+    if (externalUrl && !/^https?:\/\//i.test(externalUrl)) externalUrl = `https://${externalUrl}`;
     if (generic && !title) throw new Error('Enter a title.');
     if (generic && (!Number.isFinite(price) || price <= 0)) throw new Error('Enter a price.');
     const cash = '';
