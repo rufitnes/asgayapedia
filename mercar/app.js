@@ -1236,10 +1236,16 @@ async function startPay(params) {
     await publishEvent(NOSTR_RELAY, event);
   } catch (e) { chatAdd('sys', `Could not send the request: ${e.message}`); }
   }
+  const notice = type === 'chat' ? null : setTimeout(() => {
+    if ($('pay-status').textContent.startsWith('Waiting')) {
+      $('pay-status').textContent = 'Merchant is replying…';
+      chatAdd('sys', 'The merchant’s app is taking a little longer than usual to reply…');
+    }
+  }, 5000);
   const timer = type === 'chat' ? null : setTimeout(() => {
     if ($('pay-status').textContent.startsWith('Waiting')) {
       $('pay-status').textContent = 'Merchant not detected';
-      chatAdd('sys', 'The merchant’s app has not replied. It must be open: the instructions come from their device (liveness).');
+      chatAdd('sys', 'The merchant’s app has not replied yet. It must be open: the payment details come from their device.');
     }
   }, 45000);
   state.payUnsub = subscribeDMs(NOSTR_RELAY, { me: npubHex, author: seller, onEvent: async (ev) => {
@@ -1263,6 +1269,7 @@ async function startPay(params) {
       $('pay-status').textContent = 'Merchant replied (live)';
       $('pay-status').className = 'badge ok';
       clearTimeout(timer);
+      if (notice) clearTimeout(notice);
     } catch (e) { chatAdd('sys', `Could not decrypt a message: ${e.message}`); }
   } });
   $('pay-form').onsubmit = async (e) => {
