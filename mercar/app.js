@@ -1280,14 +1280,15 @@ async function startPay(params) {
       chatAdd('sys', 'The merchant’s app has not replied yet. It must be open: the payment details come from their device.');
     }
   }, 45000);
-  state.payUnsub = subscribeDMs(NOSTR_RELAY, { me: npubHex, author: seller, onEvent: async (ev) => {
+  const onDm = async (ev) => {
     console.log('[pay] dm', String(ev.id || '').slice(0, 10), 'from', String(ev.pubkey || '').slice(0, 12), 'expected seller', String(seller || '').slice(0, 12));
     if (ev.pubkey !== seller) return;
     try {
       const pt = await nip04Decrypt(privHex, seller, ev.content);
       const reqId = (pt.match(/requestId=([^\n\]]+)/) || [])[1];
       const orderId = (pt.match(/orderId=([^\n\]]+)/) || [])[1];
-      chatAdd('them', formatInstructions(pt), orderId ? `order-${orderId}` : (reqId ? `pi-${reqId}` : undefined));
+      const payTxid = (pt.match(/txid=([^\n\]]+)/) || [])[1];
+      chatAdd('them', formatInstructions(pt), orderId ? `order-${orderId}` : (reqId ? `pi-${reqId}` : (payTxid ? `pay-${payTxid}` : undefined)));
       if (pt.includes('[ORDER_INSTRUCTIONS]')) {
         const kv = {};
         for (const line of pt.split('\n')) {
@@ -1303,7 +1304,13 @@ async function startPay(params) {
       clearTimeout(timer);
       if (notice) clearTimeout(notice);
     } catch (e) { chatAdd('sys', `Could not decrypt a message: ${e.message}`); }
-  } });
+  };
+  const subscribeChat = () => {
+    if (state.payUnsub) { try { state.payUnsub(); } catch { /* ignore */ } }
+    state.payUnsub = subscribeDMs(NOSTR_RELAY, { me: npubHex, author: seller, onEvent: onDm });
+  };
+  state.payChatResub = subscribeChat;
+  subscribeChat();
   $('pay-form').onsubmit = async (e) => {
     e.preventDefault();
     const text = $('pay-input').value.trim();
@@ -1317,6 +1324,15 @@ async function startPay(params) {
     } catch (err) { chatAdd('sys', `Could not send: ${err.message}`); }
   };
 }
+
+function resubscribePayChat() {
+  if (document.hidden || !state.payChatResub) return;
+  const d = $('pay-dialog');
+  if (!d || !d.open) return;
+  state.payChatResub();
+}
+document.addEventListener('visibilitychange', resubscribePayChat);
+window.addEventListener('focus', resubscribePayChat);
 
 async function main() {
   const payParams = location.hash.startsWith('#pay?') ? new URLSearchParams(location.hash.slice(5)) : null;
