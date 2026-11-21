@@ -629,7 +629,12 @@ function showView(name) {
   document.getElementById('ad-view').hidden = name !== 'ad';
   const target = name === 'exchange' ? 'exchange' : name === 'restaurants' ? 'restaurants-view' : name === 'menu' ? 'menu-view' : name === 'anchor' ? 'anchor-view' : name === 'ad' ? 'ad-view' : 'categories';
   const el = document.getElementById(target);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (el) {
+    const header = document.querySelector('.topbar');
+    const offset = (header ? header.getBoundingClientRect().height : 0) + 10;
+    const y = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  }
 }
 
 function applyCategory(it) {
