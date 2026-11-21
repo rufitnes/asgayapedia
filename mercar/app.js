@@ -54,6 +54,29 @@ function selectedNetwork() {
 function anchorWs() { return ELECTRUM_WS_BY_NETWORK[selectedNetwork()]; }
 function addressPrefix() { return selectedNetwork() === 'mainnet' ? 'bitcoincash' : 'bchtest'; }
 
+/**
+ * The wallet's primary receive address: the first receive index with no on-chain history.
+ * Cashonize and Selene show that same address on their home screens; index 0 is often the
+ * already-used address the wallet rotated past.
+ */
+async function primaryReceive(signer) {
+  for (let i = 0; i < 40; i++) {
+    let lb;
+    try { lb = await signer.lockingBytecodeAt(i); } catch { break; }
+    if (!lb) break;
+    let history;
+    try {
+      const sh = await scripthashFromLockingBytecode(lb);
+      history = await electrumGetHistory(anchorWs(), sh);
+    } catch { return null; }
+    if (Array.isArray(history) && history.length === 0) {
+      const r = lockingBytecodeToCashAddress({ prefix: addressPrefix(), bytecode: lb, tokenSupport: false });
+      if (typeof r !== 'string') return r.address;
+    }
+  }
+  return null;
+}
+
 function renderMerchant(c) {
   $('merchant-name').textContent = c.merchant.name;
   $('merchant-desc').textContent = c.merchant.description ?? '';
@@ -198,7 +221,9 @@ async function connectWallet() {
   const r = lockingBytecodeToCashAddress({ prefix: addressPrefix(), bytecode: wcLocking, tokenSupport: false });
   wcAddress = typeof r === 'string' ? null : r.address;
   console.log('[mercar] wallet', wcAddress);
-  wcReceiveAddress = wcAddress;
+  const primary = await primaryReceive(wc).catch(() => null);
+  wcReceiveAddress = primary || wcAddress;
+  console.log('[mercar] primary receive', wcReceiveAddress);
   collectWalletPubkeys();
   const shownAddr = wcReceiveAddress || wcAddress;
   $('connect-btn').textContent = shownAddr ? `Connected ${shownAddr.slice(0, 14)}…` : 'Connected';

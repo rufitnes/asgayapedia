@@ -97,6 +97,19 @@ export class WizardConnectSigner {
     return pubkey;
   }
 
+  /** P2PKH locking bytecode for an arbitrary receive index (same path selection as getPubkey). */
+  async lockingBytecodeAt(index) {
+    let pubkey = this.mgr.getPubkey(childIndexOfPathName(this.pathName), BigInt(index));
+    if (!pubkey) {
+      for (let c = 0; c <= 8 && !pubkey; c++) {
+        if (!this.mgr.hasPath(c)) continue;
+        pubkey = this.mgr.getPubkey(c, BigInt(index));
+      }
+    }
+    if (!pubkey) return null;
+    return publicKeyToP2pkhLockingBytecode({ publicKey: pubkey });
+  }
+
   async getLockingBytecode() {
     return publicKeyToP2pkhLockingBytecode({ publicKey: await this.getPubkey() });
   }
