@@ -67,10 +67,15 @@ export class WizardConnectSigner {
     const child = childIndexOfPathName(this.pathName);
     let pubkey = this.mgr.getPubkey(child, BigInt(this.addressIndex));
     if (!pubkey) {
-      // Some wallets do not publish the receive path. Use any path they did publish (index 0).
+      // Some wallets do not publish the receive path. Use any path they did publish (index 0)
+      // and sign with that same path name, not the one we asked for.
       for (let c = 0; c <= 8 && !pubkey; c++) {
         if (c === child || !this.mgr.hasPath(c)) continue;
         pubkey = this.mgr.getPubkey(c, 0n);
+        if (pubkey) {
+          const path = this.mgr.getSessionPaths().find((p) => childIndexOfPathName(p.name) === c);
+          if (path) { this.pathName = path.name; this.addressIndex = 0; }
+        }
       }
     }
     if (!pubkey) {
@@ -81,12 +86,13 @@ export class WizardConnectSigner {
         const child = deriveHdPublicNodeChild(decoded.node, Number(this.addressIndex));
         if (typeof child === 'string') continue;
         pubkey = child.publicKey;
+        this.pathName = path.name;
         break;
       }
     }
     if (!pubkey) {
       const names = this.mgr.getSessionPaths().map((p) => p.name).join(', ') || 'none';
-      throw new Error(`This wallet connected but did not share a usable key (paths: ${names}). Try again, or use Cashonize or Paytaca.`);
+      throw new Error(`This wallet connected but did not share a usable key (paths: ${names}). Try again, or use Cashonize, Paytaca or Selene.`);
     }
     return pubkey;
   }

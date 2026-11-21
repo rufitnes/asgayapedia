@@ -924,7 +924,7 @@ async function publishAd() {
       }
       if (!v0) throw new Error('The wallet is not ready yet. Give it a moment and press Publish again.');
       const built = buildGenesisAnchor(wcLocking, { txid: v0.tx_hash, vout: v0.tx_pos, satoshis: BigInt(v0.value) }, commitment);
-      walletPrompt('Check Cashonize: approve the transaction that creates your identity.');
+      walletPrompt('Check your wallet: approve the transaction that creates your identity.');
       const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Create your identity' });
       walletPrompt('');
       anchorTx = res.txid ?? (await broadcastTransaction(anchorWs(), binToHex(res.signedTxBytes)));
@@ -1014,7 +1014,7 @@ async function anchorSelfSend() {
     const u = anchorUtxos.slice().sort((a, b) => Number(b.value) - Number(a.value))[0];
     if (!u) throw new Error('No UTXOs');
     const built = buildSelfSend(wcLocking, { txid: u.tx_hash, vout: u.tx_pos, satoshis: BigInt(u.value) });
-    walletPrompt('Check Cashonize: approve the small self-send (one-time).');
+    walletPrompt('Check your wallet: approve the small self-send (one-time).');
     const res = await wc.signTransaction({ transaction: built.transaction, sourceOutput: built.sourceOutput, inputIndex: 0, userPrompt: 'Prepare the wallet (one-time)' });
     const txid = res.txid ?? (await broadcastTransaction(anchorWs(), binToHex(res.signedTxBytes)));
     await anchorLoad();
@@ -1196,7 +1196,7 @@ async function startPay(params) {
   $('pay-ids').textContent = `You (session): ${npubHex.slice(0, 16)}… · Merchant: ${seller.slice(0, 16)}…${anchor ? ` · anchor ${anchor}` : ''}`;
   $('pay-status').textContent = 'Waiting for the merchant…';
   $('pay-status').className = 'badge warn';
-  chatAdd('sys', 'A private, end-to-end encrypted channel with the merchant. Mercar only showed you the ad; it cannot read or store these messages.');
+  chatAdd('sys', 'A private, end-to-end encrypted chat with the merchant. The ad is public; this conversation is not.');
   if (!seller) { chatAdd('sys', 'This ad has no merchant npub, so the channel cannot be opened.'); return; }
   const requestId = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now());
   const request = type === 'product'
@@ -1225,7 +1225,7 @@ async function startPay(params) {
         '[/PAY_INSTRUCTIONS_REQUEST]',
       ].join('\n');
   if (type === 'chat') {
-    chatAdd('sys', 'Ask the merchant anything. They answer from their own device — Mercar never reads or stores these messages.');
+    chatAdd('sys', 'Ask the merchant anything. They answer from their own device. Mercar never sees these messages in clear.');
   } else {
   chatAdd('sys', type === 'product'
     ? `Order placed: ${amount} ${asset} · we asked the merchant for the payment details.`
