@@ -423,7 +423,8 @@ function openAd(ad) {
   $('detail-where').textContent = [ad.location, ad.hours].filter(Boolean).join(' · ') || '—';
   $('buy-title').style.display = generic ? 'none' : '';
   $('buy-title').textContent = isSeller ? 'Buy BCH' : 'Sell BCH';
-  $('buy-get').textContent = generic ? 'Buy this item' : (isSeller ? 'Buy BCH' : 'Sell BCH');
+  $('buy-get').textContent = generic ? 'Buy this item' : (isSeller ? 'Ask for a quote' : 'Sell BCH');
+  showBuyReference(ad, isSeller);
   $('buy-hint').textContent = generic
     ? `${ad.price ?? '—'} ${ad.assets[0] || 'EUR'} · ${ad.condition || ''}${ad.shipping ? ' · ' + ad.shipping : ''}`
     : `Fee ${(ad.fee * 100).toFixed(2)}%; limits ${ad.min ?? '—'} – ${ad.max ?? '—'} ${ad.assets[0] ?? ''}.`;
@@ -500,6 +501,24 @@ async function verifyAnchor(ad) {
   note.textContent = `Could not verify the anchor on ${candidates.join(' / ')}: ${lastError?.message ?? 'not found'}`;
 }
 
+async function showBuyReference(ad, isSeller) {
+  const el = $('buy-ref');
+  if (!el) return;
+  el.textContent = '';
+  if (!isSeller) { el.hidden = true; return; }
+  el.hidden = false;
+  el.textContent = 'Fetching the reference price…';
+  try {
+    const r = await fetch('https://oracle.asgaya.org/quote', { cache: 'no-store' });
+    const q = await r.json();
+    const t = q.timestamp ? `${new Date(q.timestamp).toISOString().slice(11, 16)} UTC` : '';
+    el.textContent = `Reference: 1 BCH ≈ €${Number(q.priceEur).toFixed(2)} · ${q.source || 'oracle'}${t ? ` · ${t}` : ''}. The merchant's quote in the chat is binding.`;
+    el.title = 'Public reference from oracle.asgaya.org. The binding rate comes from the merchant in the chat.';
+  } catch {
+    el.textContent = 'Reference price unavailable right now. The merchant\'s quote in the chat is binding.';
+  }
+}
+
 function showInstructions() {
   const ad = state.selectedAd;
   if (!ad) return;
@@ -525,6 +544,7 @@ function showInstructions() {
   } else {
     add(`Contact the merchant to complete the payment (${method}).`);
   }
+  if (isSeller && ad.fee != null) add(`The merchant's rate includes a ${(ad.fee * 100).toFixed(2)}% fee; the binding quote arrives in the chat.`);
   if (ad.phone) add(`Contact: ${ad.phone}`);
   if (ad.notes) add(ad.notes);
   const dest = $('buy-destination')?.value.trim();
@@ -1167,9 +1187,12 @@ function formatInstructions(message) {
   }
   if (kv.method === 'bizum') {
     const amount = [kv.amount, kv.asset].filter(Boolean).join(' ');
-    const rate = kv.rate ? `The merchant's BCH price is ${kv.rate} ${kv.asset || 'EUR'}/BCH.` : '';
+    const rateBits = kv.rate
+      ? `Rate: 1 BCH = €${kv.effectiveRate || kv.rate}${kv.rateSource ? ` (${kv.rateSource}${kv.rateTime ? `, ${kv.rateTime}` : ''}${kv.fee ? `, incl. ${kv.fee}% fee` : ''})` : ''}.`
+      : '';
+    const recv = kv.receiveBch ? ` You receive ${kv.receiveBch} BCH.` : '';
     const note = kv.note ? ` ${kv.note}` : '';
-    return `To finish your purchase, send ${amount ? amount + ' ' : ''}by Bizum to ${kv.phone || '?'} with concept ${kv.concept || '?'}. ${rate} The final price is set when the payment is received.${note}`;
+    return `To finish your purchase, send ${amount ? amount + ' ' : ''}by Bizum to ${kv.phone || '?'} with concept ${kv.concept || '?'}. ${rateBits}${recv} The final price is set when the payment is received.${note}`;
   }
   const out = [`💳 Method: ${methods[kv.method] || kv.method || '?'}`];
   for (const [k, v] of Object.entries(kv)) if (!skip.has(k) && v) out.push(`• ${labels[k] || k}: ${v}`);
