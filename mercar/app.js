@@ -799,9 +799,9 @@ function refreshPublishButton(keepExisting = false) {
   btn.disabled = !want;
   document.getElementById('anchor-selfsend').disabled = anchorUtxos.length === 0;
   if (!want) note.textContent = 'Pick one currency and one payment method to continue.';
-  else if (existing) note.textContent = `Ready — reusing your identity anchor ${existing.slice(0, 12)}…`;
+  else if (existing) note.textContent = `Ready — reusing your identity anchor ${existing.slice(0, 12)}… No funds needed; publishing is free.`;
   else if (anchorUtxos.length) note.textContent = 'Ready — you will approve the transaction in your wallet.';
-  else note.textContent = `No mainnet UTXOs for ${wcAddress || 'this wallet'}. Check that the wallet is on mainnet and funded (the address is shown below the button).`;
+  else note.textContent = 'To create your identity on-chain, this wallet needs a little BCH (about 0.0002) once. After that, publishing ads is free.';
 }
 
 async function identityNameFor(anchorTx) {
