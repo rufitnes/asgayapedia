@@ -536,8 +536,7 @@ function showInstructions() {
   if (/cash|in person/i.test(method)) {
     add(`Visit ${ad.name || 'the merchant'} at ${ad.location || 'the merchant’s location'}${ad.hours ? ` (${ad.hours})` : ''} and complete the exchange in person.`);
   } else if (/bizum/i.test(method)) {
-    add(`Send ${amount.toLocaleString('en-GB')} ${asset} by Bizum to ${ad.cashAccount || ad.phone || 'the merchant’s phone'}.`);
-    add(`Concept: Asgaya ${ad.name || ''}. Name: ${ad.name || 'the merchant'}.`);
+    add(`Send ${amount.toLocaleString('en-GB')} ${asset} by Bizum. The merchant's number and the two-word reference arrive in the chat.`);
   } else if (/sepa|transfer/i.test(method)) {
     add(`Send ${amount.toLocaleString('en-GB')} ${asset} by SEPA${ad.iban ? ` to ${ad.iban}` : ' to the merchant’s account'}.`);
     add(`Concept: Asgaya ${ad.name || ''}. Name: ${ad.name || 'the merchant'}.`);
