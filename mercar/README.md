@@ -53,7 +53,7 @@ device. *(Link to be added.)*
 
 ## What works (18 Nov 2026)
 
-- **The board** (Vite): the three categories (exchange, goods, services/restaurants),
+- **The board** (Vite): the three categories (exchange, goods, services),
   product cards, the ad detail, and the on-chain identity badge (chipnet, testnet3,
   mainnet).
 - **Publish from the web**: connect with WizardConnect, mint or reuse the anchor,
