@@ -1187,12 +1187,13 @@ function formatInstructions(message) {
   }
   if (kv.method === 'bizum') {
     const amount = [kv.amount, kv.asset].filter(Boolean).join(' ');
+    const src = String(kv.rateSource || '').replace(':', ' ');
     const rateBits = kv.rate
-      ? `Rate: 1 BCH = €${kv.effectiveRate || kv.rate}${kv.rateSource ? ` (${kv.rateSource}${kv.rateTime ? `, ${kv.rateTime}` : ''}${kv.fee ? `, incl. ${kv.fee}% fee` : ''})` : ''}.`
+      ? `Rate: 1 BCH = €${kv.effectiveRate || kv.rate}${src ? ` (${src}${kv.rateTime ? `, ${kv.rateTime}` : ''}${kv.fee ? `, incl. ${kv.fee}% fee` : ''})` : ''}.`
       : '';
     const recv = kv.receiveBch ? ` You receive ${kv.receiveBch} BCH.` : '';
     const note = kv.note ? ` ${kv.note}` : '';
-    return `To finish your purchase, send ${amount ? amount + ' ' : ''}by Bizum to ${kv.phone || '?'} with concept ${kv.concept || '?'}. ${rateBits}${recv} The final price is set when the payment is received.${note}`;
+    return `To finish your purchase, send ${amount ? amount + ' ' : ''}by Bizum to ${kv.phone || '?'} with concept ${kv.concept || '?'}. ${rateBits}${recv} The rate is locked when the payment arrives.${note}`;
   }
   const out = [`💳 Method: ${methods[kv.method] || kv.method || '?'}`];
   for (const [k, v] of Object.entries(kv)) if (!skip.has(k) && v) out.push(`• ${labels[k] || k}: ${v}`);
