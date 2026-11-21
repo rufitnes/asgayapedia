@@ -274,10 +274,12 @@
 
   <dialog id="wc-dialog" class="checkout">
     <h2>Connect a BCH wallet</h2>
-    <p class="muted">Scan the QR with Cashonize, Paytaca, Selene or any WizardConnect wallet, then approve the connection in the wallet.</p>
+    <p class="muted">Scan the QR with another device, or open the link on this phone, then approve the connection in Cashonize, Paytaca, Selene or any WizardConnect wallet.</p>
     <img id="wc-qr" alt="WizardConnect QR" width="280" height="280" />
     <p class="mono" id="wc-uri"></p>
     <div class="checkout-actions">
+      <button class="ghost" id="wc-open" type="button" hidden>Open in wallet</button>
+      <button class="ghost" id="wc-copy" type="button" hidden>Copy link</button>
       <button class="ghost" id="wc-cancel" type="button">Cancel</button>
     </div>
   </dialog>

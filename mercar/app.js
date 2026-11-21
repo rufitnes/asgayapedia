@@ -179,6 +179,10 @@ async function connectWallet() {
     onUri: async (u, q) => {
       if (!dlg.open) dlg.showModal();
       $('wc-uri').textContent = u;
+      state.wcUri = u;
+      $('wc-open').hidden = false;
+      $('wc-copy').hidden = false;
+      $('wc-copy').textContent = 'Copy link';
       try { $('wc-qr').src = await QRCode.toDataURL(q ?? u, { width: 280, margin: 1 }); } catch { /* optional */ }
     },
     broadcast: false,
@@ -1344,6 +1348,23 @@ async function main() {
       if (!dlg.open) dlg.showModal();
       $('wc-uri').textContent = e.message;
     });
+  });
+  $('wc-copy').addEventListener('click', async () => {
+    const u = state.wcUri || $('wc-uri').textContent || '';
+    if (!u || u.startsWith('Waiting')) return;
+    try { await navigator.clipboard.writeText(u); }
+    catch {
+      const ta = document.createElement('textarea');
+      ta.value = u; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch { /* ignore */ }
+      ta.remove();
+    }
+    $('wc-copy').textContent = 'Copied';
+    setTimeout(() => { $('wc-copy').textContent = 'Copy link'; }, 1500);
+  });
+  $('wc-open').addEventListener('click', () => {
+    const u = state.wcUri || '';
+    if (u && !u.startsWith('Waiting')) window.location.href = u;
   });
   $('wc-cancel').addEventListener('click', () => {
     if (cancelConnect) { cancelConnect(); cancelConnect = null; }
